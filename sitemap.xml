@@ -3,7 +3,13 @@
   
   <url>
     <loc>http://silenceper.github.io/</loc>
+    <lastmod>2016-05-26T12:58:41+08:00</lastmod>
     <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://silenceper.github.io/post/first/</loc>
+    <lastmod>2016-05-26T12:58:41+08:00</lastmod>
   </url>
   
 </urlset>
