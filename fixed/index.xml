@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Fixed on silenceper blog</title>
+    <link>https://silenceper.github.io/fixed/</link>
+    <description>Recent content in Fixed on silenceper blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sat, 22 Aug 2015 06:42:21 -0700</lastBuildDate>
+    <atom:link href="https://silenceper.github.io/fixed/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>About</title>
+      <link>https://silenceper.github.io/about/</link>
+      <pubDate>Sat, 22 Aug 2015 06:42:21 -0700</pubDate>
+      
+      <guid>https://silenceper.github.io/about/</guid>
+      <description>&lt;p&gt;程序员&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>colophon</title>
+      <link>https://silenceper.github.io/colophon/</link>
+      <pubDate>Sat, 22 Aug 2015 06:28:26 -0700</pubDate>
+      
+      <guid>https://silenceper.github.io/colophon/</guid>
+      <description>&lt;p&gt;个人日志&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Code</title>
+      <link>https://silenceper.github.io/code/</link>
+      <pubDate>Wed, 19 Aug 2015 20:29:37 -0700</pubDate>
+      
+      <guid>https://silenceper.github.io/code/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;空白。。。。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;总有一天会填满的。。。&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
