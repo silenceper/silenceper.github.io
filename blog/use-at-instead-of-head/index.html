@@ -13,10 +13,10 @@
 <title>
 
 
-     silenceper 
+     Use @ instead of HEAD 
 
 </title>
-<link rel="canonical" href="https://silenceper.github.io/">
+<link rel="canonical" href="https://silenceper.github.io/blog/use-at-instead-of-head/">
 
 
 <script type="text/javascript">
@@ -105,54 +105,59 @@
     </div>
 </section>
 
-<section class="main">
+
+<section class="main post non-narrow zero-top-spacing">
     <div class="container">
         <div class="content">
-            <div class="page-heading">Blog</div>
-            <ul>
-            
-                
-            
-                
-                    <li class="post-item">
-    <div class="meta">Dec 21, 2015</div>
-    <a href="https://silenceper.github.io/blog/les-mis%C3%A9rables-by-victor-hugo/"><div>Les Misérables by Victor Hugo</div></a>
-</li>
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
 
-                
-            
-                
-                    <li class="post-item">
-    <div class="meta">Dec 21, 2015</div>
-    <a href="https://silenceper.github.io/blog/metamorphosis-by-franz-kafka/"><div>Metamorphosis by Franz Kafka</div></a>
-</li>
+    Use @ instead of HEAD
 
-                
-            
-                
-                    <li class="post-item">
-    <div class="meta">Aug 25, 2015</div>
-    <a href="https://silenceper.github.io/blog/use-at-instead-of-head/"><div>Use @ instead of HEAD</div></a>
-</li>
+</div>
 
+                    <div class="initials"><a href="https://silenceper.github.io/">ad</a></div>
+                </div>
+                <div class="meta">
+                    <div class="date" title="Tue Aug 25 2015 17:09:14 -0500">Aug 25, 2015</div>
+                    <div class="reading-time"><div class="middot"></div>1 minute read</div>
+                </div>
+            </div>
+            <div class="markdown">
+                <p>I recently discovered that from git version <a href="https://github.com/git/git/blob/master/Documentation/RelNotes/1.8.5.txt#L100">1.8.5</a> onwards, <code>@</code> can replace <code>HEAD</code>:</p>
+
+
+$ git reset --hard @~2
+$ git rebase -i @~10
+$ git diff @~2..@~3
+
+
+<p>And also in most scenarios <code>HEAD</code> can be left out completely, so you can say:</p>
+
+
+$ git reset -- @{2}
+
+
+<p>instead of:</p>
+
+
+$ git reset -- HEAD@{2}
+
+
+<p>It takes some getting used to, but it&rsquo;s definitely faster than typing <code>HEAD</code>.</p>
+
+                <br>
+                <p><a href="https://silenceper.github.io/blog/">Back to posts</a></p>
+            </div>
+            <br>
+            <div class="disqus">
                 
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-            </ul>
+            </div>
         </div>
     </div>
 </section>
+
 
 
 <script type="text/javascript">
@@ -170,5 +175,4 @@ try {
 
 </body>
 </html>
-
 
