@@ -1,2 +1,1 @@
-# silenceper.github.io
-静态blog
+# Blog 仓库
