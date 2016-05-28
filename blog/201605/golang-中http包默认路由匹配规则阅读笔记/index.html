@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="silenceper blog">
+
+<base href="https://silenceper.github.io/">
+<title>
+
+
+     Golang 中http包默认路由匹配规则阅读笔记 
+
+</title>
+<link rel="canonical" href="https://silenceper.github.io/blog/201605/golang-%E4%B8%ADhttp%E5%8C%85%E9%BB%98%E8%AE%A4%E8%B7%AF%E7%94%B1%E5%8C%B9%E9%85%8D%E8%A7%84%E5%88%99%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/">
+
+
+<script type="text/javascript">
+    var baseURL = 'https:\/\/silenceper.github.io\/';
+    var host = baseURL.substring(0, baseURL.length - 1).replace(/\//g, '');
+    if ((host === window.location.host) && (window.location.protocol !== 'https:')) {
+        window.location.protocol = 'https:';
+    }
+</script>
+
+
+
+
+
+<link rel="stylesheet" href="https://silenceper.github.io/css/reset.css">
+<link rel="stylesheet" href="https://silenceper.github.io/css/pygments.css">
+<link rel="stylesheet" href="https://silenceper.github.io/css/main.css">
+
+
+    <link rel="stylesheet" href="https://silenceper.github.io/css/override.css">
+
+
+
+
+
+<link rel="shortcut icon"
+
+    href="https://silenceper.github.io/img/favicon.ico"
+
+>
+
+
+
+</head>
+
+
+<body lang="zh">
+
+<section class="header">
+    <div class="container">
+        <div class="content">
+            <a href="https://silenceper.github.io/"><div class="name">silenceper</div></a>
+            <nav>
+                <ul>
+                    <a href="https://silenceper.github.io/blog/"><li>Blog</li></a>
+                    <a href="https://silenceper.github.io/about/"><li>About</li></a>
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<section class="icons">
+    <div class="container">
+        <div class="content">
+
+        
+            <a href="//github.com/silenceper" target="_blank">
+                <i class="icon ion-social-github"></i>
+            </a>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+        </div>
+    </div>
+</section>
+
+
+<section class="main post non-narrow zero-top-spacing">
+    <div class="container">
+        <div class="content">
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
+
+    Golang 中http包默认路由匹配规则阅读笔记
+
+</div>
+
+                    <div class="initials"><a href="https://silenceper.github.io/"></a></div>
+                </div>
+                <div class="meta">
+                    <div class="date" title="Sat May 28 2016 18:00:59 CST">May 28, 2016</div>
+                    <div class="reading-time"><div class="middot"></div>2 minutes read</div>
+                </div>
+            </div>
+            <div class="markdown">
+                
+
+<h1 id="一-执行流程:f903dbce0eb66cf9e81b93f61d58b794">一、执行流程</h1>
+
+<p>构建一个简单http server：</p>
+
+<pre><code class="language-go">package main
+
+import (
+	&quot;log&quot;
+	&quot;net/http&quot;
+)
+
+func main() {
+	http.HandleFunc(&quot;/&quot;, func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte(&quot;hello world&quot;))
+	})
+	log.Fatal(http.ListenAndServe(&quot;:8080&quot;, nil))
+}
+
+</code></pre>
+
+<p>使用<code>http://127.0.0.1:8080/</code> 就可以看到输出了</p>
+
+<p>通过跟踪http.go包代码，可以发现执行流程基本如下：</p>
+
+<h4 id="1-创建一个-listener-监听-8080-端口:f903dbce0eb66cf9e81b93f61d58b794">1.创建一个<code>Listener</code>监听<code>8080</code>端口</h4>
+
+<h4 id="2-进入-for-循环并accept请求-没有请求则处于阻塞状态:f903dbce0eb66cf9e81b93f61d58b794">2.进入<code>for</code>循环并Accept请求，没有请求则处于阻塞状态</h4>
+
+<h4 id="3-接收到请求-并创建一个conn对象-放入goroutine处理-实现高并发关键:f903dbce0eb66cf9e81b93f61d58b794">3.接收到请求，并创建一个conn对象，放入goroutine处理（实现高并发关键）</h4>
+
+<h4 id="4-解析请求来源信息获得请求路径等重要信息:f903dbce0eb66cf9e81b93f61d58b794">4.解析请求来源信息获得请求路径等重要信息</h4>
+
+<h4 id="5-请求serverhttp方法-已经通过上一步获得了responsewriter和request对象:f903dbce0eb66cf9e81b93f61d58b794">5.请求ServerHTTP方法，已经通过上一步获得了ResponseWriter和Request对象</h4>
+
+<pre><code class="language-go">func (sh serverHandler) ServeHTTP(rw ResponseWriter, req *Request) {
+	//此handler即为http.ListenAndServe 中的第二个参数
+	handler := sh.srv.Handler 
+	if handler == nil {
+		//如果handler为空则使用内部的DefaultServeMux 进行处理
+		handler = DefaultServeMux
+	}
+	if req.RequestURI == &quot;*&quot; &amp;&amp; req.Method == &quot;OPTIONS&quot; {
+		handler = globalOptionsHandler{}
+	}
+	//这里就开始处理http请求
+	//如果需要使用自定义的mux，就需要实现ServeHTTP方法，即实现Handler接口。
+	handler.ServeHTTP(rw, req)
+}
+</code></pre>
+
+<p>6.进入DefaultServeMux中的逻辑就是根据请求path在map中匹配查找handler，并交由handler处理</p>
+
+<blockquote>
+<p>http请求处理流程更多信息可以参考<a href="https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/03.3.md">《Go Web 编程
+》3.3 Go如何使得Web工作</a></p>
+</blockquote>
+
+<h1 id="二-defaultservemux-路由匹配规则:f903dbce0eb66cf9e81b93f61d58b794">二、DefaultServeMux 路由匹配规则</h1>
+
+<p>先看几个路由规则：</p>
+
+<pre><code class="language-go">package main
+
+import (
+	&quot;log&quot;
+	&quot;net/http&quot;
+)
+
+func main() {
+	//规则1
+	http.HandleFunc(&quot;/&quot;, func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte(&quot;hello world&quot;))
+	})
+	
+	//规则2
+	http.HandleFunc(&quot;/path/&quot;, func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte(&quot;pattern path: /path/ &quot;))
+	})
+
+	//规则3
+	http.HandleFunc(&quot;/path/subpath&quot;, func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte(&quot;pattern path: /path/subpath&quot;))
+	})
+
+	log.Fatal(http.ListenAndServe(&quot;:8080&quot;, nil))
+}
+
+</code></pre>
+
+<p>情景一：</p>
+
+<p>访问：<code>http://127.0.0.1:8080/</code></p>
+
+<p>返回：<code>hello world</code></p>
+
+<p>情景二：</p>
+
+<p>访问：<code>http://127.0.0.1:8080/path</code></p>
+
+<p>返回：<code>pattern path: /path/</code></p>
+
+<p>情景三：</p>
+
+<p>访问：<code>http://127.0.0.1:8080/path/subpath/</code></p>
+
+<p>返回：<code>pattern path: /path/</code></p>
+
+<p>情景四：</p>
+
+<p>访问：<code>http://127.0.0.1:8080/hahaha/</code></p>
+
+<p>返回：<code>hello world</code></p>
+
+<p>先说明一些规则吧，再看代码是怎么实现的：</p>
+
+<p>1.如果匹配路径中后带有<code>/</code>，则会自动增加一个匹配规则不带<code>/</code>后缀的，并跳转转到<code>path/</code>,解释了情景二的场景，为什么匹配到的<code>/path/</code></p>
+
+<p>2.我设置了这么多规则为什么规则一可以通用匹配未设置的路由信息，而且又不影响已经存在路由， 内部是怎么实现的？</p>
+
+<h2 id="2-1-添加路由规则:f903dbce0eb66cf9e81b93f61d58b794">2.1 添加路由规则</h2>
+
+<p>先看两个struct，这是存放默认路由规则的：</p>
+
+<pre><code class="language-go">type ServeMux struct {
+	mu    sync.RWMutex  //处理并发，增加读写锁
+	m     map[string]muxEntry  //存放规则map，key即为设置的path
+	hosts bool // whether any patterns contain hostnames（是否包含host）
+}
+
+type muxEntry struct {
+	explicit bool //是否完全匹配
+	h        Handler//相应匹配规则的handler
+	pattern  string//匹配路径
+}
+
+</code></pre>
+
+<p>通过跟踪<code>http.HandleFunc</code>定位到如下代码，正是往上面两个<code>struct</code>中增加规则：</p>
+
+<pre><code class="language-go">func (mux *ServeMux) Handle(pattern string, handler Handler) {
+	mux.mu.Lock()
+	defer mux.mu.Unlock()
+
+	if pattern == &quot;&quot; {
+		panic(&quot;http: invalid pattern &quot; + pattern)
+	}
+	if handler == nil {
+		panic(&quot;http: nil handler&quot;)
+	}
+	//如果已经匹配到了则panic
+	if mux.m[pattern].explicit {
+		panic(&quot;http: multiple registrations for &quot; + pattern)
+	}
+    
+    //增加一个新的匹配规则
+	mux.m[pattern] = muxEntry{explicit: true, h: handler, pattern: pattern}
+	
+	//根据path的第一个字母判断是否有host
+	if pattern[0] != '/' {
+		mux.hosts = true
+	}
+
+	//！！这里看清楚 就是实现了情景二的情况 ，看判断条件
+	n := len(pattern)
+	if n &gt; 0 &amp;&amp; pattern[n-1] == '/' &amp;&amp; !mux.m[pattern[0:n-1]].explicit{
+		// If pattern contains a host name, strip it and use remaining
+		// path for redirect.
+		path := pattern
+		if pattern[0] != '/' {
+			// In pattern, at least the last character is a '/', so
+			// strings.Index can't be -1.
+			path = pattern[strings.Index(pattern, &quot;/&quot;):]
+		}
+		url := &amp;url.URL{Path: path}
+		mux.m[pattern[0:n-1]] = muxEntry{h: RedirectHandler(url.String(), StatusMovedPermanently), pattern: pattern}
+	}
+}
+
+</code></pre>
+
+<p>上面有个<code>Helpful behavior</code>的注释行为，就是实现了情景二的情况，他是判断如果匹配的路径中最后含有<code>/</code>，并且之前也不存在添加去除反斜杠的规则的话，就自动给他增加一个301的跳转指向<code>/path/</code></p>
+
+<h2 id="2-2-查找路由规则:f903dbce0eb66cf9e81b93f61d58b794">2.2 查找路由规则</h2>
+
+<p>路由规则的查找就是从<code>ServeMux</code>中的map去匹配查找的,的到这个handler并执行，只是会有一些处理机制，比如怎么样确保访问<code>/path/subpath</code>的时候是先匹配<code>/path/subpath</code>而不是匹配<code>/path/</code>呢？</p>
+
+<p>当一个请求过来的时候，跟踪到了<code>mux.match</code>方法：</p>
+
+<blockquote>
+<p>过程<code>mux.ServerHTTP</code>-&gt;<code>mux.Handler</code>-&gt;<code>mux.handler</code>-&gt;<code>mux.match</code></p>
+</blockquote>
+
+<pre><code class="language-go">func (mux *ServeMux) match(path string) (h Handler, pattern string) {
+	var n = 0
+	for k, v := range mux.m {
+		if !pathMatch(k, path) {
+			continue
+		}
+		//如果匹配到了一个规则，并没有马上返回handler，而且继续匹配并且判断path的长度是否是最长的，这是关键！！！
+		if h == nil || len(k) &gt; n {
+			n = len(k)
+			h = v.h
+			pattern = v.pattern
+		}
+	}
+	return
+}
+</code></pre>
+
+<p>1.这里就解释了为什么设置的精确的path是最优匹配到的，因为它是根据path的长度判断。
+当然也就解释了为什么<code>/</code>可以匹配所有（看<code>pathMatch</code>函数就知道了，<code>/</code>是匹配所有的，只是这是最后才被匹配成功）</p>
+
+<p>2.得到了处理请求的handler，再调用<code>h.ServeHTTP(w, r)</code>，去执行相应的handler方法。</p>
+
+<p>等一下，handler中哪里有<code>ServeHTTP</code>这个方法？？</p>
+
+<p>因为在调用 <code>http.HandleFunc</code>的时候已经将自定义的handler处理函数，强制转为<code>HandlerFunc</code>类型的，就拥有了<code>ServeHTTP</code>方法：</p>
+
+<pre><code class="language-go">type HandlerFunc func(ResponseWriter, *Request)
+
+// ServeHTTP calls f(w, r).
+func (f HandlerFunc) ServeHTTP(w ResponseWriter, r *Request) {
+	f(w, r)
+}
+
+</code></pre>
+
+<p><code>f(w,r)</code>就实现了handler的执行。</p>
+
+<blockquote>
+<p>脑子里面清楚，但真到表述的时候，呵呵，当做笔记啦。。。</p>
+</blockquote>
+
+                <br>
+                <p><a href="https://silenceper.github.io/blog/">Back to posts</a></p>
+            </div>
+            <br>
+            <div class="disqus">
+                
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+</body>
+</html>
+
