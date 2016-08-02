@@ -115,7 +115,7 @@
             <div class="markdown">
                 
 
-<h1 id="一-执行流程:f903dbce0eb66cf9e81b93f61d58b794">一、执行流程</h1>
+<h1 id="一-执行流程">一、执行流程</h1>
 
 <p>构建一个简单http server：</p>
 
@@ -139,15 +139,15 @@ func main() {
 
 <p>通过跟踪http.go包代码，可以发现执行流程基本如下：</p>
 
-<h4 id="1-创建一个-listener-监听-8080-端口:f903dbce0eb66cf9e81b93f61d58b794">1.创建一个<code>Listener</code>监听<code>8080</code>端口</h4>
+<h4 id="1-创建一个-listener-监听-8080-端口">1.创建一个<code>Listener</code>监听<code>8080</code>端口</h4>
 
-<h4 id="2-进入-for-循环并accept请求-没有请求则处于阻塞状态:f903dbce0eb66cf9e81b93f61d58b794">2.进入<code>for</code>循环并Accept请求，没有请求则处于阻塞状态</h4>
+<h4 id="2-进入-for-循环并accept请求-没有请求则处于阻塞状态">2.进入<code>for</code>循环并Accept请求，没有请求则处于阻塞状态</h4>
 
-<h4 id="3-接收到请求-并创建一个conn对象-放入goroutine处理-实现高并发关键:f903dbce0eb66cf9e81b93f61d58b794">3.接收到请求，并创建一个conn对象，放入goroutine处理（实现高并发关键）</h4>
+<h4 id="3-接收到请求-并创建一个conn对象-放入goroutine处理-实现高并发关键">3.接收到请求，并创建一个conn对象，放入goroutine处理（实现高并发关键）</h4>
 
-<h4 id="4-解析请求来源信息获得请求路径等重要信息:f903dbce0eb66cf9e81b93f61d58b794">4.解析请求来源信息获得请求路径等重要信息</h4>
+<h4 id="4-解析请求来源信息获得请求路径等重要信息">4.解析请求来源信息获得请求路径等重要信息</h4>
 
-<h4 id="5-请求serverhttp方法-已经通过上一步获得了responsewriter和request对象:f903dbce0eb66cf9e81b93f61d58b794">5.请求ServerHTTP方法，已经通过上一步获得了ResponseWriter和Request对象</h4>
+<h4 id="5-请求serverhttp方法-已经通过上一步获得了responsewriter和request对象">5.请求ServerHTTP方法，已经通过上一步获得了ResponseWriter和Request对象</h4>
 
 <pre><code class="language-go">func (sh serverHandler) ServeHTTP(rw ResponseWriter, req *Request) {
 	//此handler即为http.ListenAndServe 中的第二个参数
@@ -172,7 +172,7 @@ func main() {
 》3.3 Go如何使得Web工作</a></p>
 </blockquote>
 
-<h1 id="二-defaultservemux-路由匹配规则:f903dbce0eb66cf9e81b93f61d58b794">二、DefaultServeMux 路由匹配规则</h1>
+<h1 id="二-defaultservemux-路由匹配规则">二、DefaultServeMux 路由匹配规则</h1>
 
 <p>先看几个路由规则：</p>
 
@@ -234,7 +234,7 @@ func main() {
 
 <p>2.我设置了这么多规则为什么规则一可以通用匹配未设置的路由信息，而且又不影响已经存在路由， 内部是怎么实现的？</p>
 
-<h2 id="2-1-添加路由规则:f903dbce0eb66cf9e81b93f61d58b794">2.1 添加路由规则</h2>
+<h2 id="2-1-添加路由规则">2.1 添加路由规则</h2>
 
 <p>先看两个struct，这是存放默认路由规则的：</p>
 
@@ -297,7 +297,7 @@ type muxEntry struct {
 
 <p>上面有个<code>Helpful behavior</code>的注释行为，就是实现了情景二的情况，他是判断如果匹配的路径中最后含有<code>/</code>，并且之前也不存在添加去除反斜杠的规则的话，就自动给他增加一个301的跳转指向<code>/path/</code></p>
 
-<h2 id="2-2-查找路由规则:f903dbce0eb66cf9e81b93f61d58b794">2.2 查找路由规则</h2>
+<h2 id="2-2-查找路由规则">2.2 查找路由规则</h2>
 
 <p>路由规则的查找就是从<code>ServeMux</code>中的map去匹配查找的,的到这个handler并执行，只是会有一些处理机制，比如怎么样确保访问<code>/path/subpath</code>的时候是先匹配<code>/path/subpath</code>而不是匹配<code>/path/</code>呢？</p>
 
@@ -376,6 +376,10 @@ func (f HandlerFunc) ServeHTTP(w ResponseWriter, r *Request) {
     </div>
 </section>
 
+
+<div style="display:none">
+    <script src="https://v1.cnzz.com/z_stat.php?id=5647642&web_id=5647642" language="JavaScript"></script>
+</div>
 
 
 

@@ -17,7 +17,7 @@
       <guid>https://silenceper.github.io/blog/201605/golang-%E4%B8%ADhttp%E5%8C%85%E9%BB%98%E8%AE%A4%E8%B7%AF%E7%94%B1%E5%8C%B9%E9%85%8D%E8%A7%84%E5%88%99%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/</guid>
       <description>
 
-&lt;h1 id=&#34;一-执行流程:f903dbce0eb66cf9e81b93f61d58b794&#34;&gt;一、执行流程&lt;/h1&gt;
+&lt;h1 id=&#34;一-执行流程&#34;&gt;一、执行流程&lt;/h1&gt;
 
 &lt;p&gt;构建一个简单http server：&lt;/p&gt;
 
@@ -41,15 +41,15 @@ func main() {
 
 &lt;p&gt;通过跟踪http.go包代码，可以发现执行流程基本如下：&lt;/p&gt;
 
-&lt;h4 id=&#34;1-创建一个-listener-监听-8080-端口:f903dbce0eb66cf9e81b93f61d58b794&#34;&gt;1.创建一个&lt;code&gt;Listener&lt;/code&gt;监听&lt;code&gt;8080&lt;/code&gt;端口&lt;/h4&gt;
+&lt;h4 id=&#34;1-创建一个-listener-监听-8080-端口&#34;&gt;1.创建一个&lt;code&gt;Listener&lt;/code&gt;监听&lt;code&gt;8080&lt;/code&gt;端口&lt;/h4&gt;
 
-&lt;h4 id=&#34;2-进入-for-循环并accept请求-没有请求则处于阻塞状态:f903dbce0eb66cf9e81b93f61d58b794&#34;&gt;2.进入&lt;code&gt;for&lt;/code&gt;循环并Accept请求，没有请求则处于阻塞状态&lt;/h4&gt;
+&lt;h4 id=&#34;2-进入-for-循环并accept请求-没有请求则处于阻塞状态&#34;&gt;2.进入&lt;code&gt;for&lt;/code&gt;循环并Accept请求，没有请求则处于阻塞状态&lt;/h4&gt;
 
-&lt;h4 id=&#34;3-接收到请求-并创建一个conn对象-放入goroutine处理-实现高并发关键:f903dbce0eb66cf9e81b93f61d58b794&#34;&gt;3.接收到请求，并创建一个conn对象，放入goroutine处理（实现高并发关键）&lt;/h4&gt;
+&lt;h4 id=&#34;3-接收到请求-并创建一个conn对象-放入goroutine处理-实现高并发关键&#34;&gt;3.接收到请求，并创建一个conn对象，放入goroutine处理（实现高并发关键）&lt;/h4&gt;
 
-&lt;h4 id=&#34;4-解析请求来源信息获得请求路径等重要信息:f903dbce0eb66cf9e81b93f61d58b794&#34;&gt;4.解析请求来源信息获得请求路径等重要信息&lt;/h4&gt;
+&lt;h4 id=&#34;4-解析请求来源信息获得请求路径等重要信息&#34;&gt;4.解析请求来源信息获得请求路径等重要信息&lt;/h4&gt;
 
-&lt;h4 id=&#34;5-请求serverhttp方法-已经通过上一步获得了responsewriter和request对象:f903dbce0eb66cf9e81b93f61d58b794&#34;&gt;5.请求ServerHTTP方法，已经通过上一步获得了ResponseWriter和Request对象&lt;/h4&gt;
+&lt;h4 id=&#34;5-请求serverhttp方法-已经通过上一步获得了responsewriter和request对象&#34;&gt;5.请求ServerHTTP方法，已经通过上一步获得了ResponseWriter和Request对象&lt;/h4&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;func (sh serverHandler) ServeHTTP(rw ResponseWriter, req *Request) {
 	//此handler即为http.ListenAndServe 中的第二个参数
@@ -74,7 +74,7 @@ func main() {
 》3.3 Go如何使得Web工作&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h1 id=&#34;二-defaultservemux-路由匹配规则:f903dbce0eb66cf9e81b93f61d58b794&#34;&gt;二、DefaultServeMux 路由匹配规则&lt;/h1&gt;
+&lt;h1 id=&#34;二-defaultservemux-路由匹配规则&#34;&gt;二、DefaultServeMux 路由匹配规则&lt;/h1&gt;
 
 &lt;p&gt;先看几个路由规则：&lt;/p&gt;
 
@@ -136,7 +136,7 @@ func main() {
 
 &lt;p&gt;2.我设置了这么多规则为什么规则一可以通用匹配未设置的路由信息，而且又不影响已经存在路由， 内部是怎么实现的？&lt;/p&gt;
 
-&lt;h2 id=&#34;2-1-添加路由规则:f903dbce0eb66cf9e81b93f61d58b794&#34;&gt;2.1 添加路由规则&lt;/h2&gt;
+&lt;h2 id=&#34;2-1-添加路由规则&#34;&gt;2.1 添加路由规则&lt;/h2&gt;
 
 &lt;p&gt;先看两个struct，这是存放默认路由规则的：&lt;/p&gt;
 
@@ -199,7 +199,7 @@ type muxEntry struct {
 
 &lt;p&gt;上面有个&lt;code&gt;Helpful behavior&lt;/code&gt;的注释行为，就是实现了情景二的情况，他是判断如果匹配的路径中最后含有&lt;code&gt;/&lt;/code&gt;，并且之前也不存在添加去除反斜杠的规则的话，就自动给他增加一个301的跳转指向&lt;code&gt;/path/&lt;/code&gt;&lt;/p&gt;
 
-&lt;h2 id=&#34;2-2-查找路由规则:f903dbce0eb66cf9e81b93f61d58b794&#34;&gt;2.2 查找路由规则&lt;/h2&gt;
+&lt;h2 id=&#34;2-2-查找路由规则&#34;&gt;2.2 查找路由规则&lt;/h2&gt;
 
 &lt;p&gt;路由规则的查找就是从&lt;code&gt;ServeMux&lt;/code&gt;中的map去匹配查找的,的到这个handler并执行，只是会有一些处理机制，比如怎么样确保访问&lt;code&gt;/path/subpath&lt;/code&gt;的时候是先匹配&lt;code&gt;/path/subpath&lt;/code&gt;而不是匹配&lt;code&gt;/path/&lt;/code&gt;呢？&lt;/p&gt;
 

@@ -6,8 +6,32 @@
     <description>Recent content on silenceper blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Sat, 28 May 2016 18:00:59 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 02 Aug 2016 15:40:59 +0800</lastBuildDate>
     <atom:link href="https://silenceper.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>DCMP: 一个分布式管理配置平台</title>
+      <link>https://silenceper.github.io/blog/201608/dcmp-%E4%B8%80%E4%B8%AA%E5%88%86%E5%B8%83%E5%BC%8F%E7%AE%A1%E7%90%86%E9%85%8D%E7%BD%AE%E5%B9%B3%E5%8F%B0/</link>
+      <pubDate>Tue, 02 Aug 2016 15:40:59 +0800</pubDate>
+      
+      <guid>https://silenceper.github.io/blog/201608/dcmp-%E4%B8%80%E4%B8%AA%E5%88%86%E5%B8%83%E5%BC%8F%E7%AE%A1%E7%90%86%E9%85%8D%E7%BD%AE%E5%B9%B3%E5%8F%B0/</guid>
+      <description>&lt;p&gt;Distributed Configuration Management Platform&lt;/p&gt;
+
+&lt;p&gt;提供了一个etcd的管理界面，可通过界面修改配置信息，借助confd可实现配置文件的同步。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/silenceper/dcmp/master/docs/image.png&#34; alt=&#34;dcmp image&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;GITHUB：&lt;a href=&#34;https://github.com/silenceper/dcmp&#34;&gt;https://github.com/silenceper/dcmp&lt;/a&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;API采用的是Gin Framework，写起api应用来非常方便，前端尝试了一下react。&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;传到Github一看，发现css，js的代码比golang还要多 。 😢&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
     
     <item>
       <title>Golang 中http包默认路由匹配规则阅读笔记</title>
@@ -17,7 +41,7 @@
       <guid>https://silenceper.github.io/blog/201605/golang-%E4%B8%ADhttp%E5%8C%85%E9%BB%98%E8%AE%A4%E8%B7%AF%E7%94%B1%E5%8C%B9%E9%85%8D%E8%A7%84%E5%88%99%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/</guid>
       <description>
 
-&lt;h1 id=&#34;一-执行流程:f903dbce0eb66cf9e81b93f61d58b794&#34;&gt;一、执行流程&lt;/h1&gt;
+&lt;h1 id=&#34;一-执行流程&#34;&gt;一、执行流程&lt;/h1&gt;
 
 &lt;p&gt;构建一个简单http server：&lt;/p&gt;
 
@@ -41,15 +65,15 @@ func main() {
 
 &lt;p&gt;通过跟踪http.go包代码，可以发现执行流程基本如下：&lt;/p&gt;
 
-&lt;h4 id=&#34;1-创建一个-listener-监听-8080-端口:f903dbce0eb66cf9e81b93f61d58b794&#34;&gt;1.创建一个&lt;code&gt;Listener&lt;/code&gt;监听&lt;code&gt;8080&lt;/code&gt;端口&lt;/h4&gt;
+&lt;h4 id=&#34;1-创建一个-listener-监听-8080-端口&#34;&gt;1.创建一个&lt;code&gt;Listener&lt;/code&gt;监听&lt;code&gt;8080&lt;/code&gt;端口&lt;/h4&gt;
 
-&lt;h4 id=&#34;2-进入-for-循环并accept请求-没有请求则处于阻塞状态:f903dbce0eb66cf9e81b93f61d58b794&#34;&gt;2.进入&lt;code&gt;for&lt;/code&gt;循环并Accept请求，没有请求则处于阻塞状态&lt;/h4&gt;
+&lt;h4 id=&#34;2-进入-for-循环并accept请求-没有请求则处于阻塞状态&#34;&gt;2.进入&lt;code&gt;for&lt;/code&gt;循环并Accept请求，没有请求则处于阻塞状态&lt;/h4&gt;
 
-&lt;h4 id=&#34;3-接收到请求-并创建一个conn对象-放入goroutine处理-实现高并发关键:f903dbce0eb66cf9e81b93f61d58b794&#34;&gt;3.接收到请求，并创建一个conn对象，放入goroutine处理（实现高并发关键）&lt;/h4&gt;
+&lt;h4 id=&#34;3-接收到请求-并创建一个conn对象-放入goroutine处理-实现高并发关键&#34;&gt;3.接收到请求，并创建一个conn对象，放入goroutine处理（实现高并发关键）&lt;/h4&gt;
 
-&lt;h4 id=&#34;4-解析请求来源信息获得请求路径等重要信息:f903dbce0eb66cf9e81b93f61d58b794&#34;&gt;4.解析请求来源信息获得请求路径等重要信息&lt;/h4&gt;
+&lt;h4 id=&#34;4-解析请求来源信息获得请求路径等重要信息&#34;&gt;4.解析请求来源信息获得请求路径等重要信息&lt;/h4&gt;
 
-&lt;h4 id=&#34;5-请求serverhttp方法-已经通过上一步获得了responsewriter和request对象:f903dbce0eb66cf9e81b93f61d58b794&#34;&gt;5.请求ServerHTTP方法，已经通过上一步获得了ResponseWriter和Request对象&lt;/h4&gt;
+&lt;h4 id=&#34;5-请求serverhttp方法-已经通过上一步获得了responsewriter和request对象&#34;&gt;5.请求ServerHTTP方法，已经通过上一步获得了ResponseWriter和Request对象&lt;/h4&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;func (sh serverHandler) ServeHTTP(rw ResponseWriter, req *Request) {
 	//此handler即为http.ListenAndServe 中的第二个参数
@@ -74,7 +98,7 @@ func main() {
 》3.3 Go如何使得Web工作&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h1 id=&#34;二-defaultservemux-路由匹配规则:f903dbce0eb66cf9e81b93f61d58b794&#34;&gt;二、DefaultServeMux 路由匹配规则&lt;/h1&gt;
+&lt;h1 id=&#34;二-defaultservemux-路由匹配规则&#34;&gt;二、DefaultServeMux 路由匹配规则&lt;/h1&gt;
 
 &lt;p&gt;先看几个路由规则：&lt;/p&gt;
 
@@ -136,7 +160,7 @@ func main() {
 
 &lt;p&gt;2.我设置了这么多规则为什么规则一可以通用匹配未设置的路由信息，而且又不影响已经存在路由， 内部是怎么实现的？&lt;/p&gt;
 
-&lt;h2 id=&#34;2-1-添加路由规则:f903dbce0eb66cf9e81b93f61d58b794&#34;&gt;2.1 添加路由规则&lt;/h2&gt;
+&lt;h2 id=&#34;2-1-添加路由规则&#34;&gt;2.1 添加路由规则&lt;/h2&gt;
 
 &lt;p&gt;先看两个struct，这是存放默认路由规则的：&lt;/p&gt;
 
@@ -199,7 +223,7 @@ type muxEntry struct {
 
 &lt;p&gt;上面有个&lt;code&gt;Helpful behavior&lt;/code&gt;的注释行为，就是实现了情景二的情况，他是判断如果匹配的路径中最后含有&lt;code&gt;/&lt;/code&gt;，并且之前也不存在添加去除反斜杠的规则的话，就自动给他增加一个301的跳转指向&lt;code&gt;/path/&lt;/code&gt;&lt;/p&gt;
 
-&lt;h2 id=&#34;2-2-查找路由规则:f903dbce0eb66cf9e81b93f61d58b794&#34;&gt;2.2 查找路由规则&lt;/h2&gt;
+&lt;h2 id=&#34;2-2-查找路由规则&#34;&gt;2.2 查找路由规则&lt;/h2&gt;
 
 &lt;p&gt;路由规则的查找就是从&lt;code&gt;ServeMux&lt;/code&gt;中的map去匹配查找的,的到这个handler并执行，只是会有一些处理机制，比如怎么样确保访问&lt;code&gt;/path/subpath&lt;/code&gt;的时候是先匹配&lt;code&gt;/path/subpath&lt;/code&gt;而不是匹配&lt;code&gt;/path/&lt;/code&gt;呢？&lt;/p&gt;
 
@@ -272,7 +296,7 @@ func (f HandlerFunc) ServeHTTP(w ResponseWriter, r *Request) {
       <guid>https://silenceper.github.io/blog/201601/tcp-time_wait%E8%BF%9E%E6%8E%A5%E6%95%B0%E8%BF%87%E5%A4%9A%E5%AF%BC%E8%87%B4%E6%9C%8D%E5%8A%A1%E4%B8%8D%E5%8F%AF%E7%94%A8/</guid>
       <description>
 
-&lt;h1 id=&#34;问题出现:bfab40ae83425293fad5240da6e0e088&#34;&gt;问题出现：&lt;/h1&gt;
+&lt;h1 id=&#34;问题出现&#34;&gt;问题出现：&lt;/h1&gt;
 
 &lt;p&gt;在元旦前夕，自己维护的一个服务突然在高峰时期收到大量报警，赶紧登上服务器看一下：&lt;/p&gt;
 
@@ -282,7 +306,7 @@ func (f HandlerFunc) ServeHTTP(w ResponseWriter, r *Request) {
 
 &lt;p&gt;后来反应过来看到有好几个接口请求数增加，因为发版本的原因，是新版本才会请求这些接口，所以 我暂时屏蔽了这几个口接口问题得到遏制（幸好是用户感知不到的接口）。&lt;/p&gt;
 
-&lt;h1 id=&#34;排查:bfab40ae83425293fad5240da6e0e088&#34;&gt;排查：&lt;/h1&gt;
+&lt;h1 id=&#34;排查&#34;&gt;排查：&lt;/h1&gt;
 
 &lt;p&gt;这个问题围绕我好几天，我屏蔽的那几个接口，反复看了好几遍，而且又将其中的sql查询分析，并没有慢请求。。。  这下又彻底懵了，没有头绪。&lt;/p&gt;
 
@@ -298,7 +322,7 @@ SetMaxIdleConns用于设置闲置的连接数。
 
 &lt;p&gt;没有配置连接池，每次的都需要新建一个连接并进行处理，而且又没有进行关闭，这是导致tcp 出现大量time_wait的主要原因。&lt;/p&gt;
 
-&lt;h1 id=&#34;反思:bfab40ae83425293fad5240da6e0e088&#34;&gt;反思：&lt;/h1&gt;
+&lt;h1 id=&#34;反思&#34;&gt;反思：&lt;/h1&gt;
 
 &lt;p&gt;问题终于找到解决，但是回过头来想了一下，其实一开始就可以定位到的，只是很多问题集中在一起出现反而让自己不知所措，这个时候如果是敏感的人的话应该马上能够从tcp状态上看出问题，之后线上遇到问题，重要的是先解决（不管通过什么方式），之后再一步步排查。&lt;/p&gt;
 </description>
