@@ -6,8 +6,50 @@
     <description>Recent content in Blog on silenceper blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Tue, 02 Aug 2016 15:40:59 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 16 Sep 2016 15:40:59 +0800</lastBuildDate>
     <atom:link href="https://silenceper.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>wechat sdk for golang: 一个简单易用的微信sdk</title>
+      <link>https://silenceper.github.io/blog/201609/wechat-sdk-for-golang-%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E6%98%93%E7%94%A8%E7%9A%84%E5%BE%AE%E4%BF%A1sdk/</link>
+      <pubDate>Fri, 16 Sep 2016 15:40:59 +0800</pubDate>
+      
+      <guid>https://silenceper.github.io/blog/201609/wechat-sdk-for-golang-%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E6%98%93%E7%94%A8%E7%9A%84%E5%BE%AE%E4%BF%A1sdk/</guid>
+      <description>&lt;p&gt;一直很想自己用golang写个微信的sdk，目标是简单好用，所以利用闲暇时间（周末，中秋😁），就做出来。&lt;/p&gt;
+
+&lt;p&gt;项目地址:&lt;a href=&#34;https://github.com/silenceper/wechat&#34;&gt;https://github.com/silenceper/wechat&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;目前实现了消息管理，微信网页授权，菜单管理，素材管理几个接口，看下他的基本使用：&lt;/p&gt;
+
+&lt;p&gt;以下是一个处理消息接收以及回复的例子：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;
+//配置微信参数
+config := &amp;amp;wechat.Config{
+    AppID:          &amp;quot;xxxx&amp;quot;,
+    AppSecret:      &amp;quot;xxxx&amp;quot;,
+    Token:          &amp;quot;xxxx&amp;quot;,
+    EncodingAESKey: &amp;quot;xxxx&amp;quot;,
+    Cache:          memCache
+}
+wc := wechat.NewWechat(config)
+
+// 传入request和responseWriter
+server := wc.GetServer(request, responseWriter)
+server.SetMessageHandler(func(msg message.MixMessage) *message.Reply {
+
+    //回复消息：演示回复用户发送的消息
+    text := message.NewText(msg.Content)
+    return &amp;amp;message.Reply{message.MsgText, text}
+})
+
+server.Serve()
+server.Send()
+
+
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
     
     <item>
       <title>DCMP: 一个分布式管理配置平台</title>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="silenceper blog">
+
+<base href="https://silenceper.github.io/">
+<title>
+
+
+     wechat sdk for golang: 一个简单易用的微信sdk 
+
+</title>
+<link rel="canonical" href="https://silenceper.github.io/blog/201609/wechat-sdk-for-golang-%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E6%98%93%E7%94%A8%E7%9A%84%E5%BE%AE%E4%BF%A1sdk/">
+
+
+<script type="text/javascript">
+    var baseURL = 'https:\/\/silenceper.github.io\/';
+    var host = baseURL.substring(0, baseURL.length - 1).replace(/\//g, '');
+    if ((host === window.location.host) && (window.location.protocol !== 'https:')) {
+        window.location.protocol = 'https:';
+    }
+</script>
+
+
+
+
+
+<link rel="stylesheet" href="https://silenceper.github.io/css/reset.css">
+<link rel="stylesheet" href="https://silenceper.github.io/css/pygments.css">
+<link rel="stylesheet" href="https://silenceper.github.io/css/main.css">
+
+
+    <link rel="stylesheet" href="https://silenceper.github.io/css/override.css">
+
+
+
+
+
+<link rel="shortcut icon"
+
+    href="https://silenceper.github.io/img/favicon.ico"
+
+>
+
+
+
+</head>
+
+
+<body lang="zh">
+
+<section class="header">
+    <div class="container">
+        <div class="content">
+            <a href="https://silenceper.github.io/"><div class="name">silenceper</div></a>
+            <nav>
+                <ul>
+                    <a href="https://silenceper.github.io/blog/"><li>Blog</li></a>
+                    <a href="https://silenceper.github.io/about/"><li>About</li></a>
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<section class="icons">
+    <div class="container">
+        <div class="content">
+
+        
+            <a href="//github.com/silenceper" target="_blank">
+                <i class="icon ion-social-github"></i>
+            </a>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+        </div>
+    </div>
+</section>
+
+
+<section class="main post non-narrow zero-top-spacing">
+    <div class="container">
+        <div class="content">
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
+
+    wechat sdk for golang: 一个简单易用的微信sdk
+
+</div>
+
+                    <div class="initials"><a href="https://silenceper.github.io/"></a></div>
+                </div>
+                <div class="meta">
+                    <div class="date" title="Fri Sep 16 2016 15:40:59 CST">Sep 16, 2016</div>
+                    <div class="reading-time"><div class="middot"></div>1 minute read</div>
+                </div>
+            </div>
+            <div class="markdown">
+                <p>一直很想自己用golang写个微信的sdk，目标是简单好用，所以利用闲暇时间（周末，中秋😁），就做出来。</p>
+
+<p>项目地址:<a href="https://github.com/silenceper/wechat">https://github.com/silenceper/wechat</a></p>
+
+<p>目前实现了消息管理，微信网页授权，菜单管理，素材管理几个接口，看下他的基本使用：</p>
+
+<p>以下是一个处理消息接收以及回复的例子：</p>
+
+<pre><code class="language-go">
+//配置微信参数
+config := &amp;wechat.Config{
+    AppID:          &quot;xxxx&quot;,
+    AppSecret:      &quot;xxxx&quot;,
+    Token:          &quot;xxxx&quot;,
+    EncodingAESKey: &quot;xxxx&quot;,
+    Cache:          memCache
+}
+wc := wechat.NewWechat(config)
+
+// 传入request和responseWriter
+server := wc.GetServer(request, responseWriter)
+server.SetMessageHandler(func(msg message.MixMessage) *message.Reply {
+
+    //回复消息：演示回复用户发送的消息
+    text := message.NewText(msg.Content)
+    return &amp;message.Reply{message.MsgText, text}
+})
+
+server.Serve()
+server.Send()
+
+
+</code></pre>
+
+                <br>
+                <p><a href="https://silenceper.github.io/blog/">Back to posts</a></p>
+            </div>
+            <br>
+
+            
+            	<div class="ds-thread" data-thread-key="wechat sdk for golang: 一个简单易用的微信sdk" data-title="wechat sdk for golang: 一个简单易用的微信sdk" data-url="https://silenceper.github.io/blog/201609/wechat-sdk-for-golang-%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E6%98%93%E7%94%A8%E7%9A%84%E5%BE%AE%E4%BF%A1sdk/"></div>
+            
+            
+            <script type="text/javascript">
+            var duoshuoQuery = {short_name:"silenceper"};
+            	(function() {
+            		var ds = document.createElement('script');
+            		ds.type = 'text/javascript';ds.async = true;
+            		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            		ds.charset = 'UTF-8';
+            		(document.getElementsByTagName('head')[0]
+            		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+            	})();
+            	</script>
+
+            <div class="disqus">
+                
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<div style="display:none">
+    <script src="https://v1.cnzz.com/z_stat.php?id=5647642&web_id=5647642" language="JavaScript"></script>
+</div>
+
+
+
+
+</body>
+</html>
+
