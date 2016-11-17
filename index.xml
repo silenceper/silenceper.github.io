@@ -360,9 +360,32 @@ func (f HandlerFunc) ServeHTTP(w ResponseWriter, r *Request) {
 SetMaxIdleConns用于设置闲置的连接数。
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;因为项目提供的orm是没有主动的去关闭数据库的连接的，因为考虑到连接建立以及释放中间的消耗（提供的方案是通过连接池搞定）&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;为什么会有TIME_WAIT状态？&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;没有配置连接池，每次的都需要新建一个连接并进行处理，而且又没有进行关闭，这是导致tcp 出现大量time_wait的主要原因。&lt;/p&gt;
+&lt;p&gt;源于tcp链接关闭中的四次挥手，是主动关闭链接的一方产生的状态：
+TCP状态转化图三次握手/四次挥手：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./images/tcp.png&#34; alt=&#34;TCP状态转化图&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;四次挥手的过程如下：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;主动关闭连接的一方，调用close()；协议层发送FIN包&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;被动关闭的一方收到FIN包后，协议层回复ACK；然后被动关闭的一方，进入CLOSE_WAIT状态，主动关闭的一方等待对方关闭，则进入FIN_WAIT_2状态；此时，主动关闭的一方 等待 被动关闭一方的应用程序，调用close操作&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;被动关闭的一方在完成所有数据发送后，调用close()操作；此时，协议层发送FIN包给主动关闭的一方，等待对方的ACK，被动关闭的一方进入LAST_ACK状态；&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;主动关闭的一方收到FIN包，协议层回复ACK；此时，主动关闭连接的一方，进入TIME_WAIT状态；而被动关闭的一方，进入CLOSED状态&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;等待2MSL时间，主动关闭的一方，结束TIME_WAIT，进入CLOSED状态&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;所以time_wait属于tcp正常的一个状态，是为了解决网络的丢包和网络不稳定锁存在的一个状态。&lt;/p&gt;
+
+&lt;p&gt;因为当前服务器并发相对较大，所以存在了大量的链接为关闭，如果只是几百的话，也不会影响服务器性能。&lt;/p&gt;
+
+&lt;p&gt;使用连接池保存长链接，可使得链接复用，不会出现大量的这种状态。&lt;/p&gt;
 
 &lt;h1 id=&#34;反思&#34;&gt;反思：&lt;/h1&gt;
 
