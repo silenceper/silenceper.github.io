@@ -17,17 +17,6 @@
       <guid>https://silenceper.github.io/blog/201611/%E8%81%8A%E8%81%8Atcp%E8%BF%9E%E6%8E%A5%E6%B1%A0/</guid>
       <description>
 
-&lt;p&gt;概览：&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;为什么需要连接池&#34;&gt;为什么需要连接池&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;连接失效&#34;&gt;连接失效&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;database/sql 中的连接池&#34;&gt;database/sql 中的连接池&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;使用连接池管理Thrift链接&#34;&gt;使用连接池管理Thrift链接&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
 &lt;h1 id=&#34;为什么需要连接池&#34;&gt;为什么需要连接池&lt;/h1&gt;
 
 &lt;p&gt;我觉得使用连接池最大的一个好处就是&lt;strong&gt;减少连接的创建和关闭，增加系统负载能力&lt;/strong&gt;，
@@ -253,7 +242,7 @@ p.Put(conn)
 
 &lt;hr /&gt;
 
-&lt;p&gt;写完，外面听见🐓开始打鸣了。&lt;/p&gt;
+&lt;p&gt;写完，听见外面的🐓开始打鸣了。&lt;/p&gt;
 </description>
     </item>
     
