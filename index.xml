@@ -1,735 +1,113 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>silenceper blog</title>
-    <link>https://silenceper.github.io/</link>
-    <description>Recent content on silenceper blog</description>
+    <title>silenceper</title>
+    <link>http://silenceper.com/</link>
+    <description>Recent content on silenceper</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh-CN</language>
+    <language>en-us</language>
     <lastBuildDate>Sun, 20 Nov 2016 02:40:59 +0800</lastBuildDate>
-    <atom:link href="https://silenceper.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+	<atom:link href="http://silenceper.com/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
-      <title>聊聊TCP连接池</title>
-      <link>https://silenceper.github.io/blog/201611/%E8%81%8A%E8%81%8Atcp%E8%BF%9E%E6%8E%A5%E6%B1%A0/</link>
+      <title>聊聊连接池</title>
+      <link>http://silenceper.com/blog/201611/tcp_connection_pool/</link>
       <pubDate>Sun, 20 Nov 2016 02:40:59 +0800</pubDate>
       
-      <guid>https://silenceper.github.io/blog/201611/%E8%81%8A%E8%81%8Atcp%E8%BF%9E%E6%8E%A5%E6%B1%A0/</guid>
-      <description>
-
-&lt;p&gt;概览：&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;为什么需要连接池&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;连接失效问题&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;database/sql 中的连接池&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;使用连接池管理Thrift链接&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;以下主要使用Golang作为编程语言&lt;/p&gt;
-
-&lt;h1 id=&#34;为什么需要连接池&#34;&gt;为什么需要连接池&lt;/h1&gt;
-
-&lt;p&gt;我觉得使用连接池最大的一个好处就是&lt;strong&gt;减少连接的创建和关闭，增加系统负载能力&lt;/strong&gt;，
-之前就有遇到一个问题：&lt;a href=&#34;http://silenceper.com/blog/201601/tcp-time_wait%E8%BF%9E%E6%8E%A5%E6%95%B0%E8%BF%87%E5%A4%9A%E5%AF%BC%E8%87%B4%E6%9C%8D%E5%8A%A1%E4%B8%8D%E5%8F%AF%E7%94%A8/&#34;&gt;TCP TIME_WAIT连接数过多导致服务不可用&lt;/a&gt;，因为未开启数据库连接池，再加上mysql并发较大，导致需要频繁的创建链接，最终产生了上万的TIME_WAIT的tcp链接，影响了系统性能。&lt;/p&gt;
-
-&lt;p&gt;链接池中的的功能主要是管理一堆的链接，包括创建和关闭，所以自己在&lt;a href=&#34;fatih/pool&#34;&gt;fatih/pool&lt;/a&gt;基础上，改造了一下：&lt;a href=&#34;https://github.com/silenceper/pool&#34;&gt;https://github.com/silenceper/pool&lt;/a&gt; ，使得更加通用一些，增加的一些功能点如下：&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;连接对象不单单是&lt;code&gt;net.Conn&lt;/code&gt;,变为了&lt;code&gt;interface{}&lt;/code&gt;（池中存储自己想要的格式）&lt;/li&gt;
-&lt;li&gt;增加了链接的最大空闲时间（保证了当连接空闲太久，链接失效的问题）&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;主要是用到了&lt;code&gt;channel&lt;/code&gt;来管理连接，并且能够很好的利用管道的顺序性，当需要使用的时候&lt;code&gt;Get&lt;/code&gt;一个连接，使用完毕之后&lt;code&gt;Put&lt;/code&gt;放回&lt;code&gt;channel&lt;/code&gt;中。&lt;/p&gt;
-
-&lt;h1 id=&#34;连接失效问题&#34;&gt;连接失效问题&lt;/h1&gt;
-
-&lt;p&gt;使用连接池之后就不再是短连接，而是长连接了，就引发了一些问题：&lt;/p&gt;
-
-&lt;h4 id=&#34;1-长时间空闲-连接断开&#34;&gt;1、长时间空闲，连接断开？&lt;/h4&gt;
-
-&lt;p&gt;因为网络环境是复杂的，中间可能因为防火墙等原因，导致长时间空闲的连接会断开，所以可以通过两个方法来解决：&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;客户端增加心跳，定时的给服务端发送请求&lt;/li&gt;
-&lt;li&gt;给连接池中的连接增加最大空闲时间，超时的连接不再使用&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;在&lt;a href=&#34;[https://github.com/silenceper/pool]&#34;&gt;https://github.com/silenceper/pool&lt;/a&gt;就增加了一个这样最大空闲时间的参数，在连接创建或者连接被重新返回连接池中时重置，给每个连接都增加了一个连接的创建时间，在取出的时候对时间进行比较：&lt;a href=&#34;https://github.com/silenceper/pool/blob/master/channel.go#L85&#34;&gt;https://github.com/silenceper/pool/blob/master/channel.go#L85&lt;/a&gt;&lt;/p&gt;
-
-&lt;h4 id=&#34;2-当服务端重启之后-连接失效&#34;&gt;2、当服务端重启之后，连接失效？&lt;/h4&gt;
-
-&lt;p&gt;远程服务端很有可能重启，那么之前创建的链接就失效了。客户端在使用的时候就需要判断这些失效的连接并丢弃，在&lt;code&gt;database/sql&lt;/code&gt;中就判断了这些失效的连接，使用这种错误表示&lt;code&gt;var ErrBadConn = errors.New(&amp;quot;driver: bad connection&amp;quot;)&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;另外值得一提的就是在&lt;code&gt;database/sql&lt;/code&gt;对这种&lt;code&gt;ErrBadConn&lt;/code&gt;错误进行了重试，默认重试次数是两次，所以能够保证即便是链接失效或者断开了，本次的请求能够正常响应（继续往下看就是分析了）。&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;连接失效的特征&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;对连接进行read读操作时，返回&lt;code&gt;EOF&lt;/code&gt;错误&lt;/li&gt;
-&lt;li&gt;对连接进行write操作时，返回&lt;code&gt;write tcp 127.0.0.1:52089-&amp;gt;127.0.0.1:8002: write: broken pipe&lt;/code&gt;错误&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h1 id=&#34;database-sql-中的连接池&#34;&gt;database/sql 中的连接池&lt;/h1&gt;
-
-&lt;p&gt;在&lt;code&gt;database/sql&lt;/code&gt;中使用连接连接池很简单，主要涉及下面这些配置：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;	db.SetMaxIdleConns(10) //连接池中最大空闲连接数
-	db.SetMaxOpenConns(20) //打开的最大连接数
-	db.SetConnMaxLifetime(300*time.Second)//连接的最大空闲时间(可选)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;注：如果&lt;code&gt;MaxIdleConns&lt;/code&gt;大于0并且&lt;code&gt;MaxOpenConns&lt;/code&gt;小于&lt;code&gt;MaxIdleConns&lt;/code&gt;,那么会将&lt;code&gt;MaxIdleConns&lt;/code&gt;置为&lt;code&gt;MaxIdleConns&lt;/code&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;来看下db这个结构，以及字段相关说明：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;type DB struct {
-	//具体的数据库实现的interface{},
-	//例如https://github.com/go-sql-driver/mysql 就注册并并实现了driver.Open方法，主要是在里面实现了一些鉴权的操作
-	driver driver.Driver  
-	//dsn连接
-	dsn    string
-	//在prepared statement中用到
-	numClosed uint64
-
-	mu           sync.Mutex // protects following fields
-	//可使用的空闲的链接
-	freeConn     []*driverConn
-	//用来传递连接请求的管道
-	connRequests []chan connRequest
-	//当前打开的连接数
-	numOpen      int	
-	//当需要创建新的链接的时候，往这个管道中发送一个struct数据，
-	//因为在Open数据库的就启用了一个goroutine执行connectionOpener方法读取管道中的数据
-	openerCh    chan struct{}
-	//数据库是否已经被关闭
-	closed      bool
-	//用来保证锁被正确的关闭
-	dep         map[finalCloser]depSet
-	//stacktrace of last conn&#39;s put; debug only
-	lastPut     map[*driverConn]string 
-	//最大空闲连接
-	maxIdle     int                  
-	//最大打开的连接
-	maxOpen     int                    
-	//连接的最大空闲时间
-	maxLifetime time.Duration          
-	//定时清理空闲连接的管道
-	cleanerCh   chan struct{}
-}
-
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;看一个查询数据库的例子：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;	rows, err := db.Query(&amp;quot;select * from table1&amp;quot;)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;在调用&lt;code&gt;db.Query&lt;/code&gt;方法如下：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;func (db *DB) Query(query string, args ...interface{}) (*Rows, error) {
-	var rows *Rows
-	var err error
-	//这里就做了对失效的链接的重试操作
-	for i := 0; i &amp;lt; maxBadConnRetries; i++ {
-		rows, err = db.query(query, args, cachedOrNewConn)
-		if err != driver.ErrBadConn {
-			break
-		}
-	}
-	if err == driver.ErrBadConn {
-		return db.query(query, args, alwaysNewConn)
-	}
-	return rows, err
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;在什么情况下会返回，可以从这里看到：
-&lt;a href=&#34;https://github.com/go-sql-driver/mysql/blob/master/packets.go#L35&#34;&gt;readPack&lt;/a&gt;，&lt;a href=&#34;https://github.com/go-sql-driver/mysql/blob/master/packets.go#L132&#34;&gt;writePack&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;继续跟进去就到了&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;func (db *DB) conn(strategy connReuseStrategy) (*driverConn, error) {
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;方法主要是创建tcp连接，并判断了连接的生存时间lifetime，以及连接数的一些限制，如果超过的设定的最大打开链接数限制等待&lt;code&gt;connRequest&lt;/code&gt;管道中有连接产生(在&lt;code&gt;putConn&lt;/code&gt;释放链接的时候就会往这个管道中写入数据)&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;何时释放链接?&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;当我们调用&lt;code&gt;rows.Close()&lt;/code&gt;的时候，就会把当前正在使用的链接重新放回&lt;code&gt;freeConn&lt;/code&gt;或者写入到&lt;code&gt;db.connRequests&lt;/code&gt;管道中&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;	//putConnDBLocked 方法
-	
-	//如果有db.connRequests有在等待连接的话，就把当前连接给它用
-	if c := len(db.connRequests); c &amp;gt; 0 {
-		req := db.connRequests[0]
-		// This copy is O(n) but in practice faster than a linked list.
-		// TODO: consider compacting it down less often and
-		// moving the base instead?
-		copy(db.connRequests, db.connRequests[1:])
-		db.connRequests = db.connRequests[:c-1]
-		if err == nil {
-			dc.inUse = true
-		}
-		req &amp;lt;- connRequest{
-			conn: dc,
-			err:  err,
-		}
-		return true
-	} else if err == nil &amp;amp;&amp;amp; !db.closed &amp;amp;&amp;amp; db.maxIdleConnsLocked() &amp;gt; len(db.freeConn) {
-	//没人需要我这个链接，我就把他重新返回`freeConn`连接池中
-		db.freeConn = append(db.freeConn, dc)
-		db.startCleanerLocked()
-		return true
-	}
-
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h1 id=&#34;使用连接池管理thrift链接&#34;&gt;使用连接池管理Thrift链接&lt;/h1&gt;
-
-&lt;p&gt;这里是使用连接池&lt;a href=&#34;https://github.com/silenceper/pool&#34;&gt;https://github.com/silenceper/pool&lt;/a&gt;，如何构建一个thrift链接&lt;/p&gt;
-
-&lt;p&gt;客户端创建Thrift的代码：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;type Client struct {
-	*user.UserClient
-}
-
-
-//创建Thrift客户端链接的方法
-factory := func() (interface{}, error) {
-	protocolFactory := thrift.NewTBinaryProtocolFactoryDefault()
-	transportFactory := thrift.NewTTransportFactory()
-
-	var transport thrift.TTransport
-	var err error
-	transport, err = thrift.NewTSocket(rpcConfig.Listen)
-	if err != nil {
-		panic(err)
-	}
-	transport = transportFactory.GetTransport(transport)
-	//defer transport.Close()
-	if err := transport.Open(); err != nil {
-		panic(err)
-	}
-	rpcClient := user.NewUserClientFactory(transport, protocolFactory)
-	//在连接池中直接放置Client对象
-	return &amp;amp;Client{UserClient: rpcClient}, nil
-}
-//关闭连接的方法
-close := func(v interface{}) error {
-	v.(*Client).Transport.Close()
-	return nil
-}
-
-//创建了一个 初始化连接是
-poolConfig := &amp;amp;pool.PoolConfig{
-	InitialCap: 10,
-	MaxCap:     20,
-	Factory:     factory,
-	Close:       close,
-	IdleTimeout: 300 * time.Second,
-}
-p, err := pool.NewChannelPool(poolConfig)
-if err != nil {
-	panic(err)
-}
-
-//取得链接
-conn, err := p.Get()
-if err != nil {
-	return nil, err
-}
-v, ok := conn.(*Client)
-
-...使用连接调用远程方法
-
-//将连接重新放回连接池中
-p.Put(conn)
-
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;写完，听见外面的🐓开始打鸣了。&lt;/p&gt;
-</description>
+      <guid>http://silenceper.com/blog/201611/tcp_connection_pool/</guid>
+      <description>以下主要使用Golang作为编程语言 为什么需要连接池 我觉得使用连接池最大的一个好处就是减少连接的创建和关闭，增加系统负载能力， 之前就有遇到一</description>
     </item>
     
     <item>
-      <title>wechat sdk for golang: 一个简单易用的微信sdk</title>
-      <link>https://silenceper.github.io/blog/201609/wechat-sdk-for-golang-%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E6%98%93%E7%94%A8%E7%9A%84%E5%BE%AE%E4%BF%A1sdk/</link>
+      <title>开源项目：wechat sdk</title>
+      <link>http://silenceper.com/blog/201609/go-wechat-sdk/</link>
       <pubDate>Fri, 16 Sep 2016 15:40:59 +0800</pubDate>
       
-      <guid>https://silenceper.github.io/blog/201609/wechat-sdk-for-golang-%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E6%98%93%E7%94%A8%E7%9A%84%E5%BE%AE%E4%BF%A1sdk/</guid>
-      <description>&lt;p&gt;一直很想自己用golang写个微信的sdk，目标是简单好用，所以利用闲暇时间（周末，中秋😁），就做出来。&lt;/p&gt;
-
-&lt;p&gt;项目地址:&lt;a href=&#34;https://github.com/silenceper/wechat&#34;&gt;https://github.com/silenceper/wechat&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;目前实现了消息管理，微信网页授权，菜单管理，素材管理几个接口，看下他的基本使用：&lt;/p&gt;
-
-&lt;p&gt;以下是一个处理消息接收以及回复的例子：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;
-//配置微信参数
-config := &amp;amp;wechat.Config{
-    AppID:          &amp;quot;xxxx&amp;quot;,
-    AppSecret:      &amp;quot;xxxx&amp;quot;,
-    Token:          &amp;quot;xxxx&amp;quot;,
-    EncodingAESKey: &amp;quot;xxxx&amp;quot;,
-    Cache:          memCache
-}
-wc := wechat.NewWechat(config)
-
-// 传入request和responseWriter
-server := wc.GetServer(request, responseWriter)
-server.SetMessageHandler(func(msg message.MixMessage) *message.Reply {
-
-    //回复消息：演示回复用户发送的消息
-    text := message.NewText(msg.Content)
-    return &amp;amp;message.Reply{message.MsgText, text}
-})
-
-server.Serve()
-server.Send()
-
-
-&lt;/code&gt;&lt;/pre&gt;
-</description>
+      <guid>http://silenceper.com/blog/201609/go-wechat-sdk/</guid>
+      <description>一直很想自己用golang写个微信的sdk，目标是简单好用，所以利用闲暇时间（周末，中秋😁），就做出来。 项目地址:https://githu</description>
     </item>
     
     <item>
-      <title>DCMP: 一个分布式管理配置平台</title>
-      <link>https://silenceper.github.io/blog/201608/dcmp-%E4%B8%80%E4%B8%AA%E5%88%86%E5%B8%83%E5%BC%8F%E7%AE%A1%E7%90%86%E9%85%8D%E7%BD%AE%E5%B9%B3%E5%8F%B0/</link>
+      <title>dcmp</title>
+      <link>http://silenceper.com/blog/201608/dcmp/</link>
       <pubDate>Tue, 02 Aug 2016 15:40:59 +0800</pubDate>
       
-      <guid>https://silenceper.github.io/blog/201608/dcmp-%E4%B8%80%E4%B8%AA%E5%88%86%E5%B8%83%E5%BC%8F%E7%AE%A1%E7%90%86%E9%85%8D%E7%BD%AE%E5%B9%B3%E5%8F%B0/</guid>
-      <description>&lt;p&gt;Distributed Configuration Management Platform&lt;/p&gt;
-
-&lt;p&gt;提供了一个etcd的管理界面，可通过界面修改配置信息，借助confd可实现配置文件的同步。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/silenceper/dcmp/master/docs/image.png&#34; alt=&#34;dcmp image&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;GITHUB：&lt;a href=&#34;https://github.com/silenceper/dcmp&#34;&gt;https://github.com/silenceper/dcmp&lt;/a&gt;&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;API采用的是Gin Framework，写起api应用来非常方便，前端尝试了一下react。&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;传到Github一看，发现css，js的代码比golang还要多 。 😢&lt;/p&gt;
-&lt;/blockquote&gt;
-</description>
+      <guid>http://silenceper.com/blog/201608/dcmp/</guid>
+      <description>Distributed Configuration Management Platform 提供了一个etcd的管理界面，可通过界面修改配置信息，借助confd可实现配置文件的同步。 GITHUB：https://github</description>
     </item>
     
     <item>
       <title>Golang 中http包默认路由匹配规则阅读笔记</title>
-      <link>https://silenceper.github.io/blog/201605/golang-%E4%B8%ADhttp%E5%8C%85%E9%BB%98%E8%AE%A4%E8%B7%AF%E7%94%B1%E5%8C%B9%E9%85%8D%E8%A7%84%E5%88%99%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/</link>
+      <link>http://silenceper.com/blog/201605/go-http-process/</link>
       <pubDate>Sat, 28 May 2016 18:00:59 +0800</pubDate>
       
-      <guid>https://silenceper.github.io/blog/201605/golang-%E4%B8%ADhttp%E5%8C%85%E9%BB%98%E8%AE%A4%E8%B7%AF%E7%94%B1%E5%8C%B9%E9%85%8D%E8%A7%84%E5%88%99%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/</guid>
-      <description>
-
-&lt;h1 id=&#34;一-执行流程&#34;&gt;一、执行流程&lt;/h1&gt;
-
-&lt;p&gt;构建一个简单http server：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;package main
-
-import (
-	&amp;quot;log&amp;quot;
-	&amp;quot;net/http&amp;quot;
-)
-
-func main() {
-	http.HandleFunc(&amp;quot;/&amp;quot;, func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte(&amp;quot;hello world&amp;quot;))
-	})
-	log.Fatal(http.ListenAndServe(&amp;quot;:8080&amp;quot;, nil))
-}
-
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;使用&lt;code&gt;http://127.0.0.1:8080/&lt;/code&gt; 就可以看到输出了&lt;/p&gt;
-
-&lt;p&gt;通过跟踪http.go包代码，可以发现执行流程基本如下：&lt;/p&gt;
-
-&lt;h4 id=&#34;1-创建一个-listener-监听-8080-端口&#34;&gt;1.创建一个&lt;code&gt;Listener&lt;/code&gt;监听&lt;code&gt;8080&lt;/code&gt;端口&lt;/h4&gt;
-
-&lt;h4 id=&#34;2-进入-for-循环并accept请求-没有请求则处于阻塞状态&#34;&gt;2.进入&lt;code&gt;for&lt;/code&gt;循环并Accept请求，没有请求则处于阻塞状态&lt;/h4&gt;
-
-&lt;h4 id=&#34;3-接收到请求-并创建一个conn对象-放入goroutine处理-实现高并发关键&#34;&gt;3.接收到请求，并创建一个conn对象，放入goroutine处理（实现高并发关键）&lt;/h4&gt;
-
-&lt;h4 id=&#34;4-解析请求来源信息获得请求路径等重要信息&#34;&gt;4.解析请求来源信息获得请求路径等重要信息&lt;/h4&gt;
-
-&lt;h4 id=&#34;5-请求serverhttp方法-已经通过上一步获得了responsewriter和request对象&#34;&gt;5.请求ServerHTTP方法，已经通过上一步获得了ResponseWriter和Request对象&lt;/h4&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;func (sh serverHandler) ServeHTTP(rw ResponseWriter, req *Request) {
-	//此handler即为http.ListenAndServe 中的第二个参数
-	handler := sh.srv.Handler 
-	if handler == nil {
-		//如果handler为空则使用内部的DefaultServeMux 进行处理
-		handler = DefaultServeMux
-	}
-	if req.RequestURI == &amp;quot;*&amp;quot; &amp;amp;&amp;amp; req.Method == &amp;quot;OPTIONS&amp;quot; {
-		handler = globalOptionsHandler{}
-	}
-	//这里就开始处理http请求
-	//如果需要使用自定义的mux，就需要实现ServeHTTP方法，即实现Handler接口。
-	handler.ServeHTTP(rw, req)
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;6.进入DefaultServeMux中的逻辑就是根据请求path在map中匹配查找handler，并交由handler处理&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;http请求处理流程更多信息可以参考&lt;a href=&#34;https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/03.3.md&#34;&gt;《Go Web 编程
-》3.3 Go如何使得Web工作&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h1 id=&#34;二-defaultservemux-路由匹配规则&#34;&gt;二、DefaultServeMux 路由匹配规则&lt;/h1&gt;
-
-&lt;p&gt;先看几个路由规则：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;package main
-
-import (
-	&amp;quot;log&amp;quot;
-	&amp;quot;net/http&amp;quot;
-)
-
-func main() {
-	//规则1
-	http.HandleFunc(&amp;quot;/&amp;quot;, func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte(&amp;quot;hello world&amp;quot;))
-	})
-	
-	//规则2
-	http.HandleFunc(&amp;quot;/path/&amp;quot;, func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte(&amp;quot;pattern path: /path/ &amp;quot;))
-	})
-
-	//规则3
-	http.HandleFunc(&amp;quot;/path/subpath&amp;quot;, func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte(&amp;quot;pattern path: /path/subpath&amp;quot;))
-	})
-
-	log.Fatal(http.ListenAndServe(&amp;quot;:8080&amp;quot;, nil))
-}
-
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;情景一：&lt;/p&gt;
-
-&lt;p&gt;访问：&lt;code&gt;http://127.0.0.1:8080/&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;返回：&lt;code&gt;hello world&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;情景二：&lt;/p&gt;
-
-&lt;p&gt;访问：&lt;code&gt;http://127.0.0.1:8080/path&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;返回：&lt;code&gt;pattern path: /path/&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;情景三：&lt;/p&gt;
-
-&lt;p&gt;访问：&lt;code&gt;http://127.0.0.1:8080/path/subpath/&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;返回：&lt;code&gt;pattern path: /path/&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;情景四：&lt;/p&gt;
-
-&lt;p&gt;访问：&lt;code&gt;http://127.0.0.1:8080/hahaha/&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;返回：&lt;code&gt;hello world&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;先说明一些规则吧，再看代码是怎么实现的：&lt;/p&gt;
-
-&lt;p&gt;1.如果匹配路径中后带有&lt;code&gt;/&lt;/code&gt;，则会自动增加一个匹配规则不带&lt;code&gt;/&lt;/code&gt;后缀的，并跳转转到&lt;code&gt;path/&lt;/code&gt;,解释了情景二的场景，为什么匹配到的&lt;code&gt;/path/&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;2.我设置了这么多规则为什么规则一可以通用匹配未设置的路由信息，而且又不影响已经存在路由， 内部是怎么实现的？&lt;/p&gt;
-
-&lt;h2 id=&#34;2-1-添加路由规则&#34;&gt;2.1 添加路由规则&lt;/h2&gt;
-
-&lt;p&gt;先看两个struct，这是存放默认路由规则的：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;type ServeMux struct {
-	mu    sync.RWMutex  //处理并发，增加读写锁
-	m     map[string]muxEntry  //存放规则map，key即为设置的path
-	hosts bool // whether any patterns contain hostnames（是否包含host）
-}
-
-type muxEntry struct {
-	explicit bool //是否完全匹配
-	h        Handler//相应匹配规则的handler
-	pattern  string//匹配路径
-}
-
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;通过跟踪&lt;code&gt;http.HandleFunc&lt;/code&gt;定位到如下代码，正是往上面两个&lt;code&gt;struct&lt;/code&gt;中增加规则：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;func (mux *ServeMux) Handle(pattern string, handler Handler) {
-	mux.mu.Lock()
-	defer mux.mu.Unlock()
-
-	if pattern == &amp;quot;&amp;quot; {
-		panic(&amp;quot;http: invalid pattern &amp;quot; + pattern)
-	}
-	if handler == nil {
-		panic(&amp;quot;http: nil handler&amp;quot;)
-	}
-	//如果已经匹配到了则panic
-	if mux.m[pattern].explicit {
-		panic(&amp;quot;http: multiple registrations for &amp;quot; + pattern)
-	}
-    
-    //增加一个新的匹配规则
-	mux.m[pattern] = muxEntry{explicit: true, h: handler, pattern: pattern}
-	
-	//根据path的第一个字母判断是否有host
-	if pattern[0] != &#39;/&#39; {
-		mux.hosts = true
-	}
-
-	//！！这里看清楚 就是实现了情景二的情况 ，看判断条件
-	n := len(pattern)
-	if n &amp;gt; 0 &amp;amp;&amp;amp; pattern[n-1] == &#39;/&#39; &amp;amp;&amp;amp; !mux.m[pattern[0:n-1]].explicit{
-		// If pattern contains a host name, strip it and use remaining
-		// path for redirect.
-		path := pattern
-		if pattern[0] != &#39;/&#39; {
-			// In pattern, at least the last character is a &#39;/&#39;, so
-			// strings.Index can&#39;t be -1.
-			path = pattern[strings.Index(pattern, &amp;quot;/&amp;quot;):]
-		}
-		url := &amp;amp;url.URL{Path: path}
-		mux.m[pattern[0:n-1]] = muxEntry{h: RedirectHandler(url.String(), StatusMovedPermanently), pattern: pattern}
-	}
-}
-
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;上面有个&lt;code&gt;Helpful behavior&lt;/code&gt;的注释行为，就是实现了情景二的情况，他是判断如果匹配的路径中最后含有&lt;code&gt;/&lt;/code&gt;，并且之前也不存在添加去除反斜杠的规则的话，就自动给他增加一个301的跳转指向&lt;code&gt;/path/&lt;/code&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;2-2-查找路由规则&#34;&gt;2.2 查找路由规则&lt;/h2&gt;
-
-&lt;p&gt;路由规则的查找就是从&lt;code&gt;ServeMux&lt;/code&gt;中的map去匹配查找的,的到这个handler并执行，只是会有一些处理机制，比如怎么样确保访问&lt;code&gt;/path/subpath&lt;/code&gt;的时候是先匹配&lt;code&gt;/path/subpath&lt;/code&gt;而不是匹配&lt;code&gt;/path/&lt;/code&gt;呢？&lt;/p&gt;
-
-&lt;p&gt;当一个请求过来的时候，跟踪到了&lt;code&gt;mux.match&lt;/code&gt;方法：&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;过程&lt;code&gt;mux.ServerHTTP&lt;/code&gt;-&amp;gt;&lt;code&gt;mux.Handler&lt;/code&gt;-&amp;gt;&lt;code&gt;mux.handler&lt;/code&gt;-&amp;gt;&lt;code&gt;mux.match&lt;/code&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;func (mux *ServeMux) match(path string) (h Handler, pattern string) {
-	var n = 0
-	for k, v := range mux.m {
-		if !pathMatch(k, path) {
-			continue
-		}
-		//如果匹配到了一个规则，并没有马上返回handler，而且继续匹配并且判断path的长度是否是最长的，这是关键！！！
-		if h == nil || len(k) &amp;gt; n {
-			n = len(k)
-			h = v.h
-			pattern = v.pattern
-		}
-	}
-	return
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;1.这里就解释了为什么设置的精确的path是最优匹配到的，因为它是根据path的长度判断。
-当然也就解释了为什么&lt;code&gt;/&lt;/code&gt;可以匹配所有（看&lt;code&gt;pathMatch&lt;/code&gt;函数就知道了，&lt;code&gt;/&lt;/code&gt;是匹配所有的，只是这是最后才被匹配成功）&lt;/p&gt;
-
-&lt;p&gt;2.得到了处理请求的handler，再调用&lt;code&gt;h.ServeHTTP(w, r)&lt;/code&gt;，去执行相应的handler方法。&lt;/p&gt;
-
-&lt;p&gt;等一下，handler中哪里有&lt;code&gt;ServeHTTP&lt;/code&gt;这个方法？？&lt;/p&gt;
-
-&lt;p&gt;因为在调用 &lt;code&gt;http.HandleFunc&lt;/code&gt;的时候已经将自定义的handler处理函数，强制转为&lt;code&gt;HandlerFunc&lt;/code&gt;类型的，就拥有了&lt;code&gt;ServeHTTP&lt;/code&gt;方法：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;type HandlerFunc func(ResponseWriter, *Request)
-
-// ServeHTTP calls f(w, r).
-func (f HandlerFunc) ServeHTTP(w ResponseWriter, r *Request) {
-	f(w, r)
-}
-
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;code&gt;f(w,r)&lt;/code&gt;就实现了handler的执行。&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;脑子里面清楚，但真到表述的时候，呵呵，当做笔记啦。。。&lt;/p&gt;
-&lt;/blockquote&gt;
-</description>
+      <guid>http://silenceper.com/blog/201605/go-http-process/</guid>
+      <description>一、执行流程 构建一个简单http server： package main import ( &amp;quot;log&amp;quot; &amp;quot;net/http&amp;quot; ) func main() { http.HandleFunc(&amp;quot;/&amp;quot;, func(w http.ResponseWriter, r *http.Request) { w.Write([]byte(&amp;quot;hello world&amp;quot;)) }) log.Fatal(http.ListenAndServe(&amp;quot;:8080&amp;quot;, nil)) } 使用http://127.0.0.1:8080/ 就</description>
     </item>
     
     <item>
-      <title>你好，世界！</title>
-      <link>https://silenceper.github.io/blog/201605/%E4%BD%A0%E5%A5%BD%E4%B8%96%E7%95%8C/</link>
-      <pubDate>Sat, 28 May 2016 15:40:59 +0800</pubDate>
-      
-      <guid>https://silenceper.github.io/blog/201605/%E4%BD%A0%E5%A5%BD%E4%B8%96%E7%95%8C/</guid>
-      <description>&lt;p&gt;静下心来，随便写写&lt;/p&gt;
-
-&lt;p&gt;Blog被折腾过很多次，从asp的zblog到php的WordPress，一直感觉很炫，自己也自定义过主题。但是感觉脱离了自己建立blog的初衷，仅仅只是想把自己的想法记录下来，所以就直接选用的Hugo+github pages，这样最简单，也更自然。&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>tcp time_wait连接数过多导致服务不可用</title>
-      <link>https://silenceper.github.io/blog/201601/tcp-time_wait%E8%BF%9E%E6%8E%A5%E6%95%B0%E8%BF%87%E5%A4%9A%E5%AF%BC%E8%87%B4%E6%9C%8D%E5%8A%A1%E4%B8%8D%E5%8F%AF%E7%94%A8/</link>
+      <title>tcp time_wait问题</title>
+      <link>http://silenceper.com/blog/201601/tcp_time_wait_error/</link>
       <pubDate>Sun, 03 Jan 2016 15:40:59 +0800</pubDate>
       
-      <guid>https://silenceper.github.io/blog/201601/tcp-time_wait%E8%BF%9E%E6%8E%A5%E6%95%B0%E8%BF%87%E5%A4%9A%E5%AF%BC%E8%87%B4%E6%9C%8D%E5%8A%A1%E4%B8%8D%E5%8F%AF%E7%94%A8/</guid>
-      <description>
-
-&lt;h1 id=&#34;问题出现&#34;&gt;问题出现：&lt;/h1&gt;
-
-&lt;p&gt;在元旦前夕，自己维护的一个服务突然在高峰时期收到大量报警，赶紧登上服务器看一下：&lt;/p&gt;
-
-&lt;p&gt;最开始的反应是memcache tcp read time out ,因为之前也出现过类似的警告所以开始尝试切换memcache，但是运维反馈已经切换了好几台还是不起作用。&lt;/p&gt;
-
-&lt;p&gt;又看到有mysql 连接不上报错，怀疑机房内网有问题，然后有开始切换机房加机器，当时问题还是没有得到解决，这下真晕了。。。。 完全排查不出什么问题（因为是高峰时期，tcp连接数自然很高，没有在意是这个问题，自己预估不够）&lt;/p&gt;
-
-&lt;p&gt;后来反应过来看到有好几个接口请求数增加，因为发版本的原因，是新版本才会请求这些接口，所以 我暂时屏蔽了这几个口接口问题得到遏制（幸好是用户感知不到的接口）。&lt;/p&gt;
-
-&lt;h1 id=&#34;排查&#34;&gt;排查：&lt;/h1&gt;
-
-&lt;p&gt;这个问题围绕我好几天，我屏蔽的那几个接口，反复看了好几遍，而且又将其中的sql查询分析，并没有慢请求。。。  这下又彻底懵了，没有头绪。&lt;/p&gt;
-
-&lt;p&gt;说来也巧，高峰时期我用&lt;code&gt;netstat -an&lt;/code&gt; 命令查看了一些，看到大量tcp time_wait 的连接，赶紧Google了下，tcp time_wait状态是在主动关闭连接的一方保持的一个状态（一般指客户端），&lt;/p&gt;
-
-&lt;p&gt;总共的连接数在近3w(ss -s可查)，其中有2w多都是这种连接，而且都是mysql 连接（这里边服务器程序就相当于客户端去连接mysql服务器），到这里心里大致有底了，把数据库连接池加上就好了，Golang提供了两个函数可进行配置：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;SetMaxOpenConns用于设置最大打开的连接数，默认值为0表示不限制。
-SetMaxIdleConns用于设置闲置的连接数。
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;strong&gt;为什么会有TIME_WAIT状态？&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;源于tcp链接关闭中的四次挥手，是主动关闭链接的一方产生的状态：
-TCP状态转化图三次握手/四次挥手：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;./images/tcp.png&#34; alt=&#34;TCP状态转化图&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;四次挥手的过程如下：&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;主动关闭连接的一方，调用close()；协议层发送FIN包&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;被动关闭的一方收到FIN包后，协议层回复ACK；然后被动关闭的一方，进入CLOSE_WAIT状态，主动关闭的一方等待对方关闭，则进入FIN_WAIT_2状态；此时，主动关闭的一方 等待 被动关闭一方的应用程序，调用close操作&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;被动关闭的一方在完成所有数据发送后，调用close()操作；此时，协议层发送FIN包给主动关闭的一方，等待对方的ACK，被动关闭的一方进入LAST_ACK状态；&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;主动关闭的一方收到FIN包，协议层回复ACK；此时，主动关闭连接的一方，进入TIME_WAIT状态；而被动关闭的一方，进入CLOSED状态&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;等待2MSL时间，主动关闭的一方，结束TIME_WAIT，进入CLOSED状态&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;所以time_wait属于tcp正常的一个状态，是为了解决网络的丢包和网络不稳定锁存在的一个状态。&lt;/p&gt;
-
-&lt;p&gt;因为当前服务器并发相对较大，所以存在了大量的链接为关闭，如果只是几百的话，也不会影响服务器性能。&lt;/p&gt;
-
-&lt;p&gt;使用连接池保存长链接，可使得链接复用，不会出现大量的这种状态。&lt;/p&gt;
-
-&lt;h1 id=&#34;反思&#34;&gt;反思：&lt;/h1&gt;
-
-&lt;p&gt;问题终于找到解决，但是回过头来想了一下，其实一开始就可以定位到的，只是很多问题集中在一起出现反而让自己不知所措，这个时候如果是敏感的人的话应该马上能够从tcp状态上看出问题，之后线上遇到问题，重要的是先解决（不管通过什么方式），之后再一步步排查。&lt;/p&gt;
-</description>
+      <guid>http://silenceper.com/blog/201601/tcp_time_wait_error/</guid>
+      <description>问题出现： 在元旦前夕，自己维护的一个服务突然在高峰时期收到大量报警，赶紧登上服务器看一下： 最开始的反应是memcache tcp read time out ,因为之前也</description>
     </item>
     
     <item>
       <title>About</title>
-      <link>https://silenceper.github.io/about/</link>
+      <link>http://silenceper.com/fixed/about/</link>
       <pubDate>Sat, 22 Aug 2015 06:42:21 -0700</pubDate>
       
-      <guid>https://silenceper.github.io/about/</guid>
-      <description>&lt;p&gt;&lt;img src=&#34;http://tva1.sinaimg.cn/crop.0.0.749.749.180/65209136jw8f9qzi6i6saj20ku0ktt99.jpg&#34; alt=&#34;avatar&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;熟悉语言：PHP，Golang&lt;/p&gt;
-
-&lt;p&gt;联系邮箱：silenceper#gmail.com (#换成@)&lt;/p&gt;
-</description>
+      <guid>http://silenceper.com/fixed/about/</guid>
+      <description>熟悉语言：PHP，Golang 联系邮箱：silenceper#gmail.com (#换成@)</description>
     </item>
     
     <item>
       <title>colophon</title>
-      <link>https://silenceper.github.io/colophon/</link>
+      <link>http://silenceper.com/fixed/colophon/</link>
       <pubDate>Sat, 22 Aug 2015 06:28:26 -0700</pubDate>
       
-      <guid>https://silenceper.github.io/colophon/</guid>
-      <description>&lt;p&gt;个人日志&lt;/p&gt;
-</description>
+      <guid>http://silenceper.com/fixed/colophon/</guid>
+      <description>个人日志</description>
     </item>
     
     <item>
       <title>Code</title>
-      <link>https://silenceper.github.io/code/</link>
+      <link>http://silenceper.com/fixed/code/</link>
       <pubDate>Wed, 19 Aug 2015 20:29:37 -0700</pubDate>
       
-      <guid>https://silenceper.github.io/code/</guid>
-      <description>&lt;blockquote&gt;
-&lt;p&gt;空白。。。。&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;总有一天会填满的。。。&lt;/p&gt;
-</description>
+      <guid>http://silenceper.com/fixed/code/</guid>
+      <description>空白。。。。 总有一天会填满的。。。</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://silenceper.github.io/about-this-site/</link>
+      <link>http://silenceper.com/about-this-site/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://silenceper.github.io/about-this-site/</guid>
-      <description>&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-  &lt;head&gt;
-    &lt;link rel=&#34;canonical&#34; href=&#34;https://silenceper.github.io/colophon&#34;/&gt;
-    &lt;meta http-equiv=&#34;content-type&#34; content=&#34;text/html; charset=utf-8&#34;/&gt;
-    &lt;meta http-equiv=&#34;refresh&#34; content=&#34;0;url=/colophon&#34;/&gt;
-  &lt;/head&gt;
-&lt;/html&gt;
-</description>
+      <guid>http://silenceper.com/about-this-site/</guid>
+      <description>    </description>
     </item>
     
     <item>
       <title></title>
-      <link>https://silenceper.github.io/posts/</link>
+      <link>http://silenceper.com/posts/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://silenceper.github.io/posts/</guid>
-      <description>&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-  &lt;head&gt;
-    &lt;link rel=&#34;canonical&#34; href=&#34;https://silenceper.github.io/blog&#34;/&gt;
-    &lt;meta http-equiv=&#34;content-type&#34; content=&#34;text/html; charset=utf-8&#34;/&gt;
-    &lt;meta http-equiv=&#34;refresh&#34; content=&#34;0;url=/blog&#34;/&gt;
-  &lt;/head&gt;
-&lt;/html&gt;
-</description>
+      <guid>http://silenceper.com/posts/</guid>
+      <description>    </description>
     </item>
     
     <item>
       <title></title>
-      <link>https://silenceper.github.io/writing/</link>
+      <link>http://silenceper.com/writing/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://silenceper.github.io/writing/</guid>
-      <description>&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-  &lt;head&gt;
-    &lt;link rel=&#34;canonical&#34; href=&#34;https://silenceper.github.io/posts&#34;/&gt;
-    &lt;meta http-equiv=&#34;content-type&#34; content=&#34;text/html; charset=utf-8&#34;/&gt;
-    &lt;meta http-equiv=&#34;refresh&#34; content=&#34;0;url=/posts&#34;/&gt;
-  &lt;/head&gt;
-&lt;/html&gt;
-</description>
+      <guid>http://silenceper.com/writing/</guid>
+      <description>    </description>
     </item>
     
   </channel>

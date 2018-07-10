@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <meta name="description" content="程序员">
+    
+    <meta name="keyword"  content="程序员,Golang,Microservice">
+    <link rel="shortcut icon" href="http://silenceper.com/img/favicon.ico">
+
+    <title>Golang 中http包默认路由匹配规则阅读笔记- silenceper的博客</title>
+
+    <link rel="canonical" href="http://silenceper.com/blog/201605/go-http-process">
+
+    <link rel="stylesheet" href="http://silenceper.com/css/iDisqus.min.css"/>
+
+    
+    <link rel="stylesheet" href="http://silenceper.com/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="http://silenceper.com/css/hux-blog.min.css">
+
+    
+    <link rel="stylesheet" href="http://silenceper.com/css/syntax.css">
+
+    
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    
+    
+    <script src="http://silenceper.com/js/jquery.min.js"></script>
+
+    
+    <script src="http://silenceper.com/js/bootstrap.min.js"></script>
+
+    
+    <script src="http://silenceper.com/js/hux-blog.min.js"></script>
+</head>
+</head>
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://silenceper.com/">silenceper</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="http://silenceper.com/">Home</a>
+                    </li>
+                    
+                    <li>
+                        <a href="http://silenceper.com/categories/tech">Tech</a>
+                    </li>
+                    
+
+                    
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header{
+        background-image: url('https://ws1.sinaimg.cn/large/65209136gy1ft4il0hnauj21hc0u0798.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                       
+                       <a class="tag" href="/tags/wechat" title="wechat">
+                           wechat
+                        </a>
+                        
+                       <a class="tag" href="/tags/go" title="go">
+                           go
+                        </a>
+                        
+                    </div>
+                    <h1>Golang 中http包默认路由匹配规则阅读笔记</h1>
+                    <h2 class="subheading"></h2>
+                    <span  class="meta">Posted by     &#34;silenceper&#34; on Saturday, May 28, 2016
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+		
+                <header>
+                <h2>TOC</h2>
+                </header>
+                <nav id="TableOfContents">
+<ul>
+<li><a href="#一-执行流程">一、执行流程</a>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#1-创建一个-listener-监听-8080-端口">1.创建一个<code>Listener</code>监听<code>8080</code>端口</a></li>
+<li><a href="#2-进入-for-循环并accept请求-没有请求则处于阻塞状态">2.进入<code>for</code>循环并Accept请求，没有请求则处于阻塞状态</a></li>
+<li><a href="#3-接收到请求-并创建一个conn对象-放入goroutine处理-实现高并发关键">3.接收到请求，并创建一个conn对象，放入goroutine处理（实现高并发关键）</a></li>
+<li><a href="#4-解析请求来源信息获得请求路径等重要信息">4.解析请求来源信息获得请求路径等重要信息</a></li>
+<li><a href="#5-请求serverhttp方法-已经通过上一步获得了responsewriter和request对象">5.请求ServerHTTP方法，已经通过上一步获得了ResponseWriter和Request对象</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><a href="#二-defaultservemux-路由匹配规则">二、DefaultServeMux 路由匹配规则</a>
+<ul>
+<li><a href="#2-1-添加路由规则">2.1 添加路由规则</a></li>
+<li><a href="#2-2-查找路由规则">2.2 查找路由规则</a></li>
+</ul></li>
+</ul>
+</nav>
+		
+		
+
+<h1 id="一-执行流程">一、执行流程</h1>
+
+<p>构建一个简单http server：</p>
+
+<pre><code class="language-go">package main
+
+import (
+	&quot;log&quot;
+	&quot;net/http&quot;
+)
+
+func main() {
+	http.HandleFunc(&quot;/&quot;, func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte(&quot;hello world&quot;))
+	})
+	log.Fatal(http.ListenAndServe(&quot;:8080&quot;, nil))
+}
+
+</code></pre>
+
+<p>使用<code>http://127.0.0.1:8080/</code> 就可以看到输出了</p>
+
+<p>通过跟踪http.go包代码，可以发现执行流程基本如下：</p>
+
+<h4 id="1-创建一个-listener-监听-8080-端口">1.创建一个<code>Listener</code>监听<code>8080</code>端口</h4>
+
+<h4 id="2-进入-for-循环并accept请求-没有请求则处于阻塞状态">2.进入<code>for</code>循环并Accept请求，没有请求则处于阻塞状态</h4>
+
+<h4 id="3-接收到请求-并创建一个conn对象-放入goroutine处理-实现高并发关键">3.接收到请求，并创建一个conn对象，放入goroutine处理（实现高并发关键）</h4>
+
+<h4 id="4-解析请求来源信息获得请求路径等重要信息">4.解析请求来源信息获得请求路径等重要信息</h4>
+
+<h4 id="5-请求serverhttp方法-已经通过上一步获得了responsewriter和request对象">5.请求ServerHTTP方法，已经通过上一步获得了ResponseWriter和Request对象</h4>
+
+<pre><code class="language-go">func (sh serverHandler) ServeHTTP(rw ResponseWriter, req *Request) {
+	//此handler即为http.ListenAndServe 中的第二个参数
+	handler := sh.srv.Handler 
+	if handler == nil {
+		//如果handler为空则使用内部的DefaultServeMux 进行处理
+		handler = DefaultServeMux
+	}
+	if req.RequestURI == &quot;*&quot; &amp;&amp; req.Method == &quot;OPTIONS&quot; {
+		handler = globalOptionsHandler{}
+	}
+	//这里就开始处理http请求
+	//如果需要使用自定义的mux，就需要实现ServeHTTP方法，即实现Handler接口。
+	handler.ServeHTTP(rw, req)
+}
+</code></pre>
+
+<p>6.进入DefaultServeMux中的逻辑就是根据请求path在map中匹配查找handler，并交由handler处理</p>
+
+<blockquote>
+<p>http请求处理流程更多信息可以参考<a href="https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/03.3.md">《Go Web 编程
+》3.3 Go如何使得Web工作</a></p>
+</blockquote>
+
+<h1 id="二-defaultservemux-路由匹配规则">二、DefaultServeMux 路由匹配规则</h1>
+
+<p>先看几个路由规则：</p>
+
+<pre><code class="language-go">package main
+
+import (
+	&quot;log&quot;
+	&quot;net/http&quot;
+)
+
+func main() {
+	//规则1
+	http.HandleFunc(&quot;/&quot;, func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte(&quot;hello world&quot;))
+	})
+	
+	//规则2
+	http.HandleFunc(&quot;/path/&quot;, func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte(&quot;pattern path: /path/ &quot;))
+	})
+
+	//规则3
+	http.HandleFunc(&quot;/path/subpath&quot;, func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte(&quot;pattern path: /path/subpath&quot;))
+	})
+
+	log.Fatal(http.ListenAndServe(&quot;:8080&quot;, nil))
+}
+
+</code></pre>
+
+<p>情景一：</p>
+
+<p>访问：<code>http://127.0.0.1:8080/</code></p>
+
+<p>返回：<code>hello world</code></p>
+
+<p>情景二：</p>
+
+<p>访问：<code>http://127.0.0.1:8080/path</code></p>
+
+<p>返回：<code>pattern path: /path/</code></p>
+
+<p>情景三：</p>
+
+<p>访问：<code>http://127.0.0.1:8080/path/subpath/</code></p>
+
+<p>返回：<code>pattern path: /path/</code></p>
+
+<p>情景四：</p>
+
+<p>访问：<code>http://127.0.0.1:8080/hahaha/</code></p>
+
+<p>返回：<code>hello world</code></p>
+
+<p>先说明一些规则吧，再看代码是怎么实现的：</p>
+
+<p>1.如果匹配路径中后带有<code>/</code>，则会自动增加一个匹配规则不带<code>/</code>后缀的，并跳转转到<code>path/</code>,解释了情景二的场景，为什么匹配到的<code>/path/</code></p>
+
+<p>2.我设置了这么多规则为什么规则一可以通用匹配未设置的路由信息，而且又不影响已经存在路由， 内部是怎么实现的？</p>
+
+<h2 id="2-1-添加路由规则">2.1 添加路由规则</h2>
+
+<p>先看两个struct，这是存放默认路由规则的：</p>
+
+<pre><code class="language-go">type ServeMux struct {
+	mu    sync.RWMutex  //处理并发，增加读写锁
+	m     map[string]muxEntry  //存放规则map，key即为设置的path
+	hosts bool // whether any patterns contain hostnames（是否包含host）
+}
+
+type muxEntry struct {
+	explicit bool //是否完全匹配
+	h        Handler//相应匹配规则的handler
+	pattern  string//匹配路径
+}
+
+</code></pre>
+
+<p>通过跟踪<code>http.HandleFunc</code>定位到如下代码，正是往上面两个<code>struct</code>中增加规则：</p>
+
+<pre><code class="language-go">func (mux *ServeMux) Handle(pattern string, handler Handler) {
+	mux.mu.Lock()
+	defer mux.mu.Unlock()
+
+	if pattern == &quot;&quot; {
+		panic(&quot;http: invalid pattern &quot; + pattern)
+	}
+	if handler == nil {
+		panic(&quot;http: nil handler&quot;)
+	}
+	//如果已经匹配到了则panic
+	if mux.m[pattern].explicit {
+		panic(&quot;http: multiple registrations for &quot; + pattern)
+	}
+    
+    //增加一个新的匹配规则
+	mux.m[pattern] = muxEntry{explicit: true, h: handler, pattern: pattern}
+	
+	//根据path的第一个字母判断是否有host
+	if pattern[0] != '/' {
+		mux.hosts = true
+	}
+
+	//！！这里看清楚 就是实现了情景二的情况 ，看判断条件
+	n := len(pattern)
+	if n &gt; 0 &amp;&amp; pattern[n-1] == '/' &amp;&amp; !mux.m[pattern[0:n-1]].explicit{
+		// If pattern contains a host name, strip it and use remaining
+		// path for redirect.
+		path := pattern
+		if pattern[0] != '/' {
+			// In pattern, at least the last character is a '/', so
+			// strings.Index can't be -1.
+			path = pattern[strings.Index(pattern, &quot;/&quot;):]
+		}
+		url := &amp;url.URL{Path: path}
+		mux.m[pattern[0:n-1]] = muxEntry{h: RedirectHandler(url.String(), StatusMovedPermanently), pattern: pattern}
+	}
+}
+
+</code></pre>
+
+<p>上面有个<code>Helpful behavior</code>的注释行为，就是实现了情景二的情况，他是判断如果匹配的路径中最后含有<code>/</code>，并且之前也不存在添加去除反斜杠的规则的话，就自动给他增加一个301的跳转指向<code>/path/</code></p>
+
+<h2 id="2-2-查找路由规则">2.2 查找路由规则</h2>
+
+<p>路由规则的查找就是从<code>ServeMux</code>中的map去匹配查找的,的到这个handler并执行，只是会有一些处理机制，比如怎么样确保访问<code>/path/subpath</code>的时候是先匹配<code>/path/subpath</code>而不是匹配<code>/path/</code>呢？</p>
+
+<p>当一个请求过来的时候，跟踪到了<code>mux.match</code>方法：</p>
+
+<blockquote>
+<p>过程<code>mux.ServerHTTP</code>-&gt;<code>mux.Handler</code>-&gt;<code>mux.handler</code>-&gt;<code>mux.match</code></p>
+</blockquote>
+
+<pre><code class="language-go">func (mux *ServeMux) match(path string) (h Handler, pattern string) {
+	var n = 0
+	for k, v := range mux.m {
+		if !pathMatch(k, path) {
+			continue
+		}
+		//如果匹配到了一个规则，并没有马上返回handler，而且继续匹配并且判断path的长度是否是最长的，这是关键！！！
+		if h == nil || len(k) &gt; n {
+			n = len(k)
+			h = v.h
+			pattern = v.pattern
+		}
+	}
+	return
+}
+</code></pre>
+
+<p>1.这里就解释了为什么设置的精确的path是最优匹配到的，因为它是根据path的长度判断。
+当然也就解释了为什么<code>/</code>可以匹配所有（看<code>pathMatch</code>函数就知道了，<code>/</code>是匹配所有的，只是这是最后才被匹配成功）</p>
+
+<p>2.得到了处理请求的handler，再调用<code>h.ServeHTTP(w, r)</code>，去执行相应的handler方法。</p>
+
+<p>等一下，handler中哪里有<code>ServeHTTP</code>这个方法？？</p>
+
+<p>因为在调用 <code>http.HandleFunc</code>的时候已经将自定义的handler处理函数，强制转为<code>HandlerFunc</code>类型的，就拥有了<code>ServeHTTP</code>方法：</p>
+
+<pre><code class="language-go">type HandlerFunc func(ResponseWriter, *Request)
+
+// ServeHTTP calls f(w, r).
+func (f HandlerFunc) ServeHTTP(w ResponseWriter, r *Request) {
+	f(w, r)
+}
+
+</code></pre>
+
+<p><code>f(w,r)</code>就实现了handler的执行。</p>
+
+<blockquote>
+<p>脑子里面清楚，但真到表述的时候，呵呵，当做笔记啦。。。</p>
+</blockquote>
+
+
+                <hr>
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/blog/201608/dcmp" data-toggle="tooltip" data-placement="top" title="dcmp">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/blog/201601/tcp_time_wait_error" data-toggle="tooltip" data-placement="top" title="tcp time_wait问题">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            
+<div id="disqus-comment"></div>
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "silenceper" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+            </div>
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                     
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                            <a href="/tags/go" title="go">
+                                go
+                            </a>
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                    </div>
+                </section>
+
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+                    
+                        <li><a target="_blank" href=""></a></li>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                   
+                   <li>
+                       <a href="" rel="alternate" type="application/rss+xml" title="silenceper" >
+                           <span class="fa-stack fa-lg">
+                               <i class="fa fa-circle fa-stack-2x"></i>
+                               <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                           </span>
+                       </a>
+                   </li>
+                   
+                    
+                    <li>
+                        <a href="mailto:silenceper@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+
+                    
+                    
+                    
+
+                    
+
+		    
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/silenceper">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                </ul>
+		<p class="copyright text-muted">
+                    Copyright &copy; silenceper , 2016
+                    <br>
+                    Hugo Theme by <a href="https://github.com/zhaohuabing/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    async("https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https'){
+       bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      }
+      else{
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+
+
+
+<script>
+    
+    var _baId = 'xx';
+
+    
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'test', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+</body>
+</html>

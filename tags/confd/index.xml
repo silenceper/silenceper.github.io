@@ -1,36 +1,23 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Confd on silenceper blog</title>
-    <link>https://silenceper.github.io/tags/confd/</link>
-    <description>Recent content in Confd on silenceper blog</description>
+    <title>Confd on silenceper</title>
+    <link>http://silenceper.com/tags/confd/</link>
+    <description>Recent content in Confd on silenceper</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh-CN</language>
+    <language>en-us</language>
     <lastBuildDate>Tue, 02 Aug 2016 15:40:59 +0800</lastBuildDate>
-    <atom:link href="https://silenceper.github.io/tags/confd/index.xml" rel="self" type="application/rss+xml" />
+    
+	<atom:link href="http://silenceper.com/tags/confd/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
-      <title>DCMP: 一个分布式管理配置平台</title>
-      <link>https://silenceper.github.io/blog/201608/dcmp-%E4%B8%80%E4%B8%AA%E5%88%86%E5%B8%83%E5%BC%8F%E7%AE%A1%E7%90%86%E9%85%8D%E7%BD%AE%E5%B9%B3%E5%8F%B0/</link>
+      <title>dcmp</title>
+      <link>http://silenceper.com/blog/201608/dcmp/</link>
       <pubDate>Tue, 02 Aug 2016 15:40:59 +0800</pubDate>
       
-      <guid>https://silenceper.github.io/blog/201608/dcmp-%E4%B8%80%E4%B8%AA%E5%88%86%E5%B8%83%E5%BC%8F%E7%AE%A1%E7%90%86%E9%85%8D%E7%BD%AE%E5%B9%B3%E5%8F%B0/</guid>
-      <description>&lt;p&gt;Distributed Configuration Management Platform&lt;/p&gt;
-
-&lt;p&gt;提供了一个etcd的管理界面，可通过界面修改配置信息，借助confd可实现配置文件的同步。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/silenceper/dcmp/master/docs/image.png&#34; alt=&#34;dcmp image&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;GITHUB：&lt;a href=&#34;https://github.com/silenceper/dcmp&#34;&gt;https://github.com/silenceper/dcmp&lt;/a&gt;&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;API采用的是Gin Framework，写起api应用来非常方便，前端尝试了一下react。&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;传到Github一看，发现css，js的代码比golang还要多 。 😢&lt;/p&gt;
-&lt;/blockquote&gt;
-</description>
+      <guid>http://silenceper.com/blog/201608/dcmp/</guid>
+      <description>Distributed Configuration Management Platform 提供了一个etcd的管理界面，可通过界面修改配置信息，借助confd可实现配置文件的同步。 GITHUB：https://github</description>
     </item>
     
   </channel>

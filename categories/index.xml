@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on silenceper</title>
+    <link>http://silenceper.com/categories/</link>
+    <description>Recent content in Categories on silenceper</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	<atom:link href="http://silenceper.com/categories/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Tech</title>
+      <link>http://silenceper.com/categories/tech/</link>
+      <pubDate>Sun, 20 Nov 2016 02:40:59 +0800</pubDate>
+      
+      <guid>http://silenceper.com/categories/tech/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

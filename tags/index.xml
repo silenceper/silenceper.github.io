@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on silenceper</title>
+    <link>http://silenceper.com/tags/</link>
+    <description>Recent content in Tags on silenceper</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 02 Aug 2016 15:40:59 +0800</lastBuildDate>
+    
+	<atom:link href="http://silenceper.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Confd</title>
+      <link>http://silenceper.com/tags/confd/</link>
+      <pubDate>Tue, 02 Aug 2016 15:40:59 +0800</pubDate>
+      
+      <guid>http://silenceper.com/tags/confd/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Dcmp</title>
+      <link>http://silenceper.com/tags/dcmp/</link>
+      <pubDate>Tue, 02 Aug 2016 15:40:59 +0800</pubDate>
+      
+      <guid>http://silenceper.com/tags/dcmp/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Etcd</title>
+      <link>http://silenceper.com/tags/etcd/</link>
+      <pubDate>Tue, 02 Aug 2016 15:40:59 +0800</pubDate>
+      
+      <guid>http://silenceper.com/tags/etcd/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Go</title>
+      <link>http://silenceper.com/tags/go/</link>
+      <pubDate>Sun, 20 Nov 2016 02:40:59 +0800</pubDate>
+      
+      <guid>http://silenceper.com/tags/go/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Mysql</title>
+      <link>http://silenceper.com/tags/mysql/</link>
+      <pubDate>Sun, 03 Jan 2016 15:40:59 +0800</pubDate>
+      
+      <guid>http://silenceper.com/tags/mysql/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Pool</title>
+      <link>http://silenceper.com/tags/pool/</link>
+      <pubDate>Sun, 20 Nov 2016 02:40:59 +0800</pubDate>
+      
+      <guid>http://silenceper.com/tags/pool/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Tcp</title>
+      <link>http://silenceper.com/tags/tcp/</link>
+      <pubDate>Sun, 03 Jan 2016 15:40:59 +0800</pubDate>
+      
+      <guid>http://silenceper.com/tags/tcp/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Wechat</title>
+      <link>http://silenceper.com/tags/wechat/</link>
+      <pubDate>Fri, 16 Sep 2016 15:40:59 +0800</pubDate>
+      
+      <guid>http://silenceper.com/tags/wechat/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

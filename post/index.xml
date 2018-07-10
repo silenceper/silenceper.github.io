@@ -1,22 +1,59 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Post on silenceper</title>
-    <link>https://silenceper.github.io/post/</link>
-    <description>Recent content in Post on silenceper</description>
+    <title>Posts on silenceper</title>
+    <link>http://silenceper.com/post/</link>
+    <description>Recent content in Posts on silenceper</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh-CN</language>
-    <lastBuildDate>Thu, 26 May 2016 12:58:41 +0800</lastBuildDate>
-    <atom:link href="https://silenceper.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-us</language>
+    <lastBuildDate>Sun, 20 Nov 2016 02:40:59 +0800</lastBuildDate>
+    
+	<atom:link href="http://silenceper.com/post/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
-      <title>first</title>
-      <link>https://silenceper.github.io/post/first/</link>
-      <pubDate>Thu, 26 May 2016 12:58:41 +0800</pubDate>
+      <title>聊聊连接池</title>
+      <link>http://silenceper.com/blog/201611/tcp_connection_pool/</link>
+      <pubDate>Sun, 20 Nov 2016 02:40:59 +0800</pubDate>
       
-      <guid>https://silenceper.github.io/post/first/</guid>
-      <description>&lt;p&gt;first post&lt;/p&gt;
-</description>
+      <guid>http://silenceper.com/blog/201611/tcp_connection_pool/</guid>
+      <description>以下主要使用Golang作为编程语言 为什么需要连接池 我觉得使用连接池最大的一个好处就是减少连接的创建和关闭，增加系统负载能力， 之前就有遇到一</description>
+    </item>
+    
+    <item>
+      <title>开源项目：wechat sdk</title>
+      <link>http://silenceper.com/blog/201609/go-wechat-sdk/</link>
+      <pubDate>Fri, 16 Sep 2016 15:40:59 +0800</pubDate>
+      
+      <guid>http://silenceper.com/blog/201609/go-wechat-sdk/</guid>
+      <description>一直很想自己用golang写个微信的sdk，目标是简单好用，所以利用闲暇时间（周末，中秋😁），就做出来。 项目地址:https://githu</description>
+    </item>
+    
+    <item>
+      <title>dcmp</title>
+      <link>http://silenceper.com/blog/201608/dcmp/</link>
+      <pubDate>Tue, 02 Aug 2016 15:40:59 +0800</pubDate>
+      
+      <guid>http://silenceper.com/blog/201608/dcmp/</guid>
+      <description>Distributed Configuration Management Platform 提供了一个etcd的管理界面，可通过界面修改配置信息，借助confd可实现配置文件的同步。 GITHUB：https://github</description>
+    </item>
+    
+    <item>
+      <title>Golang 中http包默认路由匹配规则阅读笔记</title>
+      <link>http://silenceper.com/blog/201605/go-http-process/</link>
+      <pubDate>Sat, 28 May 2016 18:00:59 +0800</pubDate>
+      
+      <guid>http://silenceper.com/blog/201605/go-http-process/</guid>
+      <description>一、执行流程 构建一个简单http server： package main import ( &amp;quot;log&amp;quot; &amp;quot;net/http&amp;quot; ) func main() { http.HandleFunc(&amp;quot;/&amp;quot;, func(w http.ResponseWriter, r *http.Request) { w.Write([]byte(&amp;quot;hello world&amp;quot;)) }) log.Fatal(http.ListenAndServe(&amp;quot;:8080&amp;quot;, nil)) } 使用http://127.0.0.1:8080/ 就</description>
+    </item>
+    
+    <item>
+      <title>tcp time_wait问题</title>
+      <link>http://silenceper.com/blog/201601/tcp_time_wait_error/</link>
+      <pubDate>Sun, 03 Jan 2016 15:40:59 +0800</pubDate>
+      
+      <guid>http://silenceper.com/blog/201601/tcp_time_wait_error/</guid>
+      <description>问题出现： 在元旦前夕，自己维护的一个服务突然在高峰时期收到大量报警，赶紧登上服务器看一下： 最开始的反应是memcache tcp read time out ,因为之前也</description>
     </item>
     
   </channel>

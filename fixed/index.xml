@@ -1,50 +1,41 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Fixed on silenceper blog</title>
-    <link>https://silenceper.github.io/fixed/</link>
-    <description>Recent content in Fixed on silenceper blog</description>
+    <title>Fixeds on silenceper</title>
+    <link>http://silenceper.com/fixed/</link>
+    <description>Recent content in Fixeds on silenceper</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh-CN</language>
+    <language>en-us</language>
     <lastBuildDate>Sat, 22 Aug 2015 06:42:21 -0700</lastBuildDate>
-    <atom:link href="https://silenceper.github.io/fixed/index.xml" rel="self" type="application/rss+xml" />
+    
+	<atom:link href="http://silenceper.com/fixed/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>About</title>
-      <link>https://silenceper.github.io/about/</link>
+      <link>http://silenceper.com/fixed/about/</link>
       <pubDate>Sat, 22 Aug 2015 06:42:21 -0700</pubDate>
       
-      <guid>https://silenceper.github.io/about/</guid>
-      <description>&lt;p&gt;&lt;img src=&#34;http://tva1.sinaimg.cn/crop.0.0.749.749.180/65209136jw8f9qzi6i6saj20ku0ktt99.jpg&#34; alt=&#34;avatar&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;熟悉语言：PHP，Golang&lt;/p&gt;
-
-&lt;p&gt;联系邮箱：silenceper#gmail.com (#换成@)&lt;/p&gt;
-</description>
+      <guid>http://silenceper.com/fixed/about/</guid>
+      <description>熟悉语言：PHP，Golang 联系邮箱：silenceper#gmail.com (#换成@)</description>
     </item>
     
     <item>
       <title>colophon</title>
-      <link>https://silenceper.github.io/colophon/</link>
+      <link>http://silenceper.com/fixed/colophon/</link>
       <pubDate>Sat, 22 Aug 2015 06:28:26 -0700</pubDate>
       
-      <guid>https://silenceper.github.io/colophon/</guid>
-      <description>&lt;p&gt;个人日志&lt;/p&gt;
-</description>
+      <guid>http://silenceper.com/fixed/colophon/</guid>
+      <description>个人日志</description>
     </item>
     
     <item>
       <title>Code</title>
-      <link>https://silenceper.github.io/code/</link>
+      <link>http://silenceper.com/fixed/code/</link>
       <pubDate>Wed, 19 Aug 2015 20:29:37 -0700</pubDate>
       
-      <guid>https://silenceper.github.io/code/</guid>
-      <description>&lt;blockquote&gt;
-&lt;p&gt;空白。。。。&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;总有一天会填满的。。。&lt;/p&gt;
-</description>
+      <guid>http://silenceper.com/fixed/code/</guid>
+      <description>空白。。。。 总有一天会填满的。。。</description>
     </item>
     
   </channel>

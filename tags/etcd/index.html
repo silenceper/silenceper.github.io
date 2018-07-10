@@ -1,27 +1,341 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en-us">
+<head><head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <meta name="description" content="程序员">
+    
+    <meta name="keyword"  content="程序员,Golang,Microservice">
+    <link rel="shortcut icon" href="http://silenceper.com/img/favicon.ico">
 
-<head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="chrome=1">
-<meta name="HandheldFriendly" content="True">
-<meta name="description" content="silenceper blog">
+    <title>Etcd- silenceper的博客</title>
 
-<base href="https://silenceper.github.io/">
-<title>
+    <link rel="canonical" href="http://silenceper.com/tags/etcd/">
+
+    <link rel="stylesheet" href="http://silenceper.com/css/iDisqus.min.css"/>
+
+    
+    <link rel="stylesheet" href="http://silenceper.com/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="http://silenceper.com/css/hux-blog.min.css">
+
+    
+    <link rel="stylesheet" href="http://silenceper.com/css/syntax.css">
+
+    
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    
+    
+    <script src="http://silenceper.com/js/jquery.min.js"></script>
+
+    
+    <script src="http://silenceper.com/js/bootstrap.min.js"></script>
+
+    
+    <script src="http://silenceper.com/js/hux-blog.min.js"></script>
+</head>
+</head>
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://silenceper.com/">silenceper</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="http://silenceper.com/">Home</a>
+                    </li>
+                    
+                    <li>
+                        <a href="http://silenceper.com/categories/tech">Tech</a>
+                    </li>
+                    
+
+                    
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
 
 
-     Etcd 
 
-</title>
-<link rel="canonical" href="https://silenceper.github.io/tags/etcd/">
+<header class="intro-header" style="background-image: url('http://silenceper.com/img/home-bg-jeep.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
+                <div class="site-heading">
+                    <h1>silenceper </h1>
+                    
+		    <span class="subheading">好看的皮囊千篇一律 有趣的灵魂万里挑一</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
 
 
-<script type="text/javascript">
-    var baseURL = 'https:\/\/silenceper.github.io\/';
-    var host = baseURL.substring(0, baseURL.length - 1).replace(/\//g, '');
-    if ((host === window.location.host) && (window.location.protocol !== 'https:')) {
-        window.location.protocol = 'https:';
+
+  
+<div class="container">
+    <div class="row">
+        
+        
+   	    <div class="
+            col-lg-8 col-lg-offset-1
+            col-md-8 col-md-offset-1
+            col-sm-12
+            col-xs-12
+            post-container
+        ">
+            
+
+<div class="post-preview">
+    <a href="http://silenceper.com/blog/201608/dcmp/">
+        <h2 class="post-title">
+            dcmp
+        </h2>
+	
+        <h3 class="post-subtitle">
+            基于etcd的配置管理系统
+        </h3>
+	
+        <div class="post-content-preview">
+	
+            Distributed Configuration Management Platform 提供了一个etcd的管理界面，可通过界面修改配置信息，借助confd可实现配置文件的同步。 GITHUB：https://github
+       
+        </div>
+    </a>
+    <p class="post-meta">
+    Posted by     &#34;silenceper&#34; Tuesday, August 2, 2016
+    </p>
+</div>
+<hr>
+
+
+            
+
+
+
+       	</div>
+        
+
+<div class="
+    col-lg-3 col-lg-offset-0
+    col-md-3 col-md-offset-0
+    col-sm-12
+    col-xs-12
+    sidebar-container
+">
+    
+    
+    <section>
+        <hr class="hidden-sm hidden-xs">
+        <h5>FEATURED TAGS</h5>
+        <div class="tags">
+             
+            
+                
+            
+                
+            
+                
+            
+                
+                    <a href="/tags/go" title="go">
+                        go
+                    </a>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        </div>
+    </section>
+    
+
+    
+    <section class="visible-md visible-lg">
+        <hr><h5><a href="">ABOUT ME</a></h5>
+        <div class="short-about">
+            
+            <img src="http://silenceper.com/img/silenceper-avatar.png" />
+            
+            
+                <p>做一个有趣的人</p>
+            
+           
+           <ul class="list-inline"> 
+               
+               <li>
+                   <a href="http://silenceper.com/tags/etcd/index.xml" rel="alternate" type="application/rss+xml" title="silenceper" >
+                       <span class="fa-stack fa-lg">
+                           <i class="fa fa-circle fa-stack-2x"></i>
+                           <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                       </span>
+                   </a>
+               </li>
+               
+               
+               
+               
+               
+               
+               
+               <li>
+                   <a target="_blank" href="https://github.com/silenceper">
+                       <span class="fa-stack fa-lg">
+                           <i class="fa fa-circle fa-stack-2x"></i>
+                           <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                       </span>
+                   </a>
+               </li>
+               
+               
+                </ul>
+            </div>
+    </section>
+   
+   <hr>
+   <h5>FRIENDS</h5>
+   <ul class="list-inline">
+       
+           <li><a target="_blank" href=""></a></li>
+       
+   </ul>
+   
+    
+   <hr>
+   <h5>BOOKMARKS</h5>
+   <ul class="list-inline">
+   
+   </ul>
+</div>
+
+	</div>
+</div>
+
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                   
+                   <li>
+                       <a href="http://silenceper.com/tags/etcd/index.xml" rel="alternate" type="application/rss+xml" title="silenceper" >
+                           <span class="fa-stack fa-lg">
+                               <i class="fa fa-circle fa-stack-2x"></i>
+                               <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                           </span>
+                       </a>
+                   </li>
+                   
+                    
+                    <li>
+                        <a href="mailto:silenceper@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+
+                    
+                    
+                    
+
+                    
+
+		    
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/silenceper">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                </ul>
+		<p class="copyright text-muted">
+                    Copyright &copy; silenceper , 2016
+                    <br>
+                    Hugo Theme by <a href="https://github.com/zhaohuabing/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
     }
 </script>
 
@@ -29,93 +343,76 @@
 
 
 
-<link rel="stylesheet" href="https://silenceper.github.io/css/reset.css">
-<link rel="stylesheet" href="https://silenceper.github.io/css/pygments.css">
-<link rel="stylesheet" href="https://silenceper.github.io/css/main.css">
 
-
-    <link rel="stylesheet" href="https://silenceper.github.io/css/override.css">
-
-
-
-
-
-<link rel="shortcut icon"
-
-    href="https://silenceper.github.io/img/favicon.ico"
-
->
-
-
-
-</head>
-
-
-<body lang="zh">
-
-<section class="header">
-    <div class="container">
-        <div class="content">
-            <a href="https://silenceper.github.io/"><div class="name">silenceper</div></a>
-            <nav>
-                <ul>
-                    <a href="https://silenceper.github.io/blog/"><li>Blog</li></a>
-                    <a href="https://silenceper.github.io/about/"><li>About</li></a>
-                    
-                </ul>
-            </nav>
-        </div>
-    </div>
-</section>
-
-<section class="icons">
-    <div class="container">
-        <div class="content">
-
-        
-            <a href="//github.com/silenceper" target="_blank">
-                <i class="icon ion-social-github"></i>
-            </a>
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-        </div>
-    </div>
-</section>
-
-<section class="main">
-    <div class="container">
-        <div class="content">
-            <div class="page-heading">Blog</div>
-            <ul>
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
                 
-                <li class="post-item">
-    <div class="meta">Aug 2, 2016</div>
-    <a href="https://silenceper.github.io/blog/201608/dcmp-%E4%B8%80%E4%B8%AA%E5%88%86%E5%B8%83%E5%BC%8F%E7%AE%A1%E7%90%86%E9%85%8D%E7%BD%AE%E5%B9%B3%E5%8F%B0/"><div>DCMP: 一个分布式管理配置平台</div></a>
-</li>
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
 
-                
-            </ul>
-        </div>
-    </div>
-</section>
 
-<div style="display:none">
-    <script src="https://v1.cnzz.com/z_stat.php?id=5647642&web_id=5647642" language="JavaScript"></script>
-</div>
+<script>
+    async("https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
 
+
+<script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https'){
+       bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      }
+      else{
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+
+
+
+<script>
+    
+    var _baId = 'xx';
+
+    
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'test', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
 
 
 
 </body>
 </html>
-
-
