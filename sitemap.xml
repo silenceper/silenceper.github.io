@@ -28,33 +28,6 @@
   </url>
   
   <url>
-    <loc>http://silenceper.com/fixed/about/</loc>
-    <lastmod>2015-08-22T06:42:21-07:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://silenceper.com/fixed/colophon/</loc>
-    <lastmod>2015-08-22T06:28:26-07:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://silenceper.com/fixed/code/</loc>
-    <lastmod>2015-08-19T20:29:37-07:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://silenceper.com/about-this-site/</loc>
-  </url>
-  
-  <url>
-    <loc>http://silenceper.com/posts/</loc>
-  </url>
-  
-  <url>
-    <loc>http://silenceper.com/writing/</loc>
-  </url>
-  
-  <url>
     <loc>http://silenceper.com/categories/</loc>
     <priority>0</priority>
   </url>
@@ -74,12 +47,6 @@
   <url>
     <loc>http://silenceper.com/tags/etcd/</loc>
     <lastmod>2016-08-02T15:40:59+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://silenceper.com/fixed/</loc>
-    <lastmod>2015-08-22T06:42:21-07:00</lastmod>
     <priority>0</priority>
   </url>
   

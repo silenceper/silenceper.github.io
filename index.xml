@@ -56,59 +56,5 @@
       <description>问题出现： 在元旦前夕，自己维护的一个服务突然在高峰时期收到大量报警，赶紧登上服务器看一下： 最开始的反应是memcache tcp read time out ,因为之前也</description>
     </item>
     
-    <item>
-      <title>About</title>
-      <link>http://silenceper.com/fixed/about/</link>
-      <pubDate>Sat, 22 Aug 2015 06:42:21 -0700</pubDate>
-      
-      <guid>http://silenceper.com/fixed/about/</guid>
-      <description>熟悉语言：PHP，Golang 联系邮箱：silenceper#gmail.com (#换成@)</description>
-    </item>
-    
-    <item>
-      <title>colophon</title>
-      <link>http://silenceper.com/fixed/colophon/</link>
-      <pubDate>Sat, 22 Aug 2015 06:28:26 -0700</pubDate>
-      
-      <guid>http://silenceper.com/fixed/colophon/</guid>
-      <description>个人日志</description>
-    </item>
-    
-    <item>
-      <title>Code</title>
-      <link>http://silenceper.com/fixed/code/</link>
-      <pubDate>Wed, 19 Aug 2015 20:29:37 -0700</pubDate>
-      
-      <guid>http://silenceper.com/fixed/code/</guid>
-      <description>空白。。。。 总有一天会填满的。。。</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>http://silenceper.com/about-this-site/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>http://silenceper.com/about-this-site/</guid>
-      <description>    </description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>http://silenceper.com/posts/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>http://silenceper.com/posts/</guid>
-      <description>    </description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>http://silenceper.com/writing/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>http://silenceper.com/writing/</guid>
-      <description>    </description>
-    </item>
-    
   </channel>
 </rss>
