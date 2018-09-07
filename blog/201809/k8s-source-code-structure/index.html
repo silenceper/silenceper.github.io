@@ -5,14 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
-    <meta name="description" content="程序员">
+    <meta name="description" content="k8s源码包的作用，手动编译k8s源码以及如何阅读k8s源代码">
     
     <meta name="keyword"  content="程序员,Golang,Microservice">
     <link rel="shortcut icon" href="http://silenceper.com/img/favicon.ico">
 
-    <title>开源项目：wechat sdk- silenceper的博客</title>
+    <title>k8s源码阅读(一)：源码结构- silenceper的博客</title>
 
-    <link rel="canonical" href="http://silenceper.com/blog/201609/go-wechat-sdk">
+    <link rel="canonical" href="http://silenceper.com/blog/201809/k8s-source-code-structure">
 
     <link rel="stylesheet" href="http://silenceper.com/css/iDisqus.min.css"/>
 
@@ -118,18 +118,14 @@
                 <div class="post-heading">
                     <div class="tags">
                        
-                       <a class="tag" href="/tags/wechat" title="wechat">
-                           wechat
-                        </a>
-                        
-                       <a class="tag" href="/tags/go" title="go">
-                           go
+                       <a class="tag" href="/tags/k8s" title="k8s">
+                           k8s
                         </a>
                         
                     </div>
-                    <h1>开源项目：wechat sdk</h1>
-                    <h2 class="subheading">wechat sdk for golang: 一个简单易用的微信sdk</h2>
-                    <span  class="meta">Posted by     &#34;silenceper&#34; on Friday, September 16, 2016
+                    <h1>k8s源码阅读(一)：源码结构</h1>
+                    <h2 class="subheading">k8s各个包中功能</h2>
+                    <span  class="meta">Posted by     &#34;silenceper&#34; on Thursday, September 6, 2018
                         
                     </span>
                 </div>
@@ -155,54 +151,51 @@
                 <header>
                 <h2>TOC</h2>
                 </header>
-                
+                <nav id="TableOfContents">
+<ul>
+<li><a href="#代码结构">代码结构</a></li>
+<li><a href="#阅读">阅读</a></li>
+<li><a href="#编译">编译</a></li>
+</ul>
+</nav>
 		
-		<p>一直很想自己用golang写个微信的sdk，目标是简单好用，所以利用闲暇时间（周末，中秋😁），就做出来。</p>
+		
 
-<p>项目地址:<a href="https://github.com/silenceper/wechat">https://github.com/silenceper/wechat</a></p>
+<h1 id="代码结构">代码结构</h1>
 
-<p>目前实现了消息管理，微信网页授权，菜单管理，素材管理几个接口，看下他的基本使用：</p>
-
-<p>以下是一个处理消息接收以及回复的例子：</p>
-
-<pre><code class="language-go">
-//配置微信参数
-config := &amp;wechat.Config{
-    AppID:          &quot;xxxx&quot;,
-    AppSecret:      &quot;xxxx&quot;,
-    Token:          &quot;xxxx&quot;,
-    EncodingAESKey: &quot;xxxx&quot;,
-    Cache:          memCache
-}
-wc := wechat.NewWechat(config)
-
-// 传入request和responseWriter
-server := wc.GetServer(request, responseWriter)
-server.SetMessageHandler(func(msg message.MixMessage) *message.Reply {
-
-    //回复消息：演示回复用户发送的消息
-    text := message.NewText(msg.Content)
-    return &amp;message.Reply{message.MsgText, text}
-})
-
-server.Serve()
-server.Send()
-
+<pre><code>├── Godeps        godep依赖文件
+├── api           swagger api文档
+├── build         构建用到的命令
+├── cluster       自动构建和快速构建k8s集群的脚本(进入维护阶段)
+├── cmd           核心：命令入口
+├── docs          文档
+├── examples      一些样例
+├── hack          hack代码
+├── logo          logo图片
+├── pkg           核心：具体命令的逻辑代码
+├── plugin        主要是kube-scheduler
+├── staging       暂存区，用于分离仓库
+├── test          test
+├── third_party   一些第三方工具
+├── translations  多语言文件
+└── vendor        依赖代码
 
 </code></pre>
+
+<h1 id="阅读">阅读</h1>
+
+<h1 id="编译">编译</h1>
+
+<p><code>make help</code></p>
 
 
                 <hr>
 
                 <ul class="pager">
                     
-                    <li class="previous">
-                        <a href="/blog/201611/tcp_connection_pool" data-toggle="tooltip" data-placement="top" title="聊聊连接池">&larr; Previous Post</a>
-                    </li>
-                    
                     
                     <li class="next">
-                        <a href="/blog/201608/dcmp" data-toggle="tooltip" data-placement="top" title="dcmp">Next Post &rarr;</a>
+                        <a href="/blog/201611/tcp_connection_pool" data-toggle="tooltip" data-placement="top" title="聊聊连接池">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -335,7 +328,7 @@ server.Send()
                     
                 </ul>
 		<p class="copyright text-muted">
-                    Copyright &copy; silenceper , 2016
+                    Copyright &copy; silenceper , 2018
                     <br>
                     Hugo Theme by <a href="https://github.com/zhaohuabing/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a>
                 </p>

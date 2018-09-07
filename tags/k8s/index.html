@@ -10,9 +10,9 @@
     <meta name="keyword"  content="程序员,Golang,Microservice">
     <link rel="shortcut icon" href="http://silenceper.com/img/favicon.ico">
 
-    <title>开源项目：wechat sdk- silenceper的博客</title>
+    <title>K8s- silenceper的博客</title>
 
-    <link rel="canonical" href="http://silenceper.com/blog/201609/go-wechat-sdk">
+    <link rel="canonical" href="http://silenceper.com/tags/k8s/">
 
     <link rel="stylesheet" href="http://silenceper.com/css/iDisqus.min.css"/>
 
@@ -105,33 +105,14 @@
 
 
 
-
-<style type="text/css">
-    header.intro-header{
-        background-image: url('https://ws1.sinaimg.cn/large/65209136gy1ft4il0hnauj21hc0u0798.jpg')
-    }
-</style>
-<header class="intro-header" >
+<header class="intro-header" style="background-image: url('http://silenceper.com/img/home-bg-jeep.jpg')">
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="post-heading">
-                    <div class="tags">
-                       
-                       <a class="tag" href="/tags/wechat" title="wechat">
-                           wechat
-                        </a>
-                        
-                       <a class="tag" href="/tags/go" title="go">
-                           go
-                        </a>
-                        
-                    </div>
-                    <h1>开源项目：wechat sdk</h1>
-                    <h2 class="subheading">wechat sdk for golang: 一个简单易用的微信sdk</h2>
-                    <span  class="meta">Posted by     &#34;silenceper&#34; on Friday, September 16, 2016
-                        
-                    </span>
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
+                <div class="site-heading">
+                    <h1>silenceper </h1>
+                    
+		    <span class="subheading">好看的皮囊千篇一律 有趣的灵魂万里挑一</span>
                 </div>
             </div>
         </div>
@@ -140,150 +121,152 @@
 
 
 
-
-<article>
-    <div class="container">
-        <div class="row">
-
+  
+<div class="container">
+    <div class="row">
+        
+        
+   	    <div class="
+            col-lg-8 col-lg-offset-1
+            col-md-8 col-md-offset-1
+            col-sm-12
+            col-xs-12
+            post-container
+        ">
             
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                post-container">
 
-		
-                <header>
-                <h2>TOC</h2>
-                </header>
-                
-		
-		<p>一直很想自己用golang写个微信的sdk，目标是简单好用，所以利用闲暇时间（周末，中秋😁），就做出来。</p>
-
-<p>项目地址:<a href="https://github.com/silenceper/wechat">https://github.com/silenceper/wechat</a></p>
-
-<p>目前实现了消息管理，微信网页授权，菜单管理，素材管理几个接口，看下他的基本使用：</p>
-
-<p>以下是一个处理消息接收以及回复的例子：</p>
-
-<pre><code class="language-go">
-//配置微信参数
-config := &amp;wechat.Config{
-    AppID:          &quot;xxxx&quot;,
-    AppSecret:      &quot;xxxx&quot;,
-    Token:          &quot;xxxx&quot;,
-    EncodingAESKey: &quot;xxxx&quot;,
-    Cache:          memCache
-}
-wc := wechat.NewWechat(config)
-
-// 传入request和responseWriter
-server := wc.GetServer(request, responseWriter)
-server.SetMessageHandler(func(msg message.MixMessage) *message.Reply {
-
-    //回复消息：演示回复用户发送的消息
-    text := message.NewText(msg.Content)
-    return &amp;message.Reply{message.MsgText, text}
-})
-
-server.Serve()
-server.Send()
-
-
-</code></pre>
-
-
-                <hr>
-
-                <ul class="pager">
-                    
-                    <li class="previous">
-                        <a href="/blog/201611/tcp_connection_pool" data-toggle="tooltip" data-placement="top" title="聊聊连接池">&larr; Previous Post</a>
-                    </li>
-                    
-                    
-                    <li class="next">
-                        <a href="/blog/201608/dcmp" data-toggle="tooltip" data-placement="top" title="dcmp">Next Post &rarr;</a>
-                    </li>
-                    
-                </ul>
-
-            
-<div id="disqus-comment"></div>
-
-<div id="disqus_thread"></div>
-<script type="application/javascript">
-    var disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "silenceper" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-
-
-
-            </div>
-            
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                sidebar-container">
-
-                
-                <section>
-                    <hr class="hidden-sm hidden-xs">
-                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
-                    <div class="tags">
-                     
-                    
-                        
-                    
-                        
-                    
-                        
-                    
-                        
-                            <a href="/tags/go" title="go">
-                                go
-                            </a>
-                        
-                    
-                        
-                    
-                        
-                    
-                        
-                    
-                        
-                    
-                        
-                    
-                    </div>
-                </section>
-
-                
-                <hr>
-                <h5>FRIENDS</h5>
-                <ul class="list-inline">
-                    
-                        <li><a target="_blank" href=""></a></li>
-                    
-                </ul>
-            </div>
+<div class="post-preview">
+    <a href="http://silenceper.com/blog/201809/how-to-build-a-k8s-cluster/">
+        <h2 class="post-title">
+            在CentOS上搭建Kubernetes集群
+        </h2>
+	
+        <h3 class="post-subtitle">
+            如何在CentOS上安装kubernetes集群，原生安装
+        </h3>
+	
+        <div class="post-content-preview">
+	
+            主要是自己在搭建过程中整理的文档，如果来构建一个多节点的kubernetes集群，以服务的方式，注册到系统
+        
         </div>
-    </div>
-</article>
+    </a>
+    <p class="post-meta">
+    Posted by     &#34;silenceper&#34; Friday, September 7, 2018
+    </p>
+</div>
+<hr>
+
+
+            
+
+
+
+       	</div>
+        
+
+<div class="
+    col-lg-3 col-lg-offset-0
+    col-md-3 col-md-offset-0
+    col-sm-12
+    col-xs-12
+    sidebar-container
+">
+    
+    
+    <section>
+        <hr class="hidden-sm hidden-xs">
+        <h5>FEATURED TAGS</h5>
+        <div class="tags">
+             
+            
+                
+            
+                
+            
+                
+            
+                
+                    <a href="/tags/go" title="go">
+                        go
+                    </a>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        </div>
+    </section>
+    
+
+    
+    <section class="visible-md visible-lg">
+        <hr><h5><a href="">ABOUT ME</a></h5>
+        <div class="short-about">
+            
+            <img src="http://silenceper.com/img/silenceper-avatar.png" />
+            
+            
+                <p>做一个有趣的人</p>
+            
+           
+           <ul class="list-inline"> 
+               
+               <li>
+                   <a href="http://silenceper.com/tags/k8s/index.xml" rel="alternate" type="application/rss+xml" title="silenceper" >
+                       <span class="fa-stack fa-lg">
+                           <i class="fa fa-circle fa-stack-2x"></i>
+                           <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                       </span>
+                   </a>
+               </li>
+               
+               
+               
+               
+               
+               
+               
+               <li>
+                   <a target="_blank" href="https://github.com/silenceper">
+                       <span class="fa-stack fa-lg">
+                           <i class="fa fa-circle fa-stack-2x"></i>
+                           <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                       </span>
+                   </a>
+               </li>
+               
+               
+                </ul>
+            </div>
+    </section>
+   
+   <hr>
+   <h5>FRIENDS</h5>
+   <ul class="list-inline">
+       
+           <li><a target="_blank" href=""></a></li>
+       
+   </ul>
+   
+    
+   <hr>
+   <h5>BOOKMARKS</h5>
+   <ul class="list-inline">
+   
+   </ul>
+</div>
+
+	</div>
+</div>
+
 
 
 
@@ -295,7 +278,7 @@ server.Send()
                 <ul class="list-inline text-center">
                    
                    <li>
-                       <a href="" rel="alternate" type="application/rss+xml" title="silenceper" >
+                       <a href="http://silenceper.com/tags/k8s/index.xml" rel="alternate" type="application/rss+xml" title="silenceper" >
                            <span class="fa-stack fa-lg">
                                <i class="fa fa-circle fa-stack-2x"></i>
                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
@@ -335,7 +318,7 @@ server.Send()
                     
                 </ul>
 		<p class="copyright text-muted">
-                    Copyright &copy; silenceper , 2016
+                    Copyright &copy; silenceper , 2018
                     <br>
                     Hugo Theme by <a href="https://github.com/zhaohuabing/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a>
                 </p>

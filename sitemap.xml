@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>http://silenceper.com/blog/201809/how-to-build-a-k8s-cluster/</loc>
+    <lastmod>2018-09-07T11:45:59+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>http://silenceper.com/blog/201611/tcp_connection_pool/</loc>
     <lastmod>2016-11-20T02:40:59+08:00</lastmod>
   </url>
@@ -57,6 +62,12 @@
   </url>
   
   <url>
+    <loc>http://silenceper.com/tags/k8s/</loc>
+    <lastmod>2018-09-07T11:45:59+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>http://silenceper.com/tags/mysql/</loc>
     <lastmod>2016-01-03T15:40:59+08:00</lastmod>
     <priority>0</priority>
@@ -70,7 +81,7 @@
   
   <url>
     <loc>http://silenceper.com/post/</loc>
-    <lastmod>2016-11-20T02:40:59+08:00</lastmod>
+    <lastmod>2018-09-07T11:45:59+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -88,7 +99,7 @@
   
   <url>
     <loc>http://silenceper.com/categories/tech/</loc>
-    <lastmod>2016-11-20T02:40:59+08:00</lastmod>
+    <lastmod>2018-09-07T11:45:59+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -100,7 +111,7 @@
   
   <url>
     <loc>http://silenceper.com/</loc>
-    <lastmod>2016-11-20T02:40:59+08:00</lastmod>
+    <lastmod>2018-09-07T11:45:59+08:00</lastmod>
     <priority>0</priority>
   </url>
   

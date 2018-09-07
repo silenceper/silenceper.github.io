@@ -6,10 +6,19 @@
     <description>Recent content in Tech on silenceper</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 20 Nov 2016 02:40:59 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 07 Sep 2018 11:45:59 +0800</lastBuildDate>
     
 	<atom:link href="http://silenceper.com/categories/tech/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>在CentOS上搭建Kubernetes集群</title>
+      <link>http://silenceper.com/blog/201809/how-to-build-a-k8s-cluster/</link>
+      <pubDate>Fri, 07 Sep 2018 11:45:59 +0800</pubDate>
+      
+      <guid>http://silenceper.com/blog/201809/how-to-build-a-k8s-cluster/</guid>
+      <description>以下是我自己在部署k8s集群上做的一些记录，部署了一个master，一个node节点。 环境准备 我在VirtualBox中建的两个CentOS</description>
+    </item>
     
     <item>
       <title>聊聊连接池</title>
