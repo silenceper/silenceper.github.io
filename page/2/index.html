@@ -137,6 +137,24 @@
             
 
 <div class="post-preview">
+    <a href="http://silenceper.com/blog/201605/go-http-process/">
+        <h2 class="post-title">
+            Golang 中http包默认路由匹配规则阅读笔记
+        </h2>
+	
+        <div class="post-content-preview">
+	
+            一、执行流程 构建一个简单http server： package main import ( &quot;log&quot; &quot;net/http&quot; ) func main() { http.HandleFunc(&quot;/&quot;, func(w http.ResponseWriter, r *http.Request) { w.Write([]byte(&quot;hello world&quot;)) }) log.Fatal(http.ListenAndServe(&quot;:8080&quot;, nil)) } 使用http://127.0.0.1:8080/ 就
+       
+        </div>
+    </a>
+    <p class="post-meta">
+    Posted by     &#34;silenceper&#34; Saturday, May 28, 2016
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
     <a href="http://silenceper.com/blog/201601/tcp_time_wait_error/">
         <h2 class="post-title">
             tcp time_wait问题
@@ -189,6 +207,8 @@
         <h5>FEATURED TAGS</h5>
         <div class="tags">
              
+            
+                
             
                 
             

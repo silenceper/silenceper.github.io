@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Docker on silenceper</title>
+    <link>http://silenceper.com/tags/docker/</link>
+    <description>Recent content in Docker on silenceper</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 09 Sep 2018 11:45:59 +0800</lastBuildDate>
+    
+	<atom:link href="http://silenceper.com/tags/docker/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>docker pull 翻墙下载镜像</title>
+      <link>http://silenceper.com/blog/201809/over-the-wall-pull-docker-mirror/</link>
+      <pubDate>Sun, 09 Sep 2018 11:45:59 +0800</pubDate>
+      
+      <guid>http://silenceper.com/blog/201809/over-the-wall-pull-docker-mirror/</guid>
+      <description>我们一般通过设置http_proxy环境变量，使得http请求，可以走我们设置的proxy，（一些go get镜像无法下载可以这么用），但是对</description>
+    </item>
+    
+  </channel>
+</rss>

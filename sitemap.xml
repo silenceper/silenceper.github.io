@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>http://silenceper.com/blog/201809/over-the-wall-pull-docker-mirror/</loc>
+    <lastmod>2018-09-09T11:45:59+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>http://silenceper.com/blog/201809/how-to-build-a-k8s-cluster/</loc>
     <lastmod>2018-09-07T11:45:59+08:00</lastmod>
   </url>
@@ -50,6 +55,12 @@
   </url>
   
   <url>
+    <loc>http://silenceper.com/tags/docker/</loc>
+    <lastmod>2018-09-09T11:45:59+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>http://silenceper.com/tags/etcd/</loc>
     <lastmod>2016-08-02T15:40:59+08:00</lastmod>
     <priority>0</priority>
@@ -81,7 +92,7 @@
   
   <url>
     <loc>http://silenceper.com/post/</loc>
-    <lastmod>2018-09-07T11:45:59+08:00</lastmod>
+    <lastmod>2018-09-09T11:45:59+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -99,7 +110,7 @@
   
   <url>
     <loc>http://silenceper.com/categories/tech/</loc>
-    <lastmod>2018-09-07T11:45:59+08:00</lastmod>
+    <lastmod>2018-09-09T11:45:59+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -111,7 +122,7 @@
   
   <url>
     <loc>http://silenceper.com/</loc>
-    <lastmod>2018-09-07T11:45:59+08:00</lastmod>
+    <lastmod>2018-09-09T11:45:59+08:00</lastmod>
     <priority>0</priority>
   </url>
   
