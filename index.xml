@@ -6,10 +6,19 @@
     <description>Recent content on silenceper</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 09 Sep 2018 11:45:59 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 12 Sep 2018 11:45:59 +0800</lastBuildDate>
     
 	<atom:link href="http://silenceper.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>k8s源码阅读(一)：源码结构</title>
+      <link>http://silenceper.com/blog/201809/k8s-source-code-structure/</link>
+      <pubDate>Wed, 12 Sep 2018 11:45:59 +0800</pubDate>
+      
+      <guid>http://silenceper.com/blog/201809/k8s-source-code-structure/</guid>
+      <description>环境 k8s代码版本：release-1.9 工具：vscode, dlv 下载代码，并放入gopath中，方便编译： $ mkdir -p $GOPATH/src/k8s.io &amp;amp;&amp;amp; cd $GOPATH/src/k8s.io $ git clone https://github.com/kubernetes/kubernetes # 有墙 代码结</description>
+    </item>
     
     <item>
       <title>docker pull 翻墙下载镜像</title>

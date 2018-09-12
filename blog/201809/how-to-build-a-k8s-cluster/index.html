@@ -956,6 +956,11 @@ yum install docker-ce-17.12.1.ce-1.el7.centos.x86_64.rpm
 <pre><code>EnvironmentFile=-/run/flannel/docker
 </code></pre>
 
+<p>并且启动命令为，主要是增加了一个<code>$DOCKER_NETWORK_OPTIONS</code>参数是flannel传入的用来修改<code>docker0</code>网桥IP</p>
+
+<pre><code>ExecStart=/usr/bin/dockerd $DOCKER_NETWORK_OPTIONS --log-driver=json-file --log-opt max-size=50m --log-opt max-file=5
+</code></pre>
+
 <p>启动：</p>
 
 <pre><code>systemctl daemon-reload

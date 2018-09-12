@@ -108,7 +108,7 @@
 
 <style type="text/css">
     header.intro-header{
-        background-image: url('https://ws1.sinaimg.cn/large/65209136gy1ft4il0hnauj21hc0u0798.jpg')
+        background-image: url('https://ws1.sinaimg.cn/large/65209136gy1fv6z5v33bqj21hb0tc781.jpg')
     }
 </style>
 <header class="intro-header" >
@@ -125,7 +125,7 @@
                     </div>
                     <h1>k8s源码阅读(一)：源码结构</h1>
                     <h2 class="subheading">k8s各个包中功能</h2>
-                    <span  class="meta">Posted by     &#34;silenceper&#34; on Thursday, September 6, 2018
+                    <span  class="meta">Posted by     &#34;silenceper&#34; on Wednesday, September 12, 2018
                         
                     </span>
                 </div>
@@ -153,13 +153,26 @@
                 </header>
                 <nav id="TableOfContents">
 <ul>
+<li><a href="#环境">环境</a></li>
 <li><a href="#代码结构">代码结构</a></li>
-<li><a href="#阅读">阅读</a></li>
-<li><a href="#编译">编译</a></li>
+<li><a href="#dlv调试阅读">DLV调试阅读</a></li>
 </ul>
 </nav>
 		
 		
+
+<h1 id="环境">环境</h1>
+
+<ul>
+<li>k8s代码版本：<a href="https://github.com/silenceper/kubernetes">release-1.9</a></li>
+<li>工具：vscode, dlv</li>
+</ul>
+
+<p>下载代码，并放入gopath中，方便编译：</p>
+
+<pre><code>$ mkdir -p $GOPATH/src/k8s.io  &amp;&amp; cd $GOPATH/src/k8s.io
+$ git clone https://github.com/kubernetes/kubernetes # 有墙
+</code></pre>
 
 <h1 id="代码结构">代码结构</h1>
 
@@ -169,7 +182,7 @@
 ├── cluster       自动构建和快速构建k8s集群的脚本(进入维护阶段)
 ├── cmd           核心：命令入口
 ├── docs          文档
-├── examples      一些样例
+├── examples      一些部署样例yaml文件
 ├── hack          hack代码
 ├── logo          logo图片
 ├── pkg           核心：具体命令的逻辑代码
@@ -182,11 +195,39 @@
 
 </code></pre>
 
-<h1 id="阅读">阅读</h1>
+<p>组件入口基本都在<code>/cmd/</code>目录下，并且可直接通过<code>go build</code>单独编译（通过<code>make xxxx</code>也行，<code>make help</code>查看具体指令）</p>
 
-<h1 id="编译">编译</h1>
+<h1 id="dlv调试阅读">DLV调试阅读</h1>
 
-<p><code>make help</code></p>
+<p>有两种方式，一种是直接通过<code>dlv</code>命令进行调试，比如调试kubelet组件：</p>
+
+<pre><code>$ cd cmd/kubelet
+$ dlv debug . -- --logtostderr=true --v=5 --address=192.168.99.102 --hostname-override=192.168.99.102 --allow-privileged=true --bootstrap-kubeconfig=/etc/kubernetes/bootstrap.kubeconfig --kubeconfig=/etc/kubernetes/kubelet.kubeconfig --cert-dir=/etc/kubernetes/ssl --cluster-domain=cluster.local --hairpin-mode promiscuous-bridge --serialize-image-pulls=false
+</code></pre>
+
+<blockquote>
+<p>其中<code>--</code>后为程序运行参数</p>
+</blockquote>
+
+<p>进入之后为通过<code>break</code>，<code>n</code>,<code>s</code>,<code>p</code>等指令操作，这种方式不太方便，尤其对于k8s这种大工程，推荐配合工具进行，比如vscode。</p>
+
+<p>通过我配置<code>launch.json</code>文件的<code>args</code>参数，让<code>kubelet</code>运行起来：</p>
+
+<pre><code>&quot;args&quot;: [
+    &quot;--address=192.168.186.219&quot;,
+    &quot;--hostname-override=192.168.186.219&quot;,
+    &quot;--cluster-domain=cluster.local&quot;,
+    &quot;--root-dir=/Users/silenceper/workspace/golang/src/k8s.io/kubelet&quot;,
+    &quot;--bootstrap-kubeconfig=/Users/silenceper/workspace/golang/src/k8s.io/kubelet/kubernetes/bootstrap.kubeconfig&quot;,
+    &quot;--kubeconfig=/Users/silenceper/workspace/golang/src/k8s.io/kubelet/kubernetes/kubelet.kubeconfig&quot;,
+    &quot;--cert-dir=/Users/silenceper/workspace/golang/src/k8s.io/kubelet/kubernetes/ssl&quot;,
+],
+</code></pre>
+
+<p>通过调试，可以做到边看代码，变追踪kubelet的执行过程
+&gt; 因为os的原因，执行流程可能与目标平台的执行结果可能不一致，不过可以手动改代码达到预期结果，或者直接在Linux下调试</p>
+
+<p><img src="https://ws1.sinaimg.cn/large/65209136gy1fv6z2jx1ajj21g20sc7b3.jpg" alt="11" /></p>
 
 
                 <hr>
@@ -195,7 +236,7 @@
                     
                     
                     <li class="next">
-                        <a href="/blog/201611/tcp_connection_pool" data-toggle="tooltip" data-placement="top" title="聊聊连接池">Next Post &rarr;</a>
+                        <a href="/blog/201809/over-the-wall-pull-docker-mirror" data-toggle="tooltip" data-placement="top" title="docker pull 翻墙下载镜像">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -239,6 +280,8 @@
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                      
+                    
+                        
                     
                         
                     
