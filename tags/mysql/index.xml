@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Mysql on silenceper</title>
+    <title>mysql on silenceper</title>
     <link>http://silenceper.com/tags/mysql/</link>
-    <description>Recent content in Mysql on silenceper</description>
+    <description>Recent content in mysql on silenceper</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 03 Jan 2016 15:40:59 +0800</lastBuildDate>

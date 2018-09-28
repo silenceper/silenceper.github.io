@@ -975,6 +975,11 @@ systemctl status docker
 
 <h2 id="安装配置kubelet">安装配置kubelet</h2>
 
+<blockquote>
+<p>前提：关闭swap，否则无法启动
+使用:<code>swapoff -a</code>或者注释fstab中swap配置</p>
+</blockquote>
+
 <p>TIPS: 现在master节点上，赋予kubelet-bootstrap用户，system:node-bootstrapper cluster 角色，否则kubelet没有权限创建认证请求。</p>
 
 <pre><code>cd /etc/kubernetes
@@ -1044,6 +1049,11 @@ certificatesigningrequest.certificates.k8s.io &quot;node-csr-vtB-rALjRudPIp4IvIH
 </code></pre>
 
 <h2 id="配置-kube-proxy">配置 kube-proxy</h2>
+
+<p>安装conntrack：</p>
+
+<pre><code>yum install -y conntrack-tools
+</code></pre>
 
 <p>文件<code>/usr/lib/systemd/system/kube-proxy.service</code>：</p>
 

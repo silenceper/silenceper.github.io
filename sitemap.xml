@@ -48,6 +48,23 @@
   </url>
   
   <url>
+    <loc>http://silenceper.com/post/</loc>
+    <lastmod>2018-09-12T11:45:59+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://silenceper.com/tags/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://silenceper.com/categories/tech/</loc>
+    <lastmod>2018-09-12T11:45:59+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>http://silenceper.com/tags/confd/</loc>
     <lastmod>2016-08-02T15:40:59+08:00</lastmod>
     <priority>0</priority>
@@ -96,14 +113,8 @@
   </url>
   
   <url>
-    <loc>http://silenceper.com/post/</loc>
+    <loc>http://silenceper.com/</loc>
     <lastmod>2018-09-12T11:45:59+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://silenceper.com/tags/</loc>
-    <lastmod>2016-08-02T15:40:59+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -114,20 +125,8 @@
   </url>
   
   <url>
-    <loc>http://silenceper.com/categories/tech/</loc>
-    <lastmod>2018-09-12T11:45:59+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>http://silenceper.com/tags/wechat/</loc>
     <lastmod>2016-09-16T15:40:59+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://silenceper.com/</loc>
-    <lastmod>2018-09-12T11:45:59+08:00</lastmod>
     <priority>0</priority>
   </url>
   
