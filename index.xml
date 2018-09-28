@@ -6,10 +6,19 @@
     <description>Recent content on silenceper</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 12 Sep 2018 11:45:59 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 26 Sep 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://silenceper.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>k8s网络组件：flannel</title>
+      <link>http://silenceper.com/2018/09/flannel-in-k8s/</link>
+      <pubDate>Wed, 26 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://silenceper.com/2018/09/flannel-in-k8s/</guid>
+      <description>Flannel是一个专门为k8s定制的网络解决方案，主要解决POD跨主机通信问题，这里主要讲述Flannel是如何实现的。 安装 集成在k8s上</description>
+    </item>
     
     <item>
       <title>k8s源码阅读(一)：源码结构</title>
