@@ -488,6 +488,12 @@ kubectl config set-context kubernetes \
 kubectl config use-context kubernetes
 </code></pre>
 
+<blockquote>
+<p>admin 证书中设定了 <code>group=system:masters</code>即（O=system:masters）
+这个group与ckuster-admin ClusterRole绑定，所以具有整个集群的权限
+如果需要单独指定权限，则可以自己设定user绑定ClusterRole</p>
+</blockquote>
+
 <h1 id="创建-kubeconfig-文件">创建 kubeconfig 文件</h1>
 
 <h2 id="创建-tls-bootstrapping-token">创建 TLS Bootstrapping Token</h2>
