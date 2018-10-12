@@ -13,10 +13,10 @@
     
     <item>
       <title>k8s网络组件：flannel</title>
-      <link>http://silenceper.com/2018/09/flannel-in-k8s/</link>
+      <link>http://silenceper.com/blog/201809/flannel-in-k8s/</link>
       <pubDate>Wed, 26 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>http://silenceper.com/2018/09/flannel-in-k8s/</guid>
+      <guid>http://silenceper.com/blog/201809/flannel-in-k8s/</guid>
       <description>Flannel是一个专门为k8s定制的网络解决方案，主要解决POD跨主机通信问题，这里主要讲述Flannel是如何实现的。 安装 集成在k8s上</description>
     </item>
     
