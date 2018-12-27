@@ -456,7 +456,7 @@ export PATH=/usr/local/bin:$PATH
 
 <h2 id="分发证书">分发证书</h2>
 
-<p>将生成的证书和秘钥文件（后缀为<code>.pem</code>）拷贝到所有机器的`/etc/kubernetes/ssl 目录下
+<p>将生成的证书和秘钥文件（后缀为<code>.pem</code>）拷贝到所有机器的<code>/etc/kubernetes/ssl</code> 目录下
 &gt; 命令略</p>
 
 <h1 id="安装kubectl文件">安装kubectl文件</h1>
@@ -637,6 +637,7 @@ ETCD_ADVERTISE_CLIENT_URLS=&quot;https://192.168.99.101:2379&quot;
 <p>启动服务：</p>
 
 <pre><code>mv etcd.service /usr/lib/systemd/system/
+mkdir /var/lib/etcd
 systemctl daemon-reload
 systemctl enable etcd
 systemctl start etcd
@@ -1035,7 +1036,8 @@ KUBELET_ARGS=&quot;--bootstrap-kubeconfig=/etc/kubernetes/bootstrap.kubeconfig -
 
 <p>启动：</p>
 
-<pre><code>systemctl daemon-reload
+<pre><code>mkdir /varlib/kubelet
+systemctl daemon-reload
 systemctl enable kubelet
 systemctl start kubelet
 systemctl status kubelet
@@ -1071,7 +1073,7 @@ After=network.target
 [Service]
 EnvironmentFile=-/etc/kubernetes/config
 EnvironmentFile=-/etc/kubernetes/proxy
-ExecStart=/usr/bin/kube-proxy \
+ExecStart=/usr/local/bin/kube-proxy \
         $KUBE_LOGTOSTDERR \
         $KUBE_LOG_LEVEL \
         $KUBE_MASTER \
