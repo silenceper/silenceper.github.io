@@ -224,7 +224,7 @@
 </code></pre>
 
 <blockquote>
-<p>注：如果<code>MaxIdleConns</code>大于0并且<code>MaxOpenConns</code>小于<code>MaxIdleConns</code>,那么会将<code>MaxIdleConns</code>置为<code>MaxIdleConns</code></p>
+<p>注：如果<code>MaxIdleConns</code>大于0并且<code>MaxOpenConns</code>小于<code>MaxIdleConns</code>,那么会将<code>MaxIdleConns</code>置为<code>MaxOpenConns</code></p>
 </blockquote>
 
 <p>来看下db这个结构，以及字段相关说明：</p>
@@ -232,7 +232,7 @@
 <pre><code class="language-go">type DB struct {
 	//具体的数据库实现的interface{},
 	//例如https://github.com/go-sql-driver/mysql 就注册并并实现了driver.Open方法，主要是在里面实现了一些鉴权的操作
-	driver driver.Driver  
+	driver driver.Driver
 	//dsn连接
 	dsn    string
 	//在prepared statement中用到
@@ -244,7 +244,7 @@
 	//用来传递连接请求的管道
 	connRequests []chan connRequest
 	//当前打开的连接数
-	numOpen      int	
+	numOpen      int
 	//当需要创建新的链接的时候，往这个管道中发送一个struct数据，
 	//因为在Open数据库的就启用了一个goroutine执行connectionOpener方法读取管道中的数据
 	openerCh    chan struct{}
@@ -253,13 +253,13 @@
 	//用来保证锁被正确的关闭
 	dep         map[finalCloser]depSet
 	//stacktrace of last conn's put; debug only
-	lastPut     map[*driverConn]string 
+	lastPut     map[*driverConn]string
 	//最大空闲连接
-	maxIdle     int                  
+	maxIdle     int
 	//最大打开的连接
-	maxOpen     int                    
+	maxOpen     int
 	//连接的最大空闲时间
-	maxLifetime time.Duration          
+	maxLifetime time.Duration
 	//定时清理空闲连接的管道
 	cleanerCh   chan struct{}
 }
@@ -305,7 +305,7 @@
 <p>当我们调用<code>rows.Close()</code>的时候，就会把当前正在使用的链接重新放回<code>freeConn</code>或者写入到<code>db.connRequests</code>管道中</p>
 
 <pre><code class="language-go">	//putConnDBLocked 方法
-	
+
 	//如果有db.connRequests有在等待连接的话，就把当前连接给它用
 	if c := len(db.connRequests); c &gt; 0 {
 		req := db.connRequests[0]
