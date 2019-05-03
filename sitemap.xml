@@ -53,96 +53,14 @@
   </url>
   
   <url>
-    <loc>http://silenceper.com/categories/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>http://silenceper.com/post/</loc>
     <lastmod>2018-10-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://silenceper.com/tags/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://silenceper.com/categories/tech/</loc>
-    <lastmod>2018-10-12T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://silenceper.com/tags/confd/</loc>
-    <lastmod>2016-08-02T15:40:59+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://silenceper.com/tags/dcmp/</loc>
-    <lastmod>2016-08-02T15:40:59+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://silenceper.com/tags/docker/</loc>
-    <lastmod>2018-09-09T11:45:59+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://silenceper.com/tags/etcd/</loc>
-    <lastmod>2016-08-02T15:40:59+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://silenceper.com/tags/flannel/</loc>
-    <lastmod>2018-10-12T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://silenceper.com/tags/go/</loc>
-    <lastmod>2016-11-20T02:40:59+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://silenceper.com/tags/k8s/</loc>
-    <lastmod>2018-09-12T11:45:59+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://silenceper.com/tags/mysql/</loc>
-    <lastmod>2016-01-03T15:40:59+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://silenceper.com/tags/pool/</loc>
-    <lastmod>2016-11-20T02:40:59+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>http://silenceper.com/</loc>
     <lastmod>2018-10-12T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://silenceper.com/tags/tcp/</loc>
-    <lastmod>2016-01-03T15:40:59+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://silenceper.com/tags/wechat/</loc>
-    <lastmod>2016-09-16T15:40:59+08:00</lastmod>
     <priority>0</priority>
   </url>
   
