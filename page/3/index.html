@@ -137,107 +137,23 @@
             
 
 <div class="post-preview">
-    <a href="http://silenceper.com/blog/201809/how-to-build-a-k8s-cluster/">
+    <a href="http://silenceper.com/blog/201601/tcp_time_wait_error/">
         <h2 class="post-title">
-            在CentOS上搭建Kubernetes集群
+            tcp time_wait问题
         </h2>
 	
         <h3 class="post-subtitle">
-            如何在CentOS上安装kubernetes集群，原生安装
+            tcp time_wait连接数过多导致服务不可用
         </h3>
 	
         <div class="post-content-preview">
 	
-            主要是自己在搭建过程中整理的文档，如果来构建一个多节点的kubernetes集群，以服务的方式，注册到系统
+            time_wait 连接数过多
         
         </div>
     </a>
     <p class="post-meta">
-    Posted by     &#34;silenceper&#34; Friday, September 7, 2018
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="http://silenceper.com/blog/201611/tcp_connection_pool/">
-        <h2 class="post-title">
-            聊聊连接池
-        </h2>
-	
-        <h3 class="post-subtitle">
-            mysql 数据库连接池设置
-        </h3>
-	
-        <div class="post-content-preview">
-	
-            以下主要使用Golang作为编程语言 为什么需要连接池 我觉得使用连接池最大的一个好处就是减少连接的创建和关闭，增加系统负载能力， 之前就有遇到一
-       
-        </div>
-    </a>
-    <p class="post-meta">
-    Posted by     &#34;silenceper&#34; Sunday, November 20, 2016
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="http://silenceper.com/blog/201609/go-wechat-sdk/">
-        <h2 class="post-title">
-            开源项目：wechat sdk
-        </h2>
-	
-        <h3 class="post-subtitle">
-            wechat sdk for golang: 一个简单易用的微信sdk
-        </h3>
-	
-        <div class="post-content-preview">
-	
-            一直很想自己用golang写个微信的sdk，目标是简单好用，所以利用闲暇时间（周末，中秋😁），就做出来。 项目地址:https://githu
-       
-        </div>
-    </a>
-    <p class="post-meta">
-    Posted by     &#34;silenceper&#34; Friday, September 16, 2016
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="http://silenceper.com/blog/201608/dcmp/">
-        <h2 class="post-title">
-            dcmp
-        </h2>
-	
-        <h3 class="post-subtitle">
-            基于etcd的配置管理系统
-        </h3>
-	
-        <div class="post-content-preview">
-	
-            Distributed Configuration Management Platform 提供了一个etcd的管理界面，可通过界面修改配置信息，借助confd可实现配置文件的同步。 GITHUB：https://github
-       
-        </div>
-    </a>
-    <p class="post-meta">
-    Posted by     &#34;silenceper&#34; Tuesday, August 2, 2016
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="http://silenceper.com/blog/201605/go-http-process/">
-        <h2 class="post-title">
-            Golang 中http包默认路由匹配规则阅读笔记
-        </h2>
-	
-        <div class="post-content-preview">
-	
-            一、执行流程 构建一个简单http server： package main import ( &quot;log&quot; &quot;net/http&quot; ) func main() { http.HandleFunc(&quot;/&quot;, func(w http.ResponseWriter, r *http.Request) { w.Write([]byte(&quot;hello world&quot;)) }) log.Fatal(http.ListenAndServe(&quot;:8080&quot;, nil)) } 使用http://127.0.0.1:8080/ 就
-       
-        </div>
-    </a>
-    <p class="post-meta">
-    Posted by     &#34;silenceper&#34; Saturday, May 28, 2016
+    Posted by     &#34;silenceper&#34; Sunday, January 3, 2016
     </p>
 </div>
 <hr>
@@ -249,13 +165,9 @@
 <ul class="pager">
     
     <li class="previous">
-        <a href="/">&larr; Newer Posts</a>
+        <a href="/page/2/">&larr; Newer Posts</a>
     </li>
     
-    
-    <li class="next">
-        <a href="/page/3/">Older Posts &rarr;</a>
-    </li>
     
 </ul>
 

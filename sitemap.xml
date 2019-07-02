@@ -3,6 +3,17 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>http://silenceper.com/blog/201907/cluster-autoscaler-usage/</loc>
+    <lastmod>2019-07-02T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://silenceper.com/</loc>
+    <lastmod>2019-07-02T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>http://silenceper.com/blog/201810/calico-in-k8s/</loc>
     <lastmod>2018-10-12T00:00:00+00:00</lastmod>
   </url>
@@ -50,12 +61,6 @@
   <url>
     <loc>http://silenceper.com/blog/201601/tcp_time_wait_error/</loc>
     <lastmod>2016-01-03T15:40:59+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://silenceper.com/</loc>
-    <lastmod>2018-10-12T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
 </urlset>
