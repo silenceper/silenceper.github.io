@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ca on silenceper</title>
+    <link>http://silenceper.com/tags/ca/</link>
+    <description>Recent content in ca on silenceper</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 02 Jul 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://silenceper.com/tags/ca/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Cluster Autoscaler:集群自动扩缩容</title>
+      <link>http://silenceper.com/blog/201907/cluster-autoscaler-usage/</link>
+      <pubDate>Tue, 02 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://silenceper.com/blog/201907/cluster-autoscaler-usage/</guid>
+      <description>Cluster AutoScaler 是一个自动扩展和收缩 Kubernetes 集群 Node 的扩展。当集群容量不足时，它会自动去 Cloud Provider （支持 GCE、GKE 和 AWS）创建新的 Node，而在 Node 长时间资源利用</description>
+    </item>
+    
+  </channel>
+</rss>

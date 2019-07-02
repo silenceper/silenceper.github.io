@@ -6,9 +6,73 @@
     <description>Recent content in Tags on silenceper</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
+    <lastBuildDate>Tue, 02 Jul 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://silenceper.com/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>ca</title>
+      <link>http://silenceper.com/tags/ca/</link>
+      <pubDate>Tue, 02 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://silenceper.com/tags/ca/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>k8s</title>
+      <link>http://silenceper.com/tags/k8s/</link>
+      <pubDate>Tue, 02 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://silenceper.com/tags/k8s/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>flannel</title>
+      <link>http://silenceper.com/tags/flannel/</link>
+      <pubDate>Fri, 12 Oct 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://silenceper.com/tags/flannel/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>docker</title>
+      <link>http://silenceper.com/tags/docker/</link>
+      <pubDate>Sun, 09 Sep 2018 11:45:59 +0800</pubDate>
+      
+      <guid>http://silenceper.com/tags/docker/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>go</title>
+      <link>http://silenceper.com/tags/go/</link>
+      <pubDate>Sun, 20 Nov 2016 02:40:59 +0800</pubDate>
+      
+      <guid>http://silenceper.com/tags/go/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>pool</title>
+      <link>http://silenceper.com/tags/pool/</link>
+      <pubDate>Sun, 20 Nov 2016 02:40:59 +0800</pubDate>
+      
+      <guid>http://silenceper.com/tags/pool/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>wechat</title>
+      <link>http://silenceper.com/tags/wechat/</link>
+      <pubDate>Fri, 16 Sep 2016 15:40:59 +0800</pubDate>
+      
+      <guid>http://silenceper.com/tags/wechat/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>confd</title>
@@ -29,47 +93,11 @@
     </item>
     
     <item>
-      <title>docker</title>
-      <link>http://silenceper.com/tags/docker/</link>
-      <pubDate>Sun, 09 Sep 2018 11:45:59 +0800</pubDate>
-      
-      <guid>http://silenceper.com/tags/docker/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>etcd</title>
       <link>http://silenceper.com/tags/etcd/</link>
       <pubDate>Tue, 02 Aug 2016 15:40:59 +0800</pubDate>
       
       <guid>http://silenceper.com/tags/etcd/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>flannel</title>
-      <link>http://silenceper.com/tags/flannel/</link>
-      <pubDate>Fri, 12 Oct 2018 00:00:00 +0000</pubDate>
-      
-      <guid>http://silenceper.com/tags/flannel/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>go</title>
-      <link>http://silenceper.com/tags/go/</link>
-      <pubDate>Sun, 20 Nov 2016 02:40:59 +0800</pubDate>
-      
-      <guid>http://silenceper.com/tags/go/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>k8s</title>
-      <link>http://silenceper.com/tags/k8s/</link>
-      <pubDate>Wed, 12 Sep 2018 11:45:59 +0800</pubDate>
-      
-      <guid>http://silenceper.com/tags/k8s/</guid>
       <description></description>
     </item>
     
@@ -83,29 +111,11 @@
     </item>
     
     <item>
-      <title>pool</title>
-      <link>http://silenceper.com/tags/pool/</link>
-      <pubDate>Sun, 20 Nov 2016 02:40:59 +0800</pubDate>
-      
-      <guid>http://silenceper.com/tags/pool/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>tcp</title>
       <link>http://silenceper.com/tags/tcp/</link>
       <pubDate>Sun, 03 Jan 2016 15:40:59 +0800</pubDate>
       
       <guid>http://silenceper.com/tags/tcp/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>wechat</title>
-      <link>http://silenceper.com/tags/wechat/</link>
-      <pubDate>Fri, 16 Sep 2016 15:40:59 +0800</pubDate>
-      
-      <guid>http://silenceper.com/tags/wechat/</guid>
       <description></description>
     </item>
     
