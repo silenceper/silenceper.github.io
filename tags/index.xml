@@ -6,10 +6,37 @@
     <description>Recent content in Tags on silenceper</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Jul 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 22 Oct 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://silenceper.com/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>filebeat</title>
+      <link>http://silenceper.com/tags/filebeat/</link>
+      <pubDate>Tue, 22 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://silenceper.com/tags/filebeat/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>k8s</title>
+      <link>http://silenceper.com/tags/k8s/</link>
+      <pubDate>Tue, 22 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://silenceper.com/tags/k8s/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>log-pilot</title>
+      <link>http://silenceper.com/tags/log-pilot/</link>
+      <pubDate>Tue, 22 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://silenceper.com/tags/log-pilot/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>ca</title>
@@ -17,15 +44,6 @@
       <pubDate>Tue, 02 Jul 2019 00:00:00 +0000</pubDate>
       
       <guid>http://silenceper.com/tags/ca/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>k8s</title>
-      <link>http://silenceper.com/tags/k8s/</link>
-      <pubDate>Tue, 02 Jul 2019 00:00:00 +0000</pubDate>
-      
-      <guid>http://silenceper.com/tags/k8s/</guid>
       <description></description>
     </item>
     

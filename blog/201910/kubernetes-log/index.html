@@ -10,9 +10,9 @@
     <meta name="keyword"  content="程序员,Golang,Microservice">
     <link rel="shortcut icon" href="http://silenceper.com/img/favicon.ico">
 
-    <title>Golang 中http包默认路由匹配规则阅读笔记- silenceper的博客</title>
+    <title>Kubernetes容器日志收集方案- silenceper的博客</title>
 
-    <link rel="canonical" href="http://silenceper.com/blog/201605/go-http-process">
+    <link rel="canonical" href="http://silenceper.com/blog/201910/kubernetes-log/">
 
     <link rel="stylesheet" href="http://silenceper.com/css/iDisqus.min.css"/>
 
@@ -108,7 +108,7 @@
 
 <style type="text/css">
     header.intro-header{
-        background-image: url('http://silenceper.com/img/bg/rabbit.jpg')
+        background-image: url('http://silenceper.com/img/bg/guidao.jpg')
     }
 </style>
 <header class="intro-header" >
@@ -118,18 +118,22 @@
                 <div class="post-heading">
                     <div class="tags">
                        
-                       <a class="tag" href="/tags/wechat" title="wechat">
-                           wechat
+                       <a class="tag" href="/tags/k8s" title="k8s">
+                           k8s
                         </a>
                         
-                       <a class="tag" href="/tags/go" title="go">
-                           go
+                       <a class="tag" href="/tags/filebeat" title="filebeat">
+                           filebeat
+                        </a>
+                        
+                       <a class="tag" href="/tags/log-pilot" title="log-pilot">
+                           log-pilot
                         </a>
                         
                     </div>
-                    <h1>Golang 中http包默认路由匹配规则阅读笔记</h1>
-                    <h2 class="subheading"></h2>
-                    <span  class="meta">Posted by     &#34;silenceper&#34; on Saturday, May 28, 2016
+                    <h1>Kubernetes容器日志收集方案</h1>
+                    <h2 class="subheading">容器日志收集方案对比，以及对log-pilot组件原理分析</h2>
+                    <span  class="meta">Posted by silenceper on Tuesday, October 22, 2019
                         
                     </span>
                 </div>
@@ -157,262 +161,113 @@
                 </header>
                 <nav id="TableOfContents">
 <ul>
-<li><a href="#一-执行流程">一、执行流程</a>
-<ul>
-<li>
-<ul>
-<li>
-<ul>
-<li><a href="#1-创建一个-listener-监听-8080-端口">1.创建一个<code>Listener</code>监听<code>8080</code>端口</a></li>
-<li><a href="#2-进入-for-循环并accept请求-没有请求则处于阻塞状态">2.进入<code>for</code>循环并Accept请求，没有请求则处于阻塞状态</a></li>
-<li><a href="#3-接收到请求-并创建一个conn对象-放入goroutine处理-实现高并发关键">3.接收到请求，并创建一个conn对象，放入goroutine处理（实现高并发关键）</a></li>
-<li><a href="#4-解析请求来源信息获得请求路径等重要信息">4.解析请求来源信息获得请求路径等重要信息</a></li>
-<li><a href="#5-请求serverhttp方法-已经通过上一步获得了responsewriter和request对象">5.请求ServerHTTP方法，已经通过上一步获得了ResponseWriter和Request对象</a></li>
-</ul></li>
-</ul></li>
-</ul></li>
-<li><a href="#二-defaultservemux-路由匹配规则">二、DefaultServeMux 路由匹配规则</a>
-<ul>
-<li><a href="#2-1-添加路由规则">2.1 添加路由规则</a></li>
-<li><a href="#2-2-查找路由规则">2.2 查找路由规则</a></li>
-</ul></li>
+<li><a href="#方案">方案</a></li>
+<li><a href="#log-pilot-代码分析">log-pilot 代码分析</a></li>
 </ul>
 </nav>
 		
 		
 
-<h1 id="一-执行流程">一、执行流程</h1>
+<p>收集POD中container日志，日志还分为两种一种是容器标准输出日志和容器内日志。</p>
 
-<p>构建一个简单http server：</p>
+<h1 id="方案">方案</h1>
 
-<pre><code class="language-go">package main
+<p>从日志的采集方式上，在我看来方案大致主要分为两种：</p>
 
-import (
-	&quot;log&quot;
-	&quot;net/http&quot;
-)
+<p><strong>（1）POD 里面安装logging agent</strong></p>
 
-func main() {
-	http.HandleFunc(&quot;/&quot;, func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte(&quot;hello world&quot;))
-	})
-	log.Fatal(http.ListenAndServe(&quot;:8080&quot;, nil))
-}
+<p>每个pod里面都要安装一个agent，无论是以放在本container还是以sidecar的方式部署，很明显会占用很多资源，基本不推荐</p>
 
-</code></pre>
+<p><strong>（2）在节点上安装logging agent（推荐）</strong></p>
 
-<p>使用<code>http://127.0.0.1:8080/</code> 就可以看到输出了</p>
-
-<p>通过跟踪http.go包代码，可以发现执行流程基本如下：</p>
-
-<h4 id="1-创建一个-listener-监听-8080-端口">1.创建一个<code>Listener</code>监听<code>8080</code>端口</h4>
-
-<h4 id="2-进入-for-循环并accept请求-没有请求则处于阻塞状态">2.进入<code>for</code>循环并Accept请求，没有请求则处于阻塞状态</h4>
-
-<h4 id="3-接收到请求-并创建一个conn对象-放入goroutine处理-实现高并发关键">3.接收到请求，并创建一个conn对象，放入goroutine处理（实现高并发关键）</h4>
-
-<h4 id="4-解析请求来源信息获得请求路径等重要信息">4.解析请求来源信息获得请求路径等重要信息</h4>
-
-<h4 id="5-请求serverhttp方法-已经通过上一步获得了responsewriter和request对象">5.请求ServerHTTP方法，已经通过上一步获得了ResponseWriter和Request对象</h4>
-
-<pre><code class="language-go">func (sh serverHandler) ServeHTTP(rw ResponseWriter, req *Request) {
-	//此handler即为http.ListenAndServe 中的第二个参数
-	handler := sh.srv.Handler 
-	if handler == nil {
-		//如果handler为空则使用内部的DefaultServeMux 进行处理
-		handler = DefaultServeMux
-	}
-	if req.RequestURI == &quot;*&quot; &amp;&amp; req.Method == &quot;OPTIONS&quot; {
-		handler = globalOptionsHandler{}
-	}
-	//这里就开始处理http请求
-	//如果需要使用自定义的mux，就需要实现ServeHTTP方法，即实现Handler接口。
-	handler.ServeHTTP(rw, req)
-}
-</code></pre>
-
-<p>6.进入DefaultServeMux中的逻辑就是根据请求path在map中匹配查找handler，并交由handler处理</p>
+<p>其实容器stdout,stderr的日志最终也是落在宿主机上，而容器内的路径可以通过配置volumeMount 在宿主机上配置映射即可，所以这种方式还是最可行的</p>
 
 <blockquote>
-<p>http请求处理流程更多信息可以参考<a href="https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/03.3.md">《Go Web 编程
-》3.3 Go如何使得Web工作</a></p>
+<p>当然应用还可以自己通过代码直接上报给日志服务，但是这种方式不够通用，还增加了业务代码的复杂性</p>
 </blockquote>
 
-<h1 id="二-defaultservemux-路由匹配规则">二、DefaultServeMux 路由匹配规则</h1>
+<h1 id="log-pilot-代码分析">log-pilot 代码分析</h1>
 
-<p>先看几个路由规则：</p>
+<p>这里以log-pilot为例，来分析下</p>
 
-<pre><code class="language-go">package main
+<p>代码地址： <a href="https://github.com/AliyunContainerService/log-pilot">https://github.com/AliyunContainerService/log-pilot</a></p>
 
-import (
-	&quot;log&quot;
-	&quot;net/http&quot;
-)
+<p><strong>基本流程:</strong></p>
 
-func main() {
-	//规则1
-	http.HandleFunc(&quot;/&quot;, func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte(&quot;hello world&quot;))
-	})
-	
-	//规则2
-	http.HandleFunc(&quot;/path/&quot;, func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte(&quot;pattern path: /path/ &quot;))
-	})
+<p>监听docker-service的事件（start，restart，destory），从container信息中提取pod_name,namespace信息（可通过docker inspect [container ID]查看到），并写入filebeat中的prospector.d中的配置文件。</p>
 
-	//规则3
-	http.HandleFunc(&quot;/path/subpath&quot;, func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte(&quot;pattern path: /path/subpath&quot;))
-	})
+<p><strong>事件监听：</strong>
+<a href="https://github.com/AliyunContainerService/log-pilot/blob/0948b2c1feca97f849bd3a4eeda7bd40a907efca/pilot/pilot.go#L134">pilot/pilot.go#L134</a></p>
 
-	log.Fatal(http.ListenAndServe(&quot;:8080&quot;, nil))
-}
+<pre><code>	msgs, errs := p.client.Events(ctx, options)chenqz1987, 1 year ago: • fix issue #40 and update log-pilot capability…
 
-</code></pre>
+	go func() {
+		defer func() {
+			log.Warn(&quot;finish to watch event&quot;)
+			p.stopChan &lt;- true
+		}()
 
-<p>情景一：</p>
+		log.Info(&quot;begin to watch event&quot;)
 
-<p>访问：<code>http://127.0.0.1:8080/</code></p>
-
-<p>返回：<code>hello world</code></p>
-
-<p>情景二：</p>
-
-<p>访问：<code>http://127.0.0.1:8080/path</code></p>
-
-<p>返回：<code>pattern path: /path/</code></p>
-
-<p>情景三：</p>
-
-<p>访问：<code>http://127.0.0.1:8080/path/subpath/</code></p>
-
-<p>返回：<code>pattern path: /path/</code></p>
-
-<p>情景四：</p>
-
-<p>访问：<code>http://127.0.0.1:8080/hahaha/</code></p>
-
-<p>返回：<code>hello world</code></p>
-
-<p>先说明一些规则吧，再看代码是怎么实现的：</p>
-
-<p>1.如果匹配路径中后带有<code>/</code>，则会自动增加一个匹配规则不带<code>/</code>后缀的，并跳转转到<code>path/</code>,解释了情景二的场景，为什么匹配到的<code>/path/</code></p>
-
-<p>2.我设置了这么多规则为什么规则一可以通用匹配未设置的路由信息，而且又不影响已经存在路由， 内部是怎么实现的？</p>
-
-<h2 id="2-1-添加路由规则">2.1 添加路由规则</h2>
-
-<p>先看两个struct，这是存放默认路由规则的：</p>
-
-<pre><code class="language-go">type ServeMux struct {
-	mu    sync.RWMutex  //处理并发，增加读写锁
-	m     map[string]muxEntry  //存放规则map，key即为设置的path
-	hosts bool // whether any patterns contain hostnames（是否包含host）
-}
-
-type muxEntry struct {
-	explicit bool //是否完全匹配
-	h        Handler//相应匹配规则的handler
-	pattern  string//匹配路径
-}
-
-</code></pre>
-
-<p>通过跟踪<code>http.HandleFunc</code>定位到如下代码，正是往上面两个<code>struct</code>中增加规则：</p>
-
-<pre><code class="language-go">func (mux *ServeMux) Handle(pattern string, handler Handler) {
-	mux.mu.Lock()
-	defer mux.mu.Unlock()
-
-	if pattern == &quot;&quot; {
-		panic(&quot;http: invalid pattern &quot; + pattern)
-	}
-	if handler == nil {
-		panic(&quot;http: nil handler&quot;)
-	}
-	//如果已经匹配到了则panic
-	if mux.m[pattern].explicit {
-		panic(&quot;http: multiple registrations for &quot; + pattern)
-	}
-    
-    //增加一个新的匹配规则
-	mux.m[pattern] = muxEntry{explicit: true, h: handler, pattern: pattern}
-	
-	//根据path的第一个字母判断是否有host
-	if pattern[0] != '/' {
-		mux.hosts = true
-	}
-
-	//！！这里看清楚 就是实现了情景二的情况 ，看判断条件
-	n := len(pattern)
-	if n &gt; 0 &amp;&amp; pattern[n-1] == '/' &amp;&amp; !mux.m[pattern[0:n-1]].explicit{
-		// If pattern contains a host name, strip it and use remaining
-		// path for redirect.
-		path := pattern
-		if pattern[0] != '/' {
-			// In pattern, at least the last character is a '/', so
-			// strings.Index can't be -1.
-			path = pattern[strings.Index(pattern, &quot;/&quot;):]
+		for {
+			select {
+			case msg := &lt;-msgs:
+				if err := p.processEvent(msg); err != nil {
+					log.Errorf(&quot;fail to process event: %v,  %v&quot;, msg, err)
+				}
+			case err := &lt;-errs:
+				log.Warnf(&quot;error: %v&quot;, err)
+				if err == io.EOF || err == io.ErrUnexpectedEOF {
+					return
+				}
+				msgs, errs = p.client.Events(ctx, options)
+			}
 		}
-		url := &amp;url.URL{Path: path}
-		mux.m[pattern[0:n-1]] = muxEntry{h: RedirectHandler(url.String(), StatusMovedPermanently), pattern: pattern}
-	}
-}
-
+	}()
 </code></pre>
 
-<p>上面有个<code>Helpful behavior</code>的注释行为，就是实现了情景二的情况，他是判断如果匹配的路径中最后含有<code>/</code>，并且之前也不存在添加去除反斜杠的规则的话，就自动给他增加一个301的跳转指向<code>/path/</code></p>
+<p><strong>对接不同收集器</strong></p>
 
-<h2 id="2-2-查找路由规则">2.2 查找路由规则</h2>
+<p>log-pilot支持<code>filebeat</code>和<code>fluentd</code>两种日志收集器，目的主要是刷新对应的配置文件。主要是实现了<code>Piloter</code>接口：</p>
 
-<p>路由规则的查找就是从<code>ServeMux</code>中的map去匹配查找的,的到这个handler并执行，只是会有一些处理机制，比如怎么样确保访问<code>/path/subpath</code>的时候是先匹配<code>/path/subpath</code>而不是匹配<code>/path/</code>呢？</p>
+<p><a href="https://github.com/AliyunContainerService/log-pilot/blob/0948b2c1feca97f849bd3a4eeda7bd40a907efca/pilot/piloter.go#L17">pilot/piloter.go#L17</a></p>
 
-<p>当一个请求过来的时候，跟踪到了<code>mux.match</code>方法：</p>
+<pre><code>// Piloter interface for piloter
+type Piloter interface {
+	Name() string
+
+	Start() error
+	Reload() error
+	Stop() error
+
+	GetBaseConf() string
+	GetConfHome() string
+	GetConfPath(container string) string
+
+	OnDestroyEvent(container string) error
+}
+</code></pre>
+
+<p>至于在启动log-pilot选择哪种采集器进行采集，是通过在容器的<a href="https://github.com/AliyunContainerService/log-pilot/blob/master/assets/entrypoint">entrypoint</a>文件中通过制定环境变量<code>PILOT_TYPE</code>的方式进行选择性渲染的。</p>
+
+<p><strong>完善</strong></p>
+
+<p>当前最新版本[0.9.7]</p>
+
+<p>1、目前log-pilot还是只能通过监听docker-servier的event进行，对于containerd，cri-o还没办法适配。</p>
 
 <blockquote>
-<p>过程<code>mux.ServerHTTP</code>-&gt;<code>mux.Handler</code>-&gt;<code>mux.handler</code>-&gt;<code>mux.match</code></p>
+<p>containerd目前没提供相应的event接口，可以选择从k8s api 通过List-Watch中获取</p>
 </blockquote>
 
-<pre><code class="language-go">func (mux *ServeMux) match(path string) (h Handler, pattern string) {
-	var n = 0
-	for k, v := range mux.m {
-		if !pathMatch(k, path) {
-			continue
-		}
-		//如果匹配到了一个规则，并没有马上返回handler，而且继续匹配并且判断path的长度是否是最长的，这是关键！！！
-		if h == nil || len(k) &gt; n {
-			n = len(k)
-			h = v.h
-			pattern = v.pattern
-		}
-	}
-	return
-}
-</code></pre>
-
-<p>1.这里就解释了为什么设置的精确的path是最优匹配到的，因为它是根据path的长度判断。
-当然也就解释了为什么<code>/</code>可以匹配所有（看<code>pathMatch</code>函数就知道了，<code>/</code>是匹配所有的，只是这是最后才被匹配成功）</p>
-
-<p>2.得到了处理请求的handler，再调用<code>h.ServeHTTP(w, r)</code>，去执行相应的handler方法。</p>
-
-<p>等一下，handler中哪里有<code>ServeHTTP</code>这个方法？？</p>
-
-<p>因为在调用 <code>http.HandleFunc</code>的时候已经将自定义的handler处理函数，强制转为<code>HandlerFunc</code>类型的，就拥有了<code>ServeHTTP</code>方法：</p>
-
-<pre><code class="language-go">type HandlerFunc func(ResponseWriter, *Request)
-
-// ServeHTTP calls f(w, r).
-func (f HandlerFunc) ServeHTTP(w ResponseWriter, r *Request) {
-	f(w, r)
-}
-
-</code></pre>
-
-<p><code>f(w,r)</code>就实现了handler的执行。</p>
+<p>2、filebeat升级</p>
 
 <blockquote>
-<p>脑子里面清楚，但真到表述的时候，呵呵，当做笔记啦。。。</p>
+<p>filebeat 目前用的版本是6.1.1 ，filebeat本身就是一个比较吃资源的进程，filebeat有些issue是<a href="https://github.com/elastic/beats/pull/7820">7820</a>bug，可以将filebeat升级到一个新的版本。</p>
 </blockquote>
+
+<p>3、资源限制
+&gt; 在k8s中通过制定limit，限制log-pilot的资源占用（主要还是日志采集器）</p>
 
 
                 <hr>
@@ -420,13 +275,9 @@ func (f HandlerFunc) ServeHTTP(w ResponseWriter, r *Request) {
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/blog/201601/tcp_time_wait_error" data-toggle="tooltip" data-placement="top" title="tcp time_wait问题">&larr; Previous Post</a>
+                        <a href="/blog/201907/cluster-autoscaler-usage/" data-toggle="tooltip" data-placement="top" title="Cluster Autoscaler:集群自动扩缩容">&larr; Previous Post</a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/blog/201608/dcmp" data-toggle="tooltip" data-placement="top" title="dcmp">Next Post &rarr;</a>
-                    </li>
                     
                 </ul>
 
@@ -580,7 +431,7 @@ func (f HandlerFunc) ServeHTTP(w ResponseWriter, r *Request) {
                     
                 </ul>
 		<p class="copyright text-muted">
-                    Copyright &copy; silenceper , 2016
+                    Copyright &copy; silenceper , 2019
                     <br>
                     Hugo Theme by <a href="https://github.com/zhaohuabing/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a>
                 </p>
