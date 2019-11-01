@@ -3,157 +3,157 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>http://silenceper.com/categories/</loc>
+    <loc>https://silenceper.com/categories/</loc>
     <lastmod>2019-10-22T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://silenceper.com/tags/filebeat/</loc>
+    <loc>https://silenceper.com/tags/filebeat/</loc>
     <lastmod>2019-10-22T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://silenceper.com/tags/k8s/</loc>
+    <loc>https://silenceper.com/tags/k8s/</loc>
     <lastmod>2019-10-22T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://silenceper.com/blog/201910/kubernetes-log/</loc>
+    <loc>https://silenceper.com/blog/201910/kubernetes-log/</loc>
     <lastmod>2019-10-22T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://silenceper.com/tags/log-pilot/</loc>
+    <loc>https://silenceper.com/tags/log-pilot/</loc>
     <lastmod>2019-10-22T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://silenceper.com/post/</loc>
+    <loc>https://silenceper.com/post/</loc>
     <lastmod>2019-10-22T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://silenceper.com/</loc>
+    <loc>https://silenceper.com/</loc>
     <lastmod>2019-10-22T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://silenceper.com/tags/</loc>
+    <loc>https://silenceper.com/tags/</loc>
     <lastmod>2019-10-22T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://silenceper.com/categories/tech/</loc>
+    <loc>https://silenceper.com/categories/tech/</loc>
     <lastmod>2019-10-22T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://silenceper.com/tags/ca/</loc>
+    <loc>https://silenceper.com/tags/ca/</loc>
     <lastmod>2019-07-02T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://silenceper.com/blog/201907/cluster-autoscaler-usage/</loc>
+    <loc>https://silenceper.com/blog/201907/cluster-autoscaler-usage/</loc>
     <lastmod>2019-07-02T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://silenceper.com/tags/flannel/</loc>
+    <loc>https://silenceper.com/tags/flannel/</loc>
     <lastmod>2018-10-12T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://silenceper.com/blog/201810/calico-in-k8s/</loc>
+    <loc>https://silenceper.com/blog/201810/calico-in-k8s/</loc>
     <lastmod>2018-10-12T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://silenceper.com/blog/201809/flannel-in-k8s/</loc>
+    <loc>https://silenceper.com/blog/201809/flannel-in-k8s/</loc>
     <lastmod>2018-09-26T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://silenceper.com/blog/201809/k8s-source-code-structure/</loc>
+    <loc>https://silenceper.com/blog/201809/k8s-source-code-structure/</loc>
     <lastmod>2018-09-12T11:45:59+08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://silenceper.com/tags/docker/</loc>
+    <loc>https://silenceper.com/tags/docker/</loc>
     <lastmod>2018-09-09T11:45:59+08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://silenceper.com/blog/201809/over-the-wall-pull-docker-mirror/</loc>
+    <loc>https://silenceper.com/blog/201809/over-the-wall-pull-docker-mirror/</loc>
     <lastmod>2018-09-09T11:45:59+08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://silenceper.com/blog/201809/how-to-build-a-k8s-cluster/</loc>
+    <loc>https://silenceper.com/blog/201809/how-to-build-a-k8s-cluster/</loc>
     <lastmod>2018-09-07T11:45:59+08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://silenceper.com/tags/go/</loc>
+    <loc>https://silenceper.com/tags/go/</loc>
     <lastmod>2016-11-20T02:40:59+08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://silenceper.com/tags/pool/</loc>
+    <loc>https://silenceper.com/tags/pool/</loc>
     <lastmod>2016-11-20T02:40:59+08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://silenceper.com/blog/201611/tcp_connection_pool/</loc>
+    <loc>https://silenceper.com/blog/201611/tcp_connection_pool/</loc>
     <lastmod>2016-11-20T02:40:59+08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://silenceper.com/tags/wechat/</loc>
+    <loc>https://silenceper.com/tags/wechat/</loc>
     <lastmod>2016-09-16T15:40:59+08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://silenceper.com/blog/201609/go-wechat-sdk/</loc>
+    <loc>https://silenceper.com/blog/201609/go-wechat-sdk/</loc>
     <lastmod>2016-09-16T15:40:59+08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://silenceper.com/tags/confd/</loc>
+    <loc>https://silenceper.com/tags/confd/</loc>
     <lastmod>2016-08-02T15:40:59+08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://silenceper.com/tags/dcmp/</loc>
+    <loc>https://silenceper.com/tags/dcmp/</loc>
     <lastmod>2016-08-02T15:40:59+08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://silenceper.com/blog/201608/dcmp/</loc>
+    <loc>https://silenceper.com/blog/201608/dcmp/</loc>
     <lastmod>2016-08-02T15:40:59+08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://silenceper.com/tags/etcd/</loc>
+    <loc>https://silenceper.com/tags/etcd/</loc>
     <lastmod>2016-08-02T15:40:59+08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://silenceper.com/blog/201605/go-http-process/</loc>
+    <loc>https://silenceper.com/blog/201605/go-http-process/</loc>
     <lastmod>2016-05-28T18:00:59+08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://silenceper.com/tags/mysql/</loc>
+    <loc>https://silenceper.com/tags/mysql/</loc>
     <lastmod>2016-01-03T15:40:59+08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://silenceper.com/tags/tcp/</loc>
+    <loc>https://silenceper.com/tags/tcp/</loc>
     <lastmod>2016-01-03T15:40:59+08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://silenceper.com/blog/201601/tcp_time_wait_error/</loc>
+    <loc>https://silenceper.com/blog/201601/tcp_time_wait_error/</loc>
     <lastmod>2016-01-03T15:40:59+08:00</lastmod>
   </url>
   

@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>pool on silenceper</title>
-    <link>http://silenceper.com/tags/pool/</link>
+    <link>https://silenceper.com/tags/pool/</link>
     <description>Recent content in pool on silenceper</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 20 Nov 2016 02:40:59 +0800</lastBuildDate>
     
-	<atom:link href="http://silenceper.com/tags/pool/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://silenceper.com/tags/pool/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>聊聊连接池</title>
-      <link>http://silenceper.com/blog/201611/tcp_connection_pool/</link>
+      <link>https://silenceper.com/blog/201611/tcp_connection_pool/</link>
       <pubDate>Sun, 20 Nov 2016 02:40:59 +0800</pubDate>
       
-      <guid>http://silenceper.com/blog/201611/tcp_connection_pool/</guid>
+      <guid>https://silenceper.com/blog/201611/tcp_connection_pool/</guid>
       <description>以下主要使用Golang作为编程语言 为什么需要连接池 我觉得使用连接池最大的一个好处就是减少连接的创建和关闭，增加系统负载能力， 之前就有遇到一</description>
     </item>
     

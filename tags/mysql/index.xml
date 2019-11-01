@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>mysql on silenceper</title>
-    <link>http://silenceper.com/tags/mysql/</link>
+    <link>https://silenceper.com/tags/mysql/</link>
     <description>Recent content in mysql on silenceper</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 03 Jan 2016 15:40:59 +0800</lastBuildDate>
     
-	<atom:link href="http://silenceper.com/tags/mysql/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://silenceper.com/tags/mysql/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>tcp time_wait问题</title>
-      <link>http://silenceper.com/blog/201601/tcp_time_wait_error/</link>
+      <link>https://silenceper.com/blog/201601/tcp_time_wait_error/</link>
       <pubDate>Sun, 03 Jan 2016 15:40:59 +0800</pubDate>
       
-      <guid>http://silenceper.com/blog/201601/tcp_time_wait_error/</guid>
+      <guid>https://silenceper.com/blog/201601/tcp_time_wait_error/</guid>
       <description>问题出现： 在元旦前夕，自己维护的一个服务突然在高峰时期收到大量报警，赶紧登上服务器看一下： 最开始的反应是memcache tcp read time out ,因为之前也</description>
     </item>
     

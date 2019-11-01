@@ -2,120 +2,120 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tech on silenceper</title>
-    <link>http://silenceper.com/categories/tech/</link>
+    <link>https://silenceper.com/categories/tech/</link>
     <description>Recent content in Tech on silenceper</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 22 Oct 2019 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="http://silenceper.com/categories/tech/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://silenceper.com/categories/tech/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Kubernetes容器日志收集方案</title>
-      <link>http://silenceper.com/blog/201910/kubernetes-log/</link>
+      <link>https://silenceper.com/blog/201910/kubernetes-log/</link>
       <pubDate>Tue, 22 Oct 2019 00:00:00 +0000</pubDate>
       
-      <guid>http://silenceper.com/blog/201910/kubernetes-log/</guid>
+      <guid>https://silenceper.com/blog/201910/kubernetes-log/</guid>
       <description>收集POD中container日志，日志还分为两种一种是容器标准输出日志和容器内日志。 方案 从日志的采集方式上，在我看来方案大致主要分为两种：</description>
     </item>
     
     <item>
       <title>Cluster Autoscaler:集群自动扩缩容</title>
-      <link>http://silenceper.com/blog/201907/cluster-autoscaler-usage/</link>
+      <link>https://silenceper.com/blog/201907/cluster-autoscaler-usage/</link>
       <pubDate>Tue, 02 Jul 2019 00:00:00 +0000</pubDate>
       
-      <guid>http://silenceper.com/blog/201907/cluster-autoscaler-usage/</guid>
+      <guid>https://silenceper.com/blog/201907/cluster-autoscaler-usage/</guid>
       <description>Cluster AutoScaler 是一个自动扩展和收缩 Kubernetes 集群 Node 的扩展。当集群容量不足时，它会自动去 Cloud Provider （支持 GCE、GKE 和 AWS）创建新的 Node，而在 Node 长时间资源利用</description>
     </item>
     
     <item>
       <title>k8s网络组件：calico</title>
-      <link>http://silenceper.com/blog/201810/calico-in-k8s/</link>
+      <link>https://silenceper.com/blog/201810/calico-in-k8s/</link>
       <pubDate>Fri, 12 Oct 2018 00:00:00 +0000</pubDate>
       
-      <guid>http://silenceper.com/blog/201810/calico-in-k8s/</guid>
+      <guid>https://silenceper.com/blog/201810/calico-in-k8s/</guid>
       <description>前提已经安装好k8s集群 安装 calico 安装其实很简单，已经集成在两个yaml文件中 calico 版本: v3.2.3 安装必看 如果安装过flannel组件，需要先去除dock</description>
     </item>
     
     <item>
       <title>k8s网络组件：flannel</title>
-      <link>http://silenceper.com/blog/201809/flannel-in-k8s/</link>
+      <link>https://silenceper.com/blog/201809/flannel-in-k8s/</link>
       <pubDate>Wed, 26 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>http://silenceper.com/blog/201809/flannel-in-k8s/</guid>
+      <guid>https://silenceper.com/blog/201809/flannel-in-k8s/</guid>
       <description>Flannel是一个专门为k8s定制的网络解决方案，主要解决POD跨主机通信问题，这里主要讲述Flannel是如何实现的。 安装 集成在k8s上</description>
     </item>
     
     <item>
       <title>k8s源码阅读(一)：源码结构</title>
-      <link>http://silenceper.com/blog/201809/k8s-source-code-structure/</link>
+      <link>https://silenceper.com/blog/201809/k8s-source-code-structure/</link>
       <pubDate>Wed, 12 Sep 2018 11:45:59 +0800</pubDate>
       
-      <guid>http://silenceper.com/blog/201809/k8s-source-code-structure/</guid>
+      <guid>https://silenceper.com/blog/201809/k8s-source-code-structure/</guid>
       <description>环境 k8s代码版本：release-1.9 工具：vscode, dlv 下载代码，并放入gopath中，方便编译： $ mkdir -p $GOPATH/src/k8s.io &amp;amp;&amp;amp; cd $GOPATH/src/k8s.io $ git clone https://github.com/kubernetes/kubernetes # 有墙 代码结</description>
     </item>
     
     <item>
       <title>docker pull 翻墙下载镜像</title>
-      <link>http://silenceper.com/blog/201809/over-the-wall-pull-docker-mirror/</link>
+      <link>https://silenceper.com/blog/201809/over-the-wall-pull-docker-mirror/</link>
       <pubDate>Sun, 09 Sep 2018 11:45:59 +0800</pubDate>
       
-      <guid>http://silenceper.com/blog/201809/over-the-wall-pull-docker-mirror/</guid>
+      <guid>https://silenceper.com/blog/201809/over-the-wall-pull-docker-mirror/</guid>
       <description>我们一般通过设置http_proxy环境变量，使得http请求，可以走我们设置的proxy，（一些go get镜像无法下载可以这么用），但是对</description>
     </item>
     
     <item>
       <title>在CentOS上搭建Kubernetes集群</title>
-      <link>http://silenceper.com/blog/201809/how-to-build-a-k8s-cluster/</link>
+      <link>https://silenceper.com/blog/201809/how-to-build-a-k8s-cluster/</link>
       <pubDate>Fri, 07 Sep 2018 11:45:59 +0800</pubDate>
       
-      <guid>http://silenceper.com/blog/201809/how-to-build-a-k8s-cluster/</guid>
+      <guid>https://silenceper.com/blog/201809/how-to-build-a-k8s-cluster/</guid>
       <description>以下是我自己在部署k8s集群上做的一些记录，部署了一个master，一个node节点。 环境准备 我在VirtualBox中建的两个CentOS</description>
     </item>
     
     <item>
       <title>聊聊连接池</title>
-      <link>http://silenceper.com/blog/201611/tcp_connection_pool/</link>
+      <link>https://silenceper.com/blog/201611/tcp_connection_pool/</link>
       <pubDate>Sun, 20 Nov 2016 02:40:59 +0800</pubDate>
       
-      <guid>http://silenceper.com/blog/201611/tcp_connection_pool/</guid>
+      <guid>https://silenceper.com/blog/201611/tcp_connection_pool/</guid>
       <description>以下主要使用Golang作为编程语言 为什么需要连接池 我觉得使用连接池最大的一个好处就是减少连接的创建和关闭，增加系统负载能力， 之前就有遇到一</description>
     </item>
     
     <item>
       <title>开源项目：wechat sdk</title>
-      <link>http://silenceper.com/blog/201609/go-wechat-sdk/</link>
+      <link>https://silenceper.com/blog/201609/go-wechat-sdk/</link>
       <pubDate>Fri, 16 Sep 2016 15:40:59 +0800</pubDate>
       
-      <guid>http://silenceper.com/blog/201609/go-wechat-sdk/</guid>
+      <guid>https://silenceper.com/blog/201609/go-wechat-sdk/</guid>
       <description>一直很想自己用golang写个微信的sdk，目标是简单好用，所以利用闲暇时间（周末，中秋😁），就做出来。 项目地址:https://githu</description>
     </item>
     
     <item>
       <title>dcmp</title>
-      <link>http://silenceper.com/blog/201608/dcmp/</link>
+      <link>https://silenceper.com/blog/201608/dcmp/</link>
       <pubDate>Tue, 02 Aug 2016 15:40:59 +0800</pubDate>
       
-      <guid>http://silenceper.com/blog/201608/dcmp/</guid>
+      <guid>https://silenceper.com/blog/201608/dcmp/</guid>
       <description>Distributed Configuration Management Platform 提供了一个etcd的管理界面，可通过界面修改配置信息，借助confd可实现配置文件的同步。 GITHUB：https://github</description>
     </item>
     
     <item>
       <title>Golang 中http包默认路由匹配规则阅读笔记</title>
-      <link>http://silenceper.com/blog/201605/go-http-process/</link>
+      <link>https://silenceper.com/blog/201605/go-http-process/</link>
       <pubDate>Sat, 28 May 2016 18:00:59 +0800</pubDate>
       
-      <guid>http://silenceper.com/blog/201605/go-http-process/</guid>
+      <guid>https://silenceper.com/blog/201605/go-http-process/</guid>
       <description>一、执行流程 构建一个简单http server： package main import ( &amp;quot;log&amp;quot; &amp;quot;net/http&amp;quot; ) func main() { http.HandleFunc(&amp;quot;/&amp;quot;, func(w http.ResponseWriter, r *http.Request) { w.Write([]byte(&amp;quot;hello world&amp;quot;)) }) log.Fatal(http.ListenAndServe(&amp;quot;:8080&amp;quot;, nil)) } 使用http://127.0.0.1:8080/ 就</description>
     </item>
     
     <item>
       <title>tcp time_wait问题</title>
-      <link>http://silenceper.com/blog/201601/tcp_time_wait_error/</link>
+      <link>https://silenceper.com/blog/201601/tcp_time_wait_error/</link>
       <pubDate>Sun, 03 Jan 2016 15:40:59 +0800</pubDate>
       
-      <guid>http://silenceper.com/blog/201601/tcp_time_wait_error/</guid>
+      <guid>https://silenceper.com/blog/201601/tcp_time_wait_error/</guid>
       <description>问题出现： 在元旦前夕，自己维护的一个服务突然在高峰时期收到大量报警，赶紧登上服务器看一下： 最开始的反应是memcache tcp read time out ,因为之前也</description>
     </item>
     
