@@ -6,10 +6,19 @@
     <description>Recent content on silenceper</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 22 Oct 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 10 Jan 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://silenceper.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>如何在Go项目中输出版本信息？</title>
+      <link>https://silenceper.com/blog/202001/go-import-version/</link>
+      <pubDate>Fri, 10 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://silenceper.com/blog/202001/go-import-version/</guid>
+      <description>我们经常在使用CLI工具的时候，都会有这样的参数输出： ➜ ~ docker version Client: Docker Engine - Community Version: 18.09.2 API version: 1.39 Go version: go1.10.8 Git commit: 6247962 Built: Sun Feb 10 04:12:39 2019 OS/Arch: darwin/amd64 Experimental: false ➜ ~ 可以打印出构建时对应的</description>
+    </item>
     
     <item>
       <title>Kubernetes容器日志收集方案</title>

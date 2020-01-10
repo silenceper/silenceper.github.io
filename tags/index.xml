@@ -6,10 +6,19 @@
     <description>Recent content in Tags on silenceper</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 22 Oct 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 10 Jan 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://silenceper.com/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>go</title>
+      <link>https://silenceper.com/tags/go/</link>
+      <pubDate>Fri, 10 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://silenceper.com/tags/go/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>filebeat</title>
@@ -62,15 +71,6 @@
       <pubDate>Sun, 09 Sep 2018 11:45:59 +0800</pubDate>
       
       <guid>https://silenceper.com/tags/docker/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>go</title>
-      <link>https://silenceper.com/tags/go/</link>
-      <pubDate>Sun, 20 Nov 2016 02:40:59 +0800</pubDate>
-      
-      <guid>https://silenceper.com/tags/go/</guid>
       <description></description>
     </item>
     
