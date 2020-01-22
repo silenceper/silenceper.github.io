@@ -157,20 +157,7 @@
                 </header>
                 <nav id="TableOfContents">
 <ul>
-<li><a href="#一-执行流程">一、执行流程</a>
-<ul>
-<li>
-<ul>
-<li>
-<ul>
-<li><a href="#1-创建一个-listener-监听-8080-端口">1.创建一个<code>Listener</code>监听<code>8080</code>端口</a></li>
-<li><a href="#2-进入-for-循环并accept请求-没有请求则处于阻塞状态">2.进入<code>for</code>循环并Accept请求，没有请求则处于阻塞状态</a></li>
-<li><a href="#3-接收到请求-并创建一个conn对象-放入goroutine处理-实现高并发关键">3.接收到请求，并创建一个conn对象，放入goroutine处理（实现高并发关键）</a></li>
-<li><a href="#4-解析请求来源信息获得请求路径等重要信息">4.解析请求来源信息获得请求路径等重要信息</a></li>
-<li><a href="#5-请求serverhttp方法-已经通过上一步获得了responsewriter和request对象">5.请求ServerHTTP方法，已经通过上一步获得了ResponseWriter和Request对象</a></li>
-</ul></li>
-</ul></li>
-</ul></li>
+<li><a href="#一-执行流程">一、执行流程</a></li>
 <li><a href="#二-defaultservemux-路由匹配规则">二、DefaultServeMux 路由匹配规则</a>
 <ul>
 <li><a href="#2-1-添加路由规则">2.1 添加路由规则</a></li>
@@ -205,15 +192,16 @@ func main() {
 
 <p>通过跟踪http.go包代码，可以发现执行流程基本如下：</p>
 
-<h4 id="1-创建一个-listener-监听-8080-端口">1.创建一个<code>Listener</code>监听<code>8080</code>端口</h4>
+<ul>
+<li><p>1.创建一个<code>Listener</code>监听<code>8080</code>端口</p></li>
 
-<h4 id="2-进入-for-循环并accept请求-没有请求则处于阻塞状态">2.进入<code>for</code>循环并Accept请求，没有请求则处于阻塞状态</h4>
+<li><p>2.进入<code>for</code>循环并Accept请求，没有请求则处于阻塞状态</p></li>
 
-<h4 id="3-接收到请求-并创建一个conn对象-放入goroutine处理-实现高并发关键">3.接收到请求，并创建一个conn对象，放入goroutine处理（实现高并发关键）</h4>
+<li><p>3.接收到请求，并创建一个conn对象，放入goroutine处理（实现高并发关键）</p></li>
 
-<h4 id="4-解析请求来源信息获得请求路径等重要信息">4.解析请求来源信息获得请求路径等重要信息</h4>
+<li><p>4.解析请求来源信息获得请求路径等重要信息</p></li>
 
-<h4 id="5-请求serverhttp方法-已经通过上一步获得了responsewriter和request对象">5.请求ServerHTTP方法，已经通过上一步获得了ResponseWriter和Request对象</h4>
+<li><p>5.请求ServerHTTP方法，已经通过上一步获得了ResponseWriter和Request对象</p>
 
 <pre><code class="language-go">func (sh serverHandler) ServeHTTP(rw ResponseWriter, req *Request) {
 	//此handler即为http.ListenAndServe 中的第二个参数
@@ -229,9 +217,10 @@ func main() {
 	//如果需要使用自定义的mux，就需要实现ServeHTTP方法，即实现Handler接口。
 	handler.ServeHTTP(rw, req)
 }
-</code></pre>
+</code></pre></li>
 
-<p>6.进入DefaultServeMux中的逻辑就是根据请求path在map中匹配查找handler，并交由handler处理</p>
+<li><p>6.进入DefaultServeMux中的逻辑就是根据请求path在map中匹配查找handler，并交由handler处理</p></li>
+</ul>
 
 <blockquote>
 <p>http请求处理流程更多信息可以参考<a href="https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/03.3.md">《Go Web 编程
