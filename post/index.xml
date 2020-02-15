@@ -6,19 +6,10 @@
     <description>Recent content in Posts on silenceper</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 15 Feb 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 10 Jan 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://silenceper.com/post/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>利用Kubernetes中的leaderelection实现组件高可用</title>
-      <link>https://silenceper.com/blog/202002/kubernetes-leaderelection/</link>
-      <pubDate>Sat, 15 Feb 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://silenceper.com/blog/202002/kubernetes-leaderelection/</guid>
-      <description>在Kubernetes中，通常kube-schduler和kube-controller-manager都是多副本进行部署的来保证高可用，而</description>
-    </item>
     
     <item>
       <title>如何在Go项目中输出版本信息？</title>
@@ -135,6 +126,19 @@
       
       <guid>https://silenceper.com/blog/201601/tcp_time_wait_error/</guid>
       <description>问题出现： 在元旦前夕，自己维护的一个服务突然在高峰时期收到大量报警，赶紧登上服务器看一下： 最开始的反应是memcache tcp read time out ,因为之前也</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://silenceper.com/post/2020-02-15-kubernetes-leaderelection/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://silenceper.com/post/2020-02-15-kubernetes-leaderelection/</guid>
+      <description>在Kubernetes中，通常kube-schduler和kube-controller-manager都是多副本进行部署的来保证高可用，而真正在工作的实例其实只有一个。这里就利用到 leaderelection 的选主机制，保证leader是处于工作状态，并且在leader挂掉之后，从其他节点选取新的leader保证组件正常工作。
+不单单只是k8s中的这两个组件用到，在其他服务中也可以看到这个包的使用，比如cluster-autoscaler等都能看得到这个包的，今天就来看看这个包的使用以及它内部是如何实现的。
+
+使用 以下是一个简单使用的例子，编译完成之后同时启动多个进程，但是只有一个进程在工作，当把leader进程kill掉之后，会重新选举出一个leader进行工作，即执行其中的 run 方法：
+/* 例子来源于client-go中的example包中 */ package main import ( &amp;quot;context&amp;quot; &amp;quot;flag&amp;quot; &amp;quot;os&amp;quot; &amp;quot;os/signal&amp;quot; &amp;quot;syscall&amp;quot; &amp;quot;time&amp;quot; &amp;quot;github.com/google/uuid&amp;quot; metav1 &amp;quot;k8s.io/apimachinery/pkg/apis/meta/v1&amp;quot; clientset &amp;quot;k8s.io/client-go/kubernetes&amp;quot; &amp;quot;k8s.io/client-go/rest&amp;quot; &amp;quot;k8s.io/client-go/tools/clientcmd&amp;quot; &amp;quot;k8s.io/client-go/tools/leaderelection&amp;quot; &amp;quot;k8s.io/client-go/tools/leaderelection/resourcelock&amp;quot; &amp;quot;k8s.io/klog&amp;quot; ) func buildConfig(kubeconfig string) (*rest.Config, error) { if kubeconfig != &amp;quot;&amp;quot; { cfg, err := clientcmd.BuildConfigFromFlags(&amp;quot;&amp;quot;, kubeconfig) if err != nil { return nil, err } return cfg, nil } cfg, err := rest.InClusterConfig() if err != nil { return nil, err } return cfg, nil } func main() { klog.</description>
     </item>
     
   </channel>

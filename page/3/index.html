@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
-    <meta name="description" content="程序员">
+    <meta name="description" content="一个记录生活，工作的博客。关于Go，Kubernetes，云原生">
     
     <meta name="keyword"  content="程序员,Golang,Microservice">
     <link rel="shortcut icon" href="https://silenceper.com/img/favicon.ico">
@@ -137,28 +137,6 @@
             
 
 <div class="post-preview">
-    <a href="https://silenceper.com/blog/201609/go-wechat-sdk/">
-        <h2 class="post-title">
-            开源项目：wechat sdk
-        </h2>
-	
-        <h3 class="post-subtitle">
-            wechat sdk for golang: 一个简单易用的微信sdk
-        </h3>
-	
-        <div class="post-content-preview">
-	
-            一直很想自己用golang写个微信的sdk，目标是简单好用，所以利用闲暇时间（周末，中秋😁），就做出来。 项目地址:https://githu
-       
-        </div>
-    </a>
-    <p class="post-meta">
-    Posted by     &#34;silenceper&#34; Friday, September 16, 2016
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
     <a href="https://silenceper.com/blog/201608/dcmp/">
         <h2 class="post-title">
             dcmp
@@ -216,6 +194,28 @@
     </a>
     <p class="post-meta">
     Posted by     &#34;silenceper&#34; Sunday, January 3, 2016
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="https://silenceper.com/post/2020-02-15-kubernetes-leaderelection/">
+        <h2 class="post-title">
+            
+        </h2>
+	
+        <div class="post-content-preview">
+	
+            在Kubernetes中，通常kube-schduler和kube-controller-manager都是多副本进行部署的来保证高可用，而真正在工作的实例其实只有一个。这里就利用到 leaderelection 的选主机制，保证leader是处于工作状态，并且在leader挂掉之后，从其他节点选取新的leader保证组件正常工作。
+不单单只是k8s中的这两个组件用到，在其他服务中也可以看到这个包的使用，比如cluster-autoscaler等都能看得到这个包的，今天就来看看这个包的使用以及它内部是如何实现的。
+
+使用 以下是一个简单使用的例子，编译完成之后同时启动多个进程，但是只有一个进程在工作，当把leader进程kill掉之后，会重新选举出一个leader进行工作，即执行其中的 run 方法：
+/* 例子来源于client-go中的example包中 */ package main import ( &quot;context&quot; &quot;flag&quot; &quot;os&quot; &quot;os/signal&quot; &quot;syscall&quot; &quot;time&quot; &quot;github.com/google/uuid&quot; metav1 &quot;k8s.io/apimachinery/pkg/apis/meta/v1&quot; clientset &quot;k8s.io/client-go/kubernetes&quot; &quot;k8s.io/client-go/rest&quot; &quot;k8s.io/client-go/tools/clientcmd&quot; &quot;k8s.io/client-go/tools/leaderelection&quot; &quot;k8s.io/client-go/tools/leaderelection/resourcelock&quot; &quot;k8s.io/klog&quot; ) func buildConfig(kubeconfig string) (*rest.Config, error) { if kubeconfig != &quot;&quot; { cfg, err := clientcmd.BuildConfigFromFlags(&quot;&quot;, kubeconfig) if err != nil { return nil, err } return cfg, nil } cfg, err := rest.InClusterConfig() if err != nil { return nil, err } return cfg, nil } func main() { klog.
+       
+        </div>
+    </a>
+    <p class="post-meta">
+    Posted by silenceper Monday, January 1, 0001
     </p>
 </div>
 <hr>
@@ -280,8 +280,6 @@
                     <a href="/tags/k8s" title="k8s">
                         k8s
                     </a>
-                
-            
                 
             
                 
