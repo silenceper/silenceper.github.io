@@ -6,10 +6,19 @@
     <description>Recent content in Posts on silenceper</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 10 Jan 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 15 Feb 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://silenceper.com/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>利用Kubernetes中的leaderelection实现组件高可用？</title>
+      <link>https://silenceper.com/blog/202002/kubernetes-leaderelection/</link>
+      <pubDate>Sat, 15 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://silenceper.com/blog/202002/kubernetes-leaderelection/</guid>
+      <description>在Kubernetes中，通常kube-schduler和kube-controller-manager都是多副本进行部署的来保证高可用，而</description>
+    </item>
     
     <item>
       <title>如何在Go项目中输出版本信息？</title>
@@ -111,7 +120,7 @@
     </item>
     
     <item>
-      <title>Golang 中http包默认路由匹配规则阅读笔记</title>
+      <title>Golang中http包默认路由匹配规则阅读笔记</title>
       <link>https://silenceper.com/blog/201605/go-http-process/</link>
       <pubDate>Sat, 28 May 2016 18:00:59 +0800</pubDate>
       

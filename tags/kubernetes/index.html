@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-us">
-<head>
-	<meta name="generator" content="Hugo 0.58.3" /><head>
+<head><head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,9 +10,9 @@
     <meta name="keyword"  content="程序员,Golang,Microservice">
     <link rel="shortcut icon" href="https://silenceper.com/img/favicon.ico">
 
-    <title>silenceper- silenceper的博客</title>
+    <title>kubernetes- silenceper的博客</title>
 
-    <link rel="canonical" href="https://silenceper.com/">
+    <link rel="canonical" href="https://silenceper.com/tags/kubernetes/">
 
     <link rel="stylesheet" href="https://silenceper.com/css/iDisqus.min.css"/>
 
@@ -137,85 +136,23 @@
             
 
 <div class="post-preview">
-    <a href="https://silenceper.com/blog/201609/go-wechat-sdk/">
+    <a href="https://silenceper.com/blog/202002/kubernetes-leaderelection/">
         <h2 class="post-title">
-            开源项目：wechat sdk
+            利用Kubernetes中的leaderelection实现组件高可用？
         </h2>
 	
         <h3 class="post-subtitle">
-            wechat sdk for golang: 一个简单易用的微信sdk
+            如何使用leaderelection以及对其源码进行分析
         </h3>
 	
         <div class="post-content-preview">
 	
-            一直很想自己用golang写个微信的sdk，目标是简单好用，所以利用闲暇时间（周末，中秋😁），就做出来。 项目地址:https://githu
+            在Kubernetes中，通常kube-schduler和kube-controller-manager都是多副本进行部署的来保证高可用，而
        
         </div>
     </a>
     <p class="post-meta">
-    Posted by     &#34;silenceper&#34; Friday, September 16, 2016
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="https://silenceper.com/blog/201608/dcmp/">
-        <h2 class="post-title">
-            dcmp
-        </h2>
-	
-        <h3 class="post-subtitle">
-            基于etcd的配置管理系统
-        </h3>
-	
-        <div class="post-content-preview">
-	
-            Distributed Configuration Management Platform 提供了一个etcd的管理界面，可通过界面修改配置信息，借助confd可实现配置文件的同步。 GITHUB：https://github
-       
-        </div>
-    </a>
-    <p class="post-meta">
-    Posted by     &#34;silenceper&#34; Tuesday, August 2, 2016
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="https://silenceper.com/blog/201605/go-http-process/">
-        <h2 class="post-title">
-            Golang中http包默认路由匹配规则阅读笔记
-        </h2>
-	
-        <div class="post-content-preview">
-	
-            一、执行流程 构建一个简单http server： package main import ( &quot;log&quot; &quot;net/http&quot; ) func main() { http.HandleFunc(&quot;/&quot;, func(w http.ResponseWriter, r *http.Request) { w.Write([]byte(&quot;hello world&quot;)) }) log.Fatal(http.ListenAndServe(&quot;:8080&quot;, nil)) } 使用http://127.0.0.1:8080/ 就
-       
-        </div>
-    </a>
-    <p class="post-meta">
-    Posted by     &#34;silenceper&#34; Saturday, May 28, 2016
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="https://silenceper.com/blog/201601/tcp_time_wait_error/">
-        <h2 class="post-title">
-            tcp time_wait问题
-        </h2>
-	
-        <h3 class="post-subtitle">
-            tcp time_wait连接数过多导致服务不可用
-        </h3>
-	
-        <div class="post-content-preview">
-	
-            time_wait 连接数过多
-        
-        </div>
-    </a>
-    <p class="post-meta">
-    Posted by     &#34;silenceper&#34; Sunday, January 3, 2016
+    Posted by silenceper Saturday, February 15, 2020
     </p>
 </div>
 <hr>
@@ -223,15 +160,6 @@
 
             
 
-
-<ul class="pager">
-    
-    <li class="previous">
-        <a href="/page/2/">&larr; Newer Posts</a>
-    </li>
-    
-    
-</ul>
 
 
        	</div>
@@ -316,7 +244,7 @@
            <ul class="list-inline"> 
                
                <li>
-                   <a href="https://silenceper.com/index.xml" rel="alternate" type="application/rss+xml" title="silenceper" >
+                   <a href="https://silenceper.com/tags/kubernetes/index.xml" rel="alternate" type="application/rss+xml" title="silenceper" >
                        <span class="fa-stack fa-lg">
                            <i class="fa fa-circle fa-stack-2x"></i>
                            <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
@@ -374,7 +302,7 @@
                 <ul class="list-inline text-center">
                    
                    <li>
-                       <a href="https://silenceper.com/index.xml" rel="alternate" type="application/rss+xml" title="silenceper" >
+                       <a href="https://silenceper.com/tags/kubernetes/index.xml" rel="alternate" type="application/rss+xml" title="silenceper" >
                            <span class="fa-stack fa-lg">
                                <i class="fa fa-circle fa-stack-2x"></i>
                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>

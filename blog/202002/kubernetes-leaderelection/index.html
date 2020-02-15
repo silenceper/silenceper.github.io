@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <meta name="description" content="程序员">
+    
+    <meta name="keyword"  content="程序员,Golang,Microservice">
+    <link rel="shortcut icon" href="https://silenceper.com/img/favicon.ico">
+
+    <title>利用Kubernetes中的leaderelection实现组件高可用？- silenceper的博客</title>
+
+    <link rel="canonical" href="https://silenceper.com/blog/202002/kubernetes-leaderelection/">
+
+    <link rel="stylesheet" href="https://silenceper.com/css/iDisqus.min.css"/>
+
+    
+    <link rel="stylesheet" href="https://silenceper.com/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="https://silenceper.com/css/hux-blog.min.css">
+
+    
+    <link rel="stylesheet" href="https://silenceper.com/css/syntax.css">
+
+    
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    
+    
+    <script src="https://silenceper.com/js/jquery.min.js"></script>
+
+    
+    <script src="https://silenceper.com/js/bootstrap.min.js"></script>
+
+    
+    <script src="https://silenceper.com/js/hux-blog.min.js"></script>
+</head>
+</head>
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://silenceper.com/">silenceper</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="https://silenceper.com/">Home</a>
+                    </li>
+                    
+                    <li>
+                        <a href="https://silenceper.com/categories/tech">tech</a>
+                    </li>
+                    
+
+                    
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header{
+        background-image: url('https://silenceper.com/img/bg/qiao.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                       
+                       <a class="tag" href="/tags/go" title="go">
+                           go
+                        </a>
+                        
+                       <a class="tag" href="/tags/kubernetes" title="kubernetes">
+                           kubernetes
+                        </a>
+                        
+                    </div>
+                    <h1>利用Kubernetes中的leaderelection实现组件高可用？</h1>
+                    <h2 class="subheading">如何使用leaderelection以及对其源码进行分析</h2>
+                    <span  class="meta">Posted by silenceper on Saturday, February 15, 2020
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+		
+                <header>
+                <h2>TOC</h2>
+                </header>
+                <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#使用">使用</a></li>
+<li><a href="#深入理解">深入理解</a>
+<ul>
+<li><a href="#入口">入口</a></li>
+<li><a href="#获取的锁以及更新锁">获取的锁以及更新锁</a></li>
+</ul></li>
+<li><a href="#总结">总结</a></li>
+</ul></li>
+</ul>
+</nav>
+		
+		
+
+<p>在Kubernetes中，通常kube-schduler和kube-controller-manager都是多副本进行部署的来保证高可用，而真正在工作的实例其实只有一个。这里就利用到 <code>leaderelection</code> 的选主机制，保证leader是处于工作状态，并且在leader挂掉之后，从其他节点选取新的leader保证组件正常工作。</p>
+
+<p>不单单只是k8s中的这两个组件用到，在其他服务中也可以看到这个包的使用，比如<a href="https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/">cluster-autoscaler</a>等都能看得到这个包的，今天就来看看这个包的使用以及它内部是如何实现的。</p>
+
+<p><a name="u0Ihj"></a></p>
+
+<h2 id="使用">使用</h2>
+
+<p>以下是一个简单使用的例子，编译完成之后同时启动多个进程，但是只有一个进程在工作，当把leader进程kill掉之后，会重新选举出一个leader进行工作，即执行其中的 <code>run</code> 方法：</p>
+
+<pre><code class="language-go">/*
+例子来源于client-go中的example包中，
+可以
+*/
+
+package main
+
+import (
+	&quot;context&quot;
+	&quot;flag&quot;
+	&quot;os&quot;
+	&quot;os/signal&quot;
+	&quot;syscall&quot;
+	&quot;time&quot;
+
+	&quot;github.com/google/uuid&quot;
+	metav1 &quot;k8s.io/apimachinery/pkg/apis/meta/v1&quot;
+	clientset &quot;k8s.io/client-go/kubernetes&quot;
+	&quot;k8s.io/client-go/rest&quot;
+	&quot;k8s.io/client-go/tools/clientcmd&quot;
+	&quot;k8s.io/client-go/tools/leaderelection&quot;
+	&quot;k8s.io/client-go/tools/leaderelection/resourcelock&quot;
+	&quot;k8s.io/klog&quot;
+)
+
+func buildConfig(kubeconfig string) (*rest.Config, error) {
+	if kubeconfig != &quot;&quot; {
+		cfg, err := clientcmd.BuildConfigFromFlags(&quot;&quot;, kubeconfig)
+		if err != nil {
+			return nil, err
+		}
+		return cfg, nil
+	}
+
+	cfg, err := rest.InClusterConfig()
+	if err != nil {
+		return nil, err
+	}
+	return cfg, nil
+}
+
+func main() {
+	klog.InitFlags(nil)
+
+	var kubeconfig string
+	var leaseLockName string
+	var leaseLockNamespace string
+	var id string
+
+	flag.StringVar(&amp;kubeconfig, &quot;kubeconfig&quot;, &quot;&quot;, &quot;absolute path to the kubeconfig file&quot;)
+	flag.StringVar(&amp;id, &quot;id&quot;, uuid.New().String(), &quot;the holder identity name&quot;)
+	flag.StringVar(&amp;leaseLockName, &quot;lease-lock-name&quot;, &quot;&quot;, &quot;the lease lock resource name&quot;)
+	flag.StringVar(&amp;leaseLockNamespace, &quot;lease-lock-namespace&quot;, &quot;&quot;, &quot;the lease lock resource namespace&quot;)
+	flag.Parse()
+
+	if leaseLockName == &quot;&quot; {
+		klog.Fatal(&quot;unable to get lease lock resource name (missing lease-lock-name flag).&quot;)
+	}
+	if leaseLockNamespace == &quot;&quot; {
+		klog.Fatal(&quot;unable to get lease lock resource namespace (missing lease-lock-namespace flag).&quot;)
+	}
+
+	// leader election uses the Kubernetes API by writing to a
+	// lock object, which can be a LeaseLock object (preferred),
+	// a ConfigMap, or an Endpoints (deprecated) object.
+	// Conflicting writes are detected and each client handles those actions
+	// independently.
+	config, err := buildConfig(kubeconfig)
+	if err != nil {
+		klog.Fatal(err)
+	}
+	client := clientset.NewForConfigOrDie(config)
+
+	run := func(ctx context.Context) {
+		// complete your controller loop here
+		klog.Info(&quot;Controller loop...&quot;)
+
+		select {}
+	}
+
+	// use a Go context so we can tell the leaderelection code when we
+	// want to step down
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	// listen for interrupts or the Linux SIGTERM signal and cancel
+	// our context, which the leader election code will observe and
+	// step down
+	ch := make(chan os.Signal, 1)
+	signal.Notify(ch, os.Interrupt, syscall.SIGTERM)
+	go func() {
+		&lt;-ch
+		klog.Info(&quot;Received termination, signaling shutdown&quot;)
+		cancel()
+	}()
+
+	// we use the Lease lock type since edits to Leases are less common
+	// and fewer objects in the cluster watch &quot;all Leases&quot;.
+    // 指定锁的资源对象，这里使用了Lease资源，还支持configmap，endpoint，或者multilock(即多种配合使用)
+	lock := &amp;resourcelock.LeaseLock{
+		LeaseMeta: metav1.ObjectMeta{
+			Name:      leaseLockName,
+			Namespace: leaseLockNamespace,
+		},
+		Client: client.CoordinationV1(),
+		LockConfig: resourcelock.ResourceLockConfig{
+			Identity: id,
+		},
+	}
+
+	// start the leader election code loop
+	leaderelection.RunOrDie(ctx, leaderelection.LeaderElectionConfig{
+		Lock: lock,
+		// IMPORTANT: you MUST ensure that any code you have that
+		// is protected by the lease must terminate **before**
+		// you call cancel. Otherwise, you could have a background
+		// loop still running and another process could
+		// get elected before your background loop finished, violating
+		// the stated goal of the lease.
+		ReleaseOnCancel: true,
+		LeaseDuration:   60 * time.Second,//租约时间
+		RenewDeadline:   15 * time.Second,//更新租约的
+		RetryPeriod:     5 * time.Second,//非leader节点重试时间
+		Callbacks: leaderelection.LeaderCallbacks{
+			OnStartedLeading: func(ctx context.Context) {
+                //变为leader执行的业务代码
+				// we're notified when we start - this is where you would
+				// usually put your code
+				run(ctx)
+			},
+			OnStoppedLeading: func() {
+                 // 进程退出
+				// we can do cleanup here
+				klog.Infof(&quot;leader lost: %s&quot;, id)
+				os.Exit(0)
+			},
+			OnNewLeader: func(identity string) {
+                //当产生新的leader后执行的方法
+				// we're notified when new leader elected
+				if identity == id {
+					// I just got the lock
+					return
+				}
+				klog.Infof(&quot;new leader elected: %s&quot;, identity)
+			},
+		},
+	})
+}
+</code></pre>
+
+<p>关键启动参数说明：</p>
+
+<pre><code class="language-bash">kubeconfig: 指定kubeconfig文件地址
+lease-lock-name：指定lock的名称
+lease-lock-namespace：指定lock存储的namespace
+id: 例子中提供的区别参数，用于区分实例
+logtostderr：klog提供的参数，指定log输出到控制台
+v: 指定日志输出级别
+</code></pre>
+
+<p><strong>同时启动两个进程：</strong><br /><strong>启动进程1</strong>：</p>
+
+<pre><code class="language-bash">go run main.go -kubeconfig=/Users/silenceper/.kube/config -logtostderr=true -lease-lock-name=example -lease-lock-namespace=default -id=1 -v=4
+I0215 19:56:37.049658   48045 leaderelection.go:242] attempting to acquire leader lease  default/example...
+I0215 19:56:37.080368   48045 leaderelection.go:252] successfully acquired lease default/example
+I0215 19:56:37.080437   48045 main.go:87] Controller loop...
+</code></pre>
+
+<p><strong>启动进程2：</strong></p>
+
+<pre><code class="language-bash">➜  leaderelection git:(master) ✗ go run main.go -kubeconfig=/Users/silenceper/.kube/config -logtostderr=true -lease-lock-name=example -lease-lock-namespace=default -id=2 -v=4
+I0215 19:57:35.870051   48791 leaderelection.go:242] attempting to acquire leader lease  default/example...
+I0215 19:57:35.894735   48791 leaderelection.go:352] lock is held by 1 and has not yet expired
+I0215 19:57:35.894769   48791 leaderelection.go:247] failed to acquire lease default/example
+I0215 19:57:35.894790   48791 main.go:151] new leader elected: 1
+I0215 19:57:44.532991   48791 leaderelection.go:352] lock is held by 1 and has not yet expired
+I0215 19:57:44.533028   48791 leaderelection.go:247] failed to acquire lease default/example
+</code></pre>
+
+<p>这里可以看出来id=1的进程持有锁，并且运行的程序，而id=2的进程表示无法获取到锁，在不断的进程尝试。</p>
+
+<p>现在kill掉id=1进程，在等待lock释放之后（有个LeaseDuration时间），leader变为id=2的进程执行工作</p>
+
+<pre><code class="language-bash">I0215 20:01:41.489300   48791 leaderelection.go:252] successfully acquired lease default/example
+I0215 20:01:41.489577   48791 main.go:87] Controller loop...
+</code></pre>
+
+<p><a name="LypZI"></a></p>
+
+<h2 id="深入理解">深入理解</h2>
+
+<p>基本原理其实就是利用通过Kubernetes中 <code>configmap</code> ， <code>endpoints</code> 或者 <code>lease</code> 资源实现一个分布式锁，抢(acqure)到锁的节点成为leader，并且定期更新（renew）。其他进程也在不断的尝试进行抢占，抢占不到则继续等待下次循环。当leader节点挂掉之后，租约到期，其他节点就成为新的leader。</p>
+
+<p><a name="iQapE"></a></p>
+
+<h3 id="入口">入口</h3>
+
+<p>通过 <code>leaderelection.RunOrDie</code> 启动，</p>
+
+<pre><code class="language-go">func RunOrDie(ctx context.Context, lec LeaderElectionConfig) {
+	le, err := NewLeaderElector(lec)
+	if err != nil {
+		panic(err)
+	}
+	if lec.WatchDog != nil {
+		lec.WatchDog.SetLeaderElection(le)
+	}
+	le.Run(ctx)
+}
+</code></pre>
+
+<p>传入参数 <code>LeaderElectionConfig</code> ：</p>
+
+<pre><code class="language-go">type LeaderElectionConfig struct {
+	// Lock 的类型
+	Lock rl.Interface
+	//持有锁的时间
+	LeaseDuration time.Duration
+	//在更新租约的超时时间
+	RenewDeadline time.Duration
+    //竞争获取锁的时间
+	RetryPeriod time.Duration
+    //状态变化时执行的函数，支持三种：
+    //1、OnStartedLeading 启动是执行的业务代码
+    //2、OnStoppedLeading leader停止执行的方法
+    //3、OnNewLeader 当产生新的leader后执行的方法
+	Callbacks LeaderCallbacks
+
+    //进行监控检查
+	// WatchDog is the associated health checker
+	// WatchDog may be null if its not needed/configured.
+	WatchDog *HealthzAdaptor
+    //leader退出时，是否执行release方法
+	ReleaseOnCancel bool
+    
+	// Name is the name of the resource lock for debugging
+	Name string
+}
+</code></pre>
+
+<p><code>LeaderElectionConfig.lock</code> <strong>支持保存在以下三种资源中：</strong><br /><code>configmap</code> <br /><code>endpoint</code> <br /><code>lease</code> <br />包中还提供了一个 <code>multilock</code> ，即可以进行选择两种，当其中一种保存失败时，选择第二张<br />可以在<a href="https://github.com/kubernetes/client-go/blob/master/tools/leaderelection/resourcelock/interface.go#L121">interface.go</a>中看到：</p>
+
+<pre><code class="language-go">	switch lockType {
+	case EndpointsResourceLock://保存在endpoints
+		return endpointsLock, nil
+	case ConfigMapsResourceLock://保存在configmaps
+		return configmapLock, nil
+	case LeasesResourceLock://保存在leases
+		return leaseLock, nil
+	case EndpointsLeasesResourceLock://优先尝试保存在endpoint失败时保存在lease
+		return &amp;MultiLock{
+			Primary:   endpointsLock,
+			Secondary: leaseLock,
+		}, nil
+	case ConfigMapsLeasesResourceLock://优先尝试保存在configmap，失败时保存在lease
+		return &amp;MultiLock{
+			Primary:   configmapLock,
+			Secondary: leaseLock,
+		}, nil
+	default:
+		return nil, fmt.Errorf(&quot;Invalid lock-type %s&quot;, lockType)
+	}
+</code></pre>
+
+<p>以lease资源对象为例，可以在查看到保存的内容:</p>
+
+<pre><code class="language-yaml">➜  ~ kubectl get lease example -n default -o yaml
+apiVersion: coordination.k8s.io/v1
+kind: Lease
+metadata:
+  creationTimestamp: &quot;2020-02-15T11:56:37Z&quot;
+  name: example
+  namespace: default
+  resourceVersion: &quot;210675&quot;
+  selfLink: /apis/coordination.k8s.io/v1/namespaces/default/leases/example
+  uid: a3470a06-6fc3-42dc-8242-9d6cebdf5315
+spec:
+  acquireTime: &quot;2020-02-15T12:01:41.476971Z&quot;//获得锁时间
+  holderIdentity: &quot;2&quot;//持有锁进程的标识
+  leaseDurationSeconds: 60//lease租约
+  leaseTransitions: 1//leader更换次数
+  renewTime: &quot;2020-02-15T12:05:37.134655Z&quot;//更新租约的时间
+</code></pre>
+
+<p>关注其spec中的字段，分别进行标注,对应结构体如下：</p>
+
+<pre><code class="language-go">type LeaderElectionRecord struct {
+	HolderIdentity       string      `json:&quot;holderIdentity&quot;`//持有锁进程的标识，一般可以利用主机名
+	LeaseDurationSeconds int         `json:&quot;leaseDurationSeconds&quot;`//  lock的租约
+	AcquireTime          metav1.Time `json:&quot;acquireTime&quot;`//持有锁的时间
+	RenewTime            metav1.Time `json:&quot;renewTime&quot;`//更新时间
+	LeaderTransitions    int         `json:&quot;leaderTransitions&quot;`//leader更换的次数
+}
+</code></pre>
+
+<p><a name="cGTSG"></a></p>
+
+<h3 id="获取的锁以及更新锁">获取的锁以及更新锁</h3>
+
+<p>Run方法中包含了获取锁以及更新锁的入口</p>
+
+<pre><code class="language-go">// Run starts the leader election loop
+func (le *LeaderElector) Run(ctx context.Context) {
+	defer func() {
+        //进行退出执行
+		runtime.HandleCrash()
+        //停止时执行回调方法
+		le.config.Callbacks.OnStoppedLeading()
+	}()
+    //不断的进行获得锁，如果获得锁成功则执行后面的方法，否则不断的进行重试
+	if !le.acquire(ctx) {
+		return // ctx signalled done
+	}
+	ctx, cancel := context.WithCancel(ctx)
+	defer cancel()
+    //获取锁成功，当前进程变为leader，执行回调函数中的业务代码
+	go le.config.Callbacks.OnStartedLeading(ctx)
+    //不断的循环进行进行租约的更新，保证锁一直被当前进行持有
+	le.renew(ctx)
+}
+</code></pre>
+
+<p><strong><code>le.acquire</code> 和 <code>le.renew</code> 内部都是调用了 <code>le.tryAcquireOrRenew</code> 函数，只是对于返回结果的处理不一样。</strong></p>
+
+<p><code>le.acquire</code> 对于 <code>le.tryAcquireOrRenew</code> 返回成功则退出，失败则继续。</p>
+
+<p><code>le.renew</code> 则相反，成功则继续，失败则退出。</p>
+
+<p>我们来看看 <code>tryAcquireOrRenew</code> 方法：</p>
+
+<pre><code class="language-go">func (le *LeaderElector) tryAcquireOrRenew() bool {
+	now := metav1.Now()
+    //锁资源对象内容
+	leaderElectionRecord := rl.LeaderElectionRecord{
+		HolderIdentity:       le.config.Lock.Identity(),//唯一标识
+		LeaseDurationSeconds: int(le.config.LeaseDuration / time.Second),
+		RenewTime:            now,
+		AcquireTime:          now,
+	}
+
+	// 1. obtain or create the ElectionRecord
+    // 第一步：从k8s资源中获取原有的锁
+	oldLeaderElectionRecord, oldLeaderElectionRawRecord, err := le.config.Lock.Get()
+	if err != nil {
+		if !errors.IsNotFound(err) {
+			klog.Errorf(&quot;error retrieving resource lock %v: %v&quot;, le.config.Lock.Describe(), err)
+			return false
+		}
+        //资源对象不存在，进行锁资源创建
+		if err = le.config.Lock.Create(leaderElectionRecord); err != nil {
+			klog.Errorf(&quot;error initially creating leader election record: %v&quot;, err)
+			return false
+		}
+		le.observedRecord = leaderElectionRecord
+		le.observedTime = le.clock.Now()
+		return true
+	}
+
+	// 2. Record obtained, check the Identity &amp; Time
+    // 第二步，对比存储在k8s中的锁资源与上一次获取的锁资源是否一致
+	if !bytes.Equal(le.observedRawRecord, oldLeaderElectionRawRecord) {
+		le.observedRecord = *oldLeaderElectionRecord
+		le.observedRawRecord = oldLeaderElectionRawRecord
+		le.observedTime = le.clock.Now()
+	}
+    //判断持有的锁是否到期以及是否被自己持有
+	if len(oldLeaderElectionRecord.HolderIdentity) &gt; 0 &amp;&amp;
+		le.observedTime.Add(le.config.LeaseDuration).After(now.Time) &amp;&amp;
+		!le.IsLeader() {
+		klog.V(4).Infof(&quot;lock is held by %v and has not yet expired&quot;, oldLeaderElectionRecord.HolderIdentity)
+		return false
+	}
+
+	// 3. We're going to try to update. The leaderElectionRecord is set to it's default
+	// here. Let's correct it before updating.
+    //第三步：自己现在是leader，但是分两组情况，上一次也是leader和首次变为leader
+	if le.IsLeader() {
+        //自己本身就是leader则不需要更新AcquireTime和LeaderTransitions
+		leaderElectionRecord.AcquireTime = oldLeaderElectionRecord.AcquireTime
+		leaderElectionRecord.LeaderTransitions = oldLeaderElectionRecord.LeaderTransitions
+	} else {
+        //首次自己变为leader则更新leader的更换次数
+		leaderElectionRecord.LeaderTransitions = oldLeaderElectionRecord.LeaderTransitions + 1
+	}
+
+    //更新锁资源，这里如果在 Get 和 Update 之间有变化，将会更新失败
+	// update the lock itself
+	if err = le.config.Lock.Update(leaderElectionRecord); err != nil {
+		klog.Errorf(&quot;Failed to update lock: %v&quot;, err)
+		return false
+	}
+
+	le.observedRecord = leaderElectionRecord
+	le.observedTime = le.clock.Now()
+	return true
+}
+
+</code></pre>
+
+<p><strong>在这一步如果发生并发操作怎么样？</strong></p>
+
+<p>这里很重要一点就是利用到了k8s api操作的原子性：</p>
+
+<p>在 <code>le.config.Lock.Get()</code> 中会获取到锁的对象，其中有一个 <code>resourceVersion</code> 字段用于标识一个资源对象的内部版本，每次更新操作都会更新其值。如果一个更新操作附加上了 <code>resourceVersion</code> 字段，那么 apiserver 就会通过验证当前 <code>resourceVersion</code> 的值与指定的值是否相匹配来确保在此次更新操作周期内没有其他的更新操作，从而保证了更新操作的原子性。</p>
+
+<h2 id="总结">总结</h2>
+
+<p>leaderelection 主要是利用了k8s API操作的原子性实现了一个分布式锁，在不断的竞争中进行选举。选中为leader的进行才会执行具体的业务代码，这在k8s中非常的常见，而且我们很方便的利用这个包完成组件的编写，从而实现组件的高可用，比如部署为一个多副本的Deployment，当leader的pod退出后会重新启动，可能锁就被其他pod获取继续执行。</p>
+
+<p>完整代码：<a href="https://github.com/go-demo/leaderelection">https://github.com/go-demo/leaderelection</a></p>
+
+<blockquote>
+<p>关注《学点程序》公众号，了解更多Go相关技术！  <img src="https://image-static.segmentfault.com/125/953/1259530967-5e172702bcedd_articlex" alt="学点程序" /></p>
+</blockquote>
+
+
+                <hr>
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/blog/202001/go-import-version/" data-toggle="tooltip" data-placement="top" title="如何在Go项目中输出版本信息？">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                </ul>
+
+            
+<div id="disqus-comment"></div>
+
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "silenceper" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+            </div>
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                    
+                    
+                       
+                    
+                       
+                    
+                       
+                    
+                       
+                    
+                       
+                    
+                       
+                    
+                       
+                            <a href="/tags/flannel" title="flannel">
+                                flannel
+                            </a>
+                       
+                    
+                       
+                            <a href="/tags/go" title="go">
+                                go
+                            </a>
+                       
+                    
+                       
+                            <a href="/tags/k8s" title="k8s">
+                                k8s
+                            </a>
+                       
+                    
+                       
+                    
+                       
+                    
+                       
+                    
+                       
+                    
+                       
+                    
+                       
+                            <a href="/tags/wechat" title="wechat">
+                                wechat
+                            </a>
+                       
+                    
+                    </div>
+                </section>
+
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+                    
+                        <li><a target="_blank" href=""></a></li>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                   
+                   <li>
+                       <a href="" rel="alternate" type="application/rss+xml" title="silenceper" >
+                           <span class="fa-stack fa-lg">
+                               <i class="fa fa-circle fa-stack-2x"></i>
+                               <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                           </span>
+                       </a>
+                   </li>
+                   
+                    
+                    <li>
+                        <a href="mailto:silenceper@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+
+                    
+                    
+                    
+
+                    
+
+		    
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/silenceper">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                </ul>
+		<p class="copyright text-muted">
+                    Copyright &copy; silenceper , 2020
+                    <br>
+                    Hugo Theme by <a href="https://github.com/zhaohuabing/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    async("https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https'){
+       bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      }
+      else{
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+
+
+
+<script>
+    
+    var _baId = '5feaced19c04a59ece51d36906735e70';
+
+    
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-139557989-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+</body>
+</html>
