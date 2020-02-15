@@ -10,7 +10,7 @@
     <meta name="keyword"  content="程序员,Golang,Microservice">
     <link rel="shortcut icon" href="https://silenceper.com/img/favicon.ico">
 
-    <title>利用Kubernetes中的leaderelection实现组件高可用？- silenceper的博客</title>
+    <title>利用Kubernetes中的leaderelection实现组件高可用- silenceper的博客</title>
 
     <link rel="canonical" href="https://silenceper.com/blog/202002/kubernetes-leaderelection/">
 
@@ -127,7 +127,7 @@
                         </a>
                         
                     </div>
-                    <h1>利用Kubernetes中的leaderelection实现组件高可用？</h1>
+                    <h1>利用Kubernetes中的leaderelection实现组件高可用</h1>
                     <h2 class="subheading">如何使用leaderelection以及对其源码进行分析</h2>
                     <span  class="meta">Posted by silenceper on Saturday, February 15, 2020
                         
@@ -183,8 +183,7 @@
 <p>以下是一个简单使用的例子，编译完成之后同时启动多个进程，但是只有一个进程在工作，当把leader进程kill掉之后，会重新选举出一个leader进行工作，即执行其中的 <code>run</code> 方法：</p>
 
 <pre><code class="language-go">/*
-例子来源于client-go中的example包中，
-可以
+例子来源于client-go中的example包中
 */
 
 package main
