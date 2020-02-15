@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
-    <meta name="description" content="程序员">
+    <meta name="description" content="一个记录生活，工作的博客。关于Go，Kubernetes，云原生">
     
     <meta name="keyword"  content="程序员,Golang,Microservice">
     <link rel="shortcut icon" href="https://silenceper.com/img/favicon.ico">
@@ -175,8 +175,6 @@
 <p>在Kubernetes中，通常kube-schduler和kube-controller-manager都是多副本进行部署的来保证高可用，而真正在工作的实例其实只有一个。这里就利用到 <code>leaderelection</code> 的选主机制，保证leader是处于工作状态，并且在leader挂掉之后，从其他节点选取新的leader保证组件正常工作。</p>
 
 <p>不单单只是k8s中的这两个组件用到，在其他服务中也可以看到这个包的使用，比如<a href="https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/">cluster-autoscaler</a>等都能看得到这个包的，今天就来看看这个包的使用以及它内部是如何实现的。</p>
-
-<p><a name="u0Ihj"></a></p>
 
 <h2 id="使用">使用</h2>
 
