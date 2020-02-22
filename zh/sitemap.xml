@@ -12,7 +12,7 @@
                     hreflang="zh"
                     href="/"
                     /></url><url>
-            <loc>/categories/</loc><lastmod>2020-02-22T13:28:27&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
+            <loc>/categories/</loc><lastmod>2020-02-22T21:31:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
                         href="/en/categories/"
@@ -21,10 +21,10 @@
                     hreflang="zh"
                     href="/categories/"
                     /></url><url>
-            <loc>/tags/go/</loc><lastmod>2020-02-22T13:28:27&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>/tags/goland/</loc><lastmod>2020-02-22T13:28:27&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>/posts/</loc><lastmod>2020-02-22T13:28:27&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>/tags/</loc><lastmod>2020-02-22T13:28:27&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
+            <loc>/tags/go/</loc><lastmod>2020-02-22T21:31:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>/tags/goland/</loc><lastmod>2020-02-22T21:31:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>/posts/</loc><lastmod>2020-02-22T21:31:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>/tags/</loc><lastmod>2020-02-22T21:31:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
                         href="/en/tags/"
@@ -33,10 +33,10 @@
                     hreflang="zh"
                     href="/tags/"
                     /></url><url>
-            <loc>/categories/tech/</loc><lastmod>2020-02-22T13:28:27&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>/blog/202002/jetbrains-liscence/</loc><lastmod>2020-02-22T13:28:27&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>/tags/kubernetes/</loc><lastmod>2020-02-22T13:28:27&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>/blog/202002/kubernetes-leaderelection/</loc><lastmod>2020-02-22T13:28:27&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>/categories/tech/</loc><lastmod>2020-02-22T21:31:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>/blog/202002/jetbrains-liscence/</loc><lastmod>2020-02-22T21:31:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>/tags/kubernetes/</loc><lastmod>2020-02-22T21:31:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>/blog/202002/kubernetes-leaderelection/</loc><lastmod>2020-02-22T21:31:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>/blog/202001/go-import-version/</loc><lastmod>2020-02-22T13:28:27&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>/tags/filebeat/</loc><lastmod>2020-02-22T13:28:27&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>/tags/k8s/</loc><lastmod>2020-02-22T13:28:27&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
