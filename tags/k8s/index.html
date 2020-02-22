@@ -1,510 +1,97 @@
 <!DOCTYPE html>
-<html lang="en-us">
-<head><head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    <meta name="description" content="一个记录生活，工作的博客。关于Go，Kubernetes，云原生">
-    
-    <meta name="keyword"  content="程序员,Golang,Microservice">
-    <link rel="shortcut icon" href="https://silenceper.com/img/favicon.ico">
-
-    <title>k8s- silenceper的博客</title>
-
-    <link rel="canonical" href="https://silenceper.com/tags/k8s/">
-
-    <link rel="stylesheet" href="https://silenceper.com/css/iDisqus.min.css"/>
-
-    
-    <link rel="stylesheet" href="https://silenceper.com/css/bootstrap.min.css">
-
-    
-    <link rel="stylesheet" href="https://silenceper.com/css/hux-blog.min.css">
-
-    
-    <link rel="stylesheet" href="https://silenceper.com/css/syntax.css">
-
-    
-    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    
-    
-    <script src="https://silenceper.com/js/jquery.min.js"></script>
-
-    
-    <script src="https://silenceper.com/js/bootstrap.min.js"></script>
-
-    
-    <script src="https://silenceper.com/js/hux-blog.min.js"></script>
-</head>
-</head>
-
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-    <div class="container-fluid">
-        
-        <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="https://silenceper.com/">silenceper</a>
+<html lang="zh">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>k8s | 标签 | silenceper</title>
+        <meta name="Description" content="一个记录生活，工作的博客。关于Go，Kubernetes，云原生"><meta property="og:title" content="k8s" />
+<meta property="og:description" content="一个记录生活，工作的博客。关于Go，Kubernetes，云原生" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="/tags/k8s/" />
+<meta property="og:updated_time" content="2019-10-22T00:00:00+00:00" /><meta property="og:site_name" content="silenceper" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="k8s"/>
+<meta name="twitter:description" content="一个记录生活，工作的博客。关于Go，Kubernetes，云原生"/>
+<meta name="theme-color" content="#ffffff">
+<meta name="msapplication-TileColor" content="#da532c">
+<link rel="canonical" href="/tags/k8s/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="alternate" href="/tags/k8s/index.xml" type="application/rss+xml" title="silenceper">
+    <link rel="feed" href="/tags/k8s/index.xml" type="application/rss+xml" title="silenceper"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/css/lib/animate/animate.min.css"><meta name="google-site-verification" content="VJ4lE3d3A73DNoyxuuXL_Cuu6MEErPtKXqfAv69pr6E" /><meta name="baidu-site-verification" content="k061nqJczY" /></head>
+    <body><script>
+            if (!window.localStorage || !window.localStorage.getItem('theme')) {window.isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;} else {
+                window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            }
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title animated bounceIn">
+            <a href="/">silenceper</a>
         </div>
-
-        
-        
-        <div id="huxblog_navbar">
-            <div class="navbar-collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="https://silenceper.com/">Home</a>
-                    </li>
-                    
-                    <li>
-                        <a href="https://silenceper.com/categories/tech">tech</a>
-                    </li>
-                    
-
-                    
-                </ul>
-            </div>
+        <div class="menu"><a class="menu-item" href="/posts/">文章</a><a class="menu-item" href="/tags/">标签</a><a class="menu-item" href="/categories/">分类</a><a class="menu-item" href="/about/">关于</a><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-rotate-180 fa-fw"></i>
+            </a>
         </div>
-        
     </div>
-    
-</nav>
-<script>
-    
-    
-    
-    var $body   = document.body;
-    var $toggle = document.querySelector('.navbar-toggle');
-    var $navbar = document.querySelector('#huxblog_navbar');
-    var $collapse = document.querySelector('.navbar-collapse');
-
-    $toggle.addEventListener('click', handleMagic)
-    function handleMagic(e){
-        if ($navbar.className.indexOf('in') > 0) {
-        
-            $navbar.className = " ";
-            
-            setTimeout(function(){
-                
-                if($navbar.className.indexOf('in') < 0) {
-                    $collapse.style.height = "0px"
-                }
-            },400)
-        }else{
-        
-            $collapse.style.height = "auto"
-            $navbar.className += " in";
-        }
-    }
-</script>
-
-
-
-<header class="intro-header" style="background-image: url('https://silenceper.com/img/bg/yulongxueshan.jpg')">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
-                <div class="site-heading">
-                    <h1>silenceper </h1>
-                    
-		    <span class="subheading">好看的皮囊千篇一律 有趣的灵魂万里挑一</span>
-                </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-wrapper">
+        <div class="header-container">
+            <div class="header-title animated bounceIn">
+                <a href="/">silenceper</a>
             </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-rotate-180 fa-fw"></i>
+            </a>
         </div>
     </div>
 </header>
 
-
-
-  
-<div class="container">
-    <div class="row">
-        
-        
-   	    <div class="
-            col-lg-8 col-lg-offset-1
-            col-md-8 col-md-offset-1
-            col-sm-12
-            col-xs-12
-            post-container
-        ">
-            
-
-<div class="post-preview">
-    <a href="https://silenceper.com/blog/201910/kubernetes-log/">
-        <h2 class="post-title">
-            Kubernetes容器日志收集方案
-        </h2>
-	
-        <h3 class="post-subtitle">
-            容器日志收集方案对比，以及对log-pilot组件原理分析
-        </h3>
-	
-        <div class="post-content-preview">
-	
-            收集POD中container日志，日志还分为两种一种是容器标准输出日志和容器内日志。 方案 从日志的采集方式上，在我看来方案大致主要分为两种：
-       
+<script>
+    window.desktopHeaderMode = "fixed";
+    window.mobileHeaderMode = "auto";
+</script>
+<main class="main">
+                <div class="container"><div class="page archive"><h2 class="single-title animated pulse faster"><i class="fas fa-tag fa-fw"></i>&nbsp;K8s</h2><h3>2019</h3><article class="archive-item">
+                    <a href="/blog/201910/kubernetes-log/" class="archive-item-link">Kubernetes容器日志收集方案</a>
+                    <span class="archive-item-date">2019-10-22</span>
+                </article><article class="archive-item">
+                    <a href="/blog/201907/cluster-autoscaler-usage/" class="archive-item-link">Cluster Autoscaler:集群自动扩缩容</a>
+                    <span class="archive-item-date">2019-07-02</span>
+                </article><h3>2018</h3><article class="archive-item">
+                    <a href="/blog/201809/k8s-source-code-structure/" class="archive-item-link">k8s源码阅读(一)：源码结构</a>
+                    <span class="archive-item-date">2018-09-12</span>
+                </article><article class="archive-item">
+                    <a href="/blog/201809/how-to-build-a-k8s-cluster/" class="archive-item-link">在CentOS上搭建Kubernetes集群</a>
+                    <span class="archive-item-date">2018-09-07</span>
+                </article></div></div>
+            </main><footer class="footer">
+    <div class="copyright"><div class="copyright-line">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
         </div>
-    </a>
-    <p class="post-meta">
-    Posted by silenceper Tuesday, October 22, 2019
-    </p>
-</div>
-<hr>
 
-<div class="post-preview">
-    <a href="https://silenceper.com/blog/201907/cluster-autoscaler-usage/">
-        <h2 class="post-title">
-            Cluster Autoscaler:集群自动扩缩容
-        </h2>
-	
-        <h3 class="post-subtitle">
-            CA 组件可以实现集群节点的自动增删，关于基本使用以及原理部分介绍
-        </h3>
-	
-        <div class="post-content-preview">
-	
-            Cluster AutoScaler 是一个自动扩展和收缩 Kubernetes 集群 Node 的扩展。当集群容量不足时，它会自动去 Cloud Provider （支持 GCE、GKE 和 AWS）创建新的 Node，而在 Node 长时间资源利用
-       
-        </div>
-    </a>
-    <p class="post-meta">
-    Posted by silenceper Tuesday, July 2, 2019
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="https://silenceper.com/blog/201809/k8s-source-code-structure/">
-        <h2 class="post-title">
-            k8s源码阅读(一)：源码结构
-        </h2>
-	
-        <h3 class="post-subtitle">
-            k8s各个包中功能
-        </h3>
-	
-        <div class="post-content-preview">
-	
-            k8s源码包的作用，手动编译k8s源码以及如何阅读k8s源代码
-        
-        </div>
-    </a>
-    <p class="post-meta">
-    Posted by     &#34;silenceper&#34; Wednesday, September 12, 2018
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="https://silenceper.com/blog/201809/how-to-build-a-k8s-cluster/">
-        <h2 class="post-title">
-            在CentOS上搭建Kubernetes集群
-        </h2>
-	
-        <h3 class="post-subtitle">
-            如何在CentOS上安装kubernetes集群，原生安装
-        </h3>
-	
-        <div class="post-content-preview">
-	
-            主要是自己在搭建过程中整理的文档，如果来构建一个多节点的kubernetes集群，以服务的方式，注册到系统
-        
-        </div>
-    </a>
-    <p class="post-meta">
-    Posted by     &#34;silenceper&#34; Friday, September 7, 2018
-    </p>
-</div>
-<hr>
-
-
-            
-
-
-
-       	</div>
-        
-
-<div class="
-    col-lg-3 col-lg-offset-0
-    col-md-3 col-md-offset-0
-    col-sm-12
-    col-xs-12
-    sidebar-container
-">
-    
-    
-    <section>
-        <hr class="hidden-sm hidden-xs">
-        <h5>FEATURED TAGS</h5>
-        <div class="tags">
-             
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-                    <a href="/tags/flannel" title="flannel">
-                        flannel
-                    </a>
-                
-            
-                
-                    <a href="/tags/go" title="go">
-                        go
-                    </a>
-                
-            
-                
-                    <a href="/tags/k8s" title="k8s">
-                        k8s
-                    </a>
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-                    <a href="/tags/wechat" title="wechat">
-                        wechat
-                    </a>
-                
-            
-        </div>
-    </section>
-    
-
-    
-    <section class="visible-md visible-lg">
-        <hr><h5><a href="">ABOUT ME</a></h5>
-        <div class="short-about">
-            
-            <img src="https://silenceper.com/img/qr_code_study_program.jpg" />
-            
-            
-                <p>关注公众号了解更多干货</p>
-            
-           
-           <ul class="list-inline"> 
-               
-               <li>
-                   <a href="https://silenceper.com/tags/k8s/index.xml" rel="alternate" type="application/rss+xml" title="silenceper" >
-                       <span class="fa-stack fa-lg">
-                           <i class="fa fa-circle fa-stack-2x"></i>
-                           <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
-                       </span>
-                   </a>
-               </li>
-               
-               
-               
-               
-               
-               
-               
-               <li>
-                   <a target="_blank" href="https://github.com/silenceper">
-                       <span class="fa-stack fa-lg">
-                           <i class="fa fa-circle fa-stack-2x"></i>
-                           <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                       </span>
-                   </a>
-               </li>
-               
-               
-                </ul>
-            </div>
-    </section>
-   
-   <hr>
-   <h5>FRIENDS</h5>
-   <ul class="list-inline">
-       
-           <li><a target="_blank" href=""></a></li>
-       
-   </ul>
-   
-    
-   <hr>
-   <h5>BOOKMARKS</h5>
-   <ul class="list-inline">
-   
-   </ul>
-</div>
-
-	</div>
-</div>
-
-
-
-
-
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <ul class="list-inline text-center">
-                   
-                   <li>
-                       <a href="https://silenceper.com/tags/k8s/index.xml" rel="alternate" type="application/rss+xml" title="silenceper" >
-                           <span class="fa-stack fa-lg">
-                               <i class="fa fa-circle fa-stack-2x"></i>
-                               <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
-                           </span>
-                       </a>
-                   </li>
-                   
-                    
-                    <li>
-                        <a href="mailto:silenceper@gmail.com">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
-		    
-
-                    
-                    
-                    
-
-                    
-
-		    
-                    
-                    
-                    <li>
-                        <a target="_blank" href="https://github.com/silenceper">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
-		    
-                    
-                </ul>
-		<p class="copyright text-muted">
-                    Copyright &copy; silenceper , 2019
-                    <br>
-                    Hugo Theme by <a href="https://github.com/zhaohuabing/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a>
-                </p>
-            </div>
-        </div>
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2016 - 2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">silenceper</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
     </div>
 </footer>
-
-
-
-
-<script>
-    function async(u, c) {
-      var d = document, t = 'script',
-          o = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
-      o.src = u;
-      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-      s.parentNode.insertBefore(o, s);
-    }
-</script>
-
-
-
-
-
-
-<script>
-    
-    if($('#tag_cloud').length !== 0){
-        async("/js/jquery.tagcloud.js",function(){
-            $.fn.tagcloud.defaults = {
-                
-                color: {start: '#bbbbee', end: '#0085a1'},
-            };
-            $('#tag_cloud a').tagcloud();
-        })
-    }
-</script>
-
-
-<script>
-    async("https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.js", function(){
-        var $nav = document.querySelector("nav");
-        if($nav) FastClick.attach($nav);
-    })
-</script>
-
-
-<script>
-    (function(){
-        var bp = document.createElement('script');
-        var curProtocol = window.location.protocol.split(':')[0];
-        if (curProtocol === 'https'){
-       bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-      }
-      else{
-      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-      }
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(bp, s);
-    })();
-</script>
-
-
-
-
-<script>
-    
-    var _baId = '5feaced19c04a59ece51d36906735e70';
-
-    
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "//hm.baidu.com/hm.js?" + _baId;
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-</script>
-
-
-
-
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-139557989-1', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
-
-
-</body>
+</div><a href="#" class="dynamic-to-top animated faster" id="dynamic-to-top">
+            <span>&nbsp;</span>
+        </a><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$", right: "$", display: false },
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },]
+            });
+        });
+    </script><link rel="stylesheet" href="/css/lib/katex/katex.min.css"><link rel="stylesheet" href="/css/lib/katex/copy-tex.min.css"><script src="/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script src="/js/lib/lazysizes/lazysizes.min.js"></script><script src="/js/lib/katex/katex.min.js"></script><script src="/js/lib/katex/auto-render.min.js"></script><script src="/js/lib/katex/copy-tex.min.js"></script><script src="/js/lib/katex/mhchem.min.js"></script><script src=/js/theme.min.js></script></body>
 </html>

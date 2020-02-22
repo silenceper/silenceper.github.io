@@ -1,67 +1,68 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>go on silenceper</title>
-    <link>https://silenceper.com/tags/go/</link>
+    <link>/tags/go/</link>
     <description>Recent content in go on silenceper</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <language>zh</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
     <lastBuildDate>Sat, 15 Feb 2020 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://silenceper.com/tags/go/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/go/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>利用Kubernetes中的leaderelection实现组件高可用</title>
-      <link>https://silenceper.com/blog/202002/kubernetes-leaderelection/</link>
+      <link>/blog/202002/kubernetes-leaderelection/</link>
       <pubDate>Sat, 15 Feb 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://silenceper.com/blog/202002/kubernetes-leaderelection/</guid>
+      <guid>/blog/202002/kubernetes-leaderelection/</guid>
       <description>在Kubernetes中，通常kube-schduler和kube-controller-manager都是多副本进行部署的来保证高可用，而</description>
     </item>
     
     <item>
       <title>如何在Go项目中输出版本信息？</title>
-      <link>https://silenceper.com/blog/202001/go-import-version/</link>
+      <link>/blog/202001/go-import-version/</link>
       <pubDate>Fri, 10 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://silenceper.com/blog/202001/go-import-version/</guid>
-      <description>我们经常在使用CLI工具的时候，都会有这样的参数输出： ➜ ~ docker version Client: Docker Engine - Community Version: 18.09.2 API version: 1.39 Go version: go1.10.8 Git commit: 6247962 Built: Sun Feb 10 04:12:39 2019 OS/Arch: darwin/amd64 Experimental: false ➜ ~ 可以打印出构建时对应的</description>
+      <guid>/blog/202001/go-import-version/</guid>
+      <description>我们经常在使用CLI工具的时候，都会有这样的参数输出： 1 2 3 4 5 6 7 8 9 10 ➜ ~ docker version Client: Docker Engine - Community Version: 18.09.2 API version: 1.39 Go version: go1.10.8 Git commit: 6247962 Built: Sun Feb 10 04:12:39 2019 OS/Arch: darwin/amd64 Experimental: false ➜ ~ 可</description>
     </item>
     
     <item>
       <title>聊聊连接池</title>
-      <link>https://silenceper.com/blog/201611/tcp_connection_pool/</link>
+      <link>/blog/201611/tcp_connection_pool/</link>
       <pubDate>Sun, 20 Nov 2016 02:40:59 +0800</pubDate>
       
-      <guid>https://silenceper.com/blog/201611/tcp_connection_pool/</guid>
+      <guid>/blog/201611/tcp_connection_pool/</guid>
       <description>以下主要使用Golang作为编程语言 为什么需要连接池 我觉得使用连接池最大的一个好处就是减少连接的创建和关闭，增加系统负载能力， 之前就有遇到一</description>
     </item>
     
     <item>
       <title>开源项目：wechat sdk</title>
-      <link>https://silenceper.com/blog/201609/go-wechat-sdk/</link>
+      <link>/blog/201609/go-wechat-sdk/</link>
       <pubDate>Fri, 16 Sep 2016 15:40:59 +0800</pubDate>
       
-      <guid>https://silenceper.com/blog/201609/go-wechat-sdk/</guid>
+      <guid>/blog/201609/go-wechat-sdk/</guid>
       <description>一直很想自己用golang写个微信的sdk，目标是简单好用，所以利用闲暇时间（周末，中秋😁），就做出来。 项目地址:https://githu</description>
     </item>
     
     <item>
       <title>Golang中http包默认路由匹配规则阅读笔记</title>
-      <link>https://silenceper.com/blog/201605/go-http-process/</link>
+      <link>/blog/201605/go-http-process/</link>
       <pubDate>Sat, 28 May 2016 18:00:59 +0800</pubDate>
       
-      <guid>https://silenceper.com/blog/201605/go-http-process/</guid>
-      <description>一、执行流程 构建一个简单http server： package main import ( &amp;quot;log&amp;quot; &amp;quot;net/http&amp;quot; ) func main() { http.HandleFunc(&amp;quot;/&amp;quot;, func(w http.ResponseWriter, r *http.Request) { w.Write([]byte(&amp;quot;hello world&amp;quot;)) }) log.Fatal(http.ListenAndServe(&amp;quot;:8080&amp;quot;, nil)) } 使用http://127.0.0.1:8080/ 就</description>
+      <guid>/blog/201605/go-http-process/</guid>
+      <description>一、执行流程 构建一个简单http server： 1 2 3 4 5 6 7 8 9 10 11 12 13 14 package main import ( &amp;#34;log&amp;#34; &amp;#34;net/http&amp;#34; ) func main() { http.HandleFunc(&amp;#34;/&amp;#34;, func(w http.ResponseWriter, r *http.Request) { w.Write([]byte(&amp;#34;hello world&amp;#34;)) }) log.Fatal(http.ListenAndServe(&amp;#34;:8080&amp;#34;, nil)) } 使用http://12</description>
     </item>
     
     <item>
       <title>tcp time_wait问题</title>
-      <link>https://silenceper.com/blog/201601/tcp_time_wait_error/</link>
+      <link>/blog/201601/tcp_time_wait_error/</link>
       <pubDate>Sun, 03 Jan 2016 15:40:59 +0800</pubDate>
       
-      <guid>https://silenceper.com/blog/201601/tcp_time_wait_error/</guid>
+      <guid>/blog/201601/tcp_time_wait_error/</guid>
       <description>问题出现： 在元旦前夕，自己维护的一个服务突然在高峰时期收到大量报警，赶紧登上服务器看一下： 最开始的反应是memcache tcp read time out ,因为之前也</description>
     </item>
     

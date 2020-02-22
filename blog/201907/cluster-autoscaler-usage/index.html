@@ -1,212 +1,214 @@
 <!DOCTYPE html>
-<html lang="en-us">
-<head><head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    <meta name="description" content="一个记录生活，工作的博客。关于Go，Kubernetes，云原生">
-    
-    <meta name="keyword"  content="程序员,Golang,Microservice">
-    <link rel="shortcut icon" href="https://silenceper.com/img/favicon.ico">
-
-    <title>Cluster Autoscaler:集群自动扩缩容- silenceper的博客</title>
-
-    <link rel="canonical" href="https://silenceper.com/blog/201907/cluster-autoscaler-usage/">
-
-    <link rel="stylesheet" href="https://silenceper.com/css/iDisqus.min.css"/>
-
-    
-    <link rel="stylesheet" href="https://silenceper.com/css/bootstrap.min.css">
-
-    
-    <link rel="stylesheet" href="https://silenceper.com/css/hux-blog.min.css">
-
-    
-    <link rel="stylesheet" href="https://silenceper.com/css/syntax.css">
-
-    
-    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    
-    
-    <script src="https://silenceper.com/js/jquery.min.js"></script>
-
-    
-    <script src="https://silenceper.com/js/bootstrap.min.js"></script>
-
-    
-    <script src="https://silenceper.com/js/hux-blog.min.js"></script>
-</head>
-</head>
-
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-    <div class="container-fluid">
-        
-        <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="https://silenceper.com/">silenceper</a>
-        </div>
-
-        
-        
-        <div id="huxblog_navbar">
-            <div class="navbar-collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="https://silenceper.com/">Home</a>
-                    </li>
-                    
-                    <li>
-                        <a href="https://silenceper.com/categories/tech">tech</a>
-                    </li>
-                    
-
-                    
-                </ul>
-            </div>
-        </div>
-        
-    </div>
-    
-</nav>
-<script>
-    
-    
-    
-    var $body   = document.body;
-    var $toggle = document.querySelector('.navbar-toggle');
-    var $navbar = document.querySelector('#huxblog_navbar');
-    var $collapse = document.querySelector('.navbar-collapse');
-
-    $toggle.addEventListener('click', handleMagic)
-    function handleMagic(e){
-        if ($navbar.className.indexOf('in') > 0) {
-        
-            $navbar.className = " ";
-            
-            setTimeout(function(){
-                
-                if($navbar.className.indexOf('in') < 0) {
-                    $collapse.style.height = "0px"
+<html lang="zh">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Cluster Autoscaler:集群自动扩缩容 | silenceper</title>
+        <meta name="Description" content="CA 组件可以实现集群节点的自动增删，关于基本使用以及原理部分介绍"><meta property="og:title" content="Cluster Autoscaler:集群自动扩缩容" />
+<meta property="og:description" content="CA 组件可以实现集群节点的自动增删，关于基本使用以及原理部分介绍" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/201907/cluster-autoscaler-usage/" />
+<meta property="article:published_time" content="2019-07-02T00:00:00+00:00" />
+<meta property="article:modified_time" content="2019-07-02T00:00:00+00:00" /><meta property="og:site_name" content="silenceper" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Cluster Autoscaler:集群自动扩缩容"/>
+<meta name="twitter:description" content="CA 组件可以实现集群节点的自动增删，关于基本使用以及原理部分介绍"/>
+<meta name="theme-color" content="#ffffff">
+<meta name="msapplication-TileColor" content="#da532c">
+<link rel="canonical" href="/blog/201907/cluster-autoscaler-usage/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="prev" href="/blog/201810/calico-in-k8s/" /><link rel="next" href="/blog/201910/kubernetes-log/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/css/lib/animate/animate.min.css"><meta name="google-site-verification" content="VJ4lE3d3A73DNoyxuuXL_Cuu6MEErPtKXqfAv69pr6E" /><meta name="baidu-site-verification" content="k061nqJczY" /><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Cluster Autoscaler:集群自动扩缩容",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "\/blog\/201907\/cluster-autoscaler-usage\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "\/img\/silenceoer-avatar.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "posts","keywords": "k8s, ca","wordcount":  3126 ,
+        "url": "\/blog\/201907\/cluster-autoscaler-usage\/","datePublished": "2019-07-02T00:00:00\x2b00:00","dateModified": "2019-07-02T00:00:00\x2b00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "silenceper",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "\/img\/silenceper-avatar.png",
+                "width":  127 ,
+                "height":  40 
                 }
-            },400)
-        }else{
-        
-            $collapse.style.height = "auto"
-            $navbar.className += " in";
-        }
+            },"description": "CA 组件可以实现集群节点的自动增删，关于基本使用以及原理部分介绍"
     }
-</script>
-
-
-
-
-<style type="text/css">
-    header.intro-header{
-        background-image: url('https://silenceper.com/img/bg/guidao.jpg')
-    }
-</style>
-<header class="intro-header" >
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="post-heading">
-                    <div class="tags">
-                       
-                       <a class="tag" href="/tags/k8s" title="k8s">
-                           k8s
-                        </a>
-                        
-                       <a class="tag" href="/tags/ca" title="ca">
-                           ca
-                        </a>
-                        
-                    </div>
-                    <h1>Cluster Autoscaler:集群自动扩缩容</h1>
-                    <h2 class="subheading">CA 组件可以实现集群节点的自动增删，关于基本使用以及原理部分介绍</h2>
-                    <span  class="meta">Posted by silenceper on Tuesday, July 2, 2019
-                        
-                    </span>
-                </div>
+    </script></head>
+    <body><script>
+            if (!window.localStorage || !window.localStorage.getItem('theme')) {window.isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;} else {
+                window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            }
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title animated bounceIn">
+            <a href="/">silenceper</a>
+        </div>
+        <div class="menu"><a class="menu-item" href="/posts/">文章</a><a class="menu-item" href="/tags/">标签</a><a class="menu-item" href="/categories/">分类</a><a class="menu-item" href="/about/">关于</a><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-rotate-180 fa-fw"></i>
+            </a>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-wrapper">
+        <div class="header-container">
+            <div class="header-title animated bounceIn">
+                <a href="/">silenceper</a>
             </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-rotate-180 fa-fw"></i>
+            </a>
         </div>
     </div>
 </header>
 
-
-
-
-<article>
-    <div class="container">
-        <div class="row">
-
-            
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                post-container">
-
-		
-                <header>
-                <h2>TOC</h2>
-                </header>
-                <nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#部署">部署</a></li>
-<li><a href="#工作原理">工作原理</a>
-<ul>
-<li><a href="#扩容">扩容</a></li>
-<li><a href="#缩容">缩容</a></li>
-</ul></li>
-<li><a href="#实现cluster-provider">实现Cluster Provider</a></li>
-</ul></li>
-</ul>
-</nav>
-		
-		
-
-<p>Cluster AutoScaler 是一个自动扩展和收缩 Kubernetes 集群 Node 的扩展。当集群容量不足时，它会自动去 Cloud Provider （支持 GCE、GKE 和 AWS）创建新的 Node，而在 Node 长时间资源利用率很低时自动将其删除以节省开支。</p>
-
+<script>
+    window.desktopHeaderMode = "fixed";
+    window.mobileHeaderMode = "auto";
+</script>
+<main class="main">
+                <div class="container"><article class="page single"><h1 class="single-title animated flipInX">Cluster Autoscaler:集群自动扩缩容</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author">
+                    <a class="author" href="/" rel="author" target="_blank">
+                        <i class="fas fa-user-circle fa-fw"></i>silenceper
+                    </a>
+                </span>&nbsp;<span class="post-category">收录于&nbsp;
+                            <span>
+                                <a href="/categories/tech">
+                                    <i class="far fa-folder fa-fw"></i>Tech
+                                </a>
+                            </span></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2019-07-02>2019-07-02</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>约 3126 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>预计阅读 7 分钟&nbsp;</div>
+        </div><div class="toc" id="toc-auto">
+                <h2 class="toc-title">目录</h2>
+                <div class="toc-content" id="toc-content-auto"></div>
+            </div>
+            <div class="toc" id="toc-static">
+                <details>
+                    <summary>
+                        <div class="toc-title">
+                            <span>目录</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#部署">部署</a></li>
+    <li><a href="#工作原理">工作原理</a>
+      <ul>
+        <li><a href="#扩容">扩容</a></li>
+        <li><a href="#缩容">缩容</a></li>
+      </ul>
+    </li>
+    <li><a href="#实现cluster-provider">实现Cluster Provider</a></li>
+  </ul>
+</nav></div>
+                </details>
+            </div><div class="content"><p>Cluster AutoScaler 是一个自动扩展和收缩 Kubernetes 集群 Node 的扩展。当集群容量不足时，它会自动去 Cloud Provider （支持 GCE、GKE 和 AWS）创建新的 Node，而在 Node 长时间资源利用率很低时自动将其删除以节省开支。</p>
 <p>在Kubernetes中关于弹性伸缩主要有三种格式：</p>
-
 <ul>
 <li><strong>HPA</strong>：Horizontal Pod Autoscaling可以根据CPU利用率自动伸缩一个Replication Controller、Deployment 或者Replica Set中的Pod数量</li>
 <li><strong>VPA</strong>：Vertical Pod Autoscaler（VPA）使用户无需为其pods中的容器设置最新的资源request。配置后，它将根据使用情况自动设置request，从而允许在节点上进行适当的调度，以便为每个pod提供适当的资源量。</li>
 <li><strong>CA</strong>：自动伸缩NODE节点</li>
 </ul>
-
 <h2 id="部署">部署</h2>
-
-<p>Cluster Autoscaler代码地址：<a href="https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler">https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler</a></p>
-
-<p>CA 提供了<a href="https://github.com/kubernetes/autoscaler/blob/7cfa98b4ca308fbede1a2f1054ef3f00daf560dd/cluster-autoscaler/cloudprovider/cloud_provider.go#L31">Cloud Provider</a>接口供各个云厂商接入，主要是针对厂商自己的API，应对节点添加以及删除的请求。</p>
-
+<p>Cluster Autoscaler代码地址：<a href="https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler" target="_blank" rel="noopener noreffer">https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler</a>
+</p>
+<p>CA 提供了<a href="https://github.com/kubernetes/autoscaler/blob/7cfa98b4ca308fbede1a2f1054ef3f00daf560dd/cluster-autoscaler/cloudprovider/cloud_provider.go#L31" target="_blank" rel="noopener noreffer">Cloud Provider</a>
+接口供各个云厂商接入，主要是针对厂商自己的API，应对节点添加以及删除的请求。</p>
 <p>目前云厂商的ECS产品都会有扩缩容的功能（例如阿里云ESS，就是CA中伸缩组的概念），CA就可以结合ESS完成集群的扩缩容功能。</p>
-
 <p>各大厂商节点扩缩容安装：</p>
-
 <ul>
-<li>GCE: <a href="https://kubernetes.io/docs/concepts/cluster-administration/cluster-management/">https://kubernetes.io/docs/concepts/cluster-administration/cluster-management/</a></li>
-<li>GKE: <a href="https://cloud.google.com/container-engine/docs/cluster-autoscaler">https://cloud.google.com/container-engine/docs/cluster-autoscaler</a></li>
-<li>AWS: <a href="https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/cloudprovider/aws/README.md">https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/cloudprovider/aws/README.md</a></li>
-<li>Azure: <a href="https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler/cloudprovider/azure">https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler/cloudprovider/azure</a></li>
-<li>alicloud：<a href="https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/cloudprovider/alicloud/README.md">https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/cloudprovider/alicloud/README.md</a></li>
-<li>baiducloud：<a href="https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/cloudprovider/baiducloud/README.md">https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/cloudprovider/baiducloud/README.md</a></li>
+<li>GCE: <a href="https://kubernetes.io/docs/concepts/cluster-administration/cluster-management/" target="_blank" rel="noopener noreffer">https://kubernetes.io/docs/concepts/cluster-administration/cluster-management/</a>
+</li>
+<li>GKE: <a href="https://cloud.google.com/container-engine/docs/cluster-autoscaler" target="_blank" rel="noopener noreffer">https://cloud.google.com/container-engine/docs/cluster-autoscaler</a>
+</li>
+<li>AWS: <a href="https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/cloudprovider/aws/README.md" target="_blank" rel="noopener noreffer">https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/cloudprovider/aws/README.md</a>
+</li>
+<li>Azure: <a href="https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler/cloudprovider/azure" target="_blank" rel="noopener noreffer">https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler/cloudprovider/azure</a>
+</li>
+<li>alicloud：<a href="https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/cloudprovider/alicloud/README.md" target="_blank" rel="noopener noreffer">https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/cloudprovider/alicloud/README.md</a>
+</li>
+<li>baiducloud：<a href="https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/cloudprovider/baiducloud/README.md" target="_blank" rel="noopener noreffer">https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/cloudprovider/baiducloud/README.md</a>
+</li>
 </ul>
-
-<p>以阿里云为例，具体安装可以参考这篇文章：<a href="https://yq.aliyun.com/articles/392170">阿里云上弹性伸缩kubernetes集群 - autoscaler
-</a></p>
-
+<p>以阿里云为例，具体安装可以参考这篇文章：<a href="https://yq.aliyun.com/articles/392170" target="_blank" rel="noopener noreffer">阿里云上弹性伸缩kubernetes集群 - autoscaler
+</a>
+</p>
 <p>其中关键yaml文件如下：</p>
-
-<pre><code>apiVersion: extensions/v1beta1
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: cluster-autoscaler
@@ -240,7 +242,7 @@ spec:
             - --stderrthreshold=info
             - --cloud-provider=alicloud
             - --skip-nodes-with-local-storage=false
-            - --nodes=1:100:${AUTO_SCALER_GROUP}
+            - --nodes=1💯${AUTO_SCALER_GROUP}
           env:
           - name: ACCESS_KEY_ID
             valueFrom:
@@ -252,37 +254,27 @@ spec:
               secretKeyRef:
                 name: cloud-config
                 key: access-key-secret
-          imagePullPolicy: &quot;Always&quot;
-</code></pre>
-
-<p>其中 <code>--nodes=1:100:${AUTO_SCALER_GROUP}</code>参数，表示扩容最大100个，缩容最小1个节点，后面<code>${AUTO_SCALER_GROUP}</code>表示伸缩组ID</p>
-
+          imagePullPolicy: &#34;Always&#34;
+</code></pre></td></tr></table>
+</div>
+</div><p>其中 <code>--nodes=1💯${AUTO_SCALER_GROUP}</code>参数，表示扩容最大100个，缩容最小1个节点，后面<code>${AUTO_SCALER_GROUP}</code>表示伸缩组ID</p>
 <h2 id="工作原理">工作原理</h2>
-
 <h3 id="扩容">扩容</h3>
-
 <p>CA会定期(默认10s,通过参数<code>--scan-interval</code>设置)检测当前集群状态下是否存在pending的pod，然后经过计算，判断需要扩容几个节点，最终从node group中进行节点的扩容：</p>
-
 <p>Node Group 就对应伸缩组的概念，可以支持配置支持多个伸缩组，通过策略来进行选择，目前支持的策略为：</p>
-
 <ul>
 <li>random：随机选择</li>
 <li>most-pods：选择能够创建pod最多的Node Group</li>
 <li>least-waste：以最小浪费原则选择，即选择有最少可用资源的 Node Group</li>
 <li>price：根据主机的价格选择，选择最便宜的</li>
-<li>priority：根据优先级进行选择，通过配置<code>cluster-autoscaler-priority-expander</code> configMap，具体参考：<a href="https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler/expander/priority">https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler/expander/priority</a></li>
+<li>priority：根据优先级进行选择，通过配置<code>cluster-autoscaler-priority-expander</code> configMap，具体参考：<a href="https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler/expander/priority" target="_blank" rel="noopener noreffer">https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler/expander/priority</a>
+</li>
 </ul>
-
 <h3 id="缩容">缩容</h3>
-
 <p>集群缩容其实是一个可选的选项，通过参数<code>--scale-down-enabled</code>控制是否开启缩容。</p>
-
 <p>CA定期会检测集群状态，判断当前集群状态下，哪些节点资源利用率小于50%(通过参数<code>--scale-down-utilization-threshold</code>控制)。</p>
-
 <p>资源利用率计算是通过判断集群cpu，mem 中request值占用率计算的，只要有一个指标超了就可能会出发缩容，之所以说是可能会触发扩容，是因为要保证被驱逐节点上的POD能够正确调度到其他节点上。</p>
-
 <p><strong>哪些NODE不会缩容：</strong></p>
-
 <ul>
 <li>当您设置了严格的 PodDisruptionBudget 的 Pod 不满足 PDB 时，不会缩容。</li>
 <li>Kube-system 下的 Pod。通过参数<code>--skip-nodes-with-system-pods</code>控制</li>
@@ -290,14 +282,59 @@ spec:
 <li>Pod 有本地存储。通过参数<code>--skip-nodes-with-local-storage</code>控制</li>
 <li>Pod 不能被调度到其他节点上。例如资源不满足等</li>
 </ul>
-
 <h2 id="实现cluster-provider">实现Cluster Provider</h2>
-
 <p>如果你使用的以上主流的几个云厂商的主机资源/k8s集群，可以直接使用官方的CA版本，只需要通过参数<code>--cloud-provider</code>控制来自哪个云厂商就可以。</p>
-
 <p>如果想要对接自己的IaaS层，只需要实现其中的接口就可以了，接口定义如下：</p>
-
-<pre><code>// CloudProvider contains configuration info and functions for interacting with
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">// CloudProvider contains configuration info and functions for interacting with
 // cloud provider (GCE, AWS, etc).
 type CloudProvider interface {Marcin Wielgus, 3 years ago: • Cluster-autoscaler: cloud provider interface
 	// Name returns name of the cloud provider.
@@ -342,11 +379,84 @@ type CloudProvider interface {Marcin Wielgus, 3 years ago: • Cluster-autoscale
 	// In particular the list of node groups returned by NodeGroups can change as a result of CloudProvider.Refresh().
 	Refresh() error
 }
-</code></pre>
-
-<p>其中NodeGroup接口定义：</p>
-
-<pre><code>// NodeGroup contains configuration info and functions to control a set
+</code></pre></td></tr></table>
+</div>
+</div><p>其中NodeGroup接口定义：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">// NodeGroup contains configuration info and functions to control a set
 // of nodes that have the same capacity and set of labels.
 type NodeGroup interface {
 	// MaxSize returns maximum size of the node group.
@@ -368,13 +478,13 @@ type NodeGroup interface {
 	IncreaseSize(delta int) error
 
 	// DeleteNodes deletes nodes from this node group. Error is returned either on
-	// failure or if the given node doesn't belong to this node group. This function
+	// failure or if the given node doesn&#39;t belong to this node group. This function
 	// should wait until node group size is updated. Implementation required.
 	//从伸缩组中删除节点
 	DeleteNodes([]*apiv1.Node) error
 
 	// DecreaseTargetSize decreases the target size of the node group. This function
-	// doesn't permit to delete any existing node and can be used only to reduce the
+	// doesn&#39;t permit to delete any existing node and can be used only to reduce the
 	// request for new nodes that have not been yet fulfilled. Delta should be negative.
 	// It is assumed that cloud provider will not delete the existing nodes when there
 	// is an option to just decrease the target. Implementation required.
@@ -416,277 +526,72 @@ type NodeGroup interface {
 	Autoprovisioned() bool
 }
 
-</code></pre>
-
-<p>其中<code>IncreaseSize</code>，<code>IncreaseSize</code>才是关键的方法，分别对用扩容伸缩组和增加节点。</p>
-
+</code></pre></td></tr></table>
+</div>
+</div><p>其中<code>IncreaseSize</code>，<code>IncreaseSize</code>才是关键的方法，分别对用扩容伸缩组和增加节点。</p>
 <p>在调用<code>IncreaseSize</code>接口后，需要完成节点自动添加进集群。参考阿里云是通过配置shell脚本到伸缩组中的ECS启动脚本中，当ECS启动，自动执行该脚本。当然我们也可以自定义通过其他方式加入集群。</p>
-
-
-                <hr>
-
-                <ul class="pager">
-                    
-                    <li class="previous">
-                        <a href="/blog/201810/calico-in-k8s/" data-toggle="tooltip" data-placement="top" title="k8s网络组件：calico">&larr; Previous Post</a>
-                    </li>
-                    
-                    
-                    <li class="next">
-                        <a href="/blog/201910/kubernetes-log/" data-toggle="tooltip" data-placement="top" title="Kubernetes容器日志收集方案">Next Post &rarr;</a>
-                    </li>
-                    
-                </ul>
-
-            
-<div id="disqus-comment"></div>
-
-<div id="disqus_thread"></div>
-<script type="application/javascript">
-    var disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "silenceper" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-
-
-
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>本文于 2019-07-02 更新</span>
             </div>
-            
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                sidebar-container">
-
-                
-                <section>
-                    <hr class="hidden-sm hidden-xs">
-                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
-                    <div class="tags">
-                    
-                    
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                            <a href="/tags/flannel" title="flannel">
-                                flannel
-                            </a>
-                       
-                    
-                       
-                            <a href="/tags/go" title="go">
-                                go
-                            </a>
-                       
-                    
-                       
-                            <a href="/tags/k8s" title="k8s">
-                                k8s
-                            </a>
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                            <a href="/tags/wechat" title="wechat">
-                                wechat
-                            </a>
-                       
-                    
-                    </div>
-                </section>
-
-                
-                <hr>
-                <h5>FRIENDS</h5>
-                <ul class="list-inline">
-                    
-                        <li><a target="_blank" href=""></a></li>
-                    
-                </ul>
-            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/blog/201907/cluster-autoscaler-usage/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share"><span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="/blog/201907/cluster-autoscaler-usage/" data-title="Cluster Autoscaler:集群自动扩缩容" data-hashtags="k8s,ca"><i class="fab fa-twitter fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="/blog/201907/cluster-autoscaler-usage/" data-hashtag="k8s"><i class="fab fa-facebook-square fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="/blog/201907/cluster-autoscaler-usage/" data-title="Cluster Autoscaler:集群自动扩缩容"><i class="fab fa-weibo fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 人人" data-sharer="renren" data-url="/blog/201907/cluster-autoscaler-usage/"><i class="fab fa-renren fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 百度" data-sharer="baidu" data-url="/blog/201907/cluster-autoscaler-usage/" data-title="Cluster Autoscaler:集群自动扩缩容"><i class="loveit it-baidu-fill"></i>
+</a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="/blog/201907/cluster-autoscaler-usage/" data-title="Cluster Autoscaler:集群自动扩缩容"><i class="fab fa-evernote fa-fw"></i>
+</a></span></div>
         </div>
     </div>
-</article>
 
-
-
-
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <ul class="list-inline text-center">
-                   
-                   <li>
-                       <a href="" rel="alternate" type="application/rss+xml" title="silenceper" >
-                           <span class="fa-stack fa-lg">
-                               <i class="fa fa-circle fa-stack-2x"></i>
-                               <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
-                           </span>
-                       </a>
-                   </li>
-                   
-                    
-                    <li>
-                        <a href="mailto:silenceper@gmail.com">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
-                            </span>
+    <div class="post-info-more">
+        <section><span>
+                        <a href="/tags/k8s">
+                            <i class="fas fa-tag fa-fw"></i>k8s
                         </a>
-                    </li>
-		    
-
-                    
-                    
-                    
-
-                    
-
-		    
-                    
-                    
-                    <li>
-                        <a target="_blank" href="https://github.com/silenceper">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                            </span>
+                    </span>&nbsp;<span>
+                        <a href="/tags/ca">
+                            <i class="fas fa-tag fa-fw"></i>ca
                         </a>
-                    </li>
-		    
-                    
-                </ul>
-		<p class="copyright text-muted">
-                    Copyright &copy; silenceper , 2019
-                    <br>
-                    Hugo Theme by <a href="https://github.com/zhaohuabing/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a>
-                </p>
-            </div>
+                    </span>&nbsp;</section>
+        <section>
+            <span><a href="javascript:window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/blog/201810/calico-in-k8s/" class="prev" rel="prev" title="k8s网络组件：calico"><i class="fas fa-angle-left fa-fw"></i>k8s网络组件：calico</a>
+            <a href="/blog/201910/kubernetes-log/" class="next" rel="next" title="Kubernetes容器日志收集方案">Kubernetes容器日志收集方案<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div class="comment"><div id="disqus_thread"></div><noscript>
+            Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright"><div class="copyright-line">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
         </div>
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2016 - 2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">silenceper</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
     </div>
 </footer>
-
-
-
-
-<script>
-    function async(u, c) {
-      var d = document, t = 'script',
-          o = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
-      o.src = u;
-      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-      s.parentNode.insertBefore(o, s);
-    }
-</script>
-
-
-
-
-
-
-<script>
-    
-    if($('#tag_cloud').length !== 0){
-        async("/js/jquery.tagcloud.js",function(){
-            $.fn.tagcloud.defaults = {
-                
-                color: {start: '#bbbbee', end: '#0085a1'},
-            };
-            $('#tag_cloud a').tagcloud();
-        })
-    }
-</script>
-
-
-<script>
-    async("https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.js", function(){
-        var $nav = document.querySelector("nav");
-        if($nav) FastClick.attach($nav);
-    })
-</script>
-
-
-<script>
-    (function(){
-        var bp = document.createElement('script');
-        var curProtocol = window.location.protocol.split(':')[0];
-        if (curProtocol === 'https'){
-       bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-      }
-      else{
-      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-      }
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(bp, s);
-    })();
-</script>
-
-
-
-
-<script>
-    
-    var _baId = '5feaced19c04a59ece51d36906735e70';
-
-    
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "//hm.baidu.com/hm.js?" + _baId;
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-</script>
-
-
-
-
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-139557989-1', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
-
-
-</body>
+</div><a href="#" class="dynamic-to-top animated faster" id="dynamic-to-top">
+            <span>&nbsp;</span>
+        </a><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$", right: "$", display: false },
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },]
+            });
+        });
+    </script><link rel="stylesheet" href="/css/lib/iconfont/iconfont.min.css"><link rel="stylesheet" href="/css/lib/katex/katex.min.css"><link rel="stylesheet" href="/css/lib/katex/copy-tex.min.css"><script src="https://silenceper.disqus.com/embed.js"></script><script src="/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script src="/js/lib/sharer/sharer.min.js"></script><script src="/js/lib/lazysizes/lazysizes.min.js"></script><script src="/js/lib/katex/katex.min.js"></script><script src="/js/lib/katex/auto-render.min.js"></script><script src="/js/lib/katex/copy-tex.min.js"></script><script src="/js/lib/katex/mhchem.min.js"></script><script src=/js/theme.min.js></script></body>
 </html>

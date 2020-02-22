@@ -1,447 +1,197 @@
 <!DOCTYPE html>
-<html lang="en-us">
-<head><head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    <meta name="description" content="一个记录生活，工作的博客。关于Go，Kubernetes，云原生">
-    
-    <meta name="keyword"  content="程序员,Golang,Microservice">
-    <link rel="shortcut icon" href="https://silenceper.com/img/favicon.ico">
-
-    <title>dcmp- silenceper的博客</title>
-
-    <link rel="canonical" href="https://silenceper.com/blog/201608/dcmp">
-
-    <link rel="stylesheet" href="https://silenceper.com/css/iDisqus.min.css"/>
-
-    
-    <link rel="stylesheet" href="https://silenceper.com/css/bootstrap.min.css">
-
-    
-    <link rel="stylesheet" href="https://silenceper.com/css/hux-blog.min.css">
-
-    
-    <link rel="stylesheet" href="https://silenceper.com/css/syntax.css">
-
-    
-    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    
-    
-    <script src="https://silenceper.com/js/jquery.min.js"></script>
-
-    
-    <script src="https://silenceper.com/js/bootstrap.min.js"></script>
-
-    
-    <script src="https://silenceper.com/js/hux-blog.min.js"></script>
-</head>
-</head>
-
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-    <div class="container-fluid">
-        
-        <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="https://silenceper.com/">silenceper</a>
-        </div>
-
-        
-        
-        <div id="huxblog_navbar">
-            <div class="navbar-collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="https://silenceper.com/">Home</a>
-                    </li>
-                    
-                    <li>
-                        <a href="https://silenceper.com/categories/tech">tech</a>
-                    </li>
-                    
-
-                    
-                </ul>
-            </div>
-        </div>
-        
-    </div>
-    
-</nav>
-<script>
-    
-    
-    
-    var $body   = document.body;
-    var $toggle = document.querySelector('.navbar-toggle');
-    var $navbar = document.querySelector('#huxblog_navbar');
-    var $collapse = document.querySelector('.navbar-collapse');
-
-    $toggle.addEventListener('click', handleMagic)
-    function handleMagic(e){
-        if ($navbar.className.indexOf('in') > 0) {
-        
-            $navbar.className = " ";
-            
-            setTimeout(function(){
-                
-                if($navbar.className.indexOf('in') < 0) {
-                    $collapse.style.height = "0px"
+<html lang="zh">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>dcmp | silenceper</title>
+        <meta name="Description" content="一个记录生活，工作的博客。关于Go，Kubernetes，云原生"><meta property="og:title" content="dcmp" />
+<meta property="og:description" content="Distributed Configuration Management Platform 提供了一个etcd的管理界面，可通过界面修改配置信息，借助confd可实现配置文件的同步。 dcmp image GITHUB：https://gith" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/201608/dcmp/" />
+<meta property="article:published_time" content="2016-08-02T15:40:59+08:00" />
+<meta property="article:modified_time" content="2016-08-02T15:40:59+08:00" /><meta property="og:site_name" content="silenceper" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="dcmp"/>
+<meta name="twitter:description" content="Distributed Configuration Management Platform 提供了一个etcd的管理界面，可通过界面修改配置信息，借助confd可实现配置文件的同步。 dcmp image GITHUB：https://gith"/>
+<meta name="theme-color" content="#ffffff">
+<meta name="msapplication-TileColor" content="#da532c">
+<link rel="canonical" href="/blog/201608/dcmp/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="prev" href="/blog/201605/go-http-process/" /><link rel="next" href="/blog/201609/go-wechat-sdk/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/css/lib/animate/animate.min.css"><meta name="google-site-verification" content="VJ4lE3d3A73DNoyxuuXL_Cuu6MEErPtKXqfAv69pr6E" /><meta name="baidu-site-verification" content="k061nqJczY" /><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "dcmp",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "\/blog\/201608\/dcmp\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "\/img\/silenceoer-avatar.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "posts","keywords": "dcmp, etcd, confd","wordcount":  172 ,
+        "url": "\/blog\/201608\/dcmp\/","datePublished": "2016-08-02T15:40:59\x2b08:00","dateModified": "2016-08-02T15:40:59\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "silenceper",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "\/img\/silenceper-avatar.png",
+                "width":  127 ,
+                "height":  40 
                 }
-            },400)
-        }else{
-        
-            $collapse.style.height = "auto"
-            $navbar.className += " in";
-        }
+            },"description": ""
     }
-</script>
-
-
-
-
-<style type="text/css">
-    header.intro-header{
-        background-image: url('https://silenceper.com/img/bg/rabbit.jpg')
-    }
-</style>
-<header class="intro-header" >
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="post-heading">
-                    <div class="tags">
-                       
-                       <a class="tag" href="/tags/dcmp" title="dcmp">
-                           dcmp
-                        </a>
-                        
-                       <a class="tag" href="/tags/etcd" title="etcd">
-                           etcd
-                        </a>
-                        
-                       <a class="tag" href="/tags/confd" title="confd">
-                           confd
-                        </a>
-                        
-                    </div>
-                    <h1>dcmp</h1>
-                    <h2 class="subheading">基于etcd的配置管理系统</h2>
-                    <span  class="meta">Posted by     &#34;silenceper&#34; on Tuesday, August 2, 2016
-                        
-                    </span>
-                </div>
+    </script></head>
+    <body><script>
+            if (!window.localStorage || !window.localStorage.getItem('theme')) {window.isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;} else {
+                window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            }
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title animated bounceIn">
+            <a href="/">silenceper</a>
+        </div>
+        <div class="menu"><a class="menu-item" href="/posts/">文章</a><a class="menu-item" href="/tags/">标签</a><a class="menu-item" href="/categories/">分类</a><a class="menu-item" href="/about/">关于</a><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-rotate-180 fa-fw"></i>
+            </a>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-wrapper">
+        <div class="header-container">
+            <div class="header-title animated bounceIn">
+                <a href="/">silenceper</a>
             </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-rotate-180 fa-fw"></i>
+            </a>
         </div>
     </div>
 </header>
 
-
-
-
-<article>
-    <div class="container">
-        <div class="row">
-
-            
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                post-container">
-
-		
-                <header>
-                <h2>TOC</h2>
-                </header>
-                
-		
-		<p>Distributed Configuration Management Platform</p>
-
+<script>
+    window.desktopHeaderMode = "fixed";
+    window.mobileHeaderMode = "auto";
+</script>
+<main class="main">
+                <div class="container"><article class="page single"><h1 class="single-title animated flipInX">dcmp</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author">
+                    <a class="author" href="/" rel="author" target="_blank">
+                        <i class="fas fa-user-circle fa-fw"></i>    &#34;silenceper&#34;
+                    </a>
+                </span>&nbsp;<span class="post-category">收录于&nbsp;
+                            <span>
+                                <a href="/categories/tech">
+                                    <i class="far fa-folder fa-fw"></i>Tech
+                                </a>
+                            </span></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2016-08-02>2016-08-02</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>约 172 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>预计阅读 1 分钟&nbsp;</div>
+        </div><div class="toc" id="toc-auto">
+                <h2 class="toc-title">目录</h2>
+                <div class="toc-content" id="toc-content-auto"></div>
+            </div>
+            <div class="toc" id="toc-static">
+                <details>
+                    <summary>
+                        <div class="toc-title">
+                            <span>目录</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
+                </details>
+            </div><div class="content"><p>Distributed Configuration Management Platform</p>
 <p>提供了一个etcd的管理界面，可通过界面修改配置信息，借助confd可实现配置文件的同步。</p>
-
-<p><img src="https://raw.githubusercontent.com/silenceper/dcmp/master/docs/image.png" alt="dcmp image" /></p>
-
-<p>GITHUB：<a href="https://github.com/silenceper/dcmp">https://github.com/silenceper/dcmp</a></p>
-
-<hr />
-
+<p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://raw.githubusercontent.com/silenceper/dcmp/master/docs/image.png" alt="dcmp image" title="dcmp image" class="lazyload">
+<figcaption class="image-caption">dcmp image</figcaption></figure>
+</p>
+<p>GITHUB：<a href="https://github.com/silenceper/dcmp" target="_blank" rel="noopener noreffer">https://github.com/silenceper/dcmp</a>
+</p>
+<hr>
 <p>API采用的是Gin Framework，写起api应用来非常方便，前端尝试了一下react。</p>
-
 <blockquote>
 <p>传到Github一看，发现css，js的代码比golang还要多 。 😢</p>
 </blockquote>
-
-
-                <hr>
-
-                <ul class="pager">
-                    
-                    <li class="previous">
-                        <a href="/blog/201605/go-http-process" data-toggle="tooltip" data-placement="top" title="Golang中http包默认路由匹配规则阅读笔记">&larr; Previous Post</a>
-                    </li>
-                    
-                    
-                    <li class="next">
-                        <a href="/blog/201609/go-wechat-sdk" data-toggle="tooltip" data-placement="top" title="开源项目：wechat sdk">Next Post &rarr;</a>
-                    </li>
-                    
-                </ul>
-
-            
-<div id="disqus-comment"></div>
-
-<div id="disqus_thread"></div>
-<script type="application/javascript">
-    var disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "silenceper" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-
-
-
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>本文于 2016-08-02 更新</span>
             </div>
-            
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                sidebar-container">
-
-                
-                <section>
-                    <hr class="hidden-sm hidden-xs">
-                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
-                    <div class="tags">
-                    
-                    
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                            <a href="/tags/flannel" title="flannel">
-                                flannel
-                            </a>
-                       
-                    
-                       
-                            <a href="/tags/go" title="go">
-                                go
-                            </a>
-                       
-                    
-                       
-                            <a href="/tags/k8s" title="k8s">
-                                k8s
-                            </a>
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                            <a href="/tags/wechat" title="wechat">
-                                wechat
-                            </a>
-                       
-                    
-                    </div>
-                </section>
-
-                
-                <hr>
-                <h5>FRIENDS</h5>
-                <ul class="list-inline">
-                    
-                        <li><a target="_blank" href=""></a></li>
-                    
-                </ul>
-            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/blog/201608/dcmp/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share"><span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="/blog/201608/dcmp/" data-title="dcmp" data-hashtags="dcmp,etcd,confd"><i class="fab fa-twitter fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="/blog/201608/dcmp/" data-hashtag="dcmp"><i class="fab fa-facebook-square fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="/blog/201608/dcmp/" data-title="dcmp"><i class="fab fa-weibo fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 人人" data-sharer="renren" data-url="/blog/201608/dcmp/"><i class="fab fa-renren fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 百度" data-sharer="baidu" data-url="/blog/201608/dcmp/" data-title="dcmp"><i class="loveit it-baidu-fill"></i>
+</a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="/blog/201608/dcmp/" data-title="dcmp"><i class="fab fa-evernote fa-fw"></i>
+</a></span></div>
         </div>
     </div>
-</article>
 
-
-
-
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <ul class="list-inline text-center">
-                   
-                   <li>
-                       <a href="" rel="alternate" type="application/rss+xml" title="silenceper" >
-                           <span class="fa-stack fa-lg">
-                               <i class="fa fa-circle fa-stack-2x"></i>
-                               <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
-                           </span>
-                       </a>
-                   </li>
-                   
-                    
-                    <li>
-                        <a href="mailto:silenceper@gmail.com">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
-                            </span>
+    <div class="post-info-more">
+        <section><span>
+                        <a href="/tags/dcmp">
+                            <i class="fas fa-tag fa-fw"></i>dcmp
                         </a>
-                    </li>
-		    
-
-                    
-                    
-                    
-
-                    
-
-		    
-                    
-                    
-                    <li>
-                        <a target="_blank" href="https://github.com/silenceper">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                            </span>
+                    </span>&nbsp;<span>
+                        <a href="/tags/etcd">
+                            <i class="fas fa-tag fa-fw"></i>etcd
                         </a>
-                    </li>
-		    
-                    
-                </ul>
-		<p class="copyright text-muted">
-                    Copyright &copy; silenceper , 2016
-                    <br>
-                    Hugo Theme by <a href="https://github.com/zhaohuabing/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a>
-                </p>
-            </div>
+                    </span>&nbsp;<span>
+                        <a href="/tags/confd">
+                            <i class="fas fa-tag fa-fw"></i>confd
+                        </a>
+                    </span>&nbsp;</section>
+        <section>
+            <span><a href="javascript:window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/blog/201605/go-http-process/" class="prev" rel="prev" title="Golang中http包默认路由匹配规则阅读笔记"><i class="fas fa-angle-left fa-fw"></i>Golang中http包默认路由匹配规则阅读笔记</a>
+            <a href="/blog/201609/go-wechat-sdk/" class="next" rel="next" title="开源项目：wechat sdk">开源项目：wechat sdk<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div class="comment"><div id="disqus_thread"></div><noscript>
+            Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright"><div class="copyright-line">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
         </div>
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2016 - 2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">silenceper</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
     </div>
 </footer>
-
-
-
-
-<script>
-    function async(u, c) {
-      var d = document, t = 'script',
-          o = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
-      o.src = u;
-      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-      s.parentNode.insertBefore(o, s);
-    }
-</script>
-
-
-
-
-
-
-<script>
-    
-    if($('#tag_cloud').length !== 0){
-        async("/js/jquery.tagcloud.js",function(){
-            $.fn.tagcloud.defaults = {
-                
-                color: {start: '#bbbbee', end: '#0085a1'},
-            };
-            $('#tag_cloud a').tagcloud();
-        })
-    }
-</script>
-
-
-<script>
-    async("https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.js", function(){
-        var $nav = document.querySelector("nav");
-        if($nav) FastClick.attach($nav);
-    })
-</script>
-
-
-<script>
-    (function(){
-        var bp = document.createElement('script');
-        var curProtocol = window.location.protocol.split(':')[0];
-        if (curProtocol === 'https'){
-       bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-      }
-      else{
-      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-      }
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(bp, s);
-    })();
-</script>
-
-
-
-
-<script>
-    
-    var _baId = '5feaced19c04a59ece51d36906735e70';
-
-    
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "//hm.baidu.com/hm.js?" + _baId;
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-</script>
-
-
-
-
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-139557989-1', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
-
-
-</body>
+</div><a href="#" class="dynamic-to-top animated faster" id="dynamic-to-top">
+            <span>&nbsp;</span>
+        </a><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$", right: "$", display: false },
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },]
+            });
+        });
+    </script><link rel="stylesheet" href="/css/lib/iconfont/iconfont.min.css"><link rel="stylesheet" href="/css/lib/katex/katex.min.css"><link rel="stylesheet" href="/css/lib/katex/copy-tex.min.css"><script src="https://silenceper.disqus.com/embed.js"></script><script src="/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script src="/js/lib/sharer/sharer.min.js"></script><script src="/js/lib/lazysizes/lazysizes.min.js"></script><script src="/js/lib/katex/katex.min.js"></script><script src="/js/lib/katex/auto-render.min.js"></script><script src="/js/lib/katex/copy-tex.min.js"></script><script src="/js/lib/katex/mhchem.min.js"></script><script src=/js/theme.min.js></script></body>
 </html>

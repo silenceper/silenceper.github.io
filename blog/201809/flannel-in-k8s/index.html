@@ -1,543 +1,268 @@
 <!DOCTYPE html>
-<html lang="en-us">
-<head><head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    <meta name="description" content="一个记录生活，工作的博客。关于Go，Kubernetes，云原生">
-    
-    <meta name="keyword"  content="程序员,Golang,Microservice">
-    <link rel="shortcut icon" href="https://silenceper.com/img/favicon.ico">
-
-    <title>k8s网络组件：flannel- silenceper的博客</title>
-
-    <link rel="canonical" href="https://silenceper.com/blog/201809/flannel-in-k8s/">
-
-    <link rel="stylesheet" href="https://silenceper.com/css/iDisqus.min.css"/>
-
-    
-    <link rel="stylesheet" href="https://silenceper.com/css/bootstrap.min.css">
-
-    
-    <link rel="stylesheet" href="https://silenceper.com/css/hux-blog.min.css">
-
-    
-    <link rel="stylesheet" href="https://silenceper.com/css/syntax.css">
-
-    
-    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    
-    
-    <script src="https://silenceper.com/js/jquery.min.js"></script>
-
-    
-    <script src="https://silenceper.com/js/bootstrap.min.js"></script>
-
-    
-    <script src="https://silenceper.com/js/hux-blog.min.js"></script>
-</head>
-</head>
-
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-    <div class="container-fluid">
-        
-        <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="https://silenceper.com/">silenceper</a>
-        </div>
-
-        
-        
-        <div id="huxblog_navbar">
-            <div class="navbar-collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="https://silenceper.com/">Home</a>
-                    </li>
-                    
-                    <li>
-                        <a href="https://silenceper.com/categories/tech">tech</a>
-                    </li>
-                    
-
-                    
-                </ul>
-            </div>
-        </div>
-        
-    </div>
-    
-</nav>
-<script>
-    
-    
-    
-    var $body   = document.body;
-    var $toggle = document.querySelector('.navbar-toggle');
-    var $navbar = document.querySelector('#huxblog_navbar');
-    var $collapse = document.querySelector('.navbar-collapse');
-
-    $toggle.addEventListener('click', handleMagic)
-    function handleMagic(e){
-        if ($navbar.className.indexOf('in') > 0) {
-        
-            $navbar.className = " ";
-            
-            setTimeout(function(){
-                
-                if($navbar.className.indexOf('in') < 0) {
-                    $collapse.style.height = "0px"
+<html lang="zh">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>k8s网络组件：flannel | silenceper</title>
+        <meta name="Description" content="一个记录生活，工作的博客。关于Go，Kubernetes，云原生"><meta property="og:title" content="k8s网络组件：flannel" />
+<meta property="og:description" content="Flannel是一个专门为k8s定制的网络解决方案，主要解决POD跨主机通信问题，这里主要讲述Flannel是如何实现的。 安装 集成在k8s上" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/201809/flannel-in-k8s/" />
+<meta property="article:published_time" content="2018-09-26T00:00:00+00:00" />
+<meta property="article:modified_time" content="2018-09-26T00:00:00+00:00" /><meta property="og:site_name" content="silenceper" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="k8s网络组件：flannel"/>
+<meta name="twitter:description" content="Flannel是一个专门为k8s定制的网络解决方案，主要解决POD跨主机通信问题，这里主要讲述Flannel是如何实现的。 安装 集成在k8s上"/>
+<meta name="theme-color" content="#ffffff">
+<meta name="msapplication-TileColor" content="#da532c">
+<link rel="canonical" href="/blog/201809/flannel-in-k8s/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="prev" href="/blog/201809/k8s-source-code-structure/" /><link rel="next" href="/blog/201810/calico-in-k8s/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/css/lib/animate/animate.min.css"><meta name="google-site-verification" content="VJ4lE3d3A73DNoyxuuXL_Cuu6MEErPtKXqfAv69pr6E" /><meta name="baidu-site-verification" content="k061nqJczY" /><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "k8s网络组件：flannel",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "\/blog\/201809\/flannel-in-k8s\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "\/img\/silenceoer-avatar.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "posts","keywords": "flannel","wordcount":  1669 ,
+        "url": "\/blog\/201809\/flannel-in-k8s\/","datePublished": "2018-09-26T00:00:00\x2b00:00","dateModified": "2018-09-26T00:00:00\x2b00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "silenceper",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "\/img\/silenceper-avatar.png",
+                "width":  127 ,
+                "height":  40 
                 }
-            },400)
-        }else{
-        
-            $collapse.style.height = "auto"
-            $navbar.className += " in";
-        }
+            },"description": ""
     }
-</script>
-
-
-
-
-<style type="text/css">
-    header.intro-header{
-        background-image: url('https://silenceper.com/img/bg/guidao.jpg')
-    }
-</style>
-<header class="intro-header" >
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="post-heading">
-                    <div class="tags">
-                       
-                       <a class="tag" href="/tags/flannel" title="flannel">
-                           flannel
-                        </a>
-                        
-                    </div>
-                    <h1>k8s网络组件：flannel</h1>
-                    <h2 class="subheading">Flannel的安装方式和原理</h2>
-                    <span  class="meta">Posted by silenceper on Wednesday, September 26, 2018
-                        
-                    </span>
-                </div>
+    </script></head>
+    <body><script>
+            if (!window.localStorage || !window.localStorage.getItem('theme')) {window.isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;} else {
+                window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            }
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title animated bounceIn">
+            <a href="/">silenceper</a>
+        </div>
+        <div class="menu"><a class="menu-item" href="/posts/">文章</a><a class="menu-item" href="/tags/">标签</a><a class="menu-item" href="/categories/">分类</a><a class="menu-item" href="/about/">关于</a><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-rotate-180 fa-fw"></i>
+            </a>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-wrapper">
+        <div class="header-container">
+            <div class="header-title animated bounceIn">
+                <a href="/">silenceper</a>
             </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-rotate-180 fa-fw"></i>
+            </a>
         </div>
     </div>
 </header>
 
+<script>
+    window.desktopHeaderMode = "fixed";
+    window.mobileHeaderMode = "auto";
+</script>
+<main class="main">
+                <div class="container"><article class="page single"><h1 class="single-title animated flipInX">k8s网络组件：flannel</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author">
+                    <a class="author" href="/" rel="author" target="_blank">
+                        <i class="fas fa-user-circle fa-fw"></i>silenceper
+                    </a>
+                </span>&nbsp;<span class="post-category">收录于&nbsp;
+                            <span>
+                                <a href="/categories/tech">
+                                    <i class="far fa-folder fa-fw"></i>Tech
+                                </a>
+                            </span></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2018-09-26>2018-09-26</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>约 1669 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>预计阅读 4 分钟&nbsp;</div>
+        </div><div class="toc" id="toc-auto">
+                <h2 class="toc-title">目录</h2>
+                <div class="toc-content" id="toc-content-auto"></div>
+            </div>
+            <div class="toc" id="toc-static">
+                <details>
+                    <summary>
+                        <div class="toc-title">
+                            <span>目录</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#etcd-方式">ETCD 方式</a></li>
+    <li><a href="#cni插件方式">CNI插件方式</a>
+      <ul>
+        <li><a href="#配置网段">配置网段</a></li>
+        <li><a href="#指定kublet网络插件">指定kublet网络插件</a></li>
+        <li><a href="#下载cni依赖插件">下载cni依赖插件</a></li>
+        <li><a href="#安装flanneld组件">安装flanneld组件</a></li>
+      </ul>
+    </li>
+    <li><a href="#区别">区别</a></li>
+  </ul>
 
-
-
-<article>
-    <div class="container">
-        <div class="row">
-
-            
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                post-container">
-
-		
-                <header>
-                <h2>TOC</h2>
-                </header>
-                <nav id="TableOfContents">
-<ul>
-<li><a href="#安装">安装</a>
-<ul>
-<li><a href="#etcd-方式">ETCD 方式</a></li>
-<li><a href="#cni插件方式">CNI插件方式</a>
-<ul>
-<li><a href="#配置网段">配置网段</a></li>
-<li><a href="#指定kublet网络插件">指定kublet网络插件</a></li>
-<li><a href="#下载cni依赖插件">下载cni依赖插件</a></li>
-<li><a href="#安装flanneld组件">安装flanneld组件</a></li>
-</ul></li>
-<li><a href="#区别">区别</a></li>
-</ul></li>
-<li><a href="#原理">原理</a>
-<ul>
-<li><a href="#flannel-backend">Flannel backend</a></li>
-</ul></li>
-</ul>
-</nav>
-		
-		
-
-<p>Flannel是一个专门为k8s定制的网络解决方案，主要解决POD跨主机通信问题，这里主要讲述Flannel是如何实现的。</p>
-
+  <ul>
+    <li><a href="#flannel-backend">Flannel backend</a></li>
+  </ul>
+</nav></div>
+                </details>
+            </div><div class="content"><p>Flannel是一个专门为k8s定制的网络解决方案，主要解决POD跨主机通信问题，这里主要讲述Flannel是如何实现的。</p>
 <h1 id="安装">安装</h1>
-
 <p>集成在k8s上有两种方式，一种是利用etcd存储整个集群的网络配置，另外一种是利用kubernetes的api 获取网络配置信息，分别如下：</p>
-
 <h2 id="etcd-方式">ETCD 方式</h2>
-
-<p>这种方式在前面的<a href="http://silenceper.com/blog/201809/how-to-build-a-k8s-cluster/#安装flannel网络插件">k8s集群安装-安装Flannel网络插件</a>已经介绍过，就是利用etcd存储网络配置信息，并且利用dockerd启动参数<code>--bip</code>来指定每个节点的网段信息，我们指定vxlan作为数据传输的backend。</p>
-
+<p>这种方式在前面的<a href="http://silenceper.com/blog/201809/how-to-build-a-k8s-cluster/#%e5%ae%89%e8%a3%85flannel%e7%bd%91%e7%bb%9c%e6%8f%92%e4%bb%b6" target="_blank" rel="noopener noreffer">k8s集群安装-安装Flannel网络插件</a>
+已经介绍过，就是利用etcd存储网络配置信息，并且利用dockerd启动参数<code>--bip</code>来指定每个节点的网段信息，我们指定vxlan作为数据传输的backend。</p>
 <h2 id="cni插件方式">CNI插件方式</h2>
-
 <p>这种方式是利用cni插件，并且将网络配置信息存储在kubernetes api中：</p>
-
 <h3 id="配置网段">配置网段</h3>
-
 <p>在<code>kube-controller-manager</code>启动脚本中加入<code>--allocate-node-cidrs=true</code>，<code>--cluster-cidr=10.244.0.0/16</code> 参数。</p>
-
 <p><code>10.244.0.0/16</code>为我们指定的集群的网段，这样每一个docker节点都会分别使用自网段<code>10.244.0.0/24</code>，<code>10.244.1.0/24</code>作为每个pod的网段，可以通过<code>kubectl get pod 192.168.99.101 -o yaml</code>命令查看<code>spec.podCIDR</code>字段。</p>
-
 <p>如果不配置该步骤可能会flannel出现<code>error registering network: failed to acquire lease: node &quot;192.168.99.101&quot; pod</code>的错误</p>
-
 <h3 id="指定kublet网络插件">指定kublet网络插件</h3>
-
-<p>在kubelet中指定三个参数
-- <code>--network-plugin=cni</code> : 网络插件使用cni
-- <code>--cni-conf-dir=/etc/cni/net.d</code> cni配置文件 ，默认
-- <code>--cni-bin-dir=/opt/cni/bin</code> cni可执行文件，默认</p>
-
-<p>这样在kublet启动的时候，就会去<code>/etc/cni/net.d</code>目录查找配置文件，并解析，使用相应的插件配置网络</p>
-
-<h3 id="下载cni依赖插件">下载cni依赖插件</h3>
-
-<p>下载cni官方提供的组件：<a href="https://github.com/containernetworking/plugins/releases/download/v0.7.1/cni-plugins-amd64-v0.7.1.tgz">cni-plugins-amd64-v0.7.1.tgz</a> ，并将可执行文件放在<code>/opt/cni/bin</code>目录。</p>
-
-<p>这里不单单只会用到flannel文件，也会用到brage用来创建网桥以及host-local用来分配ip</p>
-
-<h3 id="安装flanneld组件">安装flanneld组件</h3>
-
-<p>flannel组件直接以<code>daemonset</code>的方式安装在k8s集群中：</p>
-
-<pre><code>kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
-
-</code></pre>
-
-<p>其中<code>kube-flannel-cfg</code>configmap中的<code>Network</code>字段需要与<code>--cluster-cidr</code>配置的网段一致。</p>
-
-<p>这一步主要是安装了flanneld以及将flannel配置文件写入<code>/etc/cni/net.d</code>目录</p>
-
-<p>查看<code>kube-flannel.yml</code>中flanneld的启动参数为：</p>
-
+<p>在kubelet中指定三个参数</p>
 <ul>
-<li><code>--ip-masq</code>: 需要为其配置SNAT</li>
+<li><code>--network-plugin=cni</code> : 网络插件使用cni</li>
+<li><code>--cni-conf-dir=/etc/cni/net.d</code> cni配置文件 ，默认</li>
+<li><code>--cni-bin-dir=/opt/cni/bin</code> cni可执行文件，默认</li>
+</ul>
+<p>这样在kublet启动的时候，就会去<code>/etc/cni/net.d</code>目录查找配置文件，并解析，使用相应的插件配置网络</p>
+<h3 id="下载cni依赖插件">下载cni依赖插件</h3>
+<p>下载cni官方提供的组件：<a href="https://github.com/containernetworking/plugins/releases/download/v0.7.1/cni-plugins-amd64-v0.7.1.tgz" target="_blank" rel="noopener noreffer">cni-plugins-amd64-v0.7.1.tgz</a>
+ ，并将可执行文件放在<code>/opt/cni/bin</code>目录。</p>
+<p>这里不单单只会用到flannel文件，也会用到brage用来创建网桥以及host-local用来分配ip</p>
+<h3 id="安装flanneld组件">安装flanneld组件</h3>
+<p>flannel组件直接以<code>daemonset</code>的方式安装在k8s集群中：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+
+</code></pre></td></tr></table>
+</div>
+</div><p>其中<code>kube-flannel-cfg</code>configmap中的<code>Network</code>字段需要与<code>--cluster-cidr</code>配置的网段一致。</p>
+<p>这一步主要是安装了flanneld以及将flannel配置文件写入<code>/etc/cni/net.d</code>目录</p>
+<p>查看<code>kube-flannel.yml</code>中flanneld的启动参数为：</p>
+<ul>
+<li><code>--ip-masq </code>: 需要为其配置SNAT</li>
 <li><code>--kube-subnet-mgr</code> : 代表其使用kube类型的subnet-manager。该类型有别于使用etcd的local-subnet-mgr类型，使用kube类型后，flannel上各Node的IP子网分配均基于K8S Node的spec.podCIDR属性</li>
 </ul>
-
 <blockquote>
 <p>我的是多网卡的机器，发现网络不通，所以我特别指定的flanneld用来对外通信的网卡
- 增加&ndash;iface 参数，指定可以进行外部通信的网卡</p>
-
+增加&ndash;iface 参数，指定可以进行外部通信的网卡</p>
+</blockquote>
 <h2 id="区别">区别</h2>
-
 <ul>
 <li>flanneld 容器化了</li>
 <li>flanneld 网段信息来源于kubernetes api，而不依赖etcd</li>
 </ul>
-</blockquote>
-
 <h1 id="原理">原理</h1>
-
 <p>以上两种方式的对比可以发现，通过cni方式安装的flannel会多一个<code>cni0</code>的网桥，其实这个与<code>docker0</code>网桥的作用是一样的，创建了一对veth pair 分别联通容器内部与主机网络，并把其中一端接入<code>cni0</code>网桥。</p>
-
 <p>整个通信过程如图：</p>
-
-<p><img src="https://ws1.sinaimg.cn/large/65209136gy1fvmsrceiq7j20oh0gv0ut.jpg" alt="" /></p>
-
+<p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://ws1.sinaimg.cn/large/65209136gy1fvmsrceiq7j20oh0gv0ut.jpg" alt="" title="" class="lazyload">
+</figure>
+</p>
 <blockquote>
 <p>图中的ip信息与本机不一致，主要说明通信过程</p>
 </blockquote>
-
 <p>容器内部-&gt;docker0-&gt;flanneld-&gt;网络传输-&gt;对端flanneld-&gt;对端docker0-&gt;对端容器内</p>
-
 <p>当数据包到吧flanneld后支持多种backend进行转发</p>
-
 <h2 id="flannel-backend">Flannel backend</h2>
-
 <ul>
 <li>Host-gw: 同一网段直接通信，速度快</li>
 <li>udp： 用户空间的udp封装</li>
 <li>vxlan: 利用内核vxlan协议进行传输</li>
 <li>aws vpc: 利用aws平台内部提供的功能进行传输</li>
 </ul>
-
-<p>更多插件参考文档：<a href="https://github.com/coreos/flannel/blob/master/Documentation/backends.md">https://github.com/coreos/flannel/blob/master/Documentation/backends.md</a></p>
-
+<p>更多插件参考文档：<a href="https://github.com/coreos/flannel/blob/master/Documentation/backends.md" target="_blank" rel="noopener noreffer">https://github.com/coreos/flannel/blob/master/Documentation/backends.md</a>
+</p>
 <p><strong>如何选择？</strong></p>
-
 <p><code>vxlan</code>在功能上，和性能上基本满足我们的要求，可以直接跨网段间通信，同时性能上又比udp的方式高效</p>
-
-
-                <hr>
-
-                <ul class="pager">
-                    
-                    <li class="previous">
-                        <a href="/blog/201809/k8s-source-code-structure" data-toggle="tooltip" data-placement="top" title="k8s源码阅读(一)：源码结构">&larr; Previous Post</a>
-                    </li>
-                    
-                    
-                    <li class="next">
-                        <a href="/blog/201810/calico-in-k8s/" data-toggle="tooltip" data-placement="top" title="k8s网络组件：calico">Next Post &rarr;</a>
-                    </li>
-                    
-                </ul>
-
-            
-<div id="disqus-comment"></div>
-
-<div id="disqus_thread"></div>
-<script type="application/javascript">
-    var disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "silenceper" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-
-
-
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>本文于 2018-09-26 更新</span>
             </div>
-            
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                sidebar-container">
-
-                
-                <section>
-                    <hr class="hidden-sm hidden-xs">
-                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
-                    <div class="tags">
-                    
-                    
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                            <a href="/tags/flannel" title="flannel">
-                                flannel
-                            </a>
-                       
-                    
-                       
-                            <a href="/tags/go" title="go">
-                                go
-                            </a>
-                       
-                    
-                       
-                            <a href="/tags/k8s" title="k8s">
-                                k8s
-                            </a>
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                            <a href="/tags/wechat" title="wechat">
-                                wechat
-                            </a>
-                       
-                    
-                    </div>
-                </section>
-
-                
-                <hr>
-                <h5>FRIENDS</h5>
-                <ul class="list-inline">
-                    
-                        <li><a target="_blank" href=""></a></li>
-                    
-                </ul>
-            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/blog/201809/flannel-in-k8s/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share"><span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="/blog/201809/flannel-in-k8s/" data-title="k8s网络组件：flannel" data-hashtags="flannel"><i class="fab fa-twitter fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="/blog/201809/flannel-in-k8s/" data-hashtag="flannel"><i class="fab fa-facebook-square fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="/blog/201809/flannel-in-k8s/" data-title="k8s网络组件：flannel"><i class="fab fa-weibo fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 人人" data-sharer="renren" data-url="/blog/201809/flannel-in-k8s/"><i class="fab fa-renren fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 百度" data-sharer="baidu" data-url="/blog/201809/flannel-in-k8s/" data-title="k8s网络组件：flannel"><i class="loveit it-baidu-fill"></i>
+</a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="/blog/201809/flannel-in-k8s/" data-title="k8s网络组件：flannel"><i class="fab fa-evernote fa-fw"></i>
+</a></span></div>
         </div>
     </div>
-</article>
 
-
-
-
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <ul class="list-inline text-center">
-                   
-                   <li>
-                       <a href="" rel="alternate" type="application/rss+xml" title="silenceper" >
-                           <span class="fa-stack fa-lg">
-                               <i class="fa fa-circle fa-stack-2x"></i>
-                               <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
-                           </span>
-                       </a>
-                   </li>
-                   
-                    
-                    <li>
-                        <a href="mailto:silenceper@gmail.com">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
-                            </span>
+    <div class="post-info-more">
+        <section><span>
+                        <a href="/tags/flannel">
+                            <i class="fas fa-tag fa-fw"></i>flannel
                         </a>
-                    </li>
-		    
+                    </span>&nbsp;</section>
+        <section>
+            <span><a href="javascript:window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
 
-                    
-                    
-                    
-
-                    
-
-		    
-                    
-                    
-                    <li>
-                        <a target="_blank" href="https://github.com/silenceper">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
-		    
-                    
-                </ul>
-		<p class="copyright text-muted">
-                    Copyright &copy; silenceper , 2018
-                    <br>
-                    Hugo Theme by <a href="https://github.com/zhaohuabing/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a>
-                </p>
-            </div>
+    <div class="post-nav"><a href="/blog/201809/k8s-source-code-structure/" class="prev" rel="prev" title="k8s源码阅读(一)：源码结构"><i class="fas fa-angle-left fa-fw"></i>k8s源码阅读(一)：源码结构</a>
+            <a href="/blog/201810/calico-in-k8s/" class="next" rel="next" title="k8s网络组件：calico">k8s网络组件：calico<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div class="comment"><div id="disqus_thread"></div><noscript>
+            Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright"><div class="copyright-line">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
         </div>
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2016 - 2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">silenceper</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
     </div>
 </footer>
-
-
-
-
-<script>
-    function async(u, c) {
-      var d = document, t = 'script',
-          o = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
-      o.src = u;
-      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-      s.parentNode.insertBefore(o, s);
-    }
-</script>
-
-
-
-
-
-
-<script>
-    
-    if($('#tag_cloud').length !== 0){
-        async("/js/jquery.tagcloud.js",function(){
-            $.fn.tagcloud.defaults = {
-                
-                color: {start: '#bbbbee', end: '#0085a1'},
-            };
-            $('#tag_cloud a').tagcloud();
-        })
-    }
-</script>
-
-
-<script>
-    async("https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.js", function(){
-        var $nav = document.querySelector("nav");
-        if($nav) FastClick.attach($nav);
-    })
-</script>
-
-
-<script>
-    (function(){
-        var bp = document.createElement('script');
-        var curProtocol = window.location.protocol.split(':')[0];
-        if (curProtocol === 'https'){
-       bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-      }
-      else{
-      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-      }
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(bp, s);
-    })();
-</script>
-
-
-
-
-<script>
-    
-    var _baId = '5feaced19c04a59ece51d36906735e70';
-
-    
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "//hm.baidu.com/hm.js?" + _baId;
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-</script>
-
-
-
-
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-139557989-1', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
-
-
-</body>
+</div><a href="#" class="dynamic-to-top animated faster" id="dynamic-to-top">
+            <span>&nbsp;</span>
+        </a><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$", right: "$", display: false },
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },]
+            });
+        });
+    </script><link rel="stylesheet" href="/css/lib/iconfont/iconfont.min.css"><link rel="stylesheet" href="/css/lib/katex/katex.min.css"><link rel="stylesheet" href="/css/lib/katex/copy-tex.min.css"><script src="https://silenceper.disqus.com/embed.js"></script><script src="/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script src="/js/lib/sharer/sharer.min.js"></script><script src="/js/lib/lazysizes/lazysizes.min.js"></script><script src="/js/lib/katex/katex.min.js"></script><script src="/js/lib/katex/auto-render.min.js"></script><script src="/js/lib/katex/copy-tex.min.js"></script><script src="/js/lib/katex/mhchem.min.js"></script><script src=/js/theme.min.js></script></body>
 </html>

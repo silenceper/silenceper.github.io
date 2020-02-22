@@ -1,31 +1,32 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>flannel on silenceper</title>
-    <link>https://silenceper.com/tags/flannel/</link>
+    <link>/tags/flannel/</link>
     <description>Recent content in flannel on silenceper</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <language>zh</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
     <lastBuildDate>Fri, 12 Oct 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://silenceper.com/tags/flannel/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/flannel/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>k8s网络组件：calico</title>
-      <link>https://silenceper.com/blog/201810/calico-in-k8s/</link>
+      <link>/blog/201810/calico-in-k8s/</link>
       <pubDate>Fri, 12 Oct 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://silenceper.com/blog/201810/calico-in-k8s/</guid>
+      <guid>/blog/201810/calico-in-k8s/</guid>
       <description>前提已经安装好k8s集群 安装 calico 安装其实很简单，已经集成在两个yaml文件中 calico 版本: v3.2.3 安装必看 如果安装过flannel组件，需要先去除dock</description>
     </item>
     
     <item>
       <title>k8s网络组件：flannel</title>
-      <link>https://silenceper.com/blog/201809/flannel-in-k8s/</link>
+      <link>/blog/201809/flannel-in-k8s/</link>
       <pubDate>Wed, 26 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://silenceper.com/blog/201809/flannel-in-k8s/</guid>
+      <guid>/blog/201809/flannel-in-k8s/</guid>
       <description>Flannel是一个专门为k8s定制的网络解决方案，主要解决POD跨主机通信问题，这里主要讲述Flannel是如何实现的。 安装 集成在k8s上</description>
     </item>
     

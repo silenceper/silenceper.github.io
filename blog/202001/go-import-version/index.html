@@ -1,169 +1,135 @@
 <!DOCTYPE html>
-<html lang="en-us">
-<head><head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    <meta name="description" content="一个记录生活，工作的博客。关于Go，Kubernetes，云原生">
-    
-    <meta name="keyword"  content="程序员,Golang,Microservice">
-    <link rel="shortcut icon" href="https://silenceper.com/img/favicon.ico">
-
-    <title>如何在Go项目中输出版本信息？- silenceper的博客</title>
-
-    <link rel="canonical" href="https://silenceper.com/blog/202001/go-import-version/">
-
-    <link rel="stylesheet" href="https://silenceper.com/css/iDisqus.min.css"/>
-
-    
-    <link rel="stylesheet" href="https://silenceper.com/css/bootstrap.min.css">
-
-    
-    <link rel="stylesheet" href="https://silenceper.com/css/hux-blog.min.css">
-
-    
-    <link rel="stylesheet" href="https://silenceper.com/css/syntax.css">
-
-    
-    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    
-    
-    <script src="https://silenceper.com/js/jquery.min.js"></script>
-
-    
-    <script src="https://silenceper.com/js/bootstrap.min.js"></script>
-
-    
-    <script src="https://silenceper.com/js/hux-blog.min.js"></script>
-</head>
-</head>
-
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-    <div class="container-fluid">
-        
-        <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="https://silenceper.com/">silenceper</a>
-        </div>
-
-        
-        
-        <div id="huxblog_navbar">
-            <div class="navbar-collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="https://silenceper.com/">Home</a>
-                    </li>
-                    
-                    <li>
-                        <a href="https://silenceper.com/categories/tech">tech</a>
-                    </li>
-                    
-
-                    
-                </ul>
-            </div>
-        </div>
-        
-    </div>
-    
-</nav>
-<script>
-    
-    
-    
-    var $body   = document.body;
-    var $toggle = document.querySelector('.navbar-toggle');
-    var $navbar = document.querySelector('#huxblog_navbar');
-    var $collapse = document.querySelector('.navbar-collapse');
-
-    $toggle.addEventListener('click', handleMagic)
-    function handleMagic(e){
-        if ($navbar.className.indexOf('in') > 0) {
-        
-            $navbar.className = " ";
-            
-            setTimeout(function(){
-                
-                if($navbar.className.indexOf('in') < 0) {
-                    $collapse.style.height = "0px"
+<html lang="zh">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>如何在Go项目中输出版本信息？ | silenceper</title>
+        <meta name="Description" content="这篇文章主要描述如何在构建Go项目的时候通过ldflags参数对变量进行动态赋值"><meta property="og:title" content="如何在Go项目中输出版本信息？" />
+<meta property="og:description" content="这篇文章主要描述如何在构建Go项目的时候通过ldflags参数对变量进行动态赋值" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/202001/go-import-version/" />
+<meta property="article:published_time" content="2020-01-10T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-01-10T00:00:00+00:00" /><meta property="og:site_name" content="silenceper" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="如何在Go项目中输出版本信息？"/>
+<meta name="twitter:description" content="这篇文章主要描述如何在构建Go项目的时候通过ldflags参数对变量进行动态赋值"/>
+<meta name="theme-color" content="#ffffff">
+<meta name="msapplication-TileColor" content="#da532c">
+<link rel="canonical" href="/blog/202001/go-import-version/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="prev" href="/blog/201910/kubernetes-log/" /><link rel="next" href="/blog/202002/kubernetes-leaderelection/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/css/lib/animate/animate.min.css"><meta name="google-site-verification" content="VJ4lE3d3A73DNoyxuuXL_Cuu6MEErPtKXqfAv69pr6E" /><meta name="baidu-site-verification" content="k061nqJczY" /><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "如何在Go项目中输出版本信息？",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "\/blog\/202001\/go-import-version\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "\/img\/silenceoer-avatar.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "posts","keywords": "go","wordcount":  675 ,
+        "url": "\/blog\/202001\/go-import-version\/","datePublished": "2020-01-10T00:00:00\x2b00:00","dateModified": "2020-01-10T00:00:00\x2b00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "silenceper",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "\/img\/silenceper-avatar.png",
+                "width":  127 ,
+                "height":  40 
                 }
-            },400)
-        }else{
-        
-            $collapse.style.height = "auto"
-            $navbar.className += " in";
-        }
+            },"description": "这篇文章主要描述如何在构建Go项目的时候通过ldflags参数对变量进行动态赋值"
     }
-</script>
-
-
-
-
-<style type="text/css">
-    header.intro-header{
-        background-image: url('https://silenceper.com/img/bg/qiao.jpg')
-    }
-</style>
-<header class="intro-header" >
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="post-heading">
-                    <div class="tags">
-                       
-                       <a class="tag" href="/tags/go" title="go">
-                           go
-                        </a>
-                        
-                    </div>
-                    <h1>如何在Go项目中输出版本信息？</h1>
-                    <h2 class="subheading">这篇文章主要描述如何在构建Go项目的时候通过ldflags参数对变量进行动态赋值</h2>
-                    <span  class="meta">Posted by silenceper on Friday, January 10, 2020
-                        
-                    </span>
-                </div>
+    </script></head>
+    <body><script>
+            if (!window.localStorage || !window.localStorage.getItem('theme')) {window.isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;} else {
+                window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            }
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title animated bounceIn">
+            <a href="/">silenceper</a>
+        </div>
+        <div class="menu"><a class="menu-item" href="/posts/">文章</a><a class="menu-item" href="/tags/">标签</a><a class="menu-item" href="/categories/">分类</a><a class="menu-item" href="/about/">关于</a><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-rotate-180 fa-fw"></i>
+            </a>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-wrapper">
+        <div class="header-container">
+            <div class="header-title animated bounceIn">
+                <a href="/">silenceper</a>
             </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-rotate-180 fa-fw"></i>
+            </a>
         </div>
     </div>
 </header>
 
-
-
-
-<article>
-    <div class="container">
-        <div class="row">
-
-            
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                post-container">
-
-		
-                <header>
-                <h2>TOC</h2>
-                </header>
-                <nav id="TableOfContents">
-<ul>
-<li><a href="#实现">实现</a></li>
-<li><a href="#参数说明">参数说明</a></li>
-<li><a href="#一个完整的例子">一个完整的例子</a></li>
-</ul>
-</nav>
-		
-		
-
-<p>我们经常在使用CLI工具的时候，都会有这样的参数输出：</p>
-
-<pre><code>➜  ~ docker version
+<script>
+    window.desktopHeaderMode = "fixed";
+    window.mobileHeaderMode = "auto";
+</script>
+<main class="main">
+                <div class="container"><article class="page single"><h1 class="single-title animated flipInX">如何在Go项目中输出版本信息？</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author">
+                    <a class="author" href="/" rel="author" target="_blank">
+                        <i class="fas fa-user-circle fa-fw"></i>silenceper
+                    </a>
+                </span>&nbsp;<span class="post-category">收录于&nbsp;
+                            <span>
+                                <a href="/categories/tech">
+                                    <i class="far fa-folder fa-fw"></i>Tech
+                                </a>
+                            </span></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-01-10>2020-01-10</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>约 675 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>预计阅读 2 分钟&nbsp;</div>
+        </div><div class="toc" id="toc-auto">
+                <h2 class="toc-title">目录</h2>
+                <div class="toc-content" id="toc-content-auto"></div>
+            </div>
+            <div class="toc" id="toc-static">
+                <details>
+                    <summary>
+                        <div class="toc-title">
+                            <span>目录</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
+                </details>
+            </div><div class="content"><p>我们经常在使用CLI工具的时候，都会有这样的参数输出：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">➜  ~ docker version
 Client: Docker Engine - Community
  Version:           18.09.2
  API version:       1.39
@@ -173,390 +139,268 @@ Client: Docker Engine - Community
  OS/Arch:           darwin/amd64
  Experimental:      false
 ➜  ~
-</code></pre>
-
-<p>可以打印出构建时对应的版本信息，比如 Version，Go Version，Git Commit等，这个是如何实现的呢？</p>
-
+</code></pre></td></tr></table>
+</div>
+</div><p>可以打印出构建时对应的版本信息，比如 Version，Go Version，Git Commit等，这个是如何实现的呢？</p>
 <h1 id="实现">实现</h1>
-
 <p>主要是通过<code>ldflags</code>参数来实现在构建的时候对变量进行赋值。</p>
-
 <p>比如下面一段代码：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">main</span>
 
-<pre><code>package main
+<span class="kn">import</span> <span class="p">(</span>
+	<span class="s">&#34;flag&#34;</span>
+	<span class="s">&#34;fmt&#34;</span>
+	<span class="s">&#34;os&#34;</span>
+<span class="p">)</span>
 
-import (
-	&quot;flag&quot;
-	&quot;fmt&quot;
-	&quot;os&quot;
-)
+<span class="c1">//需要赋值的变量
+</span><span class="c1"></span><span class="kd">var</span> <span class="nx">version</span> <span class="p">=</span> <span class="s">&#34;&#34;</span>
 
-//需要赋值的变量
-var version = &quot;&quot;
+<span class="c1">//通过flag包设置-version参数
+</span><span class="c1"></span><span class="kd">var</span> <span class="nx">printVersion</span> <span class="kt">bool</span>
 
-//通过flag包设置-version参数
-var printVersion bool
+<span class="kd">func</span> <span class="nf">init</span><span class="p">()</span> <span class="p">{</span>
+	<span class="nx">flag</span><span class="p">.</span><span class="nf">BoolVar</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">printVersion</span><span class="p">,</span> <span class="s">&#34;version&#34;</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="s">&#34;print program build version&#34;</span><span class="p">)</span>
+	<span class="nx">flag</span><span class="p">.</span><span class="nf">Parse</span><span class="p">()</span>
+<span class="p">}</span>
 
-func init() {
-	flag.BoolVar(&amp;printVersion, &quot;version&quot;, false, &quot;print program build version&quot;)
-	flag.Parse()
-}
-
-func main() {
-	if printVersion {
-		println(version)
-		os.Exit(0)
-	}
-	fmt.Printf(&quot;example for print version&quot;)
-}
-</code></pre>
-
-<p>构建命令：</p>
-
-<pre><code>go build -ldflags &quot;-X main.version=v0.1&quot; -o example
-</code></pre>
-
-<p>程序输出：</p>
-
-<pre><code>➜ ./example
+<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="k">if</span> <span class="nx">printVersion</span> <span class="p">{</span>
+		<span class="nb">println</span><span class="p">(</span><span class="nx">version</span><span class="p">)</span>
+		<span class="nx">os</span><span class="p">.</span><span class="nf">Exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;example for print version&#34;</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>构建命令：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">go build -ldflags &#34;-X main.version=v0.1&#34; -o example
+</code></pre></td></tr></table>
+</div>
+</div><p>程序输出：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">➜ ./example
 version=v0.1
-</code></pre>
-
-<h1 id="参数说明">参数说明</h1>
-
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="参数说明">参数说明</h1>
 <p>1、-ldflags build命令中用于调用接链接器的参数</p>
-
-<pre><code>-ldflags '[pattern=]arg list'
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">-ldflags &#39;[pattern=]arg list&#39;
 	arguments to pass on each go tool link invocation.
-</code></pre>
-
-<p>2、-X 链接器参数，主要用于设置变量</p>
-
-<pre><code>-X importpath.name=value
+</code></pre></td></tr></table>
+</div>
+</div><p>2、-X 链接器参数，主要用于设置变量</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">-X importpath.name=value
     Set the value of the string variable in importpath named name to value.
     Note that before Go 1.5 this option took two separate arguments.
     Now it takes one argument split on the first = sign.
-</code></pre>
-
-<h1 id="一个完整的例子">一个完整的例子</h1>
-
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="一个完整的例子">一个完整的例子</h1>
 <p>这里将version包单独做了一个包存放，只需要引入即可：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">main</span>
 
-<pre><code>package main
+<span class="kn">import</span> <span class="p">(</span>
+	<span class="s">&#34;flag&#34;</span>
 
-import (
-	&quot;flag&quot;
+	<span class="s">&#34;github.com/go-demo/version&#34;</span>
+<span class="p">)</span>
 
-	&quot;github.com/go-demo/version&quot;
-)
+<span class="c1">//通过flag包设置-version参数
+</span><span class="c1"></span><span class="kd">var</span> <span class="nx">printVersion</span> <span class="kt">bool</span>
 
-//通过flag包设置-version参数
-var printVersion bool
+<span class="kd">func</span> <span class="nf">init</span><span class="p">()</span> <span class="p">{</span>
+	<span class="nx">flag</span><span class="p">.</span><span class="nf">BoolVar</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">printVersion</span><span class="p">,</span> <span class="s">&#34;version&#34;</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="s">&#34;print program build version&#34;</span><span class="p">)</span>
+	<span class="nx">flag</span><span class="p">.</span><span class="nf">Parse</span><span class="p">()</span>
+<span class="p">}</span>
 
-func init() {
-	flag.BoolVar(&amp;printVersion, &quot;version&quot;, false, &quot;print program build version&quot;)
-	flag.Parse()
-}
-
-func main() {
-	if printVersion {
-		version.PrintVersion()
-	}
-}
-</code></pre>
-
-<p>构建的shell如下(也可以放在Makefile中)：</p>
-
-<pre><code>#!/bin/sh
-version=&quot;v0.1&quot;
-path=&quot;github.com/go-demo/version&quot;
-flags=&quot;-X $path.Version=$version -X '$path.GoVersion=$(go version)' -X '$path.BuildTime=`date +&quot;%Y-%m-%d %H:%m:%S&quot;`' -X $path.GitCommit=`git rev-parse HEAD`&quot;
-go build -ldflags &quot;$flags&quot; -o example example-version.go
-</code></pre>
-
-<p>TIPS: 如果值内容中含有空格，可以用单引号</p>
-
+<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="k">if</span> <span class="nx">printVersion</span> <span class="p">{</span>
+		<span class="nx">version</span><span class="p">.</span><span class="nf">PrintVersion</span><span class="p">()</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>构建的shell如下(也可以放在Makefile中)：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="cp">#!/bin/sh
+</span><span class="cp"></span><span class="nv">version</span><span class="o">=</span><span class="s2">&#34;v0.1&#34;</span>
+<span class="nv">path</span><span class="o">=</span><span class="s2">&#34;github.com/go-demo/version&#34;</span>
+<span class="nv">flags</span><span class="o">=</span><span class="s2">&#34;-X </span><span class="nv">$path</span><span class="s2">.Version=</span><span class="nv">$version</span><span class="s2"> -X &#39;</span><span class="nv">$path</span><span class="s2">.GoVersion=</span><span class="k">$(</span>go version<span class="k">)</span><span class="s2">&#39; -X &#39;</span><span class="nv">$path</span><span class="s2">.BuildTime=`date +&#34;</span>%Y-%m-%d %H:%m:%S<span class="s2">&#34;`&#39; -X </span><span class="nv">$path</span><span class="s2">.GitCommit=`git rev-parse HEAD`&#34;</span>
+go build -ldflags <span class="s2">&#34;</span><span class="nv">$flags</span><span class="s2">&#34;</span> -o example example-version.go
+</code></pre></td></tr></table>
+</div>
+</div><p>TIPS: 如果值内容中含有空格，可以用单引号</p>
 <p>最终版本输出:</p>
-
-<pre><code>➜ sh build.sh
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">➜ sh build.sh
 ➜ ./example -version
 Version: v0.1
 Go Version: go version go1.13.1 darwin/amd64
 Git Commit: a775ecd27c5e78437b605c438905e9cc888fbc1c
 Build Time: 2020-01-09 19:01:51
-</code></pre>
-
-<p>完整代码：<a href="https://github.com/go-demo/version">https://github.com/go-demo/version</a></p>
-
+</code></pre></td></tr></table>
+</div>
+</div><p>完整代码：https://github.com/go-demo/version</p>
 <blockquote>
-<p>关注《学点程序》公众号，了解更多Go相关技术！  <img src="https://image-static.segmentfault.com/125/953/1259530967-5e172702bcedd_articlex" alt="学点程序" /></p>
+<p>关注《学点程序》公众号，了解更多Go相关技术！  <figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://image-static.segmentfault.com/125/953/1259530967-5e172702bcedd_articlex" alt="学点程序" title="学点程序" class="lazyload">
+<figcaption class="image-caption">学点程序</figcaption></figure>
+</p>
 </blockquote>
-
-
-                <hr>
-
-                <ul class="pager">
-                    
-                    <li class="previous">
-                        <a href="/blog/201910/kubernetes-log/" data-toggle="tooltip" data-placement="top" title="Kubernetes容器日志收集方案">&larr; Previous Post</a>
-                    </li>
-                    
-                    
-                    <li class="next">
-                        <a href="/blog/202002/kubernetes-leaderelection/" data-toggle="tooltip" data-placement="top" title="利用Kubernetes中的leaderelection实现组件高可用">Next Post &rarr;</a>
-                    </li>
-                    
-                </ul>
-
-            
-<div id="disqus-comment"></div>
-
-<div id="disqus_thread"></div>
-<script type="application/javascript">
-    var disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "silenceper" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-
-
-
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>本文于 2020-01-10 更新</span>
             </div>
-            
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                sidebar-container">
-
-                
-                <section>
-                    <hr class="hidden-sm hidden-xs">
-                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
-                    <div class="tags">
-                    
-                    
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                            <a href="/tags/flannel" title="flannel">
-                                flannel
-                            </a>
-                       
-                    
-                       
-                            <a href="/tags/go" title="go">
-                                go
-                            </a>
-                       
-                    
-                       
-                            <a href="/tags/k8s" title="k8s">
-                                k8s
-                            </a>
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                            <a href="/tags/wechat" title="wechat">
-                                wechat
-                            </a>
-                       
-                    
-                    </div>
-                </section>
-
-                
-                <hr>
-                <h5>FRIENDS</h5>
-                <ul class="list-inline">
-                    
-                        <li><a target="_blank" href=""></a></li>
-                    
-                </ul>
-            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/blog/202001/go-import-version/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share"><span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="/blog/202001/go-import-version/" data-title="如何在Go项目中输出版本信息？" data-hashtags="go"><i class="fab fa-twitter fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="/blog/202001/go-import-version/" data-hashtag="go"><i class="fab fa-facebook-square fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="/blog/202001/go-import-version/" data-title="如何在Go项目中输出版本信息？"><i class="fab fa-weibo fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 人人" data-sharer="renren" data-url="/blog/202001/go-import-version/"><i class="fab fa-renren fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 百度" data-sharer="baidu" data-url="/blog/202001/go-import-version/" data-title="如何在Go项目中输出版本信息？"><i class="loveit it-baidu-fill"></i>
+</a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="/blog/202001/go-import-version/" data-title="如何在Go项目中输出版本信息？"><i class="fab fa-evernote fa-fw"></i>
+</a></span></div>
         </div>
     </div>
-</article>
 
-
-
-
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <ul class="list-inline text-center">
-                   
-                   <li>
-                       <a href="" rel="alternate" type="application/rss+xml" title="silenceper" >
-                           <span class="fa-stack fa-lg">
-                               <i class="fa fa-circle fa-stack-2x"></i>
-                               <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
-                           </span>
-                       </a>
-                   </li>
-                   
-                    
-                    <li>
-                        <a href="mailto:silenceper@gmail.com">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
-                            </span>
+    <div class="post-info-more">
+        <section><span>
+                        <a href="/tags/go">
+                            <i class="fas fa-tag fa-fw"></i>go
                         </a>
-                    </li>
-		    
+                    </span>&nbsp;</section>
+        <section>
+            <span><a href="javascript:window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
 
-                    
-                    
-                    
-
-                    
-
-		    
-                    
-                    
-                    <li>
-                        <a target="_blank" href="https://github.com/silenceper">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
-		    
-                    
-                </ul>
-		<p class="copyright text-muted">
-                    Copyright &copy; silenceper , 2020
-                    <br>
-                    Hugo Theme by <a href="https://github.com/zhaohuabing/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a>
-                </p>
-            </div>
+    <div class="post-nav"><a href="/blog/201910/kubernetes-log/" class="prev" rel="prev" title="Kubernetes容器日志收集方案"><i class="fas fa-angle-left fa-fw"></i>Kubernetes容器日志收集方案</a>
+            <a href="/blog/202002/kubernetes-leaderelection/" class="next" rel="next" title="利用Kubernetes中的leaderelection实现组件高可用">利用Kubernetes中的leaderelection实现组件高可用<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div class="comment"><div id="disqus_thread"></div><noscript>
+            Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright"><div class="copyright-line">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
         </div>
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2016 - 2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">silenceper</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
     </div>
 </footer>
-
-
-
-
-<script>
-    function async(u, c) {
-      var d = document, t = 'script',
-          o = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
-      o.src = u;
-      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-      s.parentNode.insertBefore(o, s);
-    }
-</script>
-
-
-
-
-
-
-<script>
-    
-    if($('#tag_cloud').length !== 0){
-        async("/js/jquery.tagcloud.js",function(){
-            $.fn.tagcloud.defaults = {
-                
-                color: {start: '#bbbbee', end: '#0085a1'},
-            };
-            $('#tag_cloud a').tagcloud();
-        })
-    }
-</script>
-
-
-<script>
-    async("https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.js", function(){
-        var $nav = document.querySelector("nav");
-        if($nav) FastClick.attach($nav);
-    })
-</script>
-
-
-<script>
-    (function(){
-        var bp = document.createElement('script');
-        var curProtocol = window.location.protocol.split(':')[0];
-        if (curProtocol === 'https'){
-       bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-      }
-      else{
-      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-      }
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(bp, s);
-    })();
-</script>
-
-
-
-
-<script>
-    
-    var _baId = '5feaced19c04a59ece51d36906735e70';
-
-    
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "//hm.baidu.com/hm.js?" + _baId;
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-</script>
-
-
-
-
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-139557989-1', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
-
-
-</body>
+</div><a href="#" class="dynamic-to-top animated faster" id="dynamic-to-top">
+            <span>&nbsp;</span>
+        </a><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$", right: "$", display: false },
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },]
+            });
+        });
+    </script><link rel="stylesheet" href="/css/lib/iconfont/iconfont.min.css"><link rel="stylesheet" href="/css/lib/katex/katex.min.css"><link rel="stylesheet" href="/css/lib/katex/copy-tex.min.css"><script src="https://silenceper.disqus.com/embed.js"></script><script src="/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script src="/js/lib/sharer/sharer.min.js"></script><script src="/js/lib/lazysizes/lazysizes.min.js"></script><script src="/js/lib/katex/katex.min.js"></script><script src="/js/lib/katex/auto-render.min.js"></script><script src="/js/lib/katex/copy-tex.min.js"></script><script src="/js/lib/katex/mhchem.min.js"></script><script src=/js/theme.min.js></script></body>
 </html>

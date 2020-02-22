@@ -1,673 +1,547 @@
 <!DOCTYPE html>
-<html lang="en-us">
-<head><head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    <meta name="description" content="一个记录生活，工作的博客。关于Go，Kubernetes，云原生">
-    
-    <meta name="keyword"  content="程序员,Golang,Microservice">
-    <link rel="shortcut icon" href="https://silenceper.com/img/favicon.ico">
-
-    <title>Golang中http包默认路由匹配规则阅读笔记- silenceper的博客</title>
-
-    <link rel="canonical" href="https://silenceper.com/blog/201605/go-http-process">
-
-    <link rel="stylesheet" href="https://silenceper.com/css/iDisqus.min.css"/>
-
-    
-    <link rel="stylesheet" href="https://silenceper.com/css/bootstrap.min.css">
-
-    
-    <link rel="stylesheet" href="https://silenceper.com/css/hux-blog.min.css">
-
-    
-    <link rel="stylesheet" href="https://silenceper.com/css/syntax.css">
-
-    
-    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    
-    
-    <script src="https://silenceper.com/js/jquery.min.js"></script>
-
-    
-    <script src="https://silenceper.com/js/bootstrap.min.js"></script>
-
-    
-    <script src="https://silenceper.com/js/hux-blog.min.js"></script>
-</head>
-</head>
-
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-    <div class="container-fluid">
-        
-        <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="https://silenceper.com/">silenceper</a>
-        </div>
-
-        
-        
-        <div id="huxblog_navbar">
-            <div class="navbar-collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="https://silenceper.com/">Home</a>
-                    </li>
-                    
-                    <li>
-                        <a href="https://silenceper.com/categories/tech">tech</a>
-                    </li>
-                    
-
-                    
-                </ul>
-            </div>
-        </div>
-        
-    </div>
-    
-</nav>
-<script>
-    
-    
-    
-    var $body   = document.body;
-    var $toggle = document.querySelector('.navbar-toggle');
-    var $navbar = document.querySelector('#huxblog_navbar');
-    var $collapse = document.querySelector('.navbar-collapse');
-
-    $toggle.addEventListener('click', handleMagic)
-    function handleMagic(e){
-        if ($navbar.className.indexOf('in') > 0) {
-        
-            $navbar.className = " ";
-            
-            setTimeout(function(){
-                
-                if($navbar.className.indexOf('in') < 0) {
-                    $collapse.style.height = "0px"
+<html lang="zh">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Golang中http包默认路由匹配规则阅读笔记 | silenceper</title>
+        <meta name="Description" content="一个记录生活，工作的博客。关于Go，Kubernetes，云原生"><meta property="og:title" content="Golang中http包默认路由匹配规则阅读笔记" />
+<meta property="og:description" content="一、执行流程 构建一个简单http server： 1 2 3 4 5 6 7 8 9 10 11 12 13 14 package main import ( &#34;log&#34; &#34;net/http&#34; ) func main() { http.HandleFunc(&#34;/&#34;, func(w http.ResponseWriter, r *http.Request) { w.Write([]byte(&#34;hello world&#34;)) }) log.Fatal(http.ListenAndServe(&#34;:8080&#34;, nil)) } 使用http://12" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/201605/go-http-process/" />
+<meta property="article:published_time" content="2016-05-28T18:00:59+08:00" />
+<meta property="article:modified_time" content="2016-05-28T18:00:59+08:00" /><meta property="og:site_name" content="silenceper" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Golang中http包默认路由匹配规则阅读笔记"/>
+<meta name="twitter:description" content="一、执行流程 构建一个简单http server： 1 2 3 4 5 6 7 8 9 10 11 12 13 14 package main import ( &#34;log&#34; &#34;net/http&#34; ) func main() { http.HandleFunc(&#34;/&#34;, func(w http.ResponseWriter, r *http.Request) { w.Write([]byte(&#34;hello world&#34;)) }) log.Fatal(http.ListenAndServe(&#34;:8080&#34;, nil)) } 使用http://12"/>
+<meta name="theme-color" content="#ffffff">
+<meta name="msapplication-TileColor" content="#da532c">
+<link rel="canonical" href="/blog/201605/go-http-process/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="prev" href="/blog/201601/tcp_time_wait_error/" /><link rel="next" href="/blog/201608/dcmp/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/css/lib/animate/animate.min.css"><meta name="google-site-verification" content="VJ4lE3d3A73DNoyxuuXL_Cuu6MEErPtKXqfAv69pr6E" /><meta name="baidu-site-verification" content="k061nqJczY" /><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Golang中http包默认路由匹配规则阅读笔记",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "\/blog\/201605\/go-http-process\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "\/img\/silenceoer-avatar.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "posts","keywords": "wechat, go","wordcount":  2235 ,
+        "url": "\/blog\/201605\/go-http-process\/","datePublished": "2016-05-28T18:00:59\x2b08:00","dateModified": "2016-05-28T18:00:59\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "silenceper",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "\/img\/silenceper-avatar.png",
+                "width":  127 ,
+                "height":  40 
                 }
-            },400)
-        }else{
-        
-            $collapse.style.height = "auto"
-            $navbar.className += " in";
-        }
+            },"description": ""
     }
-</script>
-
-
-
-
-<style type="text/css">
-    header.intro-header{
-        background-image: url('https://silenceper.com/img/bg/rabbit.jpg')
-    }
-</style>
-<header class="intro-header" >
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="post-heading">
-                    <div class="tags">
-                       
-                       <a class="tag" href="/tags/wechat" title="wechat">
-                           wechat
-                        </a>
-                        
-                       <a class="tag" href="/tags/go" title="go">
-                           go
-                        </a>
-                        
-                    </div>
-                    <h1>Golang中http包默认路由匹配规则阅读笔记</h1>
-                    <h2 class="subheading"></h2>
-                    <span  class="meta">Posted by     &#34;silenceper&#34; on Saturday, May 28, 2016
-                        
-                    </span>
-                </div>
+    </script></head>
+    <body><script>
+            if (!window.localStorage || !window.localStorage.getItem('theme')) {window.isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;} else {
+                window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            }
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title animated bounceIn">
+            <a href="/">silenceper</a>
+        </div>
+        <div class="menu"><a class="menu-item" href="/posts/">文章</a><a class="menu-item" href="/tags/">标签</a><a class="menu-item" href="/categories/">分类</a><a class="menu-item" href="/about/">关于</a><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-rotate-180 fa-fw"></i>
+            </a>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-wrapper">
+        <div class="header-container">
+            <div class="header-title animated bounceIn">
+                <a href="/">silenceper</a>
             </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-rotate-180 fa-fw"></i>
+            </a>
         </div>
     </div>
 </header>
 
-
-
-
-<article>
-    <div class="container">
-        <div class="row">
-
-            
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                post-container">
-
-		
-                <header>
-                <h2>TOC</h2>
-                </header>
-                <nav id="TableOfContents">
-<ul>
-<li><a href="#一-执行流程">一、执行流程</a></li>
-<li><a href="#二-defaultservemux-路由匹配规则">二、DefaultServeMux 路由匹配规则</a>
-<ul>
-<li><a href="#2-1-添加路由规则">2.1 添加路由规则</a></li>
-<li><a href="#2-2-查找路由规则">2.2 查找路由规则</a></li>
-</ul></li>
-</ul>
-</nav>
-		
-		
-
-<h1 id="一-执行流程">一、执行流程</h1>
-
+<script>
+    window.desktopHeaderMode = "fixed";
+    window.mobileHeaderMode = "auto";
+</script>
+<main class="main">
+                <div class="container"><article class="page single"><h1 class="single-title animated flipInX">Golang中http包默认路由匹配规则阅读笔记</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author">
+                    <a class="author" href="/" rel="author" target="_blank">
+                        <i class="fas fa-user-circle fa-fw"></i>    &#34;silenceper&#34;
+                    </a>
+                </span>&nbsp;<span class="post-category">收录于&nbsp;
+                            <span>
+                                <a href="/categories/tech">
+                                    <i class="far fa-folder fa-fw"></i>Tech
+                                </a>
+                            </span></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2016-05-28>2016-05-28</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>约 2235 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>预计阅读 5 分钟&nbsp;</div>
+        </div><div class="toc" id="toc-auto">
+                <h2 class="toc-title">目录</h2>
+                <div class="toc-content" id="toc-content-auto"></div>
+            </div>
+            <div class="toc" id="toc-static">
+                <details>
+                    <summary>
+                        <div class="toc-title">
+                            <span>目录</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#21-添加路由规则">2.1 添加路由规则</a></li>
+    <li><a href="#22-查找路由规则">2.2 查找路由规则</a></li>
+  </ul>
+</nav></div>
+                </details>
+            </div><div class="content"><h1 id="一执行流程">一、执行流程</h1>
 <p>构建一个简单http server：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">main</span>
 
-<pre><code class="language-go">package main
+<span class="kn">import</span> <span class="p">(</span>
+	<span class="s">&#34;log&#34;</span>
+	<span class="s">&#34;net/http&#34;</span>
+<span class="p">)</span>
 
-import (
-	&quot;log&quot;
-	&quot;net/http&quot;
-)
+<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="nx">http</span><span class="p">.</span><span class="nf">HandleFunc</span><span class="p">(</span><span class="s">&#34;/&#34;</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
+		<span class="nx">w</span><span class="p">.</span><span class="nf">Write</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&#34;hello world&#34;</span><span class="p">))</span>
+	<span class="p">})</span>
+	<span class="nx">log</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nf">ListenAndServe</span><span class="p">(</span><span class="s">&#34;:8080&#34;</span><span class="p">,</span> <span class="kc">nil</span><span class="p">))</span>
+<span class="p">}</span>
 
-func main() {
-	http.HandleFunc(&quot;/&quot;, func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte(&quot;hello world&quot;))
-	})
-	log.Fatal(http.ListenAndServe(&quot;:8080&quot;, nil))
-}
-
-</code></pre>
-
-<p>使用<code>http://127.0.0.1:8080/</code> 就可以看到输出了</p>
-
+</code></pre></td></tr></table>
+</div>
+</div><p>使用<code>http://127.0.0.1:8080/</code> 就可以看到输出了</p>
 <p>通过跟踪http.go包代码，可以发现执行流程基本如下：</p>
-
 <ul>
-<li><p>1.创建一个<code>Listener</code>监听<code>8080</code>端口</p></li>
-
-<li><p>2.进入<code>for</code>循环并Accept请求，没有请求则处于阻塞状态</p></li>
-
-<li><p>3.接收到请求，并创建一个conn对象，放入goroutine处理（实现高并发关键）</p></li>
-
-<li><p>4.解析请求来源信息获得请求路径等重要信息</p></li>
-
-<li><p>5.请求ServerHTTP方法，已经通过上一步获得了ResponseWriter和Request对象</p>
-
-<pre><code class="language-go">func (sh serverHandler) ServeHTTP(rw ResponseWriter, req *Request) {
-	//此handler即为http.ListenAndServe 中的第二个参数
-	handler := sh.srv.Handler 
-	if handler == nil {
-		//如果handler为空则使用内部的DefaultServeMux 进行处理
-		handler = DefaultServeMux
-	}
-	if req.RequestURI == &quot;*&quot; &amp;&amp; req.Method == &quot;OPTIONS&quot; {
-		handler = globalOptionsHandler{}
-	}
-	//这里就开始处理http请求
-	//如果需要使用自定义的mux，就需要实现ServeHTTP方法，即实现Handler接口。
-	handler.ServeHTTP(rw, req)
-}
-</code></pre></li>
-
-<li><p>6.进入DefaultServeMux中的逻辑就是根据请求path在map中匹配查找handler，并交由handler处理</p></li>
+<li>
+<p>1.创建一个<code>Listener</code>监听<code>8080</code>端口</p>
+</li>
+<li>
+<p>2.进入<code>for</code>循环并Accept请求，没有请求则处于阻塞状态</p>
+</li>
+<li>
+<p>3.接收到请求，并创建一个conn对象，放入goroutine处理（实现高并发关键）</p>
+</li>
+<li>
+<p>4.解析请求来源信息获得请求路径等重要信息</p>
+</li>
+<li>
+<p>5.请求ServerHTTP方法，已经通过上一步获得了ResponseWriter和Request对象</p>
+</li>
 </ul>
-
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">sh</span> <span class="nx">serverHandler</span><span class="p">)</span> <span class="nf">ServeHTTP</span><span class="p">(</span><span class="nx">rw</span> <span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">req</span> <span class="o">*</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
+	<span class="c1">//此handler即为http.ListenAndServe 中的第二个参数
+</span><span class="c1"></span>	<span class="nx">handler</span> <span class="o">:=</span> <span class="nx">sh</span><span class="p">.</span><span class="nx">srv</span><span class="p">.</span><span class="nx">Handler</span> 
+	<span class="k">if</span> <span class="nx">handler</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="c1">//如果handler为空则使用内部的DefaultServeMux 进行处理
+</span><span class="c1"></span>		<span class="nx">handler</span> <span class="p">=</span> <span class="nx">DefaultServeMux</span>
+	<span class="p">}</span>
+	<span class="k">if</span> <span class="nx">req</span><span class="p">.</span><span class="nx">RequestURI</span> <span class="o">==</span> <span class="s">&#34;*&#34;</span> <span class="o">&amp;&amp;</span> <span class="nx">req</span><span class="p">.</span><span class="nx">Method</span> <span class="o">==</span> <span class="s">&#34;OPTIONS&#34;</span> <span class="p">{</span>
+		<span class="nx">handler</span> <span class="p">=</span> <span class="nx">globalOptionsHandler</span><span class="p">{}</span>
+	<span class="p">}</span>
+	<span class="c1">//这里就开始处理http请求
+</span><span class="c1"></span>	<span class="c1">//如果需要使用自定义的mux，就需要实现ServeHTTP方法，即实现Handler接口。
+</span><span class="c1"></span>	<span class="nx">handler</span><span class="p">.</span><span class="nf">ServeHTTP</span><span class="p">(</span><span class="nx">rw</span><span class="p">,</span> <span class="nx">req</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>6.进入DefaultServeMux中的逻辑就是根据请求path在map中匹配查找handler，并交由handler处理</li>
+</ul>
 <blockquote>
-<p>http请求处理流程更多信息可以参考<a href="https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/03.3.md">《Go Web 编程
-》3.3 Go如何使得Web工作</a></p>
+<p>http请求处理流程更多信息可以参考<a href="https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/03.3.md" target="_blank" rel="noopener noreffer">《Go Web 编程
+》3.3 Go如何使得Web工作</a>
+</p>
 </blockquote>
-
-<h1 id="二-defaultservemux-路由匹配规则">二、DefaultServeMux 路由匹配规则</h1>
-
+<h1 id="二defaultservemux-路由匹配规则">二、DefaultServeMux 路由匹配规则</h1>
 <p>先看几个路由规则：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">main</span>
 
-<pre><code class="language-go">package main
+<span class="kn">import</span> <span class="p">(</span>
+	<span class="s">&#34;log&#34;</span>
+	<span class="s">&#34;net/http&#34;</span>
+<span class="p">)</span>
 
-import (
-	&quot;log&quot;
-	&quot;net/http&quot;
-)
-
-func main() {
-	//规则1
-	http.HandleFunc(&quot;/&quot;, func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte(&quot;hello world&quot;))
-	})
+<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="c1">//规则1
+</span><span class="c1"></span>	<span class="nx">http</span><span class="p">.</span><span class="nf">HandleFunc</span><span class="p">(</span><span class="s">&#34;/&#34;</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
+		<span class="nx">w</span><span class="p">.</span><span class="nf">Write</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&#34;hello world&#34;</span><span class="p">))</span>
+	<span class="p">})</span>
 	
-	//规则2
-	http.HandleFunc(&quot;/path/&quot;, func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte(&quot;pattern path: /path/ &quot;))
-	})
+	<span class="c1">//规则2
+</span><span class="c1"></span>	<span class="nx">http</span><span class="p">.</span><span class="nf">HandleFunc</span><span class="p">(</span><span class="s">&#34;/path/&#34;</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
+		<span class="nx">w</span><span class="p">.</span><span class="nf">Write</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&#34;pattern path: /path/ &#34;</span><span class="p">))</span>
+	<span class="p">})</span>
 
-	//规则3
-	http.HandleFunc(&quot;/path/subpath&quot;, func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte(&quot;pattern path: /path/subpath&quot;))
-	})
+	<span class="c1">//规则3
+</span><span class="c1"></span>	<span class="nx">http</span><span class="p">.</span><span class="nf">HandleFunc</span><span class="p">(</span><span class="s">&#34;/path/subpath&#34;</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
+		<span class="nx">w</span><span class="p">.</span><span class="nf">Write</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&#34;pattern path: /path/subpath&#34;</span><span class="p">))</span>
+	<span class="p">})</span>
 
-	log.Fatal(http.ListenAndServe(&quot;:8080&quot;, nil))
-}
+	<span class="nx">log</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nf">ListenAndServe</span><span class="p">(</span><span class="s">&#34;:8080&#34;</span><span class="p">,</span> <span class="kc">nil</span><span class="p">))</span>
+<span class="p">}</span>
 
-</code></pre>
-
-<p>情景一：</p>
-
+</code></pre></td></tr></table>
+</div>
+</div><p>情景一：</p>
 <p>访问：<code>http://127.0.0.1:8080/</code></p>
-
 <p>返回：<code>hello world</code></p>
-
 <p>情景二：</p>
-
 <p>访问：<code>http://127.0.0.1:8080/path</code></p>
-
-<p>返回：<code>pattern path: /path/</code></p>
-
+<p>返回：<code>pattern path: /path/ </code></p>
 <p>情景三：</p>
-
 <p>访问：<code>http://127.0.0.1:8080/path/subpath/</code></p>
-
-<p>返回：<code>pattern path: /path/</code></p>
-
+<p>返回：<code>pattern path: /path/ </code></p>
 <p>情景四：</p>
-
 <p>访问：<code>http://127.0.0.1:8080/hahaha/</code></p>
-
 <p>返回：<code>hello world</code></p>
-
 <p>先说明一些规则吧，再看代码是怎么实现的：</p>
-
 <p>1.如果匹配路径中后带有<code>/</code>，则会自动增加一个匹配规则不带<code>/</code>后缀的，并跳转转到<code>path/</code>,解释了情景二的场景，为什么匹配到的<code>/path/</code></p>
-
 <p>2.我设置了这么多规则为什么规则一可以通用匹配未设置的路由信息，而且又不影响已经存在路由， 内部是怎么实现的？</p>
-
-<h2 id="2-1-添加路由规则">2.1 添加路由规则</h2>
-
+<h2 id="21-添加路由规则">2.1 添加路由规则</h2>
 <p>先看两个struct，这是存放默认路由规则的：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">ServeMux</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="nx">mu</span>    <span class="nx">sync</span><span class="p">.</span><span class="nx">RWMutex</span>  <span class="c1">//处理并发，增加读写锁
+</span><span class="c1"></span>	<span class="nx">m</span>     <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="nx">muxEntry</span>  <span class="c1">//存放规则map，key即为设置的path
+</span><span class="c1"></span>	<span class="nx">hosts</span> <span class="kt">bool</span> <span class="c1">// whether any patterns contain hostnames（是否包含host）
+</span><span class="c1"></span><span class="p">}</span>
 
-<pre><code class="language-go">type ServeMux struct {
-	mu    sync.RWMutex  //处理并发，增加读写锁
-	m     map[string]muxEntry  //存放规则map，key即为设置的path
-	hosts bool // whether any patterns contain hostnames（是否包含host）
-}
+<span class="kd">type</span> <span class="nx">muxEntry</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="nx">explicit</span> <span class="kt">bool</span> <span class="c1">//是否完全匹配
+</span><span class="c1"></span>	<span class="nx">h</span>        <span class="nx">Handler</span><span class="c1">//相应匹配规则的handler
+</span><span class="c1"></span>	<span class="nx">pattern</span>  <span class="kt">string</span><span class="c1">//匹配路径
+</span><span class="c1"></span><span class="p">}</span>
 
-type muxEntry struct {
-	explicit bool //是否完全匹配
-	h        Handler//相应匹配规则的handler
-	pattern  string//匹配路径
-}
+</code></pre></td></tr></table>
+</div>
+</div><p>通过跟踪<code>http.HandleFunc</code>定位到如下代码，正是往上面两个<code>struct</code>中增加规则：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">mux</span> <span class="o">*</span><span class="nx">ServeMux</span><span class="p">)</span> <span class="nf">Handle</span><span class="p">(</span><span class="nx">pattern</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">handler</span> <span class="nx">Handler</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">mux</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
+	<span class="k">defer</span> <span class="nx">mux</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
 
-</code></pre>
-
-<p>通过跟踪<code>http.HandleFunc</code>定位到如下代码，正是往上面两个<code>struct</code>中增加规则：</p>
-
-<pre><code class="language-go">func (mux *ServeMux) Handle(pattern string, handler Handler) {
-	mux.mu.Lock()
-	defer mux.mu.Unlock()
-
-	if pattern == &quot;&quot; {
-		panic(&quot;http: invalid pattern &quot; + pattern)
-	}
-	if handler == nil {
-		panic(&quot;http: nil handler&quot;)
-	}
-	//如果已经匹配到了则panic
-	if mux.m[pattern].explicit {
-		panic(&quot;http: multiple registrations for &quot; + pattern)
-	}
+	<span class="k">if</span> <span class="nx">pattern</span> <span class="o">==</span> <span class="s">&#34;&#34;</span> <span class="p">{</span>
+		<span class="nb">panic</span><span class="p">(</span><span class="s">&#34;http: invalid pattern &#34;</span> <span class="o">+</span> <span class="nx">pattern</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="k">if</span> <span class="nx">handler</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nb">panic</span><span class="p">(</span><span class="s">&#34;http: nil handler&#34;</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="c1">//如果已经匹配到了则panic
+</span><span class="c1"></span>	<span class="k">if</span> <span class="nx">mux</span><span class="p">.</span><span class="nx">m</span><span class="p">[</span><span class="nx">pattern</span><span class="p">].</span><span class="nx">explicit</span> <span class="p">{</span>
+		<span class="nb">panic</span><span class="p">(</span><span class="s">&#34;http: multiple registrations for &#34;</span> <span class="o">+</span> <span class="nx">pattern</span><span class="p">)</span>
+	<span class="p">}</span>
     
-    //增加一个新的匹配规则
-	mux.m[pattern] = muxEntry{explicit: true, h: handler, pattern: pattern}
+    <span class="c1">//增加一个新的匹配规则
+</span><span class="c1"></span>	<span class="nx">mux</span><span class="p">.</span><span class="nx">m</span><span class="p">[</span><span class="nx">pattern</span><span class="p">]</span> <span class="p">=</span> <span class="nx">muxEntry</span><span class="p">{</span><span class="nx">explicit</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">h</span><span class="p">:</span> <span class="nx">handler</span><span class="p">,</span> <span class="nx">pattern</span><span class="p">:</span> <span class="nx">pattern</span><span class="p">}</span>
 	
-	//根据path的第一个字母判断是否有host
-	if pattern[0] != '/' {
-		mux.hosts = true
-	}
+	<span class="c1">//根据path的第一个字母判断是否有host
+</span><span class="c1"></span>	<span class="k">if</span> <span class="nx">pattern</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="sc">&#39;/&#39;</span> <span class="p">{</span>
+		<span class="nx">mux</span><span class="p">.</span><span class="nx">hosts</span> <span class="p">=</span> <span class="kc">true</span>
+	<span class="p">}</span>
 
-	//！！这里看清楚 就是实现了情景二的情况 ，看判断条件
-	n := len(pattern)
-	if n &gt; 0 &amp;&amp; pattern[n-1] == '/' &amp;&amp; !mux.m[pattern[0:n-1]].explicit{
-		// If pattern contains a host name, strip it and use remaining
-		// path for redirect.
-		path := pattern
-		if pattern[0] != '/' {
-			// In pattern, at least the last character is a '/', so
-			// strings.Index can't be -1.
-			path = pattern[strings.Index(pattern, &quot;/&quot;):]
-		}
-		url := &amp;url.URL{Path: path}
-		mux.m[pattern[0:n-1]] = muxEntry{h: RedirectHandler(url.String(), StatusMovedPermanently), pattern: pattern}
-	}
-}
+	<span class="c1">//！！这里看清楚 就是实现了情景二的情况 ，看判断条件
+</span><span class="c1"></span>	<span class="nx">n</span> <span class="o">:=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">pattern</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">n</span> <span class="p">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">pattern</span><span class="p">[</span><span class="nx">n</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;/&#39;</span> <span class="o">&amp;&amp;</span> <span class="p">!</span><span class="nx">mux</span><span class="p">.</span><span class="nx">m</span><span class="p">[</span><span class="nx">pattern</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="nx">n</span><span class="o">-</span><span class="mi">1</span><span class="p">]].</span><span class="nx">explicit</span><span class="p">{</span>
+		<span class="c1">// If pattern contains a host name, strip it and use remaining
+</span><span class="c1"></span>		<span class="c1">// path for redirect.
+</span><span class="c1"></span>		<span class="nx">path</span> <span class="o">:=</span> <span class="nx">pattern</span>
+		<span class="k">if</span> <span class="nx">pattern</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="sc">&#39;/&#39;</span> <span class="p">{</span>
+			<span class="c1">// In pattern, at least the last character is a &#39;/&#39;, so
+</span><span class="c1"></span>			<span class="c1">// strings.Index can&#39;t be -1.
+</span><span class="c1"></span>			<span class="nx">path</span> <span class="p">=</span> <span class="nx">pattern</span><span class="p">[</span><span class="nx">strings</span><span class="p">.</span><span class="nf">Index</span><span class="p">(</span><span class="nx">pattern</span><span class="p">,</span> <span class="s">&#34;/&#34;</span><span class="p">):]</span>
+		<span class="p">}</span>
+		<span class="nx">url</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">url</span><span class="p">.</span><span class="nx">URL</span><span class="p">{</span><span class="nx">Path</span><span class="p">:</span> <span class="nx">path</span><span class="p">}</span>
+		<span class="nx">mux</span><span class="p">.</span><span class="nx">m</span><span class="p">[</span><span class="nx">pattern</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="nx">n</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span> <span class="p">=</span> <span class="nx">muxEntry</span><span class="p">{</span><span class="nx">h</span><span class="p">:</span> <span class="nf">RedirectHandler</span><span class="p">(</span><span class="nx">url</span><span class="p">.</span><span class="nf">String</span><span class="p">(),</span> <span class="nx">StatusMovedPermanently</span><span class="p">),</span> <span class="nx">pattern</span><span class="p">:</span> <span class="nx">pattern</span><span class="p">}</span>
+	<span class="p">}</span>
+<span class="p">}</span>
 
-</code></pre>
-
-<p>上面有个<code>Helpful behavior</code>的注释行为，就是实现了情景二的情况，他是判断如果匹配的路径中最后含有<code>/</code>，并且之前也不存在添加去除反斜杠的规则的话，就自动给他增加一个301的跳转指向<code>/path/</code></p>
-
-<h2 id="2-2-查找路由规则">2.2 查找路由规则</h2>
-
-<p>路由规则的查找就是从<code>ServeMux</code>中的map去匹配查找的,的到这个handler并执行，只是会有一些处理机制，比如怎么样确保访问<code>/path/subpath</code>的时候是先匹配<code>/path/subpath</code>而不是匹配<code>/path/</code>呢？</p>
-
+</code></pre></td></tr></table>
+</div>
+</div><p>上面有个<code>Helpful behavior</code>的注释行为，就是实现了情景二的情况，他是判断如果匹配的路径中最后含有<code>/</code>，并且之前也不存在添加去除反斜杠的规则的话，就自动给他增加一个301的跳转指向<code>/path/</code></p>
+<h2 id="22-查找路由规则">2.2 查找路由规则</h2>
+<p>路由规则的查找就是从<code>ServeMux </code>中的map去匹配查找的,的到这个handler并执行，只是会有一些处理机制，比如怎么样确保访问<code>/path/subpath</code>的时候是先匹配<code>/path/subpath</code>而不是匹配<code>/path/</code>呢？</p>
 <p>当一个请求过来的时候，跟踪到了<code>mux.match</code>方法：</p>
-
 <blockquote>
 <p>过程<code>mux.ServerHTTP</code>-&gt;<code>mux.Handler</code>-&gt;<code>mux.handler</code>-&gt;<code>mux.match</code></p>
 </blockquote>
-
-<pre><code class="language-go">func (mux *ServeMux) match(path string) (h Handler, pattern string) {
-	var n = 0
-	for k, v := range mux.m {
-		if !pathMatch(k, path) {
-			continue
-		}
-		//如果匹配到了一个规则，并没有马上返回handler，而且继续匹配并且判断path的长度是否是最长的，这是关键！！！
-		if h == nil || len(k) &gt; n {
-			n = len(k)
-			h = v.h
-			pattern = v.pattern
-		}
-	}
-	return
-}
-</code></pre>
-
-<p>1.这里就解释了为什么设置的精确的path是最优匹配到的，因为它是根据path的长度判断。
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">mux</span> <span class="o">*</span><span class="nx">ServeMux</span><span class="p">)</span> <span class="nf">match</span><span class="p">(</span><span class="nx">path</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="nx">h</span> <span class="nx">Handler</span><span class="p">,</span> <span class="nx">pattern</span> <span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
+	<span class="kd">var</span> <span class="nx">n</span> <span class="p">=</span> <span class="mi">0</span>
+	<span class="k">for</span> <span class="nx">k</span><span class="p">,</span> <span class="nx">v</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">mux</span><span class="p">.</span><span class="nx">m</span> <span class="p">{</span>
+		<span class="k">if</span> <span class="p">!</span><span class="nf">pathMatch</span><span class="p">(</span><span class="nx">k</span><span class="p">,</span> <span class="nx">path</span><span class="p">)</span> <span class="p">{</span>
+			<span class="k">continue</span>
+		<span class="p">}</span>
+		<span class="c1">//如果匹配到了一个规则，并没有马上返回handler，而且继续匹配并且判断path的长度是否是最长的，这是关键！！！
+</span><span class="c1"></span>		<span class="k">if</span> <span class="nx">h</span> <span class="o">==</span> <span class="kc">nil</span> <span class="o">||</span> <span class="nb">len</span><span class="p">(</span><span class="nx">k</span><span class="p">)</span> <span class="p">&gt;</span> <span class="nx">n</span> <span class="p">{</span>
+			<span class="nx">n</span> <span class="p">=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">k</span><span class="p">)</span>
+			<span class="nx">h</span> <span class="p">=</span> <span class="nx">v</span><span class="p">.</span><span class="nx">h</span>
+			<span class="nx">pattern</span> <span class="p">=</span> <span class="nx">v</span><span class="p">.</span><span class="nx">pattern</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	<span class="k">return</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>1.这里就解释了为什么设置的精确的path是最优匹配到的，因为它是根据path的长度判断。
 当然也就解释了为什么<code>/</code>可以匹配所有（看<code>pathMatch</code>函数就知道了，<code>/</code>是匹配所有的，只是这是最后才被匹配成功）</p>
-
 <p>2.得到了处理请求的handler，再调用<code>h.ServeHTTP(w, r)</code>，去执行相应的handler方法。</p>
-
 <p>等一下，handler中哪里有<code>ServeHTTP</code>这个方法？？</p>
-
 <p>因为在调用 <code>http.HandleFunc</code>的时候已经将自定义的handler处理函数，强制转为<code>HandlerFunc</code>类型的，就拥有了<code>ServeHTTP</code>方法：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">HandlerFunc</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="o">*</span><span class="nx">Request</span><span class="p">)</span>
 
-<pre><code class="language-go">type HandlerFunc func(ResponseWriter, *Request)
+<span class="c1">// ServeHTTP calls f(w, r).
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">f</span> <span class="nx">HandlerFunc</span><span class="p">)</span> <span class="nf">ServeHTTP</span><span class="p">(</span><span class="nx">w</span> <span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nf">f</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="nx">r</span><span class="p">)</span>
+<span class="p">}</span>
 
-// ServeHTTP calls f(w, r).
-func (f HandlerFunc) ServeHTTP(w ResponseWriter, r *Request) {
-	f(w, r)
-}
-
-</code></pre>
-
-<p><code>f(w,r)</code>就实现了handler的执行。</p>
-
+</code></pre></td></tr></table>
+</div>
+</div><p><code>f(w,r)</code>就实现了handler的执行。</p>
 <blockquote>
 <p>脑子里面清楚，但真到表述的时候，呵呵，当做笔记啦。。。</p>
 </blockquote>
-
-
-                <hr>
-
-                <ul class="pager">
-                    
-                    <li class="previous">
-                        <a href="/blog/201601/tcp_time_wait_error" data-toggle="tooltip" data-placement="top" title="tcp time_wait问题">&larr; Previous Post</a>
-                    </li>
-                    
-                    
-                    <li class="next">
-                        <a href="/blog/201608/dcmp" data-toggle="tooltip" data-placement="top" title="dcmp">Next Post &rarr;</a>
-                    </li>
-                    
-                </ul>
-
-            
-<div id="disqus-comment"></div>
-
-<div id="disqus_thread"></div>
-<script type="application/javascript">
-    var disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "silenceper" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-
-
-
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>本文于 2016-05-28 更新</span>
             </div>
-            
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                sidebar-container">
-
-                
-                <section>
-                    <hr class="hidden-sm hidden-xs">
-                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
-                    <div class="tags">
-                    
-                    
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                            <a href="/tags/flannel" title="flannel">
-                                flannel
-                            </a>
-                       
-                    
-                       
-                            <a href="/tags/go" title="go">
-                                go
-                            </a>
-                       
-                    
-                       
-                            <a href="/tags/k8s" title="k8s">
-                                k8s
-                            </a>
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                            <a href="/tags/wechat" title="wechat">
-                                wechat
-                            </a>
-                       
-                    
-                    </div>
-                </section>
-
-                
-                <hr>
-                <h5>FRIENDS</h5>
-                <ul class="list-inline">
-                    
-                        <li><a target="_blank" href=""></a></li>
-                    
-                </ul>
-            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/blog/201605/go-http-process/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share"><span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="/blog/201605/go-http-process/" data-title="Golang中http包默认路由匹配规则阅读笔记" data-hashtags="wechat,go"><i class="fab fa-twitter fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="/blog/201605/go-http-process/" data-hashtag="wechat"><i class="fab fa-facebook-square fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="/blog/201605/go-http-process/" data-title="Golang中http包默认路由匹配规则阅读笔记"><i class="fab fa-weibo fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 人人" data-sharer="renren" data-url="/blog/201605/go-http-process/"><i class="fab fa-renren fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 百度" data-sharer="baidu" data-url="/blog/201605/go-http-process/" data-title="Golang中http包默认路由匹配规则阅读笔记"><i class="loveit it-baidu-fill"></i>
+</a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="/blog/201605/go-http-process/" data-title="Golang中http包默认路由匹配规则阅读笔记"><i class="fab fa-evernote fa-fw"></i>
+</a></span></div>
         </div>
     </div>
-</article>
 
-
-
-
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <ul class="list-inline text-center">
-                   
-                   <li>
-                       <a href="" rel="alternate" type="application/rss+xml" title="silenceper" >
-                           <span class="fa-stack fa-lg">
-                               <i class="fa fa-circle fa-stack-2x"></i>
-                               <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
-                           </span>
-                       </a>
-                   </li>
-                   
-                    
-                    <li>
-                        <a href="mailto:silenceper@gmail.com">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
-                            </span>
+    <div class="post-info-more">
+        <section><span>
+                        <a href="/tags/wechat">
+                            <i class="fas fa-tag fa-fw"></i>wechat
                         </a>
-                    </li>
-		    
-
-                    
-                    
-                    
-
-                    
-
-		    
-                    
-                    
-                    <li>
-                        <a target="_blank" href="https://github.com/silenceper">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                            </span>
+                    </span>&nbsp;<span>
+                        <a href="/tags/go">
+                            <i class="fas fa-tag fa-fw"></i>go
                         </a>
-                    </li>
-		    
-                    
-                </ul>
-		<p class="copyright text-muted">
-                    Copyright &copy; silenceper , 2016
-                    <br>
-                    Hugo Theme by <a href="https://github.com/zhaohuabing/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a>
-                </p>
-            </div>
+                    </span>&nbsp;</section>
+        <section>
+            <span><a href="javascript:window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/blog/201601/tcp_time_wait_error/" class="prev" rel="prev" title="tcp time_wait问题"><i class="fas fa-angle-left fa-fw"></i>tcp time_wait问题</a>
+            <a href="/blog/201608/dcmp/" class="next" rel="next" title="dcmp">dcmp<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div class="comment"><div id="disqus_thread"></div><noscript>
+            Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright"><div class="copyright-line">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
         </div>
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2016 - 2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">silenceper</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
     </div>
 </footer>
-
-
-
-
-<script>
-    function async(u, c) {
-      var d = document, t = 'script',
-          o = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
-      o.src = u;
-      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-      s.parentNode.insertBefore(o, s);
-    }
-</script>
-
-
-
-
-
-
-<script>
-    
-    if($('#tag_cloud').length !== 0){
-        async("/js/jquery.tagcloud.js",function(){
-            $.fn.tagcloud.defaults = {
-                
-                color: {start: '#bbbbee', end: '#0085a1'},
-            };
-            $('#tag_cloud a').tagcloud();
-        })
-    }
-</script>
-
-
-<script>
-    async("https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.js", function(){
-        var $nav = document.querySelector("nav");
-        if($nav) FastClick.attach($nav);
-    })
-</script>
-
-
-<script>
-    (function(){
-        var bp = document.createElement('script');
-        var curProtocol = window.location.protocol.split(':')[0];
-        if (curProtocol === 'https'){
-       bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-      }
-      else{
-      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-      }
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(bp, s);
-    })();
-</script>
-
-
-
-
-<script>
-    
-    var _baId = '5feaced19c04a59ece51d36906735e70';
-
-    
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "//hm.baidu.com/hm.js?" + _baId;
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-</script>
-
-
-
-
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-139557989-1', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
-
-
-</body>
+</div><a href="#" class="dynamic-to-top animated faster" id="dynamic-to-top">
+            <span>&nbsp;</span>
+        </a><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$", right: "$", display: false },
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },]
+            });
+        });
+    </script><link rel="stylesheet" href="/css/lib/iconfont/iconfont.min.css"><link rel="stylesheet" href="/css/lib/katex/katex.min.css"><link rel="stylesheet" href="/css/lib/katex/copy-tex.min.css"><script src="https://silenceper.disqus.com/embed.js"></script><script src="/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script src="/js/lib/sharer/sharer.min.js"></script><script src="/js/lib/lazysizes/lazysizes.min.js"></script><script src="/js/lib/katex/katex.min.js"></script><script src="/js/lib/katex/auto-render.min.js"></script><script src="/js/lib/katex/copy-tex.min.js"></script><script src="/js/lib/katex/mhchem.min.js"></script><script src=/js/theme.min.js></script></body>
 </html>

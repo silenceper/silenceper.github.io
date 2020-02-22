@@ -1,49 +1,50 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>k8s on silenceper</title>
-    <link>https://silenceper.com/tags/k8s/</link>
+    <link>/tags/k8s/</link>
     <description>Recent content in k8s on silenceper</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <language>zh</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
     <lastBuildDate>Tue, 22 Oct 2019 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://silenceper.com/tags/k8s/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/k8s/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Kubernetes容器日志收集方案</title>
-      <link>https://silenceper.com/blog/201910/kubernetes-log/</link>
+      <link>/blog/201910/kubernetes-log/</link>
       <pubDate>Tue, 22 Oct 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://silenceper.com/blog/201910/kubernetes-log/</guid>
+      <guid>/blog/201910/kubernetes-log/</guid>
       <description>收集POD中container日志，日志还分为两种一种是容器标准输出日志和容器内日志。 方案 从日志的采集方式上，在我看来方案大致主要分为两种：</description>
     </item>
     
     <item>
       <title>Cluster Autoscaler:集群自动扩缩容</title>
-      <link>https://silenceper.com/blog/201907/cluster-autoscaler-usage/</link>
+      <link>/blog/201907/cluster-autoscaler-usage/</link>
       <pubDate>Tue, 02 Jul 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://silenceper.com/blog/201907/cluster-autoscaler-usage/</guid>
+      <guid>/blog/201907/cluster-autoscaler-usage/</guid>
       <description>Cluster AutoScaler 是一个自动扩展和收缩 Kubernetes 集群 Node 的扩展。当集群容量不足时，它会自动去 Cloud Provider （支持 GCE、GKE 和 AWS）创建新的 Node，而在 Node 长时间资源利用</description>
     </item>
     
     <item>
       <title>k8s源码阅读(一)：源码结构</title>
-      <link>https://silenceper.com/blog/201809/k8s-source-code-structure/</link>
+      <link>/blog/201809/k8s-source-code-structure/</link>
       <pubDate>Wed, 12 Sep 2018 11:45:59 +0800</pubDate>
       
-      <guid>https://silenceper.com/blog/201809/k8s-source-code-structure/</guid>
-      <description>环境 k8s代码版本：release-1.9 工具：vscode, dlv 下载代码，并放入gopath中，方便编译： $ mkdir -p $GOPATH/src/k8s.io &amp;amp;&amp;amp; cd $GOPATH/src/k8s.io $ git clone https://github.com/kubernetes/kubernetes # 有墙 代码结</description>
+      <guid>/blog/201809/k8s-source-code-structure/</guid>
+      <description>环境 k8s代码版本：release-1.9 工具：vscode, dlv 下载代码，并放入gopath中，方便编译： 1 2 $ mkdir -p $GOPATH/src/k8s.io &amp;amp;&amp;amp; cd $GOPATH/src/k8s.io $ git clone https://github.com/kubernetes/kubernetes # 有墙 代</description>
     </item>
     
     <item>
       <title>在CentOS上搭建Kubernetes集群</title>
-      <link>https://silenceper.com/blog/201809/how-to-build-a-k8s-cluster/</link>
+      <link>/blog/201809/how-to-build-a-k8s-cluster/</link>
       <pubDate>Fri, 07 Sep 2018 11:45:59 +0800</pubDate>
       
-      <guid>https://silenceper.com/blog/201809/how-to-build-a-k8s-cluster/</guid>
+      <guid>/blog/201809/how-to-build-a-k8s-cluster/</guid>
       <description>以下是我自己在部署k8s集群上做的一些记录，部署了一个master，一个node节点。 环境准备 我在VirtualBox中建的两个CentOS</description>
     </item>
     

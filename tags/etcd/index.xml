@@ -1,23 +1,24 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>etcd on silenceper</title>
-    <link>https://silenceper.com/tags/etcd/</link>
+    <link>/tags/etcd/</link>
     <description>Recent content in etcd on silenceper</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <language>zh</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
     <lastBuildDate>Tue, 02 Aug 2016 15:40:59 +0800</lastBuildDate>
     
-	<atom:link href="https://silenceper.com/tags/etcd/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/etcd/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>dcmp</title>
-      <link>https://silenceper.com/blog/201608/dcmp/</link>
+      <link>/blog/201608/dcmp/</link>
       <pubDate>Tue, 02 Aug 2016 15:40:59 +0800</pubDate>
       
-      <guid>https://silenceper.com/blog/201608/dcmp/</guid>
-      <description>Distributed Configuration Management Platform 提供了一个etcd的管理界面，可通过界面修改配置信息，借助confd可实现配置文件的同步。 GITHUB：https://github</description>
+      <guid>/blog/201608/dcmp/</guid>
+      <description>Distributed Configuration Management Platform 提供了一个etcd的管理界面，可通过界面修改配置信息，借助confd可实现配置文件的同步。 dcmp image GITHUB：https://gith</description>
     </item>
     
   </channel>

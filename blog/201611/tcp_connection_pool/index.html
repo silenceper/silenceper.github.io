@@ -1,669 +1,554 @@
 <!DOCTYPE html>
-<html lang="en-us">
-<head><head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    <meta name="description" content="一个记录生活，工作的博客。关于Go，Kubernetes，云原生">
-    
-    <meta name="keyword"  content="程序员,Golang,Microservice">
-    <link rel="shortcut icon" href="https://silenceper.com/img/favicon.ico">
-
-    <title>聊聊连接池- silenceper的博客</title>
-
-    <link rel="canonical" href="https://silenceper.com/blog/201611/tcp_connection_pool">
-
-    <link rel="stylesheet" href="https://silenceper.com/css/iDisqus.min.css"/>
-
-    
-    <link rel="stylesheet" href="https://silenceper.com/css/bootstrap.min.css">
-
-    
-    <link rel="stylesheet" href="https://silenceper.com/css/hux-blog.min.css">
-
-    
-    <link rel="stylesheet" href="https://silenceper.com/css/syntax.css">
-
-    
-    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    
-    
-    <script src="https://silenceper.com/js/jquery.min.js"></script>
-
-    
-    <script src="https://silenceper.com/js/bootstrap.min.js"></script>
-
-    
-    <script src="https://silenceper.com/js/hux-blog.min.js"></script>
-</head>
-</head>
-
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-    <div class="container-fluid">
-        
-        <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="https://silenceper.com/">silenceper</a>
-        </div>
-
-        
-        
-        <div id="huxblog_navbar">
-            <div class="navbar-collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="https://silenceper.com/">Home</a>
-                    </li>
-                    
-                    <li>
-                        <a href="https://silenceper.com/categories/tech">tech</a>
-                    </li>
-                    
-
-                    
-                </ul>
-            </div>
-        </div>
-        
-    </div>
-    
-</nav>
-<script>
-    
-    
-    
-    var $body   = document.body;
-    var $toggle = document.querySelector('.navbar-toggle');
-    var $navbar = document.querySelector('#huxblog_navbar');
-    var $collapse = document.querySelector('.navbar-collapse');
-
-    $toggle.addEventListener('click', handleMagic)
-    function handleMagic(e){
-        if ($navbar.className.indexOf('in') > 0) {
-        
-            $navbar.className = " ";
-            
-            setTimeout(function(){
-                
-                if($navbar.className.indexOf('in') < 0) {
-                    $collapse.style.height = "0px"
+<html lang="zh">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>聊聊连接池 | silenceper</title>
+        <meta name="Description" content="一个记录生活，工作的博客。关于Go，Kubernetes，云原生"><meta property="og:title" content="聊聊连接池" />
+<meta property="og:description" content="以下主要使用Golang作为编程语言 为什么需要连接池 我觉得使用连接池最大的一个好处就是减少连接的创建和关闭，增加系统负载能力， 之前就有遇到一" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/201611/tcp_connection_pool/" />
+<meta property="article:published_time" content="2016-11-20T02:40:59+08:00" />
+<meta property="article:modified_time" content="2016-11-20T02:40:59+08:00" /><meta property="og:site_name" content="silenceper" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="聊聊连接池"/>
+<meta name="twitter:description" content="以下主要使用Golang作为编程语言 为什么需要连接池 我觉得使用连接池最大的一个好处就是减少连接的创建和关闭，增加系统负载能力， 之前就有遇到一"/>
+<meta name="theme-color" content="#ffffff">
+<meta name="msapplication-TileColor" content="#da532c">
+<link rel="canonical" href="/blog/201611/tcp_connection_pool/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="prev" href="/blog/201609/go-wechat-sdk/" /><link rel="next" href="/blog/201809/how-to-build-a-k8s-cluster/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/css/lib/animate/animate.min.css"><meta name="google-site-verification" content="VJ4lE3d3A73DNoyxuuXL_Cuu6MEErPtKXqfAv69pr6E" /><meta name="baidu-site-verification" content="k061nqJczY" /><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "聊聊连接池",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "\/blog\/201611\/tcp_connection_pool\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "\/img\/silenceoer-avatar.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "posts","keywords": "go, pool","wordcount":  2529 ,
+        "url": "\/blog\/201611\/tcp_connection_pool\/","datePublished": "2016-11-20T02:40:59\x2b08:00","dateModified": "2016-11-20T02:40:59\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "silenceper",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "\/img\/silenceper-avatar.png",
+                "width":  127 ,
+                "height":  40 
                 }
-            },400)
-        }else{
-        
-            $collapse.style.height = "auto"
-            $navbar.className += " in";
-        }
+            },"description": ""
     }
-</script>
-
-
-
-
-<style type="text/css">
-    header.intro-header{
-        background-image: url('https://silenceper.com/img/bg/rabbit.jpg')
-    }
-</style>
-<header class="intro-header" >
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="post-heading">
-                    <div class="tags">
-                       
-                       <a class="tag" href="/tags/go" title="go">
-                           go
-                        </a>
-                        
-                       <a class="tag" href="/tags/pool" title="pool">
-                           pool
-                        </a>
-                        
-                    </div>
-                    <h1>聊聊连接池</h1>
-                    <h2 class="subheading">mysql 数据库连接池设置</h2>
-                    <span  class="meta">Posted by     &#34;silenceper&#34; on Sunday, November 20, 2016
-                        
-                    </span>
-                </div>
+    </script></head>
+    <body><script>
+            if (!window.localStorage || !window.localStorage.getItem('theme')) {window.isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;} else {
+                window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            }
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title animated bounceIn">
+            <a href="/">silenceper</a>
+        </div>
+        <div class="menu"><a class="menu-item" href="/posts/">文章</a><a class="menu-item" href="/tags/">标签</a><a class="menu-item" href="/categories/">分类</a><a class="menu-item" href="/about/">关于</a><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-rotate-180 fa-fw"></i>
+            </a>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-wrapper">
+        <div class="header-container">
+            <div class="header-title animated bounceIn">
+                <a href="/">silenceper</a>
             </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-rotate-180 fa-fw"></i>
+            </a>
         </div>
     </div>
 </header>
 
-
-
-
-<article>
-    <div class="container">
-        <div class="row">
-
-            
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                post-container">
-
-		
-                <header>
-                <h2>TOC</h2>
-                </header>
-                <nav id="TableOfContents">
-<ul>
-<li><a href="#为什么需要连接池">为什么需要连接池</a></li>
-<li><a href="#连接失效问题">连接失效问题</a>
-<ul>
-<li><a href="#1-长时间空闲-连接断开">1、长时间空闲，连接断开？</a></li>
-<li><a href="#2-当服务端重启之后-连接失效">2、当服务端重启之后，连接失效？</a></li>
-</ul></li>
-<li><a href="#database-sql-中的连接池">database/sql 中的连接池</a></li>
-<li><a href="#使用连接池管理thrift链接">使用连接池管理Thrift链接</a></li>
-</ul>
-</nav>
-		
-		
-
-<p>以下主要使用Golang作为编程语言</p>
-
+<script>
+    window.desktopHeaderMode = "fixed";
+    window.mobileHeaderMode = "auto";
+</script>
+<main class="main">
+                <div class="container"><article class="page single"><h1 class="single-title animated flipInX">聊聊连接池</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author">
+                    <a class="author" href="/" rel="author" target="_blank">
+                        <i class="fas fa-user-circle fa-fw"></i>    &#34;silenceper&#34;
+                    </a>
+                </span>&nbsp;<span class="post-category">收录于&nbsp;
+                            <span>
+                                <a href="/categories/tech">
+                                    <i class="far fa-folder fa-fw"></i>Tech
+                                </a>
+                            </span></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2016-11-20>2016-11-20</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>约 2529 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>预计阅读 6 分钟&nbsp;</div>
+        </div><div class="toc" id="toc-auto">
+                <h2 class="toc-title">目录</h2>
+                <div class="toc-content" id="toc-content-auto"></div>
+            </div>
+            <div class="toc" id="toc-static">
+                <details>
+                    <summary>
+                        <div class="toc-title">
+                            <span>目录</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#1长时间空闲连接断开">1、长时间空闲，连接断开？</a></li>
+    <li><a href="#2当服务端重启之后连接失效">2、当服务端重启之后，连接失效？</a></li>
+  </ul>
+</nav></div>
+                </details>
+            </div><div class="content"><p>以下主要使用Golang作为编程语言</p>
 <h1 id="为什么需要连接池">为什么需要连接池</h1>
-
 <p>我觉得使用连接池最大的一个好处就是<strong>减少连接的创建和关闭，增加系统负载能力</strong>，
-之前就有遇到一个问题：<a href="http://silenceper.com/blog/201601/tcp-time_wait%E8%BF%9E%E6%8E%A5%E6%95%B0%E8%BF%87%E5%A4%9A%E5%AF%BC%E8%87%B4%E6%9C%8D%E5%8A%A1%E4%B8%8D%E5%8F%AF%E7%94%A8/">TCP TIME_WAIT连接数过多导致服务不可用</a>，因为未开启数据库连接池，再加上mysql并发较大，导致需要频繁的创建链接，最终产生了上万的TIME_WAIT的tcp链接，影响了系统性能。</p>
-
-<p>链接池中的的功能主要是管理一堆的链接，包括创建和关闭，所以自己在<a href="fatih/pool">fatih/pool</a>基础上，改造了一下：<a href="https://github.com/silenceper/pool">https://github.com/silenceper/pool</a> ，使得更加通用一些，增加的一些功能点如下：</p>
-
+之前就有遇到一个问题：<a href="http://silenceper.com/blog/201601/tcp-time_wait%E8%BF%9E%E6%8E%A5%E6%95%B0%E8%BF%87%E5%A4%9A%E5%AF%BC%E8%87%B4%E6%9C%8D%E5%8A%A1%E4%B8%8D%E5%8F%AF%E7%94%A8/" target="_blank" rel="noopener noreffer">TCP TIME_WAIT连接数过多导致服务不可用</a>
+，因为未开启数据库连接池，再加上mysql并发较大，导致需要频繁的创建链接，最终产生了上万的TIME_WAIT的tcp链接，影响了系统性能。</p>
+<p>链接池中的的功能主要是管理一堆的链接，包括创建和关闭，所以自己在<a href="fatih/pool" rel="noopener noreffer">fatih/pool</a>
+基础上，改造了一下：<a href="https://github.com/silenceper/pool" target="_blank" rel="noopener noreffer">https://github.com/silenceper/pool</a>
+ ，使得更加通用一些，增加的一些功能点如下：</p>
 <ul>
 <li>连接对象不单单是<code>net.Conn</code>,变为了<code>interface{}</code>（池中存储自己想要的格式）</li>
 <li>增加了链接的最大空闲时间（保证了当连接空闲太久，链接失效的问题）</li>
 </ul>
-
 <p>主要是用到了<code>channel</code>来管理连接，并且能够很好的利用管道的顺序性，当需要使用的时候<code>Get</code>一个连接，使用完毕之后<code>Put</code>放回<code>channel</code>中。</p>
-
 <h1 id="连接失效问题">连接失效问题</h1>
-
 <p>使用连接池之后就不再是短连接，而是长连接了，就引发了一些问题：</p>
-
-<h2 id="1-长时间空闲-连接断开">1、长时间空闲，连接断开？</h2>
-
+<h2 id="1长时间空闲连接断开">1、长时间空闲，连接断开？</h2>
 <p>因为网络环境是复杂的，中间可能因为防火墙等原因，导致长时间空闲的连接会断开，所以可以通过两个方法来解决：</p>
-
 <ul>
 <li>客户端增加心跳，定时的给服务端发送请求</li>
 <li>给连接池中的连接增加最大空闲时间，超时的连接不再使用</li>
 </ul>
-
-<p>在<a href="[https://github.com/silenceper/pool]">https://github.com/silenceper/pool</a>就增加了一个这样最大空闲时间的参数，在连接创建或者连接被重新返回连接池中时重置，给每个连接都增加了一个连接的创建时间，在取出的时候对时间进行比较：<a href="https://github.com/silenceper/pool/blob/master/channel.go#L85">https://github.com/silenceper/pool/blob/master/channel.go#L85</a></p>
-
-<h2 id="2-当服务端重启之后-连接失效">2、当服务端重启之后，连接失效？</h2>
-
+<p>在<a href="[https://github.com/silenceper/pool]" rel="noopener noreffer">https://github.com/silenceper/pool</a>
+就增加了一个这样最大空闲时间的参数，在连接创建或者连接被重新返回连接池中时重置，给每个连接都增加了一个连接的创建时间，在取出的时候对时间进行比较：<a href="https://github.com/silenceper/pool/blob/master/channel.go#L85" target="_blank" rel="noopener noreffer">https://github.com/silenceper/pool/blob/master/channel.go#L85</a>
+</p>
+<h2 id="2当服务端重启之后连接失效">2、当服务端重启之后，连接失效？</h2>
 <p>远程服务端很有可能重启，那么之前创建的链接就失效了。客户端在使用的时候就需要判断这些失效的连接并丢弃，在<code>database/sql</code>中就判断了这些失效的连接，使用这种错误表示<code>var ErrBadConn = errors.New(&quot;driver: bad connection&quot;)</code></p>
-
 <p>另外值得一提的就是在<code>database/sql</code>对这种<code>ErrBadConn</code>错误进行了重试，默认重试次数是两次，所以能够保证即便是链接失效或者断开了，本次的请求能够正常响应（继续往下看就是分析了）。</p>
-
 <p><strong>连接失效的特征</strong></p>
-
 <ul>
 <li>对连接进行read读操作时，返回<code>EOF</code>错误</li>
 <li>对连接进行write操作时，返回<code>write tcp 127.0.0.1:52089-&gt;127.0.0.1:8002: write: broken pipe</code>错误</li>
 </ul>
-
-<h1 id="database-sql-中的连接池">database/sql 中的连接池</h1>
-
+<h1 id="databasesql-中的连接池">database/sql 中的连接池</h1>
 <p>在<code>database/sql</code>中使用连接连接池很简单，主要涉及下面这些配置：</p>
-
-<pre><code class="language-go">	db.SetMaxIdleConns(10) //连接池中最大空闲连接数
-	db.SetMaxOpenConns(20) //打开的最大连接数
-	db.SetConnMaxLifetime(300*time.Second)//连接的最大空闲时间(可选)
-</code></pre>
-
-<blockquote>
-<p>注：如果<code>MaxIdleConns</code>大于0并且<code>MaxOpenConns</code>小于<code>MaxIdleConns</code>,那么会将<code>MaxIdleConns</code>置为<code>MaxOpenConns</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go">	<span class="nx">db</span><span class="p">.</span><span class="nf">SetMaxIdleConns</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="c1">//连接池中最大空闲连接数
+</span><span class="c1"></span>	<span class="nx">db</span><span class="p">.</span><span class="nf">SetMaxOpenConns</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="c1">//打开的最大连接数
+</span><span class="c1"></span>	<span class="nx">db</span><span class="p">.</span><span class="nf">SetConnMaxLifetime</span><span class="p">(</span><span class="mi">300</span><span class="o">*</span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span><span class="c1">//连接的最大空闲时间(可选)
+</span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>注：如果<code>MaxIdleConns</code>大于0并且<code>MaxOpenConns</code>小于<code>MaxIdleConns </code>,那么会将<code>MaxIdleConns</code>置为<code>MaxOpenConns</code></p>
 </blockquote>
-
 <p>来看下db这个结构，以及字段相关说明：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">DB</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="c1">//具体的数据库实现的interface{},
+</span><span class="c1"></span>	<span class="c1">//例如https://github.com/go-sql-driver/mysql 就注册并并实现了driver.Open方法，主要是在里面实现了一些鉴权的操作
+</span><span class="c1"></span>	<span class="nx">driver</span> <span class="nx">driver</span><span class="p">.</span><span class="nx">Driver</span>
+	<span class="c1">//dsn连接
+</span><span class="c1"></span>	<span class="nx">dsn</span>    <span class="kt">string</span>
+	<span class="c1">//在prepared statement中用到
+</span><span class="c1"></span>	<span class="nx">numClosed</span> <span class="kt">uint64</span>
 
-<pre><code class="language-go">type DB struct {
-	//具体的数据库实现的interface{},
-	//例如https://github.com/go-sql-driver/mysql 就注册并并实现了driver.Open方法，主要是在里面实现了一些鉴权的操作
-	driver driver.Driver
-	//dsn连接
-	dsn    string
-	//在prepared statement中用到
-	numClosed uint64
+	<span class="nx">mu</span>           <span class="nx">sync</span><span class="p">.</span><span class="nx">Mutex</span> <span class="c1">// protects following fields
+</span><span class="c1"></span>	<span class="c1">//可使用的空闲的链接
+</span><span class="c1"></span>	<span class="nx">freeConn</span>     <span class="p">[]</span><span class="o">*</span><span class="nx">driverConn</span>
+	<span class="c1">//用来传递连接请求的管道
+</span><span class="c1"></span>	<span class="nx">connRequests</span> <span class="p">[]</span><span class="kd">chan</span> <span class="nx">connRequest</span>
+	<span class="c1">//当前打开的连接数
+</span><span class="c1"></span>	<span class="nx">numOpen</span>      <span class="kt">int</span>
+	<span class="c1">//当需要创建新的链接的时候，往这个管道中发送一个struct数据，
+</span><span class="c1"></span>	<span class="c1">//因为在Open数据库的就启用了一个goroutine执行connectionOpener方法读取管道中的数据
+</span><span class="c1"></span>	<span class="nx">openerCh</span>    <span class="kd">chan</span> <span class="kd">struct</span><span class="p">{}</span>
+	<span class="c1">//数据库是否已经被关闭
+</span><span class="c1"></span>	<span class="nx">closed</span>      <span class="kt">bool</span>
+	<span class="c1">//用来保证锁被正确的关闭
+</span><span class="c1"></span>	<span class="nx">dep</span>         <span class="kd">map</span><span class="p">[</span><span class="nx">finalCloser</span><span class="p">]</span><span class="nx">depSet</span>
+	<span class="c1">//stacktrace of last conn&#39;s put; debug only
+</span><span class="c1"></span>	<span class="nx">lastPut</span>     <span class="kd">map</span><span class="p">[</span><span class="o">*</span><span class="nx">driverConn</span><span class="p">]</span><span class="kt">string</span>
+	<span class="c1">//最大空闲连接
+</span><span class="c1"></span>	<span class="nx">maxIdle</span>     <span class="kt">int</span>
+	<span class="c1">//最大打开的连接
+</span><span class="c1"></span>	<span class="nx">maxOpen</span>     <span class="kt">int</span>
+	<span class="c1">//连接的最大空闲时间
+</span><span class="c1"></span>	<span class="nx">maxLifetime</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Duration</span>
+	<span class="c1">//定时清理空闲连接的管道
+</span><span class="c1"></span>	<span class="nx">cleanerCh</span>   <span class="kd">chan</span> <span class="kd">struct</span><span class="p">{}</span>
+<span class="p">}</span>
 
-	mu           sync.Mutex // protects following fields
-	//可使用的空闲的链接
-	freeConn     []*driverConn
-	//用来传递连接请求的管道
-	connRequests []chan connRequest
-	//当前打开的连接数
-	numOpen      int
-	//当需要创建新的链接的时候，往这个管道中发送一个struct数据，
-	//因为在Open数据库的就启用了一个goroutine执行connectionOpener方法读取管道中的数据
-	openerCh    chan struct{}
-	//数据库是否已经被关闭
-	closed      bool
-	//用来保证锁被正确的关闭
-	dep         map[finalCloser]depSet
-	//stacktrace of last conn's put; debug only
-	lastPut     map[*driverConn]string
-	//最大空闲连接
-	maxIdle     int
-	//最大打开的连接
-	maxOpen     int
-	//连接的最大空闲时间
-	maxLifetime time.Duration
-	//定时清理空闲连接的管道
-	cleanerCh   chan struct{}
-}
-
-</code></pre>
-
-<p>看一个查询数据库的例子：</p>
-
-<pre><code>	rows, err := db.Query(&quot;select * from table1&quot;)
-</code></pre>
-
-<p>在调用<code>db.Query</code>方法如下：</p>
-
-<pre><code class="language-go">func (db *DB) Query(query string, args ...interface{}) (*Rows, error) {
-	var rows *Rows
-	var err error
-	//这里就做了对失效的链接的重试操作
-	for i := 0; i &lt; maxBadConnRetries; i++ {
-		rows, err = db.query(query, args, cachedOrNewConn)
-		if err != driver.ErrBadConn {
-			break
-		}
-	}
-	if err == driver.ErrBadConn {
-		return db.query(query, args, alwaysNewConn)
-	}
-	return rows, err
-}
-</code></pre>
-
-<p>在什么情况下会返回，可以从这里看到：
-<a href="https://github.com/go-sql-driver/mysql/blob/master/packets.go#L35">readPack</a>，<a href="https://github.com/go-sql-driver/mysql/blob/master/packets.go#L132">writePack</a></p>
-
+</code></pre></td></tr></table>
+</div>
+</div><p>看一个查询数据库的例子：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">	rows, err := db.Query(&#34;select * from table1&#34;)
+</code></pre></td></tr></table>
+</div>
+</div><p>在调用<code>db.Query</code>方法如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">db</span> <span class="o">*</span><span class="nx">DB</span><span class="p">)</span> <span class="nf">Query</span><span class="p">(</span><span class="nx">query</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">args</span> <span class="o">...</span><span class="kd">interface</span><span class="p">{})</span> <span class="p">(</span><span class="o">*</span><span class="nx">Rows</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+	<span class="kd">var</span> <span class="nx">rows</span> <span class="o">*</span><span class="nx">Rows</span>
+	<span class="kd">var</span> <span class="nx">err</span> <span class="kt">error</span>
+	<span class="c1">//这里就做了对失效的链接的重试操作
+</span><span class="c1"></span>	<span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">maxBadConnRetries</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+		<span class="nx">rows</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">db</span><span class="p">.</span><span class="nf">query</span><span class="p">(</span><span class="nx">query</span><span class="p">,</span> <span class="nx">args</span><span class="p">,</span> <span class="nx">cachedOrNewConn</span><span class="p">)</span>
+		<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="nx">driver</span><span class="p">.</span><span class="nx">ErrBadConn</span> <span class="p">{</span>
+			<span class="k">break</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">==</span> <span class="nx">driver</span><span class="p">.</span><span class="nx">ErrBadConn</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="nx">db</span><span class="p">.</span><span class="nf">query</span><span class="p">(</span><span class="nx">query</span><span class="p">,</span> <span class="nx">args</span><span class="p">,</span> <span class="nx">alwaysNewConn</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="k">return</span> <span class="nx">rows</span><span class="p">,</span> <span class="nx">err</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>在什么情况下会返回，可以从这里看到：
+<a href="https://github.com/go-sql-driver/mysql/blob/master/packets.go#L35" target="_blank" rel="noopener noreffer">readPack</a>
+，<a href="https://github.com/go-sql-driver/mysql/blob/master/packets.go#L132" target="_blank" rel="noopener noreffer">writePack</a>
+</p>
 <p>继续跟进去就到了</p>
-
-<pre><code class="language-go">func (db *DB) conn(strategy connReuseStrategy) (*driverConn, error) {
-</code></pre>
-
-<p>方法主要是创建tcp连接，并判断了连接的生存时间lifetime，以及连接数的一些限制，如果超过的设定的最大打开链接数限制等待<code>connRequest</code>管道中有连接产生(在<code>putConn</code>释放链接的时候就会往这个管道中写入数据)</p>
-
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">db</span> <span class="o">*</span><span class="nx">DB</span><span class="p">)</span> <span class="nf">conn</span><span class="p">(</span><span class="nx">strategy</span> <span class="nx">connReuseStrategy</span><span class="p">)</span> <span class="p">(</span><span class="o">*</span><span class="nx">driverConn</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>方法主要是创建tcp连接，并判断了连接的生存时间lifetime，以及连接数的一些限制，如果超过的设定的最大打开链接数限制等待<code>connRequest</code>管道中有连接产生(在<code>putConn</code>释放链接的时候就会往这个管道中写入数据)</p>
 <p><strong>何时释放链接?</strong></p>
-
 <p>当我们调用<code>rows.Close()</code>的时候，就会把当前正在使用的链接重新放回<code>freeConn</code>或者写入到<code>db.connRequests</code>管道中</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go">	<span class="c1">//putConnDBLocked 方法
+</span><span class="c1"></span>
+	<span class="c1">//如果有db.connRequests有在等待连接的话，就把当前连接给它用
+</span><span class="c1"></span>	<span class="k">if</span> <span class="nx">c</span> <span class="o">:=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">db</span><span class="p">.</span><span class="nx">connRequests</span><span class="p">);</span> <span class="nx">c</span> <span class="p">&gt;</span> <span class="mi">0</span> <span class="p">{</span>
+		<span class="nx">req</span> <span class="o">:=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">connRequests</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+		<span class="c1">// This copy is O(n) but in practice faster than a linked list.
+</span><span class="c1"></span>		<span class="c1">// TODO: consider compacting it down less often and
+</span><span class="c1"></span>		<span class="c1">// moving the base instead?
+</span><span class="c1"></span>		<span class="nb">copy</span><span class="p">(</span><span class="nx">db</span><span class="p">.</span><span class="nx">connRequests</span><span class="p">,</span> <span class="nx">db</span><span class="p">.</span><span class="nx">connRequests</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+		<span class="nx">db</span><span class="p">.</span><span class="nx">connRequests</span> <span class="p">=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">connRequests</span><span class="p">[:</span><span class="nx">c</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+		<span class="k">if</span> <span class="nx">err</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+			<span class="nx">dc</span><span class="p">.</span><span class="nx">inUse</span> <span class="p">=</span> <span class="kc">true</span>
+		<span class="p">}</span>
+		<span class="nx">req</span> <span class="o">&lt;-</span> <span class="nx">connRequest</span><span class="p">{</span>
+			<span class="nx">conn</span><span class="p">:</span> <span class="nx">dc</span><span class="p">,</span>
+			<span class="nx">err</span><span class="p">:</span>  <span class="nx">err</span><span class="p">,</span>
+		<span class="p">}</span>
+		<span class="k">return</span> <span class="kc">true</span>
+	<span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nx">err</span> <span class="o">==</span> <span class="kc">nil</span> <span class="o">&amp;&amp;</span> <span class="p">!</span><span class="nx">db</span><span class="p">.</span><span class="nx">closed</span> <span class="o">&amp;&amp;</span> <span class="nx">db</span><span class="p">.</span><span class="nf">maxIdleConnsLocked</span><span class="p">()</span> <span class="p">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">db</span><span class="p">.</span><span class="nx">freeConn</span><span class="p">)</span> <span class="p">{</span>
+	<span class="c1">//没人需要我这个链接，我就把他重新返回`freeConn`连接池中
+</span><span class="c1"></span>		<span class="nx">db</span><span class="p">.</span><span class="nx">freeConn</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">db</span><span class="p">.</span><span class="nx">freeConn</span><span class="p">,</span> <span class="nx">dc</span><span class="p">)</span>
+		<span class="nx">db</span><span class="p">.</span><span class="nf">startCleanerLocked</span><span class="p">()</span>
+		<span class="k">return</span> <span class="kc">true</span>
+	<span class="p">}</span>
 
-<pre><code class="language-go">	//putConnDBLocked 方法
-
-	//如果有db.connRequests有在等待连接的话，就把当前连接给它用
-	if c := len(db.connRequests); c &gt; 0 {
-		req := db.connRequests[0]
-		// This copy is O(n) but in practice faster than a linked list.
-		// TODO: consider compacting it down less often and
-		// moving the base instead?
-		copy(db.connRequests, db.connRequests[1:])
-		db.connRequests = db.connRequests[:c-1]
-		if err == nil {
-			dc.inUse = true
-		}
-		req &lt;- connRequest{
-			conn: dc,
-			err:  err,
-		}
-		return true
-	} else if err == nil &amp;&amp; !db.closed &amp;&amp; db.maxIdleConnsLocked() &gt; len(db.freeConn) {
-	//没人需要我这个链接，我就把他重新返回`freeConn`连接池中
-		db.freeConn = append(db.freeConn, dc)
-		db.startCleanerLocked()
-		return true
-	}
-
-</code></pre>
-
-<h1 id="使用连接池管理thrift链接">使用连接池管理Thrift链接</h1>
-
-<p>这里是使用连接池<a href="https://github.com/silenceper/pool">https://github.com/silenceper/pool</a>，如何构建一个thrift链接</p>
-
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="使用连接池管理thrift链接">使用连接池管理Thrift链接</h1>
+<p>这里是使用连接池<a href="https://github.com/silenceper/pool" target="_blank" rel="noopener noreffer">https://github.com/silenceper/pool</a>
+，如何构建一个thrift链接</p>
 <p>客户端创建Thrift的代码：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Client</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="o">*</span><span class="nx">user</span><span class="p">.</span><span class="nx">UserClient</span>
+<span class="p">}</span>
 
-<pre><code class="language-go">type Client struct {
-	*user.UserClient
-}
 
+<span class="c1">//创建Thrift客户端链接的方法
+</span><span class="c1"></span><span class="nx">factory</span> <span class="o">:=</span> <span class="kd">func</span><span class="p">()</span> <span class="p">(</span><span class="kd">interface</span><span class="p">{},</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">protocolFactory</span> <span class="o">:=</span> <span class="nx">thrift</span><span class="p">.</span><span class="nf">NewTBinaryProtocolFactoryDefault</span><span class="p">()</span>
+	<span class="nx">transportFactory</span> <span class="o">:=</span> <span class="nx">thrift</span><span class="p">.</span><span class="nf">NewTTransportFactory</span><span class="p">()</span>
 
-//创建Thrift客户端链接的方法
-factory := func() (interface{}, error) {
-	protocolFactory := thrift.NewTBinaryProtocolFactoryDefault()
-	transportFactory := thrift.NewTTransportFactory()
+	<span class="kd">var</span> <span class="nx">transport</span> <span class="nx">thrift</span><span class="p">.</span><span class="nx">TTransport</span>
+	<span class="kd">var</span> <span class="nx">err</span> <span class="kt">error</span>
+	<span class="nx">transport</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">thrift</span><span class="p">.</span><span class="nf">NewTSocket</span><span class="p">(</span><span class="nx">rpcConfig</span><span class="p">.</span><span class="nx">Listen</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="nx">transport</span> <span class="p">=</span> <span class="nx">transportFactory</span><span class="p">.</span><span class="nf">GetTransport</span><span class="p">(</span><span class="nx">transport</span><span class="p">)</span>
+	<span class="c1">//defer transport.Close()
+</span><span class="c1"></span>	<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">transport</span><span class="p">.</span><span class="nf">Open</span><span class="p">();</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="nx">rpcClient</span> <span class="o">:=</span> <span class="nx">user</span><span class="p">.</span><span class="nf">NewUserClientFactory</span><span class="p">(</span><span class="nx">transport</span><span class="p">,</span> <span class="nx">protocolFactory</span><span class="p">)</span>
+	<span class="c1">//在连接池中直接放置Client对象
+</span><span class="c1"></span>	<span class="k">return</span> <span class="o">&amp;</span><span class="nx">Client</span><span class="p">{</span><span class="nx">UserClient</span><span class="p">:</span> <span class="nx">rpcClient</span><span class="p">},</span> <span class="kc">nil</span>
+<span class="p">}</span>
+<span class="c1">//关闭连接的方法
+</span><span class="c1"></span><span class="nx">close</span> <span class="o">:=</span> <span class="kd">func</span><span class="p">(</span><span class="nx">v</span> <span class="kd">interface</span><span class="p">{})</span> <span class="kt">error</span> <span class="p">{</span>
+	<span class="nx">v</span><span class="p">.(</span><span class="o">*</span><span class="nx">Client</span><span class="p">).</span><span class="nx">Transport</span><span class="p">.</span><span class="nf">Close</span><span class="p">()</span>
+	<span class="k">return</span> <span class="kc">nil</span>
+<span class="p">}</span>
 
-	var transport thrift.TTransport
-	var err error
-	transport, err = thrift.NewTSocket(rpcConfig.Listen)
-	if err != nil {
-		panic(err)
-	}
-	transport = transportFactory.GetTransport(transport)
-	//defer transport.Close()
-	if err := transport.Open(); err != nil {
-		panic(err)
-	}
-	rpcClient := user.NewUserClientFactory(transport, protocolFactory)
-	//在连接池中直接放置Client对象
-	return &amp;Client{UserClient: rpcClient}, nil
-}
-//关闭连接的方法
-close := func(v interface{}) error {
-	v.(*Client).Transport.Close()
-	return nil
-}
+<span class="c1">//创建了一个 初始化连接是
+</span><span class="c1"></span><span class="nx">poolConfig</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">pool</span><span class="p">.</span><span class="nx">PoolConfig</span><span class="p">{</span>
+	<span class="nx">InitialCap</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+	<span class="nx">MaxCap</span><span class="p">:</span>     <span class="mi">20</span><span class="p">,</span>
+	<span class="nx">Factory</span><span class="p">:</span>     <span class="nx">factory</span><span class="p">,</span>
+	<span class="nx">Close</span><span class="p">:</span>       <span class="nx">close</span><span class="p">,</span>
+	<span class="nx">IdleTimeout</span><span class="p">:</span> <span class="mi">300</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="nx">p</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">pool</span><span class="p">.</span><span class="nf">NewChannelPool</span><span class="p">(</span><span class="nx">poolConfig</span><span class="p">)</span>
+<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+	<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="p">}</span>
 
-//创建了一个 初始化连接是
-poolConfig := &amp;pool.PoolConfig{
-	InitialCap: 10,
-	MaxCap:     20,
-	Factory:     factory,
-	Close:       close,
-	IdleTimeout: 300 * time.Second,
-}
-p, err := pool.NewChannelPool(poolConfig)
-if err != nil {
-	panic(err)
-}
+<span class="c1">//取得链接
+</span><span class="c1"></span><span class="nx">conn</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">p</span><span class="p">.</span><span class="nf">Get</span><span class="p">()</span>
+<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+	<span class="k">return</span> <span class="kc">nil</span><span class="p">,</span> <span class="nx">err</span>
+<span class="p">}</span>
+<span class="nx">v</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">conn</span><span class="p">.(</span><span class="o">*</span><span class="nx">Client</span><span class="p">)</span>
 
-//取得链接
-conn, err := p.Get()
-if err != nil {
-	return nil, err
-}
-v, ok := conn.(*Client)
+<span class="o">...</span><span class="nx">使用连接调用远程方法</span>
 
-...使用连接调用远程方法
+<span class="c1">//将连接重新放回连接池中
+</span><span class="c1"></span><span class="nx">p</span><span class="p">.</span><span class="nf">Put</span><span class="p">(</span><span class="nx">conn</span><span class="p">)</span>
 
-//将连接重新放回连接池中
-p.Put(conn)
-
-</code></pre>
-
-<hr />
-
+</code></pre></td></tr></table>
+</div>
+</div><hr>
 <p>写完，听见外面的🐓开始打鸣了。</p>
-
-
-                <hr>
-
-                <ul class="pager">
-                    
-                    <li class="previous">
-                        <a href="/blog/201609/go-wechat-sdk" data-toggle="tooltip" data-placement="top" title="开源项目：wechat sdk">&larr; Previous Post</a>
-                    </li>
-                    
-                    
-                    <li class="next">
-                        <a href="/blog/201809/how-to-build-a-k8s-cluster" data-toggle="tooltip" data-placement="top" title="在CentOS上搭建Kubernetes集群">Next Post &rarr;</a>
-                    </li>
-                    
-                </ul>
-
-            
-<div id="disqus-comment"></div>
-
-<div id="disqus_thread"></div>
-<script type="application/javascript">
-    var disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "silenceper" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-
-
-
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>本文于 2016-11-20 更新</span>
             </div>
-            
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                sidebar-container">
-
-                
-                <section>
-                    <hr class="hidden-sm hidden-xs">
-                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
-                    <div class="tags">
-                    
-                    
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                            <a href="/tags/flannel" title="flannel">
-                                flannel
-                            </a>
-                       
-                    
-                       
-                            <a href="/tags/go" title="go">
-                                go
-                            </a>
-                       
-                    
-                       
-                            <a href="/tags/k8s" title="k8s">
-                                k8s
-                            </a>
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                            <a href="/tags/wechat" title="wechat">
-                                wechat
-                            </a>
-                       
-                    
-                    </div>
-                </section>
-
-                
-                <hr>
-                <h5>FRIENDS</h5>
-                <ul class="list-inline">
-                    
-                        <li><a target="_blank" href=""></a></li>
-                    
-                </ul>
-            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/blog/201611/tcp_connection_pool/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share"><span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="/blog/201611/tcp_connection_pool/" data-title="聊聊连接池" data-hashtags="go,pool"><i class="fab fa-twitter fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="/blog/201611/tcp_connection_pool/" data-hashtag="go"><i class="fab fa-facebook-square fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="/blog/201611/tcp_connection_pool/" data-title="聊聊连接池"><i class="fab fa-weibo fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 人人" data-sharer="renren" data-url="/blog/201611/tcp_connection_pool/"><i class="fab fa-renren fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 百度" data-sharer="baidu" data-url="/blog/201611/tcp_connection_pool/" data-title="聊聊连接池"><i class="loveit it-baidu-fill"></i>
+</a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="/blog/201611/tcp_connection_pool/" data-title="聊聊连接池"><i class="fab fa-evernote fa-fw"></i>
+</a></span></div>
         </div>
     </div>
-</article>
 
-
-
-
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <ul class="list-inline text-center">
-                   
-                   <li>
-                       <a href="" rel="alternate" type="application/rss+xml" title="silenceper" >
-                           <span class="fa-stack fa-lg">
-                               <i class="fa fa-circle fa-stack-2x"></i>
-                               <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
-                           </span>
-                       </a>
-                   </li>
-                   
-                    
-                    <li>
-                        <a href="mailto:silenceper@gmail.com">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
-                            </span>
+    <div class="post-info-more">
+        <section><span>
+                        <a href="/tags/go">
+                            <i class="fas fa-tag fa-fw"></i>go
                         </a>
-                    </li>
-		    
-
-                    
-                    
-                    
-
-                    
-
-		    
-                    
-                    
-                    <li>
-                        <a target="_blank" href="https://github.com/silenceper">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                            </span>
+                    </span>&nbsp;<span>
+                        <a href="/tags/pool">
+                            <i class="fas fa-tag fa-fw"></i>pool
                         </a>
-                    </li>
-		    
-                    
-                </ul>
-		<p class="copyright text-muted">
-                    Copyright &copy; silenceper , 2016
-                    <br>
-                    Hugo Theme by <a href="https://github.com/zhaohuabing/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a>
-                </p>
-            </div>
+                    </span>&nbsp;</section>
+        <section>
+            <span><a href="javascript:window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/blog/201609/go-wechat-sdk/" class="prev" rel="prev" title="开源项目：wechat sdk"><i class="fas fa-angle-left fa-fw"></i>开源项目：wechat sdk</a>
+            <a href="/blog/201809/how-to-build-a-k8s-cluster/" class="next" rel="next" title="在CentOS上搭建Kubernetes集群">在CentOS上搭建Kubernetes集群<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div class="comment"><div id="disqus_thread"></div><noscript>
+            Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright"><div class="copyright-line">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
         </div>
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2016 - 2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">silenceper</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
     </div>
 </footer>
-
-
-
-
-<script>
-    function async(u, c) {
-      var d = document, t = 'script',
-          o = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
-      o.src = u;
-      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-      s.parentNode.insertBefore(o, s);
-    }
-</script>
-
-
-
-
-
-
-<script>
-    
-    if($('#tag_cloud').length !== 0){
-        async("/js/jquery.tagcloud.js",function(){
-            $.fn.tagcloud.defaults = {
-                
-                color: {start: '#bbbbee', end: '#0085a1'},
-            };
-            $('#tag_cloud a').tagcloud();
-        })
-    }
-</script>
-
-
-<script>
-    async("https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.js", function(){
-        var $nav = document.querySelector("nav");
-        if($nav) FastClick.attach($nav);
-    })
-</script>
-
-
-<script>
-    (function(){
-        var bp = document.createElement('script');
-        var curProtocol = window.location.protocol.split(':')[0];
-        if (curProtocol === 'https'){
-       bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-      }
-      else{
-      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-      }
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(bp, s);
-    })();
-</script>
-
-
-
-
-<script>
-    
-    var _baId = '5feaced19c04a59ece51d36906735e70';
-
-    
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "//hm.baidu.com/hm.js?" + _baId;
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-</script>
-
-
-
-
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-139557989-1', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
-
-
-</body>
+</div><a href="#" class="dynamic-to-top animated faster" id="dynamic-to-top">
+            <span>&nbsp;</span>
+        </a><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$", right: "$", display: false },
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },]
+            });
+        });
+    </script><link rel="stylesheet" href="/css/lib/iconfont/iconfont.min.css"><link rel="stylesheet" href="/css/lib/katex/katex.min.css"><link rel="stylesheet" href="/css/lib/katex/copy-tex.min.css"><script src="https://silenceper.disqus.com/embed.js"></script><script src="/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script src="/js/lib/sharer/sharer.min.js"></script><script src="/js/lib/lazysizes/lazysizes.min.js"></script><script src="/js/lib/katex/katex.min.js"></script><script src="/js/lib/katex/auto-render.min.js"></script><script src="/js/lib/katex/copy-tex.min.js"></script><script src="/js/lib/katex/mhchem.min.js"></script><script src=/js/theme.min.js></script></body>
 </html>

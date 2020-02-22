@@ -1,22 +1,23 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>kubernetes on silenceper</title>
-    <link>https://silenceper.com/tags/kubernetes/</link>
+    <link>/tags/kubernetes/</link>
     <description>Recent content in kubernetes on silenceper</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <language>zh</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
     <lastBuildDate>Sat, 15 Feb 2020 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://silenceper.com/tags/kubernetes/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/kubernetes/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>利用Kubernetes中的leaderelection实现组件高可用</title>
-      <link>https://silenceper.com/blog/202002/kubernetes-leaderelection/</link>
+      <link>/blog/202002/kubernetes-leaderelection/</link>
       <pubDate>Sat, 15 Feb 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://silenceper.com/blog/202002/kubernetes-leaderelection/</guid>
+      <guid>/blog/202002/kubernetes-leaderelection/</guid>
       <description>在Kubernetes中，通常kube-schduler和kube-controller-manager都是多副本进行部署的来保证高可用，而</description>
     </item>
     

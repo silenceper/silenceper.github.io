@@ -1,222 +1,185 @@
 <!DOCTYPE html>
-<html lang="en-us">
-<head><head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    <meta name="description" content="一个记录生活，工作的博客。关于Go，Kubernetes，云原生">
-    
-    <meta name="keyword"  content="程序员,Golang,Microservice">
-    <link rel="shortcut icon" href="https://silenceper.com/img/favicon.ico">
-
-    <title>Kubernetes容器日志收集方案- silenceper的博客</title>
-
-    <link rel="canonical" href="https://silenceper.com/blog/201910/kubernetes-log/">
-
-    <link rel="stylesheet" href="https://silenceper.com/css/iDisqus.min.css"/>
-
-    
-    <link rel="stylesheet" href="https://silenceper.com/css/bootstrap.min.css">
-
-    
-    <link rel="stylesheet" href="https://silenceper.com/css/hux-blog.min.css">
-
-    
-    <link rel="stylesheet" href="https://silenceper.com/css/syntax.css">
-
-    
-    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    
-    
-    <script src="https://silenceper.com/js/jquery.min.js"></script>
-
-    
-    <script src="https://silenceper.com/js/bootstrap.min.js"></script>
-
-    
-    <script src="https://silenceper.com/js/hux-blog.min.js"></script>
-</head>
-</head>
-
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-    <div class="container-fluid">
-        
-        <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="https://silenceper.com/">silenceper</a>
-        </div>
-
-        
-        
-        <div id="huxblog_navbar">
-            <div class="navbar-collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="https://silenceper.com/">Home</a>
-                    </li>
-                    
-                    <li>
-                        <a href="https://silenceper.com/categories/tech">tech</a>
-                    </li>
-                    
-
-                    
-                </ul>
-            </div>
-        </div>
-        
-    </div>
-    
-</nav>
-<script>
-    
-    
-    
-    var $body   = document.body;
-    var $toggle = document.querySelector('.navbar-toggle');
-    var $navbar = document.querySelector('#huxblog_navbar');
-    var $collapse = document.querySelector('.navbar-collapse');
-
-    $toggle.addEventListener('click', handleMagic)
-    function handleMagic(e){
-        if ($navbar.className.indexOf('in') > 0) {
-        
-            $navbar.className = " ";
-            
-            setTimeout(function(){
-                
-                if($navbar.className.indexOf('in') < 0) {
-                    $collapse.style.height = "0px"
+<html lang="zh">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Kubernetes容器日志收集方案 | silenceper</title>
+        <meta name="Description" content="容器日志收集方案对比，以及对log-pilot组件原理分析"><meta property="og:title" content="Kubernetes容器日志收集方案" />
+<meta property="og:description" content="容器日志收集方案对比，以及对log-pilot组件原理分析" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/201910/kubernetes-log/" />
+<meta property="article:published_time" content="2019-10-22T00:00:00+00:00" />
+<meta property="article:modified_time" content="2019-10-22T00:00:00+00:00" /><meta property="og:site_name" content="silenceper" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Kubernetes容器日志收集方案"/>
+<meta name="twitter:description" content="容器日志收集方案对比，以及对log-pilot组件原理分析"/>
+<meta name="theme-color" content="#ffffff">
+<meta name="msapplication-TileColor" content="#da532c">
+<link rel="canonical" href="/blog/201910/kubernetes-log/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="prev" href="/blog/201907/cluster-autoscaler-usage/" /><link rel="next" href="/blog/202001/go-import-version/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/css/lib/animate/animate.min.css"><meta name="google-site-verification" content="VJ4lE3d3A73DNoyxuuXL_Cuu6MEErPtKXqfAv69pr6E" /><meta name="baidu-site-verification" content="k061nqJczY" /><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Kubernetes容器日志收集方案",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "\/blog\/201910\/kubernetes-log\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "\/img\/silenceoer-avatar.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "posts","keywords": "k8s, filebeat, log-pilot","wordcount":  1064 ,
+        "url": "\/blog\/201910\/kubernetes-log\/","datePublished": "2019-10-22T00:00:00\x2b00:00","dateModified": "2019-10-22T00:00:00\x2b00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "silenceper",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "\/img\/silenceper-avatar.png",
+                "width":  127 ,
+                "height":  40 
                 }
-            },400)
-        }else{
-        
-            $collapse.style.height = "auto"
-            $navbar.className += " in";
-        }
+            },"description": "容器日志收集方案对比，以及对log-pilot组件原理分析"
     }
-</script>
-
-
-
-
-<style type="text/css">
-    header.intro-header{
-        background-image: url('https://silenceper.com/img/bg/guidao.jpg')
-    }
-</style>
-<header class="intro-header" >
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="post-heading">
-                    <div class="tags">
-                       
-                       <a class="tag" href="/tags/k8s" title="k8s">
-                           k8s
-                        </a>
-                        
-                       <a class="tag" href="/tags/filebeat" title="filebeat">
-                           filebeat
-                        </a>
-                        
-                       <a class="tag" href="/tags/log-pilot" title="log-pilot">
-                           log-pilot
-                        </a>
-                        
-                    </div>
-                    <h1>Kubernetes容器日志收集方案</h1>
-                    <h2 class="subheading">容器日志收集方案对比，以及对log-pilot组件原理分析</h2>
-                    <span  class="meta">Posted by silenceper on Tuesday, October 22, 2019
-                        
-                    </span>
-                </div>
+    </script></head>
+    <body><script>
+            if (!window.localStorage || !window.localStorage.getItem('theme')) {window.isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;} else {
+                window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            }
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title animated bounceIn">
+            <a href="/">silenceper</a>
+        </div>
+        <div class="menu"><a class="menu-item" href="/posts/">文章</a><a class="menu-item" href="/tags/">标签</a><a class="menu-item" href="/categories/">分类</a><a class="menu-item" href="/about/">关于</a><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-rotate-180 fa-fw"></i>
+            </a>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-wrapper">
+        <div class="header-container">
+            <div class="header-title animated bounceIn">
+                <a href="/">silenceper</a>
             </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-rotate-180 fa-fw"></i>
+            </a>
         </div>
     </div>
 </header>
 
-
-
-
-<article>
-    <div class="container">
-        <div class="row">
-
-            
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                post-container">
-
-		
-                <header>
-                <h2>TOC</h2>
-                </header>
-                <nav id="TableOfContents">
-<ul>
-<li><a href="#方案">方案</a></li>
-<li><a href="#log-pilot-代码分析">log-pilot 代码分析</a></li>
-</ul>
-</nav>
-		
-		
-
-<p>收集POD中container日志，日志还分为两种一种是容器标准输出日志和容器内日志。</p>
-
+<script>
+    window.desktopHeaderMode = "fixed";
+    window.mobileHeaderMode = "auto";
+</script>
+<main class="main">
+                <div class="container"><article class="page single"><h1 class="single-title animated flipInX">Kubernetes容器日志收集方案</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author">
+                    <a class="author" href="/" rel="author" target="_blank">
+                        <i class="fas fa-user-circle fa-fw"></i>silenceper
+                    </a>
+                </span>&nbsp;<span class="post-category">收录于&nbsp;
+                            <span>
+                                <a href="/categories/tech">
+                                    <i class="far fa-folder fa-fw"></i>Tech
+                                </a>
+                            </span></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2019-10-22>2019-10-22</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>约 1064 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>预计阅读 3 分钟&nbsp;</div>
+        </div><div class="toc" id="toc-auto">
+                <h2 class="toc-title">目录</h2>
+                <div class="toc-content" id="toc-content-auto"></div>
+            </div>
+            <div class="toc" id="toc-static">
+                <details>
+                    <summary>
+                        <div class="toc-title">
+                            <span>目录</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
+                </details>
+            </div><div class="content"><p>收集POD中container日志，日志还分为两种一种是容器标准输出日志和容器内日志。</p>
 <h1 id="方案">方案</h1>
-
 <p>从日志的采集方式上，在我看来方案大致主要分为两种：</p>
-
 <p><strong>（1）POD 里面安装logging agent</strong></p>
-
 <p>每个pod里面都要安装一个agent，无论是以放在本container还是以sidecar的方式部署，很明显会占用很多资源，基本不推荐</p>
-
 <p><strong>（2）在节点上安装logging agent（推荐）</strong></p>
-
 <p>其实容器stdout,stderr的日志最终也是落在宿主机上，而容器内的路径可以通过配置volumeMount 在宿主机上配置映射即可，所以这种方式还是最可行的</p>
-
 <blockquote>
 <p>当然应用还可以自己通过代码直接上报给日志服务，但是这种方式不够通用，还增加了业务代码的复杂性</p>
 </blockquote>
-
 <h1 id="log-pilot-代码分析">log-pilot 代码分析</h1>
-
 <p>这里以log-pilot为例，来分析下</p>
-
-<p>代码地址： <a href="https://github.com/AliyunContainerService/log-pilot">https://github.com/AliyunContainerService/log-pilot</a></p>
-
+<p>代码地址： <a href="https://github.com/AliyunContainerService/log-pilot" target="_blank" rel="noopener noreffer">https://github.com/AliyunContainerService/log-pilot</a>
+</p>
 <p><strong>基本流程:</strong></p>
-
 <p>监听docker-service的事件（start，restart，destory），从container信息中提取pod_name,namespace信息（可通过docker inspect [container ID]查看到），并写入filebeat中的prospector.d中的配置文件。</p>
-
 <p><strong>事件监听：</strong>
-<a href="https://github.com/AliyunContainerService/log-pilot/blob/0948b2c1feca97f849bd3a4eeda7bd40a907efca/pilot/pilot.go#L134">pilot/pilot.go#L134</a></p>
-
-<pre><code>	msgs, errs := p.client.Events(ctx, options)chenqz1987, 1 year ago: • fix issue #40 and update log-pilot capability…
+<a href="https://github.com/AliyunContainerService/log-pilot/blob/0948b2c1feca97f849bd3a4eeda7bd40a907efca/pilot/pilot.go#L134" target="_blank" rel="noopener noreffer">pilot/pilot.go#L134</a>
+</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">	msgs, errs := p.client.Events(ctx, options)chenqz1987, 1 year ago: • fix issue #40 and update log-pilot capability…
 
 	go func() {
 		defer func() {
-			log.Warn(&quot;finish to watch event&quot;)
+			log.Warn(&#34;finish to watch event&#34;)
 			p.stopChan &lt;- true
 		}()
 
-		log.Info(&quot;begin to watch event&quot;)
+		log.Info(&#34;begin to watch event&#34;)
 
 		for {
 			select {
 			case msg := &lt;-msgs:
 				if err := p.processEvent(msg); err != nil {
-					log.Errorf(&quot;fail to process event: %v,  %v&quot;, msg, err)
+					log.Errorf(&#34;fail to process event: %v,  %v&#34;, msg, err)
 				}
 			case err := &lt;-errs:
-				log.Warnf(&quot;error: %v&quot;, err)
+				log.Warnf(&#34;error: %v&#34;, err)
 				if err == io.EOF || err == io.ErrUnexpectedEOF {
 					return
 				}
@@ -224,15 +187,31 @@
 			}
 		}
 	}()
-</code></pre>
-
-<p><strong>对接不同收集器</strong></p>
-
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>对接不同收集器</strong></p>
 <p>log-pilot支持<code>filebeat</code>和<code>fluentd</code>两种日志收集器，目的主要是刷新对应的配置文件。主要是实现了<code>Piloter</code>接口：</p>
-
-<p><a href="https://github.com/AliyunContainerService/log-pilot/blob/0948b2c1feca97f849bd3a4eeda7bd40a907efca/pilot/piloter.go#L17">pilot/piloter.go#L17</a></p>
-
-<pre><code>// Piloter interface for piloter
+<p><a href="https://github.com/AliyunContainerService/log-pilot/blob/0948b2c1feca97f849bd3a4eeda7bd40a907efca/pilot/piloter.go#L17" target="_blank" rel="noopener noreffer">pilot/piloter.go#L17</a>
+</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">// Piloter interface for piloter
 type Piloter interface {
 	Name() string
 
@@ -246,294 +225,91 @@ type Piloter interface {
 
 	OnDestroyEvent(container string) error
 }
-</code></pre>
-
-<p>至于在启动log-pilot选择哪种采集器进行采集，是通过在容器的<a href="https://github.com/AliyunContainerService/log-pilot/blob/master/assets/entrypoint">entrypoint</a>文件中通过制定环境变量<code>PILOT_TYPE</code>的方式进行选择性渲染的。</p>
-
+</code></pre></td></tr></table>
+</div>
+</div><p>至于在启动log-pilot选择哪种采集器进行采集，是通过在容器的<a href="https://github.com/AliyunContainerService/log-pilot/blob/master/assets/entrypoint" target="_blank" rel="noopener noreffer">entrypoint</a>
+文件中通过制定环境变量<code>PILOT_TYPE</code>的方式进行选择性渲染的。</p>
 <p><strong>完善</strong></p>
-
 <p>当前最新版本[0.9.7]</p>
-
 <p>1、目前log-pilot还是只能通过监听docker-servier的event进行，对于containerd，cri-o还没办法适配。</p>
-
 <blockquote>
 <p>containerd目前没提供相应的event接口，可以选择从k8s api 通过List-Watch中获取</p>
 </blockquote>
-
 <p>2、filebeat升级</p>
-
 <blockquote>
-<p>filebeat 目前用的版本是6.1.1 ，filebeat本身就是一个比较吃资源的进程，filebeat有些issue是<a href="https://github.com/elastic/beats/pull/7820">7820</a>bug，可以将filebeat升级到一个新的版本。</p>
+<p>filebeat 目前用的版本是6.1.1 ，filebeat本身就是一个比较吃资源的进程，filebeat有些issue是<a href="https://github.com/elastic/beats/pull/7820" target="_blank" rel="noopener noreffer">7820</a>
+bug，可以将filebeat升级到一个新的版本。</p>
 </blockquote>
-
-<p>3、资源限制
-&gt; 在k8s中通过制定limit，限制log-pilot的资源占用（主要还是日志采集器）</p>
-
-
-                <hr>
-
-                <ul class="pager">
-                    
-                    <li class="previous">
-                        <a href="/blog/201907/cluster-autoscaler-usage/" data-toggle="tooltip" data-placement="top" title="Cluster Autoscaler:集群自动扩缩容">&larr; Previous Post</a>
-                    </li>
-                    
-                    
-                    <li class="next">
-                        <a href="/blog/202001/go-import-version/" data-toggle="tooltip" data-placement="top" title="如何在Go项目中输出版本信息？">Next Post &rarr;</a>
-                    </li>
-                    
-                </ul>
-
-            
-<div id="disqus-comment"></div>
-
-<div id="disqus_thread"></div>
-<script type="application/javascript">
-    var disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "silenceper" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-
-
-
+<p>3、资源限制</p>
+<blockquote>
+<p>在k8s中通过制定limit，限制log-pilot的资源占用（主要还是日志采集器）</p>
+</blockquote>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>本文于 2019-10-22 更新</span>
             </div>
-            
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                sidebar-container">
-
-                
-                <section>
-                    <hr class="hidden-sm hidden-xs">
-                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
-                    <div class="tags">
-                    
-                    
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                            <a href="/tags/flannel" title="flannel">
-                                flannel
-                            </a>
-                       
-                    
-                       
-                            <a href="/tags/go" title="go">
-                                go
-                            </a>
-                       
-                    
-                       
-                            <a href="/tags/k8s" title="k8s">
-                                k8s
-                            </a>
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                    
-                       
-                            <a href="/tags/wechat" title="wechat">
-                                wechat
-                            </a>
-                       
-                    
-                    </div>
-                </section>
-
-                
-                <hr>
-                <h5>FRIENDS</h5>
-                <ul class="list-inline">
-                    
-                        <li><a target="_blank" href=""></a></li>
-                    
-                </ul>
-            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/blog/201910/kubernetes-log/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share"><span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="/blog/201910/kubernetes-log/" data-title="Kubernetes容器日志收集方案" data-hashtags="k8s,filebeat,log-pilot"><i class="fab fa-twitter fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="/blog/201910/kubernetes-log/" data-hashtag="k8s"><i class="fab fa-facebook-square fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="/blog/201910/kubernetes-log/" data-title="Kubernetes容器日志收集方案"><i class="fab fa-weibo fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 人人" data-sharer="renren" data-url="/blog/201910/kubernetes-log/"><i class="fab fa-renren fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 百度" data-sharer="baidu" data-url="/blog/201910/kubernetes-log/" data-title="Kubernetes容器日志收集方案"><i class="loveit it-baidu-fill"></i>
+</a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="/blog/201910/kubernetes-log/" data-title="Kubernetes容器日志收集方案"><i class="fab fa-evernote fa-fw"></i>
+</a></span></div>
         </div>
     </div>
-</article>
 
-
-
-
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <ul class="list-inline text-center">
-                   
-                   <li>
-                       <a href="" rel="alternate" type="application/rss+xml" title="silenceper" >
-                           <span class="fa-stack fa-lg">
-                               <i class="fa fa-circle fa-stack-2x"></i>
-                               <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
-                           </span>
-                       </a>
-                   </li>
-                   
-                    
-                    <li>
-                        <a href="mailto:silenceper@gmail.com">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
-                            </span>
+    <div class="post-info-more">
+        <section><span>
+                        <a href="/tags/k8s">
+                            <i class="fas fa-tag fa-fw"></i>k8s
                         </a>
-                    </li>
-		    
-
-                    
-                    
-                    
-
-                    
-
-		    
-                    
-                    
-                    <li>
-                        <a target="_blank" href="https://github.com/silenceper">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                            </span>
+                    </span>&nbsp;<span>
+                        <a href="/tags/filebeat">
+                            <i class="fas fa-tag fa-fw"></i>filebeat
                         </a>
-                    </li>
-		    
-                    
-                </ul>
-		<p class="copyright text-muted">
-                    Copyright &copy; silenceper , 2019
-                    <br>
-                    Hugo Theme by <a href="https://github.com/zhaohuabing/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a>
-                </p>
-            </div>
+                    </span>&nbsp;<span>
+                        <a href="/tags/log-pilot">
+                            <i class="fas fa-tag fa-fw"></i>log-pilot
+                        </a>
+                    </span>&nbsp;</section>
+        <section>
+            <span><a href="javascript:window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/blog/201907/cluster-autoscaler-usage/" class="prev" rel="prev" title="Cluster Autoscaler:集群自动扩缩容"><i class="fas fa-angle-left fa-fw"></i>Cluster Autoscaler:集群自动扩缩容</a>
+            <a href="/blog/202001/go-import-version/" class="next" rel="next" title="如何在Go项目中输出版本信息？">如何在Go项目中输出版本信息？<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div class="comment"><div id="disqus_thread"></div><noscript>
+            Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright"><div class="copyright-line">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
         </div>
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2016 - 2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">silenceper</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
     </div>
 </footer>
-
-
-
-
-<script>
-    function async(u, c) {
-      var d = document, t = 'script',
-          o = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
-      o.src = u;
-      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-      s.parentNode.insertBefore(o, s);
-    }
-</script>
-
-
-
-
-
-
-<script>
-    
-    if($('#tag_cloud').length !== 0){
-        async("/js/jquery.tagcloud.js",function(){
-            $.fn.tagcloud.defaults = {
-                
-                color: {start: '#bbbbee', end: '#0085a1'},
-            };
-            $('#tag_cloud a').tagcloud();
-        })
-    }
-</script>
-
-
-<script>
-    async("https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.js", function(){
-        var $nav = document.querySelector("nav");
-        if($nav) FastClick.attach($nav);
-    })
-</script>
-
-
-<script>
-    (function(){
-        var bp = document.createElement('script');
-        var curProtocol = window.location.protocol.split(':')[0];
-        if (curProtocol === 'https'){
-       bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-      }
-      else{
-      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-      }
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(bp, s);
-    })();
-</script>
-
-
-
-
-<script>
-    
-    var _baId = '5feaced19c04a59ece51d36906735e70';
-
-    
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "//hm.baidu.com/hm.js?" + _baId;
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-</script>
-
-
-
-
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-139557989-1', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
-
-
-</body>
+</div><a href="#" class="dynamic-to-top animated faster" id="dynamic-to-top">
+            <span>&nbsp;</span>
+        </a><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$", right: "$", display: false },
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },]
+            });
+        });
+    </script><link rel="stylesheet" href="/css/lib/iconfont/iconfont.min.css"><link rel="stylesheet" href="/css/lib/katex/katex.min.css"><link rel="stylesheet" href="/css/lib/katex/copy-tex.min.css"><script src="https://silenceper.disqus.com/embed.js"></script><script src="/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script src="/js/lib/sharer/sharer.min.js"></script><script src="/js/lib/lazysizes/lazysizes.min.js"></script><script src="/js/lib/katex/katex.min.js"></script><script src="/js/lib/katex/auto-render.min.js"></script><script src="/js/lib/katex/copy-tex.min.js"></script><script src="/js/lib/katex/mhchem.min.js"></script><script src=/js/theme.min.js></script></body>
 </html>
