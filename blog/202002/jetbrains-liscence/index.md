@@ -1,9 +1,9 @@
-# 如何免费拿到jetbrains全家桶的正版授权？
+# 通过开源项目获取goland免费开源授权
 
 
-我是一个gopher， `vim` ， `vs code` 都使用过，最后还是切换到了 `goland` ，可能对于我来说，使用的goland更习惯了（当然其他人使用其它工具可能更方便，不抬杠:<）
+我是一个gopher， `vim` ， `vs code` 都使用过，最后还是切换到了 `goland` ，可能对于我来说，使用的goland更习惯了（当然其他人使用其它工具可能更方便，不抬杠:<）
 
-这篇文章并不是利用什么漏洞后门，而是告知大家 `jetbrains` 对于开源项目的支持，可以免费通过项目申请得到正版 `Liscence` 。
+这篇文章并不是利用什么漏洞后门，而是告知大家 `jetbrains` 对于开源项目的支持，可以免费通过项目申请得到免费开源授权 。
 
 ## 申请
 申请条件可以看这里：<br />[https://www.jetbrains.com/community/opensource/](https://www.jetbrains.com/community/opensource/)
@@ -23,6 +23,8 @@
 
 - 许可证仅可用于非商业OS开发。请考虑购买单独的许可证以处理商业项目。
 - 该软件的使用仅限于许可用户，无权将软件转让给任何第三方。
+完整许可说明：[https://www.jetbrains.com/store/license_opensource.html](https://www.jetbrains.com/store/license_opensource.html)
+
 
 点击**APPLY**，进入如下页面，填写项目信息进行申请：
 
@@ -38,5 +40,5 @@
 ![我的许可证](/img/20200222/jetbrains-license.png)
 
 
-不得不点赞jetbrains拥抱开源的精神！
+>不得不点赞jetbrains拥抱开源的精神！同时该授权必须在遵循开源许可的范围内使用
 
