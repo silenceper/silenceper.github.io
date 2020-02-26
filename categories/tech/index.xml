@@ -7,19 +7,10 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Sat, 22 Feb 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 15 Feb 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/tech/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>通过开源项目获取goland免费开源授权</title>
-      <link>/blog/202002/jetbrains-liscence/</link>
-      <pubDate>Sat, 22 Feb 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/blog/202002/jetbrains-liscence/</guid>
-      <description>我是一个gopher， vim ， vs code 都使用过，最后还是切换到了 goland ，可能对于我来说，使用的goland更习惯了（当然其他人使用其它工具可能更方便，不</description>
-    </item>
     
     <item>
       <title>利用Kubernetes中的leaderelection实现组件高可用</title>
