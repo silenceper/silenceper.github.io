@@ -7,18 +7,18 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Sat, 22 Feb 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 03 Mar 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/goland/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>通过开源项目获取goland免费开源授权</title>
-      <link>/blog/202002/jetbrains-liscence/</link>
-      <pubDate>Sat, 22 Feb 2020 00:00:00 +0000</pubDate>
+      <title>分析kubernetes中的事件机制</title>
+      <link>/blog/202003/kubernetes-event/</link>
+      <pubDate>Tue, 03 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>/blog/202002/jetbrains-liscence/</guid>
-      <description>我是一个gopher， vim ， vs code 都使用过，最后还是切换到了 goland ，可能对于我来说，使用的goland更习惯了（当然其他人使用其它工具可能更方便，不</description>
+      <guid>/blog/202003/kubernetes-event/</guid>
+      <description>我们通过 kubectl describe [资源] 命令，可以在看到Event输出，并且经常依赖event进行问题定位，从event中可以分析整个POD的运行轨迹，为服务的</description>
     </item>
     
   </channel>

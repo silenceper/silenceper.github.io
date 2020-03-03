@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>分析kubernetes中的事件机制 | silenceper</title>
+        <meta name="Description" content="Kubernetes源码阅读：event是如何写入和处理的"><meta property="og:title" content="分析kubernetes中的事件机制" />
+<meta property="og:description" content="Kubernetes源码阅读：event是如何写入和处理的" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/202003/kubernetes-event/" />
+<meta property="article:published_time" content="2020-03-03T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-03-03T00:00:00+00:00" /><meta property="og:site_name" content="silenceper" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="分析kubernetes中的事件机制"/>
+<meta name="twitter:description" content="Kubernetes源码阅读：event是如何写入和处理的"/>
+<meta name="theme-color" content="#ffffff">
+<meta name="msapplication-TileColor" content="#da532c">
+<link rel="canonical" href="/blog/202003/kubernetes-event/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="prev" href="/blog/202002/kubernetes-leaderelection/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><meta name="google-site-verification" content="VJ4lE3d3A73DNoyxuuXL_Cuu6MEErPtKXqfAv69pr6E" /><meta name="baidu-site-verification" content="k061nqJczY" /><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "分析kubernetes中的事件机制",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "\/blog\/202003\/kubernetes-event\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "\/img\/silenceoer-avatar.jpg",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "posts","keywords": "goland","wordcount":  4189 ,
+        "url": "\/blog\/202003\/kubernetes-event\/","datePublished": "2020-03-03T00:00:00\x2b00:00","dateModified": "2020-03-03T00:00:00\x2b00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "silenceper",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "\/img\/silenceper-avatar.jpg",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": "Kubernetes源码阅读：event是如何写入和处理的"
+    }
+    </script></head>
+    <body><script>
+            if (!window.localStorage || !window.localStorage.getItem('theme')) {window.isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;} else {
+                window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            }
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title animated bounceIn">
+            <a href="/">silenceper</a>
+        </div>
+        <div class="menu"><a class="menu-item" href="/posts/">文章</a><a class="menu-item" href="/tags/">标签</a><a class="menu-item" href="/categories/">分类</a><a class="menu-item" href="/about/">关于</a><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-rotate-180 fa-fw"></i>
+            </a>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-wrapper">
+        <div class="header-container">
+            <div class="header-title animated bounceIn">
+                <a href="/">silenceper</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-rotate-180 fa-fw"></i>
+            </a>
+        </div>
+    </div>
+</header>
+
+<script>
+    window.desktopHeaderMode = "fixed";
+    window.mobileHeaderMode = "auto";
+</script>
+<main class="main">
+                <div class="container"><article class="page single"><h1 class="single-title animated flipInX">分析kubernetes中的事件机制</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author">
+                    <a class="author" href="/" rel="author" target="_blank">
+                        <i class="fas fa-user-circle fa-fw"></i>silenceper
+                    </a>
+                </span>&nbsp;<span class="post-category">收录于&nbsp;
+                            <span>
+                                <a href="/categories/tech">
+                                    <i class="far fa-folder fa-fw"></i>Tech
+                                </a>
+                            </span></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-03-03>2020-03-03</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>约 4189 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>预计阅读 9 分钟&nbsp;</div>
+        </div><div class="toc" id="toc-auto">
+                <h2 class="toc-title">目录</h2>
+                <div class="toc-content" id="toc-content-auto"></div>
+            </div>
+            <div class="toc" id="toc-static">
+                <details>
+                    <summary>
+                        <div class="toc-title">
+                            <span>目录</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#event定义">Event定义</a></li>
+    <li><a href="#写入事件">写入事件</a>
+      <ul>
+        <li><a href="#eventbroadcaster">EventBroadcaster</a></li>
+        <li><a href="#eventrecorder">EventRecorder</a></li>
+      </ul>
+    </li>
+    <li><a href="#消费事件">消费事件</a>
+      <ul>
+        <li><a href="#事件处理">事件处理</a></li>
+      </ul>
+    </li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav></div>
+                </details>
+            </div><div class="content"><p>我们通过 <code>kubectl describe [资源]</code> 命令，可以在看到Event输出，并且经常依赖event进行问题定位，从event中可以分析整个POD的运行轨迹，为服务的客观测性提供数据来源，由此可见，event在Kubernetes中起着举足轻重的作用。</p>
+<p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="/img/20200303/event.png" alt="event展示" title="event展示" class="lazyload">
+<figcaption class="image-caption">event展示</figcaption></figure>
+</p>
+<p>event并不只是kubelet中都有的，关于event的操作被封装在<a href="https://github.com/kubernetes/kubernetes/tree/v1.17.3/staging/src/k8s.io/client-go/tools/record" target="_blank" rel="noopener noreffer">client-go/tools/record</a>
+包，我们完全可以在写入自定义的event。</p>
+<p>现在让我们来一步步揭开event的面纱。
+<a name="EBJdC"></a></p>
+<h2 id="event定义">Event定义</h2>
+<p>其实event也是一个资源对象，并且通过apiserver将event存储在etcd中，所以我们也可以通过 <code>kubectl get event</code> 命令查看对应的event对象。</p>
+<p>以下是一个event的yaml文件：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">apiVersion</span><span class="p">:</span> <span class="nx">v1</span>
+<span class="nx">count</span><span class="p">:</span> <span class="mi">1</span>
+<span class="nx">eventTime</span><span class="p">:</span> <span class="nx">null</span>
+<span class="nx">firstTimestamp</span><span class="p">:</span> <span class="s">&#34;2020-03-02T13:08:22Z&#34;</span>
+<span class="nx">involvedObject</span><span class="p">:</span>
+  <span class="nx">apiVersion</span><span class="p">:</span> <span class="nx">v1</span>
+  <span class="nx">kind</span><span class="p">:</span> <span class="nx">Pod</span>
+  <span class="nx">name</span><span class="p">:</span> <span class="nx">example</span><span class="o">-</span><span class="nx">foo</span><span class="o">-</span><span class="nx">d75d8587c</span><span class="o">-</span><span class="nx">xsf64</span>
+  <span class="nx">namespace</span><span class="p">:</span> <span class="k">default</span>
+  <span class="nx">resourceVersion</span><span class="p">:</span> <span class="s">&#34;429837&#34;</span>
+  <span class="nx">uid</span><span class="p">:</span> <span class="nx">ce611c62</span><span class="o">-</span><span class="mi">6</span><span class="nx">c1a</span><span class="o">-</span><span class="mi">4</span><span class="nx">bd8</span><span class="o">-</span><span class="mi">9029</span><span class="o">-</span><span class="mi">136</span><span class="nx">a1adf7de4</span>
+<span class="nx">kind</span><span class="p">:</span> <span class="nx">Event</span>
+<span class="nx">lastTimestamp</span><span class="p">:</span> <span class="s">&#34;2020-03-02T13:08:22Z&#34;</span>
+<span class="nx">message</span><span class="p">:</span> <span class="nx">Pod</span> <span class="nx">sandbox</span> <span class="nx">changed</span><span class="p">,</span> <span class="nx">it</span> <span class="nx">will</span> <span class="nx">be</span> <span class="nx">killed</span> <span class="nx">and</span> <span class="nx">re</span><span class="o">-</span><span class="nx">created</span><span class="p">.</span>
+<span class="nx">metadata</span><span class="p">:</span>
+  <span class="nx">creationTimestamp</span><span class="p">:</span> <span class="s">&#34;2020-03-02T13:08:30Z&#34;</span>
+  <span class="nx">name</span><span class="p">:</span> <span class="nx">example</span><span class="o">-</span><span class="nx">foo</span><span class="o">-</span><span class="nx">d75d8587c</span><span class="o">-</span><span class="nx">xsf64</span><span class="mf">.15</span><span class="nx">f87ea1df862b64</span>
+  <span class="nx">namespace</span><span class="p">:</span> <span class="k">default</span>
+  <span class="nx">resourceVersion</span><span class="p">:</span> <span class="s">&#34;479466&#34;</span>
+  <span class="nx">selfLink</span><span class="p">:</span> <span class="o">/</span><span class="nx">api</span><span class="o">/</span><span class="nx">v1</span><span class="o">/</span><span class="nx">namespaces</span><span class="o">/</span><span class="k">default</span><span class="o">/</span><span class="nx">events</span><span class="o">/</span><span class="nx">example</span><span class="o">-</span><span class="nx">foo</span><span class="o">-</span><span class="nx">d75d8587c</span><span class="o">-</span><span class="nx">xsf64</span><span class="mf">.15</span><span class="nx">f87ea1df862b64</span>
+  <span class="nx">uid</span><span class="p">:</span> <span class="mi">9</span><span class="nx">fe6f72a</span><span class="o">-</span><span class="mi">341</span><span class="nx">d</span><span class="o">-</span><span class="mi">4</span><span class="nx">c49</span><span class="o">-</span><span class="mi">960</span><span class="nx">b</span><span class="o">-</span><span class="nx">e185982d331a</span>
+<span class="nx">reason</span><span class="p">:</span> <span class="nx">SandboxChanged</span>
+<span class="nx">reportingComponent</span><span class="p">:</span> <span class="s">&#34;&#34;</span>
+<span class="nx">reportingInstance</span><span class="p">:</span> <span class="s">&#34;&#34;</span>
+<span class="nx">source</span><span class="p">:</span>
+  <span class="nx">component</span><span class="p">:</span> <span class="nx">kubelet</span>
+  <span class="nx">host</span><span class="p">:</span> <span class="nx">minikube</span>
+<span class="kd">type</span><span class="p">:</span> <span class="nx">Normal</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><strong><br /></strong>主要字段说明：**</p>
+<ul>
+<li>involvedObject： 触发event的资源类型</li>
+<li>lastTimestamp：最后一次触发的时间</li>
+<li>message：事件说明</li>
+<li>metadata :event的元信息，name，namespace等</li>
+<li>reason：event的原因</li>
+<li>source：上报事件的来源，比如kubelet中的某个节点</li>
+<li>type:事件类型，Normal或Warning</li>
+</ul>
+<p>event字段定义可以看这里：<a href="https://github.com/kubernetes/kubernetes/blob/v1.17.3/staging/src/k8s.io/api/core/v1/types.go#L5078" target="_blank" rel="noopener noreffer">types.go#L5078</a>
+</p>
+<p>接下来我们来看看，整个event是如何下入的。</p>
+<p><a name="MUouw"></a></p>
+<h2 id="写入事件">写入事件</h2>
+<blockquote>
+<p>1、这里以kubelet为例，看看是如何进行事件写入的</p>
+<p>2、文中代码以Kubernetes 1.17.3为例进行分析</p>
+</blockquote>
+<p>先以一幅图来看下整个的处理流程
+<figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="/img/20200303/kubernetes-event.png" alt="event处理过程" title="event处理过程" class="lazyload">
+<figcaption class="image-caption">event处理过程</figcaption></figure>
+</p>
+<p>创建操作事件的客户端：<br /><a href="https://github.com/kubernetes/kubernetes/blob/v1.17.3/cmd/kubelet/app/server.go#L461" target="_blank" rel="noopener noreffer">kubelet/app/server.go#L461</a>
+</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// makeEventRecorder sets up kubeDeps.Recorder if it&#39;s nil. It&#39;s a no-op otherwise.
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">makeEventRecorder</span><span class="p">(</span><span class="nx">kubeDeps</span> <span class="o">*</span><span class="nx">kubelet</span><span class="p">.</span><span class="nx">Dependencies</span><span class="p">,</span> <span class="nx">nodeName</span> <span class="nx">types</span><span class="p">.</span><span class="nx">NodeName</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">if</span> <span class="nx">kubeDeps</span><span class="p">.</span><span class="nx">Recorder</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="k">return</span>
+	<span class="p">}</span>
+    <span class="c1">//事件广播
+</span><span class="c1"></span>	<span class="nx">eventBroadcaster</span> <span class="o">:=</span> <span class="nx">record</span><span class="p">.</span><span class="nf">NewBroadcaster</span><span class="p">()</span>
+    <span class="c1">//创建EventRecorder
+</span><span class="c1"></span>	<span class="nx">kubeDeps</span><span class="p">.</span><span class="nx">Recorder</span> <span class="p">=</span> <span class="nx">eventBroadcaster</span><span class="p">.</span><span class="nf">NewRecorder</span><span class="p">(</span><span class="nx">legacyscheme</span><span class="p">.</span><span class="nx">Scheme</span><span class="p">,</span> <span class="nx">v1</span><span class="p">.</span><span class="nx">EventSource</span><span class="p">{</span><span class="nx">Component</span><span class="p">:</span> <span class="nx">componentKubelet</span><span class="p">,</span> <span class="nx">Host</span><span class="p">:</span> <span class="nb">string</span><span class="p">(</span><span class="nx">nodeName</span><span class="p">)})</span>
+	<span class="c1">//发送event至log输出
+</span><span class="c1"></span>    <span class="nx">eventBroadcaster</span><span class="p">.</span><span class="nf">StartLogging</span><span class="p">(</span><span class="nx">klog</span><span class="p">.</span><span class="nf">V</span><span class="p">(</span><span class="mi">3</span><span class="p">).</span><span class="nx">Infof</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">kubeDeps</span><span class="p">.</span><span class="nx">EventClient</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">klog</span><span class="p">.</span><span class="nf">V</span><span class="p">(</span><span class="mi">4</span><span class="p">).</span><span class="nf">Infof</span><span class="p">(</span><span class="s">&#34;Sending events to api server.&#34;</span><span class="p">)</span>
+        <span class="c1">//发送event至apiserver
+</span><span class="c1"></span>		<span class="nx">eventBroadcaster</span><span class="p">.</span><span class="nf">StartRecordingToSink</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">v1core</span><span class="p">.</span><span class="nx">EventSinkImpl</span><span class="p">{</span><span class="nx">Interface</span><span class="p">:</span> <span class="nx">kubeDeps</span><span class="p">.</span><span class="nx">EventClient</span><span class="p">.</span><span class="nf">Events</span><span class="p">(</span><span class="s">&#34;&#34;</span><span class="p">)})</span>
+	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+		<span class="nx">klog</span><span class="p">.</span><span class="nf">Warning</span><span class="p">(</span><span class="s">&#34;No api server defined - no events will be sent to API server.&#34;</span><span class="p">)</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>通过 <code>makeEventRecorder</code> 创建了 <code>EventRecorder</code> 实例，这是一个事件广播器，通过它提供了StartLogging和StartRecordingToSink两个事件处理函数，分别将event发送给log和apiserver。<br /><code>NewRecorder</code>创建了 <code>EventRecorder</code> 的实例，它提供了 <code>Event</code> ，<code>Eventf</code> 等方法供事件记录。</p>
+<p><a name="3klAc"></a></p>
+<h3 id="eventbroadcaster">EventBroadcaster</h3>
+<p>我们来看下EventBroadcaster接口定义：<a href="https://github.com/kubernetes/kubernetes/blob/v1.17.3/staging/src/k8s.io/client-go/tools/record/event.go#L113" target="_blank" rel="noopener noreffer">event.go#L113</a>
+</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// EventBroadcaster knows how to receive events and send them to any EventSink, watcher, or log.
+</span><span class="c1"></span><span class="kd">type</span> <span class="nx">EventBroadcaster</span> <span class="kd">interface</span> <span class="p">{</span>
+    <span class="c1">//
+</span><span class="c1"></span>	<span class="nf">StartEventWatcher</span><span class="p">(</span><span class="nx">eventHandler</span> <span class="kd">func</span><span class="p">(</span><span class="o">*</span><span class="nx">v1</span><span class="p">.</span><span class="nx">Event</span><span class="p">))</span> <span class="nx">watch</span><span class="p">.</span><span class="nx">Interface</span>
+	<span class="nf">StartRecordingToSink</span><span class="p">(</span><span class="nx">sink</span> <span class="nx">EventSink</span><span class="p">)</span> <span class="nx">watch</span><span class="p">.</span><span class="nx">Interface</span>
+	<span class="nf">StartLogging</span><span class="p">(</span><span class="nx">logf</span> <span class="kd">func</span><span class="p">(</span><span class="nx">format</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">args</span> <span class="o">...</span><span class="kd">interface</span><span class="p">{}))</span> <span class="nx">watch</span><span class="p">.</span><span class="nx">Interface</span>
+	<span class="nf">NewRecorder</span><span class="p">(</span><span class="nx">scheme</span> <span class="o">*</span><span class="nx">runtime</span><span class="p">.</span><span class="nx">Scheme</span><span class="p">,</span> <span class="nx">source</span> <span class="nx">v1</span><span class="p">.</span><span class="nx">EventSource</span><span class="p">)</span> <span class="nx">EventRecorder</span>
+
+	<span class="nf">Shutdown</span><span class="p">()</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>具体实现是通过 <a href="https://github.com/kubernetes/kubernetes/blob/v1.17.3/staging/src/k8s.io/client-go/tools/record/event.go#L155" target="_blank" rel="noopener noreffer">eventBroadcasterImpl</a>
+  struct来实现了各个方法。</p>
+<p>其中StartLogging 和 StartRecordingToSink 其实就是完成了对事件的消费，EventRecorder实现对事件的写入，中间通过channel实现了生产者消费者模型。
+<a name="uX4b1"></a></p>
+<h3 id="eventrecorder"><code>EventRecorder</code></h3>
+<p>我们先来看下<code>EventRecorder</code> 接口定义：<a href="https://github.com/kubernetes/kubernetes/blob/v1.17.3/staging/src/k8s.io/client-go/tools/record/event.go#L88" target="_blank" rel="noopener noreffer">event.go#L88</a>
+，提供了一下4个方法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// EventRecorder knows how to record events on behalf of an EventSource.
+</span><span class="c1"></span><span class="kd">type</span> <span class="nx">EventRecorder</span> <span class="kd">interface</span> <span class="p">{</span>
+	<span class="c1">// Event constructs an event from the given information and puts it in the queue for sending.
+</span><span class="c1"></span>	<span class="c1">// &#39;object&#39; is the object this event is about. Event will make a reference-- or you may also
+</span><span class="c1"></span>	<span class="c1">// pass a reference to the object directly.
+</span><span class="c1"></span>	<span class="c1">// &#39;type&#39; of this event, and can be one of Normal, Warning. New types could be added in future
+</span><span class="c1"></span>	<span class="c1">// &#39;reason&#39; is the reason this event is generated. &#39;reason&#39; should be short and unique; it
+</span><span class="c1"></span>	<span class="c1">// should be in UpperCamelCase format (starting with a capital letter). &#34;reason&#34; will be used
+</span><span class="c1"></span>	<span class="c1">// to automate handling of events, so imagine people writing switch statements to handle them.
+</span><span class="c1"></span>	<span class="c1">// You want to make that easy.
+</span><span class="c1"></span>	<span class="c1">// &#39;message&#39; is intended to be human readable.
+</span><span class="c1"></span>	<span class="c1">//
+</span><span class="c1"></span>	<span class="c1">// The resulting event will be created in the same namespace as the reference object.
+</span><span class="c1"></span>	<span class="nf">Event</span><span class="p">(</span><span class="nx">object</span> <span class="nx">runtime</span><span class="p">.</span><span class="nx">Object</span><span class="p">,</span> <span class="nx">eventtype</span><span class="p">,</span> <span class="nx">reason</span><span class="p">,</span> <span class="nx">message</span> <span class="kt">string</span><span class="p">)</span>
+
+	<span class="c1">// Eventf is just like Event, but with Sprintf for the message field.
+</span><span class="c1"></span>	<span class="nf">Eventf</span><span class="p">(</span><span class="nx">object</span> <span class="nx">runtime</span><span class="p">.</span><span class="nx">Object</span><span class="p">,</span> <span class="nx">eventtype</span><span class="p">,</span> <span class="nx">reason</span><span class="p">,</span> <span class="nx">messageFmt</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">args</span> <span class="o">...</span><span class="kd">interface</span><span class="p">{})</span>
+
+	<span class="c1">// PastEventf is just like Eventf, but with an option to specify the event&#39;s &#39;timestamp&#39; field.
+</span><span class="c1"></span>	<span class="nf">PastEventf</span><span class="p">(</span><span class="nx">object</span> <span class="nx">runtime</span><span class="p">.</span><span class="nx">Object</span><span class="p">,</span> <span class="nx">timestamp</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">Time</span><span class="p">,</span> <span class="nx">eventtype</span><span class="p">,</span> <span class="nx">reason</span><span class="p">,</span> <span class="nx">messageFmt</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">args</span> <span class="o">...</span><span class="kd">interface</span><span class="p">{})</span>
+
+	<span class="c1">// AnnotatedEventf is just like eventf, but with annotations attached
+</span><span class="c1"></span>	<span class="nf">AnnotatedEventf</span><span class="p">(</span><span class="nx">object</span> <span class="nx">runtime</span><span class="p">.</span><span class="nx">Object</span><span class="p">,</span> <span class="nx">annotations</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">,</span> <span class="nx">eventtype</span><span class="p">,</span> <span class="nx">reason</span><span class="p">,</span> <span class="nx">messageFmt</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">args</span> <span class="o">...</span><span class="kd">interface</span><span class="p">{})</span>
+<span class="p">}</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><p>主要参数说明：</p>
+<ul>
+<li><code>object</code> 对应event资源定义中的 <code>involvedObject</code></li>
+<li><code>eventtype</code> 对应event资源定义中的type，可选Normal，Warning.</li>
+<li><code>reason</code> ：事件原因</li>
+<li><code>message</code> ：事件消息</li>
+</ul>
+<p>我们来看下当我们调用 <code>Event(object runtime.Object, eventtype, reason, message string)</code> 的整个过程。<br />发现最终都调用到了 <code>generateEvent</code> 方法：<a href="https://github.com/kubernetes/kubernetes/blob/v1.17.3/staging/src/k8s.io/client-go/tools/record/event.go#L316" target="_blank" rel="noopener noreffer">event.go#L316</a>
+</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">recorder</span> <span class="o">*</span><span class="nx">recorderImpl</span><span class="p">)</span> <span class="nf">generateEvent</span><span class="p">(</span><span class="nx">object</span> <span class="nx">runtime</span><span class="p">.</span><span class="nx">Object</span><span class="p">,</span> <span class="nx">annotations</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">,</span> <span class="nx">timestamp</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">Time</span><span class="p">,</span> <span class="nx">eventtype</span><span class="p">,</span> <span class="nx">reason</span><span class="p">,</span> <span class="nx">message</span> <span class="kt">string</span><span class="p">)</span> <span class="p">{</span>	
+    <span class="o">...</span><span class="p">..</span>
+	<span class="nx">event</span> <span class="o">:=</span> <span class="nx">recorder</span><span class="p">.</span><span class="nf">makeEvent</span><span class="p">(</span><span class="nx">ref</span><span class="p">,</span> <span class="nx">annotations</span><span class="p">,</span> <span class="nx">eventtype</span><span class="p">,</span> <span class="nx">reason</span><span class="p">,</span> <span class="nx">message</span><span class="p">)</span>
+	<span class="nx">event</span><span class="p">.</span><span class="nx">Source</span> <span class="p">=</span> <span class="nx">recorder</span><span class="p">.</span><span class="nx">source</span>
+	<span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+		<span class="c1">// NOTE: events should be a non-blocking operation
+</span><span class="c1"></span>		<span class="k">defer</span> <span class="nx">utilruntime</span><span class="p">.</span><span class="nf">HandleCrash</span><span class="p">()</span>
+		<span class="nx">recorder</span><span class="p">.</span><span class="nf">Action</span><span class="p">(</span><span class="nx">watch</span><span class="p">.</span><span class="nx">Added</span><span class="p">,</span> <span class="nx">event</span><span class="p">)</span>
+	<span class="p">}()</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>最终事件在一个 <code>goroutine</code> 中通过调用 <code>recorder.Action</code> 进入处理，这里保证了每次调用event方法都是非阻塞的。<br />其中 <code>makeEvent</code> 的作用主要是构造了一个event对象，事件name根据InvolvedObject中的name加上时间戳生成：</p>
+<blockquote>
+<p>注意看：对于一些非namespace资源产生的event，event的namespace是default</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">recorder</span> <span class="o">*</span><span class="nx">recorderImpl</span><span class="p">)</span> <span class="nf">makeEvent</span><span class="p">(</span><span class="nx">ref</span> <span class="o">*</span><span class="nx">v1</span><span class="p">.</span><span class="nx">ObjectReference</span><span class="p">,</span> <span class="nx">annotations</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">,</span> <span class="nx">eventtype</span><span class="p">,</span> <span class="nx">reason</span><span class="p">,</span> <span class="nx">message</span> <span class="kt">string</span><span class="p">)</span> <span class="o">*</span><span class="nx">v1</span><span class="p">.</span><span class="nx">Event</span> <span class="p">{</span>
+	<span class="nx">t</span> <span class="o">:=</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">Time</span><span class="p">{</span><span class="nx">Time</span><span class="p">:</span> <span class="nx">recorder</span><span class="p">.</span><span class="nx">clock</span><span class="p">.</span><span class="nf">Now</span><span class="p">()}</span>
+	<span class="nx">namespace</span> <span class="o">:=</span> <span class="nx">ref</span><span class="p">.</span><span class="nx">Namespace</span>
+	<span class="k">if</span> <span class="nx">namespace</span> <span class="o">==</span> <span class="s">&#34;&#34;</span> <span class="p">{</span>
+		<span class="nx">namespace</span> <span class="p">=</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">NamespaceDefault</span>
+	<span class="p">}</span>
+	<span class="k">return</span> <span class="o">&amp;</span><span class="nx">v1</span><span class="p">.</span><span class="nx">Event</span><span class="p">{</span>
+		<span class="nx">ObjectMeta</span><span class="p">:</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">ObjectMeta</span><span class="p">{</span>
+			<span class="nx">Name</span><span class="p">:</span>        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span><span class="s">&#34;%v.%x&#34;</span><span class="p">,</span> <span class="nx">ref</span><span class="p">.</span><span class="nx">Name</span><span class="p">,</span> <span class="nx">t</span><span class="p">.</span><span class="nf">UnixNano</span><span class="p">()),</span>
+			<span class="nx">Namespace</span><span class="p">:</span>   <span class="nx">namespace</span><span class="p">,</span>
+			<span class="nx">Annotations</span><span class="p">:</span> <span class="nx">annotations</span><span class="p">,</span>
+		<span class="p">},</span>
+		<span class="nx">InvolvedObject</span><span class="p">:</span> <span class="o">*</span><span class="nx">ref</span><span class="p">,</span>
+		<span class="nx">Reason</span><span class="p">:</span>         <span class="nx">reason</span><span class="p">,</span>
+		<span class="nx">Message</span><span class="p">:</span>        <span class="nx">message</span><span class="p">,</span>
+		<span class="nx">FirstTimestamp</span><span class="p">:</span> <span class="nx">t</span><span class="p">,</span>
+		<span class="nx">LastTimestamp</span><span class="p">:</span>  <span class="nx">t</span><span class="p">,</span>
+		<span class="nx">Count</span><span class="p">:</span>          <span class="mi">1</span><span class="p">,</span>
+		<span class="nx">Type</span><span class="p">:</span>           <span class="nx">eventtype</span><span class="p">,</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>进一步跟踪<code>Action</code>方法，<a href="https://github.com/kubernetes/apimachinery/blob/master/pkg/watch/mux.go#L188:23" target="_blank" rel="noopener noreffer">apimachinery/blob/master/pkg/watch/mux.go#L188:23</a>
+</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// Action distributes the given event among all watchers.
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">m</span> <span class="o">*</span><span class="nx">Broadcaster</span><span class="p">)</span> <span class="nf">Action</span><span class="p">(</span><span class="nx">action</span> <span class="nx">EventType</span><span class="p">,</span> <span class="nx">obj</span> <span class="nx">runtime</span><span class="p">.</span><span class="nx">Object</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">m</span><span class="p">.</span><span class="nx">incoming</span> <span class="o">&lt;-</span> <span class="nx">Event</span><span class="p">{</span><span class="nx">action</span><span class="p">,</span> <span class="nx">obj</span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>将event写入到了一个channel里面。<br />**注意：**<br />这个Action方式是<a href="https://github.com/kubernetes/apimachinery/blob/master/pkg/watch/mux.go#L188:23" target="_blank" rel="noopener noreffer">apimachinery</a>
+包中的方法，因为实现的sturt <code>recorderImpl</code><br />将 <code>*watch.Broadcaster</code> 作为一个匿名struct，并且在 <code>NewRecorder</code> 进行 <code>Broadcaster</code> 赋值，这个<code>Broadcaster</code>其实就是 <code>eventBroadcasterImpl</code> 中的<code>Broadcaster</code>。</p>
+<p>到此，基本清楚了event最终被写入到了 <code>Broadcaster</code> 中的 <code>incoming</code> channel中，下面看下是怎么进行消费的。</p>
+<p><a name="Mwa4D"></a></p>
+<h2 id="消费事件">消费事件</h2>
+<p>在 <code>makeEventRecorder</code> 调用的 <code>StartLogging</code> 和 <code>StartRecordingToSink</code> 其实就是完成了对事件的消费。</p>
+<ul>
+<li><code>StartLogging</code>直接将event输出到日志</li>
+<li><code>StartRecordingToSink</code>将事件写入到apiserver</li>
+</ul>
+<p>两个方法内部都调用了 <code>StartEventWatcher</code> 方法，并且传入一个 <code>eventHandler</code> 方法对event进行处理</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">e</span> <span class="o">*</span><span class="nx">eventBroadcasterImpl</span><span class="p">)</span> <span class="nf">StartEventWatcher</span><span class="p">(</span><span class="nx">eventHandler</span> <span class="kd">func</span><span class="p">(</span><span class="o">*</span><span class="nx">v1</span><span class="p">.</span><span class="nx">Event</span><span class="p">))</span> <span class="nx">watch</span><span class="p">.</span><span class="nx">Interface</span> <span class="p">{</span>
+	<span class="nx">watcher</span> <span class="o">:=</span> <span class="nx">e</span><span class="p">.</span><span class="nf">Watch</span><span class="p">()</span>
+	<span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+		<span class="k">defer</span> <span class="nx">utilruntime</span><span class="p">.</span><span class="nf">HandleCrash</span><span class="p">()</span>
+		<span class="k">for</span> <span class="nx">watchEvent</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">watcher</span><span class="p">.</span><span class="nf">ResultChan</span><span class="p">()</span> <span class="p">{</span>
+			<span class="nx">event</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">watchEvent</span><span class="p">.</span><span class="nx">Object</span><span class="p">.(</span><span class="o">*</span><span class="nx">v1</span><span class="p">.</span><span class="nx">Event</span><span class="p">)</span>
+			<span class="k">if</span> <span class="p">!</span><span class="nx">ok</span> <span class="p">{</span>
+				<span class="c1">// This is all local, so there&#39;s no reason this should
+</span><span class="c1"></span>				<span class="c1">// ever happen.
+</span><span class="c1"></span>				<span class="k">continue</span>
+			<span class="p">}</span>
+			<span class="nf">eventHandler</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span>
+		<span class="p">}</span>
+	<span class="p">}()</span>
+	<span class="k">return</span> <span class="nx">watcher</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>其中 <code>watcher.ResultChan</code> 方法就拿到了事件，这里是在一个goroutine中通过<a href="https://github.com/kubernetes/apimachinery/blob/master/pkg/watch/mux.go#L204" target="_blank" rel="noopener noreffer">func (m *Broadcaster) loop() </a>
+==&gt;<a href="https://github.com/kubernetes/apimachinery/blob/master/pkg/watch/mux.go#L219" target="_blank" rel="noopener noreffer">func (m *Broadcaster) distribute(event Event)</a>
+ 方法调用将event又写入了<a href="https://github.com/kubernetes/apimachinery/blob/master/pkg/watch/mux.go#L242" target="_blank" rel="noopener noreffer">broadcasterWatcher.result</a>
+</p>
+<p>主要看下 <code>StartRecordingToSink</code> 提供的的<code>eventHandler</code>， <code>recordToSink</code> 方法：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">recordToSink</span><span class="p">(</span><span class="nx">sink</span> <span class="nx">EventSink</span><span class="p">,</span> <span class="nx">event</span> <span class="o">*</span><span class="nx">v1</span><span class="p">.</span><span class="nx">Event</span><span class="p">,</span> <span class="nx">eventCorrelator</span> <span class="o">*</span><span class="nx">EventCorrelator</span><span class="p">,</span> <span class="nx">sleepDuration</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Duration</span><span class="p">)</span> <span class="p">{</span>
+	<span class="c1">// Make a copy before modification, because there could be multiple listeners.
+</span><span class="c1"></span>	<span class="c1">// Events are safe to copy like this.
+</span><span class="c1"></span>	<span class="nx">eventCopy</span> <span class="o">:=</span> <span class="o">*</span><span class="nx">event</span>
+	<span class="nx">event</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">eventCopy</span>
+	<span class="nx">result</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">eventCorrelator</span><span class="p">.</span><span class="nf">EventCorrelate</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">utilruntime</span><span class="p">.</span><span class="nf">HandleError</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="k">if</span> <span class="nx">result</span><span class="p">.</span><span class="nx">Skip</span> <span class="p">{</span>
+		<span class="k">return</span>
+	<span class="p">}</span>
+	<span class="nx">tries</span> <span class="o">:=</span> <span class="mi">0</span>
+	<span class="k">for</span> <span class="p">{</span>
+		<span class="k">if</span> <span class="nf">recordEvent</span><span class="p">(</span><span class="nx">sink</span><span class="p">,</span> <span class="nx">result</span><span class="p">.</span><span class="nx">Event</span><span class="p">,</span> <span class="nx">result</span><span class="p">.</span><span class="nx">Patch</span><span class="p">,</span> <span class="nx">result</span><span class="p">.</span><span class="nx">Event</span><span class="p">.</span><span class="nx">Count</span> <span class="p">&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">eventCorrelator</span><span class="p">)</span> <span class="p">{</span>
+			<span class="k">break</span>
+		<span class="p">}</span>
+		<span class="nx">tries</span><span class="o">++</span>
+		<span class="k">if</span> <span class="nx">tries</span> <span class="o">&gt;=</span> <span class="nx">maxTriesPerEvent</span> <span class="p">{</span>
+			<span class="nx">klog</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="s">&#34;Unable to write event &#39;%#v&#39; (retry limit exceeded!)&#34;</span><span class="p">,</span> <span class="nx">event</span><span class="p">)</span>
+			<span class="k">break</span>
+		<span class="p">}</span>
+		<span class="c1">// Randomize the first sleep so that various clients won&#39;t all be
+</span><span class="c1"></span>		<span class="c1">// synced up if the master goes down.
+</span><span class="c1"></span>        <span class="c1">// 第一次重试增加随机性，防止 apiserver 重启的时候所有的事件都在同一时间发送事件
+</span><span class="c1"></span>		<span class="k">if</span> <span class="nx">tries</span> <span class="o">==</span> <span class="mi">1</span> <span class="p">{</span>
+			<span class="nx">time</span><span class="p">.</span><span class="nf">Sleep</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nf">Duration</span><span class="p">(</span><span class="nb">float64</span><span class="p">(</span><span class="nx">sleepDuration</span><span class="p">)</span> <span class="o">*</span> <span class="nx">rand</span><span class="p">.</span><span class="nf">Float64</span><span class="p">()))</span>
+		<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+			<span class="nx">time</span><span class="p">.</span><span class="nf">Sleep</span><span class="p">(</span><span class="nx">sleepDuration</span><span class="p">)</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>其中event被经过了一个 <code>eventCorrelator.EventCorrelate(event)</code> 方法做预处理，主要是聚合相同的事件（避免产生的事件过多，增加 etcd 和 apiserver 的压力，也会导致查看 pod 事件很不清晰）</p>
+<p>下面一个for循环就是在进行重试，最大重试次数是12次，调用 <code>recordEvent</code>  方法才真正将event写入到了apiserver。</p>
+<p><a name="QwCYz"></a></p>
+<h3 id="事件处理">事件处理</h3>
+<p>我们来看下<code>EventCorrelate</code>方法：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// EventCorrelate filters, aggregates, counts, and de-duplicates all incoming events
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">EventCorrelator</span><span class="p">)</span> <span class="nf">EventCorrelate</span><span class="p">(</span><span class="nx">newEvent</span> <span class="o">*</span><span class="nx">v1</span><span class="p">.</span><span class="nx">Event</span><span class="p">)</span> <span class="p">(</span><span class="o">*</span><span class="nx">EventCorrelateResult</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">if</span> <span class="nx">newEvent</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="kc">nil</span><span class="p">,</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="s">&#34;event is nil&#34;</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="nx">aggregateEvent</span><span class="p">,</span> <span class="nx">ckey</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">aggregator</span><span class="p">.</span><span class="nf">EventAggregate</span><span class="p">(</span><span class="nx">newEvent</span><span class="p">)</span>
+	<span class="nx">observedEvent</span><span class="p">,</span> <span class="nx">patch</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">logger</span><span class="p">.</span><span class="nf">eventObserve</span><span class="p">(</span><span class="nx">aggregateEvent</span><span class="p">,</span> <span class="nx">ckey</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">c</span><span class="p">.</span><span class="nf">filterFunc</span><span class="p">(</span><span class="nx">observedEvent</span><span class="p">)</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="o">&amp;</span><span class="nx">EventCorrelateResult</span><span class="p">{</span><span class="nx">Skip</span><span class="p">:</span> <span class="kc">true</span><span class="p">},</span> <span class="kc">nil</span>
+	<span class="p">}</span>
+	<span class="k">return</span> <span class="o">&amp;</span><span class="nx">EventCorrelateResult</span><span class="p">{</span><span class="nx">Event</span><span class="p">:</span> <span class="nx">observedEvent</span><span class="p">,</span> <span class="nx">Patch</span><span class="p">:</span> <span class="nx">patch</span><span class="p">},</span> <span class="nx">err</span>
+<span class="p">}</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><p>分别调用了 <code>aggregator.EventAggregate</code> ，<code> logger.eventObserve</code> ， <code>filterFunc</code> 三个方法，分别作用是：</p>
+<ol>
+<li><strong><code>aggregator.EventAggregate</code></strong>：聚合event，如果在最近 10 分钟出现过 10 个相似的事件（除了 message 和时间戳之外其他关键字段都相同的事件），aggregator 会把它们的 message 设置为 <code>(combined from similar events)+event.Message</code></li>
+<li> <strong><code>logger.eventObserve</code></strong>：它会把相同的事件以及包含 <code>aggregator</code> 被聚合了的相似的事件，通过增加 <code>Count</code> 字段来记录事件发生了多少次。</li>
+<li><strong><code>filterFunc</code></strong>: 这里实现了一个基于<strong>令牌桶的限流算法</strong>，如果超过设定的速率则丢弃，保证了apiserver的安全。</li>
+</ol>
+<p>我们主要来看下<code>aggregator.EventAggregate</code>方法：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">e</span> <span class="o">*</span><span class="nx">EventAggregator</span><span class="p">)</span> <span class="nf">EventAggregate</span><span class="p">(</span><span class="nx">newEvent</span> <span class="o">*</span><span class="nx">v1</span><span class="p">.</span><span class="nx">Event</span><span class="p">)</span> <span class="p">(</span><span class="o">*</span><span class="nx">v1</span><span class="p">.</span><span class="nx">Event</span><span class="p">,</span> <span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">now</span> <span class="o">:=</span> <span class="nx">metav1</span><span class="p">.</span><span class="nf">NewTime</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">clock</span><span class="p">.</span><span class="nf">Now</span><span class="p">())</span>
+	<span class="kd">var</span> <span class="nx">record</span> <span class="nx">aggregateRecord</span>
+	<span class="c1">// eventKey is the full cache key for this event
+</span><span class="c1"></span>    <span class="c1">//eventKey 是将除了时间戳外所有字段结合在一起
+</span><span class="c1"></span>	<span class="nx">eventKey</span> <span class="o">:=</span> <span class="nf">getEventKey</span><span class="p">(</span><span class="nx">newEvent</span><span class="p">)</span>
+	<span class="c1">// aggregateKey is for the aggregate event, if one is needed.
+</span><span class="c1"></span>    <span class="c1">//aggregateKey 是除了message和时间戳外的字段结合在一起，localKey 是message
+</span><span class="c1"></span>	<span class="nx">aggregateKey</span><span class="p">,</span> <span class="nx">localKey</span> <span class="o">:=</span> <span class="nx">e</span><span class="p">.</span><span class="nf">keyFunc</span><span class="p">(</span><span class="nx">newEvent</span><span class="p">)</span>
+
+	<span class="c1">// Do we have a record of similar events in our cache?
+</span><span class="c1"></span>	<span class="nx">e</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
+	<span class="k">defer</span> <span class="nx">e</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
+    <span class="c1">//从cache中根据aggregateKey查询是否存在，如果是相同或者相类似的事件会被放入cache中
+</span><span class="c1"></span>	<span class="nx">value</span><span class="p">,</span> <span class="nx">found</span> <span class="o">:=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">cache</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="nx">aggregateKey</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">found</span> <span class="p">{</span>
+		<span class="nx">record</span> <span class="p">=</span> <span class="nx">value</span><span class="p">.(</span><span class="nx">aggregateRecord</span><span class="p">)</span>
+	<span class="p">}</span>
+	
+    <span class="c1">//判断上次事件产生的时间是否超过10分钟，如何操作则重新生成一个localKeys集合（集合中存放message）
+</span><span class="c1"></span>	<span class="nx">maxInterval</span> <span class="o">:=</span> <span class="nx">time</span><span class="p">.</span><span class="nf">Duration</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">maxIntervalInSeconds</span><span class="p">)</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span>
+	<span class="nx">interval</span> <span class="o">:=</span> <span class="nx">now</span><span class="p">.</span><span class="nx">Time</span><span class="p">.</span><span class="nf">Sub</span><span class="p">(</span><span class="nx">record</span><span class="p">.</span><span class="nx">lastTimestamp</span><span class="p">.</span><span class="nx">Time</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">interval</span> <span class="p">&gt;</span> <span class="nx">maxInterval</span> <span class="p">{</span>
+		<span class="nx">record</span> <span class="p">=</span> <span class="nx">aggregateRecord</span><span class="p">{</span><span class="nx">localKeys</span><span class="p">:</span> <span class="nx">sets</span><span class="p">.</span><span class="nf">NewString</span><span class="p">()}</span>
+	<span class="p">}</span>
+
+	<span class="c1">// Write the new event into the aggregation record and put it on the cache
+</span><span class="c1"></span>    <span class="c1">//将locakKey也就是message放入集合中，如果message相同就是覆盖了
+</span><span class="c1"></span>	<span class="nx">record</span><span class="p">.</span><span class="nx">localKeys</span><span class="p">.</span><span class="nf">Insert</span><span class="p">(</span><span class="nx">localKey</span><span class="p">)</span>
+	<span class="nx">record</span><span class="p">.</span><span class="nx">lastTimestamp</span> <span class="p">=</span> <span class="nx">now</span>
+	<span class="nx">e</span><span class="p">.</span><span class="nx">cache</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="nx">aggregateKey</span><span class="p">,</span> <span class="nx">record</span><span class="p">)</span>
+
+	<span class="c1">// If we are not yet over the threshold for unique events, don&#39;t correlate them
+</span><span class="c1"></span>	<span class="c1">//判断localKeys集合中存放的类似事件是否超过10个，
+</span><span class="c1"></span>    <span class="k">if</span> <span class="nb">uint</span><span class="p">(</span><span class="nx">record</span><span class="p">.</span><span class="nx">localKeys</span><span class="p">.</span><span class="nf">Len</span><span class="p">())</span> <span class="p">&lt;</span> <span class="nx">e</span><span class="p">.</span><span class="nx">maxEvents</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="nx">newEvent</span><span class="p">,</span> <span class="nx">eventKey</span>
+	<span class="p">}</span>
+
+	<span class="c1">// do not grow our local key set any larger than max
+</span><span class="c1"></span>	<span class="nx">record</span><span class="p">.</span><span class="nx">localKeys</span><span class="p">.</span><span class="nf">PopAny</span><span class="p">()</span>
+
+	<span class="c1">// create a new aggregate event, and return the aggregateKey as the cache key
+</span><span class="c1"></span>	<span class="c1">// (so that it can be overwritten.)
+</span><span class="c1"></span>	<span class="nx">eventCopy</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">v1</span><span class="p">.</span><span class="nx">Event</span><span class="p">{</span>
+		<span class="nx">ObjectMeta</span><span class="p">:</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">ObjectMeta</span><span class="p">{</span>
+			<span class="nx">Name</span><span class="p">:</span>      <span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span><span class="s">&#34;%v.%x&#34;</span><span class="p">,</span> <span class="nx">newEvent</span><span class="p">.</span><span class="nx">InvolvedObject</span><span class="p">.</span><span class="nx">Name</span><span class="p">,</span> <span class="nx">now</span><span class="p">.</span><span class="nf">UnixNano</span><span class="p">()),</span>
+			<span class="nx">Namespace</span><span class="p">:</span> <span class="nx">newEvent</span><span class="p">.</span><span class="nx">Namespace</span><span class="p">,</span>
+		<span class="p">},</span>
+		<span class="nx">Count</span><span class="p">:</span>          <span class="mi">1</span><span class="p">,</span>
+		<span class="nx">FirstTimestamp</span><span class="p">:</span> <span class="nx">now</span><span class="p">,</span>
+		<span class="nx">InvolvedObject</span><span class="p">:</span> <span class="nx">newEvent</span><span class="p">.</span><span class="nx">InvolvedObject</span><span class="p">,</span>
+		<span class="nx">LastTimestamp</span><span class="p">:</span>  <span class="nx">now</span><span class="p">,</span>
+        <span class="c1">//这里会对message加个前缀：(combined from similar events): 
+</span><span class="c1"></span>		<span class="nx">Message</span><span class="p">:</span>        <span class="nx">e</span><span class="p">.</span><span class="nf">messageFunc</span><span class="p">(</span><span class="nx">newEvent</span><span class="p">),</span>
+		<span class="nx">Type</span><span class="p">:</span>           <span class="nx">newEvent</span><span class="p">.</span><span class="nx">Type</span><span class="p">,</span>
+		<span class="nx">Reason</span><span class="p">:</span>         <span class="nx">newEvent</span><span class="p">.</span><span class="nx">Reason</span><span class="p">,</span>
+		<span class="nx">Source</span><span class="p">:</span>         <span class="nx">newEvent</span><span class="p">.</span><span class="nx">Source</span><span class="p">,</span>
+	<span class="p">}</span>
+	<span class="k">return</span> <span class="nx">eventCopy</span><span class="p">,</span> <span class="nx">aggregateKey</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><code>aggregator.EventAggregate</code>方法中其实就是判断了通过cache和localKeys判断事件是否相似，如果最近 10 分钟出现过 10 个相似的事件就合并并加上前缀，后续通过<code>logger.eventObserve</code>方法进行count累加，如果message也相同，肯定就是直接count++。</p>
+<p><a name="yEk1J"></a></p>
+<h2 id="总结">总结</h2>
+<p>好了，event处理的整个流程基本就是这样，我们可以概括一下，可以结合文中的图对比一起看下：</p>
+<ol>
+<li>创建 <code>EventRecorder</code> 对象，通过其提供的 <code>Event</code> 等方法，创建好event对象</li>
+<li>将创建出来的对象发送给 <code>EventBroadcaster</code> 中的channel中</li>
+<li><code>EventBroadcaster</code> 通过后台运行的goroutine，从管道中取出事件，并广播给提前注册好的handler处理</li>
+<li>当输出log的handler收到事件就直接打印事件</li>
+<li>当 <code>EventSink</code> handler收到处理事件就通过预处理之后将事件发送给apiserver</li>
+<li>其中预处理包含三个动作，1、限流 2、聚合 3、计数</li>
+<li>apiserver收到事件处理之后就存储在etcd中</li>
+</ol>
+<p>回顾event的整个流程，可以看到event并不是保证100%事件写入（从预处理的过程来看），这样做是为了后端服务etcd的可用性，因为event事件在整个集群中产生是非常频繁的，尤其在服务不稳定的时候，而相比Deployment,Pod等其他资源，又没那么的重要。所以这里做了个取舍。</p>
+<p><strong>参考文档：</strong></p>
+<ul>
+<li><a href="https://cizixs.com/2017/06/22/kubelet-source-code-analysis-part4-event/" target="_blank" rel="noopener noreffer">https://cizixs.com/2017/06/22/kubelet-source-code-analysis-part4-event/</a>
+</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>本文于 2020-03-03 更新</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/blog/202003/kubernetes-event/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share"><span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="/blog/202003/kubernetes-event/" data-title="分析kubernetes中的事件机制" data-hashtags="goland"><i class="fab fa-twitter fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="/blog/202003/kubernetes-event/" data-hashtag="goland"><i class="fab fa-facebook-square fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="/blog/202003/kubernetes-event/" data-title="分析kubernetes中的事件机制"><i class="fab fa-weibo fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 人人" data-sharer="renren" data-url="/blog/202003/kubernetes-event/"><i class="fab fa-renren fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 百度" data-sharer="baidu" data-url="/blog/202003/kubernetes-event/" data-title="分析kubernetes中的事件机制"><i class="loveit it-baidu-fill"></i>
+</a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="/blog/202003/kubernetes-event/" data-title="分析kubernetes中的事件机制"><i class="fab fa-evernote fa-fw"></i>
+</a></span></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section><span>
+                        <a href="/tags/goland">
+                            <i class="fas fa-tag fa-fw"></i>goland
+                        </a>
+                    </span>&nbsp;</section>
+        <section>
+            <span><a href="javascript:window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/blog/202002/kubernetes-leaderelection/" class="prev" rel="prev" title="利用Kubernetes中的leaderelection实现组件高可用"><i class="fas fa-angle-left fa-fw"></i>利用Kubernetes中的leaderelection实现组件高可用</a></div>
+</div>
+<div class="comment"><div id="disqus_thread"></div><noscript>
+            Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright"><div class="copyright-line">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
+        </div>
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2016 - 2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">silenceper</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+    </div>
+</footer>
+</div><a href="#" class="dynamic-to-top animated faster" id="dynamic-to-top">
+            <span>&nbsp;</span>
+        </a><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$", right: "$", display: false },
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },]
+            });
+        });
+    </script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.css"><link rel="stylesheet" href="/css/lib/iconfont/iconfont.min.css"><script src="https://silenceper.disqus.com/embed.js"></script><script src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.2/dist/smooth-scroll.polyfills.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazysizes@5.1.2/lazysizes.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/mhchem.min.js"></script><script src="/js/lib/sharer/sharer.min.js"></script><script src=/js/theme.min.js></script>
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-139557989-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?fe23775b1a9ea11a6797646a56df1cc7";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script></body>
+</html>
