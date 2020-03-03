@@ -60,7 +60,7 @@ event字段定义可以看这里：[types.go#L5078](https://github.com/kubernete
 <a name="MUouw"></a>
 ## 写入事件
 > 1、这里以kubelet为例，看看是如何进行事件写入的
-> 
+>
 > 2、文中代码以Kubernetes 1.17.3为例进行分析
 
 先以一幅图来看下整个的处理流程
@@ -152,7 +152,7 @@ type EventRecorder interface {
 我们来看下当我们调用 `Event(object runtime.Object, eventtype, reason, message string)` 的整个过程。<br />发现最终都调用到了 `generateEvent` 方法：[event.go#L316](https://github.com/kubernetes/kubernetes/blob/v1.17.3/staging/src/k8s.io/client-go/tools/record/event.go#L316)
 
 ```go
-func (recorder *recorderImpl) generateEvent(object runtime.Object, annotations map[string]string, timestamp metav1.Time, eventtype, reason, message string) {	
+func (recorder *recorderImpl) generateEvent(object runtime.Object, annotations map[string]string, timestamp metav1.Time, eventtype, reason, message string) {
     .....
 	event := recorder.makeEvent(ref, annotations, eventtype, reason, message)
 	event.Source = recorder.source
@@ -322,7 +322,7 @@ func (e *EventAggregator) EventAggregate(newEvent *v1.Event) (*v1.Event, string)
 	if found {
 		record = value.(aggregateRecord)
 	}
-	
+
     //判断上次事件产生的时间是否超过10分钟，如何操作则重新生成一个localKeys集合（集合中存放message）
 	maxInterval := time.Duration(e.maxIntervalInSeconds) * time.Second
 	interval := now.Time.Sub(record.lastTimestamp.Time)
@@ -356,7 +356,7 @@ func (e *EventAggregator) EventAggregate(newEvent *v1.Event) (*v1.Event, string)
 		FirstTimestamp: now,
 		InvolvedObject: newEvent.InvolvedObject,
 		LastTimestamp:  now,
-        //这里会对message加个前缀：(combined from similar events): 
+        //这里会对message加个前缀：(combined from similar events):
 		Message:        e.messageFunc(newEvent),
 		Type:           newEvent.Type,
 		Reason:         newEvent.Reason,
