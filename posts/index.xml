@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Tue, 03 Mar 2020 12:40:59 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 08 Mar 2020 19:26:59 +0800</lastBuildDate>
     
 	<atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>singleflight包原理解析</title>
+      <link>/blog/202003/singleflight/</link>
+      <pubDate>Sun, 08 Mar 2020 19:26:59 +0800</pubDate>
+      
+      <guid>/blog/202003/singleflight/</guid>
+      <description>singleflight 包主要是用来做并发控制，常见的比如防止 缓存击穿 ，我们来模拟一下这种场景： 缓存击穿：缓存在某个时间点过期的时候，恰好在这个时间点对这个Key</description>
+    </item>
     
     <item>
       <title>分析kubernetes中的事件机制</title>

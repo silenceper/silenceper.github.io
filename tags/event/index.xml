@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>kubernetes on silenceper</title>
-    <link>/tags/kubernetes/</link>
-    <description>Recent content in kubernetes on silenceper</description>
+    <title>event on silenceper</title>
+    <link>/tags/event/</link>
+    <description>Recent content in event on silenceper</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
     <lastBuildDate>Tue, 03 Mar 2020 12:40:59 +0800</lastBuildDate>
     
-	<atom:link href="/tags/kubernetes/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/event/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -19,15 +19,6 @@
       
       <guid>/blog/202003/kubernetes-event/</guid>
       <description>我们通过 kubectl describe [资源] 命令，可以在看到Event输出，并且经常依赖event进行问题定位，从event中可以分析整个POD的运行轨迹，为服务的</description>
-    </item>
-    
-    <item>
-      <title>利用Kubernetes中的leaderelection实现组件高可用</title>
-      <link>/blog/202002/kubernetes-leaderelection/</link>
-      <pubDate>Sat, 15 Feb 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/blog/202002/kubernetes-leaderelection/</guid>
-      <description>在Kubernetes中，通常kube-schduler和kube-controller-manager都是多副本进行部署的来保证高可用，而</description>
     </item>
     
   </channel>

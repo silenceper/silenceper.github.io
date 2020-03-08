@@ -2,7 +2,7 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>/categories/</loc><lastmod>2020-03-03T12:40:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
+            <loc>/categories/</loc><lastmod>2020-03-08T19:26:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
                         href="/en/categories/"
@@ -11,10 +11,10 @@
                     hreflang="zh"
                     href="/categories/"
                     /></url><url>
-            <loc>/tags/go/</loc><lastmod>2020-03-03T12:40:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>/tags/goland/</loc><lastmod>2020-03-03T12:40:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>/posts/</loc><lastmod>2020-03-03T12:40:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>/tags/</loc><lastmod>2020-03-03T12:40:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
+            <loc>/posts/</loc><lastmod>2020-03-08T19:26:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>/tags/singleflight/</loc><lastmod>2020-03-08T19:26:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>/blog/202003/singleflight/</loc><lastmod>2020-03-08T19:26:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>/tags/</loc><lastmod>2020-03-08T19:26:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
                         href="/en/tags/"
@@ -23,7 +23,10 @@
                     hreflang="zh"
                     href="/tags/"
                     /></url><url>
-            <loc>/categories/tech/</loc><lastmod>2020-03-03T12:40:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>/categories/tech/</loc><lastmod>2020-03-08T19:26:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>/tags/%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6/</loc><lastmod>2020-03-08T19:26:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>/tags/event/</loc><lastmod>2020-03-03T12:40:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>/tags/kubernetes/</loc><lastmod>2020-03-03T12:40:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>/blog/202003/kubernetes-event/</loc><lastmod>2020-03-03T12:40:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>/about/</loc><lastmod>2020-02-22T10:04:49&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>/</loc><lastmod>2020-02-22T10:04:49&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
@@ -35,7 +38,7 @@
                     hreflang="zh"
                     href="/"
                     /></url><url>
-            <loc>/tags/kubernetes/</loc><lastmod>2020-02-15T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>/tags/go/</loc><lastmod>2020-02-15T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>/blog/202002/kubernetes-leaderelection/</loc><lastmod>2020-02-15T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>/blog/202001/go-import-version/</loc><lastmod>2020-01-10T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>/tags/filebeat/</loc><lastmod>2019-10-22T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
