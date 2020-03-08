@@ -11,7 +11,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/blog/201907/cluster-autoscaler-usage/" />
 <meta property="article:published_time" content="2019-07-02T00:00:00+00:00" />
-<meta property="article:modified_time" content="2020-02-22T13:28:27+08:00" /><meta property="og:site_name" content="silenceper" />
+<meta property="article:modified_time" content="2019-07-02T00:00:00+00:00" /><meta property="og:site_name" content="silenceper" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Cluster Autoscaler:集群自动扩缩容"/>
 <meta name="twitter:description" content="CA 组件可以实现集群节点的自动增删，关于基本使用以及原理部分介绍"/>
@@ -37,7 +37,7 @@
                 "width":  800 ,
                 "height":  600 
             },"genre": "posts","keywords": "k8s, ca","wordcount":  3126 ,
-        "url": "\/blog\/201907\/cluster-autoscaler-usage\/","datePublished": "2019-07-02T00:00:00\x2b00:00","dateModified": "2020-02-22T13:28:27\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+        "url": "\/blog\/201907\/cluster-autoscaler-usage\/","datePublished": "2019-07-02T00:00:00\x2b00:00","dateModified": "2019-07-02T00:00:00\x2b00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "silenceper",
                 "logo": {
@@ -530,11 +530,16 @@ type NodeGroup interface {
 </div>
 </div><p>其中<code>IncreaseSize</code>，<code>IncreaseSize</code>才是关键的方法，分别对用扩容伸缩组和增加节点。</p>
 <p>在调用<code>IncreaseSize</code>接口后，需要完成节点自动添加进集群。参考阿里云是通过配置shell脚本到伸缩组中的ECS启动脚本中，当ECS启动，自动执行该脚本。当然我们也可以自定义通过其他方式加入集群。</p>
-</div><div class="post-footer" id="post-footer">
+<hr/>
+            <figure>
+                <img src="https://silenceper.oss-cn-beijing.aliyuncs.com/qrcode/search_study_program.png" data-sizes="auto" data-src="https://silenceper.oss-cn-beijing.aliyuncs.com/qrcode/search_study_program.png" class="lazyautosizes ls-is-cached lazyloaded">
+                <figcaption class="image-caption">关注公众号，获取最新文章推送</figcaption>
+            </figure>
+        </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>本文于 2020-02-22 13:28 更新</span>
+                <span>本文于 2019-07-02 00:00 更新</span>
             </div>
             <div class="post-info-license"></div>
         </div>

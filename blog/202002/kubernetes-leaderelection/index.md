@@ -419,7 +419,5 @@ func (le *LeaderElector) tryAcquireOrRenew() bool {
 leaderelection 主要是利用了k8s API操作的原子性实现了一个分布式锁，在不断的竞争中进行选举。选中为leader的进行才会执行具体的业务代码，这在k8s中非常的常见，而且我们很方便的利用这个包完成组件的编写，从而实现组件的高可用，比如部署为一个多副本的Deployment，当leader的pod退出后会重新启动，可能锁就被其他pod获取继续执行。
 
 
-完整代码：https://github.com/go-demo/leaderelection
-
->关注《学点程序》公众号，了解更多Go相关技术！  ![学点程序](https://image-static.segmentfault.com/125/953/1259530967-5e172702bcedd_articlex)
+完整代码：[https://github.com/go-demo/leaderelection](https://github.com/go-demo/leaderelection)
 

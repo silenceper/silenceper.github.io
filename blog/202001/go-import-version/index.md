@@ -124,7 +124,6 @@ Git Commit: a775ecd27c5e78437b605c438905e9cc888fbc1c
 Build Time: 2020-01-09 19:01:51
 ```
 
-完整代码：https://github.com/go-demo/version
+完整代码：[https://github.com/go-demo/version](https://github.com/go-demo/version)
 
->关注《学点程序》公众号，了解更多Go相关技术！  ![学点程序](https://image-static.segmentfault.com/125/953/1259530967-5e172702bcedd_articlex)
 
