@@ -36,7 +36,7 @@
                 "url": "\/img\/silenceoer-avatar.jpg",
                 "width":  800 ,
                 "height":  600 
-            },"genre": "posts","keywords": "hairpin, kubernetes","wordcount":  1324 ,
+            },"genre": "posts","keywords": "hairpin, kubernetes","wordcount":  1458 ,
         "url": "\/blog\/202004\/bridge-hairpin-mod\/","datePublished": "2020-04-30T11:26:59\x2b08:00","dateModified": "2020-04-30T11:26:59\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "silenceper",
@@ -98,7 +98,7 @@
                                 </a>
                             </span></span></div>
             <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-04-30&#32;11:26>2020-04-30 11:26</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>约 1324 字&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>约 1458 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>预计阅读 3 分钟&nbsp;</div>
         </div><div class="toc" id="toc-auto">
                 <h2 class="toc-title">目录</h2>
@@ -120,6 +120,7 @@
         <li><a href="#环境配置">环境配置</a></li>
         <li><a href="#排查过程">排查过程</a></li>
         <li><a href="#解疑promiscuous-bridge-与-hairpin-veth">解疑：promiscuous-bridge 与 hairpin-veth</a></li>
+        <li><a href="#总结">总结</a></li>
       </ul>
     </li>
   </ul>
@@ -187,6 +188,9 @@
 </blockquote>
 <p>手动开关命令：
 <code>ifconfig docker0 promisc on/off</code></p>
+<h3 id="总结">总结</h3>
+<p>其实集群cni我们这种比较另类的使用方式也跑了很久了，之所以没出问题，应该是业务基本没遇到这种pod内通过service访问自己的情况。</p>
+<p>所以还是要跟着标准的k8s方式来安装cni，避免入坑，比如flannel就已经提供给了<code>hairpinMode </code>参数来进行配置开启。</p>
 <hr/>
             <figure>
                 <img src="https://silenceper.oss-cn-beijing.aliyuncs.com/qrcode/search_study_program.png" data-sizes="auto" data-src="https://silenceper.oss-cn-beijing.aliyuncs.com/qrcode/search_study_program.png" class="lazyautosizes ls-is-cached lazyloaded">

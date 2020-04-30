@@ -76,5 +76,7 @@ bridge不允许包从收到包的端口发出，比如这种情况，在pod内�
 `ifconfig docker0 promisc on/off`
 
 
+### 总结
+其实集群cni我们这种比较另类的使用方式也跑了很久了，之所以没出问题，应该是业务基本没遇到这种pod内通过service访问自己的情况。
 
-
+所以还是要跟着标准的k8s方式来安装cni，避免入坑，比如flannel就已经提供给了`hairpinMode `参数来进行配置开启。
