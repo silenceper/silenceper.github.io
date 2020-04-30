@@ -45,7 +45,8 @@ pod内部访问service->docker0网桥->宿主机的iptables规则->docker0网桥
 查看这个讨论：
 [https://github.com/kubernetes/kubernetes/issues/45790](https://github.com/kubernetes/kubernetes/issues/45790)
 
-大致结论是，应该由cni插件来根据这个值来做对应的操作。
+**大致结论是，应该由cni插件来根据这个值来做对应的操作。**
+
 
 还是没解决我的问题？ 
 
@@ -59,7 +60,7 @@ for intf in /sys/devices/virtual/net/docker0/brif/*; do echo 1> $intf/hairpin_mo
 可以访问了。😺
 
 
-### promiscuous-bridge 与 hairpin-veth
+### 解疑：promiscuous-bridge 与 hairpin-veth
 
 **为什么我无法访问**
 

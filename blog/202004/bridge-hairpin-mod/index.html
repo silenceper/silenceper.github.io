@@ -36,7 +36,7 @@
                 "url": "\/img\/silenceoer-avatar.jpg",
                 "width":  800 ,
                 "height":  600 
-            },"genre": "posts","keywords": "hairpin, kubernetes","wordcount":  1304 ,
+            },"genre": "posts","keywords": "hairpin, kubernetes","wordcount":  1324 ,
         "url": "\/blog\/202004\/bridge-hairpin-mod\/","datePublished": "2020-04-30T11:26:59\x2b08:00","dateModified": "2020-04-30T11:26:59\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "silenceper",
@@ -98,7 +98,7 @@
                                 </a>
                             </span></span></div>
             <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-04-30&#32;11:26>2020-04-30 11:26</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>约 1304 字&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>约 1324 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>预计阅读 3 分钟&nbsp;</div>
         </div><div class="toc" id="toc-auto">
                 <h2 class="toc-title">目录</h2>
@@ -119,7 +119,7 @@
         <li><a href="#问题现象">问题现象</a></li>
         <li><a href="#环境配置">环境配置</a></li>
         <li><a href="#排查过程">排查过程</a></li>
-        <li><a href="#promiscuous-bridge-与-hairpin-veth">promiscuous-bridge 与 hairpin-veth</a></li>
+        <li><a href="#解疑promiscuous-bridge-与-hairpin-veth">解疑：promiscuous-bridge 与 hairpin-veth</a></li>
       </ul>
     </li>
   </ul>
@@ -164,7 +164,7 @@
 <p>查看这个讨论：
 <a href="https://github.com/kubernetes/kubernetes/issues/45790" target="_blank" rel="noopener noreffer">https://github.com/kubernetes/kubernetes/issues/45790</a>
 </p>
-<p>大致结论是，应该由cni插件来根据这个值来做对应的操作。</p>
+<p><strong>大致结论是，应该由cni插件来根据这个值来做对应的操作。</strong></p>
 <p>还是没解决我的问题？</p>
 <p>不过我看到hairpin开启的标志位是通过<code>/sys/devices/virtual/net/docker0/brif/veth-xxx/hairpin_mod</code> 内容设置为1开启的。</p>
 <p>所以我将所有veth该文件内容设置<code>1</code></p>
@@ -177,7 +177,7 @@
 </code></pre></td></tr></table>
 </div>
 </div><p>可以访问了。😺</p>
-<h3 id="promiscuous-bridge-与-hairpin-veth">promiscuous-bridge 与 hairpin-veth</h3>
+<h3 id="解疑promiscuous-bridge-与-hairpin-veth">解疑：promiscuous-bridge 与 hairpin-veth</h3>
 <p><strong>为什么我无法访问</strong></p>
 <p>bridge不允许包从收到包的端口发出，比如这种情况，在pod内通过docker0访问service，后续又通过docker0网桥进来，所以需要开启<code>hairpin_mod</code></p>
 <p><strong>为什么使用tcpdump 可以让访问可通？</strong></p>
