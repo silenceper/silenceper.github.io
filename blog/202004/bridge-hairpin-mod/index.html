@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>记一次问题排查：为什么在POD无法通过Service访问自己？ | silenceper</title>
+        <meta name="Description" content="记一次问题排查：为什么在POD无法通过Service访问自己？，主要介绍分析过程"><meta property="og:title" content="记一次问题排查：为什么在POD无法通过Service访问自己？" />
+<meta property="og:description" content="记一次问题排查：为什么在POD无法通过Service访问自己？，主要介绍分析过程" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/202004/bridge-hairpin-mod/" />
+<meta property="article:published_time" content="2020-04-30T11:26:59+08:00" />
+<meta property="article:modified_time" content="2020-04-30T11:26:59+08:00" /><meta property="og:site_name" content="silenceper" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="记一次问题排查：为什么在POD无法通过Service访问自己？"/>
+<meta name="twitter:description" content="记一次问题排查：为什么在POD无法通过Service访问自己？，主要介绍分析过程"/>
+<meta name="theme-color" content="#ffffff">
+<meta name="msapplication-TileColor" content="#da532c">
+<link rel="canonical" href="/blog/202004/bridge-hairpin-mod/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="prev" href="/blog/202003/singleflight/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><meta name="google-site-verification" content="VJ4lE3d3A73DNoyxuuXL_Cuu6MEErPtKXqfAv69pr6E" /><meta name="baidu-site-verification" content="k061nqJczY" /><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "记一次问题排查：为什么在POD无法通过Service访问自己？",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "\/blog\/202004\/bridge-hairpin-mod\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "\/img\/silenceoer-avatar.jpg",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "posts","keywords": "hairpin, kubernetes","wordcount":  1304 ,
+        "url": "\/blog\/202004\/bridge-hairpin-mod\/","datePublished": "2020-04-30T11:26:59\x2b08:00","dateModified": "2020-04-30T11:26:59\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "silenceper",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "\/img\/silenceper-avatar.jpg",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": "记一次问题排查：为什么在POD无法通过Service访问自己？，主要介绍分析过程"
+    }
+    </script></head>
+    <body><script>
+            if (!window.localStorage || !window.localStorage.getItem('theme')) {window.isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;} else {
+                window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            }
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title animated bounceIn">
+            <a href="/">silenceper</a>
+        </div>
+        <div class="menu"><a class="menu-item" href="/posts/">文章</a><a class="menu-item" href="/tags/">标签</a><a class="menu-item" href="/categories/">分类</a><a class="menu-item" href="/about/">关于</a><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-rotate-180 fa-fw"></i>
+            </a>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-wrapper">
+        <div class="header-container">
+            <div class="header-title animated bounceIn">
+                <a href="/">silenceper</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-rotate-180 fa-fw"></i>
+            </a>
+        </div>
+    </div>
+</header>
+
+<script>
+    window.desktopHeaderMode = "fixed";
+    window.mobileHeaderMode = "auto";
+</script>
+<main class="main">
+                <div class="container"><article class="page single"><h1 class="single-title animated flipInX">记一次问题排查：为什么在POD无法通过Service访问自己？</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author">
+                    <a class="author" href="/" rel="author" target="_blank">
+                        <i class="fas fa-user-circle fa-fw"></i>silenceper
+                    </a>
+                </span>&nbsp;<span class="post-category">收录于&nbsp;
+                            <span>
+                                <a href="/categories/tech">
+                                    <i class="far fa-folder fa-fw"></i>Tech
+                                </a>
+                            </span></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-04-30&#32;11:26>2020-04-30 11:26</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>约 1304 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>预计阅读 3 分钟&nbsp;</div>
+        </div><div class="toc" id="toc-auto">
+                <h2 class="toc-title">目录</h2>
+                <div class="toc-content" id="toc-content-auto"></div>
+            </div>
+            <div class="toc" id="toc-static">
+                <details>
+                    <summary>
+                        <div class="toc-title">
+                            <span>目录</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#问题现象">问题现象</a></li>
+        <li><a href="#环境配置">环境配置</a></li>
+        <li><a href="#排查过程">排查过程</a></li>
+        <li><a href="#promiscuous-bridge-与-hairpin-veth">promiscuous-bridge 与 hairpin-veth</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+                </details>
+            </div><div class="content"><h3 id="问题现象">问题现象</h3>
+<p>创建一个nginx pod，并配置了service访问，service后端指向pod。</p>
+<p>进入pod中使用service ip 或者service 域名，无法访问。</p>
+<p>一开始以为是环境配置或者k8s版本（1.9）的问题，在其他1.13的kubernetes环境下也试了，还是同样的问题。</p>
+<h3 id="环境配置">环境配置</h3>
+<p>使用的cni插件是flannel，但不是容器化安装，也不是标准化的通过kubelet指定cni plugin（&ndash;cni-bin-dir,&ndash;cni-conf-dir参数），而是通过dockerd 提供的<code>-bip</code>参数指定容器的子网，而这个值是从<code>/run/flannel/subnet.env</code>(flannel会将获取到的子网写入到该文件)</p>
+<h3 id="排查过程">排查过程</h3>
+<p><strong>1、首先尝试通过pod ip尝试是否可访问，已验证是可通的。</strong></p>
+<p><strong>2、尝试对docker0网桥进行抓包</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">tcpdump -i docker0
+</code></pre></td></tr></table>
+</div>
+</div><p>神奇的在这里，再次尝试通过service 访问是居然可以通，发现只要tcpdump断开就不行了。</p>
+<blockquote>
+<p>到这里的时候有点觉得诡异了</p>
+</blockquote>
+<p>在pod内通过service访问的时候网络的流向应该是</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">pod内部访问service-&gt;docker0网桥-&gt;宿主机的iptables规则-&gt;docker0网桥-&gt;pod内部
+</code></pre></td></tr></table>
+</div>
+</div><p>查阅了相关资料后，看到kubelet有个<code>--hairpin-mod</code>参数：</p>
+<p>文档说明：</p>
+<blockquote>
+<p>如果网络没有为“发夹模式”流量生成正确配置，通常当 kube-proxy 以 iptables 模式运行，并且 Pod 与桥接网络连接时，就会发生这种情况。Kubelet 公开了一个 hairpin-mode 标志，如果 pod 试图访问它们自己的 Service VIP，就可以让 Service 的端点重新负载到他们自己身上。hairpin-mode 标志必须设置为 hairpin-veth 或者 promiscuous-bridge。</p>
+</blockquote>
+<p>可是我设置之后还是没有还是不行，翻了一下kubelet里面的代码，发现cni组件并没有取这个值做任何才做（在kubnet中有）</p>
+<p>查看这个讨论：
+<a href="https://github.com/kubernetes/kubernetes/issues/45790" target="_blank" rel="noopener noreffer">https://github.com/kubernetes/kubernetes/issues/45790</a>
+</p>
+<p>大致结论是，应该由cni插件来根据这个值来做对应的操作。</p>
+<p>还是没解决我的问题？</p>
+<p>不过我看到hairpin开启的标志位是通过<code>/sys/devices/virtual/net/docker0/brif/veth-xxx/hairpin_mod</code> 内容设置为1开启的。</p>
+<p>所以我将所有veth该文件内容设置<code>1</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">for intf in /sys/devices/virtual/net/docker0/brif/*; do echo 1&gt; $intf/hairpin_mod; done
+</code></pre></td></tr></table>
+</div>
+</div><p>可以访问了。😺</p>
+<h3 id="promiscuous-bridge-与-hairpin-veth">promiscuous-bridge 与 hairpin-veth</h3>
+<p><strong>为什么我无法访问</strong></p>
+<p>bridge不允许包从收到包的端口发出，比如这种情况，在pod内通过docker0访问service，后续又通过docker0网桥进来，所以需要开启<code>hairpin_mod</code></p>
+<p><strong>为什么使用tcpdump 可以让访问可通？</strong></p>
+<p>因为tcpdump要抓取所有经过该网卡，所以需要开启混杂模式。可以在/var/log/message看到<code>device docker0 entered promiscuous mode</code>的log。</p>
+<blockquote>
+<p>混杂模式（英語：promiscuous mode）是电脑网络中的术语。 是指一台机器的网卡能够接收所有经过它的数据流，而不论其目的地址是否是它。 一般计算机网卡都工作在非混杂模式下，此时网卡只接受来自网络端口的目的地址指向自己的数据。 当网卡工作在混杂模式下时，网卡将来自接口的所有数据都捕获并交给相应的驱动程序。</p>
+</blockquote>
+<p>手动开关命令：
+<code>ifconfig docker0 promisc on/off</code></p>
+<hr/>
+            <figure>
+                <img src="https://silenceper.oss-cn-beijing.aliyuncs.com/qrcode/search_study_program.png" data-sizes="auto" data-src="https://silenceper.oss-cn-beijing.aliyuncs.com/qrcode/search_study_program.png" class="lazyautosizes ls-is-cached lazyloaded">
+                <figcaption class="image-caption">关注公众号，获取最新文章推送</figcaption>
+            </figure>
+        </div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>本文于 2020-04-30 11:26 更新</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/blog/202004/bridge-hairpin-mod/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share"><span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="/blog/202004/bridge-hairpin-mod/" data-title="记一次问题排查：为什么在POD无法通过Service访问自己？" data-hashtags="hairpin,kubernetes"><i class="fab fa-twitter fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="/blog/202004/bridge-hairpin-mod/" data-hashtag="hairpin"><i class="fab fa-facebook-square fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="/blog/202004/bridge-hairpin-mod/" data-title="记一次问题排查：为什么在POD无法通过Service访问自己？"><i class="fab fa-weibo fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 人人" data-sharer="renren" data-url="/blog/202004/bridge-hairpin-mod/"><i class="fab fa-renren fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 百度" data-sharer="baidu" data-url="/blog/202004/bridge-hairpin-mod/" data-title="记一次问题排查：为什么在POD无法通过Service访问自己？"><i class="loveit it-baidu-fill"></i>
+</a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="/blog/202004/bridge-hairpin-mod/" data-title="记一次问题排查：为什么在POD无法通过Service访问自己？"><i class="fab fa-evernote fa-fw"></i>
+</a></span></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section><span>
+                        <a href="/tags/hairpin">
+                            <i class="fas fa-tag fa-fw"></i>hairpin
+                        </a>
+                    </span>&nbsp;<span>
+                        <a href="/tags/kubernetes">
+                            <i class="fas fa-tag fa-fw"></i>kubernetes
+                        </a>
+                    </span>&nbsp;</section>
+        <section>
+            <span><a href="javascript:window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/blog/202003/singleflight/" class="prev" rel="prev" title="singleflight包原理解析"><i class="fas fa-angle-left fa-fw"></i>singleflight包原理解析</a></div>
+</div>
+<div class="comment"><div id="gitalk"></div><script>
+            document.addEventListener("DOMContentLoaded", function(event) {
+                var gitalk = new Gitalk({
+                    id: '2020-04-30 11:26:59 \x2b0800 CST',
+                    title: '记一次问题排查：为什么在POD无法通过Service访问自己？',
+                    clientID: 'e708cc1fbc3e2613a24d',
+                    clientSecret: 'ffa9552c4ef788a7f135fa7b9510ffc672d0b914',
+                    repo: 'silenceper.github.io',
+                    owner: 'silenceper',
+                    admin: ['silenceper'],
+                    body: decodeURI(location.href),
+                });
+                gitalk.render('gitalk');
+            });
+        </script>
+        <noscript>
+            Please enable JavaScript to view the <a href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a>
+        </noscript></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright"><div class="copyright-line">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
+        </div>
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2016 - 2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">silenceper</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+    </div>
+</footer>
+</div><a href="#" class="dynamic-to-top animated faster" id="dynamic-to-top">
+            <span>&nbsp;</span>
+        </a><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$", right: "$", display: false },
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },]
+            });
+        });
+    </script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.css"><link rel="stylesheet" href="/css/lib/iconfont/iconfont.min.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script><script src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.2/dist/smooth-scroll.polyfills.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazysizes@5.1.2/lazysizes.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/mhchem.min.js"></script><script src="/js/lib/sharer/sharer.min.js"></script><script src=/js/theme.min.js></script>
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-139557989-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?fe23775b1a9ea11a6797646a56df1cc7";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script></body>
+</html>

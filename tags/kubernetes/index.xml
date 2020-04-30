@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Tue, 03 Mar 2020 12:40:59 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 30 Apr 2020 11:26:59 +0800</lastBuildDate>
     
 	<atom:link href="/tags/kubernetes/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>记一次问题排查：为什么在POD无法通过Service访问自己？</title>
+      <link>/blog/202004/bridge-hairpin-mod/</link>
+      <pubDate>Thu, 30 Apr 2020 11:26:59 +0800</pubDate>
+      
+      <guid>/blog/202004/bridge-hairpin-mod/</guid>
+      <description>问题现象 创建一个nginx pod，并配置了service访问，service后端指向pod。 进入pod中使用service ip 或者servic</description>
+    </item>
     
     <item>
       <title>分析kubernetes中的事件机制</title>
