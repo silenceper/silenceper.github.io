@@ -23,7 +23,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="manifest" href="/site.webmanifest">
-<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="prev" href="/blog/202003/singleflight/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><meta name="google-site-verification" content="VJ4lE3d3A73DNoyxuuXL_Cuu6MEErPtKXqfAv69pr6E" /><meta name="baidu-site-verification" content="k061nqJczY" /><script type="application/ld+json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="prev" href="/blog/202003/singleflight/" /><link rel="next" href="/blog/202005/getting-started-with-postgres/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><meta name="google-site-verification" content="VJ4lE3d3A73DNoyxuuXL_Cuu6MEErPtKXqfAv69pr6E" /><meta name="baidu-site-verification" content="k061nqJczY" /><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -114,25 +114,21 @@
                     </summary>
                     <div class="toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li>
-      <ul>
-        <li><a href="#问题现象">问题现象</a></li>
-        <li><a href="#环境配置">环境配置</a></li>
-        <li><a href="#排查过程">排查过程</a></li>
-        <li><a href="#解疑promiscuous-bridge-与-hairpin-veth">解疑：promiscuous-bridge 与 hairpin-veth</a></li>
-        <li><a href="#总结">总结</a></li>
-      </ul>
-    </li>
+    <li><a href="#问题现象">问题现象</a></li>
+    <li><a href="#环境配置">环境配置</a></li>
+    <li><a href="#排查过程">排查过程</a></li>
+    <li><a href="#解疑promiscuous-bridge-与-hairpin-veth">解疑：promiscuous-bridge 与 hairpin-veth</a></li>
+    <li><a href="#总结">总结</a></li>
   </ul>
 </nav></div>
                 </details>
-            </div><div class="content"><h3 id="问题现象">问题现象</h3>
+            </div><div class="content"><h2 id="问题现象">问题现象</h2>
 <p>创建一个nginx pod，并配置了service访问，service后端指向pod。</p>
 <p>进入pod中使用service ip 或者service 域名，无法访问。</p>
 <p>一开始以为是环境配置或者k8s版本（1.9）的问题，在其他1.13的kubernetes环境下也试了，还是同样的问题。</p>
-<h3 id="环境配置">环境配置</h3>
+<h2 id="环境配置">环境配置</h2>
 <p>使用的cni插件是flannel，但不是容器化安装，也不是标准化的通过kubelet指定cni plugin（&ndash;cni-bin-dir,&ndash;cni-conf-dir参数），而是通过dockerd 提供的<code>-bip</code>参数指定容器的子网，而这个值是从<code>/run/flannel/subnet.env</code>(flannel会将获取到的子网写入到该文件)</p>
-<h3 id="排查过程">排查过程</h3>
+<h2 id="排查过程">排查过程</h2>
 <p><strong>1、首先尝试通过pod ip尝试是否可访问，已验证是可通的。</strong></p>
 <p><strong>2、尝试对docker0网桥进行抓包</strong></p>
 <div class="highlight"><div class="chroma">
@@ -178,7 +174,7 @@
 </code></pre></td></tr></table>
 </div>
 </div><p>可以访问了。😺</p>
-<h3 id="解疑promiscuous-bridge-与-hairpin-veth">解疑：promiscuous-bridge 与 hairpin-veth</h3>
+<h2 id="解疑promiscuous-bridge-与-hairpin-veth">解疑：promiscuous-bridge 与 hairpin-veth</h2>
 <p><strong>为什么我无法访问</strong></p>
 <p>bridge不允许包从收到包的端口发出，比如这种情况，在pod内通过docker0访问service，后续又通过docker0网桥进来，所以需要开启<code>hairpin_mod</code></p>
 <p><strong>为什么使用tcpdump 可以让访问可通？</strong></p>
@@ -188,7 +184,7 @@
 </blockquote>
 <p>手动开关命令：
 <code>ifconfig docker0 promisc on/off</code></p>
-<h3 id="总结">总结</h3>
+<h2 id="总结">总结</h2>
 <p>其实我们集群通过这种比较另类的方式来分配POD IP也用了了很久了，之所以没出问题，应该是业务基本没遇到这种pod内通过service访问自己的情况。</p>
 <p>所以还是要跟着标准的k8s方式来安装cni，避免入坑，比如flannel就已经提供给了<code>hairpinMode </code>参数来进行配置开启。</p>
 <hr/>
@@ -233,7 +229,8 @@
         </section>
     </div>
 
-    <div class="post-nav"><a href="/blog/202003/singleflight/" class="prev" rel="prev" title="singleflight包原理解析"><i class="fas fa-angle-left fa-fw"></i>singleflight包原理解析</a></div>
+    <div class="post-nav"><a href="/blog/202003/singleflight/" class="prev" rel="prev" title="singleflight包原理解析"><i class="fas fa-angle-left fa-fw"></i>singleflight包原理解析</a>
+            <a href="/blog/202005/getting-started-with-postgres/" class="next" rel="next" title="postgres入门">postgres入门<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 <div class="comment"><div id="gitalk"></div><script>
             document.addEventListener("DOMContentLoaded", function(event) {

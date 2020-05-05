@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>postgres入门 | silenceper</title>
+        <meta name="Description" content="主要介绍postgres数据库的基本操作以及与mysql的对比"><meta property="og:title" content="postgres入门" />
+<meta property="og:description" content="主要介绍postgres数据库的基本操作以及与mysql的对比" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/202005/getting-started-with-postgres/" />
+<meta property="article:published_time" content="2020-05-04T23:20:59+08:00" />
+<meta property="article:modified_time" content="2020-05-04T23:20:59+08:00" /><meta property="og:site_name" content="silenceper" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="postgres入门"/>
+<meta name="twitter:description" content="主要介绍postgres数据库的基本操作以及与mysql的对比"/>
+<meta name="theme-color" content="#ffffff">
+<meta name="msapplication-TileColor" content="#da532c">
+<link rel="canonical" href="/blog/202005/getting-started-with-postgres/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="prev" href="/blog/202004/bridge-hairpin-mod/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><meta name="google-site-verification" content="VJ4lE3d3A73DNoyxuuXL_Cuu6MEErPtKXqfAv69pr6E" /><meta name="baidu-site-verification" content="k061nqJczY" /><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "postgres入门",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "\/blog\/202005\/getting-started-with-postgres\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "\/img\/silenceoer-avatar.jpg",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "posts","keywords": "postgres","wordcount":  1403 ,
+        "url": "\/blog\/202005\/getting-started-with-postgres\/","datePublished": "2020-05-04T23:20:59\x2b08:00","dateModified": "2020-05-04T23:20:59\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "silenceper",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "\/img\/silenceper-avatar.jpg",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": "主要介绍postgres数据库的基本操作以及与mysql的对比"
+    }
+    </script></head>
+    <body><script>
+            if (!window.localStorage || !window.localStorage.getItem('theme')) {window.isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;} else {
+                window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            }
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title animated bounceIn">
+            <a href="/">silenceper</a>
+        </div>
+        <div class="menu"><a class="menu-item" href="/posts/">文章</a><a class="menu-item" href="/tags/">标签</a><a class="menu-item" href="/categories/">分类</a><a class="menu-item" href="/about/">关于</a><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-rotate-180 fa-fw"></i>
+            </a>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-wrapper">
+        <div class="header-container">
+            <div class="header-title animated bounceIn">
+                <a href="/">silenceper</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-rotate-180 fa-fw"></i>
+            </a>
+        </div>
+    </div>
+</header>
+
+<script>
+    window.desktopHeaderMode = "fixed";
+    window.mobileHeaderMode = "auto";
+</script>
+<main class="main">
+                <div class="container"><article class="page single"><h1 class="single-title animated flipInX">postgres入门</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author">
+                    <a class="author" href="/" rel="author" target="_blank">
+                        <i class="fas fa-user-circle fa-fw"></i>silenceper
+                    </a>
+                </span>&nbsp;<span class="post-category">收录于&nbsp;
+                            <span>
+                                <a href="/categories/tech">
+                                    <i class="far fa-folder fa-fw"></i>Tech
+                                </a>
+                            </span></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-05-04&#32;23:20>2020-05-04 23:20</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>约 1403 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>预计阅读 3 分钟&nbsp;</div>
+        </div><div class="featured-image"><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://silenceper.oss-cn-beijing.aliyuncs.com/blog/bg/shulin.jpg" alt="featured image" title="featured image" class="lazyload">
+</div><div class="toc" id="toc-auto">
+                <h2 class="toc-title">目录</h2>
+                <div class="toc-content" id="toc-content-auto"></div>
+            </div>
+            <div class="toc" id="toc-static">
+                <details>
+                    <summary>
+                        <div class="toc-title">
+                            <span>目录</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#安装">安装</a></li>
+    <li><a href="#基本操作">基本操作</a>
+      <ul>
+        <li><a href="#创建用户以及db">创建用户以及DB</a></li>
+        <li><a href="#数据库操作">数据库操作</a></li>
+      </ul>
+    </li>
+    <li><a href="#与mysql对比">与mysql对比</a></li>
+  </ul>
+</nav></div>
+                </details>
+            </div><div class="content"><p>最近需要将mysql数据库切换到pg数据库（公司要求新上的应用DB首选postgres），所以对pg进行基本学习了下，总体感觉相差不大，在一些细节以及需要上可能需要注意。</p>
+<h2 id="安装">安装</h2>
+<p>我这里是以docker的方式来进行安装的。</p>
+<blockquote>
+<p>这种安装方式只能作为作为本地开发调试用</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">docker run --name postgres -v /Users/silenceper/workspace/postgres/data:/var/lib/postgresql/data -e <span class="nv">POSTGRES_PASSWORD</span><span class="o">=</span><span class="m">123</span> -p 5432:5432 -d postgres:10.3
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>指定数据存储目录映射到宿主机本地，避免容器销毁后数据丢失</li>
+<li>指定密码postgres用户的密码为123</li>
+<li>指定使用postgres:10.3镜像</li>
+</ul>
+<p>可以选择pgAdmin4作为客户端，有图形化UI界面，或者直接使用psql命令。</p>
+<h2 id="基本操作">基本操作</h2>
+<p>登录数据库（使用psql命令）：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"># 进入容器才能使用psql命令
+docker exec -it postgres bash 
+# 以postgres角色登录
+ psql -U postgres
+</code></pre></td></tr></table>
+</div>
+</div><p>可以通过 <code>\?</code>查看一些常用的操作。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">\h：查看SQL命令的解释，比如\h select。
+\?：查看psql命令列表。
+\l：列出所有数据库。
+\c [database_name]：连接其他数据库。
+\d：列出当前数据库的所有表格。
+\d [table_name]：列出某一张表格的结构。
+\du：列出所有用户。
+\e：打开文本编辑器。
+\conninfo：列出当前数据库和连接的信息。
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="创建用户以及db">创建用户以及DB</h3>
+<p>创建用户</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">CREATE USER dbuser WITH PASSWORD &#39;password&#39;;
+</code></pre></td></tr></table>
+</div>
+</div><p>创建用户数据库，这里为exampledb，并指定所有者为dbuser</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">CREATE DATABASE exampledb OWNER dbuser;
+</code></pre></td></tr></table>
+</div>
+</div><p>将exampledb数据库的所有权限都赋予dbuser，否则dbuser只能登录控制台，没有任何数据库操作权限。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">GRANT ALL PRIVILEGES ON DATABASE exampledb to dbuser;
+</code></pre></td></tr></table>
+</div>
+</div><p>最后，使用\q命令退出控制台（也可以直接按ctrl+D）。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">\q
+
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="数据库操作">数据库操作</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"># 创建新表
+CREATE TABLE user_tbl(name VARCHAR(20), signup_date DATE);
+
+# 插入数据
+INSERT INTO user_tbl(name, signup_date) VALUES(&#39;张三&#39;, &#39;2013-12-22&#39;);
+
+# 选择记录
+SELECT * FROM user_tbl;
+
+# 更新数据
+UPDATE user_tbl set name = &#39;李四&#39; WHERE name = &#39;张三&#39;;
+
+# 删除记录
+DELETE FROM user_tbl WHERE name = &#39;李四&#39; ;
+
+# 添加栏位
+ALTER TABLE user_tbl ADD email VARCHAR(40);
+
+# 更新结构
+ALTER TABLE user_tbl ALTER COLUMN signup_date SET NOT NULL;
+
+# 更名栏位
+ALTER TABLE user_tbl RENAME COLUMN signup_date TO signup;
+
+# 删除栏位
+ALTER TABLE user_tbl DROP COLUMN email;
+
+# 表格更名
+ALTER TABLE user_tbl RENAME TO backup_tbl;
+
+# 删除表格
+DROP TABLE IF EXISTS backup_tbl;
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="与mysql对比">与mysql对比</h2>
+<ul>
+<li>原先在mysql中会比较建议用反引号(`)来对字段进行转义，在postgres中就不行了</li>
+</ul>
+<p>MySQL 可以使用单引号（’）或者双引号（&quot;）表示值，但是 PG 只能用单引号（’）表示值，PG 的双引号（&quot;）是表示系统标识符的，比如表名或者字段名。MySQL可以使用反单引号（`）表示系统标识符，比如表名、字段名，PG 也是不支持的</p>
+<ul>
+<li>时间类型：postgres中时间类型带上<code>with time zone</code>时区</li>
+</ul>
+<p>这个在用的时候挺方便的，避免时区不对。</p>
+<p>原先一直用<a href="https://github.com/silenceper/gogen" target="_blank" rel="noopener noreffer">https://github.com/silenceper/gogen</a>
+(一个自动化orm生成工具)来生成db相关的操作一开始只支持mysql，后面加入了postgres的支持就屏蔽了对底层db的选择，方便。</p>
+<p>不过对于go开发来说，只要不是手写sql取执行，而是利用一些orm工具，底层都封装了对多种数据库的支持，切换就变得更简单。</p>
+<p><strong>这里引入一个话题：golang开发者到底该不该用orm？</strong></p>
+<p>我自己觉得，有个取舍，如果需要写的sql比较复杂，关联关系又太多，虽然orm工具也提供了这种关系的对应，但是用的话还不如自己来写sql简单，而且也易读。</p>
+<p>如果是业务系统是比较清晰的，已经被拆分的够简单，我基本上都会使用orm工具。</p>
+<hr/>
+            <figure>
+                <img src="https://silenceper.oss-cn-beijing.aliyuncs.com/qrcode/search_study_program.png" data-sizes="auto" data-src="https://silenceper.oss-cn-beijing.aliyuncs.com/qrcode/search_study_program.png" class="lazyautosizes ls-is-cached lazyloaded">
+                <figcaption class="image-caption">关注公众号，获取最新文章推送</figcaption>
+            </figure>
+        </div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>本文于 2020-05-04 23:20 更新</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/blog/202005/getting-started-with-postgres/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share"><span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="/blog/202005/getting-started-with-postgres/" data-title="postgres入门" data-hashtags="postgres"><i class="fab fa-twitter fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="/blog/202005/getting-started-with-postgres/" data-hashtag="postgres"><i class="fab fa-facebook-square fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="/blog/202005/getting-started-with-postgres/" data-title="postgres入门" data-image="https://silenceper.oss-cn-beijing.aliyuncs.com/blog/bg/shulin.jpg"><i class="fab fa-weibo fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 人人" data-sharer="renren" data-url="/blog/202005/getting-started-with-postgres/"><i class="fab fa-renren fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 百度" data-sharer="baidu" data-url="/blog/202005/getting-started-with-postgres/" data-title="postgres入门"><i class="loveit it-baidu-fill"></i>
+</a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="/blog/202005/getting-started-with-postgres/" data-title="postgres入门"><i class="fab fa-evernote fa-fw"></i>
+</a></span></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section><span>
+                        <a href="/tags/postgres">
+                            <i class="fas fa-tag fa-fw"></i>postgres
+                        </a>
+                    </span>&nbsp;</section>
+        <section>
+            <span><a href="javascript:window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/blog/202004/bridge-hairpin-mod/" class="prev" rel="prev" title="记一次问题排查：为什么在POD无法通过Service访问自己？"><i class="fas fa-angle-left fa-fw"></i>记一次问题排查：为什么在POD无法通过Service访问自己？</a></div>
+</div>
+<div class="comment"><div id="gitalk"></div><script>
+            document.addEventListener("DOMContentLoaded", function(event) {
+                var gitalk = new Gitalk({
+                    id: '2020-05-04 23:20:59 \x2b0800 CST',
+                    title: 'postgres入门',
+                    clientID: 'e708cc1fbc3e2613a24d',
+                    clientSecret: 'ffa9552c4ef788a7f135fa7b9510ffc672d0b914',
+                    repo: 'silenceper.github.io',
+                    owner: 'silenceper',
+                    admin: ['silenceper'],
+                    body: decodeURI(location.href),
+                });
+                gitalk.render('gitalk');
+            });
+        </script>
+        <noscript>
+            Please enable JavaScript to view the <a href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a>
+        </noscript></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright"><div class="copyright-line">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
+        </div>
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2016 - 2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">silenceper</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+    </div>
+</footer>
+</div><a href="#" class="dynamic-to-top animated faster" id="dynamic-to-top">
+            <span>&nbsp;</span>
+        </a><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$", right: "$", display: false },
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },]
+            });
+        });
+    </script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.css"><link rel="stylesheet" href="/css/lib/iconfont/iconfont.min.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script><script src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.2/dist/smooth-scroll.polyfills.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazysizes@5.1.2/lazysizes.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/mhchem.min.js"></script><script src="/js/lib/sharer/sharer.min.js"></script><script src=/js/theme.min.js></script>
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-139557989-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?fe23775b1a9ea11a6797646a56df1cc7";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script></body>
+</html>
