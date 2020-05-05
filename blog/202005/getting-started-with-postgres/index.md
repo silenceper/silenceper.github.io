@@ -121,3 +121,5 @@ MySQL 可以使用单引号（’）或者双引号（"）表示值，但是 PG 
 我自己觉得，有个取舍，如果需要写的sql比较复杂，关联关系又太多，虽然orm工具也提供了这种关系的对应，但是用的话还不如自己来写sql简单，而且也易读。
 
 如果是业务系统是比较清晰的，已经被拆分的够简单，我基本上都会使用orm工具。
+
+> 参考文档：https://www.ruanyifeng.com/blog/2013/12/getting_started_with_postgresql.html
