@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>echo on silenceper</title>
+    <link>/tags/echo/</link>
+    <description>Recent content in echo on silenceper</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Wed, 13 May 2020 20:20:59 +0800</lastBuildDate>
+    
+	<atom:link href="/tags/echo/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>用vim保存文件和echo命令有什么不同</title>
+      <link>/blog/202005/difference-vim-and-echo/</link>
+      <pubDate>Wed, 13 May 2020 20:20:59 +0800</pubDate>
+      
+      <guid>/blog/202005/difference-vim-and-echo/</guid>
+      <description>现象 最近在调试一个filebeat程序时需要制造一些log，我是直接使用vim直接对文件打开然后直接保存的。 但是有个奇怪的现象：每次写入一行</description>
+    </item>
+    
+  </channel>
+</rss>

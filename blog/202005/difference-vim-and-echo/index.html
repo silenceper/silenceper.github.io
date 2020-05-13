@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>用vim保存文件和echo命令有什么不同 | silenceper</title>
+        <meta name="Description" content="一个记录生活，工作的博客。关于Go，Kubernetes，云原生"><meta property="og:title" content="用vim保存文件和echo命令有什么不同" />
+<meta property="og:description" content="现象 最近在调试一个filebeat程序时需要制造一些log，我是直接使用vim直接对文件打开然后直接保存的。 但是有个奇怪的现象：每次写入一行" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/202005/difference-vim-and-echo/" />
+<meta property="article:published_time" content="2020-05-13T20:20:59+08:00" />
+<meta property="article:modified_time" content="2020-05-13T20:20:59+08:00" /><meta property="og:site_name" content="silenceper" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="用vim保存文件和echo命令有什么不同"/>
+<meta name="twitter:description" content="现象 最近在调试一个filebeat程序时需要制造一些log，我是直接使用vim直接对文件打开然后直接保存的。 但是有个奇怪的现象：每次写入一行"/>
+<meta name="theme-color" content="#ffffff">
+<meta name="msapplication-TileColor" content="#da532c">
+<link rel="canonical" href="/blog/202005/difference-vim-and-echo/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="prev" href="/blog/202005/getting-started-with-postgres/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><meta name="google-site-verification" content="VJ4lE3d3A73DNoyxuuXL_Cuu6MEErPtKXqfAv69pr6E" /><meta name="baidu-site-verification" content="k061nqJczY" /><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "用vim保存文件和echo命令有什么不同",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "\/blog\/202005\/difference-vim-and-echo\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "\/img\/silenceoer-avatar.jpg",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "posts","keywords": "vim, echo","wordcount":  1835 ,
+        "url": "\/blog\/202005\/difference-vim-and-echo\/","datePublished": "2020-05-13T20:20:59\x2b08:00","dateModified": "2020-05-13T20:20:59\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "silenceper",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "\/img\/silenceper-avatar.jpg",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": ""
+    }
+    </script></head>
+    <body><script>
+            if (!window.localStorage || !window.localStorage.getItem('theme')) {window.isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;} else {
+                window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            }
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title animated bounceIn">
+            <a href="/">silenceper</a>
+        </div>
+        <div class="menu"><a class="menu-item" href="/posts/">文章</a><a class="menu-item" href="/tags/">标签</a><a class="menu-item" href="/categories/">分类</a><a class="menu-item" href="/about/">关于</a><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-rotate-180 fa-fw"></i>
+            </a>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-wrapper">
+        <div class="header-container">
+            <div class="header-title animated bounceIn">
+                <a href="/">silenceper</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-rotate-180 fa-fw"></i>
+            </a>
+        </div>
+    </div>
+</header>
+
+<script>
+    window.desktopHeaderMode = "fixed";
+    window.mobileHeaderMode = "auto";
+</script>
+<main class="main">
+                <div class="container"><article class="page single"><h1 class="single-title animated flipInX">用vim保存文件和echo命令有什么不同</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author">
+                    <a class="author" href="/" rel="author" target="_blank">
+                        <i class="fas fa-user-circle fa-fw"></i>silenceper
+                    </a>
+                </span>&nbsp;<span class="post-category">收录于&nbsp;
+                            <span>
+                                <a href="/categories/tech">
+                                    <i class="far fa-folder fa-fw"></i>Tech
+                                </a>
+                            </span></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-05-13&#32;20:20>2020-05-13 20:20</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>约 1835 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>预计阅读 4 分钟&nbsp;</div>
+        </div><div class="toc" id="toc-auto">
+                <h2 class="toc-title">目录</h2>
+                <div class="toc-content" id="toc-content-auto"></div>
+            </div>
+            <div class="toc" id="toc-static">
+                <details>
+                    <summary>
+                        <div class="toc-title">
+                            <span>目录</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#现象">现象</a></li>
+    <li><a href="#验证">验证</a></li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav></div>
+                </details>
+            </div><div class="content"><h2 id="现象">现象</h2>
+<p>最近在调试一个filebeat程序时需要制造一些log，我是直接使用vim直接对文件打开然后直接保存的。</p>
+<p>但是有个<strong>奇怪的现象</strong>：每次写入一行新的日志，filebeat都会将整个文件的内容又重新进行上报一遍导致日志上传重复，同时观察到filebeat的文件采集状态文件<code>registry</code>都会进行增加一个重复的文件。</p>
+<p>操作一番后以为是程序的问题，最后才反应过来，最终使用<code>echo &quot;test some log&quot;&gt;&gt;test.log</code>追加的方式发现不会有此问题。</p>
+<p>同时看了下两者的<code>inode</code>信息，确认了是因为<code>vim</code>会改变文件的inode(一个新的文件)，echo则不会：</p>
+<p><strong>1、查看文件inode为908488</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@localhost work<span class="o">]</span><span class="c1"># stat test.log</span>
+  文件：<span class="s2">&#34;test.log&#34;</span>
+  大小：0         	块：0          IO 块：4096   普通空文件
+设备：fd00h/64768d	Inode：908488      硬链接：1
+权限：<span class="o">(</span>0644/-rw-r--r--<span class="o">)</span>  Uid：<span class="o">(</span>    0/    root<span class="o">)</span>   Gid：<span class="o">(</span>    0/    root<span class="o">)</span>
+环境：unconfined_u:object_r:admin_home_t:s0
+最近访问：2020-05-10 04:38:39.399791808 -0400
+最近更改：2020-05-10 04:38:39.399791808 -0400
+最近改动：2020-05-10 04:38:39.399791808 -0400
+创建时间：-
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>2、当我用vim/vi工具进行编辑保存之后，变为了：908490</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@localhost work]# vi test.log
+[root@localhost work]# stat test.log
+  文件：&#34;test.log&#34;
+  大小：7         	块：8          IO 块：4096   普通文件
+设备：fd00h/64768d	Inode：908490      硬链接：1
+权限：(0644/-rw-r--r--)  Uid：(    0/    root)   Gid：(    0/    root)
+环境：unconfined_u:object_r:admin_home_t:s0
+最近访问：2020-05-10 04:39:01.950055784 -0400
+最近更改：2020-05-10 04:39:01.950055784 -0400
+最近改动：2020-05-10 04:39:01.953305882 -0400
+创建时间：-
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>3、而用echo命令修改看到inode信息并没有改变, 908490</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@localhost work]# echo &#34;test some log&#34;&gt;&gt;test.log
+[root@localhost work]# stat test.log
+  文件：&#34;test.log&#34;
+  大小：21        	块：8          IO 块：4096   普通文件
+设备：fd00h/64768d	Inode：908490      硬链接：1
+权限：(0644/-rw-r--r--)  Uid：(    0/    root)   Gid：(    0/    root)
+环境：unconfined_u:object_r:admin_home_t:s0
+最近访问：2020-05-10 04:39:01.950055784 -0400
+最近更改：2020-05-10 04:41:16.794459151 -0400
+最近改动：2020-05-10 04:41:16.794459151 -0400
+创建时间：-
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="验证">验证</h2>
+<p>其实通过inode的改变以及可以猜测出在使用vi/vim进行编辑的时候，文件以及变为了一个新的文件，这里我主要通过<code>inotifywait</code>来看一下，在进行vim编辑的时候，文件会产生什么时间</p>
+<blockquote>
+<p>一开始本来打算使用golang中<code>github.com/fsnotify/fsnotify</code>去看的，但是发现包中对event进行了合并，不够原始。所以才直接使用<code>inotifywait </code>来看</p>
+</blockquote>
+<p>inotifywait命令：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">inotifywait -rm test.log
+</code></pre></td></tr></table>
+</div>
+</div><p>1、使用vim进行编辑的结果：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@localhost work]# inotifywait -rm test.log
+Setting up watches.  Beware: since -r was given, this may take a while!
+Watches established.
+test.log OPEN
+test.log ACCESS
+test.log CLOSE_NOWRITE,CLOSE
+test.log MOVE_SELF
+test.log ATTRIB
+test.log DELETE_SELF
+</code></pre></td></tr></table>
+</div>
+</div><p>可以看到对文件进行了<code>DELETE_SELF</code></p>
+<p><strong>注意当再次进行编辑的时候，已经无法监听到了，因为原有文件以及被删除，需要重启</strong></p>
+<p>2、使用echo进行追加写入的结果</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@localhost work]# inotifywait -rm test.log
+Setting up watches.  Beware: since -r was given, this may take a while!
+Watches established.
+test.log OPEN
+test.log MODIFY
+test.log CLOSE_WRITE,CLOSE
+</code></pre></td></tr></table>
+</div>
+</div><p>3、监听整个目录，可以看到更多信息</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@localhost work]# inotifywait -rm ./dir/
+Setting up watches.  Beware: since -r was given, this may take a while!
+Watches established.
+
+# 当进行文件写入时
+./dir/ OPEN test.log
+./dir/ CREATE .test.log.swp
+./dir/ OPEN .test.log.swp
+./dir/ CREATE .test.log.swx
+./dir/ OPEN .test.log.swx
+./dir/ CLOSE_WRITE,CLOSE .test.log.swx
+./dir/ DELETE .test.log.swx
+./dir/ CLOSE_WRITE,CLOSE .test.log.swp
+./dir/ DELETE .test.log.swp
+./dir/ CREATE .test.log.swp
+./dir/ OPEN .test.log.swp
+./dir/ MODIFY .test.log.swp
+./dir/ ATTRIB .test.log.swp
+./dir/ ACCESS test.log
+./dir/ CLOSE_NOWRITE,CLOSE test.log
+./dir/ MODIFY .test.log.swp
+
+# 当进行文件保存是
+
+./dir/ CREATE 4913
+./dir/ OPEN 4913
+./dir/ ATTRIB 4913
+./dir/ CLOSE_WRITE,CLOSE 4913
+./dir/ DELETE 4913
+./dir/ MOVED_FROM test.log
+./dir/ MOVED_TO test.log~
+./dir/ CREATE test.log
+./dir/ OPEN test.log
+./dir/ MODIFY test.log
+./dir/ CLOSE_WRITE,CLOSE test.log
+./dir/ ATTRIB test.log
+./dir/ MODIFY .test.log.swp
+./dir/ DELETE test.log~
+./dir/ CLOSE_WRITE,CLOSE .test.log.swp
+./dir/ DELETE .test.log.swp
+</code></pre></td></tr></table>
+</div>
+</div><p>可以看到在进行文件保存时，将原有test.log 移动为test.log~，并新创建一个文件test.log，最后对test.log~备份文件和.test.log.swp缓冲区文件进行删除</p>
+<h2 id="总结">总结</h2>
+<ul>
+<li>vim编辑是产生了一个新的文件，所以看到inode信息变化了，而echo仅仅只是对文件进行写入。</li>
+<li>在vim编辑过程中，会生成swp缓冲区文件，在进行vim编辑时时刻将内容保存进入swp，防止程序退出未保存</li>
+<li>产生后缀带 ~ 的备份文件，这个是在对文件进行保存时产生，如果文件被正常保存则该文件会被立即删除，正常情况下是看不到这个文件</li>
+</ul>
+<hr/>
+            <figure>
+                <img src="https://silenceper.oss-cn-beijing.aliyuncs.com/qrcode/search_study_program.png" data-sizes="auto" data-src="https://silenceper.oss-cn-beijing.aliyuncs.com/qrcode/search_study_program.png" class="lazyautosizes ls-is-cached lazyloaded">
+                <figcaption class="image-caption">关注公众号，获取最新文章推送</figcaption>
+            </figure>
+        </div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>本文于 2020-05-13 20:20 更新</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/blog/202005/difference-vim-and-echo/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share"><span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="/blog/202005/difference-vim-and-echo/" data-title="用vim保存文件和echo命令有什么不同" data-hashtags="vim,echo"><i class="fab fa-twitter fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="/blog/202005/difference-vim-and-echo/" data-hashtag="vim"><i class="fab fa-facebook-square fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="/blog/202005/difference-vim-and-echo/" data-title="用vim保存文件和echo命令有什么不同"><i class="fab fa-weibo fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 人人" data-sharer="renren" data-url="/blog/202005/difference-vim-and-echo/"><i class="fab fa-renren fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 百度" data-sharer="baidu" data-url="/blog/202005/difference-vim-and-echo/" data-title="用vim保存文件和echo命令有什么不同"><i class="loveit it-baidu-fill"></i>
+</a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="/blog/202005/difference-vim-and-echo/" data-title="用vim保存文件和echo命令有什么不同"><i class="fab fa-evernote fa-fw"></i>
+</a></span></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section><span>
+                        <a href="/tags/vim">
+                            <i class="fas fa-tag fa-fw"></i>vim
+                        </a>
+                    </span>&nbsp;<span>
+                        <a href="/tags/echo">
+                            <i class="fas fa-tag fa-fw"></i>echo
+                        </a>
+                    </span>&nbsp;</section>
+        <section>
+            <span><a href="javascript:window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/blog/202005/getting-started-with-postgres/" class="prev" rel="prev" title="postgres入门"><i class="fas fa-angle-left fa-fw"></i>postgres入门</a></div>
+</div>
+<div class="comment"><div id="gitalk"></div><script>
+            document.addEventListener("DOMContentLoaded", function(event) {
+                var gitalk = new Gitalk({
+                    id: '2020-05-13 20:20:59 \x2b0800 CST',
+                    title: '用vim保存文件和echo命令有什么不同',
+                    clientID: 'e708cc1fbc3e2613a24d',
+                    clientSecret: 'ffa9552c4ef788a7f135fa7b9510ffc672d0b914',
+                    repo: 'silenceper.github.io',
+                    owner: 'silenceper',
+                    admin: ['silenceper'],
+                    body: decodeURI(location.href),
+                });
+                gitalk.render('gitalk');
+            });
+        </script>
+        <noscript>
+            Please enable JavaScript to view the <a href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a>
+        </noscript></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright"><div class="copyright-line">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
+        </div>
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2016 - 2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">silenceper</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+    </div>
+</footer>
+</div><a href="#" class="dynamic-to-top animated faster" id="dynamic-to-top">
+            <span>&nbsp;</span>
+        </a><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$", right: "$", display: false },
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },]
+            });
+        });
+    </script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.css"><link rel="stylesheet" href="/css/lib/iconfont/iconfont.min.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script><script src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.2/dist/smooth-scroll.polyfills.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazysizes@5.1.2/lazysizes.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/mhchem.min.js"></script><script src="/js/lib/sharer/sharer.min.js"></script><script src=/js/theme.min.js></script>
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-139557989-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?fe23775b1a9ea11a6797646a56df1cc7";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script></body>
+</html>
