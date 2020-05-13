@@ -5,15 +5,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-        <title>用vim保存文件和echo命令有什么不同 | silenceper</title>
-        <meta name="Description" content="一个记录生活，工作的博客。关于Go，Kubernetes，云原生"><meta property="og:title" content="用vim保存文件和echo命令有什么不同" />
+        <title>用vim保存文件和echo命令到底有什么不同？ | silenceper</title>
+        <meta name="Description" content="一个记录生活，工作的博客。关于Go，Kubernetes，云原生"><meta property="og:title" content="用vim保存文件和echo命令到底有什么不同？" />
 <meta property="og:description" content="现象 最近在调试一个filebeat程序时需要制造一些log，我是直接使用vim直接对文件打开然后直接保存的。 但是有个奇怪的现象：每次写入一行" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/blog/202005/difference-vim-and-echo/" />
 <meta property="article:published_time" content="2020-05-13T20:20:59+08:00" />
 <meta property="article:modified_time" content="2020-05-13T20:20:59+08:00" /><meta property="og:site_name" content="silenceper" />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="用vim保存文件和echo命令有什么不同"/>
+<meta name="twitter:title" content="用vim保存文件和echo命令到底有什么不同？"/>
 <meta name="twitter:description" content="现象 最近在调试一个filebeat程序时需要制造一些log，我是直接使用vim直接对文件打开然后直接保存的。 但是有个奇怪的现象：每次写入一行"/>
 <meta name="theme-color" content="#ffffff">
 <meta name="msapplication-TileColor" content="#da532c">
@@ -27,7 +27,7 @@
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "用vim保存文件和echo命令有什么不同",
+        "headline": "用vim保存文件和echo命令到底有什么不同？",
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "\/blog\/202005\/difference-vim-and-echo\/"
@@ -36,7 +36,7 @@
                 "url": "\/img\/silenceoer-avatar.jpg",
                 "width":  800 ,
                 "height":  600 
-            },"genre": "posts","keywords": "vim, echo, inotify","wordcount":  1835 ,
+            },"genre": "posts","keywords": "vim, echo, inotify","wordcount":  1837 ,
         "url": "\/blog\/202005\/difference-vim-and-echo\/","datePublished": "2020-05-13T20:20:59\x2b08:00","dateModified": "2020-05-13T20:20:59\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "silenceper",
@@ -86,7 +86,7 @@
     window.mobileHeaderMode = "auto";
 </script>
 <main class="main">
-                <div class="container"><article class="page single"><h1 class="single-title animated flipInX">用vim保存文件和echo命令有什么不同</h1><div class="post-meta">
+                <div class="container"><article class="page single"><h1 class="single-title animated flipInX">用vim保存文件和echo命令到底有什么不同？</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author">
                     <a class="author" href="/" rel="author" target="_blank">
                         <i class="fas fa-user-circle fa-fw"></i>silenceper
@@ -98,7 +98,7 @@
                                 </a>
                             </span></span></div>
             <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-05-13&#32;20:20>2020-05-13 20:20</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>约 1835 字&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>约 1837 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>预计阅读 4 分钟&nbsp;</div>
         </div><div class="toc" id="toc-auto">
                 <h2 class="toc-title">目录</h2>
@@ -250,7 +250,7 @@ test.log DELETE_SELF
 </code></pre></td></tr></table>
 </div>
 </div><p>可以看到对文件进行了<code>DELETE_SELF</code></p>
-<p><strong>注意当再次进行编辑的时候，已经无法监听到了，因为原有文件以及被删除，需要重启</strong></p>
+<p><strong>注意当再次进行编辑的时候，已经无法监听到了，因为原有文件已经被删除，需要重新监听</strong></p>
 <p>2、使用echo进行追加写入的结果</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -381,12 +381,12 @@ Watches established.
             <div class="post-info-md"><span>
                             <a class="link-to-markdown" href="/blog/202005/difference-vim-and-echo/index.md" target="_blank">阅读原始文档</a>
                         </span></div>
-            <div class="post-info-share"><span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="/blog/202005/difference-vim-and-echo/" data-title="用vim保存文件和echo命令有什么不同" data-hashtags="vim,echo,inotify"><i class="fab fa-twitter fa-fw"></i>
+            <div class="post-info-share"><span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="/blog/202005/difference-vim-and-echo/" data-title="用vim保存文件和echo命令到底有什么不同？" data-hashtags="vim,echo,inotify"><i class="fab fa-twitter fa-fw"></i>
 </a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="/blog/202005/difference-vim-and-echo/" data-hashtag="vim"><i class="fab fa-facebook-square fa-fw"></i>
-</a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="/blog/202005/difference-vim-and-echo/" data-title="用vim保存文件和echo命令有什么不同"><i class="fab fa-weibo fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="/blog/202005/difference-vim-and-echo/" data-title="用vim保存文件和echo命令到底有什么不同？"><i class="fab fa-weibo fa-fw"></i>
 </a><a href="javascript:void(0);" title="分享到 人人" data-sharer="renren" data-url="/blog/202005/difference-vim-and-echo/"><i class="fab fa-renren fa-fw"></i>
-</a><a href="javascript:void(0);" title="分享到 百度" data-sharer="baidu" data-url="/blog/202005/difference-vim-and-echo/" data-title="用vim保存文件和echo命令有什么不同"><i class="loveit it-baidu-fill"></i>
-</a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="/blog/202005/difference-vim-and-echo/" data-title="用vim保存文件和echo命令有什么不同"><i class="fab fa-evernote fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 百度" data-sharer="baidu" data-url="/blog/202005/difference-vim-and-echo/" data-title="用vim保存文件和echo命令到底有什么不同？"><i class="loveit it-baidu-fill"></i>
+</a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="/blog/202005/difference-vim-and-echo/" data-title="用vim保存文件和echo命令到底有什么不同？"><i class="fab fa-evernote fa-fw"></i>
 </a></span></div>
         </div>
     </div>
@@ -416,7 +416,7 @@ Watches established.
             document.addEventListener("DOMContentLoaded", function(event) {
                 var gitalk = new Gitalk({
                     id: '2020-05-13 20:20:59 \x2b0800 CST',
-                    title: '用vim保存文件和echo命令有什么不同',
+                    title: '用vim保存文件和echo命令到底有什么不同？',
                     clientID: 'e708cc1fbc3e2613a24d',
                     clientSecret: 'ffa9552c4ef788a7f135fa7b9510ffc672d0b914',
                     repo: 'silenceper.github.io',
