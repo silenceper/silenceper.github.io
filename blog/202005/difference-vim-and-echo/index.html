@@ -6,15 +6,15 @@
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
         <title>用vim保存文件和echo命令到底有什么不同？ | silenceper</title>
-        <meta name="Description" content="一个记录生活，工作的博客。关于Go，Kubernetes，云原生"><meta property="og:title" content="用vim保存文件和echo命令到底有什么不同？" />
-<meta property="og:description" content="现象 最近在调试一个filebeat程序时需要制造一些log，我是直接使用vim直接对文件打开然后直接保存的。 但是有个奇怪的现象：每次写入一行" />
+        <meta name="Description" content="调试filebeat程序，发现日志被重复上传。深入验证并对比下使用vim写入文件并保存和使用echo有什么不同？"><meta property="og:title" content="用vim保存文件和echo命令到底有什么不同？" />
+<meta property="og:description" content="调试filebeat程序，发现日志被重复上传。深入验证并对比下使用vim写入文件并保存和使用echo有什么不同？" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/blog/202005/difference-vim-and-echo/" />
 <meta property="article:published_time" content="2020-05-13T20:20:59+08:00" />
 <meta property="article:modified_time" content="2020-05-13T20:20:59+08:00" /><meta property="og:site_name" content="silenceper" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="用vim保存文件和echo命令到底有什么不同？"/>
-<meta name="twitter:description" content="现象 最近在调试一个filebeat程序时需要制造一些log，我是直接使用vim直接对文件打开然后直接保存的。 但是有个奇怪的现象：每次写入一行"/>
+<meta name="twitter:description" content="调试filebeat程序，发现日志被重复上传。深入验证并对比下使用vim写入文件并保存和使用echo有什么不同？"/>
 <meta name="theme-color" content="#ffffff">
 <meta name="msapplication-TileColor" content="#da532c">
 <link rel="canonical" href="/blog/202005/difference-vim-and-echo/" />
@@ -46,7 +46,7 @@
                 "width":  127 ,
                 "height":  40 
                 }
-            },"description": ""
+            },"description": "调试filebeat程序，发现日志被重复上传。深入验证并对比下使用vim写入文件并保存和使用echo有什么不同？"
     }
     </script></head>
     <body><script>
