@@ -11,6 +11,8 @@
 
 同时看了下两者的`inode`信息，确认了是因为`vim`会改变文件的inode(一个新的文件)，echo则不会：
 > 2020-05-14更新：也跟文件权限有关，如果文件没有o没有w权限，则inode信息会改变，如果`chmod o+w test.log`则inode信息不会变
+> 
+> 同时vim也是开了备份文件
 
 **1、查看文件inode为908488**
 
@@ -26,6 +28,7 @@
 最近改动：2020-05-10 04:38:39.399791808 -0400
 创建时间：-
 ```
+
 
 **2、当我用vim/vi工具进行编辑保存之后，变为了：908490**
 
@@ -76,7 +79,7 @@ inotifywait -rm test.log
 -rw-r--r--. 1 root root   49 5月  14 05:40 test.log
 ```
 
-1、使用vim进行编辑的结果：
+**1、使用vim进行编辑的结果：**
 
 ```
 [root@localhost work]# inotifywait -rm test.log
@@ -93,7 +96,7 @@ test.log DELETE_SELF
 
 **注意当再次进行编辑的时候，已经无法监听到了，因为原有文件已经被删除，需要重新监听**
 
-2、使用echo进行追加写入的结果
+**2、使用echo进行追加写入的结果**
 
 ```
 [root@localhost work]# inotifywait -rm test.log
@@ -104,7 +107,7 @@ test.log MODIFY
 test.log CLOSE_WRITE,CLOSE
 ```
 
-3、监听整个目录，可以看到更多信息
+**3、监听整个目录，可以看到更多信息**
 
 ```
 [root@localhost work]# inotifywait -rm ./dir/
@@ -151,7 +154,7 @@ Watches established.
 
 可以看到在进行文件保存时，将原有test.log 移动为test.log~，并新创建一个文件test.log，最后对test.log~备份文件和.test.log.swp缓冲区文件进行删除
 
-4、当进行`chmod o+w test.log`时，看到的信息如下：
+**4、当进行`chmod o+w test.log`时，看到的信息如下：**
 
 ```
 ./dir/ CREATE 4913
@@ -180,10 +183,15 @@ Watches established.
 ```
 对比3中的结果没有将test.log move to test.log~的操作，而是直接对test.log文件进行更改，所以此时inode信息并没有改变
 
+**5、如果关闭vim备份**
+
+通过设置vim参数`set nobackup nowritebackup`关闭vim的备份，则在保存的时候不会生成`test.log~`文件，这种情况下，inode信息也是不会改变的
+
+
 ## 总结
 
 - vim编辑是产生了一个新的文件，所以看到inode信息变化了，而echo仅仅只是对文件进行写入。
 - 在vim编辑过程中，会生成swp缓冲区文件，在进行vim编辑时时刻将内容保存进入swp，防止程序退出未保存
 - 产生后缀带 ~ 的备份文件，这个是在对文件进行保存时产生，如果文件被正常保存则该文件会被立即删除，正常情况下是看不到这个文件
 - 如果文件other有write权限（`chmod o+w xxx`），则当进行vi写入内容的时候文件inode不会改变。
-
+- 如果关闭vim备份，则inode信息也不会改变
