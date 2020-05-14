@@ -36,7 +36,7 @@
                 "url": "\/img\/silenceoer-avatar.jpg",
                 "width":  800 ,
                 "height":  600 
-            },"genre": "posts","keywords": "vim, echo, inotify","wordcount":  1837 ,
+            },"genre": "posts","keywords": "vim, echo, inotify","wordcount":  2210 ,
         "url": "\/blog\/202005\/difference-vim-and-echo\/","datePublished": "2020-05-13T20:20:59\x2b08:00","dateModified": "2020-05-13T20:20:59\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "silenceper",
@@ -98,8 +98,8 @@
                                 </a>
                             </span></span></div>
             <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-05-13&#32;20:20>2020-05-13 20:20</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>约 1837 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>预计阅读 4 分钟&nbsp;</div>
+                <i class="fas fa-pencil-alt fa-fw"></i>约 2210 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>预计阅读 5 分钟&nbsp;</div>
         </div><div class="toc" id="toc-auto">
                 <h2 class="toc-title">目录</h2>
                 <div class="toc-content" id="toc-content-auto"></div>
@@ -122,9 +122,12 @@
                 </details>
             </div><div class="content"><h2 id="现象">现象</h2>
 <p>最近在调试一个filebeat程序时需要制造一些log，我是直接使用vim直接对文件打开然后直接保存的。</p>
-<p>但是有个<strong>奇怪的现象</strong>：每次写入一行新的日志，filebeat都会将整个文件的内容又重新进行上报一遍导致日志上传重复，同时观察到filebeat的文件采集状态文件<code>registry</code>都会进行增加一个重复的文件。</p>
-<p>操作一番后以为是程序的问题，最后才反应过来，最终使用<code>echo &quot;test some log&quot;&gt;&gt;test.log</code>追加的方式发现不会有此问题。</p>
+<p>但是有个<strong>奇怪的现象</strong>：每次写入一行新的日志，filebeat都会将整个文件的内容又重新进行上报一遍导致日志上传重复，同时观察到filebeat的文件采集状态文件<code>registry</code>都会进行增加一个重复的文件(source相同，inode不同)。</p>
+<p>操作一番后以为是程序的问题，最后才反应过来（一开始没注意到inode不同 :&lt;），最终使用<code>echo &quot;test some log&quot;&gt;&gt;test.log</code>追加的方式发现不会有此问题。</p>
 <p>同时看了下两者的<code>inode</code>信息，确认了是因为<code>vim</code>会改变文件的inode(一个新的文件)，echo则不会：</p>
+<blockquote>
+<p>2020-05-14更新：也跟文件权限有关，如果文件没有o没有w权限，则inode信息会改变，如果<code>chmod o+w test.log</code>则inode信息不会变</p>
+</blockquote>
 <p><strong>1、查看文件inode为908488</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -222,6 +225,15 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-fallback" data-lang="fallback">inotifywait -rm test.log
+</code></pre></td></tr></table>
+</div>
+</div><p>文件权限：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">-rw-r--r--. 1 root root   49 5月  14 05:40 test.log
 </code></pre></td></tr></table>
 </div>
 </div><p>1、使用vim进行编辑的结果：</p>
@@ -358,11 +370,66 @@ Watches established.
 </code></pre></td></tr></table>
 </div>
 </div><p>可以看到在进行文件保存时，将原有test.log 移动为test.log~，并新创建一个文件test.log，最后对test.log~备份文件和.test.log.swp缓冲区文件进行删除</p>
+<p>4、当进行<code>chmod o+w test.log</code>时，看到的信息如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">./dir/ CREATE 4913
+./dir/ OPEN 4913
+./dir/ ATTRIB 4913
+./dir/ CLOSE_WRITE,CLOSE 4913
+./dir/ DELETE 4913
+./dir/ OPEN test.log
+./dir/ CREATE test.log~
+./dir/ OPEN test.log~
+./dir/ ATTRIB test.log~
+./dir/ ACCESS test.log
+./dir/ MODIFY test.log~
+./dir/ CLOSE_WRITE,CLOSE test.log~
+./dir/ ATTRIB test.log~
+./dir/ CLOSE_NOWRITE,CLOSE test.log
+./dir/ MODIFY test.log
+./dir/ OPEN test.log
+./dir/ MODIFY test.log
+./dir/ CLOSE_WRITE,CLOSE test.log
+./dir/ ATTRIB test.log
+./dir/ MODIFY .test.log.swp
+./dir/ DELETE test.log~
+./dir/ CLOSE_WRITE,CLOSE .test.log.swp
+./dir/ DELETE .test.log.swp
+</code></pre></td></tr></table>
+</div>
+</div><p>对比3中的结果没有将test.log move to test.log~的操作，而是直接对test.log文件进行更改，所以此时inode信息并没有改变</p>
 <h2 id="总结">总结</h2>
 <ul>
 <li>vim编辑是产生了一个新的文件，所以看到inode信息变化了，而echo仅仅只是对文件进行写入。</li>
 <li>在vim编辑过程中，会生成swp缓冲区文件，在进行vim编辑时时刻将内容保存进入swp，防止程序退出未保存</li>
 <li>产生后缀带 ~ 的备份文件，这个是在对文件进行保存时产生，如果文件被正常保存则该文件会被立即删除，正常情况下是看不到这个文件</li>
+<li>如果文件other有write权限（<code>chmod o+w xxx</code>），则当进行vi写入内容的时候文件inode不会改变。</li>
 </ul>
 <hr/>
             <figure>
