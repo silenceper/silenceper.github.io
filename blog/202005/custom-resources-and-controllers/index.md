@@ -1,8 +1,8 @@
-# 如何创建一个自定义Controller?
+# 如何在Kubernetes中创建一个自定义Controller?
 
 
 ## 目的
-通过Custom Resource是扩展Kubernetes的一种方式（另外一种就是通过聚合层API apiserver-aggregation），而controller对指定的resource进行监听和执行对应的动作(watch,diff,action)。<br />
+Custom Resource是扩展Kubernetes的一种方式（另外一种就是通过聚合层API apiserver-aggregation），而controller对指定的resource进行监听和执行对应的动作(watch,diff,action)。<br />
 <br />**Operator与Controller区别**
 
 - 所有的Operator都是用了Controller模式，但并不是所有Controller都是Operator。只有当它满足: controller模式 + API扩展 + 专注于某个App/中间件时，才是一个Operator。
@@ -248,7 +248,7 @@ func (in *HelmValues) DeepCopyInto(out *HelmValues) {
 
 <a name="Qu2Ju"></a>
 ### Controller编写
-在编写Controller之前需要了解client-go中的informer机制：<br />![informer](https://cdn.nlark.com/yuque/0/2020/png/748713/1589795898427-9fb052f1-571c-47ca-a77a-47bba6e24181.png#align=left&display=inline&height=397&margin=%5Bobject%20Object%5D&name=image.png&originHeight=794&originWidth=1058&size=517545&status=done&style=none&width=529)
+在编写Controller之前需要了解client-go中的informer机制：<br />![informer](https://silenceper.oss-cn-beijing.aliyuncs.com/blog/202005/informer.png)
 > 黄色的部分是controller相关的框架，包括workqueue。蓝色部分是client-go的相关内容，包括informer, reflector(其实就是informer的封装), indexer。从流程上看，reflector从apiserver中通过list&watch机制接收事件变化，进入Delta FIFO队列中，由informer进行处理。informer会将delta FIFO队列中的事件交给indexer组件，indexer组件会将事件持久化存储在本地的缓存中。之后，由于用户事先将为informer注册各种事件的回调函数，这些回调函数将针对不同的组件做不同的处理。例如在controller中，将把object放入workqueue中，之后由controller的业务逻辑中进行处理。处理的时候将从缓存中获取object的引用。即各组件对资源的处理仅限于本地缓存中，直到update资源的时候才与apiserver交互。
 
 
@@ -345,7 +345,7 @@ exampleInformerFactory.Start(stopCh)   //启动informer
 就是调用通过coge-gen生成代码创建informer并启动，创建client。<br />
 <br />**思考：为什么要通过队列来控制数据的变化？ **<br />我觉得用队列一方面是解耦，因为往往一个Controller里面可能要通过informer监听各类资源对象，通过队列借助了各个informer的依赖。另一方便可以通过不同类型的队列比如限速队列，延迟队列达到不同的并发控制。<br />
 
-<a name="GGFpW"></a>
+
 ## 总结
 
 - 先定义crd，再实现Controller逻辑
@@ -355,7 +355,6 @@ exampleInformerFactory.Start(stopCh)   //启动informer
 
 
 
-<a name="p45Hr"></a>
 ### 参考
 
 - [https://juejin.im/post/5de097bbf265da05d849ab53](https://juejin.im/post/5de097bbf265da05d849ab53)

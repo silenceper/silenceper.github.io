@@ -5,16 +5,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-        <title>如何创建一个自定义Controller? | silenceper</title>
-        <meta name="Description" content="通过Custom Resource是扩展Kubernetes的一种方式（另外一种就是通过聚合层API apiserver-aggregation），而controller对指定的resource进行监听和执行对应的动作(watch,diff,action)。"><meta property="og:title" content="如何创建一个自定义Controller?" />
-<meta property="og:description" content="通过Custom Resource是扩展Kubernetes的一种方式（另外一种就是通过聚合层API apiserver-aggregation），而controller对指定的resource进行监听和执行对应的动作(watch,diff,action)。" />
+        <title>如何在Kubernetes中创建一个自定义Controller? | silenceper</title>
+        <meta name="Description" content="Custom Resource是扩展Kubernetes的一种方式（另外一种就是通过聚合层API apiserver-aggregation），而controller对指定的resource进行监听和执行对应的动作(watch,diff,action)。"><meta property="og:title" content="如何在Kubernetes中创建一个自定义Controller?" />
+<meta property="og:description" content="Custom Resource是扩展Kubernetes的一种方式（另外一种就是通过聚合层API apiserver-aggregation），而controller对指定的resource进行监听和执行对应的动作(watch,diff,action)。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/blog/202005/custom-resources-and-controllers/" />
 <meta property="article:published_time" content="2020-05-18T18:20:59+08:00" />
 <meta property="article:modified_time" content="2020-05-18T18:20:59+08:00" /><meta property="og:site_name" content="silenceper" />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="如何创建一个自定义Controller?"/>
-<meta name="twitter:description" content="通过Custom Resource是扩展Kubernetes的一种方式（另外一种就是通过聚合层API apiserver-aggregation），而controller对指定的resource进行监听和执行对应的动作(watch,diff,action)。"/>
+<meta name="twitter:title" content="如何在Kubernetes中创建一个自定义Controller?"/>
+<meta name="twitter:description" content="Custom Resource是扩展Kubernetes的一种方式（另外一种就是通过聚合层API apiserver-aggregation），而controller对指定的resource进行监听和执行对应的动作(watch,diff,action)。"/>
 <meta name="theme-color" content="#ffffff">
 <meta name="msapplication-TileColor" content="#da532c">
 <link rel="canonical" href="/blog/202005/custom-resources-and-controllers/" />
@@ -27,7 +27,7 @@
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "如何创建一个自定义Controller?",
+        "headline": "如何在Kubernetes中创建一个自定义Controller?",
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "\/blog\/202005\/custom-resources-and-controllers\/"
@@ -36,7 +36,7 @@
                 "url": "\/img\/silenceoer-avatar.jpg",
                 "width":  800 ,
                 "height":  600 
-            },"genre": "posts","keywords": "crd, controller, kubernetes, operator","wordcount":  4075 ,
+            },"genre": "posts","keywords": "crd, controller, kubernetes, operator","wordcount":  4068 ,
         "url": "\/blog\/202005\/custom-resources-and-controllers\/","datePublished": "2020-05-18T18:20:59\x2b08:00","dateModified": "2020-05-18T18:20:59\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "silenceper",
@@ -46,7 +46,7 @@
                 "width":  127 ,
                 "height":  40 
                 }
-            },"description": "通过Custom Resource是扩展Kubernetes的一种方式（另外一种就是通过聚合层API apiserver-aggregation），而controller对指定的resource进行监听和执行对应的动作(watch,diff,action)。"
+            },"description": "Custom Resource是扩展Kubernetes的一种方式（另外一种就是通过聚合层API apiserver-aggregation），而controller对指定的resource进行监听和执行对应的动作(watch,diff,action)。"
     }
     </script></head>
     <body><script>
@@ -86,7 +86,7 @@
     window.mobileHeaderMode = "auto";
 </script>
 <main class="main">
-                <div class="container"><article class="page single"><h1 class="single-title animated flipInX">如何创建一个自定义Controller?</h1><div class="post-meta">
+                <div class="container"><article class="page single"><h1 class="single-title animated flipInX">如何在Kubernetes中创建一个自定义Controller?</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author">
                     <a class="author" href="/" rel="author" target="_blank">
                         <i class="fas fa-user-circle fa-fw"></i>silenceper
@@ -98,7 +98,7 @@
                                 </a>
                             </span></span></div>
             <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-05-18&#32;18:20>2020-05-18 18:20</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>约 4075 字&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>约 4068 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>预计阅读 9 分钟&nbsp;</div>
         </div><div class="toc" id="toc-auto">
                 <h2 class="toc-title">目录</h2>
@@ -138,7 +138,7 @@
 </nav></div>
                 </details>
             </div><div class="content"><h2 id="目的">目的</h2>
-<p>通过Custom Resource是扩展Kubernetes的一种方式（另外一种就是通过聚合层API apiserver-aggregation），而controller对指定的resource进行监听和执行对应的动作(watch,diff,action)。<br />
+<p>Custom Resource是扩展Kubernetes的一种方式（另外一种就是通过聚合层API apiserver-aggregation），而controller对指定的resource进行监听和执行对应的动作(watch,diff,action)。<br />
 <br /><strong>Operator与Controller区别</strong></p>
 <ul>
 <li>所有的Operator都是用了Controller模式，但并不是所有Controller都是Operator。只有当它满足: controller模式 + API扩展 + 专注于某个App/中间件时，才是一个Operator。</li>
@@ -550,7 +550,7 @@ Examples:
 </div>
 </div><p><a name="Qu2Ju"></a></p>
 <h3 id="controller编写">Controller编写</h3>
-<p>在编写Controller之前需要了解client-go中的informer机制：<br /><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://cdn.nlark.com/yuque/0/2020/png/748713/1589795898427-9fb052f1-571c-47ca-a77a-47bba6e24181.png#align=left&amp;display=inline&amp;height=397&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=794&amp;originWidth=1058&amp;size=517545&amp;status=done&amp;style=none&amp;width=529" alt="informer" title="informer" class="lazyload">
+<p>在编写Controller之前需要了解client-go中的informer机制：<br /><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://silenceper.oss-cn-beijing.aliyuncs.com/blog/202005/informer.png" alt="informer" title="informer" class="lazyload">
 <figcaption class="image-caption">informer</figcaption></figure>
 </p>
 <blockquote>
@@ -725,7 +725,6 @@ Examples:
 </div>
 </div><p>就是调用通过coge-gen生成代码创建informer并启动，创建client。<br />
 <br />**思考：为什么要通过队列来控制数据的变化？ **<br />我觉得用队列一方面是解耦，因为往往一个Controller里面可能要通过informer监听各类资源对象，通过队列借助了各个informer的依赖。另一方便可以通过不同类型的队列比如限速队列，延迟队列达到不同的并发控制。<br /></p>
-<p><a name="GGFpW"></a></p>
 <h2 id="总结">总结</h2>
 <ul>
 <li>先定义crd，再实现Controller逻辑</li>
@@ -733,7 +732,6 @@ Examples:
 <li>注意针对interface{}类型需要自己实现deepCopy方法</li>
 <li>实现一个Operator，集成更多更复杂的Controller的话，我们一般使用Operator框架，比如kubebuilder</li>
 </ul>
-<p><a name="p45Hr"></a></p>
 <h3 id="参考">参考</h3>
 <ul>
 <li><a href="https://juejin.im/post/5de097bbf265da05d849ab53" target="_blank" rel="noopener noreffer">https://juejin.im/post/5de097bbf265da05d849ab53</a>
@@ -760,12 +758,12 @@ Examples:
             <div class="post-info-md"><span>
                             <a class="link-to-markdown" href="/blog/202005/custom-resources-and-controllers/index.md" target="_blank">阅读原始文档</a>
                         </span></div>
-            <div class="post-info-share"><span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="/blog/202005/custom-resources-and-controllers/" data-title="如何创建一个自定义Controller?" data-hashtags="crd,controller,kubernetes,operator"><i class="fab fa-twitter fa-fw"></i>
+            <div class="post-info-share"><span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="/blog/202005/custom-resources-and-controllers/" data-title="如何在Kubernetes中创建一个自定义Controller?" data-hashtags="crd,controller,kubernetes,operator"><i class="fab fa-twitter fa-fw"></i>
 </a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="/blog/202005/custom-resources-and-controllers/" data-hashtag="crd"><i class="fab fa-facebook-square fa-fw"></i>
-</a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="/blog/202005/custom-resources-and-controllers/" data-title="如何创建一个自定义Controller?"><i class="fab fa-weibo fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="/blog/202005/custom-resources-and-controllers/" data-title="如何在Kubernetes中创建一个自定义Controller?"><i class="fab fa-weibo fa-fw"></i>
 </a><a href="javascript:void(0);" title="分享到 人人" data-sharer="renren" data-url="/blog/202005/custom-resources-and-controllers/"><i class="fab fa-renren fa-fw"></i>
-</a><a href="javascript:void(0);" title="分享到 百度" data-sharer="baidu" data-url="/blog/202005/custom-resources-and-controllers/" data-title="如何创建一个自定义Controller?"><i class="loveit it-baidu-fill"></i>
-</a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="/blog/202005/custom-resources-and-controllers/" data-title="如何创建一个自定义Controller?"><i class="fab fa-evernote fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 百度" data-sharer="baidu" data-url="/blog/202005/custom-resources-and-controllers/" data-title="如何在Kubernetes中创建一个自定义Controller?"><i class="loveit it-baidu-fill"></i>
+</a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="/blog/202005/custom-resources-and-controllers/" data-title="如何在Kubernetes中创建一个自定义Controller?"><i class="fab fa-evernote fa-fw"></i>
 </a></span></div>
         </div>
     </div>
@@ -799,7 +797,7 @@ Examples:
             document.addEventListener("DOMContentLoaded", function(event) {
                 var gitalk = new Gitalk({
                     id: '2020-05-18 18:20:59 \x2b0800 CST',
-                    title: '如何创建一个自定义Controller?',
+                    title: '如何在Kubernetes中创建一个自定义Controller?',
                     clientID: 'e708cc1fbc3e2613a24d',
                     clientSecret: 'ffa9552c4ef788a7f135fa7b9510ffc672d0b914',
                     repo: 'silenceper.github.io',

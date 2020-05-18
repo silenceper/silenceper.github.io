@@ -13,12 +13,12 @@
     
     
     <item>
-      <title>如何创建一个自定义Controller?</title>
+      <title>如何在Kubernetes中创建一个自定义Controller?</title>
       <link>/blog/202005/custom-resources-and-controllers/</link>
       <pubDate>Mon, 18 May 2020 18:20:59 +0800</pubDate>
       
       <guid>/blog/202005/custom-resources-and-controllers/</guid>
-      <description>目的 通过Custom Resource是扩展Kubernetes的一种方式（另外一种就是通过聚合层API apiserver-aggregati</description>
+      <description>目的 Custom Resource是扩展Kubernetes的一种方式（另外一种就是通过聚合层API apiserver-aggregation），而co</description>
     </item>
     
     <item>
