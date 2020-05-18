@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>controller on silenceper</title>
+    <link>/tags/controller/</link>
+    <description>Recent content in controller on silenceper</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Mon, 18 May 2020 18:20:59 +0800</lastBuildDate>
+    
+	<atom:link href="/tags/controller/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>如何创建一个自定义Controller?</title>
+      <link>/blog/202005/custom-resources-and-controllers/</link>
+      <pubDate>Mon, 18 May 2020 18:20:59 +0800</pubDate>
+      
+      <guid>/blog/202005/custom-resources-and-controllers/</guid>
+      <description>目的 通过Custom Resource是扩展Kubernetes的一种方式（另外一种就是通过聚合层API apiserver-aggregati</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>如何创建一个自定义Controller? | silenceper</title>
+        <meta name="Description" content="通过Custom Resource是扩展Kubernetes的一种方式（另外一种就是通过聚合层API apiserver-aggregation），而controller对指定的resource进行监听和执行对应的动作(watch,diff,action)。"><meta property="og:title" content="如何创建一个自定义Controller?" />
+<meta property="og:description" content="通过Custom Resource是扩展Kubernetes的一种方式（另外一种就是通过聚合层API apiserver-aggregation），而controller对指定的resource进行监听和执行对应的动作(watch,diff,action)。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/202005/custom-resources-and-controllers/" />
+<meta property="article:published_time" content="2020-05-18T18:20:59+08:00" />
+<meta property="article:modified_time" content="2020-05-18T18:20:59+08:00" /><meta property="og:site_name" content="silenceper" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="如何创建一个自定义Controller?"/>
+<meta name="twitter:description" content="通过Custom Resource是扩展Kubernetes的一种方式（另外一种就是通过聚合层API apiserver-aggregation），而controller对指定的resource进行监听和执行对应的动作(watch,diff,action)。"/>
+<meta name="theme-color" content="#ffffff">
+<meta name="msapplication-TileColor" content="#da532c">
+<link rel="canonical" href="/blog/202005/custom-resources-and-controllers/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="prev" href="/blog/202005/difference-vim-and-echo/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><meta name="google-site-verification" content="VJ4lE3d3A73DNoyxuuXL_Cuu6MEErPtKXqfAv69pr6E" /><meta name="baidu-site-verification" content="k061nqJczY" /><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "如何创建一个自定义Controller?",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "\/blog\/202005\/custom-resources-and-controllers\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "\/img\/silenceoer-avatar.jpg",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "posts","keywords": "crd, controller, kubernetes, operator","wordcount":  4084 ,
+        "url": "\/blog\/202005\/custom-resources-and-controllers\/","datePublished": "2020-05-18T18:20:59\x2b08:00","dateModified": "2020-05-18T18:20:59\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "silenceper",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "\/img\/silenceper-avatar.jpg",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": "通过Custom Resource是扩展Kubernetes的一种方式（另外一种就是通过聚合层API apiserver-aggregation），而controller对指定的resource进行监听和执行对应的动作(watch,diff,action)。"
+    }
+    </script></head>
+    <body><script>
+            if (!window.localStorage || !window.localStorage.getItem('theme')) {window.isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;} else {
+                window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            }
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title animated bounceIn">
+            <a href="/">silenceper</a>
+        </div>
+        <div class="menu"><a class="menu-item" href="/posts/">文章</a><a class="menu-item" href="/tags/">标签</a><a class="menu-item" href="/categories/">分类</a><a class="menu-item" href="/about/">关于</a><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-rotate-180 fa-fw"></i>
+            </a>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-wrapper">
+        <div class="header-container">
+            <div class="header-title animated bounceIn">
+                <a href="/">silenceper</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-rotate-180 fa-fw"></i>
+            </a>
+        </div>
+    </div>
+</header>
+
+<script>
+    window.desktopHeaderMode = "fixed";
+    window.mobileHeaderMode = "auto";
+</script>
+<main class="main">
+                <div class="container"><article class="page single"><h1 class="single-title animated flipInX">如何创建一个自定义Controller?</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author">
+                    <a class="author" href="/" rel="author" target="_blank">
+                        <i class="fas fa-user-circle fa-fw"></i>silenceper
+                    </a>
+                </span>&nbsp;<span class="post-category">收录于&nbsp;
+                            <span>
+                                <a href="/categories/tech">
+                                    <i class="far fa-folder fa-fw"></i>Tech
+                                </a>
+                            </span></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-05-18&#32;18:20>2020-05-18 18:20</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>约 4084 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>预计阅读 9 分钟&nbsp;</div>
+        </div><div class="toc" id="toc-auto">
+                <h2 class="toc-title">目录</h2>
+                <div class="toc-content" id="toc-content-auto"></div>
+            </div>
+            <div class="toc" id="toc-static">
+                <details>
+                    <summary>
+                        <div class="toc-title">
+                            <span>目录</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#目的">目的</a></li>
+    <li><a href="#crd资源定义">CRD资源定义</a></li>
+    <li><a href="#代码编写">代码编写</a>
+      <ul>
+        <li><a href="#struct资源定义">struct资源定义</a></li>
+        <li><a href="#代码生成">代码生成</a>
+          <ul>
+            <li><a href="#全局tag">全局tag</a></li>
+            <li><a href="#局部tag">局部tag</a></li>
+            <li><a href="#interface处理">interface{}处理</a></li>
+          </ul>
+        </li>
+        <li><a href="#controller编写">Controller编写</a></li>
+      </ul>
+    </li>
+    <li><a href="#总结">总结</a>
+      <ul>
+        <li><a href="#参考">参考</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+                </details>
+            </div><div class="content"><h2 id="目的">目的</h2>
+<p>通过Custom Resource是扩展Kubernetes的一种方式（另外一种就是通过聚合层API apiserver-aggregation），而controller对指定的resource进行监听和执行对应的动作(watch,diff,action)。<br />
+<br /><strong>Operator与Controller区别</strong></p>
+<ul>
+<li>所有的Operator都是用了Controller模式，但并不是所有Controller都是Operator。只有当它满足: controller模式 + API扩展 + 专注于某个App/中间件时，才是一个Operator。</li>
+<li>Operator就是使用CRD实现的定制化的Controller. 它与内置K8S Controller遵循同样的运行模式(比如 watch, diff, action)</li>
+<li>Operator是特定领域的Controller实现</li>
+</ul>
+<p>讨论两者区别：<a href="https://github.com/kubeflow/tf-operator/issues/300" target="_blank" rel="noopener noreffer">https://github.com/kubeflow/tf-operator/issues/300</a>
+</p>
+<blockquote>
+<p>所以先学习如何构建出一些自定义的Controller肯定是之后实现Operator的基础。</p>
+</blockquote>
+<p>实现一个自定义的Controller由两部分组成：CRD和Controller逻辑代码<br />这里以sample-controller的代码为例，同时我们自己写的Controller也可以参考这个代码结构。
+<a name="duygD"></a></p>
+<h2 id="crd资源定义">CRD资源定义</h2>
+<p>以sample-controler中的为例，我们需要创建的一个 <code>Foo</code> 如下<a href="https://github.com/kubernetes/sample-controller/blob/master/artifacts/examples/example-foo.yaml" target="_blank" rel="noopener noreffer">example-foo.yaml</a>
+：<br />创建该 <code>Foo</code> 自定义资源后，期望创建出一个名称为 <code>example-foo</code> ，副本数为 <code>1</code> 的deployment。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>samplecontroller.k8s.io/v1alpha1<span class="w">
+</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>Foo<span class="w">
+</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>example-foo<span class="w">
+</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">deploymentName</span><span class="p">:</span><span class="w"> </span>example-foo<span class="w">
+</span><span class="w">  </span><span class="k">replicas</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>它的CRD定义如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>apiextensions.k8s.io/v1beta1<span class="w">
+</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>CustomResourceDefinition<span class="w">
+</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>foos.samplecontroller.k8s.io<span class="w">
+</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">group</span><span class="p">:</span><span class="w"> </span>samplecontroller.k8s.io<span class="w">
+</span><span class="w">  </span><span class="k">version</span><span class="p">:</span><span class="w"> </span>v1alpha1<span class="w"> </span><span class="c">#版本</span><span class="w">
+</span><span class="w">  </span><span class="k">names</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>Foo<span class="w"> </span><span class="c"># kind类型</span><span class="w">
+</span><span class="w">    </span><span class="k">plural</span><span class="p">:</span><span class="w"> </span>foos<span class="w"> </span><span class="c"># API中使用的名称：/apis/&lt;group&gt;/&lt;version&gt;/&lt;plural&gt;</span><span class="w">
+</span><span class="w">  </span><span class="k">scope</span><span class="p">:</span><span class="w"> </span>Namespaced<span class="w"> </span><span class="c"># Namespaced/Cluster，表示该CRD是命令空间属性还是集群属性</span><span class="w">
+</span><span class="w">  </span><span class="k">validation</span><span class="p">:</span><span class="w"> </span><span class="c"># 对参数进行验证，应用openAPIV3Schema规则</span><span class="w">
+</span><span class="w">    </span><span class="k">openAPIV3Schema</span><span class="p">:</span><span class="w"> 
+</span><span class="w">      </span><span class="k">properties</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="k">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="k">properties</span><span class="p">:</span><span class="w">
+</span><span class="w">            </span><span class="c"># 定义了一个 replicas 字段，类型为integer ，并且在1-10的范围内</span><span class="w">
+</span><span class="w">            </span><span class="k">replicas</span><span class="p">:</span><span class="w">        
+</span><span class="w">              </span><span class="k">type</span><span class="p">:</span><span class="w"> </span>integer<span class="w">
+</span><span class="w">              </span><span class="k">minimum</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span><span class="w">              </span><span class="k">maximum</span><span class="p">:</span><span class="w"> </span><span class="m">10</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>更多关于crd定义规则可以参考官方文档：<br /><a href="https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/" target="_blank" rel="noopener noreffer">https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/</a>
+<br />
+<br />当把这个crd资源apply到集群中后，我们可以通过 <code>kubectl get apiservice v1alpha1.samplecontroller.k8s.io -o yaml</code> 命令看到注册这个 <code>apiservice</code> <br /></p>
+<p><a name="h4Pwy"></a></p>
+<h2 id="代码编写">代码编写</h2>
+<p>只需要将我们 <code>Foo</code> resource相关的struct，其余的类似自定义资源的 <code>informers</code> , <code>listers</code> , <code>clientset</code> 以及 <code>deepcopy</code> 的代码都可以通过工具<a href="https://github.com/kubernetes/code-generator" target="_blank" rel="noopener noreffer">code-generator</a>
+自动生成。<br />以及编写我们自定义Controller的业务逻辑代码就好了
+<a name="c9VL7"></a></p>
+<h3 id="struct资源定义">struct资源定义</h3>
+<p><a href="https://github.com/kubernetes/sample-controller/blob/master/pkg/apis/samplecontroller/v1alpha1/types.go" target="_blank" rel="noopener noreffer">type.go</a>
+</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">v1alpha1</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+	<span class="nx">metav1</span> <span class="s">&#34;k8s.io/apimachinery/pkg/apis/meta/v1&#34;</span>
+<span class="p">)</span>
+
+<span class="c1">// +genclient  
+</span><span class="c1">// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+</span><span class="c1"></span>
+<span class="c1">// Foo is a specification for a Foo resource
+</span><span class="c1"></span><span class="kd">type</span> <span class="nx">Foo</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="nx">metav1</span><span class="p">.</span><span class="nx">TypeMeta</span>   <span class="s">`json:&#34;,inline&#34;`</span>
+	<span class="nx">metav1</span><span class="p">.</span><span class="nx">ObjectMeta</span> <span class="s">`json:&#34;metadata,omitempty&#34;`</span>
+
+	<span class="nx">Spec</span>   <span class="nx">FooSpec</span>   <span class="s">`json:&#34;spec&#34;`</span>
+	<span class="nx">Status</span> <span class="nx">FooStatus</span> <span class="s">`json:&#34;status&#34;`</span>
+<span class="p">}</span>
+
+<span class="c1">// FooSpec is the spec for a Foo resource
+</span><span class="c1">// FooSpec 定义
+</span><span class="c1"></span><span class="kd">type</span> <span class="nx">FooSpec</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="nx">DeploymentName</span> <span class="kt">string</span> <span class="s">`json:&#34;deploymentName&#34;`</span>
+	<span class="nx">Replicas</span>       <span class="o">*</span><span class="kt">int32</span> <span class="s">`json:&#34;replicas&#34;`</span>
+<span class="p">}</span>
+
+<span class="c1">// FooStatus is the status for a Foo resource
+</span><span class="c1"></span><span class="kd">type</span> <span class="nx">FooStatus</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="nx">AvailableReplicas</span> <span class="kt">int32</span> <span class="s">`json:&#34;availableReplicas&#34;`</span>
+<span class="p">}</span>
+
+<span class="c1">// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+</span><span class="c1"></span>
+<span class="c1">// FooList is a list of Foo resources
+</span><span class="c1"></span><span class="kd">type</span> <span class="nx">FooList</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="nx">metav1</span><span class="p">.</span><span class="nx">TypeMeta</span> <span class="s">`json:&#34;,inline&#34;`</span>
+	<span class="nx">metav1</span><span class="p">.</span><span class="nx">ListMeta</span> <span class="s">`json:&#34;metadata&#34;`</span>
+
+	<span class="nx">Items</span> <span class="p">[]</span><span class="nx">Foo</span> <span class="s">`json:&#34;items&#34;`</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>其中类似 <code>+k8s:</code> 的注释是代码生成来识别的。<br />
+<br /><a href="https://github.com/kubernetes/sample-controller/blob/master/pkg/apis/samplecontroller/v1alpha1/register.go" target="_blank" rel="noopener noreffer">register.go</a>
+ 中将 <code>Foo</code> , <code>FooList</code> 注册进入 <code>scheme</code> 中。
+<a name="BQ8w2"></a></p>
+<h3 id="代码生成">代码生成</h3>
+<p>代码生成能帮我处理大部分重复代码，主要通过 <code>https://github.com/kubernetes/code-generator</code> 这个包进行解析tag并生成。
+<a name="WOqAo"></a></p>
+<h4 id="全局tag">全局tag</h4>
+<p>必须在目标包的doc.go文件中声明，典型路径是 pkg/apis/<apigroup>/<version>/doc.go。<br />内容示例：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// 为包中任何类型生成深拷贝方法，可以在局部tag覆盖此默认行为
+</span><span class="c1">// +groupName=example.com
+</span><span class="c1">// +k8s:deepcopy-gen=package
+</span><span class="c1">// +groupName=samplecontroller.k8s.io  // groupName指定API组的全限定名
+</span><span class="c1"></span>
+<span class="c1">// Package v1alpha1 is the v1alpha1 version of the API.
+</span><span class="c1"></span><span class="kn">package</span> <span class="nx">v1alpha1</span> <span class="c1">// import &#34;k8s.io/sample-controller/pkg/apis/samplecontroller/v1alpha1&#34;
+</span></code></pre></td></tr></table>
+</div>
+</div><p><a name="UUUVg"></a></p>
+<h4 id="局部tag">局部tag</h4>
+<ul>
+<li><strong>+genclient</strong>: 为这个 package 创建 client。</li>
+<li><strong>+genclient:noStatus</strong>: 当创建 client 时，不存储 status。</li>
+<li><strong>+k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object</strong>: 为结构体生成 deepcopy 的代码，实现了 runtime.Object 的 Interface。</li>
+</ul>
+<p><br />**代码生成：**<br />通过./hack/<a href="https://github.com/kubernetes/sample-controller/blob/master/hack/update-codegen.sh" target="_blank" rel="noopener noreffer">update-codegen.sh</a>
+方法可以生成，client以及deepcopy代码。<br />包含：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">sample-controller/pkg/apis/samplecontroller/v1alpha1/zz_generated.deepcopy.go
+sample-controller/pkg/generated/clientset
+sample-controller/pkg/generated/informers
+sample-controller/pkg/generated/informers
+
+</code></pre></td></tr></table>
+</div>
+</div><p>_前提：code-generator 已经在vendor中，执行 <code>go mod vendor</code> _<br />
+<br /><a href="https://github.com/kubernetes/sample-controller/blob/master/hack/update-codegen.sh" target="_blank" rel="noopener noreffer">update-codegen.sh</a>
+内容如下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">bash <span class="s2">&#34;</span><span class="si">${</span><span class="nv">CODEGEN_PKG</span><span class="si">}</span><span class="s2">&#34;</span>/generate-groups.sh <span class="s2">&#34;deepcopy,client,informer,lister&#34;</span> <span class="se">\
+</span><span class="se"></span>  k8s.io/sample-controller/pkg/generated k8s.io/sample-controller/pkg/apis <span class="se">\
+</span><span class="se"></span>  samplecontroller:v1alpha1 <span class="se">\
+</span><span class="se"></span>  --output-base <span class="s2">&#34;</span><span class="k">$(</span>dirname <span class="s2">&#34;</span><span class="si">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="si">}</span><span class="s2">&#34;</span><span class="k">)</span><span class="s2">/../../..&#34;</span> <span class="se">\
+</span><span class="se"></span>  --go-header-file <span class="s2">&#34;</span><span class="si">${</span><span class="nv">SCRIPT_ROOT</span><span class="si">}</span><span class="s2">&#34;</span>/hack/boilerplate.go.txt
+</code></pre></td></tr></table>
+</div>
+</div><p>完整使用说明：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">Usage: generate-groups.sh &lt;generators&gt; &lt;output-package&gt; &lt;apis-package&gt; &lt;groups-versions&gt; ...
+
+  &lt;generators&gt;        the generators comma separated to run <span class="o">(</span>deepcopy,defaulter,client,lister,informer<span class="o">)</span> or <span class="s2">&#34;all&#34;</span>.
+  &lt;output-package&gt;    the output package name <span class="o">(</span>e.g. github.com/example/project/pkg/generated<span class="o">)</span>.
+  &lt;apis-package&gt;      the external types dir <span class="o">(</span>e.g. github.com/example/api or github.com/example/project/pkg/apis<span class="o">)</span>.
+  &lt;groups-versions&gt;   the groups and their versions in the format <span class="s2">&#34;groupA:v1,v2 groupB:v1 groupC:v2&#34;</span>, relative
+                      to &lt;api-package&gt;.
+  ...                 arbitrary flags passed to all generator binaries.
+
+
+Examples:
+  generate-groups.sh all             github.com/example/project/pkg/client github.com/example/project/pkg/apis <span class="s2">&#34;foo:v1 bar:v1alpha1,v1beta1&#34;</span>
+  generate-groups.sh deepcopy,client github.com/example/project/pkg/client github.com/example/project/pkg/apis <span class="s2">&#34;foo:v1 bar:v1alpha1,v1beta1&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><a name="mIgAJ"></a></p>
+<h4 id="interface处理">interface{}处理</h4>
+<p>场景：如果我们需要一个通用的类型的object，如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="w">  </span><span class="k">validation</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="k">openAPIV3Schema</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="k">properties</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="k">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="k">properties</span><span class="p">:</span><span class="w">
+</span><span class="w">            </span><span class="k">fields</span><span class="p">:</span><span class="w">
+</span><span class="w">              </span><span class="k">type</span><span class="p">:</span><span class="w"> </span>object<span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>我们在spec里面定义了一个fields字段，类型是object（即key ,value的形式），value的值可能是int也可能是string或者bool<br />在type定义的时候我是这么写的，定义为map[string]interface{}</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml">//<span class="w"> </span>FooSpec<span class="w"> </span>is<span class="w"> </span>the<span class="w"> </span>spec<span class="w"> </span>for<span class="w"> </span>a<span class="w"> </span>Foo<span class="w"> </span>resource<span class="w">
+</span><span class="w"></span>type<span class="w"> </span>FooSpec<span class="w"> </span>struct<span class="w"> </span>{<span class="w">
+</span><span class="w">	</span>Fields<span class="w"> </span>map<span class="p">[</span>string<span class="p">]</span>interface{}<span class="w"> </span>`json<span class="p">:</span><span class="s2">&#34;fields&#34;</span>`<span class="w">
+</span><span class="w"></span>}<span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>当在代码生成的时候，发现会报错：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml">Generating<span class="w"> </span>deepcopy<span class="w"> </span>funcs<span class="w">
+</span><span class="w"></span>F0518<span class="w"> </span><span class="m">17</span><span class="p">:</span><span class="m">53</span><span class="p">:</span><span class="m">33.568567</span><span class="w">   </span><span class="m">39986</span><span class="w"> </span>deepcopy.go<span class="p">:</span><span class="m">750</span><span class="p">]</span><span class="w"> </span>DeepCopy<span class="w"> </span>of<span class="w"> </span><span class="s2">&#34;interface{}&#34;</span><span class="w"> </span>is<span class="w"> </span>unsupported.<span class="w"> </span>Instead<span class="p">,</span><span class="w"> </span>use<span class="w"> </span>named<span class="w"> </span>interfaces<span class="w"> </span>with<span class="w"> </span>DeepCopy&lt;named-interface&gt;<span class="w"> </span>as<span class="w"> </span>one<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>methods.<span class="w">
+</span><span class="w"></span><span class="k">goroutine 1 [running]</span><span class="p">:</span><span class="w">
+</span><span class="w"></span>k8s.io/klog/v2.stacks(<span class="m">0xc000132001</span><span class="p">,</span><span class="w"> </span><span class="m">0xc0002e9000</span><span class="p">,</span><span class="w"> </span><span class="m">0xad</span><span class="p">,</span><span class="w"> </span><span class="m">0xfd</span>)<span class="w">
+</span><span class="w">	</span>/Users/silenceper/workspace/golang/pkg/mod/k8s.io/klog/v2@v2<span class="m">.0.0</span>/klog.go<span class="p">:</span><span class="m">972</span><span class="w"> </span>+<span class="m">0xb8</span><span class="w">
+</span><span class="w"> </span>......<span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>遇到这种问题，需要自己实现深拷贝，例如这种：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml">type<span class="w"> </span>HelmReleaseSpec<span class="w"> </span>struct<span class="w"> </span>{<span class="w">
+</span><span class="w">    </span>HelmValues<span class="w">    </span>`json<span class="p">:</span><span class="s2">&#34;,inline&#34;</span>`<span class="w">
+</span><span class="w"></span>}<span class="w">
+</span><span class="w"> 
+</span><span class="w"></span>//<span class="w"> </span>+k8s<span class="p">:</span>deepcopy-gen=<span class="kc">false</span><span class="w">
+</span><span class="w"></span>type<span class="w"> </span>HelmValues<span class="w"> </span>struct<span class="w"> </span>{<span class="w">
+</span><span class="w">    </span>helm.Values<span class="w"> </span>`json<span class="p">:</span><span class="s2">&#34;values,omitempty&#34;</span>`<span class="w">
+</span><span class="w"></span>}<span class="w">
+</span><span class="w"> 
+</span><span class="w"></span>//<span class="w"> </span>helm.Values定义：<span class="w">
+</span><span class="w"></span>type<span class="w"> </span>Values<span class="w"> </span>map<span class="p">[</span>string<span class="p">]</span>interface{}<span class="w">
+</span><span class="w"> 
+</span><span class="w"></span>//<span class="w"> </span>自己实现深拷贝<span class="w">
+</span><span class="w"></span>func<span class="w"> </span>(in<span class="w"> </span><span class="cp">*HelmValues)</span><span class="w"> </span>DeepCopyInto(out<span class="w"> </span><span class="cp">*HelmValues)</span><span class="w"> </span>{<span class="w">
+</span><span class="w">    </span>if<span class="w"> </span>in<span class="w"> </span>==<span class="w"> </span>nil<span class="w"> </span>{<span class="w">
+</span><span class="w">        </span>return<span class="w">
+</span><span class="w">    </span>}<span class="w">
+</span><span class="w"> 
+</span><span class="w">    </span>b<span class="p">,</span><span class="w"> </span>err<span class="w"> </span><span class="p">:</span>=<span class="w"> </span>yaml.Marshal(in.Values)<span class="w">
+</span><span class="w">    </span>if<span class="w"> </span>err<span class="w"> </span>!=<span class="w"> </span>nil<span class="w"> </span>{<span class="w">
+</span><span class="w">        </span>return<span class="w">
+</span><span class="w">    </span>}<span class="w">
+</span><span class="w">    </span>var<span class="w"> </span>values<span class="w"> </span>helm.Values<span class="w">
+</span><span class="w">    </span>err<span class="w"> </span>=<span class="w"> </span>yaml.Unmarshal(b<span class="p">,</span><span class="w"> </span><span class="cp">&amp;values)</span><span class="w">
+</span><span class="w">    </span>if<span class="w"> </span>err<span class="w"> </span>!=<span class="w"> </span>nil<span class="w"> </span>{<span class="w">
+</span><span class="w">        </span>return<span class="w">
+</span><span class="w">    </span>}<span class="w">
+</span><span class="w">    </span>out.Values<span class="w"> </span>=<span class="w"> </span>values<span class="w">
+</span><span class="w"></span>}<span class="w"> 
+</span></code></pre></td></tr></table>
+</div>
+</div><p><a name="Qu2Ju"></a></p>
+<h3 id="controller编写">Controller编写</h3>
+<p>在编写Controller之前需要了解client-go中的informer机制：<br /><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://cdn.nlark.com/yuque/0/2020/png/748713/1589795898427-9fb052f1-571c-47ca-a77a-47bba6e24181.png#align=left&amp;display=inline&amp;height=397&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=794&amp;originWidth=1058&amp;size=517545&amp;status=done&amp;style=none&amp;width=529" alt="informer" title="informer" class="lazyload">
+<figcaption class="image-caption">informer</figcaption></figure>
+</p>
+<blockquote>
+<p>黄色的部分是controller相关的框架，包括workqueue。蓝色部分是client-go的相关内容，包括informer, reflector(其实就是informer的封装), indexer。从流程上看，reflector从apiserver中通过list&amp;watch机制接收事件变化，进入Delta FIFO队列中，由informer进行处理。informer会将delta FIFO队列中的事件交给indexer组件，indexer组件会将事件持久化存储在本地的缓存中。之后，由于用户事先将为informer注册各种事件的回调函数，这些回调函数将针对不同的组件做不同的处理。例如在controller中，将把object放入workqueue中，之后由controller的业务逻辑中进行处理。处理的时候将从缓存中获取object的引用。即各组件对资源的处理仅限于本地缓存中，直到update资源的时候才与apiserver交互。</p>
+</blockquote>
+<p><br />简单来讲通过list/watch机器提供了本地缓存避免每次去请求apiserver。<br />并且提供了Event Handler方法，在将数据保存进入cache时，通过调用自定义handler方法，增加自定义处理。<br />所以Controller 的代码结构，就是如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">NewController</span><span class="p">(</span>
+	<span class="nx">kubeclientset</span> <span class="nx">kubernetes</span><span class="p">.</span><span class="nx">Interface</span><span class="p">,</span>
+	<span class="nx">sampleclientset</span> <span class="nx">clientset</span><span class="p">.</span><span class="nx">Interface</span><span class="p">,</span>
+	<span class="nx">deploymentInformer</span> <span class="nx">appsinformers</span><span class="p">.</span><span class="nx">DeploymentInformer</span><span class="p">,</span>
+	<span class="nx">fooInformer</span> <span class="nx">informers</span><span class="p">.</span><span class="nx">FooInformer</span><span class="p">)</span> <span class="o">*</span><span class="nx">Controller</span> <span class="p">{</span>
+    <span class="o">...</span><span class="p">.</span>
+		<span class="nx">fooInformer</span><span class="p">.</span><span class="nf">Informer</span><span class="p">().</span><span class="nf">AddEventHandler</span><span class="p">(</span><span class="nx">cache</span><span class="p">.</span><span class="nx">ResourceEventHandlerFuncs</span><span class="p">{</span>
+		<span class="nx">AddFunc</span><span class="p">:</span> <span class="nx">controller</span><span class="p">.</span><span class="nx">enqueueFoo</span><span class="p">,</span>
+		<span class="nx">UpdateFunc</span><span class="p">:</span> <span class="kd">func</span><span class="p">(</span><span class="nx">old</span><span class="p">,</span> <span class="nx">new</span> <span class="kd">interface</span><span class="p">{})</span> <span class="p">{</span>
+			<span class="nx">controller</span><span class="p">.</span><span class="nf">enqueueFoo</span><span class="p">(</span><span class="nx">new</span><span class="p">)</span>
+		<span class="p">},</span>
+	<span class="p">})</span>
+    <span class="o">...</span><span class="p">.</span>
+<span class="p">}</span>
+<span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Controller</span><span class="p">)</span> <span class="nf">Run</span><span class="p">(</span><span class="nx">threadiness</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">stopCh</span> <span class="o">&lt;-</span><span class="kd">chan</span> <span class="kd">struct</span><span class="p">{})</span> <span class="kt">error</span> <span class="p">{</span>
+    
+    <span class="c1">// Launch two workers to process Foo resources
+</span><span class="c1"></span>	<span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">threadiness</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+		<span class="k">go</span> <span class="nx">wait</span><span class="p">.</span><span class="nf">Until</span><span class="p">(</span><span class="nx">c</span><span class="p">.</span><span class="nx">runWorker</span><span class="p">,</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">,</span> <span class="nx">stopCh</span><span class="p">)</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+<span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Controller</span><span class="p">)</span> <span class="nf">runWorker</span><span class="p">()</span> <span class="p">{</span>
+	<span class="k">for</span> <span class="nx">c</span><span class="p">.</span><span class="nf">processNextWorkItem</span><span class="p">()</span> <span class="p">{</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+<span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Controller</span><span class="p">)</span> <span class="nf">processNextWorkItem</span><span class="p">()</span> <span class="kt">bool</span> <span class="p">{</span>
+	<span class="nx">obj</span><span class="p">,</span> <span class="nx">shutdown</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">workqueue</span><span class="p">.</span><span class="nf">Get</span><span class="p">()</span>
+    <span class="o">...</span>
+    
+    <span class="nx">err</span> <span class="o">:=</span> <span class="kd">func</span><span class="p">(</span><span class="nx">obj</span> <span class="kd">interface</span><span class="p">{})</span> <span class="kt">error</span> <span class="p">{</span>
+    	<span class="o">...</span>
+        <span class="c1">// Run the syncHandler, passing it the namespace/name string of the
+</span><span class="c1"></span>		<span class="c1">// Foo resource to be synced.
+</span><span class="c1"></span>		<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nf">syncHandler</span><span class="p">(</span><span class="nx">key</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+			<span class="c1">// Put the item back on the workqueue to handle any transient errors.
+</span><span class="c1"></span>			<span class="nx">c</span><span class="p">.</span><span class="nx">workqueue</span><span class="p">.</span><span class="nf">AddRateLimited</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
+			<span class="k">return</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="s">&#34;error syncing &#39;%s&#39;: %s, requeuing&#34;</span><span class="p">,</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">err</span><span class="p">.</span><span class="nf">Error</span><span class="p">())</span>
+		<span class="p">}</span>
+        <span class="o">...</span>
+    <span class="p">}(</span><span class="nx">obj</span><span class="p">)</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+<span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Controller</span><span class="p">)</span> <span class="nf">syncHandler</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
+    <span class="c1">// Convert the namespace/name string into a distinct namespace and name
+</span><span class="c1"></span>	<span class="nx">namespace</span><span class="p">,</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">cache</span><span class="p">.</span><span class="nf">SplitMetaNamespaceKey</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">utilruntime</span><span class="p">.</span><span class="nf">HandleError</span><span class="p">(</span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="s">&#34;invalid resource key: %s&#34;</span><span class="p">,</span> <span class="nx">key</span><span class="p">))</span>
+		<span class="k">return</span> <span class="kc">nil</span>
+	<span class="p">}</span>
+    
+    <span class="c1">//TODO 处理逻辑
+</span><span class="c1"></span><span class="p">}</span>
+<span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Controller</span><span class="p">)</span> <span class="nf">enqueueFoo</span><span class="p">(</span><span class="nx">obj</span> <span class="kd">interface</span><span class="p">{})</span> <span class="p">{</span>
+    <span class="o">...</span>
+	<span class="nx">c</span><span class="p">.</span><span class="nx">workqueue</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>在NewController中通过fooInformer添加 <code>AddEventHandler</code> ，执行 <code>enqueueFoo</code> </li>
+<li>enqueueFoo 中将获取的变更放入队列</li>
+<li>启动一个或多个work从队列中取数据，最终通过syncHandler进行业务判断</li>
+<li>在sample-controller中同时还监听了deployment，在 <code>handleObject</code> 判断是否归属 <code>Foo</code> Kind ，同时执行 <code>enqueueFoo</code>  入队。</li>
+</ul>
+<p><br />具体代码判断参考<a href="https://github.com/kubernetes/sample-controller/blob/master/controller.go" target="_blank" rel="noopener noreffer">controller.go</a>
+<br />
+<br />在<a href="https://github.com/kubernetes/sample-controller/blob/master/main.go" target="_blank" rel="noopener noreffer">main.go</a>
+方法中调用如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go">
+<span class="nx">exampleClient</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">clientset</span><span class="p">.</span><span class="nf">NewForConfig</span><span class="p">(</span><span class="nx">cfg</span><span class="p">)</span>
+<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+    <span class="nx">klog</span><span class="p">.</span><span class="nf">Fatalf</span><span class="p">(</span><span class="s">&#34;Error building example clientset: %s&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">.</span><span class="nf">Error</span><span class="p">())</span>
+<span class="p">}</span>	
+<span class="nx">kubeInformerFactory</span> <span class="o">:=</span> <span class="nx">kubeinformers</span><span class="p">.</span><span class="nf">NewSharedInformerFactory</span><span class="p">(</span><span class="nx">kubeClient</span><span class="p">,</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="o">*</span><span class="mi">30</span><span class="p">)</span>
+<span class="nx">exampleInformerFactory</span> <span class="o">:=</span> <span class="nx">informers</span><span class="p">.</span><span class="nf">NewSharedInformerFactory</span><span class="p">(</span><span class="nx">exampleClient</span><span class="p">,</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="o">*</span><span class="mi">30</span><span class="p">)</span>
+
+<span class="nx">controller</span> <span class="o">:=</span> <span class="nf">NewController</span><span class="p">(</span><span class="nx">kubeClient</span><span class="p">,</span> <span class="nx">exampleClient</span><span class="p">,</span>
+                            <span class="nx">kubeInformerFactory</span><span class="p">.</span><span class="nf">Apps</span><span class="p">().</span><span class="nf">V1</span><span class="p">().</span><span class="nf">Deployments</span><span class="p">(),</span>
+                            <span class="nx">exampleInformerFactory</span><span class="p">.</span><span class="nf">Samplecontroller</span><span class="p">().</span><span class="nf">V1alpha1</span><span class="p">().</span><span class="nf">Foos</span><span class="p">())</span>
+
+<span class="c1">// notice that there is no need to run Start methods in a separate goroutine. (i.e. go kubeInformerFactory.Start(stopCh)
+</span><span class="c1">// Start method is non-blocking and runs all registered informers in a dedicated goroutine.
+</span><span class="c1"></span><span class="nx">kubeInformerFactory</span><span class="p">.</span><span class="nf">Start</span><span class="p">(</span><span class="nx">stopCh</span><span class="p">)</span>
+<span class="nx">exampleInformerFactory</span><span class="p">.</span><span class="nf">Start</span><span class="p">(</span><span class="nx">stopCh</span><span class="p">)</span>   <span class="c1">//启动informer
+</span></code></pre></td></tr></table>
+</div>
+</div><p>就是调用通过coge-gen生成代码创建informer并启动，创建client。<br />
+<br />**思考：为什么要通过队列来控制数据的变化？ **<br />我觉得用队列一方面是解耦，因为往往一个Controller里面可能要通过informer监听各类资源对象，通过队列借助了各个informer的依赖。另一方便可以通过不同类型的队列比如限速队列，延迟队列达到不同的并发控制。<br /></p>
+<p><a name="GGFpW"></a></p>
+<h2 id="总结">总结</h2>
+<ul>
+<li>先定义crd，再实现Controller逻辑</li>
+<li>可以通过code-generator生成informer，client，listers代码</li>
+<li>注意针对interface{}类型需要自己实现deepCopy方法</li>
+<li>如果是实现一个Operator，集成更多更复杂的Controller的话，我们可以借助一些Operator框架，比如kubebuilder</li>
+</ul>
+<p><a name="p45Hr"></a></p>
+<h3 id="参考">参考</h3>
+<ul>
+<li><a href="https://juejin.im/post/5de097bbf265da05d849ab53" target="_blank" rel="noopener noreffer">https://juejin.im/post/5de097bbf265da05d849ab53</a>
+</li>
+<li><a href="https://blog.fatedier.com/2019/04/02/k8s-custom-controller/" target="_blank" rel="noopener noreffer">https://blog.fatedier.com/2019/04/02/k8s-custom-controller/</a>
+</li>
+<li><a href="https://blog.gmem.cc/crd" target="_blank" rel="noopener noreffer">https://blog.gmem.cc/crd</a>
+</li>
+</ul>
+<hr/>
+            <figure>
+                <img src="https://silenceper.oss-cn-beijing.aliyuncs.com/qrcode/search_study_program.png" data-sizes="auto" data-src="https://silenceper.oss-cn-beijing.aliyuncs.com/qrcode/search_study_program.png" class="lazyautosizes ls-is-cached lazyloaded">
+                <figcaption class="image-caption">关注公众号，获取最新文章推送</figcaption>
+            </figure>
+        </div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>本文于 2020-05-18 18:20 更新</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/blog/202005/custom-resources-and-controllers/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share"><span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="/blog/202005/custom-resources-and-controllers/" data-title="如何创建一个自定义Controller?" data-hashtags="crd,controller,kubernetes,operator"><i class="fab fa-twitter fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="/blog/202005/custom-resources-and-controllers/" data-hashtag="crd"><i class="fab fa-facebook-square fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="/blog/202005/custom-resources-and-controllers/" data-title="如何创建一个自定义Controller?"><i class="fab fa-weibo fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 人人" data-sharer="renren" data-url="/blog/202005/custom-resources-and-controllers/"><i class="fab fa-renren fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 百度" data-sharer="baidu" data-url="/blog/202005/custom-resources-and-controllers/" data-title="如何创建一个自定义Controller?"><i class="loveit it-baidu-fill"></i>
+</a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="/blog/202005/custom-resources-and-controllers/" data-title="如何创建一个自定义Controller?"><i class="fab fa-evernote fa-fw"></i>
+</a></span></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section><span>
+                        <a href="/tags/crd">
+                            <i class="fas fa-tag fa-fw"></i>crd
+                        </a>
+                    </span>&nbsp;<span>
+                        <a href="/tags/controller">
+                            <i class="fas fa-tag fa-fw"></i>controller
+                        </a>
+                    </span>&nbsp;<span>
+                        <a href="/tags/kubernetes">
+                            <i class="fas fa-tag fa-fw"></i>kubernetes
+                        </a>
+                    </span>&nbsp;<span>
+                        <a href="/tags/operator">
+                            <i class="fas fa-tag fa-fw"></i>operator
+                        </a>
+                    </span>&nbsp;</section>
+        <section>
+            <span><a href="javascript:window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/blog/202005/difference-vim-and-echo/" class="prev" rel="prev" title="用vim保存文件和echo命令到底有什么不同？"><i class="fas fa-angle-left fa-fw"></i>用vim保存文件和echo命令到底有什么不同？</a></div>
+</div>
+<div class="comment"><div id="gitalk"></div><script>
+            document.addEventListener("DOMContentLoaded", function(event) {
+                var gitalk = new Gitalk({
+                    id: '2020-05-18 18:20:59 \x2b0800 CST',
+                    title: '如何创建一个自定义Controller?',
+                    clientID: 'e708cc1fbc3e2613a24d',
+                    clientSecret: 'ffa9552c4ef788a7f135fa7b9510ffc672d0b914',
+                    repo: 'silenceper.github.io',
+                    owner: 'silenceper',
+                    admin: ['silenceper'],
+                    body: decodeURI(location.href),
+                });
+                gitalk.render('gitalk');
+            });
+        </script>
+        <noscript>
+            Please enable JavaScript to view the <a href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a>
+        </noscript></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright"><div class="copyright-line">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
+        </div>
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2016 - 2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">silenceper</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+    </div>
+</footer>
+</div><a href="#" class="dynamic-to-top animated faster" id="dynamic-to-top">
+            <span>&nbsp;</span>
+        </a><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$", right: "$", display: false },
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },]
+            });
+        });
+    </script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.css"><link rel="stylesheet" href="/css/lib/iconfont/iconfont.min.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script><script src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.2/dist/smooth-scroll.polyfills.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazysizes@5.1.2/lazysizes.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/mhchem.min.js"></script><script src="/js/lib/sharer/sharer.min.js"></script><script src=/js/theme.min.js></script>
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-139557989-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?fe23775b1a9ea11a6797646a56df1cc7";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script></body>
+</html>

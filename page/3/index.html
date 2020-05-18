@@ -83,6 +83,26 @@
 </div>
 </div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/blog/201809/k8s-source-code-structure/">k8s源码阅读(一)：源码结构</a>
+    </h1><div class="post-meta"><span class="post-author">
+            <a class="author" href="/" rel="author" target="_blank">
+                <i class="fas fa-user-circle fa-fw"></i>    &#34;silenceper&#34;
+            </a>
+        </span>&nbsp;<span class="post-publish">
+            发布于&nbsp;<time datetime=2018-09-12&#32;11:45>2018-09-12 11:45</time>
+        </span>&nbsp;<span class="post-category">收录于&nbsp;
+                    <span>
+                        <a href="/categories/tech">
+                            <i class="far fa-folder fa-fw"></i>Tech
+                        </a>
+                    </span></span></div><div class="content">环境 k8s代码版本：release-1.9 工具：vscode, dlv 下载代码，并放入gopath中，方便编译： 1 2 $ mkdir -p $GOPATH/src/k8s.io &amp;&amp; cd $GOPATH/src/k8s.io $ git clone https://github.com/kubernetes/kubernetes # 有墙 代</div><div class="post-footer">
+        <a href="/blog/201809/k8s-source-code-structure/">阅读全文</a><div class="post-tags">&nbsp;<span>
+                        <a href="/tags/k8s">
+                            <i class="fas fa-tag fa-fw"></i>k8s
+                        </a>
+                    </span></div></div>
+</article>
+<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/blog/201809/over-the-wall-pull-docker-mirror/">docker pull 翻墙下载镜像</a>
     </h1><div class="post-meta"><span class="post-author">
             <a class="author" href="/" rel="author" target="_blank">
@@ -195,30 +215,6 @@
                     </span>&nbsp;<span>
                         <a href="/tags/confd">
                             <i class="fas fa-tag fa-fw"></i>confd
-                        </a>
-                    </span></div></div>
-</article>
-<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/blog/201605/go-http-process/">Golang中http包默认路由匹配规则阅读笔记</a>
-    </h1><div class="post-meta"><span class="post-author">
-            <a class="author" href="/" rel="author" target="_blank">
-                <i class="fas fa-user-circle fa-fw"></i>    &#34;silenceper&#34;
-            </a>
-        </span>&nbsp;<span class="post-publish">
-            发布于&nbsp;<time datetime=2016-05-28&#32;18:00>2016-05-28 18:00</time>
-        </span>&nbsp;<span class="post-category">收录于&nbsp;
-                    <span>
-                        <a href="/categories/tech">
-                            <i class="far fa-folder fa-fw"></i>Tech
-                        </a>
-                    </span></span></div><div class="content">一、执行流程 构建一个简单http server： 1 2 3 4 5 6 7 8 9 10 11 12 13 14 package main import ( &#34;log&#34; &#34;net/http&#34; ) func main() { http.HandleFunc(&#34;/&#34;, func(w http.ResponseWriter, r *http.Request) { w.Write([]byte(&#34;hello world&#34;)) }) log.Fatal(http.ListenAndServe(&#34;:8080&#34;, nil)) } 使用http://12</div><div class="post-footer">
-        <a href="/blog/201605/go-http-process/">阅读全文</a><div class="post-tags">&nbsp;<span>
-                        <a href="/tags/wechat">
-                            <i class="fas fa-tag fa-fw"></i>wechat
-                        </a>
-                    </span>&nbsp;<span>
-                        <a href="/tags/go">
-                            <i class="fas fa-tag fa-fw"></i>go
                         </a>
                     </span></div></div>
 </article>
