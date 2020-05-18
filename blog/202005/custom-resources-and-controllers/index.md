@@ -133,7 +133,9 @@ package v1alpha1 // import "k8s.io/sample-controller/pkg/apis/samplecontroller/v
 - **+k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object**: 为结构体生成 deepcopy 的代码，实现了 runtime.Object 的 Interface。
 
 
-<br />**代码生成：**<br />通过./hack/[update-codegen.sh](https://github.com/kubernetes/sample-controller/blob/master/hack/update-codegen.sh)方法可以生成，client以及deepcopy代码。<br />包含：
+**代码生成：**
+
+通过./hack/[update-codegen.sh](https://github.com/kubernetes/sample-controller/blob/master/hack/update-codegen.sh)方法可以生成，client以及deepcopy代码。<br />包含：
 
 ```bash
 sample-controller/pkg/apis/samplecontroller/v1alpha1/zz_generated.deepcopy.go
@@ -145,6 +147,7 @@ sample-controller/pkg/generated/informers
 
 
 _前提：code-generator 已经在vendor中，执行 `go mod vendor` _<br />
+
 <br />[update-codegen.sh](https://github.com/kubernetes/sample-controller/blob/master/hack/update-codegen.sh)内容如下
 
 ```bash
@@ -348,7 +351,7 @@ exampleInformerFactory.Start(stopCh)   //启动informer
 - 先定义crd，再实现Controller逻辑
 - 可以通过code-generator生成informer，client，listers代码
 - 注意针对interface{}类型需要自己实现deepCopy方法
-- 如果是实现一个Operator，集成更多更复杂的Controller的话，我们可以借助一些Operator框架，比如kubebuilder
+- 实现一个Operator，集成更多更复杂的Controller的话，我们一般使用Operator框架，比如kubebuilder
 
 
 

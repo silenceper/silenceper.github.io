@@ -36,7 +36,7 @@
                 "url": "\/img\/silenceoer-avatar.jpg",
                 "width":  800 ,
                 "height":  600 
-            },"genre": "posts","keywords": "crd, controller, kubernetes, operator","wordcount":  4084 ,
+            },"genre": "posts","keywords": "crd, controller, kubernetes, operator","wordcount":  4075 ,
         "url": "\/blog\/202005\/custom-resources-and-controllers\/","datePublished": "2020-05-18T18:20:59\x2b08:00","dateModified": "2020-05-18T18:20:59\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "silenceper",
@@ -98,7 +98,7 @@
                                 </a>
                             </span></span></div>
             <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-05-18&#32;18:20>2020-05-18 18:20</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>约 4084 字&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>约 4075 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>预计阅读 9 分钟&nbsp;</div>
         </div><div class="toc" id="toc-auto">
                 <h2 class="toc-title">目录</h2>
@@ -355,7 +355,8 @@
 <li><strong>+genclient:noStatus</strong>: 当创建 client 时，不存储 status。</li>
 <li><strong>+k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object</strong>: 为结构体生成 deepcopy 的代码，实现了 runtime.Object 的 Interface。</li>
 </ul>
-<p><br />**代码生成：**<br />通过./hack/<a href="https://github.com/kubernetes/sample-controller/blob/master/hack/update-codegen.sh" target="_blank" rel="noopener noreffer">update-codegen.sh</a>
+<p><strong>代码生成：</strong></p>
+<p>通过./hack/<a href="https://github.com/kubernetes/sample-controller/blob/master/hack/update-codegen.sh" target="_blank" rel="noopener noreffer">update-codegen.sh</a>
 方法可以生成，client以及deepcopy代码。<br />包含：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -373,8 +374,8 @@ sample-controller/pkg/generated/informers
 
 </code></pre></td></tr></table>
 </div>
-</div><p>_前提：code-generator 已经在vendor中，执行 <code>go mod vendor</code> _<br />
-<br /><a href="https://github.com/kubernetes/sample-controller/blob/master/hack/update-codegen.sh" target="_blank" rel="noopener noreffer">update-codegen.sh</a>
+</div><p>_前提：code-generator 已经在vendor中，执行 <code>go mod vendor</code> _<br /></p>
+<p><br /><a href="https://github.com/kubernetes/sample-controller/blob/master/hack/update-codegen.sh" target="_blank" rel="noopener noreffer">update-codegen.sh</a>
 内容如下</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -730,7 +731,7 @@ Examples:
 <li>先定义crd，再实现Controller逻辑</li>
 <li>可以通过code-generator生成informer，client，listers代码</li>
 <li>注意针对interface{}类型需要自己实现deepCopy方法</li>
-<li>如果是实现一个Operator，集成更多更复杂的Controller的话，我们可以借助一些Operator框架，比如kubebuilder</li>
+<li>实现一个Operator，集成更多更复杂的Controller的话，我们一般使用Operator框架，比如kubebuilder</li>
 </ul>
 <p><a name="p45Hr"></a></p>
 <h3 id="参考">参考</h3>
