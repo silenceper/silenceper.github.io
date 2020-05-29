@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>基础接口 · 微信开发sdk文档</title>
+        <title>群发消息 · 微信开发sdk文档</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -70,10 +70,10 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="message.html" />
+    <link rel="next" href="../contributing.html" />
     
     
-    <link rel="prev" href="configuration.html" />
+    <link rel="prev" href="message-transfer.html" />
     
 
     <style>
@@ -180,7 +180,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.2.3" data-path="basic.html">
+        <li class="chapter " data-level="1.2.3" data-path="basic.html">
             
                 <a href="basic.html">
             
@@ -219,7 +219,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.6" data-path="broadcast.html">
+        <li class="chapter active" data-level="1.2.6" data-path="broadcast.html">
             
                 <a href="broadcast.html">
             
@@ -280,7 +280,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >基础接口</a>
+        <a href=".." >群发消息</a>
     </h1>
 </div>
 
@@ -295,40 +295,36 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="&#x57FA;&#x7840;&#x63A5;&#x53E3;">&#x57FA;&#x7840;&#x63A5;&#x53E3;</h1>
-<p>&#x5FAE;&#x4FE1;&#x516C;&#x4F17;&#x53F7;&#x64CD;&#x4F5C;&#x57FA;&#x7840;&#x63A5;&#x53E3;</p>
-<h2 id="&#x83B7;&#x53D6;accesstoken">&#x83B7;&#x53D6;<code>access_token</code></h2>
-<blockquote>
-<p>&#x5728;&#x6BCF;&#x4E2A;&#x64CD;&#x4F5C;&#x5B9E;&#x4F8B;&#x5BF9;&#x8C61;&#x4E2D;&#x4E5F;&#x6709;<code>GetAccessToken</code>&#x65B9;&#x6CD5;</p>
-<pre><code class="lang-go">ak,err:=officialAccount.GetAccessToken()
+                                <h1 id="&#x6D88;&#x606F;&#x7FA4;&#x53D1;">&#x6D88;&#x606F;&#x7FA4;&#x53D1;</h1>
+<h2 id="&#x83B7;&#x53D6;&#x7FA4;&#x53D1;&#x64CD;&#x4F5C;&#x5B9E;&#x4F8B;">&#x83B7;&#x53D6;&#x7FA4;&#x53D1;&#x64CD;&#x4F5C;&#x5B9E;&#x4F8B;</h2>
+<pre><code class="lang-go">oa := wc.GetOfficialAccount(cfg)
+bd:=oa.GetBroadcast()
+<span class="hljs-comment">//TODO bd.SendText</span>
 </code></pre>
-<h3 id="&#x66FF;&#x6362;&#x83B7;&#x53D6;accesstoken&#x7684;&#x65B9;&#x6CD5;">&#x66FF;&#x6362;&#x83B7;&#x53D6;<code>access_token</code>&#x7684;&#x65B9;&#x6CD5;</h3>
-<p>&#x9ED8;&#x8BA4;&#x5728;sdk&#x5185;&#x90E8;&#x662F;ak&#x83B7;&#x53D6;&#x4E4B;&#x540E;&#x662F;&#x5B58;&#x653E;&#x5728;cache&#x4E2D;&#xFF0C;&#x5982;&#x679C;&#x4F60;&#x6709;&#x5176;&#x4ED6;&#x7CFB;&#x7EDF;&#x4EE5;&#x53CA;&#x5B58;&#x653E;&#x4E86;ak&#x7684;&#x8BDD;&#xFF0C;&#x53EA;&#x9700;&#x8981;&#x5B9E;&#x73B0;&#x5982;&#x4E0B;interface&#x5C31;&#x53EF;&#x4EE5;&#x4E86;&#xFF1A;</p>
-</blockquote>
-<pre><code class="lang-go"><span class="hljs-comment">//AccessTokenHandle AccessToken &#x63A5;&#x53E3;</span>
-<span class="hljs-keyword">type</span> AccessTokenHandle <span class="hljs-keyword">interface</span> {
-    GetAccessToken() (accessToken <span class="hljs-keyword">string</span>, err error)
-}
+<h2 id="&#x53D1;&#x9001;&#x5BF9;&#x8C61;">&#x53D1;&#x9001;&#x5BF9;&#x8C61;</h2>
+<ul>
+<li>&#x53D1;&#x9001;&#x65B9;&#x6CD5;&#x7684;&#x7B2C;&#x4E00;&#x4E2A;&#x53C2;&#x6570;&#x4E3A;<code>broadcast.User</code>&#x5BF9;&#x8C61;&#xFF0C;&#x4E3A;nil&#x5219;&#x8868;&#x793A;&#x53D1;&#x9001;&#x7ED9;&#x6240;&#x6709;&#x4EBA;</li>
+<li><code>broadcast.User{TagID:1}</code> : &#x6839;&#x636E;tagID&#x53D1;&#x9001;</li>
+<li>`broadcast.User{OpenID:[]string{&quot;openid-1&quot;,&quot;openid-2&quot;}}`` &#xFF1A;&#x6839;&#x636E;openid&#x53D1;&#x9001;</li>
+</ul>
+<h2 id="&#x7FA4;&#x53D1;&#x6D88;&#x606F;&#x7C7B;&#x578B;">&#x7FA4;&#x53D1;&#x6D88;&#x606F;&#x7C7B;&#x578B;</h2>
+<h3 id="&#x53D1;&#x9001;&#x6587;&#x672C;&#x6D88;&#x606F;">&#x53D1;&#x9001;&#x6587;&#x672C;&#x6D88;&#x606F;</h3>
+<pre><code class="lang-go">bd.SendText(user *User, content <span class="hljs-keyword">string</span>)
 </code></pre>
-<p>&#x7136;&#x540E;&#x901A;&#x8FC7;wechat&#x5BF9;&#x8C61;&#xFF0C;&#x8FDB;&#x884C;&#x8BBE;&#x7F6E;:</p>
-<pre><code class="lang-go">officialAccount.SetAccessTokenHandle=customAccessTokenHandle
+<h3 id="&#x53D1;&#x9001;&#x56FE;&#x6587;">&#x53D1;&#x9001;&#x56FE;&#x6587;</h3>
+<pre><code class="lang-go">bd.SendNews(user *User, mediaID <span class="hljs-keyword">string</span>,ignoreReprint <span class="hljs-keyword">bool</span>)
 </code></pre>
-<h2 id="&#x83B7;&#x53D6;&#x5FAE;&#x4FE1;&#x670D;&#x52A1;&#x5668;-ip-&#x6216;ip&#x6BB5;">&#x83B7;&#x53D6;&#x5FAE;&#x4FE1;&#x670D;&#x52A1;&#x5668; IP (&#x6216;IP&#x6BB5;)</h2>
-<p>&#x5982;&#x679C;&#x516C;&#x4F17;&#x53F7;&#x57FA;&#x4E8E;&#x5B89;&#x5168;&#x7B49;&#x8003;&#x8651;&#xFF0C;&#x9700;&#x8981;&#x83B7;&#x77E5;&#x5FAE;&#x4FE1;&#x670D;&#x52A1;&#x5668;&#x7684;IP&#x5730;&#x5740;&#x5217;&#x8868;&#xFF0C;&#x4EE5;&#x4FBF;&#x8FDB;&#x884C;&#x76F8;&#x5173;&#x9650;&#x5236;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x8BE5;&#x63A5;&#x53E3;&#x83B7;&#x5F97;&#x5FAE;&#x4FE1;&#x670D;&#x52A1;&#x5668;IP&#x5730;&#x5740;&#x5217;&#x8868;&#x6216;&#x8005;IP&#x7F51;&#x6BB5;&#x4FE1;&#x606F;&#x3002;</p>
-<h3 id="&#x83B7;&#x53D6;&#x5FAE;&#x4FE1;callback-ip&#x5730;&#x5740;">&#x83B7;&#x53D6;&#x5FAE;&#x4FE1;callback IP&#x5730;&#x5740;</h3>
-<pre><code class="lang-go">ipList, err:=officialAccount.GetBasic().GetCallbackIP()
+<h3 id="&#x53D1;&#x9001;&#x56FE;&#x7247;">&#x53D1;&#x9001;&#x56FE;&#x7247;</h3>
+<pre><code class="lang-go">bd.SendImage(user *User, images *Image)
 </code></pre>
-<h3 id="&#x83B7;&#x53D6;&#x5FAE;&#x4FE1;api&#x63A5;&#x53E3;-ip&#x5730;&#x5740;">&#x83B7;&#x53D6;&#x5FAE;&#x4FE1;API&#x63A5;&#x53E3; IP&#x5730;&#x5740;</h3>
-<pre><code class="lang-go">ipList, err:=officialAccount.GetBasic().GetAPIDomainIP()
+<h3 id="&#x53D1;&#x9001;&#x8BED;&#x97F3;">&#x53D1;&#x9001;&#x8BED;&#x97F3;</h3>
+<pre><code class="lang-go">bd.SendVoice(user *User, mediaID <span class="hljs-keyword">string</span>)
 </code></pre>
-<h2 id="&#x6E05;&#x7406;&#x63A5;&#x53E3;&#x8C03;&#x7528;&#x9891;&#x6B21;">&#x6E05;&#x7406;&#x63A5;&#x53E3;&#x8C03;&#x7528;&#x9891;&#x6B21;</h2>
-<blockquote>
-<p>&#x6B64;&#x63A5;&#x53E3;&#x5B98;&#x65B9;&#x6709;&#x6BCF;&#x6708;&#x8C03;&#x7528;&#x9650;&#x5236;&#xFF0C;&#x4E0D;&#x53EF;&#x968F;&#x610F;&#x8C03;&#x7528;</p>
-</blockquote>
-<pre><code class="lang-go">err:=officialAccount.GetBasic().ClearQuota()
+<h3 id="&#x53D1;&#x9001;&#x89C6;&#x9891;">&#x53D1;&#x9001;&#x89C6;&#x9891;</h3>
+<pre><code class="lang-go">bd.SendVideo(user *User, mediaID <span class="hljs-keyword">string</span>,title,description <span class="hljs-keyword">string</span>)
 </code></pre>
 <footer class="page-footer"><span class="copyright">Copyright &#xA9; Wechat SDK For Go 2020 all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">&#x8BE5;&#x6587;&#x4EF6;&#x4FEE;&#x8BA2;&#x65F6;&#x95F4;&#xFF1A;
-2020-05-29 22:55:59
+2020-05-29 22:53:07
 </span></footer>
                                 
                                 </section>
@@ -356,12 +352,12 @@
 
             
                 
-                <a href="configuration.html" class="navigation navigation-prev " aria-label="Previous page: 配置">
+                <a href="message-transfer.html" class="navigation navigation-prev " aria-label="Previous page: 多客服消息转发">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="message.html" class="navigation navigation-next " aria-label="Next page: 消息">
+                <a href="../contributing.html" class="navigation navigation-next " aria-label="Next page: 参与贡献">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -372,7 +368,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"基础接口","level":"1.2.3","depth":2,"next":{"title":"消息","level":"1.2.4","depth":2,"path":"officialaccount/message.md","ref":"officialaccount/message.md","articles":[]},"previous":{"title":"配置","level":"1.2.2","depth":2,"path":"officialaccount/configuration.md","ref":"officialaccount/configuration.md","articles":[]},"dir":"ltr"},"config":{"plugins":["github-buttons","edit-link","code","back-to-top-button","tbfed-pagefooter","baidu-v3","ga"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright &copy Wechat SDK For Go 2020","modify_label":"该文件修订时间：","modify_format":"YYYY-MM-DD HH:mm:ss"},"github":{"url":"https://github.com/silenceper/wechat"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"code":{"copyButtons":true},"baidu-v3":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"back-to-top-button":{},"github-buttons":{"buttons":[{"user":"silenceper","repo":"wechat","type":"star","size":"small"}]},"ga":{"configuration":"auto","token":"UA-139557989-1"},"baidu":{"token":"fe23775b1a9ea11a6797646a56df1cc7"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"edit-link":{"label":"更新该页","base":"https://github.com/gowechat/docs/blob/master"},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"silenceper","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"微信开发sdk文档","links":{"sidebar":{"获取SDK":"https://github.com/silenceper/wechat","上报问题":"https://github.com/silenceper/wechat/issues"}},"gitbook":"*","description":"微信开发SDK文档，包含微信公众平台，小程序，开放平台，微信支付等相关API"},"file":{"path":"officialaccount/basic.md","mtime":"2020-05-29T14:55:59.918Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-29T14:57:40.893Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"群发消息","level":"1.2.6","depth":2,"next":{"title":"参与贡献","level":"1.3","depth":1,"path":"contributing.md","ref":"contributing.md","articles":[]},"previous":{"title":"多客服消息转发","level":"1.2.5","depth":2,"path":"officialaccount/message-transfer.md","ref":"officialaccount/message-transfer.md","articles":[]},"dir":"ltr"},"config":{"plugins":["github-buttons","edit-link","code","back-to-top-button","tbfed-pagefooter","baidu-v3","ga"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright &copy Wechat SDK For Go 2020","modify_label":"该文件修订时间：","modify_format":"YYYY-MM-DD HH:mm:ss"},"github":{"url":"https://github.com/silenceper/wechat"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"code":{"copyButtons":true},"baidu-v3":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"back-to-top-button":{},"github-buttons":{"buttons":[{"user":"silenceper","repo":"wechat","type":"star","size":"small"}]},"ga":{"configuration":"auto","token":"UA-139557989-1"},"baidu":{"token":"fe23775b1a9ea11a6797646a56df1cc7"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"edit-link":{"label":"更新该页","base":"https://github.com/gowechat/docs/blob/master"},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"silenceper","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"微信开发sdk文档","links":{"sidebar":{"获取SDK":"https://github.com/silenceper/wechat","上报问题":"https://github.com/silenceper/wechat/issues"}},"gitbook":"*","description":"微信开发SDK文档，包含微信公众平台，小程序，开放平台，微信支付等相关API"},"file":{"path":"officialaccount/broadcast.md","mtime":"2020-05-29T14:53:07.240Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-29T14:57:40.893Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
