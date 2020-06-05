@@ -40,9 +40,9 @@ aarch64
 
 
 ### 通过buildx打包支持多架构的镜像
-文档：(https://docs.docker.com/buildx/working-with-buildx/)[https://docs.docker.com/buildx/working-with-buildx/]
+文档：[https://docs.docker.com/buildx/working-with-buildx/](https://docs.docker.com/buildx/working-with-buildx/)
 
-首先需要开启这个实验性的功能，怎么开启看这里：(https://github.com/docker/cli/blob/master/experimental/README.md)(https://github.com/docker/cli/blob/master/experimental/README.md)
+首先需要开启这个实验性的功能，怎么开启看这里：[https://github.com/docker/cli/blob/master/experimental/README.md](https://github.com/docker/cli/blob/master/experimental/README.md)
 
 - docker cloent: 在`~/.docker/config.json 加入``写入"experimental":"enabled"`
 - dcoker daemon: 启动参数上加上--experimental或者`/etc/docker/daemon.json`写入`  "experimental": true`
@@ -66,7 +66,7 @@ docker buildx build --platform linux/amd64,linux/arm64 -f Dockerfile -t silencep
 因为镜像仓库支持一个仓库上传多种架构，并且会根据构建平台pull相匹配架构的镜像，所以我们可以在一个Dockerfile，并且通过一个命令打包镜像并push。
 
 
-这里用到的Dockerfile在这里：(https://github.com/silenceper/reverse-proxy/blob/master/Dockerfile)[https://github.com/silenceper/reverse-proxy/blob/master/Dockerfile]
+这里用到的Dockerfile在这里：[https://github.com/silenceper/reverse-proxy/blob/master/Dockerfile](https://github.com/silenceper/reverse-proxy/blob/master/Dockerfile)
 
 **通过docker的多阶段构建将编译和打包放在一起了，隔离了环境的差异。**
 

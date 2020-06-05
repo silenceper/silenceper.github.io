@@ -36,7 +36,7 @@
                 "url": "\/img\/silenceoer-avatar.jpg",
                 "width":  800 ,
                 "height":  600 
-            },"genre": "posts","keywords": "docker, arm64","wordcount":  1462 ,
+            },"genre": "posts","keywords": "docker, arm64","wordcount":  1269 ,
         "url": "\/blog\/202006\/build-arm-image-on-x86_84\/","datePublished": "2020-06-05T14:20:59\x2b08:00","dateModified": "2020-06-05T14:20:59\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "silenceper",
@@ -98,7 +98,7 @@
                                 </a>
                             </span></span></div>
             <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-06-05&#32;14:20>2020-06-05 14:20</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>约 1462 字&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>约 1269 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>预计阅读 3 分钟&nbsp;</div>
         </div><div class="toc" id="toc-auto">
                 <h2 class="toc-title">目录</h2>
@@ -172,8 +172,10 @@ aarch64
 <p><code>binfmt_misc</code>是Linux内核说提供的一种扩展机制, 使得更多类型的文件得以成为＂可执行＂文件．Linux内核本身支持ELF、a.out、脚本（也就是上面所说的第一行#!指定解释器的方式）这集中＂可执行文件＂．但它还提供了一个称为<code>binfmt_misc</code>的内核模块, 通过这个模块可以动态注册一些＂可执行文件格式＂,注册之后我们就可以直接＂执行＂这个程序文件了．</p>
 </blockquote>
 <h3 id="通过buildx打包支持多架构的镜像">通过buildx打包支持多架构的镜像</h3>
-<p>文档：(<a href="https://docs.docker.com/buildx/working-with-buildx/)%5Bhttps://docs.docker.com/buildx/working-with-buildx/%5D">https://docs.docker.com/buildx/working-with-buildx/)[https://docs.docker.com/buildx/working-with-buildx/]</a></p>
-<p>首先需要开启这个实验性的功能，怎么开启看这里：(<a href="https://github.com/docker/cli/blob/master/experimental/README.md)(https://github.com/docker/cli/blob/master/experimental/README.md">https://github.com/docker/cli/blob/master/experimental/README.md)(https://github.com/docker/cli/blob/master/experimental/README.md</a>)</p>
+<p>文档：<a href="https://docs.docker.com/buildx/working-with-buildx/" target="_blank" rel="noopener noreffer">https://docs.docker.com/buildx/working-with-buildx/</a>
+</p>
+<p>首先需要开启这个实验性的功能，怎么开启看这里：<a href="https://github.com/docker/cli/blob/master/experimental/README.md" target="_blank" rel="noopener noreffer">https://github.com/docker/cli/blob/master/experimental/README.md</a>
+</p>
 <ul>
 <li>docker cloent: 在<code>~/.docker/config.json 加入``写入&quot;experimental&quot;:&quot;enabled&quot;</code></li>
 <li>dcoker daemon: 启动参数上加上&ndash;experimental或者<code>/etc/docker/daemon.json</code>写入<code>  &quot;experimental&quot;: true</code></li>
@@ -202,7 +204,8 @@ docker buildx inspect --bootstrap <span class="c1">#这一步会从外网拉取`
 </div>
 </div><p><code>--push</code>参数表示构建完成之后，并push到镜像仓库当中。</p>
 <p>因为镜像仓库支持一个仓库上传多种架构，并且会根据构建平台pull相匹配架构的镜像，所以我们可以在一个Dockerfile，并且通过一个命令打包镜像并push。</p>
-<p>这里用到的Dockerfile在这里：(<a href="https://github.com/silenceper/reverse-proxy/blob/master/Dockerfile)%5Bhttps://github.com/silenceper/reverse-proxy/blob/master/Dockerfile%5D">https://github.com/silenceper/reverse-proxy/blob/master/Dockerfile)[https://github.com/silenceper/reverse-proxy/blob/master/Dockerfile]</a></p>
+<p>这里用到的Dockerfile在这里：<a href="https://github.com/silenceper/reverse-proxy/blob/master/Dockerfile" target="_blank" rel="noopener noreffer">https://github.com/silenceper/reverse-proxy/blob/master/Dockerfile</a>
+</p>
 <p><strong>通过docker的多阶段构建将编译和打包放在一起了，隔离了环境的差异。</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
