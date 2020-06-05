@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>docker on silenceper</title>
-    <link>/tags/docker/</link>
-    <description>Recent content in docker on silenceper</description>
+    <title>arm64 on silenceper</title>
+    <link>/tags/arm64/</link>
+    <description>Recent content in arm64 on silenceper</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
     <lastBuildDate>Fri, 05 Jun 2020 14:20:59 +0800</lastBuildDate>
     
-	<atom:link href="/tags/docker/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/arm64/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -19,15 +19,6 @@
       
       <guid>/blog/202006/build-arm-image-on-x86_84/</guid>
       <description>有几种办法可以打包出arm64的镜像 直接在arm机器上执行编译和打包 通过qemu模拟arm环境 利用docker提供的buildx（需要启用试</description>
-    </item>
-    
-    <item>
-      <title>docker pull 翻墙下载镜像</title>
-      <link>/blog/201809/over-the-wall-pull-docker-mirror/</link>
-      <pubDate>Sun, 09 Sep 2018 11:45:59 +0800</pubDate>
-      
-      <guid>/blog/201809/over-the-wall-pull-docker-mirror/</guid>
-      <description>我们一般通过设置http_proxy环境变量，使得http请求，可以走我们设置的proxy，（一些go get镜像无法下载可以这么用），但是对</description>
     </item>
     
   </channel>

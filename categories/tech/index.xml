@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 18 May 2020 18:20:59 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 05 Jun 2020 14:20:59 +0800</lastBuildDate>
     
 	<atom:link href="/categories/tech/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>在x86_64机器上构建arm64镜像</title>
+      <link>/blog/202006/build-arm-image-on-x86_84/</link>
+      <pubDate>Fri, 05 Jun 2020 14:20:59 +0800</pubDate>
+      
+      <guid>/blog/202006/build-arm-image-on-x86_84/</guid>
+      <description>有几种办法可以打包出arm64的镜像 直接在arm机器上执行编译和打包 通过qemu模拟arm环境 利用docker提供的buildx（需要启用试</description>
+    </item>
     
     <item>
       <title>如何在Kubernetes中创建一个自定义Controller?</title>

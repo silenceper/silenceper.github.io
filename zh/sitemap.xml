@@ -2,7 +2,8 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>/categories/</loc><lastmod>2020-05-18T18:20:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
+            <loc>/tags/arm64/</loc><lastmod>2020-06-05T14:20:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>/categories/</loc><lastmod>2020-06-05T14:20:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
                         href="/en/categories/"
@@ -11,12 +12,9 @@
                     hreflang="zh"
                     href="/categories/"
                     /></url><url>
-            <loc>/tags/controller/</loc><lastmod>2020-05-18T18:20:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>/tags/crd/</loc><lastmod>2020-05-18T18:20:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>/tags/kubernetes/</loc><lastmod>2020-05-18T18:20:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>/tags/operator/</loc><lastmod>2020-05-18T18:20:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>/posts/</loc><lastmod>2020-05-18T18:20:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>/tags/</loc><lastmod>2020-05-18T18:20:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
+            <loc>/tags/docker/</loc><lastmod>2020-06-05T14:20:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>/posts/</loc><lastmod>2020-06-05T14:20:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>/tags/</loc><lastmod>2020-06-05T14:20:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
                         href="/en/tags/"
@@ -25,7 +23,12 @@
                     hreflang="zh"
                     href="/tags/"
                     /></url><url>
-            <loc>/categories/tech/</loc><lastmod>2020-05-18T18:20:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>/categories/tech/</loc><lastmod>2020-06-05T14:20:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>/blog/202006/build-arm-image-on-x86_84/</loc><lastmod>2020-06-05T14:20:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>/tags/controller/</loc><lastmod>2020-05-18T18:20:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>/tags/crd/</loc><lastmod>2020-05-18T18:20:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>/tags/kubernetes/</loc><lastmod>2020-05-18T18:20:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>/tags/operator/</loc><lastmod>2020-05-18T18:20:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>/blog/202005/custom-resources-and-controllers/</loc><lastmod>2020-05-18T18:20:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>/tags/echo/</loc><lastmod>2020-05-13T20:20:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>/tags/inotify/</loc><lastmod>2020-05-13T20:20:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
@@ -63,7 +66,6 @@
             <loc>/blog/201810/calico-in-k8s/</loc><lastmod>2018-10-12T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>/blog/201809/flannel-in-k8s/</loc><lastmod>2018-09-26T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>/blog/201809/k8s-source-code-structure/</loc><lastmod>2018-09-12T11:45:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>/tags/docker/</loc><lastmod>2018-09-09T11:45:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>/blog/201809/over-the-wall-pull-docker-mirror/</loc><lastmod>2018-09-09T11:45:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>/blog/201809/how-to-build-a-k8s-cluster/</loc><lastmod>2018-09-07T11:45:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>/tags/pool/</loc><lastmod>2016-11-20T02:40:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
