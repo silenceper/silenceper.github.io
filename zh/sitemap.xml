@@ -2,8 +2,7 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>/tags/arm64/</loc><lastmod>2020-06-05T14:20:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>/categories/</loc><lastmod>2020-06-05T14:20:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
+            <loc>/categories/</loc><lastmod>2020-07-10T14:20:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
                         href="/en/categories/"
@@ -12,9 +11,10 @@
                     hreflang="zh"
                     href="/categories/"
                     /></url><url>
-            <loc>/tags/docker/</loc><lastmod>2020-06-05T14:20:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>/posts/</loc><lastmod>2020-06-05T14:20:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>/tags/</loc><lastmod>2020-06-05T14:20:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
+            <loc>/tags/docker/</loc><lastmod>2020-07-10T14:20:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>/tags/image/</loc><lastmod>2020-07-10T14:20:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>/posts/</loc><lastmod>2020-07-10T14:20:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>/tags/</loc><lastmod>2020-07-10T14:20:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
                         href="/en/tags/"
@@ -23,7 +23,9 @@
                     hreflang="zh"
                     href="/tags/"
                     /></url><url>
-            <loc>/categories/tech/</loc><lastmod>2020-06-05T14:20:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>/categories/tech/</loc><lastmod>2020-07-10T14:20:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>/blog/202007/docker-tar-push/</loc><lastmod>2020-07-10T14:20:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>/tags/arm64/</loc><lastmod>2020-06-05T14:20:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>/blog/202006/build-arm-image-on-x86_84/</loc><lastmod>2020-06-05T14:20:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>/tags/controller/</loc><lastmod>2020-05-18T18:20:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>/tags/crd/</loc><lastmod>2020-05-18T18:20:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>

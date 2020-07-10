@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>将镜像tar包通过API直接push到registry仓库 | silenceper</title>
+        <meta name="Description" content="一个记录生活，工作的博客。关于Go，Kubernetes，云原生"><meta property="og:title" content="将镜像tar包通过API直接push到registry仓库" />
+<meta property="og:description" content="为了实现docker tar包能够直接通过页面上传，调研了一下registry的api，以及如何解析tar包（其实就是docker daemon" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/202007/docker-tar-push/" />
+<meta property="article:published_time" content="2020-07-10T14:20:59+08:00" />
+<meta property="article:modified_time" content="2020-07-10T14:20:59+08:00" /><meta property="og:site_name" content="silenceper" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="将镜像tar包通过API直接push到registry仓库"/>
+<meta name="twitter:description" content="为了实现docker tar包能够直接通过页面上传，调研了一下registry的api，以及如何解析tar包（其实就是docker daemon"/>
+<meta name="theme-color" content="#ffffff">
+<meta name="msapplication-TileColor" content="#da532c">
+<link rel="canonical" href="/blog/202007/docker-tar-push/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="prev" href="/blog/202006/build-arm-image-on-x86_84/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><meta name="google-site-verification" content="VJ4lE3d3A73DNoyxuuXL_Cuu6MEErPtKXqfAv69pr6E" /><meta name="baidu-site-verification" content="k061nqJczY" /><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "将镜像tar包通过API直接push到registry仓库",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "\/blog\/202007\/docker-tar-push\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "\/img\/silenceoer-avatar.jpg",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "posts","keywords": "docker, image","wordcount":  1247 ,
+        "url": "\/blog\/202007\/docker-tar-push\/","datePublished": "2020-07-10T14:20:59\x2b08:00","dateModified": "2020-07-10T14:20:59\x2b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "silenceper",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "\/img\/silenceper-avatar.jpg",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": ""
+    }
+    </script></head>
+    <body><script>
+            if (!window.localStorage || !window.localStorage.getItem('theme')) {window.isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;} else {
+                window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            }
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title animated bounceIn">
+            <a href="/">silenceper</a>
+        </div>
+        <div class="menu"><a class="menu-item" href="/posts/">文章</a><a class="menu-item" href="/tags/">标签</a><a class="menu-item" href="/categories/">分类</a><a class="menu-item" href="/about/">关于</a><a class="menu-item" href="/wechat/">微信SDK</a><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-rotate-180 fa-fw"></i>
+            </a>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-wrapper">
+        <div class="header-container">
+            <div class="header-title animated bounceIn">
+                <a href="/">silenceper</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="/wechat/" title="">微信SDK</a><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-rotate-180 fa-fw"></i>
+            </a>
+        </div>
+    </div>
+</header>
+
+<script>
+    window.desktopHeaderMode = "fixed";
+    window.mobileHeaderMode = "auto";
+</script>
+<main class="main">
+                <div class="container"><article class="page single"><h1 class="single-title animated flipInX">将镜像tar包通过API直接push到registry仓库</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author">
+                    <a class="author" href="/" rel="author" target="_blank">
+                        <i class="fas fa-user-circle fa-fw"></i>silenceper
+                    </a>
+                </span>&nbsp;<span class="post-category">收录于&nbsp;
+                            <span>
+                                <a href="/categories/tech">
+                                    <i class="far fa-folder fa-fw"></i>Tech
+                                </a>
+                            </span></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-07-10&#32;14:20>2020-07-10 14:20</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>约 1247 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>预计阅读 3 分钟&nbsp;</div>
+        </div><div class="toc" id="toc-auto">
+                <h2 class="toc-title">目录</h2>
+                <div class="toc-content" id="toc-content-auto"></div>
+            </div>
+            <div class="toc" id="toc-static">
+                <details>
+                    <summary>
+                        <div class="toc-title">
+                            <span>目录</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#tar包结构">tar包结构</a></li>
+    <li><a href="#registry-api">registry api</a></li>
+    <li><a href="#实现">实现</a></li>
+  </ul>
+</nav></div>
+                </details>
+            </div><div class="content"><p>为了实现docker tar包能够直接通过页面上传，调研了一下registry的api，以及如何解析tar包（其实就是docker daemon程序实现的部分）。</p>
+<p>要想实现，首先要了解docker tar包中结构组成：</p>
+<h2 id="tar包结构">tar包结构</h2>
+<p>拿了一个包含一个镜像的tar包进行解压：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">.
+├── 1ecf8bc84a7c3d60c0a6bbdd294f12a6b0e17a8269616fc9bdbedd926f74f50c
+│   ├── VERSION
+│   ├── json
+│   └── layer.tar
+├── 6f4ec1f3d7ea33646d491a705f94442f5a706e9ac9acbca22fa9b117094eb720.json
+├── aaac5bde2c2bcb6cc28b1e6d3f29fe13efce6d6b669300cc2c6bfab96b942af4
+│   ├── VERSION
+│   ├── json
+│   └── layer.tar
+├── b63363f0d2ac8b3dca6f903bb5a7301bf497b1e5be8dc4f57a14e4dc649ef9bb
+│   ├── VERSION
+│   ├── json
+│   └── layer.tar
+├── c453224a84b8318b0a09a83052314dd876899d3a1a1cf2379e74bba410415059
+│   ├── VERSION
+│   ├── json
+│   └── layer.tar
+├── dd8ef1d42fbcccc87927eee94e57519c401b84437b98fcf35505fb6b7267a375
+│   ├── VERSION
+│   ├── json
+│   └── layer.tar
+├── manifest.json
+└── repositories
+</code></pre></td></tr></table>
+</div>
+</div><p>文件说明：</p>
+<p><strong>manifest.json文件</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[
+    {
+        &#34;Config&#34;:&#34;6f4ec1f3d7ea33646d491a705f94442f5a706e9ac9acbca22fa9b117094eb720.json&#34;,
+        &#34;RepoTags&#34;:[
+            &#34;alpine:filebeat-6.8.7-arm64&#34;
+        ],
+        &#34;Layers&#34;:[
+            &#34;aaac5bde2c2bcb6cc28b1e6d3f29fe13efce6d6b669300cc2c6bfab96b942af4/layer.tar&#34;,
+            &#34;dd8ef1d42fbcccc87927eee94e57519c401b84437b98fcf35505fb6b7267a375/layer.tar&#34;,
+            &#34;c453224a84b8318b0a09a83052314dd876899d3a1a1cf2379e74bba410415059/layer.tar&#34;,
+            &#34;b63363f0d2ac8b3dca6f903bb5a7301bf497b1e5be8dc4f57a14e4dc649ef9bb/layer.tar&#34;,
+            &#34;1ecf8bc84a7c3d60c0a6bbdd294f12a6b0e17a8269616fc9bdbedd926f74f50c/layer.tar&#34;
+        ]
+    }
+]
+</code></pre></td></tr></table>
+</div>
+</div><p>manifest.json 包含了对这个tar包的描述信息，比如image config文件地址，tags说明，镜像layer信息，在解析的时候也是根据这个文件去获取关联的文件。</p>
+<p><strong>image config文件</strong></p>
+<p>比如：<code>6f4ec1f3d7ea33646d491a705f94442f5a706e9ac9acbca22fa9b117094eb720.json</code>文件：</p>
+<blockquote>
+<p>内容太多就不贴了
+这里包含了镜像运行的信息，比如env，执行参数，以及镜像历史等。</p>
+</blockquote>
+<p><strong>layer层文件：layer.tar</strong></p>
+<p>镜像的每一层的文件信息都打包在了一个单独的<code>layer.tar</code>包中，也是在上传的时候需要用到的。</p>
+<h2 id="registry-api">registry api</h2>
+<p><strong>流程：</strong></p>
+<ul>
+<li>1、获取鉴权信息</li>
+<li>2、检查layer.tar是否已经存在</li>
+<li>3、上传layer.tar</li>
+<li>4、上传image config</li>
+<li>5、上传manifest（非包中的<code>manifest.json</code>而是<a href="https://github.com/docker/distribution/blob/master/manifest/schema2/manifest.go#L63" target="_blank" rel="noopener noreffer">Manifest struct</a>
+）</li>
+</ul>
+<blockquote>
+<p>这里只列出了在上传的时候需要用的api</p>
+</blockquote>
+<p>1、获取鉴权信息</p>
+<p>这里跟registry仓库选择的鉴权方式有关，可选basic auth或者token鉴权。
+这里我是以最基本的basic auth为例子，如果是token鉴权的方式参考这里：
+<a href="https://docs.docker.com/registry/spec/auth/jwt/">https://docs.docker.com/registry/spec/auth/jwt/</a></p>
+<p>2、检查上传</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">HEAD /v2/image/blobs/&lt;digest&gt;
+</code></pre></td></tr></table>
+</div>
+</div><p>若返回200 OK 则表示存在，不用上传</p>
+<p>3、开始上传服务
+我这里是以分块上传的方式进行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">POST /v2/image/blobs/uploads/
+</code></pre></td></tr></table>
+</div>
+</div><p>如果post请求返回202 accepted，一个url会在location字段返回.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">     202 Accepted
+     Location: /v2/\&lt;image&gt;/blobs/uploads/\&lt;uuid&gt;
+     Range: bytes=0-&lt;offset&gt;
+     Content-Length: 0
+     Docker-Upload-UUID: &lt;uuid&gt; # 可以用来查看上传状态和实现断点续传
+</code></pre></td></tr></table>
+</div>
+</div><p>4、分块上传
+根据上一步获取的url，以<code>PATCH</code>的方式提交分块数据。
+如果是最后一块数据上传，则以PUT的方式提交，如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"> &gt; PUT /v2/&lt;name&gt;/blob/uploads/&lt;uuid&gt;?digest=&lt;digest&gt;
+ &gt; Content-Length: &lt;size of chunk&gt;
+ &gt; Content-Range: &lt;start of range&gt;-&lt;end of range&gt;
+ &gt; Content-Type: application/octet-stream
+   &lt;Last Layer Chunk Binary Data&gt;
+</code></pre></td></tr></table>
+</div>
+</div><p>上传layer，image config，manifests信息都是一样的。</p>
+<blockquote>
+<p>我暂时只用到了以上api，更多的api参考：https://docs.docker.com/registry/spec/api/</p>
+</blockquote>
+<h2 id="实现">实现</h2>
+<p>上面说API没啥感觉，还是看代码比较明白，所以实现了这么一个工具：<a href="https://github.com/silenceper/docker-tar-push" target="_blank" rel="noopener noreffer">https://github.com/silenceper/docker-tar-push
+</a>
+</p>
+<p><strong>Usage:</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">push your docker tar archive image without docker.
+
+Usage:
+  docker-tar-push [flags]
+
+Flags:
+  -h, --help              help for docker-tar-push
+      --log-level int     log-level, 0:Fatal,1:Error,2:Warn,3:Info,4:Debug (default 3)
+      --password string   registry auth password
+      --registry string   registry url
+      --skip-ssl-verify   skip ssl verify
+      --username string   registry auth username
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>Example:</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">docker-tar-push alpine:latest --registry=http://localhost:5000
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>参考</strong></p>
+<ul>
+<li><a href="https://www.jianshu.com/p/6a7b80122602">https://www.jianshu.com/p/6a7b80122602</a></li>
+<li><a href="https://github.com/Razikus/dockerregistrypusher">https://github.com/Razikus/dockerregistrypusher</a></li>
+<li><a href="https://docs.docker.com/registry/spec/auth/jwt/">https://docs.docker.com/registry/spec/auth/jwt/</a></li>
+<li><a href="https://github.com/docker/distribution/">https://github.com/docker/distribution/</a></li>
+</ul>
+<hr/>
+            <figure>
+                <img src="https://silenceper.oss-cn-beijing.aliyuncs.com/qrcode/search_study_program.png" data-sizes="auto" data-src="https://silenceper.oss-cn-beijing.aliyuncs.com/qrcode/search_study_program.png" class="lazyautosizes ls-is-cached lazyloaded">
+                <figcaption class="image-caption">关注公众号，获取最新文章推送</figcaption>
+            </figure>
+        </div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>本文于 2020-07-10 14:20 更新</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/blog/202007/docker-tar-push/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share"><span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="/blog/202007/docker-tar-push/" data-title="将镜像tar包通过API直接push到registry仓库" data-hashtags="docker,image"><i class="fab fa-twitter fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="/blog/202007/docker-tar-push/" data-hashtag="docker"><i class="fab fa-facebook-square fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="/blog/202007/docker-tar-push/" data-title="将镜像tar包通过API直接push到registry仓库"><i class="fab fa-weibo fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 人人" data-sharer="renren" data-url="/blog/202007/docker-tar-push/"><i class="fab fa-renren fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 百度" data-sharer="baidu" data-url="/blog/202007/docker-tar-push/" data-title="将镜像tar包通过API直接push到registry仓库"><i class="loveit it-baidu-fill"></i>
+</a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="/blog/202007/docker-tar-push/" data-title="将镜像tar包通过API直接push到registry仓库"><i class="fab fa-evernote fa-fw"></i>
+</a></span></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section><span>
+                        <a href="/tags/docker">
+                            <i class="fas fa-tag fa-fw"></i>docker
+                        </a>
+                    </span>&nbsp;<span>
+                        <a href="/tags/image">
+                            <i class="fas fa-tag fa-fw"></i>image
+                        </a>
+                    </span>&nbsp;</section>
+        <section>
+            <span><a href="javascript:window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/blog/202006/build-arm-image-on-x86_84/" class="prev" rel="prev" title="在x86_64机器上构建arm64镜像"><i class="fas fa-angle-left fa-fw"></i>在x86_64机器上构建arm64镜像</a></div>
+</div>
+<div class="comment"><div id="gitalk"></div><script>
+            document.addEventListener("DOMContentLoaded", function(event) {
+                var gitalk = new Gitalk({
+                    id: '2020-07-10 14:20:59 \x2b0800 CST',
+                    title: '将镜像tar包通过API直接push到registry仓库',
+                    clientID: 'e708cc1fbc3e2613a24d',
+                    clientSecret: 'ffa9552c4ef788a7f135fa7b9510ffc672d0b914',
+                    repo: 'silenceper.github.io',
+                    owner: 'silenceper',
+                    admin: ['silenceper'],
+                    body: decodeURI(location.href),
+                });
+                gitalk.render('gitalk');
+            });
+        </script>
+        <noscript>
+            Please enable JavaScript to view the <a href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a>
+        </noscript></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright"><div class="copyright-line">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
+        </div>
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2016 - 2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">silenceper</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+    </div>
+</footer>
+</div><a href="#" class="dynamic-to-top animated faster" id="dynamic-to-top">
+            <span>&nbsp;</span>
+        </a><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$", right: "$", display: false },
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },]
+            });
+        });
+    </script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.css"><link rel="stylesheet" href="/css/lib/iconfont/iconfont.min.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script><script src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.2/dist/smooth-scroll.polyfills.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazysizes@5.1.2/lazysizes.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/mhchem.min.js"></script><script src="/js/lib/sharer/sharer.min.js"></script><script src=/js/theme.min.js></script>
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-139557989-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?fe23775b1a9ea11a6797646a56df1cc7";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script></body>
+</html>

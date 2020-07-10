@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Fri, 05 Jun 2020 14:20:59 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 10 Jul 2020 14:20:59 +0800</lastBuildDate>
     
 	<atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>将镜像tar包通过API直接push到registry仓库</title>
+      <link>/blog/202007/docker-tar-push/</link>
+      <pubDate>Fri, 10 Jul 2020 14:20:59 +0800</pubDate>
+      
+      <guid>/blog/202007/docker-tar-push/</guid>
+      <description>为了实现docker tar包能够直接通过页面上传，调研了一下registry的api，以及如何解析tar包（其实就是docker daemon</description>
+    </item>
     
     <item>
       <title>在x86_64机器上构建arm64镜像</title>
