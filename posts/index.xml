@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Fri, 10 Jul 2020 14:20:59 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 14 Sep 2020 11:20:59 +0800</lastBuildDate>
     
 	<atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>使用keda完成基于事件的弹性伸缩</title>
+      <link>/blog/202009/how-to-use-keda/</link>
+      <pubDate>Mon, 14 Sep 2020 11:20:59 +0800</pubDate>
+      
+      <guid>/blog/202009/how-to-use-keda/</guid>
+      <description>文章中使用的是keda 1.5版本，2.0还未release 1.5版本支持deployment，job两种资源。而在2.0增加了Statefu</description>
+    </item>
     
     <item>
       <title>将镜像tar包通过API直接push到registry仓库</title>
