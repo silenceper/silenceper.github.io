@@ -36,7 +36,7 @@
                 "url": "\/img\/silenceoer-avatar.jpg",
                 "width":  800 ,
                 "height":  600 
-            },"genre": "posts","keywords": "keda, kubernetes","wordcount":  1524 ,
+            },"genre": "posts","keywords": "keda, kubernetes","wordcount":  1541 ,
         "url": "\/blog\/202009\/how-to-use-keda\/","datePublished": "2020-09-14T11:20:59\u002b08:00","dateModified": "2020-09-14T11:20:59\u002b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "silenceper",
@@ -98,7 +98,7 @@
                                 </a>
                             </span></span></div>
             <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-09-14&#32;11:20>2020-09-14 11:20</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>约 1524 字&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>约 1541 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>预计阅读 4 分钟&nbsp;</div>
         </div><div class="toc" id="toc-auto">
                 <h2 class="toc-title">目录</h2>
@@ -301,7 +301,7 @@ keda-hpa-http-demo   Deployment/http-demo   8/2 (avg)   2         100       4   
 </ul>
 <p>可以看得到HPA控制了副本1-&gt;N和N-&gt;1的变化。
 keda控制了副本0-&gt;1和1-&gt;0的变化（起到了激活和停止的作用，对于一些消费型的任务副本比较有用，比如在凌晨启动任务进行消费）</p>
-<h1 id="扩展伸缩器external-scalers">扩展伸缩器(external-scalers)</h1>
+<h1 id="扩展事件源external-scalers">扩展事件源(external-scalers)</h1>
 <p>对于在keda不支持的一些事件源，我们还可以使用keda提供的扩展机制来扩充自己的事件源。
 <a href="https://keda.sh/docs/1.5/concepts/external-scalers/" target="_blank" rel="noopener noreffer">https://keda.sh/docs/1.5/concepts/external-scalers/</a>
 
@@ -335,6 +335,9 @@ keda控制了副本0-&gt;1和1-&gt;0的变化（起到了激活和停止的作�
 </blockquote>
 <h1 id="总结">总结</h1>
 <p>之前用过k8s-prometheus-adapter项目来进行应用的自定义指标进行扩展，对比keda感觉keda操作更简单，配置更加动态化，因为抽象了hpa，用户直接操作<code>ScaledObject</code>即可，不需要关注hpa如何进行配置。而且支持将副本数设置为0，同时又拥有类似cronhpa(定时伸缩)的功能，扩展能力比较强。</p>
+<blockquote>
+<p>阅读原文体验更加，文中链接支持跳转</p>
+</blockquote>
 <hr/>
             <figure>
                 <img src="https://silenceper.oss-cn-beijing.aliyuncs.com/qrcode/search_study_program.png" data-sizes="auto" data-src="https://silenceper.oss-cn-beijing.aliyuncs.com/qrcode/search_study_program.png" class="lazyautosizes ls-is-cached lazyloaded">

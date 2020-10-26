@@ -36,7 +36,7 @@
                 "url": "\/img\/silenceoer-avatar.jpg",
                 "width":  800 ,
                 "height":  600 
-            },"genre": "posts","keywords": "kubernetes, event","wordcount":  4189 ,
+            },"genre": "posts","keywords": "kubernetes, event","wordcount":  4184 ,
         "url": "\/blog\/202003\/kubernetes-event\/","datePublished": "2020-03-03T12:40:59\u002b08:00","dateModified": "2020-03-03T12:40:59\u002b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "silenceper",
@@ -98,7 +98,7 @@
                                 </a>
                             </span></span></div>
             <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-03-03&#32;12:40>2020-03-03 12:40</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>约 4189 字&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>约 4184 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>预计阅读 9 分钟&nbsp;</div>
         </div><div class="toc" id="toc-auto">
                 <h2 class="toc-title">目录</h2>
@@ -203,7 +203,7 @@
 <span class="kd">type</span><span class="p">:</span> <span class="nx">Normal</span>
 </code></pre></td></tr></table>
 </div>
-</div><p><strong><br /></strong>主要字段说明：**</p>
+</div><p>**<br /><strong>主要字段说明：</strong></p>
 <ul>
 <li>involvedObject： 触发event的资源类型</li>
 <li>lastTimestamp：最后一次触发的时间</li>
@@ -469,7 +469,7 @@
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>将event写入到了一个channel里面。<br />**注意：**<br />这个Action方式是<a href="https://github.com/kubernetes/apimachinery/blob/master/pkg/watch/mux.go#L188:23" target="_blank" rel="noopener noreffer">apimachinery</a>
+</div><p>将event写入到了一个channel里面。<br /><strong>注意：</strong><br />这个Action方式是<a href="https://github.com/kubernetes/apimachinery/blob/master/pkg/watch/mux.go#L188:23" target="_blank" rel="noopener noreffer">apimachinery</a>
 包中的方法，因为实现的sturt <code>recorderImpl</code><br />将 <code>*watch.Broadcaster</code> 作为一个匿名struct，并且在 <code>NewRecorder</code> 进行 <code>Broadcaster</code> 赋值，这个<code>Broadcaster</code>其实就是 <code>eventBroadcasterImpl</code> 中的<code>Broadcaster</code>。</p>
 <p>到此，基本清楚了event最终被写入到了 <code>Broadcaster</code> 中的 <code>incoming</code> channel中，下面看下是怎么进行消费的。</p>
 <p><a name="Mwa4D"></a></p>

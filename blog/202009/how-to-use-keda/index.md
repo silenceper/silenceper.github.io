@@ -1,7 +1,7 @@
 # 使用keda完成基于事件的弹性伸缩
 
 > 文章中使用的是keda 1.5版本，2.0还未release
->  1.5版本支持deployment，job两种资源。而在2.0增加了StatefulSet以及自定义资源
+> 1.5版本支持deployment，job两种资源。而在2.0增加了StatefulSet以及自定义资源
 
 [keda](https://keda.sh/) 是一个支持多种事件源来对应用进行弹性伸缩的控制器。
 我觉得keda可以认为是基于HPA的external metrics的一种扩展，因为它利用了hpa中external metrics的能力，允许直接配置多个事件源：
@@ -110,7 +110,7 @@ keda控制了副本0->1和1->0的变化（起到了激活和停止的作用，�
 
 
 
-# 扩展伸缩器(external-scalers)
+# 扩展事件源(external-scalers)
 
 对于在keda不支持的一些事件源，我们还可以使用keda提供的扩展机制来扩充自己的事件源。
 [https://keda.sh/docs/1.5/concepts/external-scalers/](https://keda.sh/docs/1.5/concepts/external-scalers/)
@@ -134,4 +134,6 @@ type Scaler interface {
 
 # 总结
 之前用过k8s-prometheus-adapter项目来进行应用的自定义指标进行扩展，对比keda感觉keda操作更简单，配置更加动态化，因为抽象了hpa，用户直接操作`ScaledObject`即可，不需要关注hpa如何进行配置。而且支持将副本数设置为0，同时又拥有类似cronhpa(定时伸缩)的功能，扩展能力比较强。
+
+> 阅读原文体验更加，文中链接支持跳转
 

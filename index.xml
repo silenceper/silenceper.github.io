@@ -12,7 +12,23 @@
                 <title>About Me</title>
                 <link>/about/</link>
                 <pubDate>Sat, 22 Feb 2020 10:04:49 &#43;0800</pubDate><guid>/about/</guid>
-                <description>&lt;p&gt;常用网络ID：&lt;code&gt;silenceper&lt;/code&gt;，目前主要在做容器相关的工作&lt;/p&gt;
+                <description>&lt;h2 id=&#34;缘起&#34;&gt;缘起&lt;/h2&gt;
+&lt;p&gt;在大一期间接触网站，每个周末跑去网吧去学习如何搭建网站，从网页制作到空间(那会还没有云主机，vps和服务器买不起)、域名，中间也折腾各种开源程序（那会流行的用DeDeCMS做网站,用Disucz做论坛），也做过网站外包赚了人生第一桶金(虽然只有2k块钱)，也给学校做过网站，那会给自己做过网站，试图做一个站长。&lt;/p&gt;
+&lt;p&gt;因为做网站的关系，学习了PHP、MySQL、JavaScript、CSS等技能，能够独立做一个网站程序。 大学的网络工程，以为要去干网管了，哈哈哈 ~&lt;/p&gt;
+&lt;h2 id=&#34;职业生涯&#34;&gt;职业生涯&lt;/h2&gt;
+&lt;p&gt;2014年毕业到一家金融O2O企业用PHP做后台服务，15年开始接触到Golang，变更喜欢用Go写一些后台服务，也承受住了用户日活百万，PV 近亿的压力。&lt;/p&gt;
+&lt;p&gt;2017年开始接触微服务体系、容器等，也为公司内部构建过Devops平台。&lt;/p&gt;
+&lt;p&gt;2018年到现在开始从事基于Kubernetes平台的建设和开发，以及周边组件的研发(弹性伸缩、调度、日志、镜像等)。&lt;/p&gt;
+&lt;h4 id=&#34;开源项目&#34;&gt;开源项目&lt;/h4&gt;
+&lt;p&gt;因为工作需要以及兴趣的关系，开源了如下项目：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/silenceper/wechat&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer&#34;&gt;wechat sdk for go&lt;/a&gt;
+: 使用Golang开发的微信SDK，简单、易用&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/silenceper/gowatch&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer&#34;&gt;gowatch&lt;/a&gt;
+: Go程序热编译工具，提升开发效率&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/silenceper/pool&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer&#34;&gt;pool&lt;/a&gt;
+:Golang实现的一个通用网络连接池&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h4 id=&#34;联系方式&#34;&gt;联系方式&lt;/h4&gt;
 &lt;ul&gt;
 &lt;li&gt;Github: &lt;a href=&#34;https://github.com/silenceper&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer&#34;&gt;@silenceper&lt;/a&gt;
@@ -21,15 +37,6 @@
 &lt;li&gt;个人公众号：&lt;figure&gt;&lt;img src=&#34;/svg/loading.min.svg&#34; data-sizes=&#34;auto&#34; data-src=&#34;https://silenceper.oss-cn-beijing.aliyuncs.com/qrcode/qr_code_study_program_258.jpg&#34; alt=&#34;学点程序&#34; title=&#34;学点程序&#34; class=&#34;lazyload&#34;&gt;
 &lt;figcaption class=&#34;image-caption&#34;&gt;学点程序&lt;/figcaption&gt;&lt;/figure&gt;
 &lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&#34;开源项目&#34;&gt;开源项目&lt;/h4&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/silenceper/wechat&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer&#34;&gt;wechat sdk for go&lt;/a&gt;
-: 使用Golang开发的微信SDK，简单、易用&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/silenceper/gowatch&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer&#34;&gt;gowatch&lt;/a&gt;
-: Go程序热编译工具，提升开发效率&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/silenceper/pool&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer&#34;&gt;pool&lt;/a&gt;
-:Golang实现的一个通用网络连接池&lt;/li&gt;
 &lt;/ul&gt;
 </description>
             </item></channel>

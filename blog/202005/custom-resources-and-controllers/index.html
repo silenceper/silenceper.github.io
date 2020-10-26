@@ -36,7 +36,7 @@
                 "url": "\/img\/silenceoer-avatar.jpg",
                 "width":  800 ,
                 "height":  600 
-            },"genre": "posts","keywords": "crd, controller, kubernetes, operator","wordcount":  4068 ,
+            },"genre": "posts","keywords": "crd, controller, kubernetes, operator","wordcount":  3763 ,
         "url": "\/blog\/202005\/custom-resources-and-controllers\/","datePublished": "2020-05-18T18:20:59\u002b08:00","dateModified": "2020-05-18T18:20:59\u002b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "silenceper",
@@ -98,8 +98,8 @@
                                 </a>
                             </span></span></div>
             <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-05-18&#32;18:20>2020-05-18 18:20</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>约 4068 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>预计阅读 9 分钟&nbsp;</div>
+                <i class="fas fa-pencil-alt fa-fw"></i>约 3763 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>预计阅读 8 分钟&nbsp;</div>
         </div><div class="toc" id="toc-auto">
                 <h2 class="toc-title">目录</h2>
                 <div class="toc-content" id="toc-content-auto"></div>
@@ -166,13 +166,13 @@
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>samplecontroller.k8s.io/v1alpha1<span class="w">
-</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>Foo<span class="w">
-</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>example-foo<span class="w">
-</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">deploymentName</span><span class="p">:</span><span class="w"> </span>example-foo<span class="w">
-</span><span class="w">  </span><span class="k">replicas</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">samplecontroller.k8s.io/v1alpha1</span><span class="w">
+</span><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">Foo</span><span class="w">
+</span><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">example-foo</span><span class="w">
+</span><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">deploymentName</span><span class="p">:</span><span class="w"> </span><span class="l">example-foo</span><span class="w">
+</span><span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
 </span></code></pre></td></tr></table>
 </div>
 </div><p>它的CRD定义如下：</p>
@@ -201,27 +201,27 @@
 </span><span class="lnt">21
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>apiextensions.k8s.io/v1beta1<span class="w">
-</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>CustomResourceDefinition<span class="w">
-</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>foos.samplecontroller.k8s.io<span class="w">
-</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">group</span><span class="p">:</span><span class="w"> </span>samplecontroller.k8s.io<span class="w">
-</span><span class="w">  </span><span class="k">version</span><span class="p">:</span><span class="w"> </span>v1alpha1<span class="w"> </span><span class="c">#版本</span><span class="w">
-</span><span class="w">  </span><span class="k">names</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>Foo<span class="w"> </span><span class="c"># kind类型</span><span class="w">
-</span><span class="w">    </span><span class="k">plural</span><span class="p">:</span><span class="w"> </span>foos<span class="w"> </span><span class="c"># API中使用的名称：/apis/&lt;group&gt;/&lt;version&gt;/&lt;plural&gt;</span><span class="w">
-</span><span class="w">  </span><span class="k">scope</span><span class="p">:</span><span class="w"> </span>Namespaced<span class="w"> </span><span class="c"># Namespaced/Cluster，表示该CRD是命令空间属性还是集群属性</span><span class="w">
-</span><span class="w">  </span><span class="k">validation</span><span class="p">:</span><span class="w"> </span><span class="c"># 对参数进行验证，应用openAPIV3Schema规则</span><span class="w">
-</span><span class="w">    </span><span class="k">openAPIV3Schema</span><span class="p">:</span><span class="w"> 
-</span><span class="w">      </span><span class="k">properties</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span><span class="k">spec</span><span class="p">:</span><span class="w">
-</span><span class="w">          </span><span class="k">properties</span><span class="p">:</span><span class="w">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">apiextensions.k8s.io/v1beta1</span><span class="w">
+</span><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">CustomResourceDefinition</span><span class="w">
+</span><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">foos.samplecontroller.k8s.io</span><span class="w">
+</span><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="l">samplecontroller.k8s.io</span><span class="w">
+</span><span class="w">  </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l">v1alpha1</span><span class="w"> </span><span class="c">#版本</span><span class="w">
+</span><span class="w">  </span><span class="nt">names</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">Foo</span><span class="w"> </span><span class="c"># kind类型</span><span class="w">
+</span><span class="w">    </span><span class="nt">plural</span><span class="p">:</span><span class="w"> </span><span class="l">foos</span><span class="w"> </span><span class="c"># API中使用的名称：/apis/&lt;group&gt;/&lt;version&gt;/&lt;plural&gt;</span><span class="w">
+</span><span class="w">  </span><span class="nt">scope</span><span class="p">:</span><span class="w"> </span><span class="l">Namespaced</span><span class="w"> </span><span class="c"># Namespaced/Cluster，表示该CRD是命令空间属性还是集群属性</span><span class="w">
+</span><span class="w">  </span><span class="nt">validation</span><span class="p">:</span><span class="w"> </span><span class="c"># 对参数进行验证，应用openAPIV3Schema规则</span><span class="w">
+</span><span class="w">    </span><span class="nt">openAPIV3Schema</span><span class="p">:</span><span class="w"> 
+</span><span class="w">      </span><span class="nt">properties</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="nt">properties</span><span class="p">:</span><span class="w">
 </span><span class="w">            </span><span class="c"># 定义了一个 replicas 字段，类型为integer ，并且在1-10的范围内</span><span class="w">
-</span><span class="w">            </span><span class="k">replicas</span><span class="p">:</span><span class="w">        
-</span><span class="w">              </span><span class="k">type</span><span class="p">:</span><span class="w"> </span>integer<span class="w">
-</span><span class="w">              </span><span class="k">minimum</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
-</span><span class="w">              </span><span class="k">maximum</span><span class="p">:</span><span class="w"> </span><span class="m">10</span><span class="w">
+</span><span class="w">            </span><span class="nt">replicas</span><span class="p">:</span><span class="w">        
+</span><span class="w">              </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l">integer</span><span class="w">
+</span><span class="w">              </span><span class="nt">minimum</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span><span class="w">              </span><span class="nt">maximum</span><span class="p">:</span><span class="w"> </span><span class="m">10</span><span class="w">
 </span></code></pre></td></tr></table>
 </div>
 </div><p>更多关于crd定义规则可以参考官方文档：<br /><a href="https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/" target="_blank" rel="noopener noreffer">https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/</a>
@@ -440,13 +440,13 @@ Examples:
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="w">  </span><span class="k">validation</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="k">openAPIV3Schema</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">properties</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span><span class="k">spec</span><span class="p">:</span><span class="w">
-</span><span class="w">          </span><span class="k">properties</span><span class="p">:</span><span class="w">
-</span><span class="w">            </span><span class="k">fields</span><span class="p">:</span><span class="w">
-</span><span class="w">              </span><span class="k">type</span><span class="p">:</span><span class="w"> </span>object<span class="w">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="w">  </span><span class="nt">validation</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">openAPIV3Schema</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">properties</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="nt">properties</span><span class="p">:</span><span class="w">
+</span><span class="w">            </span><span class="nt">fields</span><span class="p">:</span><span class="w">
+</span><span class="w">              </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l">object</span><span class="w">
 </span></code></pre></td></tr></table>
 </div>
 </div><p>我们在spec里面定义了一个fields字段，类型是object（即key ,value的形式），value的值可能是int也可能是string或者bool<br />在type定义的时候我是这么写的，定义为map[string]interface{}</p>
@@ -458,9 +458,9 @@ Examples:
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yaml" data-lang="yaml">//<span class="w"> </span>FooSpec<span class="w"> </span>is<span class="w"> </span>the<span class="w"> </span>spec<span class="w"> </span>for<span class="w"> </span>a<span class="w"> </span>Foo<span class="w"> </span>resource<span class="w">
-</span><span class="w"></span>type<span class="w"> </span>FooSpec<span class="w"> </span>struct<span class="w"> </span>{<span class="w">
-</span><span class="w">	</span>Fields<span class="w"> </span>map<span class="p">[</span>string<span class="p">]</span>interface{}<span class="w"> </span>`json<span class="p">:</span><span class="s2">&#34;fields&#34;</span>`<span class="w">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="l">// FooSpec is the spec for a Foo resource</span><span class="w">
+</span><span class="w"></span><span class="l">type FooSpec struct {</span><span class="w">
+</span><span class="w">	</span><span class="l">Fields map[string]interface{} `json:&#34;fields&#34;`</span><span class="w">
 </span><span class="w"></span>}<span class="w">
 </span></code></pre></td></tr></table>
 </div>
@@ -475,12 +475,12 @@ Examples:
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yaml" data-lang="yaml">Generating<span class="w"> </span>deepcopy<span class="w"> </span>funcs<span class="w">
-</span><span class="w"></span>F0518<span class="w"> </span><span class="m">17</span><span class="p">:</span><span class="m">53</span><span class="p">:</span><span class="m">33.568567</span><span class="w">   </span><span class="m">39986</span><span class="w"> </span>deepcopy.go<span class="p">:</span><span class="m">750</span><span class="p">]</span><span class="w"> </span>DeepCopy<span class="w"> </span>of<span class="w"> </span><span class="s2">&#34;interface{}&#34;</span><span class="w"> </span>is<span class="w"> </span>unsupported.<span class="w"> </span>Instead<span class="p">,</span><span class="w"> </span>use<span class="w"> </span>named<span class="w"> </span>interfaces<span class="w"> </span>with<span class="w"> </span>DeepCopy&lt;named-interface&gt;<span class="w"> </span>as<span class="w"> </span>one<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>methods.<span class="w">
-</span><span class="w"></span><span class="k">goroutine 1 [running]</span><span class="p">:</span><span class="w">
-</span><span class="w"></span>k8s.io/klog/v2.stacks(<span class="m">0xc000132001</span><span class="p">,</span><span class="w"> </span><span class="m">0xc0002e9000</span><span class="p">,</span><span class="w"> </span><span class="m">0xad</span><span class="p">,</span><span class="w"> </span><span class="m">0xfd</span>)<span class="w">
-</span><span class="w">	</span>/Users/silenceper/workspace/golang/pkg/mod/k8s.io/klog/v2@v2<span class="m">.0.0</span>/klog.go<span class="p">:</span><span class="m">972</span><span class="w"> </span>+<span class="m">0xb8</span><span class="w">
-</span><span class="w"> </span>......<span class="w">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="l">Generating deepcopy funcs</span><span class="w">
+</span><span class="w"></span><span class="l">F0518 17:53:33.568567   39986 deepcopy.go:750] DeepCopy of &#34;interface{}&#34; is unsupported. Instead, use named interfaces with DeepCopy&lt;named-interface&gt; as one of the methods.</span><span class="w">
+</span><span class="w"></span><span class="nt">goroutine 1 [running]</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="l">k8s.io/klog/v2.stacks(0xc000132001, 0xc0002e9000, 0xad, 0xfd)</span><span class="w">
+</span><span class="w">	</span><span class="l">/Users/silenceper/workspace/golang/pkg/mod/k8s.io/klog/v2@v2.0.0/klog.go:972 +0xb8</span><span class="w">
+</span><span class="w"> </span><span class="l">......</span><span class="w">
 </span></code></pre></td></tr></table>
 </div>
 </div><p>遇到这种问题，需要自己实现深拷贝，例如这种：</p>
@@ -517,34 +517,34 @@ Examples:
 </span><span class="lnt">29
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yaml" data-lang="yaml">type<span class="w"> </span>HelmReleaseSpec<span class="w"> </span>struct<span class="w"> </span>{<span class="w">
-</span><span class="w">    </span>HelmValues<span class="w">    </span>`json<span class="p">:</span><span class="s2">&#34;,inline&#34;</span>`<span class="w">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="l">type HelmReleaseSpec struct {</span><span class="w">
+</span><span class="w">    </span><span class="l">HelmValues    `json:&#34;,inline&#34;`</span><span class="w">
 </span><span class="w"></span>}<span class="w">
 </span><span class="w"> 
-</span><span class="w"></span>//<span class="w"> </span>+k8s<span class="p">:</span>deepcopy-gen=<span class="kc">false</span><span class="w">
-</span><span class="w"></span>type<span class="w"> </span>HelmValues<span class="w"> </span>struct<span class="w"> </span>{<span class="w">
-</span><span class="w">    </span>helm.Values<span class="w"> </span>`json<span class="p">:</span><span class="s2">&#34;values,omitempty&#34;</span>`<span class="w">
+</span><span class="w"></span><span class="l">// +k8s:deepcopy-gen=false</span><span class="w">
+</span><span class="w"></span><span class="l">type HelmValues struct {</span><span class="w">
+</span><span class="w">    </span><span class="l">helm.Values `json:&#34;values,omitempty&#34;`</span><span class="w">
 </span><span class="w"></span>}<span class="w">
 </span><span class="w"> 
-</span><span class="w"></span>//<span class="w"> </span>helm.Values定义：<span class="w">
-</span><span class="w"></span>type<span class="w"> </span>Values<span class="w"> </span>map<span class="p">[</span>string<span class="p">]</span>interface{}<span class="w">
+</span><span class="w"></span><span class="l">// helm.Values定义：</span><span class="w">
+</span><span class="w"></span><span class="l">type Values map[string]interface{}</span><span class="w">
 </span><span class="w"> 
-</span><span class="w"></span>//<span class="w"> </span>自己实现深拷贝<span class="w">
-</span><span class="w"></span>func<span class="w"> </span>(in<span class="w"> </span><span class="cp">*HelmValues)</span><span class="w"> </span>DeepCopyInto(out<span class="w"> </span><span class="cp">*HelmValues)</span><span class="w"> </span>{<span class="w">
-</span><span class="w">    </span>if<span class="w"> </span>in<span class="w"> </span>==<span class="w"> </span>nil<span class="w"> </span>{<span class="w">
-</span><span class="w">        </span>return<span class="w">
+</span><span class="w"></span><span class="l">// 自己实现深拷贝</span><span class="w">
+</span><span class="w"></span><span class="l">func (in *HelmValues) DeepCopyInto(out *HelmValues) {</span><span class="w">
+</span><span class="w">    </span><span class="l">if in == nil {</span><span class="w">
+</span><span class="w">        </span><span class="l">return</span><span class="w">
 </span><span class="w">    </span>}<span class="w">
 </span><span class="w"> 
-</span><span class="w">    </span>b<span class="p">,</span><span class="w"> </span>err<span class="w"> </span><span class="p">:</span>=<span class="w"> </span>yaml.Marshal(in.Values)<span class="w">
-</span><span class="w">    </span>if<span class="w"> </span>err<span class="w"> </span>!=<span class="w"> </span>nil<span class="w"> </span>{<span class="w">
-</span><span class="w">        </span>return<span class="w">
+</span><span class="w">    </span><span class="l">b, err := yaml.Marshal(in.Values)</span><span class="w">
+</span><span class="w">    </span><span class="l">if err != nil {</span><span class="w">
+</span><span class="w">        </span><span class="l">return</span><span class="w">
 </span><span class="w">    </span>}<span class="w">
-</span><span class="w">    </span>var<span class="w"> </span>values<span class="w"> </span>helm.Values<span class="w">
-</span><span class="w">    </span>err<span class="w"> </span>=<span class="w"> </span>yaml.Unmarshal(b<span class="p">,</span><span class="w"> </span><span class="cp">&amp;values)</span><span class="w">
-</span><span class="w">    </span>if<span class="w"> </span>err<span class="w"> </span>!=<span class="w"> </span>nil<span class="w"> </span>{<span class="w">
-</span><span class="w">        </span>return<span class="w">
+</span><span class="w">    </span><span class="l">var values helm.Values</span><span class="w">
+</span><span class="w">    </span><span class="l">err = yaml.Unmarshal(b, &amp;values)</span><span class="w">
+</span><span class="w">    </span><span class="l">if err != nil {</span><span class="w">
+</span><span class="w">        </span><span class="l">return</span><span class="w">
 </span><span class="w">    </span>}<span class="w">
-</span><span class="w">    </span>out.Values<span class="w"> </span>=<span class="w"> </span>values<span class="w">
+</span><span class="w">    </span><span class="l">out.Values = values</span><span class="w">
 </span><span class="w"></span>}<span class="w"> 
 </span></code></pre></td></tr></table>
 </div>

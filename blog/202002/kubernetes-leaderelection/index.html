@@ -36,7 +36,7 @@
                 "url": "\/img\/silenceoer-avatar.jpg",
                 "width":  800 ,
                 "height":  600 
-            },"genre": "posts","keywords": "go, kubernetes","wordcount":  4388 ,
+            },"genre": "posts","keywords": "go, kubernetes","wordcount":  4358 ,
         "url": "\/blog\/202002\/kubernetes-leaderelection\/","datePublished": "2020-02-15T00:00:00\u002b00:00","dateModified": "2020-02-15T00:00:00\u002b00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "silenceper",
@@ -98,7 +98,7 @@
                                 </a>
                             </span></span></div>
             <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-02-15&#32;00:00>2020-02-15 00:00</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>约 4388 字&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>约 4358 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>预计阅读 9 分钟&nbsp;</div>
         </div><div class="featured-image"><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://silenceper.oss-cn-beijing.aliyuncs.com/blog/bg/qiao.jpg" alt="featured image" title="featured image" class="lazyload">
 </div><div class="toc" id="toc-auto">
@@ -450,7 +450,7 @@ logtostderr：klog提供的参数，指定log输出到控制台
 v: 指定日志输出级别
 </code></pre></td></tr></table>
 </div>
-</div><p><strong>同时启动两个进程：<strong><br /></strong>启动进程1</strong>：</p>
+</div><p><strong>同时启动两个进程：</strong><br /><strong>启动进程1</strong>：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -587,7 +587,7 @@ I0215 20:01:41.489577   <span class="m">48791</span> main.go:87<span class="o">]
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p><code>LeaderElectionConfig.lock</code> **支持保存在以下三种资源中：**<br /><code>configmap</code> <br /><code>endpoint</code> <br /><code>lease</code> <br />包中还提供了一个 <code>multilock</code> ，即可以进行选择两种，当其中一种保存失败时，选择第二张<br />可以在<a href="https://github.com/kubernetes/client-go/blob/master/tools/leaderelection/resourcelock/interface.go#L121" target="_blank" rel="noopener noreffer">interface.go</a>
+</div><p><code>LeaderElectionConfig.lock</code> <strong>支持保存在以下三种资源中：</strong><br /><code>configmap</code> <br /><code>endpoint</code> <br /><code>lease</code> <br />包中还提供了一个 <code>multilock</code> ，即可以进行选择两种，当其中一种保存失败时，选择第二张<br />可以在<a href="https://github.com/kubernetes/client-go/blob/master/tools/leaderelection/resourcelock/interface.go#L121" target="_blank" rel="noopener noreffer">interface.go</a>
 中看到：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -656,22 +656,22 @@ I0215 20:01:41.489577   <span class="m">48791</span> main.go:87<span class="o">]
 </span><span class="lnt">16
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yaml" data-lang="yaml">➜<span class="w">  </span>~<span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>lease<span class="w"> </span>example<span class="w"> </span>-n<span class="w"> </span>default<span class="w"> </span>-o<span class="w"> </span>yaml<span class="w">
-</span><span class="w"></span><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>coordination.k8s.io/v1<span class="w">
-</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>Lease<span class="w">
-</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">creationTimestamp</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;2020-02-15T11:56:37Z&#34;</span><span class="w">
-</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>example<span class="w">
-</span><span class="w">  </span><span class="k">namespace</span><span class="p">:</span><span class="w"> </span>default<span class="w">
-</span><span class="w">  </span><span class="k">resourceVersion</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;210675&#34;</span><span class="w">
-</span><span class="w">  </span><span class="k">selfLink</span><span class="p">:</span><span class="w"> </span>/apis/coordination.k8s.io/v1/namespaces/default/leases/example<span class="w">
-</span><span class="w">  </span><span class="k">uid</span><span class="p">:</span><span class="w"> </span>a3470a06-6fc3-42dc<span class="m">-8242</span>-9d6cebdf5315<span class="w">
-</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">acquireTime</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;2020-02-15T12:01:41.476971Z&#34;</span>//获得锁时间<span class="w">
-</span><span class="w">  </span><span class="k">holderIdentity</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;2&#34;</span>//持有锁进程的标识<span class="w">
-</span><span class="w">  </span><span class="k">leaseDurationSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">60</span>//lease租约<span class="w">
-</span><span class="w">  </span><span class="k">leaseTransitions</span><span class="p">:</span><span class="w"> </span><span class="m">1</span>//leader更换次数<span class="w">
-</span><span class="w">  </span><span class="k">renewTime</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;2020-02-15T12:05:37.134655Z&#34;</span>//更新租约的时间<span class="w">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="l">➜  ~ kubectl get lease example -n default -o yaml</span><span class="w">
+</span><span class="w"></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">coordination.k8s.io/v1</span><span class="w">
+</span><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">Lease</span><span class="w">
+</span><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">creationTimestamp</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;2020-02-15T11:56:37Z&#34;</span><span class="w">
+</span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">example</span><span class="w">
+</span><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l">default</span><span class="w">
+</span><span class="w">  </span><span class="nt">resourceVersion</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;210675&#34;</span><span class="w">
+</span><span class="w">  </span><span class="nt">selfLink</span><span class="p">:</span><span class="w"> </span><span class="l">/apis/coordination.k8s.io/v1/namespaces/default/leases/example</span><span class="w">
+</span><span class="w">  </span><span class="nt">uid</span><span class="p">:</span><span class="w"> </span><span class="l">a3470a06-6fc3-42dc-8242-9d6cebdf5315</span><span class="w">
+</span><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">acquireTime</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;2020-02-15T12:01:41.476971Z&#34;</span><span class="l">//获得锁时间</span><span class="w">
+</span><span class="w">  </span><span class="nt">holderIdentity</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;2&#34;</span><span class="l">//持有锁进程的标识</span><span class="w">
+</span><span class="w">  </span><span class="nt">leaseDurationSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">60</span><span class="l">//lease租约</span><span class="w">
+</span><span class="w">  </span><span class="nt">leaseTransitions</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="l">//leader更换次数</span><span class="w">
+</span><span class="w">  </span><span class="nt">renewTime</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;2020-02-15T12:05:37.134655Z&#34;</span><span class="l">//更新租约的时间</span><span class="w">
 </span></code></pre></td></tr></table>
 </div>
 </div><p>关注其spec中的字段，分别进行标注,对应结构体如下：</p>
