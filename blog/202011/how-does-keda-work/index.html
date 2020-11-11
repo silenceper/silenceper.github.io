@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>源码剖析：KEDA是如何工作的? | silenceper</title>
+        <meta name="Description" content="KEDA是基于Kubernetes的事件驱动自动缩放组件，它为Kubernetes中运行的任何容器提供了基于事件驱动的扩缩容能力"><meta property="og:title" content="源码剖析：KEDA是如何工作的?" />
+<meta property="og:description" content="KEDA是基于Kubernetes的事件驱动自动缩放组件，它为Kubernetes中运行的任何容器提供了基于事件驱动的扩缩容能力" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/202011/how-does-keda-work/" />
+<meta property="article:published_time" content="2020-11-08T11:20:59+08:00" />
+<meta property="article:modified_time" content="2020-11-08T11:20:59+08:00" /><meta property="og:site_name" content="silenceper" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="源码剖析：KEDA是如何工作的?"/>
+<meta name="twitter:description" content="KEDA是基于Kubernetes的事件驱动自动缩放组件，它为Kubernetes中运行的任何容器提供了基于事件驱动的扩缩容能力"/>
+<meta name="theme-color" content="#ffffff">
+<meta name="msapplication-TileColor" content="#da532c">
+<link rel="canonical" href="/blog/202011/how-does-keda-work/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="prev" href="/blog/202009/how-to-use-keda/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><meta name="google-site-verification" content="VJ4lE3d3A73DNoyxuuXL_Cuu6MEErPtKXqfAv69pr6E" /><meta name="baidu-site-verification" content="k061nqJczY" /><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "源码剖析：KEDA是如何工作的?",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "\/blog\/202011\/how-does-keda-work\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "\/img\/silenceoer-avatar.jpg",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "posts","keywords": "keda, kubernetes","wordcount":  3760 ,
+        "url": "\/blog\/202011\/how-does-keda-work\/","datePublished": "2020-11-08T11:20:59\u002b08:00","dateModified": "2020-11-08T11:20:59\u002b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "silenceper",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "\/img\/silenceper-avatar.jpg",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": "KEDA是基于Kubernetes的事件驱动自动缩放组件，它为Kubernetes中运行的任何容器提供了基于事件驱动的扩缩容能力"
+    }
+    </script></head>
+    <body><script>
+            if (!window.localStorage || !window.localStorage.getItem('theme')) {window.isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;} else {
+                window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            }
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title animated bounceIn">
+            <a href="/">silenceper</a>
+        </div>
+        <div class="menu"><a class="menu-item" href="/posts/">文章</a><a class="menu-item" href="/tags/">标签</a><a class="menu-item" href="/categories/">分类</a><a class="menu-item" href="/about/">关于</a><a class="menu-item" href="/wechat/">微信SDK</a><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-rotate-180 fa-fw"></i>
+            </a>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-wrapper">
+        <div class="header-container">
+            <div class="header-title animated bounceIn">
+                <a href="/">silenceper</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="/wechat/" title="">微信SDK</a><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-rotate-180 fa-fw"></i>
+            </a>
+        </div>
+    </div>
+</header>
+
+<script>
+    window.desktopHeaderMode = "fixed";
+    window.mobileHeaderMode = "auto";
+</script>
+<main class="main">
+                <div class="container"><article class="page single"><h1 class="single-title animated flipInX">源码剖析：KEDA是如何工作的?</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author">
+                    <a class="author" href="/" rel="author" target="_blank">
+                        <i class="fas fa-user-circle fa-fw"></i>silenceper
+                    </a>
+                </span>&nbsp;<span class="post-category">收录于&nbsp;
+                            <span>
+                                <a href="/categories/tech">
+                                    <i class="far fa-folder fa-fw"></i>Tech
+                                </a>
+                            </span></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-11-08&#32;11:20>2020-11-08 11:20</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>约 3760 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>预计阅读 8 分钟&nbsp;</div>
+        </div><div class="toc" id="toc-auto">
+                <h2 class="toc-title">目录</h2>
+                <div class="toc-content" id="toc-content-auto"></div>
+            </div>
+            <div class="toc" id="toc-static">
+                <details>
+                    <summary>
+                        <div class="toc-title">
+                            <span>目录</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#代码结构">代码结构</a></li>
+    <li><a href="#keda-operator">keda-operator</a>
+      <ul>
+        <li><a href="#scaledobjectreconciler-处理">ScaledObjectReconciler 处理</a>
+          <ul>
+            <li><a href="#ensurehpaforscaledobjectexists">ensureHPAForScaledObjectExists</a></li>
+            <li><a href="#requestscaleloop">requestScaleLoop</a></li>
+          </ul>
+        </li>
+        <li><a href="#scaledjobreconciler-处理">ScaledJobReconciler 处理</a></li>
+      </ul>
+    </li>
+    <li><a href="#keda-metrics-apiserver">keda-metrics-apiserver</a></li>
+    <li><a href="#实现一个scaler">实现一个Scaler</a></li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav></div>
+                </details>
+            </div><div class="content"><blockquote>
+<p>文章中源码是基于KEDA 2.0( <a href="https://github.com/kedacore/keda/commit/50bec808f8b4656922797e4bcb7c2b61fabd6d0e" target="_blank" rel="noopener noreffer">50bec80
+</a>
+)来进行分析</p>
+<p>keda 2.0 要求k8s集群版本 &gt;=1.16</p>
+</blockquote>
+<p>KEDA 在<a href="https://keda.sh/blog/keda-2.0-release/" target="_blank" rel="noopener noreffer">2020年11月4号release了2.0版本</a>
+，包含了一些新的比较有用的特性，比如<code>ScaledObject/ScaledJob</code>中支持多触发器、支持HPA原始的CPU、Memory scaler等。</p>
+<p>具体的安装使用请参考上一篇文章<a href="https://silenceper.com/blog/202009/how-to-use-keda/" target="_blank" rel="noopener noreffer">使用keda完成基于事件的弹性伸缩</a>
+，这篇文章主要深入的看下KEDA内部机制以及是如何工作的。</p>
+<p><strong>我们先提出几个问题，带着问题去看代码，方便我们理解整个机制：</strong></p>
+<ul>
+<li>KEDA是如何获取到多种事件的指标，以及如何判断扩缩容的？</li>
+<li>KEDA是如何做到将应用的副本数缩容0，依据是什么？</li>
+</ul>
+<h2 id="代码结构">代码结构</h2>
+<p>对一些主要目录说明，其他一些MD文件主要是文字说明：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">├── BRANDING.md
+├── BUILD.md    //如何在本地编译和运行
+├── CHANGELOG.md
+├── CONTRIBUTING.md   //如何参与贡献次项目
+├── CREATE-NEW-SCALER.md
+├── Dockerfile
+├── Dockerfile.adapter
+├── GOVERNANCE.md
+├── LICENSE
+├── MAINTAINERS.md
+├── Makefile    // 构建编译相关命令
+├── PROJECT
+├── README.md
+├── RELEASE-PROCESS.MD
+├── adapter  // keda-metrics-apiserver 组件入口
+├── api // 自定义资源定义，例如ScaledObject的定义
+├── bin 
+├── config //组件yaml资源，通过kustomization工具生成
+├── controllers //kubebuilder 中controller 代码控制crd资源
+├── go.mod
+├── go.sum
+├── hack
+├── images
+├── main.go //keda-operator  controller入口
+├── pkg   //包含组件核心代码实现
+├── tests //e2e测试
+├── tools  
+├── vendor
+└── version
+</code></pre></td></tr></table>
+</div>
+</div><p>keda中主要是两个组件<code>keda-operator</code>以及<code>keda-metrics-apiserver</code>。</p>
+<ul>
+<li>keda-operator ： 负责创建/更新HPA以及通过Loop控制应用副本数</li>
+<li>keda-metrics-apiserver：实现external-metrics接口，以对接给HPA的external类型的指标查询（比如各种prometheus指标，mysql等）</li>
+</ul>
+<h2 id="keda-operator">keda-operator</h2>
+<p>项目中用到了<a href="https://github.com/kubernetes-sigs/kubebuilder" target="_blank" rel="noopener noreffer">kubebuilder</a>
+ SDK，用来完成这个Operator的编写。</p>
+<p>对于k8s中的自定义controller不了解的可以看看这边文章：<a href="/blog/202005/custom-resources-and-controllers/" rel="noopener noreffer">如何在Kubernetes中创建一个自定义Controller?</a>
+。</p>
+<p>keda controller的主要流程，画了幅图：
+<figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="/img/20201111/keda-controller-analyze.png" alt="keda-controller 分析流程" title="keda-controller 分析流程" class="lazyload">
+<figcaption class="image-caption">keda-controller 分析流程</figcaption></figure>
+</p>
+<p>组件启动入口在于<code>main.go</code>文件中：</p>
+<p>通过<code>controller-runtime</code>组件启动两个自定义controller：<code>ScaledObjectReconciler</code>,<code>ScaledJobReconciler</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">mgr</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">ctrl</span><span class="p">.</span><span class="nf">NewManager</span><span class="p">(</span><span class="nx">ctrl</span><span class="p">.</span><span class="nf">GetConfigOrDie</span><span class="p">(),</span> <span class="nx">ctrl</span><span class="p">.</span><span class="nx">Options</span><span class="p">{</span>
+		<span class="nx">Scheme</span><span class="p">:</span>                 <span class="nx">scheme</span><span class="p">,</span>
+		<span class="nx">MetricsBindAddress</span><span class="p">:</span>     <span class="nx">metricsAddr</span><span class="p">,</span>
+		<span class="nx">HealthProbeBindAddress</span><span class="p">:</span> <span class="s">&#34;:8081&#34;</span><span class="p">,</span>
+		<span class="nx">Port</span><span class="p">:</span>                   <span class="mi">9443</span><span class="p">,</span>
+		<span class="nx">LeaderElection</span><span class="p">:</span>         <span class="nx">enableLeaderElection</span><span class="p">,</span>
+		<span class="nx">LeaderElectionID</span><span class="p">:</span>       <span class="s">&#34;operator.keda.sh&#34;</span><span class="p">,</span>
+	<span class="p">})</span>
+<span class="o">...</span>
+
+<span class="c1">// Add readiness probe 
+</span><span class="c1"></span><span class="nx">err</span> <span class="p">=</span> <span class="nx">mgr</span><span class="p">.</span><span class="nf">AddReadyzCheck</span><span class="p">(</span><span class="s">&#34;ready-ping&#34;</span><span class="p">,</span> <span class="nx">healthz</span><span class="p">.</span><span class="nx">Ping</span><span class="p">)</span>
+<span class="o">...</span>
+<span class="c1">// Add liveness probe
+</span><span class="c1"></span><span class="nx">err</span> <span class="p">=</span> <span class="nx">mgr</span><span class="p">.</span><span class="nf">AddHealthzCheck</span><span class="p">(</span><span class="s">&#34;health-ping&#34;</span><span class="p">,</span> <span class="nx">healthz</span><span class="p">.</span><span class="nx">Ping</span><span class="p">)</span>
+<span class="o">...</span><span class="p">.</span>
+<span class="c1">//注册 ScaledObject 处理的controller
+</span><span class="c1"></span><span class="k">if</span> <span class="nx">err</span> <span class="p">=</span> <span class="p">(</span><span class="o">&amp;</span><span class="nx">controllers</span><span class="p">.</span><span class="nx">ScaledObjectReconciler</span><span class="p">{</span>
+	<span class="nx">Client</span><span class="p">:</span> <span class="nx">mgr</span><span class="p">.</span><span class="nf">GetClient</span><span class="p">(),</span>
+	<span class="nx">Log</span><span class="p">:</span>    <span class="nx">ctrl</span><span class="p">.</span><span class="nx">Log</span><span class="p">.</span><span class="nf">WithName</span><span class="p">(</span><span class="s">&#34;controllers&#34;</span><span class="p">).</span><span class="nf">WithName</span><span class="p">(</span><span class="s">&#34;ScaledObject&#34;</span><span class="p">),</span>
+	<span class="nx">Scheme</span><span class="p">:</span> <span class="nx">mgr</span><span class="p">.</span><span class="nf">GetScheme</span><span class="p">(),</span>
+<span class="p">}).</span><span class="nf">SetupWithManager</span><span class="p">(</span><span class="nx">mgr</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+	<span class="nx">setupLog</span><span class="p">.</span><span class="nf">Error</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;unable to create controller&#34;</span><span class="p">,</span> <span class="s">&#34;controller&#34;</span><span class="p">,</span> <span class="s">&#34;ScaledObject&#34;</span><span class="p">)</span>
+	<span class="nx">os</span><span class="p">.</span><span class="nf">Exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="c1">////注册 ScaledJob 处理的controller
+</span><span class="c1"></span><span class="k">if</span> <span class="nx">err</span> <span class="p">=</span> <span class="p">(</span><span class="o">&amp;</span><span class="nx">controllers</span><span class="p">.</span><span class="nx">ScaledJobReconciler</span><span class="p">{</span>
+	<span class="nx">Client</span><span class="p">:</span> <span class="nx">mgr</span><span class="p">.</span><span class="nf">GetClient</span><span class="p">(),</span>
+	<span class="nx">Log</span><span class="p">:</span>    <span class="nx">ctrl</span><span class="p">.</span><span class="nx">Log</span><span class="p">.</span><span class="nf">WithName</span><span class="p">(</span><span class="s">&#34;controllers&#34;</span><span class="p">).</span><span class="nf">WithName</span><span class="p">(</span><span class="s">&#34;ScaledJob&#34;</span><span class="p">),</span>
+	<span class="nx">Scheme</span><span class="p">:</span> <span class="nx">mgr</span><span class="p">.</span><span class="nf">GetScheme</span><span class="p">(),</span>
+<span class="p">}).</span><span class="nf">SetupWithManager</span><span class="p">(</span><span class="nx">mgr</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+	<span class="nx">setupLog</span><span class="p">.</span><span class="nf">Error</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;unable to create controller&#34;</span><span class="p">,</span> <span class="s">&#34;controller&#34;</span><span class="p">,</span> <span class="s">&#34;ScaledJob&#34;</span><span class="p">)</span>
+	<span class="nx">os</span><span class="p">.</span><span class="nf">Exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">mgr</span><span class="p">.</span><span class="nf">Start</span><span class="p">(</span><span class="nx">ctrl</span><span class="p">.</span><span class="nf">SetupSignalHandler</span><span class="p">());</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+	<span class="nx">setupLog</span><span class="p">.</span><span class="nf">Error</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;problem running manager&#34;</span><span class="p">)</span>
+	<span class="nx">os</span><span class="p">.</span><span class="nf">Exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="scaledobjectreconciler-处理">ScaledObjectReconciler 处理</h3>
+<p>我们主要关注<a href="https://github.com/kedacore/keda/blob/main/controllers/scaledobject_controller.go#L100" target="_blank" rel="noopener noreffer"><code>Reconcile</code></a>
+方法，当<code>ScaledObject</code>发生变化时将会触发该方法：
+方法内部主要功能实现：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="o">...</span>
+<span class="c1">// 处理删除ScaledObject的情况
+</span><span class="c1"></span><span class="k">if</span> <span class="nx">scaledObject</span><span class="p">.</span><span class="nf">GetDeletionTimestamp</span><span class="p">()</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+      <span class="c1">//进入垃圾回收（比如停止goroutine中Loop，恢复原有副本数）
+</span><span class="c1"></span>	<span class="k">return</span> <span class="nx">ctrl</span><span class="p">.</span><span class="nx">Result</span><span class="p">{},</span> <span class="nx">r</span><span class="p">.</span><span class="nf">finalizeScaledObject</span><span class="p">(</span><span class="nx">reqLogger</span><span class="p">,</span> <span class="nx">scaledObject</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">// 给ScaledObject资源加上Finalizer：finalizer.keda.sh
+</span><span class="c1"></span><span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">r</span><span class="p">.</span><span class="nf">ensureFinalizer</span><span class="p">(</span><span class="nx">reqLogger</span><span class="p">,</span> <span class="nx">scaledObject</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+	<span class="k">return</span> <span class="nx">ctrl</span><span class="p">.</span><span class="nx">Result</span><span class="p">{},</span> <span class="nx">err</span>
+<span class="p">}</span>
+<span class="o">...</span>
+
+
+<span class="c1">// 真正处理ScaledObject资源
+</span><span class="c1"></span><span class="nx">msg</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">r</span><span class="p">.</span><span class="nf">reconcileScaledObject</span><span class="p">(</span><span class="nx">reqLogger</span><span class="p">,</span> <span class="nx">scaledObject</span><span class="p">)</span>
+<span class="c1">// 设置Status字段说明
+</span><span class="c1"></span><span class="nx">conditions</span> <span class="o">:=</span> <span class="nx">scaledObject</span><span class="p">.</span><span class="nx">Status</span><span class="p">.</span><span class="nx">Conditions</span><span class="p">.</span><span class="nf">DeepCopy</span><span class="p">()</span>
+<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+	<span class="nx">reqLogger</span><span class="p">.</span><span class="nf">Error</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">msg</span><span class="p">)</span>
+	<span class="nx">conditions</span><span class="p">.</span><span class="nf">SetReadyCondition</span><span class="p">(</span><span class="nx">metav1</span><span class="p">.</span><span class="nx">ConditionFalse</span><span class="p">,</span> <span class="s">&#34;ScaledObjectCheckFailed&#34;</span><span class="p">,</span> <span class="nx">msg</span><span class="p">)</span>
+	<span class="nx">conditions</span><span class="p">.</span><span class="nf">SetActiveCondition</span><span class="p">(</span><span class="nx">metav1</span><span class="p">.</span><span class="nx">ConditionUnknown</span><span class="p">,</span> <span class="s">&#34;UnkownState&#34;</span><span class="p">,</span> <span class="s">&#34;ScaledObject check failed&#34;</span><span class="p">)</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+	<span class="nx">reqLogger</span><span class="p">.</span><span class="nf">V</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="nf">Info</span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span>
+	<span class="nx">conditions</span><span class="p">.</span><span class="nf">SetReadyCondition</span><span class="p">(</span><span class="nx">metav1</span><span class="p">.</span><span class="nx">ConditionTrue</span><span class="p">,</span> <span class="s">&#34;ScaledObjectReady&#34;</span><span class="p">,</span> <span class="nx">msg</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="nx">kedacontrollerutil</span><span class="p">.</span><span class="nf">SetStatusConditions</span><span class="p">(</span><span class="nx">r</span><span class="p">.</span><span class="nx">Client</span><span class="p">,</span> <span class="nx">reqLogger</span><span class="p">,</span> <span class="nx">scaledObject</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">conditions</span><span class="p">)</span>
+<span class="k">return</span> <span class="nx">ctrl</span><span class="p">.</span><span class="nx">Result</span><span class="p">{},</span> <span class="nx">err</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>r.reconcileScaledObject方法：</strong></p>
+<p>这个方法中主要两个动作：</p>
+<ul>
+<li><code>ensureHPAForScaledObjectExists</code>创建HPA资源</li>
+<li>进入<code>requestScaleLoop</code>（不断的检测scaler 是否active，进行副本数的修改）</li>
+</ul>
+<h4 id="ensurehpaforscaledobjectexists">ensureHPAForScaledObjectExists</h4>
+<p>通过跟踪进入到<a href="https://github.com/kedacore/keda/blob/50bec808f8b4656922797e4bcb7c2b61fabd6d0e/controllers/hpa.go#L43" target="_blank" rel="noopener noreffer">newHPAForScaledObject</a>
+方法:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">scaledObjectMetricSpecs</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">r</span><span class="p">.</span><span class="nf">getScaledObjectMetricSpecs</span><span class="p">(</span><span class="nx">logger</span><span class="p">,</span> <span class="nx">scaledObject</span><span class="p">)</span>
+<span class="o">...</span><span class="nx">省略代码</span>
+
+<span class="nx">hpa</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">autoscalingv2beta2</span><span class="p">.</span><span class="nx">HorizontalPodAutoscaler</span><span class="p">{</span>
+	<span class="nx">Spec</span><span class="p">:</span> <span class="nx">autoscalingv2beta2</span><span class="p">.</span><span class="nx">HorizontalPodAutoscalerSpec</span><span class="p">{</span>
+		<span class="nx">MinReplicas</span><span class="p">:</span> <span class="nf">getHPAMinReplicas</span><span class="p">(</span><span class="nx">scaledObject</span><span class="p">),</span>
+		<span class="nx">MaxReplicas</span><span class="p">:</span> <span class="nf">getHPAMaxReplicas</span><span class="p">(</span><span class="nx">scaledObject</span><span class="p">),</span>
+		<span class="nx">Metrics</span><span class="p">:</span>     <span class="nx">scaledObjectMetricSpecs</span><span class="p">,</span>
+		<span class="nx">Behavior</span><span class="p">:</span>    <span class="nx">behavior</span><span class="p">,</span>
+		<span class="nx">ScaleTargetRef</span><span class="p">:</span> <span class="nx">autoscalingv2beta2</span><span class="p">.</span><span class="nx">CrossVersionObjectReference</span><span class="p">{</span>
+			<span class="nx">Name</span><span class="p">:</span>       <span class="nx">scaledObject</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">ScaleTargetRef</span><span class="p">.</span><span class="nx">Name</span><span class="p">,</span>
+			<span class="nx">Kind</span><span class="p">:</span>       <span class="nx">gvkr</span><span class="p">.</span><span class="nx">Kind</span><span class="p">,</span>
+			<span class="nx">APIVersion</span><span class="p">:</span> <span class="nx">gvkr</span><span class="p">.</span><span class="nf">GroupVersion</span><span class="p">().</span><span class="nf">String</span><span class="p">(),</span>
+		<span class="p">}},</span>
+	<span class="nx">ObjectMeta</span><span class="p">:</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">ObjectMeta</span><span class="p">{</span>
+		<span class="nx">Name</span><span class="p">:</span>      <span class="nf">getHPAName</span><span class="p">(</span><span class="nx">scaledObject</span><span class="p">),</span>
+		<span class="nx">Namespace</span><span class="p">:</span> <span class="nx">scaledObject</span><span class="p">.</span><span class="nx">Namespace</span><span class="p">,</span>
+		<span class="nx">Labels</span><span class="p">:</span>    <span class="nx">labels</span><span class="p">,</span>
+	<span class="p">},</span>
+	<span class="nx">TypeMeta</span><span class="p">:</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">TypeMeta</span><span class="p">{</span>
+		<span class="nx">APIVersion</span><span class="p">:</span> <span class="s">&#34;v2beta2&#34;</span><span class="p">,</span>
+	<span class="p">},</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>可以看到创建ScalerObject其实最终也是创建了HPA，其实还是通过HPA本身的特性来控制应用的弹性伸缩。</p>
+<p>其中<a href="https://github.com/kedacore/keda/blob/50bec808f8b4656922797e4bcb7c2b61fabd6d0e/controllers/hpa.go#L135" target="_blank" rel="noopener noreffer">getScaledObjectMetricSpecs</a>
+方法中就是获取到<code>triggers</code>中的metrics指标。</p>
+<p>这里有区分一下External的metrics和resource metrics，因为CPU/Memory scaler是通过resource metrics 来获取的。</p>
+<h4 id="requestscaleloop">requestScaleLoop</h4>
+<p><a href="https://github.com/kedacore/keda/blob/50bec808f8b4656922797e4bcb7c2b61fabd6d0e/controllers/scaledobject_controller.go#L299" target="_blank" rel="noopener noreffer">requestScaleLoop</a>
+方法中用来循环check Scaler中的IsActive状态并作出对应的处理，比如修改副本数，直接来看最终的处理吧：
+这里有两种模型来触发<code>RequestScale</code>：</p>
+<ul>
+<li>Pull模型：即主动的调用scaler 中的<code>IsActive</code>方法</li>
+<li>Push模型：由Scaler来触发，<code>PushScaler</code>多了一个Run方法，通过channel传入active状态。</li>
+</ul>
+<blockquote>
+<p><code>IsActive</code>是由Scaler实现的，比如对于prometheus来说，可能指标为0则为false</p>
+</blockquote>
+<p>这个具体的scaler实现后续再讲，我们来看看RequestScale做了什么事：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">//当前副本数为0，并是所有scaler属于active状态，则修改副本数为MinReplicaCount 或 1
+</span><span class="c1"></span><span class="k">if</span> <span class="nx">currentScale</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">Replicas</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">isActive</span> <span class="p">{</span>
+	<span class="nx">e</span><span class="p">.</span><span class="nf">scaleFromZero</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="nx">logger</span><span class="p">,</span> <span class="nx">scaledObject</span><span class="p">,</span> <span class="nx">currentScale</span><span class="p">)</span>
+<span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">!</span><span class="nx">isActive</span> <span class="o">&amp;&amp;</span>
+	<span class="nx">currentScale</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">Replicas</span> <span class="p">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span>
+	<span class="p">(</span><span class="nx">scaledObject</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">MinReplicaCount</span> <span class="o">==</span> <span class="kc">nil</span> <span class="o">||</span> <span class="o">*</span><span class="nx">scaledObject</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">MinReplicaCount</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+   <span class="c1">// 所有scaler都处理not active状态，并且当前副本数大于0，且MinReplicaCount设定为0
+</span><span class="c1"></span>   <span class="c1">// 则缩容副本数为0
+</span><span class="c1"></span>	<span class="nx">e</span><span class="p">.</span><span class="nf">scaleToZero</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="nx">logger</span><span class="p">,</span> <span class="nx">scaledObject</span><span class="p">,</span> <span class="nx">currentScale</span><span class="p">)</span>
+<span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">!</span><span class="nx">isActive</span> <span class="o">&amp;&amp;</span>
+	<span class="nx">scaledObject</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">MinReplicaCount</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="o">&amp;&amp;</span>
+	<span class="nx">currentScale</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">Replicas</span> <span class="p">&lt;</span> <span class="o">*</span><span class="nx">scaledObject</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">MinReplicaCount</span> <span class="p">{</span>
+  <span class="c1">// 所有scaler都处理not active状态，并且当前副本数小于MinReplicaCount，则修改为MinReplicaCount
+</span><span class="c1"></span>	<span class="nx">currentScale</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">Replicas</span> <span class="p">=</span> <span class="o">*</span><span class="nx">scaledObject</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">MinReplicaCount</span>
+
+	<span class="nx">err</span> <span class="o">:=</span> <span class="nx">e</span><span class="p">.</span><span class="nf">updateScaleOnScaleTarget</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="nx">scaledObject</span><span class="p">,</span> <span class="nx">currentScale</span><span class="p">)</span>
+	<span class="o">...</span><span class="p">.</span>
+<span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nx">isActive</span> <span class="p">{</span>
+<span class="c1">//  处理active状态，并且副本数大于0，则更新LastActiveTime
+</span><span class="c1"></span>	<span class="nx">e</span><span class="p">.</span><span class="nf">updateLastActiveTime</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="nx">logger</span><span class="p">,</span> <span class="nx">scaledObject</span><span class="p">)</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+<span class="c1">// 不处理
+</span><span class="c1"></span>	<span class="nx">logger</span><span class="p">.</span><span class="nf">V</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="nf">Info</span><span class="p">(</span><span class="s">&#34;ScaleTarget no change&#34;</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="scaledjobreconciler-处理">ScaledJobReconciler 处理</h3>
+<p><code>ScaledJobReconciler</code>相比<code>ScalerObject</code>少了创建HPA的步骤，其余的步骤主要是通过<a href="https://github.com/kedacore/keda/blob/50bec808f8b4656922797e4bcb7c2b61fabd6d0e/pkg/scaling/scale_handler.go#L223" target="_blank" rel="noopener noreffer">checkScaledJobScalers</a>
+，<a href="https://github.com/kedacore/keda/blob/50bec808f8b4656922797e4bcb7c2b61fabd6d0e/pkg/scaling/executor/scale_jobs.go#L24" target="_blank" rel="noopener noreffer">RequestJobScale</a>
+两个方法来判断Job创建：</p>
+<ul>
+<li><code>checkScaledJobScalers</code> 方法，用于计算isActive，maxValue的值</li>
+<li><code>RequestJobScale</code> 方法，用于负责创建Job，里面还涉及到三种扩容策略</li>
+</ul>
+<p>这里直接看代码吧，不贴代码了。</p>
+<p><strong>如何停止Loop</strong></p>
+<p>这里有个问题就是<code>startPushScalers</code>和<code>startScaleLoop</code>都是在Goroutine中处理的，所以当ScaleObject/ScalerJob被删除的时候，这里需要能够被删除，这里就用到了<code>context.Cancel</code>方法，在Goroutine启动的时候就将，context保存在<a href="https://github.com/kedacore/keda/blob/50bec808f8b4656922797e4bcb7c2b61fabd6d0e/pkg/scaling/scale_handler.go#L43" target="_blank" rel="noopener noreffer">scaleLoopContexts *sync.Map</a>
+中(如果已经有了，就先Cancel一次)，在删除资源的时候，进行删除:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">h</span> <span class="o">*</span><span class="nx">scaleHandler</span><span class="p">)</span> <span class="nf">DeleteScalableObject</span><span class="p">(</span><span class="nx">scalableObject</span> <span class="kd">interface</span><span class="p">{})</span> <span class="kt">error</span> <span class="p">{</span>
+	<span class="nx">withTriggers</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nf">asDuckWithTriggers</span><span class="p">(</span><span class="nx">scalableObject</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">h</span><span class="p">.</span><span class="nx">logger</span><span class="p">.</span><span class="nf">Error</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;error duck typing object into withTrigger&#34;</span><span class="p">)</span>
+		<span class="k">return</span> <span class="nx">err</span>
+	<span class="p">}</span>
+
+	<span class="nx">key</span> <span class="o">:=</span> <span class="nf">generateKey</span><span class="p">(</span><span class="nx">withTriggers</span><span class="p">)</span>
+
+	<span class="nx">result</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">h</span><span class="p">.</span><span class="nx">scaleLoopContexts</span><span class="p">.</span><span class="nf">Load</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">ok</span> <span class="p">{</span>
+		<span class="nx">cancel</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">result</span><span class="p">.(</span><span class="nx">context</span><span class="p">.</span><span class="nx">CancelFunc</span><span class="p">)</span>
+		<span class="k">if</span> <span class="nx">ok</span> <span class="p">{</span>
+			<span class="nf">cancel</span><span class="p">()</span>
+		<span class="p">}</span>
+		<span class="nx">h</span><span class="p">.</span><span class="nx">scaleLoopContexts</span><span class="p">.</span><span class="nf">Delete</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
+	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+		<span class="nx">h</span><span class="p">.</span><span class="nx">logger</span><span class="p">.</span><span class="nf">V</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="nf">Info</span><span class="p">(</span><span class="s">&#34;ScaleObject was not found in controller cache&#34;</span><span class="p">,</span> <span class="s">&#34;key&#34;</span><span class="p">,</span> <span class="nx">key</span><span class="p">)</span>
+	<span class="p">}</span>
+
+	<span class="k">return</span> <span class="kc">nil</span>
+<span class="p">}</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><p>ps: 这里的妙啊，学到了</p>
+<h2 id="keda-metrics-apiserver">keda-metrics-apiserver</h2>
+<p>keda-metrics-apiserver实现了<code>ExternalMetricsProvider</code>接口：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">ExternalMetricsProvider</span> <span class="kd">interface</span> <span class="p">{</span>
+   <span class="nf">GetExternalMetric</span><span class="p">(</span><span class="nx">namespace</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">metricSelector</span> <span class="nx">labels</span><span class="p">.</span><span class="nx">Selector</span><span class="p">,</span> <span class="nx">info</span> <span class="nx">ExternalMetricInfo</span><span class="p">)</span> <span class="p">(</span><span class="o">*</span><span class="nx">external_metrics</span><span class="p">.</span><span class="nx">ExternalMetricValueList</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
+
+   <span class="nf">ListAllExternalMetrics</span><span class="p">()</span> <span class="p">[]</span><span class="nx">ExternalMetricInfo</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>GetExternalMetric 用于返回Scaler的指标，调用<code>scaler.GetMetrics</code>方法</li>
+<li>ListAllExternalMetrics 返回所有支持的external metrics，例如prometheus，mysql等</li>
+</ul>
+<p>当代码写好之后，再通过apiservice注册到apiservier上(当然还涉及到鉴权，这里不啰嗦了)：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">apiVersion: apiregistration.k8s.io/v1
+kind: APIService
+metadata:
+  labels:
+    app.kubernetes.io/name: v1beta1.external.metrics.k8s.io
+    app.kubernetes.io/version: latest
+    app.kubernetes.io/part-of: keda-operator
+  name: v1beta1.external.metrics.k8s.io
+spec:
+  service:
+    name: keda-metrics-apiserver
+    namespace: keda
+  group: external.metrics.k8s.io
+  version: v1beta1
+  insecureSkipTLSVerify: true
+  groupPriorityMinimum: 100
+  versionPriority: 100
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="实现一个scaler">实现一个Scaler</h2>
+<p>其实有两种Scaler，即上面将的一个pull，一个push的模型，PushScaler多了一个Run方法：</p>
+<p>实现一个Scaler，主要实现以下接口：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// Scaler interface
+</span><span class="c1"></span><span class="kd">type</span> <span class="nx">Scaler</span> <span class="kd">interface</span> <span class="p">{</span>
+
+	<span class="c1">// 返回external_metrics.ExternalMetricValue对象，其实就是用于 keda-metrics-apiserver中获取到scaler的指标
+</span><span class="c1"></span>	<span class="nf">GetMetrics</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">metricName</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">metricSelector</span> <span class="nx">labels</span><span class="p">.</span><span class="nx">Selector</span><span class="p">)</span> <span class="p">([]</span><span class="nx">external_metrics</span><span class="p">.</span><span class="nx">ExternalMetricValue</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
+
+	<span class="c1">// 返回v2beta2.MetricSpec 结构，主要用于ScalerObject描述创建HPA的类型和Target指标等
+</span><span class="c1"></span>	<span class="nf">GetMetricSpecForScaling</span><span class="p">()</span> <span class="p">[]</span><span class="nx">v2beta2</span><span class="p">.</span><span class="nx">MetricSpec</span>
+      <span class="c1">// 返回该Scaler是否Active，可能会影响Loop中直接修改副本数
+</span><span class="c1"></span>	<span class="nf">IsActive</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span> <span class="p">(</span><span class="kt">bool</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
+
+	<span class="c1">//调用完一次上面的方法就会调用一次Close 
+</span><span class="c1"></span>	<span class="nf">Close</span><span class="p">()</span> <span class="kt">error</span>
+<span class="p">}</span>
+
+<span class="c1">// PushScaler interface
+</span><span class="c1"></span><span class="kd">type</span> <span class="nx">PushScaler</span> <span class="kd">interface</span> <span class="p">{</span>
+	<span class="nx">Scaler</span>
+
+	<span class="c1">// 通过scaler实现Run方法，往active channel中，写入值，而非上面的直接调用IsActive放回
+</span><span class="c1"></span>	<span class="nf">Run</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">active</span> <span class="kd">chan</span><span class="o">&lt;-</span> <span class="kt">bool</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="总结">总结</h2>
+<p>回过头来我们解答下在开头留下的问题：</p>
+<ul>
+<li>
+<p>KEDA是如何获取到多种事件的指标，以及如何判断扩缩容的？</p>
+<p>答：keda controler中生成了external 类型的hpa，并且实现了external metrics 的api</p>
+</li>
+<li>
+<p>KEDA是如何做到将应用的副本数缩容0，依据是什么？</p>
+<p>答： keda 内部有个loop，不断的check isActive状态，会主动的修改应用副本</p>
+</li>
+</ul>
+<hr/>
+            <figure>
+                <img src="https://silenceper.oss-cn-beijing.aliyuncs.com/qrcode/search_study_program.png" data-sizes="auto" data-src="https://silenceper.oss-cn-beijing.aliyuncs.com/qrcode/search_study_program.png" class="lazyautosizes ls-is-cached lazyloaded">
+                <figcaption class="image-caption">关注公众号，获取最新文章推送</figcaption>
+            </figure>
+        </div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>本文于 2020-11-08 11:20 更新</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/blog/202011/how-does-keda-work/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share"><span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="/blog/202011/how-does-keda-work/" data-title="源码剖析：KEDA是如何工作的?" data-hashtags="keda,kubernetes"><i class="fab fa-twitter fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="/blog/202011/how-does-keda-work/" data-hashtag="keda"><i class="fab fa-facebook-square fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="/blog/202011/how-does-keda-work/" data-title="源码剖析：KEDA是如何工作的?"><i class="fab fa-weibo fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 人人" data-sharer="renren" data-url="/blog/202011/how-does-keda-work/"><i class="fab fa-renren fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 百度" data-sharer="baidu" data-url="/blog/202011/how-does-keda-work/" data-title="源码剖析：KEDA是如何工作的?"><i class="loveit it-baidu-fill"></i>
+</a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="/blog/202011/how-does-keda-work/" data-title="源码剖析：KEDA是如何工作的?"><i class="fab fa-evernote fa-fw"></i>
+</a></span></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section><span>
+                        <a href="/tags/keda">
+                            <i class="fas fa-tag fa-fw"></i>keda
+                        </a>
+                    </span>&nbsp;<span>
+                        <a href="/tags/kubernetes">
+                            <i class="fas fa-tag fa-fw"></i>kubernetes
+                        </a>
+                    </span>&nbsp;</section>
+        <section>
+            <span><a href="javascript:window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/blog/202009/how-to-use-keda/" class="prev" rel="prev" title="使用keda完成基于事件的弹性伸缩"><i class="fas fa-angle-left fa-fw"></i>使用keda完成基于事件的弹性伸缩</a></div>
+</div>
+<div class="comment"><div id="gitalk"></div><script>
+            document.addEventListener("DOMContentLoaded", function(event) {
+                var gitalk = new Gitalk({
+                    id: '2020-11-08 11:20:59 \u002b0800 CST',
+                    title: '源码剖析：KEDA是如何工作的?',
+                    clientID: 'e708cc1fbc3e2613a24d',
+                    clientSecret: 'ffa9552c4ef788a7f135fa7b9510ffc672d0b914',
+                    repo: 'silenceper.github.io',
+                    owner: 'silenceper',
+                    admin: ['silenceper'],
+                    body: decodeURI(location.href),
+                });
+                gitalk.render('gitalk');
+            });
+        </script>
+        <noscript>
+            Please enable JavaScript to view the <a href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a>
+        </noscript></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright"><div class="copyright-line">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
+        </div>
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2016 - 2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">silenceper</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+    </div>
+</footer>
+</div><a href="#" class="dynamic-to-top animated faster" id="dynamic-to-top">
+            <span>&nbsp;</span>
+        </a><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$", right: "$", display: false },
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },]
+            });
+        });
+    </script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.css"><link rel="stylesheet" href="/css/lib/iconfont/iconfont.min.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script><script src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.2/dist/smooth-scroll.polyfills.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazysizes@5.1.2/lazysizes.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/mhchem.min.js"></script><script src="/js/lib/sharer/sharer.min.js"></script><script src=/js/theme.min.js></script>
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-139557989-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?fe23775b1a9ea11a6797646a56df1cc7";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script></body>
+</html>
