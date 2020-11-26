@@ -1,0 +1,852 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>如何编写一个CSI插件 · kubernetes笔记</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="silenceper">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-tbfed-pagefooter/footer.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="csi-driver-host-path.html" />
+    
+    
+    <link rel="prev" href="./" />
+    
+
+    <style>
+    @media only screen and (max-width: 640px) {
+        .book-header .hidden-mobile {
+            display: none;
+        }
+    }
+    </style>
+    <script>
+        window["gitbook-plugin-github-buttons"] = {"buttons":[{"user":"silenceper","repo":"kubernetes-book","type":"star","size":"small"}]};
+    </script>
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    序言
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" >
+            
+                <span>
+            
+                    
+                    KEDA
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../keda/">
+            
+                <a href="../keda/">
+            
+                    
+                    介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../keda/source.html">
+            
+                <a href="../keda/source.html">
+            
+                    
+                    源码分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" >
+            
+                <span>
+            
+                    
+                    CSI
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.3.2" data-path="how-to-write-csi-driver.html">
+            
+                <a href="how-to-write-csi-driver.html">
+            
+                    
+                    如何编写一个CSI插件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="csi-driver-host-path.html">
+            
+                <a href="csi-driver-host-path.html">
+            
+                    
+                    csi-driver-host-path插件安装
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >如何编写一个CSI插件</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="&#x5982;&#x4F55;&#x7F16;&#x5199;&#x4E00;&#x4E2A;csi&#x63D2;&#x4EF6;">&#x5982;&#x4F55;&#x7F16;&#x5199;&#x4E00;&#x4E2A;CSI&#x63D2;&#x4EF6;</h1>
+<blockquote>
+<p>&#x8FD9;&#x91CC;&#x4EE5;<a href="https://github.com/kubernetes-csi/csi-driver-host-path" target="_blank">csi-driver-host-path</a>&#x4F5C;&#x4E3A;&#x4F8B;&#x5B50;&#xFF0C;&#x6765;&#x770B;&#x770B;&#x662F;&#x5982;&#x4F55;&#x5B9E;&#x73B0;&#x4E00;&#x4E2A;csi&#x63D2;&#x4EF6;&#x7684;&#xFF1F;</p>
+</blockquote>
+<p><strong>&#x76EE;&#x6807;&#xFF1A;</strong></p>
+<ul>
+<li>&#x652F;&#x6301;PV&#x52A8;&#x6001;&#x521B;&#x5EFA;&#xFF0C;&#x5E76;&#x4E14;&#x80FD;&#x591F;&#x6302;&#x8F7D;&#x5728;POD&#x4E2D;</li>
+<li>volume&#x6765;&#x81EA;&#x672C;&#x5730;&#x76EE;&#x5F55;&#xFF0C;&#x4E3B;&#x8981;&#x662F;&#x6A21;&#x62DF;volume&#x4EA7;&#x751F;&#x7684;&#x8FC7;&#x7A0B;&#xFF0C;&#x8FD9;&#x6837;&#x5C31;&#x4E0D;&#x4F9D;&#x8D56;&#x4E8E;&#x67D0;&#x4E2A;&#x7279;&#x5B9A;&#x7684;&#x5B58;&#x50A8;&#x670D;&#x52A1;</li>
+</ul>
+<h2 id="&#x9884;&#x5907;&#x77E5;&#x8BC6;">&#x9884;&#x5907;&#x77E5;&#x8BC6;</h2>
+<p>&#x5728;<a href="README.">&#x4E0A;&#x4E00;&#x7BC7;&#x6587;&#x7AE0;</a>&#x4E2D;&#xFF0C;&#x5DF2;&#x7ECF;&#x5BF9;CSI&#x6982;&#x5FF5;&#x6709;&#x4E2A;&#x4E86;&#x89E3;&#xFF0C;&#x5E76;&#x4E14;&#x63D0;&#x51FA;&#x4E86;CSI&#x7EC4;&#x4EF6;&#x9700;&#x8981;&#x5B9E;&#x73B0;&#x7684;RPC&#x63A5;&#x53E3;&#xFF0C;&#x90A3;&#x6211;&#x4EEC;&#x4E3A;&#x4EC0;&#x4E48;&#x9700;&#x8981;&#x8FD9;&#x4E9B;&#x63A5;&#x53E3;&#xFF0C;&#x8FD9;&#x9700;&#x8981;&#x4ECE;volume&#x8981;&#x88AB;&#x4F7F;&#x7528;&#x7ECF;&#x8FC7;&#x4E86;&#x4EE5;&#x4E0B;&#x6D41;&#x7A0B;&#xFF1A;</p>
+<ul>
+<li>volume&#x521B;&#x5EFA;</li>
+<li>volume <code>attach</code>&#x5230;&#x8282;&#x70B9;(&#x6BD4;&#x5982;&#x50CF;EBS&#x786C;&#x76D8;&#xFF0C;NFS&#x53EF;&#x80FD;&#x5C31;&#x76F4;&#x63A5;&#x4E0B;&#x4E00;&#x6B65;mount&#x4E86;)</li>
+<li>volume &#x88AB;<code>mount</code>&#x5230;&#x6307;&#x5B9A;&#x76EE;&#x5F55;(&#x8FD9;&#x4E2A;&#x76EE;&#x5F55;&#x5176;&#x5B9E;&#x5C31;&#x88AB;&#x6620;&#x5C04;&#x5230;&#x5BB9;&#x5668;&#x4E2D;&#xFF0C;&#x7531;kubelet &#x4E2D;&#x7684;<code>VolumeManager</code> &#x8C03;&#x7528;)</li>
+</ul>
+<p>&#x800C;&#x5F53;&#x5378;&#x8F7D;&#x65F6;&#x6B63;&#x597D;&#x662F;&#x76F8;&#x53CD;&#x7684;&#xFF1A;<code>unmount</code>,<code>detach</code>,<code>delete volume</code></p>
+<p>&#x6B63;&#x597D;&#x5BF9;&#x5E94;&#x5982;&#x4E0B;&#x56FE;&#xFF1A;</p>
+<pre><code>   CreateVolume +------------+ DeleteVolume
+ +-------------&gt;|  CREATED   +--------------+
+ |              +---+----^---+              |
+ |       Controller |    | Controller       v
++++         Publish |    | Unpublish       +++
+|X|          Volume |    | Volume          | |
++-+             +---v----+---+             +-+
+                | NODE_READY |
+                +---+----^---+
+               Node |    | Node
+              Stage |    | Unstage
+             Volume |    | Volume
+                +---v----+---+
+                |  VOL_READY |
+                +---+----^---+
+               Node |    | Node
+            Publish |    | Unpublish
+             Volume |    | Volume
+                +---v----+---+
+                | PUBLISHED  |
+                +------------+
+</code></pre><p>&#x800C;&#x4E3A;&#x4EC0;&#x4E48;&#x591A;&#x4E2A;<code>NodeStageVolume</code>&#x7684;&#x8FC7;&#x7A0B;&#x662F;&#x56E0;&#x4E3A;&#xFF1A;</p>
+<blockquote>
+<p>&#x5BF9;&#x4E8E;&#x5757;&#x5B58;&#x50A8;&#x6765;&#x8BF4;&#xFF0C;&#x8BBE;&#x5907;&#x53EA;&#x80FD;mount&#x5230;&#x4E00;&#x4E2A;&#x76EE;&#x5F55;&#x4E0A;&#xFF0C;&#x6240;&#x4EE5;<code>NodeStageVolume</code>&#x5C31;&#x662F;&#x5148;mount&#x5230;&#x4E00;&#x4E2A;globalmount&#x76EE;&#x5F55;(&#x7C7B;&#x4F3C;:<code>/var/lib/kubelet/plugins/kubernetes.io/csi/pv/pvc-bcfe33ed-e822-4b0e-954a-0f5c0468525e/globalmount</code>)&#xFF0C;&#x7136;&#x540E;&#x518D;<code>NodePublishVolume</code>&#x8FD9;&#x4E00;&#x6B65;&#x4E2D;&#x901A;&#x8FC7;<code>mount bind</code>&#x5230;pod&#x7684;&#x76EE;&#x5F55;&#xFF08;<code>/var/lib/kubelet/pods/9c5aa371-e5a7-4b67-8795-ec7013811363/volumes/kubernetes.io~csi/pvc-bcfe33ed-e822-4b0e-954a-0f5c0468525e/mount/hello-world</code>&#xFF09;&#xFF0C;&#x8FD9;&#x6837;&#x5C31;&#x53EF;&#x4EE5;&#x5B9E;&#x73B0;&#x4E00;&#x4E2A;pv&#x6302;&#x8F7D;&#x5728;&#x591A;&#x4E2A;pod&#x4E2D;&#x4F7F;&#x7528;&#x3002;</p>
+</blockquote>
+<h2 id="&#x4EE3;&#x7801;&#x5B9E;&#x73B0;">&#x4EE3;&#x7801;&#x5B9E;&#x73B0;</h2>
+<p>&#x6211;&#x4EEC;&#x5E76;&#x4E0D;&#x4E00;&#x5B9A;&#x8981;&#x5B9E;&#x73B0;&#x6240;&#x6709;&#x7684;&#x63A5;&#x53E3;&#xFF0C;&#x8FD9;&#x4E2A;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;CSI&#x4E2D;<code>Capabilities</code>&#x80FD;&#x529B;&#x6807;&#x8BC6;&#x51FA;&#x6765;&#xFF0C;&#x6211;&#x4EEC;&#x7EC4;&#x4EF6;&#x63D0;&#x4F9B;&#x7684;&#x80FD;&#x529B;&#xFF0C;&#x6BD4;&#x5982;</p>
+<ul>
+<li><p><code>IdentityServer</code>&#x4E2D;&#x7684;<code>GetPluginCapabilities</code>&#x65B9;&#x6CD5;</p>
+</li>
+<li><p><code>ControllerServer</code>&#x4E2D;&#x7684;<code>ControllerGetCapabilities</code>&#x65B9;&#x6CD5;</p>
+</li>
+<li><code>NodeServer</code>&#x4E2D;&#x7684;<code>NodeGetCapabilities</code> </li>
+</ul>
+<p>&#x8FD9;&#x4E9B;&#x65B9;&#x6CD5;&#x90FD;&#x662F;&#x5728;&#x544A;&#x8BC9;&#x8C03;&#x7528;&#x65B9;&#xFF0C;&#x6211;&#x4EEC;&#x7684;&#x7EC4;&#x4EF6;&#x5B9E;&#x73B0;&#x4E86;&#x54EA;&#x4E9B;&#x80FD;&#x529B;&#xFF0C;&#x672A;&#x5B9E;&#x73B0;&#x7684;&#x65B9;&#x6CD5;&#x5C31;&#x4E0D;&#x4F1A;&#x8C03;&#x7528;&#x4E86;&#x3002;</p>
+<h3 id="identityserver">IdentityServer</h3>
+<p><code>IdentityServer</code>&#x5305;&#x542B;&#x4E86;&#x4E09;&#x4E2A;&#x63A5;&#x53E3;&#xFF0C;&#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x4E3B;&#x8981;&#x5B9E;&#x73B0;</p>
+<pre><code class="lang-go"><span class="hljs-comment">// IdentityServer is the server API for Identity service.</span>
+<span class="hljs-keyword">type</span> IdentityServer <span class="hljs-keyword">interface</span> {
+    GetPluginInfo(context.Context, *GetPluginInfoRequest) (*GetPluginInfoResponse, error)
+    GetPluginCapabilities(context.Context, *GetPluginCapabilitiesRequest) (*GetPluginCapabilitiesResponse, error)
+    Probe(context.Context, *ProbeRequest) (*ProbeResponse, error)
+}
+</code></pre>
+<p>&#x4E3B;&#x8981;&#x770B;&#x4E0B;<code>GetPluginCapabilities</code>&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#xFF1A;</p>
+<p><a href="https://github.com/kubernetes-csi/csi-driver-host-path/blob/master/pkg/hostpath/identityserver.go#L60" target="_blank">identityserver.go#L60</a>:</p>
+<pre><code class="lang-go"><span class="hljs-keyword">func</span> (ids *identityServer) GetPluginCapabilities(ctx context.Context, req *csi.GetPluginCapabilitiesRequest) (*csi.GetPluginCapabilitiesResponse, error) {
+    <span class="hljs-keyword">return</span> &amp;csi.GetPluginCapabilitiesResponse{
+        Capabilities: []*csi.PluginCapability{
+            {
+                Type: &amp;csi.PluginCapability_Service_{
+                    Service: &amp;csi.PluginCapability_Service{
+                        Type: csi.PluginCapability_Service_CONTROLLER_SERVICE,
+                    },
+                },
+            },
+            {
+                Type: &amp;csi.PluginCapability_Service_{
+                    Service: &amp;csi.PluginCapability_Service{
+                        Type: csi.PluginCapability_Service_VOLUME_ACCESSIBILITY_CONSTRAINTS,
+                    },
+                },
+            },
+        },
+    }, <span class="hljs-literal">nil</span>
+}
+</code></pre>
+<p>&#x4EE5;&#x4E0A;&#x5C31;&#x544A;&#x8BC9;&#x8C03;&#x7528;&#x8005;&#x6211;&#x4EEC;&#x63D0;&#x4F9B;&#x4E86;ControllerService&#x7684;&#x80FD;&#x529B;&#xFF0C;&#x4EE5;&#x53CA;volume&#x8BBF;&#x95EE;&#x9650;&#x5236;&#x7684;&#x80FD;&#x529B;&#xFF08;CSI &#x5904;&#x7406;&#x65F6;&#x9700;&#x8981;&#x6839;&#x636E;&#x96C6;&#x7FA4;&#x62D3;&#x6251;&#x4F5C;&#x8C03;&#x6574;&#xFF09;</p>
+<blockquote>
+<p>PS&#xFF1A;&#x5176;&#x5B9E;&#x5728;k8s&#x8FD8;&#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x4E2A;&#x5305;&#xFF1A;github.com/kubernetes-csi/drivers/pkg/csi-common&#xFF0C;&#x91CC;&#x9762;&#x63D0;&#x4F9B;&#x4E86;&#x6BD4;&#x5982;<code>DefaultIdentityServer</code>&#xFF0C;<code>DefaultControllerServer</code>,<code>DefaultNodeServer</code>&#x7684;struct&#xFF0C;&#x53EA;&#x8981;&#x5728;&#x6211;&#x4EEC;&#x81EA;&#x5DF1;&#x7684;<code>XXXServer struct</code>&#x4E2D;&#x7EE7;&#x627F;&#x8FD9;&#x4E9B;<code>struct</code>&#xFF0C;&#x6211;&#x4EEC;&#x7684;&#x4EE3;&#x7801;&#x4E2D;&#x5C31;&#x53EA;&#x8981;&#x5305;&#x542B;&#x81EA;&#x5DF1;&#x5B9E;&#x73B0;&#x7684;&#x65B9;&#x6CD5;&#x5C31;&#x884C;&#x4E86;&#xFF0C;&#x53EF;&#x4EE5;&#x53C2;&#x8003;<a href="https://github.com/kubernetes-sigs/alibaba-cloud-csi-driver/blob/master/pkg/disk/identityserver.go#L26" target="_blank">alibaba-cloud-csi-driver</a>&#x4E2D;&#x7684;&#x3002;</p>
+</blockquote>
+<h3 id="controllerserver">ControllerServer</h3>
+<p><code>ControllerServer</code>&#x6211;&#x4EEC;&#x4E3B;&#x8981;&#x5173;&#x6CE8;<code>CreateVolume</code>,<code>DeleteVolume</code>&#xFF0C;&#x56E0;&#x4E3A;&#x662F;hostpath volume&#xFF0C;&#x6240;&#x4EE5;&#x5C31;&#x6CA1;&#x6709;attach&#x7684;&#x8FD9;&#x4E2A;&#x8FC7;&#x7A0B;&#x4E86;&#xFF0C;&#x6211;&#x4EEC;&#x653E;&#x5728;NodeServer&#x4E2D;&#x5B9E;&#x73B0;&#xFF1A;</p>
+<h4 id="createvolume">CreateVolume</h4>
+<p><a href="https://github.com/kubernetes-csi/csi-driver-host-path/blob/b1cfe85dd7bfffce2bbe5b1228c994a9bc3649fb/pkg/hostpath/controllerserver.go#L73" target="_blank">controllerserver.go#L73</a></p>
+<pre><code class="lang-go"><span class="hljs-keyword">func</span> (cs *controllerServer) CreateVolume(ctx context.Context, req *csi.CreateVolumeRequest) (*csi.CreateVolumeResponse, error) {
+  <span class="hljs-comment">//&#x6821;&#x9A8C;&#x53C2;&#x6570;&#x662F;&#x5426;&#x6709;CreateVolume&#x7684;&#x80FD;&#x529B;</span>
+    <span class="hljs-keyword">if</span> err := cs.validateControllerServiceRequest(csi.ControllerServiceCapability_RPC_CREATE_DELETE_VOLUME); err != <span class="hljs-literal">nil</span> {
+        glog.V(<span class="hljs-number">3</span>).Infof(<span class="hljs-string">&quot;invalid create volume req: %v&quot;</span>, req)
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err
+    }
+
+  <span class="hljs-comment">//.....&#x8FD9;&#x91CC;&#x7701;&#x7565;&#x7684;&#x6821;&#x9A8C;&#x53C2;&#x6570;&#x7684;&#x8FC7;&#x7A0B;</span>
+
+
+  <span class="hljs-comment">//&#x8FD9;&#x91CC;&#x6839;&#x636E;volume name&#x5224;&#x65AD;&#x662F;&#x5426;&#x5DF2;&#x7ECF;&#x5B58;&#x5728;&#x4E86;&#xFF0C;&#x5B58;&#x5728;&#x4E86;&#x5C31;&#x8FD4;&#x56DE;&#x5C31;&#x884C;&#x4E86;</span>
+    <span class="hljs-keyword">if</span> exVol, err := getVolumeByName(req.GetName()); err == <span class="hljs-literal">nil</span> {
+        <span class="hljs-comment">// volume&#x5DF2;&#x7ECF;&#x5B58;&#x5728;&#xFF0C;&#x4F46;&#x662F;&#x5927;&#x5C0F;&#x4E0D;&#x7B26;&#x5408;</span>
+        <span class="hljs-keyword">if</span> exVol.VolSize &lt; capacity {
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, status.Errorf(codes.AlreadyExists, <span class="hljs-string">&quot;Volume with the same name: %s but with different size already exist&quot;</span>, req.GetName())
+        }
+    <span class="hljs-comment">//&#x8FD9;&#x91CC;&#x5224;&#x65AD;&#x662F;&#x5426;&#x8BBE;&#x7F6E;&#x4E86;pvc.dataSource&#xFF0C;&#x5C31;&#x8868;&#x793A;&#x662F;&#x4E00;&#x4E2A;restore&#x8FC7;&#x7A0B;</span>
+        <span class="hljs-keyword">if</span> req.GetVolumeContentSource() != <span class="hljs-literal">nil</span> {
+            volumeSource := req.VolumeContentSource
+            <span class="hljs-keyword">switch</span> volumeSource.Type.(<span class="hljs-keyword">type</span>) {
+        <span class="hljs-comment">//&#x6821;&#x9A8C;&#xFF1A;&#x4ECE;&#x5FEB;&#x7167;&#x4E2D;&#x6062;&#x590D;</span>
+            <span class="hljs-keyword">case</span> *csi.VolumeContentSource_Snapshot:
+                <span class="hljs-keyword">if</span> volumeSource.GetSnapshot() != <span class="hljs-literal">nil</span> &amp;&amp; exVol.ParentSnapID != <span class="hljs-string">&quot;&quot;</span> &amp;&amp; exVol.ParentSnapID != volumeSource.GetSnapshot().GetSnapshotId() {
+                    <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, status.Error(codes.AlreadyExists, <span class="hljs-string">&quot;existing volume source snapshot id not matching&quot;</span>)
+                }
+        <span class="hljs-comment">//&#x6821;&#x9A8C;&#xFF1A;clone&#x8FC7;&#x7A0B;</span>
+            <span class="hljs-keyword">case</span> *csi.VolumeContentSource_Volume:
+                <span class="hljs-keyword">if</span> volumeSource.GetVolume() != <span class="hljs-literal">nil</span> &amp;&amp; exVol.ParentVolID != volumeSource.GetVolume().GetVolumeId() {
+                    <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, status.Error(codes.AlreadyExists, <span class="hljs-string">&quot;existing volume source volume id not matching&quot;</span>)
+                }
+            <span class="hljs-keyword">default</span>:
+                <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, status.Errorf(codes.InvalidArgument, <span class="hljs-string">&quot;%v not a proper volume source&quot;</span>, volumeSource)
+            }
+        }
+        <span class="hljs-comment">// TODO (sbezverk) Do I need to make sure that volume still exists?</span>
+        <span class="hljs-keyword">return</span> &amp;csi.CreateVolumeResponse{
+            Volume: &amp;csi.Volume{
+                VolumeId:      exVol.VolID,
+                CapacityBytes: <span class="hljs-keyword">int64</span>(exVol.VolSize),
+                VolumeContext: req.GetParameters(),
+                ContentSource: req.GetVolumeContentSource(),
+            },
+        }, <span class="hljs-literal">nil</span>
+    }
+
+  <span class="hljs-comment">//&#x521B;&#x5EFA;volume</span>
+    volumeID := uuid.NewUUID().String()
+  <span class="hljs-comment">//&#x521B;&#x5EFA;hostpath&#x7684;volume</span>
+    vol, err := createHostpathVolume(volumeID, req.GetName(), capacity, requestedAccessType, <span class="hljs-literal">false</span> <span class="hljs-comment">/* ephemeral */</span>)
+    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, status.Errorf(codes.Internal, <span class="hljs-string">&quot;failed to create volume %v: %v&quot;</span>, volumeID, err)
+    }
+    glog.V(<span class="hljs-number">4</span>).Infof(<span class="hljs-string">&quot;created volume %s at path %s&quot;</span>, vol.VolID, vol.VolPath)
+
+  <span class="hljs-comment">//&#x5224;&#x65AD;&#x662F;&#x4ECE;&#x5FEB;&#x7167;&#x6062;&#x590D;&#xFF0C;&#x8FD8;&#x662F;clone</span>
+    <span class="hljs-keyword">if</span> req.GetVolumeContentSource() != <span class="hljs-literal">nil</span> {
+        path := getVolumePath(volumeID)
+        volumeSource := req.VolumeContentSource
+        <span class="hljs-keyword">switch</span> volumeSource.Type.(<span class="hljs-keyword">type</span>) {
+      <span class="hljs-comment">//&#x4ECE;&#x5FEB;&#x7167;&#x6062;&#x590D;</span>
+        <span class="hljs-keyword">case</span> *csi.VolumeContentSource_Snapshot:
+            <span class="hljs-keyword">if</span> snapshot := volumeSource.GetSnapshot(); snapshot != <span class="hljs-literal">nil</span> {
+                err = loadFromSnapshot(capacity, snapshot.GetSnapshotId(), path, requestedAccessType)
+                vol.ParentSnapID = snapshot.GetSnapshotId()
+            }
+      <span class="hljs-comment">//clone</span>
+        <span class="hljs-keyword">case</span> *csi.VolumeContentSource_Volume:
+            <span class="hljs-keyword">if</span> srcVolume := volumeSource.GetVolume(); srcVolume != <span class="hljs-literal">nil</span> {
+                err = loadFromVolume(capacity, srcVolume.GetVolumeId(), path, requestedAccessType)
+                vol.ParentVolID = srcVolume.GetVolumeId()
+            }
+        <span class="hljs-keyword">default</span>:
+            err = status.Errorf(codes.InvalidArgument, <span class="hljs-string">&quot;%v not a proper volume source&quot;</span>, volumeSource)
+        }
+        <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+            <span class="hljs-keyword">if</span> delErr := deleteHostpathVolume(volumeID); delErr != <span class="hljs-literal">nil</span> {
+                glog.V(<span class="hljs-number">2</span>).Infof(<span class="hljs-string">&quot;deleting hostpath volume %v failed: %v&quot;</span>, volumeID, delErr)
+            }
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err
+        }
+        glog.V(<span class="hljs-number">4</span>).Infof(<span class="hljs-string">&quot;successfully populated volume %s&quot;</span>, vol.VolID)
+    }
+
+  <span class="hljs-comment">//Topology&#x8868;&#x793A;volume&#x80FD;&#x591F;&#x90E8;&#x7F72;&#x5728;&#x54EA;&#x4E9B;&#x8282;&#x70B9;&#xFF08;&#x751F;&#x4EA7;&#x60C5;&#x51B5;&#x53EF;&#x80FD;&#x5C31;&#x5BF9;&#x5E94;&#x53EF;&#x7528;&#x533A;&#xFF09;</span>
+    topologies := []*csi.Topology{&amp;csi.Topology{
+        Segments: <span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]<span class="hljs-keyword">string</span>{TopologyKeyNode: cs.nodeID},
+    }}
+
+    <span class="hljs-keyword">return</span> &amp;csi.CreateVolumeResponse{
+        Volume: &amp;csi.Volume{
+            VolumeId:           volumeID,
+            CapacityBytes:      req.GetCapacityRange().GetRequiredBytes(),
+            VolumeContext:      req.GetParameters(),
+            ContentSource:      req.GetVolumeContentSource(),
+            AccessibleTopology: topologies,
+        },
+    }, <span class="hljs-literal">nil</span>
+}
+</code></pre>
+<p><strong><code>createHostpathVolume</code></strong></p>
+<p>&#x518D;&#x6765;&#x770B;&#x4E0B;<code>createHostpathVolume</code>&#x65B9;&#x6CD5;&#xFF0C;&#x8FD9;&#x91CC;<code>accessType</code>&#x6709;&#x4E24;&#x4E2A;&#x9009;&#x9879;&#xFF0C;&#x662F;&#x521B;&#x5EFA;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#xFF0C;&#x8FD8;&#x662F;&#x521B;&#x5EFA;&#x5757;&#xFF0C;&#x5176;&#x5B9E;&#x5C31;&#x662F;&#x5BF9;&#x5E94;pvc&#x4E2D;<code>volumeMode</code>&#x5B57;&#x6BB5;&#xFF1A;</p>
+<p><a href="https://github.com/kubernetes-csi/csi-driver-host-path/blob/b1cfe85dd7bfffce2bbe5b1228c994a9bc3649fb/pkg/hostpath/hostpath.go#L208" target="_blank">pkg/hostpath/hostpath.go#L208</a></p>
+<pre><code class="lang-go">
+<span class="hljs-comment">// createVolume create the directory for the hostpath volume.</span>
+<span class="hljs-comment">// It returns the volume path or err if one occurs.</span>
+<span class="hljs-keyword">func</span> createHostpathVolume(volID, name <span class="hljs-keyword">string</span>, <span class="hljs-built_in">cap</span> <span class="hljs-keyword">int64</span>, volAccessType accessType, ephemeral <span class="hljs-keyword">bool</span>) (*hostPathVolume, error) {
+    path := getVolumePath(volID)
+
+    <span class="hljs-keyword">switch</span> volAccessType {
+    <span class="hljs-keyword">case</span> mountAccess:
+    <span class="hljs-comment">//&#x521B;&#x5EFA;&#x6587;&#x4EF6;</span>
+        err := os.MkdirAll(path, <span class="hljs-number">0777</span>)
+        <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err
+        }
+    <span class="hljs-keyword">case</span> blockAccess:
+    <span class="hljs-comment">//&#x521B;&#x5EFA;&#x5757;</span>
+        executor := utilexec.New()
+        size := fmt.Sprintf(<span class="hljs-string">&quot;%dM&quot;</span>, <span class="hljs-built_in">cap</span>/mib)
+        <span class="hljs-comment">// Create a block file.</span>
+        _, err := os.Stat(path)
+        <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+            <span class="hljs-keyword">if</span> os.IsNotExist(err) {
+                out, err := executor.Command(<span class="hljs-string">&quot;fallocate&quot;</span>, <span class="hljs-string">&quot;-l&quot;</span>, size, path).CombinedOutput()
+                <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+                    <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, fmt.Errorf(<span class="hljs-string">&quot;failed to create block device: %v, %v&quot;</span>, err, <span class="hljs-keyword">string</span>(out))
+                }
+            } <span class="hljs-keyword">else</span> {
+                <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, fmt.Errorf(<span class="hljs-string">&quot;failed to stat block device: %v, %v&quot;</span>, path, err)
+            }
+        }
+
+    <span class="hljs-comment">// &#x901A;&#x8FC7;losetup&#x5C06;&#x6587;&#x4EF6;&#x865A;&#x62DF;&#x6210;&#x5757;&#x8BBE;&#x5907;</span>
+        <span class="hljs-comment">// Associate block file with the loop device.</span>
+        volPathHandler := volumepathhandler.VolumePathHandler{}
+        _, err = volPathHandler.AttachFileDevice(path)
+        <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+            <span class="hljs-comment">// Remove the block file because it&apos;ll no longer be used again.</span>
+            <span class="hljs-keyword">if</span> err2 := os.Remove(path); err2 != <span class="hljs-literal">nil</span> {
+                glog.Errorf(<span class="hljs-string">&quot;failed to cleanup block file %s: %v&quot;</span>, path, err2)
+            }
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, fmt.Errorf(<span class="hljs-string">&quot;failed to attach device %v: %v&quot;</span>, path, err)
+        }
+    <span class="hljs-keyword">default</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, fmt.Errorf(<span class="hljs-string">&quot;unsupported access type %v&quot;</span>, volAccessType)
+    }
+
+    hostpathVol := hostPathVolume{
+        VolID:         volID,
+        VolName:       name,
+        VolSize:       <span class="hljs-built_in">cap</span>,
+        VolPath:       path,
+        VolAccessType: volAccessType,
+        Ephemeral:     ephemeral,
+    }
+    hostPathVolumes[volID] = hostpathVol
+    <span class="hljs-keyword">return</span> &amp;hostpathVol, <span class="hljs-literal">nil</span>
+}
+</code></pre>
+<h4 id="deletevolume">DeleteVolume</h4>
+<p>&#x5728;DeleteVolume&#x8FD9;&#x91CC;&#x4E3B;&#x8981;&#x662F;&#x5220;&#x9664;volume&#xFF1A;</p>
+<p><a href="https://github.com/kubernetes-csi/csi-driver-host-path/blob/b1cfe85dd7bfffce2bbe5b1228c994a9bc3649fb/pkg/hostpath/controllerserver.go#L208" target="_blank">pkg/hostpath/controllerserver.go#L2</a></p>
+<pre><code class="lang-go"><span class="hljs-keyword">func</span> (cs *controllerServer) DeleteVolume(ctx context.Context, req *csi.DeleteVolumeRequest) (*csi.DeleteVolumeResponse, error) {
+    <span class="hljs-comment">// Check arguments</span>
+    <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(req.GetVolumeId()) == <span class="hljs-number">0</span> {
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, status.Error(codes.InvalidArgument, <span class="hljs-string">&quot;Volume ID missing in request&quot;</span>)
+    }
+
+    <span class="hljs-keyword">if</span> err := cs.validateControllerServiceRequest(csi.ControllerServiceCapability_RPC_CREATE_DELETE_VOLUME); err != <span class="hljs-literal">nil</span> {
+        glog.V(<span class="hljs-number">3</span>).Infof(<span class="hljs-string">&quot;invalid delete volume req: %v&quot;</span>, req)
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err
+    }
+
+    volId := req.GetVolumeId()
+    <span class="hljs-keyword">if</span> err := deleteHostpathVolume(volId); err != <span class="hljs-literal">nil</span> {
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, status.Errorf(codes.Internal, <span class="hljs-string">&quot;failed to delete volume %v: %v&quot;</span>, volId, err)
+    }
+
+    glog.V(<span class="hljs-number">4</span>).Infof(<span class="hljs-string">&quot;volume %v successfully deleted&quot;</span>, volId)
+
+    <span class="hljs-keyword">return</span> &amp;csi.DeleteVolumeResponse{}, <span class="hljs-literal">nil</span>
+}
+</code></pre>
+<p>&#x5728;<code>ControllerService</code>&#x4E2D;&#x8FD8;&#x6709;&#x4E00;&#x4E9B;&#x5176;&#x4ED6;&#x63A5;&#x53E3;&#xFF0C;&#x6BD4;&#x5982;<code>CreateSnapshot</code>&#x521B;&#x5EFA;&#x5FEB;&#x7167;&#xFF0C;<code>DeleteSnapshot</code>&#x5220;&#x9664;&#x5FEB;&#x7167;&#xFF0C;<code>&#x6269;&#x5BB9;</code>&#x7B49;&#xFF0C;&#x5176;&#x5B9E;&#x90FD;&#x4F1A;&#x4F9D;&#x8D56;&#x4E8E;&#x6211;&#x4EEC;&#x5B58;&#x50A8;&#x670D;&#x52A1;&#x7AEF;&#x7684;&#x63D0;&#x4F9B;&#x7684;&#x80FD;&#x529B;&#xFF0C;&#x8C03;&#x7528;&#x76F8;&#x5E94;&#x7684;&#x63A5;&#x53E3;&#x5C31;&#x884C;&#x4E86;&#x3002;</p>
+<h3 id="nodeserver">NodeServer</h3>
+<p>&#x5728;<code>nodeServer</code>&#x4E2D;&#x5C31;&#x662F;&#x5B9E;&#x73B0;&#x6211;&#x4EEC;&#x7684;<code>mount</code>,<code>unmount</code>&#x8FC7;&#x7A0B;&#x4E86;&#xFF0C;&#x5206;&#x522B;&#x5BF9;&#x5E94;<code>NodePublishVolume</code>&#x548C;<code>NodeUnpublishVolume</code></p>
+<h4 id="nodepublishvolume">NodePublishVolume</h4>
+<p><a href="https://github.com/kubernetes-csi/csi-driver-host-path/blob/b1cfe85dd7bfffce2bbe5b1228c994a9bc3649fb/pkg/hostpath/nodeserver.go#L50" target="_blank">pkg/hostpath/nodeserver.go#L5</a></p>
+<pre><code class="lang-go"><span class="hljs-keyword">func</span> (ns *nodeServer) NodePublishVolume(ctx context.Context, req *csi.NodePublishVolumeRequest) (*csi.NodePublishVolumeResponse, error) {
+    <span class="hljs-comment">//......&#x8FD9;&#x91CC;&#x7701;&#x7565;&#x6821;&#x9A8C;&#x53C2;&#x6570;&#x4EE3;&#x7801;</span>
+
+
+
+    vol, err := getVolumeByID(req.GetVolumeId())
+    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, status.Error(codes.NotFound, err.Error())
+    }
+  <span class="hljs-comment">//&#x5BF9;&#x5E94;pvc.volumeBind&#x5B57;&#x6BB5;&#x662F;block&#x7684;&#x60C5;&#x51B5;</span>
+    <span class="hljs-keyword">if</span> req.GetVolumeCapability().GetBlock() != <span class="hljs-literal">nil</span> {
+        <span class="hljs-keyword">if</span> vol.VolAccessType != blockAccess {
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, status.Error(codes.InvalidArgument, <span class="hljs-string">&quot;cannot publish a non-block volume as block volume&quot;</span>)
+        }
+
+        volPathHandler := volumepathhandler.VolumePathHandler{}
+
+    <span class="hljs-comment">//&#x83B7;&#x53D6;device&#x5730;&#x5740;&#xFF08;&#x901A;&#x8FC7;loopset -l&#x547D;&#x4EE4;&#xFF0C;&#x56E0;&#x4E3A;&#x662F;&#x901A;&#x8FC7;&#x6587;&#x4EF6;&#x865A;&#x62DF;&#x51FA;&#x6765;&#x7684;&#x5757;&#x8BBE;&#x5907;&#xFF09;</span>
+        <span class="hljs-comment">// Get loop device from the volume path.</span>
+        loopDevice, err := volPathHandler.GetLoopDevice(vol.VolPath)
+        <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, status.Error(codes.Internal, fmt.Sprintf(<span class="hljs-string">&quot;failed to get the loop device: %v&quot;</span>, err))
+        }
+
+        mounter := mount.New(<span class="hljs-string">&quot;&quot;</span>)
+
+        <span class="hljs-comment">// Check if the target path exists. Create if not present.</span>
+        _, err = os.Lstat(targetPath)
+        <span class="hljs-keyword">if</span> os.IsNotExist(err) {
+            <span class="hljs-keyword">if</span> err = mounter.MakeFile(targetPath); err != <span class="hljs-literal">nil</span> {
+                <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, status.Error(codes.Internal, fmt.Sprintf(<span class="hljs-string">&quot;failed to create target path: %s: %v&quot;</span>, targetPath, err))
+            }
+        }
+        <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, status.Errorf(codes.Internal, <span class="hljs-string">&quot;failed to check if the target block file exists: %v&quot;</span>, err)
+        }
+
+        <span class="hljs-comment">// Check if the target path is already mounted. Prevent remounting.</span>
+        notMount, err := mounter.IsNotMountPoint(targetPath)
+        <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+            <span class="hljs-keyword">if</span> !os.IsNotExist(err) {
+                <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, status.Errorf(codes.Internal, <span class="hljs-string">&quot;error checking path %s for mount: %s&quot;</span>, targetPath, err)
+            }
+            notMount = <span class="hljs-literal">true</span>
+        }
+        <span class="hljs-keyword">if</span> !notMount {
+            <span class="hljs-comment">// It&apos;s already mounted.</span>
+            glog.V(<span class="hljs-number">5</span>).Infof(<span class="hljs-string">&quot;Skipping bind-mounting subpath %s: already mounted&quot;</span>, targetPath)
+            <span class="hljs-keyword">return</span> &amp;csi.NodePublishVolumeResponse{}, <span class="hljs-literal">nil</span>
+        }
+
+    <span class="hljs-comment">//&#x8FDB;&#x884C;&#x7ED1;&#x5B9A;&#x6302;&#x8F7D;&#xFF08;mount bind&#xFF09;&#xFF0C;&#x5C06;&#x5757;&#x8BBE;&#x5907;&#x7ED1;&#x5B9A;&#x5230;&#x5BB9;&#x5668;&#x76EE;&#x5F55;(targetpath&#x7C7B;&#x4F3C;&#x8FD9;&#x79CD;&#xFF1A;/var/lib/kubelet/pods/9c5aa371-e5a7-4b67-8795-ec7013811363/volumes/kubernetes.io~csi/pvc-bcfe33ed-e822-4b0e-954a-0f5c0468525e/mount)</span>
+        options := []<span class="hljs-keyword">string</span>{<span class="hljs-string">&quot;bind&quot;</span>}
+        <span class="hljs-keyword">if</span> err := mount.New(<span class="hljs-string">&quot;&quot;</span>).Mount(loopDevice, targetPath, <span class="hljs-string">&quot;&quot;</span>, options); err != <span class="hljs-literal">nil</span> {
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, status.Error(codes.Internal, fmt.Sprintf(<span class="hljs-string">&quot;failed to mount block device: %s at %s: %v&quot;</span>, loopDevice, targetPath, err))
+        }
+    <span class="hljs-comment">//&#x5BF9;&#x5E94;pvc.volumeBind&#x5B57;&#x6BB5;&#x662F;filesystem&#x7684;&#x60C5;&#x51B5;</span>
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> req.GetVolumeCapability().GetMount() != <span class="hljs-literal">nil</span> {
+        <span class="hljs-comment">//....&#x8FD9;&#x91CC;&#x7701;&#x7565;&#xFF0C;&#x56E0;&#x4E3A;&#x8DDF;&#x4E0A;&#x9762;&#x7C7B;&#x4F3C;&#x4E5F;&#x662F;mount bind&#x8FC7;&#x7A0B;</span>
+    }
+
+    <span class="hljs-keyword">return</span> &amp;csi.NodePublishVolumeResponse{}, <span class="hljs-literal">nil</span>
+}
+</code></pre>
+<h4 id="nodeunpublishvolume">NodeUnpublishVolume</h4>
+<p><code>NodeUnpublishVolume</code>&#x8FC7;&#x7A0B;&#x5C31;&#x662F;unmount&#x8FC7;&#x7A0B;&#xFF0C;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p><a href="https://github.com/kubernetes-csi/csi-driver-host-path/blob/b1cfe85dd7bfffce2bbe5b1228c994a9bc3649fb/pkg/hostpath/nodeserver.go#L191" target="_blank">pkg/hostpath/nodeserver.go#L191</a></p>
+<pre><code class="lang-go"><span class="hljs-keyword">func</span> (ns *nodeServer) NodeUnpublishVolume(ctx context.Context, req *csi.NodeUnpublishVolumeRequest) (*csi.NodeUnpublishVolumeResponse, error) {
+
+    <span class="hljs-comment">// Check arguments</span>
+    <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(req.GetVolumeId()) == <span class="hljs-number">0</span> {
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, status.Error(codes.InvalidArgument, <span class="hljs-string">&quot;Volume ID missing in request&quot;</span>)
+    }
+    <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(req.GetTargetPath()) == <span class="hljs-number">0</span> {
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, status.Error(codes.InvalidArgument, <span class="hljs-string">&quot;Target path missing in request&quot;</span>)
+    }
+    targetPath := req.GetTargetPath()
+    volumeID := req.GetVolumeId()
+
+    vol, err := getVolumeByID(volumeID)
+    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, status.Error(codes.NotFound, err.Error())
+    }
+
+    <span class="hljs-comment">// Unmount only if the target path is really a mount point.</span>
+    <span class="hljs-keyword">if</span> notMnt, err := mount.IsNotMountPoint(mount.New(<span class="hljs-string">&quot;&quot;</span>), targetPath); err != <span class="hljs-literal">nil</span> {
+        <span class="hljs-keyword">if</span> !os.IsNotExist(err) {
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, status.Error(codes.Internal, err.Error())
+        }
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> !notMnt {
+        <span class="hljs-comment">// Unmounting the image or filesystem.</span>
+        err = mount.New(<span class="hljs-string">&quot;&quot;</span>).Unmount(targetPath)
+        <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, status.Error(codes.Internal, err.Error())
+        }
+    }
+    <span class="hljs-comment">// Delete the mount point.</span>
+    <span class="hljs-comment">// Does not return error for non-existent path, repeated calls OK for idempotency.</span>
+    <span class="hljs-keyword">if</span> err = os.RemoveAll(targetPath); err != <span class="hljs-literal">nil</span> {
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, status.Error(codes.Internal, err.Error())
+    }
+    glog.V(<span class="hljs-number">4</span>).Infof(<span class="hljs-string">&quot;hostpath: volume %s has been unpublished.&quot;</span>, targetPath)
+
+    <span class="hljs-keyword">if</span> vol.Ephemeral {
+        glog.V(<span class="hljs-number">4</span>).Infof(<span class="hljs-string">&quot;deleting volume %s&quot;</span>, volumeID)
+        <span class="hljs-keyword">if</span> err := deleteHostpathVolume(volumeID); err != <span class="hljs-literal">nil</span> &amp;&amp; !os.IsNotExist(err) {
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, status.Error(codes.Internal, fmt.Sprintf(<span class="hljs-string">&quot;failed to delete volume: %s&quot;</span>, err))
+        }
+    }
+
+    <span class="hljs-keyword">return</span> &amp;csi.NodeUnpublishVolumeResponse{}, <span class="hljs-literal">nil</span>
+}
+</code></pre>
+<h3 id="&#x542F;&#x52A8;grpc-server">&#x542F;&#x52A8;grpc server</h3>
+<p><a href="https://github.com/kubernetes-csi/csi-driver-host-path/blob/b1cfe85dd7bfffce2bbe5b1228c994a9bc3649fb/pkg/hostpath/hostpath.go#L164" target="_blank">pkg/hostpath/hostpath.go#L164</a></p>
+<pre><code class="lang-go"><span class="hljs-keyword">func</span> (hp *hostPath) Run() {
+    <span class="hljs-comment">// Create GRPC servers</span>
+    hp.ids = NewIdentityServer(hp.name, hp.version)
+    hp.ns = NewNodeServer(hp.nodeID, hp.ephemeral, hp.maxVolumesPerNode)
+    hp.cs = NewControllerServer(hp.ephemeral, hp.nodeID)
+
+
+    s := NewNonBlockingGRPCServer()
+    s.Start(hp.endpoint, hp.ids, hp.cs, hp.ns)
+    s.Wait()
+}
+</code></pre>
+<h2 id="&#x6D4B;&#x8BD5;">&#x6D4B;&#x8BD5;</h2>
+<p>&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;<a href="https://github.com/rexray/gocsi/tree/master/csc" target="_blank">csc</a>&#x5DE5;&#x5177;&#x6765;&#x8FDB;&#x884C;grpc&#x63A5;&#x53E3;&#x7684;&#x6D4B;&#x8BD5;&#xFF1A;</p>
+<pre><code class="lang-sh">$ GO111MODULE=off go get -u github.com/rexray/gocsi/csc
+</code></pre>
+<p><strong>Get plugin info</strong></p>
+<pre><code>$ csc identity plugin-info --endpoint tcp://127.0.0.1:10000
+&quot;csi-hostpath&quot;  &quot;0.1.0&quot;
+</code></pre><p><strong>Create a volume</strong></p>
+<pre><code>$ csc controller new --endpoint tcp://127.0.0.1:10000 --cap 1,block CSIVolumeName
+CSIVolumeID
+</code></pre><p><strong>Delete a volume</strong></p>
+<pre><code>$ csc controller del --endpoint tcp://127.0.0.1:10000 CSIVolumeID
+CSIVolumeID
+</code></pre><p><strong>Validate volume capabilities</strong></p>
+<pre><code>$ csc controller validate-volume-capabilities --endpoint tcp://127.0.0.1:10000 --cap 1,block CSIVolumeID
+CSIVolumeID  true
+</code></pre><p><strong>NodePublish a volume</strong></p>
+<pre><code>$ csc node publish --endpoint tcp://127.0.0.1:10000 --cap 1,block --target-path /mnt/hostpath CSIVolumeID
+CSIVolumeID
+</code></pre><p><strong>NodeUnpublish a volume</strong></p>
+<pre><code>$ csc node unpublish --endpoint tcp://127.0.0.1:10000 --target-path /mnt/hostpath CSIVolumeID
+CSIVolumeID
+</code></pre><p><strong>Get Nodeinfo</strong></p>
+<pre><code>$ csc node get-info --endpoint tcp://127.0.0.1:10000
+CSINode
+</code></pre><h2 id="&#x90E8;&#x7F72;">&#x90E8;&#x7F72;</h2>
+<p>&#x4ECE;&#x4E0A;&#x4E00;&#x7BC7;&#x6587;&#x7AE0;&#x4E2D;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#xFF0C;CSI&#x771F;&#x6B63;&#x8FD0;&#x884C;&#x8D77;&#x6765;&#xFF0C;&#x5176;&#x5B9E;&#x8FD8;&#x9700;&#x8981;&#x4E00;&#x4E9B;&#x5B98;&#x65B9;&#x63D0;&#x4F9B;&#x7684;&#x7EC4;&#x4EF6;&#x8FDB;&#x884C;&#x914D;&#x5408;&#xFF0C;&#x6BD4;&#x5982;<code>node-driver-registrar</code>&#xFF0C;<code>csi-provision</code>&#xFF0C;<code>csi-attacher</code>&#xFF0C;&#x6211;&#x4EEC;&#x5C06;&#x8FD9;&#x4E9B;container&#x4F5C;&#x4E3A;&#x6211;&#x4EEC;&#x7684;sidecar&#x5BB9;&#x5668;&#xFF0C;&#x901A;&#x8FC7;volume&#x5171;&#x4EAB;socket&#x8FDE;&#x63A5;&#xFF0C;&#x65B9;&#x4FBF;&#x8C03;&#x7528;&#xFF0C;&#x90E8;&#x7F72;&#x5728;&#x4E00;&#x8D77;&#x3002;</p>
+<p>&#x6211;&#x4EEC;&#x628A;&#x670D;&#x52A1;&#x5206;&#x4E3A;&#x4E24;&#x4E2A;&#x90E8;&#x5206;&#xFF1A;</p>
+<ul>
+<li>controller &#xFF1A;&#x4EE5;Deployment&#x6216;&#x8005;Statefulset&#x65B9;&#x5F0F;&#x90E8;&#x7F72;&#xFF0C;&#x901A;&#x8FC7;leader selector&#xFF0C;&#x63A7;&#x5236;&#x53EA;&#x6709;&#x4E00;&#x4E2A;&#x5728;&#x5DE5;&#x4F5C;&#x3002; </li>
+<li>node&#xFF1A;&#x4EE5;DaemonSet&#x65B9;&#x5F0F;&#x90E8;&#x7F72;&#xFF0C;&#x5728;&#x6BCF;&#x4E2A;&#x8282;&#x70B9;&#x4E0A;&#x90FD;&#x8C03;&#x5EA6;</li>
+</ul>
+<blockquote>
+<p>hostpath&#x56E0;&#x4E3A;&#x53EA;&#x6709;&#x5728;&#x5355;&#x4E2A;&#x8282;&#x70B9;&#x4E0A;&#x6D4B;&#x8BD5;&#x7528;&#xFF0C;&#x6240;&#x4EE5;&#x5B83;&#x7684;&#x90FD;&#x4F7F;&#x7528;&#x4E86;Statefulset&#xFF0C;&#x56E0;&#x4E3A;&#x53EA;&#x662F;&#x6D4B;&#x8BD5;&#x3002;</p>
+</blockquote>
+<p>&#x5728;&#x751F;&#x4EA7;&#x90E8;&#x7F72;&#x7684;&#x8BDD;&#x53EF;&#x4EE5;&#x53C2;&#x8003;<a href="https://github.com/kubernetes-csi/csi-driver-nfs/tree/master/deploy" target="_blank">csi-driver-nfs</a> &#x670D;&#x52A1;&#x7684;&#x90E8;&#x7F72;&#xFF0C;&#x8FD9;&#x4E2A;&#x670D;&#x52A1;&#x6BD4;&#x8F83;&#x5B8C;&#x6574;&#x3002;</p>
+<ul>
+<li><a href="https://github.com/kubernetes-csi/csi-driver-nfs/blob/master/deploy/csi-nfs-node.yaml" target="_blank">https://github.com/kubernetes-csi/csi-driver-nfs/blob/master/deploy/csi-nfs-node.yaml</a></li>
+<li><a href="https://github.com/kubernetes-csi/csi-driver-nfs/blob/master/deploy/csi-nfs-controller.yaml" target="_blank">https://github.com/kubernetes-csi/csi-driver-nfs/blob/master/deploy/csi-nfs-controller.yaml</a></li>
+</ul>
+<p>&#x5F53;&#x7136;&#x8FD8;&#x6709;&#x4E00;&#x4E9B;rbac&#xFF0C;CSIDriver&#x7684;&#x521B;&#x5EFA;&#xFF0C;&#x8FD9;&#x91CC;&#x5C31;&#x4E0D;&#x8D34;&#x51FA;&#x6765;&#x4E86;&#x3002;</p>
+<h2 id="&#x603B;&#x7ED3;">&#x603B;&#x7ED3;</h2>
+<p>&#x56DE;&#x987E;&#x4E0B;&#x6574;&#x4E2A;&#x7EC4;&#x4EF6;&#x662F;&#x600E;&#x4E48;&#x534F;&#x8C03;&#x5DE5;&#x4F5C;&#x7684;&#xFF1A;</p>
+<ul>
+<li><code>csi-provisioner</code>&#x7EC4;&#x4EF6;&#x76D1;&#x542C;pvc&#x7684;&#x521B;&#x5EFA;&#xFF0C;&#x4ECE;&#x800C;&#x901A;&#x8FC7; CSI socket &#x521B;&#x5EFA; <a href="https://github.com/container-storage-interface/spec/blob/master/spec.md#createvolume" target="_blank">CreateVolumeRequest</a> &#x8BF7;&#x6C42;&#x81F3;<code>CreateVolume</code>&#x65B9;&#x6CD5;</li>
+<li><code>csi-provisioner</code>&#x521B;&#x5EFA; PV &#x4EE5;&#x53CA;&#x66F4;&#x65B0; PVC&#x72B6;&#x6001;&#x81F3;  bound &#xFF0C;&#x4ECE;&#x800C;&#x7531; controller-manager&#x521B;&#x5EFA;<code>VolumeAttachment</code>&#x5BF9;&#x8C61;</li>
+<li><code>csi-attacher</code> &#x76D1;&#x542C;<code>VolumeAttachments</code> &#x5BF9;&#x8C61;&#x521B;&#x5EFA;&#xFF0C;&#x4ECE;&#x800C;&#x8C03;&#x7528;<a href="https://github.com/container-storage-interface/spec/blob/master/spec.md#controllerpublishvolume" target="_blank"> ControllerPublishVolume</a> &#x65B9;&#x6CD5;&#x3002;</li>
+<li><code>kubelet</code>&#x4E00;&#x76F4;&#x90FD;&#x5728;&#x7B49;&#x5F85;volume attach&#xFF0C; &#x4ECE;&#x800C;&#x8C03;&#x7528; <a href="https://github.com/container-storage-interface/spec/blob/master/spec.md#nodestagevolume" target="_blank">NodeStageVolume</a> *(&#x4E3B;&#x8981;&#x505A;&#x683C;&#x5F0F;&#x5316;&#x4EE5;&#x53CA;mount&#x5230;&#x8282;&#x70B9;&#x4E0A;&#x4E00;&#x4E2A;&#x5168;&#x5C40;&#x76EE;&#x5F55;) &#x65B9;&#x6CD5; - &#x8FD9;&#x4E00;&#x6B65;&#x53EF;&#x9009;</li>
+<li>CSI Driver&#x5728; &#x5728; <a href="https://github.com/container-storage-interface/spec/blob/master/spec.md#nodestagevolume" target="_blank">NodeStageVolume</a> &#x65B9;&#x6CD5;&#x4E2D;&#x5C06;volumemount&#x5230; <code>/var/lib/kubelet/plugins/kubernetes.io/csi/pv/&lt;pv-name&gt;/globalmount</code>&#x8FD9;&#x4E2A;&#x76EE;&#x5F55;&#x5E76;&#x653E;&#x56DE;kubelet</li>
+<li><code>kubelet</code>&#x8C03;&#x7528;<a href="https://github.com/container-storage-interface/spec/blob/master/spec.md#nodepublishvolume" target="_blank">NodePublishVolume</a> (&#x6302;&#x8F7D;&#x5230;pod&#x76EE;&#x5F55;&#x901A;&#x8FC7;<code>mount bind</code>)</li>
+<li>CSI Driver&#x76F8;&#x5E94;<a href="https://github.com/container-storage-interface/spec/blob/master/spec.md#nodepublishvolume" target="_blank"> NodePublishVolume</a> &#x8BF7;&#x6C42;&#xFF0C;&#x5C06;volume&#x6302;&#x8F7D;&#x5230;pod&#x76EE;&#x5F55; <code>/var/lib/kubelet/pods/&lt;pod-uuid&gt;/volumes/[kubernetes.io](http://kubernetes.io/)~csi/&lt;pvc-name&gt;/mount</code></li>
+<li>&#x6700;&#x540E;&#xFF0C;kubelet&#x542F;&#x52A8;&#x5BB9;&#x5668;</li>
+</ul>
+<h2 id="&#x53C2;&#x8003;">&#x53C2;&#x8003;</h2>
+<ul>
+<li><p><a href="https://medium.com/velotio-perspectives/kubernetes-csi-in-action-explained-with-features-and-use-cases-4f966b910774" target="_blank">https://medium.com/velotio-perspectives/kubernetes-csi-in-action-explained-with-features-and-use-cases-4f966b910774</a></p>
+</li>
+<li><p><a href="https://kubernetes-csi.github.io/docs/developing.html" target="_blank">https://kubernetes-csi.github.io/docs/developing.html</a></p>
+</li>
+</ul>
+<footer class="page-footer"><span class="copyright">Copyright &#xA9; silenceper 2020 all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">&#x8BE5;&#x6587;&#x4EF6;&#x4FEE;&#x8BA2;&#x65F6;&#x95F4;&#xFF1A;
+2020-11-26 11:43:44
+</span></footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="./" class="navigation navigation-prev " aria-label="Previous page: 介绍">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="csi-driver-host-path.html" class="navigation navigation-next " aria-label="Next page: csi-driver-host-path插件安装">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"如何编写一个CSI插件","level":"1.3.2","depth":2,"next":{"title":"csi-driver-host-path插件安装","level":"1.3.3","depth":2,"path":"csi/csi-driver-host-path.md","ref":"./csi/csi-driver-host-path.md","articles":[]},"previous":{"title":"介绍","level":"1.3.1","depth":2,"path":"csi/README.md","ref":"./csi/README.md","articles":[]},"dir":"ltr"},"config":{"plugins":["github-buttons","edit-link","code","back-to-top-button","tbfed-pagefooter","baidu-v3","ga"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright &copy silenceper 2020","modify_label":"该文件修订时间：","modify_format":"YYYY-MM-DD HH:mm:ss"},"github":{"url":"https://github.com/silenceper/kubernetes-book"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"code":{"copyButtons":true},"baidu-v3":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"back-to-top-button":{},"github-buttons":{"buttons":[{"user":"silenceper","repo":"kubernetes-book","type":"star","size":"small"}]},"ga":{"configuration":"auto","token":"UA-139557989-1"},"baidu":{"token":"fe23775b1a9ea11a6797646a56df1cc7"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"edit-link":{"label":"更新该页","base":"https://github.com/silenceper/kubernetes-book/blob/main"},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"silenceper","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"kubernetes笔记","links":{"sidebar":{}},"gitbook":"*","description":"kubernets笔记"},"file":{"path":"csi/how-to-write-csi-driver.md","mtime":"2020-11-26T03:43:44.255Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-11-26T03:51:41.086Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-github-buttons/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-edit-link/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-baidu-v3/baidu-tongji.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-ga/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
