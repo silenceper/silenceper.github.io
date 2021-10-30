@@ -9,9 +9,10 @@
         <meta name="Description" content="KEDA是基于Kubernetes的事件驱动自动缩放组件，它为Kubernetes中运行的任何容器提供了基于事件驱动的扩缩容能力"><meta property="og:title" content="源码剖析：KEDA是如何工作的?" />
 <meta property="og:description" content="KEDA是基于Kubernetes的事件驱动自动缩放组件，它为Kubernetes中运行的任何容器提供了基于事件驱动的扩缩容能力" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/blog/202011/how-does-keda-work/" />
+<meta property="og:url" content="/blog/202011/how-does-keda-work/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2020-11-08T11:20:59+08:00" />
 <meta property="article:modified_time" content="2020-11-08T11:20:59+08:00" /><meta property="og:site_name" content="silenceper" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="源码剖析：KEDA是如何工作的?"/>
 <meta name="twitter:description" content="KEDA是基于Kubernetes的事件驱动自动缩放组件，它为Kubernetes中运行的任何容器提供了基于事件驱动的扩缩容能力"/>
@@ -23,7 +24,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="manifest" href="/site.webmanifest">
-<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="prev" href="/blog/202009/how-to-use-keda/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><meta name="google-site-verification" content="VJ4lE3d3A73DNoyxuuXL_Cuu6MEErPtKXqfAv69pr6E" /><meta name="baidu-site-verification" content="k061nqJczY" /><script type="application/ld+json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="prev" href="/blog/202009/how-to-use-keda/" /><link rel="next" href="/blog/202110/enforce-limit-emptydir-size/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/css/lib/animate/animate.min.css"><meta name="google-site-verification" content="VJ4lE3d3A73DNoyxuuXL_Cuu6MEErPtKXqfAv69pr6E" /><meta name="baidu-site-verification" content="k061nqJczY" /><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -151,7 +152,7 @@
 <p>对一些主要目录说明，其他一些MD文件主要是文字说明：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -182,7 +183,7 @@
 </span><span class="lnt">29
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">├── BRANDING.md
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">├── BRANDING.md
 ├── BUILD.md    //如何在本地编译和运行
 ├── CHANGELOG.md
 ├── CONTRIBUTING.md   //如何参与贡献次项目
@@ -231,7 +232,7 @@
 <p>通过<code>controller-runtime</code>组件启动两个自定义controller：<code>ScaledObjectReconciler</code>,<code>ScaledJobReconciler</code>:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -272,7 +273,7 @@
 </span><span class="lnt">39
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">mgr</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">ctrl</span><span class="p">.</span><span class="nf">NewManager</span><span class="p">(</span><span class="nx">ctrl</span><span class="p">.</span><span class="nf">GetConfigOrDie</span><span class="p">(),</span> <span class="nx">ctrl</span><span class="p">.</span><span class="nx">Options</span><span class="p">{</span>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="nx">mgr</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">ctrl</span><span class="p">.</span><span class="nf">NewManager</span><span class="p">(</span><span class="nx">ctrl</span><span class="p">.</span><span class="nf">GetConfigOrDie</span><span class="p">(),</span> <span class="nx">ctrl</span><span class="p">.</span><span class="nx">Options</span><span class="p">{</span>
 		<span class="nx">Scheme</span><span class="p">:</span>                 <span class="nx">scheme</span><span class="p">,</span>
 		<span class="nx">MetricsBindAddress</span><span class="p">:</span>     <span class="nx">metricsAddr</span><span class="p">,</span>
 		<span class="nx">HealthProbeBindAddress</span><span class="p">:</span> <span class="s">&#34;:8081&#34;</span><span class="p">,</span>
@@ -319,7 +320,7 @@
 方法内部主要功能实现：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -349,7 +350,7 @@
 </span><span class="lnt">28
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="o">...</span>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="o">...</span>
 <span class="c1">// 处理删除ScaledObject的情况
 </span><span class="c1"></span><span class="k">if</span> <span class="nx">scaledObject</span><span class="p">.</span><span class="nf">GetDeletionTimestamp</span><span class="p">()</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
       <span class="c1">//进入垃圾回收（比如停止goroutine中Loop，恢复原有副本数）
@@ -390,7 +391,7 @@
 方法:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -415,7 +416,7 @@
 </span><span class="lnt">23
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">scaledObjectMetricSpecs</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">r</span><span class="p">.</span><span class="nf">getScaledObjectMetricSpecs</span><span class="p">(</span><span class="nx">logger</span><span class="p">,</span> <span class="nx">scaledObject</span><span class="p">)</span>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="nx">scaledObjectMetricSpecs</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">r</span><span class="p">.</span><span class="nf">getScaledObjectMetricSpecs</span><span class="p">(</span><span class="nx">logger</span><span class="p">,</span> <span class="nx">scaledObject</span><span class="p">)</span>
 <span class="o">...</span><span class="nx">省略代码</span>
 
 <span class="nx">hpa</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">autoscalingv2beta2</span><span class="p">.</span><span class="nx">HorizontalPodAutoscaler</span><span class="p">{</span>
@@ -458,7 +459,7 @@
 <p>这个具体的scaler实现后续再讲，我们来看看RequestScale做了什么事：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -484,7 +485,7 @@
 </span><span class="lnt">24
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">//当前副本数为0，并是所有scaler属于active状态，则修改副本数为MinReplicaCount 或 1
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">//当前副本数为0，并是所有scaler属于active状态，则修改副本数为MinReplicaCount 或 1
 </span><span class="c1"></span><span class="k">if</span> <span class="nx">currentScale</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">Replicas</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">isActive</span> <span class="p">{</span>
 	<span class="nx">e</span><span class="p">.</span><span class="nf">scaleFromZero</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="nx">logger</span><span class="p">,</span> <span class="nx">scaledObject</span><span class="p">,</span> <span class="nx">currentScale</span><span class="p">)</span>
 <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">!</span><span class="nx">isActive</span> <span class="o">&amp;&amp;</span>
@@ -524,7 +525,7 @@
 中(如果已经有了，就先Cancel一次)，在删除资源的时候，进行删除:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -549,7 +550,7 @@
 </span><span class="lnt">23
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">h</span> <span class="o">*</span><span class="nx">scaleHandler</span><span class="p">)</span> <span class="nf">DeleteScalableObject</span><span class="p">(</span><span class="nx">scalableObject</span> <span class="kd">interface</span><span class="p">{})</span> <span class="kt">error</span> <span class="p">{</span>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">h</span> <span class="o">*</span><span class="nx">scaleHandler</span><span class="p">)</span> <span class="nf">DeleteScalableObject</span><span class="p">(</span><span class="nx">scalableObject</span> <span class="kd">interface</span><span class="p">{})</span> <span class="kt">error</span> <span class="p">{</span>
 	<span class="nx">withTriggers</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nf">asDuckWithTriggers</span><span class="p">(</span><span class="nx">scalableObject</span><span class="p">)</span>
 	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
 		<span class="nx">h</span><span class="p">.</span><span class="nx">logger</span><span class="p">.</span><span class="nf">Error</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;error duck typing object into withTrigger&#34;</span><span class="p">)</span>
@@ -579,14 +580,14 @@
 <p>keda-metrics-apiserver实现了<code>ExternalMetricsProvider</code>接口：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">ExternalMetricsProvider</span> <span class="kd">interface</span> <span class="p">{</span>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">ExternalMetricsProvider</span> <span class="kd">interface</span> <span class="p">{</span>
    <span class="nf">GetExternalMetric</span><span class="p">(</span><span class="nx">namespace</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">metricSelector</span> <span class="nx">labels</span><span class="p">.</span><span class="nx">Selector</span><span class="p">,</span> <span class="nx">info</span> <span class="nx">ExternalMetricInfo</span><span class="p">)</span> <span class="p">(</span><span class="o">*</span><span class="nx">external_metrics</span><span class="p">.</span><span class="nx">ExternalMetricValueList</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
 
    <span class="nf">ListAllExternalMetrics</span><span class="p">()</span> <span class="p">[]</span><span class="nx">ExternalMetricInfo</span>
@@ -600,7 +601,7 @@
 <p>当代码写好之后，再通过apiservice注册到apiservier上(当然还涉及到鉴权，这里不啰嗦了)：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -619,7 +620,7 @@
 </span><span class="lnt">17
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">apiVersion: apiregistration.k8s.io/v1
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">apiVersion: apiregistration.k8s.io/v1
 kind: APIService
 metadata:
   labels:
@@ -643,7 +644,7 @@ spec:
 <p>实现一个Scaler，主要实现以下接口：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -667,7 +668,7 @@ spec:
 </span><span class="lnt">22
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// Scaler interface
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// Scaler interface
 </span><span class="c1"></span><span class="kd">type</span> <span class="nx">Scaler</span> <span class="kd">interface</span> <span class="p">{</span>
 
 	<span class="c1">// 返回external_metrics.ExternalMetricValue对象，其实就是用于 keda-metrics-apiserver中获取到scaler的指标
@@ -745,26 +746,10 @@ spec:
         </section>
     </div>
 
-    <div class="post-nav"><a href="/blog/202009/how-to-use-keda/" class="prev" rel="prev" title="使用keda完成基于事件的弹性伸缩"><i class="fas fa-angle-left fa-fw"></i>使用keda完成基于事件的弹性伸缩</a></div>
+    <div class="post-nav"><a href="/blog/202009/how-to-use-keda/" class="prev" rel="prev" title="使用keda完成基于事件的弹性伸缩"><i class="fas fa-angle-left fa-fw"></i>使用keda完成基于事件的弹性伸缩</a>
+            <a href="/blog/202110/enforce-limit-emptydir-size/" class="next" rel="next" title="emptyDir 通过xfs_quota 强制限制大小">emptyDir 通过xfs_quota 强制限制大小<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
-<div class="comment"><div id="gitalk"></div><script>
-            document.addEventListener("DOMContentLoaded", function(event) {
-                var gitalk = new Gitalk({
-                    id: '2020-11-08 11:20:59 \u002b0800 CST',
-                    title: '源码剖析：KEDA是如何工作的?',
-                    clientID: 'e708cc1fbc3e2613a24d',
-                    clientSecret: 'ffa9552c4ef788a7f135fa7b9510ffc672d0b914',
-                    repo: 'silenceper.github.io',
-                    owner: 'silenceper',
-                    admin: ['silenceper'],
-                    body: decodeURI(location.href),
-                });
-                gitalk.render('gitalk');
-            });
-        </script>
-        <noscript>
-            Please enable JavaScript to view the <a href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a>
-        </noscript></div>
+<div class="comment"></div>
     </article></div>
             </main><footer class="footer">
     <div class="copyright"><div class="copyright-line">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
@@ -785,24 +770,5 @@ spec:
                     { left: "\\[", right: "\\]", display: true },]
             });
         });
-    </script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.css"><link rel="stylesheet" href="/css/lib/iconfont/iconfont.min.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script><script src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.2/dist/smooth-scroll.polyfills.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazysizes@5.1.2/lazysizes.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/mhchem.min.js"></script><script src="/js/lib/sharer/sharer.min.js"></script><script src=/js/theme.min.js></script>
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-139557989-1', 'auto');
-	ga('set', 'anonymizeIp', true);
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-    hm.src = "https://hm.baidu.com/hm.js?fe23775b1a9ea11a6797646a56df1cc7";
-  var s = document.getElementsByTagName("script")[0];
-  s.parentNode.insertBefore(hm, s);
-})();
-</script></body>
+    </script><link rel="stylesheet" href="/css/lib/iconfont/iconfont.min.css"><link rel="stylesheet" href="/css/lib/katex/katex.min.css"><link rel="stylesheet" href="/css/lib/katex/copy-tex.min.css"><script src="/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script src="/js/lib/sharer/sharer.min.js"></script><script src="/js/lib/lazysizes/lazysizes.min.js"></script><script src="/js/lib/katex/katex.min.js"></script><script src="/js/lib/katex/auto-render.min.js"></script><script src="/js/lib/katex/copy-tex.min.js"></script><script src="/js/lib/katex/mhchem.min.js"></script><script src=/js/theme.min.js></script></body>
 </html>

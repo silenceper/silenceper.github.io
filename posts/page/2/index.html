@@ -9,8 +9,8 @@
         <meta name="Description" content="一个记录生活，工作的博客。关于Go，Kubernetes，云原生"><meta property="og:title" content="Posts" />
 <meta property="og:description" content="一个记录生活，工作的博客。关于Go，Kubernetes，云原生" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="/posts/" />
-<meta property="og:updated_time" content="2020-11-08T11:20:59+08:00" /><meta property="og:site_name" content="silenceper" />
+<meta property="og:url" content="/posts/" /><meta property="og:site_name" content="silenceper" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Posts"/>
 <meta name="twitter:description" content="一个记录生活，工作的博客。关于Go，Kubernetes，云原生"/>
@@ -23,7 +23,7 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="manifest" href="/site.webmanifest">
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="alternate" href="/posts/index.xml" type="application/rss+xml" title="silenceper">
-    <link rel="feed" href="/posts/index.xml" type="application/rss+xml" title="silenceper"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><meta name="google-site-verification" content="VJ4lE3d3A73DNoyxuuXL_Cuu6MEErPtKXqfAv69pr6E" /><meta name="baidu-site-verification" content="k061nqJczY" /></head>
+    <link rel="feed" href="/posts/index.xml" type="application/rss+xml" title="silenceper"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/css/lib/animate/animate.min.css"><meta name="google-site-verification" content="VJ4lE3d3A73DNoyxuuXL_Cuu6MEErPtKXqfAv69pr6E" /><meta name="baidu-site-verification" content="k061nqJczY" /></head>
     <body><script>
             if (!window.localStorage || !window.localStorage.getItem('theme')) {window.isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;} else {
                 window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
@@ -61,7 +61,10 @@
     window.mobileHeaderMode = "auto";
 </script>
 <main class="main">
-                <div class="container"><div class="page archive"><h2 class="single-title animated pulse faster">所有文章</h2><h3>2019</h3><article class="archive-item">
+                <div class="container"><div class="page archive"><h2 class="single-title animated pulse faster">所有文章</h2><h3>2020</h3><article class="archive-item">
+                    <a href="/blog/202001/go-import-version/" class="archive-item-link">如何在Go项目中输出版本信息？</a>
+                    <span class="archive-item-date">2020-01-10 00:00</span>
+                </article><h3>2019</h3><article class="archive-item">
                     <a href="/blog/201910/kubernetes-log/" class="archive-item-link">Kubernetes容器日志收集方案</a>
                     <span class="archive-item-date">2019-10-22 00:00</span>
                 </article><article class="archive-item">
@@ -94,9 +97,6 @@
                 </article><article class="archive-item">
                     <a href="/blog/201605/go-http-process/" class="archive-item-link">Golang中http包默认路由匹配规则阅读笔记</a>
                     <span class="archive-item-date">2016-05-28 18:00</span>
-                </article><article class="archive-item">
-                    <a href="/blog/201601/tcp_time_wait_error/" class="archive-item-link">tcp time_wait问题</a>
-                    <span class="archive-item-date">2016-01-03 15:40</span>
                 </article><ul class="pagination"><li class="page-item ">
                     <span class="page-link">
                         <a href="/posts/">1</a>
@@ -104,6 +104,10 @@
                 </li><li class="page-item active">
                     <span class="page-link">
                         <a href="/posts/page/2/">2</a>
+                    </span>
+                </li><li class="page-item ">
+                    <span class="page-link">
+                        <a href="/posts/page/3/">3</a>
                     </span>
                 </li></ul></div></div>
             </main><footer class="footer">
@@ -125,24 +129,5 @@
                     { left: "\\[", right: "\\]", display: true },]
             });
         });
-    </script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.css"><script src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.2/dist/smooth-scroll.polyfills.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazysizes@5.1.2/lazysizes.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/mhchem.min.js"></script><script src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.2/dist/smooth-scroll.polyfills.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazysizes@5.1.2/lazysizes.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/mhchem.min.js"></script><script src=/js/theme.min.js></script>
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-139557989-1', 'auto');
-	ga('set', 'anonymizeIp', true);
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-    hm.src = "https://hm.baidu.com/hm.js?fe23775b1a9ea11a6797646a56df1cc7";
-  var s = document.getElementsByTagName("script")[0];
-  s.parentNode.insertBefore(hm, s);
-})();
-</script></body>
+    </script><link rel="stylesheet" href="/css/lib/katex/katex.min.css"><link rel="stylesheet" href="/css/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/css/lib/katex/katex.min.css"><link rel="stylesheet" href="/css/lib/katex/copy-tex.min.css"><script src="/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script src="/js/lib/lazysizes/lazysizes.min.js"></script><script src="/js/lib/katex/katex.min.js"></script><script src="/js/lib/katex/auto-render.min.js"></script><script src="/js/lib/katex/copy-tex.min.js"></script><script src="/js/lib/katex/mhchem.min.js"></script><script src="/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script src="/js/lib/lazysizes/lazysizes.min.js"></script><script src="/js/lib/katex/katex.min.js"></script><script src="/js/lib/katex/auto-render.min.js"></script><script src="/js/lib/katex/copy-tex.min.js"></script><script src="/js/lib/katex/mhchem.min.js"></script><script src=/js/theme.min.js></script></body>
 </html>

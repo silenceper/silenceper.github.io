@@ -9,9 +9,10 @@
         <meta name="Description" content="Custom Resource是扩展Kubernetes的一种方式（另外一种就是通过聚合层API apiserver-aggregation），而controller对指定的resource进行监听和执行对应的动作(watch,diff,action)。"><meta property="og:title" content="如何在Kubernetes中创建一个自定义Controller?" />
 <meta property="og:description" content="Custom Resource是扩展Kubernetes的一种方式（另外一种就是通过聚合层API apiserver-aggregation），而controller对指定的resource进行监听和执行对应的动作(watch,diff,action)。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/blog/202005/custom-resources-and-controllers/" />
+<meta property="og:url" content="/blog/202005/custom-resources-and-controllers/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2020-05-18T18:20:59+08:00" />
 <meta property="article:modified_time" content="2020-05-18T18:20:59+08:00" /><meta property="og:site_name" content="silenceper" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="如何在Kubernetes中创建一个自定义Controller?"/>
 <meta name="twitter:description" content="Custom Resource是扩展Kubernetes的一种方式（另外一种就是通过聚合层API apiserver-aggregation），而controller对指定的resource进行监听和执行对应的动作(watch,diff,action)。"/>
@@ -23,7 +24,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="manifest" href="/site.webmanifest">
-<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="prev" href="/blog/202005/difference-vim-and-echo/" /><link rel="next" href="/blog/202006/build-arm-image-on-x86_84/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><meta name="google-site-verification" content="VJ4lE3d3A73DNoyxuuXL_Cuu6MEErPtKXqfAv69pr6E" /><meta name="baidu-site-verification" content="k061nqJczY" /><script type="application/ld+json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="prev" href="/blog/202005/difference-vim-and-echo/" /><link rel="next" href="/blog/202006/build-arm-image-on-x86_84/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/css/lib/animate/animate.min.css"><meta name="google-site-verification" content="VJ4lE3d3A73DNoyxuuXL_Cuu6MEErPtKXqfAv69pr6E" /><meta name="baidu-site-verification" content="k061nqJczY" /><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -157,7 +158,7 @@
 ：<br />创建该 <code>Foo</code> 自定义资源后，期望创建出一个名称为 <code>example-foo</code> ，副本数为 <code>1</code> 的deployment。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -166,7 +167,7 @@
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">samplecontroller.k8s.io/v1alpha1</span><span class="w">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">samplecontroller.k8s.io/v1alpha1</span><span class="w">
 </span><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">Foo</span><span class="w">
 </span><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
 </span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">example-foo</span><span class="w">
@@ -178,7 +179,7 @@
 </div><p>它的CRD定义如下：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -201,7 +202,7 @@
 </span><span class="lnt">21
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">apiextensions.k8s.io/v1beta1</span><span class="w">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">apiextensions.k8s.io/v1beta1</span><span class="w">
 </span><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">CustomResourceDefinition</span><span class="w">
 </span><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
 </span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">foos.samplecontroller.k8s.io</span><span class="w">
@@ -237,7 +238,7 @@
 </p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -278,7 +279,7 @@
 </span><span class="lnt">39
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">v1alpha1</span>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">v1alpha1</span>
 
 <span class="kn">import</span> <span class="p">(</span>
 	<span class="nx">metav1</span> <span class="s">&#34;k8s.io/apimachinery/pkg/apis/meta/v1&#34;</span>
@@ -330,7 +331,7 @@
 <p>必须在目标包的doc.go文件中声明，典型路径是 pkg/apis/<apigroup>/<version>/doc.go。<br />内容示例：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -339,7 +340,7 @@
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// 为包中任何类型生成深拷贝方法，可以在局部tag覆盖此默认行为
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// 为包中任何类型生成深拷贝方法，可以在局部tag覆盖此默认行为
 </span><span class="c1">// +groupName=example.com
 </span><span class="c1">// +k8s:deepcopy-gen=package
 </span><span class="c1">// +groupName=samplecontroller.k8s.io  // groupName指定API组的全限定名
@@ -360,14 +361,14 @@
 方法可以生成，client以及deepcopy代码。<br />包含：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">sample-controller/pkg/apis/samplecontroller/v1alpha1/zz_generated.deepcopy.go
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">sample-controller/pkg/apis/samplecontroller/v1alpha1/zz_generated.deepcopy.go
 sample-controller/pkg/generated/clientset
 sample-controller/pkg/generated/informers
 sample-controller/pkg/generated/informers
@@ -379,14 +380,14 @@ sample-controller/pkg/generated/informers
 内容如下</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">bash <span class="s2">&#34;</span><span class="si">${</span><span class="nv">CODEGEN_PKG</span><span class="si">}</span><span class="s2">&#34;</span>/generate-groups.sh <span class="s2">&#34;deepcopy,client,informer,lister&#34;</span> <span class="se">\
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">bash <span class="s2">&#34;</span><span class="si">${</span><span class="nv">CODEGEN_PKG</span><span class="si">}</span><span class="s2">&#34;</span>/generate-groups.sh <span class="s2">&#34;deepcopy,client,informer,lister&#34;</span> <span class="se">\
 </span><span class="se"></span>  k8s.io/sample-controller/pkg/generated k8s.io/sample-controller/pkg/apis <span class="se">\
 </span><span class="se"></span>  samplecontroller:v1alpha1 <span class="se">\
 </span><span class="se"></span>  --output-base <span class="s2">&#34;</span><span class="k">$(</span>dirname <span class="s2">&#34;</span><span class="si">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="si">}</span><span class="s2">&#34;</span><span class="k">)</span><span class="s2">/../../..&#34;</span> <span class="se">\
@@ -396,7 +397,7 @@ sample-controller/pkg/generated/informers
 </div><p>完整使用说明：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -411,7 +412,7 @@ sample-controller/pkg/generated/informers
 </span><span class="lnt">13
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">Usage: generate-groups.sh &lt;generators&gt; &lt;output-package&gt; &lt;apis-package&gt; &lt;groups-versions&gt; ...
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">Usage: generate-groups.sh &lt;generators&gt; &lt;output-package&gt; &lt;apis-package&gt; &lt;groups-versions&gt; ...
 
   &lt;generators&gt;        the generators comma separated to run <span class="o">(</span>deepcopy,defaulter,client,lister,informer<span class="o">)</span> or <span class="s2">&#34;all&#34;</span>.
   &lt;output-package&gt;    the output package name <span class="o">(</span>e.g. github.com/example/project/pkg/generated<span class="o">)</span>.
@@ -431,7 +432,7 @@ Examples:
 <p>场景：如果我们需要一个通用的类型的object，如下：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -440,7 +441,7 @@ Examples:
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="w">  </span><span class="nt">validation</span><span class="p">:</span><span class="w">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="w">  </span><span class="nt">validation</span><span class="p">:</span><span class="w">
 </span><span class="w">    </span><span class="nt">openAPIV3Schema</span><span class="p">:</span><span class="w">
 </span><span class="w">      </span><span class="nt">properties</span><span class="p">:</span><span class="w">
 </span><span class="w">        </span><span class="nt">spec</span><span class="p">:</span><span class="w">
@@ -452,13 +453,13 @@ Examples:
 </div><p>我们在spec里面定义了一个fields字段，类型是object（即key ,value的形式），value的值可能是int也可能是string或者bool<br />在type定义的时候我是这么写的，定义为map[string]interface{}</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="l">// FooSpec is the spec for a Foo resource</span><span class="w">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="l">// FooSpec is the spec for a Foo resource</span><span class="w">
 </span><span class="w"></span><span class="l">type FooSpec struct {</span><span class="w">
 </span><span class="w">	</span><span class="l">Fields map[string]interface{} `json:&#34;fields&#34;`</span><span class="w">
 </span><span class="w"></span>}<span class="w">
@@ -467,7 +468,7 @@ Examples:
 </div><p>当在代码生成的时候，发现会报错：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -475,7 +476,7 @@ Examples:
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="l">Generating deepcopy funcs</span><span class="w">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="l">Generating deepcopy funcs</span><span class="w">
 </span><span class="w"></span><span class="l">F0518 17:53:33.568567   39986 deepcopy.go:750] DeepCopy of &#34;interface{}&#34; is unsupported. Instead, use named interfaces with DeepCopy&lt;named-interface&gt; as one of the methods.</span><span class="w">
 </span><span class="w"></span><span class="nt">goroutine 1 [running]</span><span class="p">:</span><span class="w">
 </span><span class="w"></span><span class="l">k8s.io/klog/v2.stacks(0xc000132001, 0xc0002e9000, 0xad, 0xfd)</span><span class="w">
@@ -486,7 +487,7 @@ Examples:
 </div><p>遇到这种问题，需要自己实现深拷贝，例如这种：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -517,7 +518,7 @@ Examples:
 </span><span class="lnt">29
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="l">type HelmReleaseSpec struct {</span><span class="w">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="l">type HelmReleaseSpec struct {</span><span class="w">
 </span><span class="w">    </span><span class="l">HelmValues    `json:&#34;,inline&#34;`</span><span class="w">
 </span><span class="w"></span>}<span class="w">
 </span><span class="w"> 
@@ -559,7 +560,7 @@ Examples:
 <p><br />简单来讲通过list/watch机器提供了本地缓存避免每次去请求apiserver。<br />并且提供了Event Handler方法，在将数据保存进入cache时，通过调用自定义handler方法，增加自定义处理。<br />所以Controller 的代码结构，就是如下：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -617,7 +618,7 @@ Examples:
 </span><span class="lnt">56
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">NewController</span><span class="p">(</span>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">NewController</span><span class="p">(</span>
 	<span class="nx">kubeclientset</span> <span class="nx">kubernetes</span><span class="p">.</span><span class="nx">Interface</span><span class="p">,</span>
 	<span class="nx">sampleclientset</span> <span class="nx">clientset</span><span class="p">.</span><span class="nx">Interface</span><span class="p">,</span>
 	<span class="nx">deploymentInformer</span> <span class="nx">appsinformers</span><span class="p">.</span><span class="nx">DeploymentInformer</span><span class="p">,</span>
@@ -687,7 +688,7 @@ Examples:
 方法中调用如下：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -705,7 +706,7 @@ Examples:
 </span><span class="lnt">16
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go">
 <span class="nx">exampleClient</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">clientset</span><span class="p">.</span><span class="nf">NewForConfig</span><span class="p">(</span><span class="nx">cfg</span><span class="p">)</span>
 <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
     <span class="nx">klog</span><span class="p">.</span><span class="nf">Fatalf</span><span class="p">(</span><span class="s">&#34;Error building example clientset: %s&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">.</span><span class="nf">Error</span><span class="p">())</span>
@@ -794,24 +795,7 @@ Examples:
     <div class="post-nav"><a href="/blog/202005/difference-vim-and-echo/" class="prev" rel="prev" title="用vim保存文件和echo命令到底有什么不同？"><i class="fas fa-angle-left fa-fw"></i>用vim保存文件和echo命令到底有什么不同？</a>
             <a href="/blog/202006/build-arm-image-on-x86_84/" class="next" rel="next" title="在x86_64机器上构建arm64镜像">在x86_64机器上构建arm64镜像<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
-<div class="comment"><div id="gitalk"></div><script>
-            document.addEventListener("DOMContentLoaded", function(event) {
-                var gitalk = new Gitalk({
-                    id: '2020-05-18 18:20:59 \u002b0800 CST',
-                    title: '如何在Kubernetes中创建一个自定义Controller?',
-                    clientID: 'e708cc1fbc3e2613a24d',
-                    clientSecret: 'ffa9552c4ef788a7f135fa7b9510ffc672d0b914',
-                    repo: 'silenceper.github.io',
-                    owner: 'silenceper',
-                    admin: ['silenceper'],
-                    body: decodeURI(location.href),
-                });
-                gitalk.render('gitalk');
-            });
-        </script>
-        <noscript>
-            Please enable JavaScript to view the <a href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a>
-        </noscript></div>
+<div class="comment"></div>
     </article></div>
             </main><footer class="footer">
     <div class="copyright"><div class="copyright-line">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
@@ -832,24 +816,5 @@ Examples:
                     { left: "\\[", right: "\\]", display: true },]
             });
         });
-    </script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.css"><link rel="stylesheet" href="/css/lib/iconfont/iconfont.min.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script><script src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.2/dist/smooth-scroll.polyfills.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazysizes@5.1.2/lazysizes.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/mhchem.min.js"></script><script src="/js/lib/sharer/sharer.min.js"></script><script src=/js/theme.min.js></script>
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-139557989-1', 'auto');
-	ga('set', 'anonymizeIp', true);
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-    hm.src = "https://hm.baidu.com/hm.js?fe23775b1a9ea11a6797646a56df1cc7";
-  var s = document.getElementsByTagName("script")[0];
-  s.parentNode.insertBefore(hm, s);
-})();
-</script></body>
+    </script><link rel="stylesheet" href="/css/lib/iconfont/iconfont.min.css"><link rel="stylesheet" href="/css/lib/katex/katex.min.css"><link rel="stylesheet" href="/css/lib/katex/copy-tex.min.css"><script src="/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script src="/js/lib/sharer/sharer.min.js"></script><script src="/js/lib/lazysizes/lazysizes.min.js"></script><script src="/js/lib/katex/katex.min.js"></script><script src="/js/lib/katex/auto-render.min.js"></script><script src="/js/lib/katex/copy-tex.min.js"></script><script src="/js/lib/katex/mhchem.min.js"></script><script src=/js/theme.min.js></script></body>
 </html>

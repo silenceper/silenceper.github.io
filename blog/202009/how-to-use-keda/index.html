@@ -9,9 +9,10 @@
         <meta name="Description" content="一个记录生活，工作的博客。关于Go，Kubernetes，云原生"><meta property="og:title" content="使用keda完成基于事件的弹性伸缩" />
 <meta property="og:description" content="文章中使用的是keda 1.5版本，2.0还未release 1.5版本支持deployment，job两种资源。而在2.0增加了Statefu" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/blog/202009/how-to-use-keda/" />
+<meta property="og:url" content="/blog/202009/how-to-use-keda/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2020-09-14T11:20:59+08:00" />
 <meta property="article:modified_time" content="2020-09-14T11:20:59+08:00" /><meta property="og:site_name" content="silenceper" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="使用keda完成基于事件的弹性伸缩"/>
 <meta name="twitter:description" content="文章中使用的是keda 1.5版本，2.0还未release 1.5版本支持deployment，job两种资源。而在2.0增加了Statefu"/>
@@ -23,7 +24,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="manifest" href="/site.webmanifest">
-<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="prev" href="/blog/202007/docker-tar-push/" /><link rel="next" href="/blog/202011/how-does-keda-work/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><meta name="google-site-verification" content="VJ4lE3d3A73DNoyxuuXL_Cuu6MEErPtKXqfAv69pr6E" /><meta name="baidu-site-verification" content="k061nqJczY" /><script type="application/ld+json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="prev" href="/blog/202007/docker-tar-push/" /><link rel="next" href="/blog/202011/how-does-keda-work/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/css/lib/animate/animate.min.css"><meta name="google-site-verification" content="VJ4lE3d3A73DNoyxuuXL_Cuu6MEErPtKXqfAv69pr6E" /><meta name="baidu-site-verification" content="k061nqJczY" /><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -130,10 +131,11 @@
 <figcaption class="image-caption">支持的事件源</figcaption></figure>
 </p>
 <h1 id="安装keda">安装keda</h1>
-<p>从 <a href="https://github.com/kedacore/keda/releases">https://github.com/kedacore/keda/releases</a> 下载1.5版本的zip包，包含了yaml和crd:</p>
+<p>从 <a href="https://github.com/kedacore/keda/releases" target="_blank" rel="noopener noreffer">https://github.com/kedacore/keda/releases</a>
+ 下载1.5版本的zip包，包含了yaml和crd:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -148,7 +150,7 @@
 </span><span class="lnt">13
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">├── 00-namespace.yaml
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">├── 00-namespace.yaml
 ├── 01-service_account.yaml
 ├── 10-cluster_role.yaml
 ├── 11-role_binding.yaml
@@ -166,11 +168,11 @@
 </div><p>安装：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">kubectl apply -f ./crds/
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">kubectl apply -f ./crds/
 kubectl apply -f .
 </code></pre></td></tr></table>
 </div>
@@ -179,7 +181,7 @@ kubectl apply -f .
 <p>以Deployment为例，看下ScaledObject支持哪些变量</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -195,7 +197,7 @@ kubectl apply -f .
 </span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">apiVersion: keda.k8s.io/v1alpha1
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">apiVersion: keda.k8s.io/v1alpha1
 kind: ScaledObject
 metadata:
   name: {scaled-object-name}
@@ -217,7 +219,7 @@ spec:
 <p>这里我将<code>minReplicaCount</code>设置为2，因为在没有流量的时候副本数将会被keda设置为0。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -235,7 +237,7 @@ spec:
 </span><span class="lnt">16
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">apiVersion: keda.k8s.io/v1alpha1
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">apiVersion: keda.k8s.io/v1alpha1
 kind: ScaledObject
 metadata:
   name: prometheus-scaledobject
@@ -256,12 +258,12 @@ spec:
 </div><p>当创建该<code>ScaledObject </code>，我们看到同时创建了一个hpa资源：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">➜  example kubectl get hpa
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">➜  example kubectl get hpa
 NAME                 REFERENCE              TARGETS     MINPODS   MAXPODS   REPLICAS   AGE
 keda-hpa-http-demo   Deployment/http-demo   0/2 (avg)   2         100       2          70m
 </code></pre></td></tr></table>
@@ -269,21 +271,21 @@ keda-hpa-http-demo   Deployment/http-demo   0/2 (avg)   2         100       2   
 </div><p>通过压测观察hpa资源变化：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">&gt; ab  -c 10 -n 1000 http://127.0.0.1:8080/
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">&gt; ab  -c 10 -n 1000 http://127.0.0.1:8080/
 </code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">Every 1.0s: kubectl get hpa                                                                                      anymore.local: Mon Sep 14 14:23:59 2020
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">Every 1.0s: kubectl get hpa                                                                                      anymore.local: Mon Sep 14 14:23:59 2020
 
 NAME                 REFERENCE              TARGETS     MINPODS   MAXPODS   REPLICAS   AGE
 keda-hpa-http-demo   Deployment/http-demo   8/2 (avg)   2         100       4          73m
@@ -308,7 +310,7 @@ keda控制了副本0-&gt;1和1-&gt;0的变化（起到了激活和停止的作�
 主要是通过grpc实现一下接口实现：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -316,7 +318,7 @@ keda控制了副本0-&gt;1和1-&gt;0的变化（起到了激活和停止的作�
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">type Scaler interface {
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">type Scaler interface {
 	GetMetrics(ctx context.Context, metricName string, metricSelector labels.Selector) ([]external_metrics.ExternalMetricValue, error)
 	GetMetricSpecForScaling() []v2beta2.MetricSpec
 	IsActive(ctx context.Context) (bool, error)
@@ -383,24 +385,7 @@ keda控制了副本0-&gt;1和1-&gt;0的变化（起到了激活和停止的作�
     <div class="post-nav"><a href="/blog/202007/docker-tar-push/" class="prev" rel="prev" title="将镜像tar包通过API直接push到registry仓库"><i class="fas fa-angle-left fa-fw"></i>将镜像tar包通过API直接push到registry仓库</a>
             <a href="/blog/202011/how-does-keda-work/" class="next" rel="next" title="源码剖析：KEDA是如何工作的?">源码剖析：KEDA是如何工作的?<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
-<div class="comment"><div id="gitalk"></div><script>
-            document.addEventListener("DOMContentLoaded", function(event) {
-                var gitalk = new Gitalk({
-                    id: '2020-09-14 11:20:59 \u002b0800 CST',
-                    title: '使用keda完成基于事件的弹性伸缩',
-                    clientID: 'e708cc1fbc3e2613a24d',
-                    clientSecret: 'ffa9552c4ef788a7f135fa7b9510ffc672d0b914',
-                    repo: 'silenceper.github.io',
-                    owner: 'silenceper',
-                    admin: ['silenceper'],
-                    body: decodeURI(location.href),
-                });
-                gitalk.render('gitalk');
-            });
-        </script>
-        <noscript>
-            Please enable JavaScript to view the <a href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a>
-        </noscript></div>
+<div class="comment"></div>
     </article></div>
             </main><footer class="footer">
     <div class="copyright"><div class="copyright-line">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
@@ -421,24 +406,5 @@ keda控制了副本0-&gt;1和1-&gt;0的变化（起到了激活和停止的作�
                     { left: "\\[", right: "\\]", display: true },]
             });
         });
-    </script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.css"><link rel="stylesheet" href="/css/lib/iconfont/iconfont.min.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script><script src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.2/dist/smooth-scroll.polyfills.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazysizes@5.1.2/lazysizes.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/mhchem.min.js"></script><script src="/js/lib/sharer/sharer.min.js"></script><script src=/js/theme.min.js></script>
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-139557989-1', 'auto');
-	ga('set', 'anonymizeIp', true);
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-    hm.src = "https://hm.baidu.com/hm.js?fe23775b1a9ea11a6797646a56df1cc7";
-  var s = document.getElementsByTagName("script")[0];
-  s.parentNode.insertBefore(hm, s);
-})();
-</script></body>
+    </script><link rel="stylesheet" href="/css/lib/iconfont/iconfont.min.css"><link rel="stylesheet" href="/css/lib/katex/katex.min.css"><link rel="stylesheet" href="/css/lib/katex/copy-tex.min.css"><script src="/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script src="/js/lib/sharer/sharer.min.js"></script><script src="/js/lib/lazysizes/lazysizes.min.js"></script><script src="/js/lib/katex/katex.min.js"></script><script src="/js/lib/katex/auto-render.min.js"></script><script src="/js/lib/katex/copy-tex.min.js"></script><script src="/js/lib/katex/mhchem.min.js"></script><script src=/js/theme.min.js></script></body>
 </html>

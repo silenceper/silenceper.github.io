@@ -9,9 +9,10 @@
         <meta name="Description" content="调试filebeat程序，发现日志被重复上传。深入验证并对比下使用vim写入文件并保存和使用echo有什么不同？"><meta property="og:title" content="用vim保存文件和echo命令到底有什么不同？" />
 <meta property="og:description" content="调试filebeat程序，发现日志被重复上传。深入验证并对比下使用vim写入文件并保存和使用echo有什么不同？" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/blog/202005/difference-vim-and-echo/" />
+<meta property="og:url" content="/blog/202005/difference-vim-and-echo/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2020-05-13T20:20:59+08:00" />
 <meta property="article:modified_time" content="2020-05-13T20:20:59+08:00" /><meta property="og:site_name" content="silenceper" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="用vim保存文件和echo命令到底有什么不同？"/>
 <meta name="twitter:description" content="调试filebeat程序，发现日志被重复上传。深入验证并对比下使用vim写入文件并保存和使用echo有什么不同？"/>
@@ -23,7 +24,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="manifest" href="/site.webmanifest">
-<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="prev" href="/blog/202005/getting-started-with-postgres/" /><link rel="next" href="/blog/202005/custom-resources-and-controllers/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><meta name="google-site-verification" content="VJ4lE3d3A73DNoyxuuXL_Cuu6MEErPtKXqfAv69pr6E" /><meta name="baidu-site-verification" content="k061nqJczY" /><script type="application/ld+json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="prev" href="/blog/202005/getting-started-with-postgres/" /><link rel="next" href="/blog/202005/custom-resources-and-controllers/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/css/lib/animate/animate.min.css"><meta name="google-site-verification" content="VJ4lE3d3A73DNoyxuuXL_Cuu6MEErPtKXqfAv69pr6E" /><meta name="baidu-site-verification" content="k061nqJczY" /><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -132,7 +133,7 @@
 <p><strong>1、查看文件inode为908488</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -144,7 +145,7 @@
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@localhost work<span class="o">]</span><span class="c1"># stat test.log</span>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@localhost work<span class="o">]</span><span class="c1"># stat test.log</span>
   文件：<span class="s2">&#34;test.log&#34;</span>
   大小：0         	块：0          IO 块：4096   普通空文件
 设备：fd00h/64768d	Inode：908488      硬链接：1
@@ -159,7 +160,7 @@
 </div><p><strong>2、当我用vim/vi工具进行编辑保存之后，变为了：908490</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -172,7 +173,7 @@
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@localhost work]# vi test.log
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">[root@localhost work]# vi test.log
 [root@localhost work]# stat test.log
   文件：&#34;test.log&#34;
   大小：7         	块：8          IO 块：4096   普通文件
@@ -188,7 +189,7 @@
 </div><p><strong>3、而用echo命令修改看到inode信息并没有改变, 908490</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -201,7 +202,7 @@
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@localhost work]# echo &#34;test some log&#34;&gt;&gt;test.log
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">[root@localhost work]# echo &#34;test some log&#34;&gt;&gt;test.log
 [root@localhost work]# stat test.log
   文件：&#34;test.log&#34;
   大小：21        	块：8          IO 块：4096   普通文件
@@ -222,25 +223,25 @@
 <p>inotifywait命令：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">inotifywait -rm test.log
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">inotifywait -rm test.log
 </code></pre></td></tr></table>
 </div>
 </div><p>文件权限：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">-rw-r--r--. 1 root root   49 5月  14 05:40 test.log
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">-rw-r--r--. 1 root root   49 5月  14 05:40 test.log
 </code></pre></td></tr></table>
 </div>
 </div><p><strong>1、使用vim进行编辑的结果：</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -251,7 +252,7 @@
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@localhost work]# inotifywait -rm test.log
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">[root@localhost work]# inotifywait -rm test.log
 Setting up watches.  Beware: since -r was given, this may take a while!
 Watches established.
 test.log OPEN
@@ -267,7 +268,7 @@ test.log DELETE_SELF
 <p><strong>2、使用echo进行追加写入的结果</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -275,7 +276,7 @@ test.log DELETE_SELF
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@localhost work]# inotifywait -rm test.log
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">[root@localhost work]# inotifywait -rm test.log
 Setting up watches.  Beware: since -r was given, this may take a while!
 Watches established.
 test.log OPEN
@@ -286,7 +287,7 @@ test.log CLOSE_WRITE,CLOSE
 </div><p><strong>3、监听整个目录，可以看到更多信息</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -328,7 +329,7 @@ test.log CLOSE_WRITE,CLOSE
 </span><span class="lnt">40
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@localhost work]# inotifywait -rm ./dir/
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">[root@localhost work]# inotifywait -rm ./dir/
 Setting up watches.  Beware: since -r was given, this may take a while!
 Watches established.
 
@@ -374,7 +375,7 @@ Watches established.
 <p><strong>4、当进行<code>chmod o+w test.log</code>时，看到的信息如下：</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -399,7 +400,7 @@ Watches established.
 </span><span class="lnt">23
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">./dir/ CREATE 4913
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">./dir/ CREATE 4913
 ./dir/ OPEN 4913
 ./dir/ ATTRIB 4913
 ./dir/ CLOSE_WRITE,CLOSE 4913
@@ -484,24 +485,7 @@ Watches established.
     <div class="post-nav"><a href="/blog/202005/getting-started-with-postgres/" class="prev" rel="prev" title="postgres入门"><i class="fas fa-angle-left fa-fw"></i>postgres入门</a>
             <a href="/blog/202005/custom-resources-and-controllers/" class="next" rel="next" title="如何在Kubernetes中创建一个自定义Controller?">如何在Kubernetes中创建一个自定义Controller?<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
-<div class="comment"><div id="gitalk"></div><script>
-            document.addEventListener("DOMContentLoaded", function(event) {
-                var gitalk = new Gitalk({
-                    id: '2020-05-13 20:20:59 \u002b0800 CST',
-                    title: '用vim保存文件和echo命令到底有什么不同？',
-                    clientID: 'e708cc1fbc3e2613a24d',
-                    clientSecret: 'ffa9552c4ef788a7f135fa7b9510ffc672d0b914',
-                    repo: 'silenceper.github.io',
-                    owner: 'silenceper',
-                    admin: ['silenceper'],
-                    body: decodeURI(location.href),
-                });
-                gitalk.render('gitalk');
-            });
-        </script>
-        <noscript>
-            Please enable JavaScript to view the <a href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a>
-        </noscript></div>
+<div class="comment"></div>
     </article></div>
             </main><footer class="footer">
     <div class="copyright"><div class="copyright-line">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
@@ -522,24 +506,5 @@ Watches established.
                     { left: "\\[", right: "\\]", display: true },]
             });
         });
-    </script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.css"><link rel="stylesheet" href="/css/lib/iconfont/iconfont.min.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script><script src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.2/dist/smooth-scroll.polyfills.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazysizes@5.1.2/lazysizes.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/mhchem.min.js"></script><script src="/js/lib/sharer/sharer.min.js"></script><script src=/js/theme.min.js></script>
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-139557989-1', 'auto');
-	ga('set', 'anonymizeIp', true);
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-    hm.src = "https://hm.baidu.com/hm.js?fe23775b1a9ea11a6797646a56df1cc7";
-  var s = document.getElementsByTagName("script")[0];
-  s.parentNode.insertBefore(hm, s);
-})();
-</script></body>
+    </script><link rel="stylesheet" href="/css/lib/iconfont/iconfont.min.css"><link rel="stylesheet" href="/css/lib/katex/katex.min.css"><link rel="stylesheet" href="/css/lib/katex/copy-tex.min.css"><script src="/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script src="/js/lib/sharer/sharer.min.js"></script><script src="/js/lib/lazysizes/lazysizes.min.js"></script><script src="/js/lib/katex/katex.min.js"></script><script src="/js/lib/katex/auto-render.min.js"></script><script src="/js/lib/katex/copy-tex.min.js"></script><script src="/js/lib/katex/mhchem.min.js"></script><script src=/js/theme.min.js></script></body>
 </html>

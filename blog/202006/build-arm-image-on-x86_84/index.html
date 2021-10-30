@@ -9,9 +9,10 @@
         <meta name="Description" content="通过qemu-user-static在x86_64机器上构建arm64镜像"><meta property="og:title" content="在x86_64机器上构建arm64镜像" />
 <meta property="og:description" content="通过qemu-user-static在x86_64机器上构建arm64镜像" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/blog/202006/build-arm-image-on-x86_84/" />
+<meta property="og:url" content="/blog/202006/build-arm-image-on-x86_84/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2020-06-05T14:20:59+08:00" />
 <meta property="article:modified_time" content="2020-06-05T14:20:59+08:00" /><meta property="og:site_name" content="silenceper" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="在x86_64机器上构建arm64镜像"/>
 <meta name="twitter:description" content="通过qemu-user-static在x86_64机器上构建arm64镜像"/>
@@ -23,7 +24,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="manifest" href="/site.webmanifest">
-<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="prev" href="/blog/202005/custom-resources-and-controllers/" /><link rel="next" href="/blog/202007/docker-tar-push/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><meta name="google-site-verification" content="VJ4lE3d3A73DNoyxuuXL_Cuu6MEErPtKXqfAv69pr6E" /><meta name="baidu-site-verification" content="k061nqJczY" /><script type="application/ld+json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="prev" href="/blog/202005/custom-resources-and-controllers/" /><link rel="next" href="/blog/202007/docker-tar-push/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/css/lib/animate/animate.min.css"><meta name="google-site-verification" content="VJ4lE3d3A73DNoyxuuXL_Cuu6MEErPtKXqfAv69pr6E" /><meta name="baidu-site-verification" content="k061nqJczY" /><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -140,7 +141,7 @@
 <p>开启arm平台支持：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -153,7 +154,7 @@
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-sh" data-lang="sh">$ docker run --rm --privileged multiarch/qemu-user-static:register --reset
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">$ docker run --rm --privileged multiarch/qemu-user-static:register --reset
 
 $ docker build --rm -t <span class="s2">&#34;test/integration/ubuntu&#34;</span> -<span class="s">&lt;&lt;EOF
 </span><span class="s">FROM multiarch/qemu-user-static:x86_64-aarch64 as qemu
@@ -183,12 +184,12 @@ aarch64
 <p><strong>进行初始化：</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">docker buildx create --name builderx
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">docker buildx create --name builderx
 docker buildx use builderx
 docker buildx inspect --bootstrap <span class="c1">#这一步会从外网拉取`moby/buildkit`镜像，貌似还改不了</span>
 </code></pre></td></tr></table>
@@ -196,10 +197,10 @@ docker buildx inspect --bootstrap <span class="c1">#这一步会从外网拉取`
 </div><p><strong>接下来你就可以通过如下命令去构建多种架构的镜像：</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">docker buildx build --platform linux/amd64,linux/arm64 -f Dockerfile -t silenceper/reverse-proxy .  --push
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">docker buildx build --platform linux/amd64,linux/arm64 -f Dockerfile -t silenceper/reverse-proxy .  --push
 </code></pre></td></tr></table>
 </div>
 </div><p><code>--push</code>参数表示构建完成之后，并push到镜像仓库当中。</p>
@@ -209,7 +210,7 @@ docker buildx inspect --bootstrap <span class="c1">#这一步会从外网拉取`
 <p><strong>通过docker的多阶段构建将编译和打包放在一起了，隔离了环境的差异。</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -222,7 +223,7 @@ docker buildx inspect --bootstrap <span class="c1">#这一步会从外网拉取`
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">FROM</span> <span class="nx">golang</span><span class="p">:</span><span class="nx">alpine</span> <span class="nx">as</span> <span class="nx">builder</span>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="nx">FROM</span> <span class="nx">golang</span><span class="p">:</span><span class="nx">alpine</span> <span class="nx">as</span> <span class="nx">builder</span>
 <span class="nx">ADD</span> <span class="p">.</span> <span class="o">/</span><span class="k">go</span><span class="o">/</span><span class="nx">src</span><span class="o">/</span><span class="nx">github</span><span class="p">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">silenceper</span><span class="o">/</span><span class="nx">reverse</span><span class="o">-</span><span class="nx">proxy</span><span class="o">/</span>
 <span class="nx">RUN</span> <span class="nx">cd</span> <span class="o">/</span><span class="k">go</span><span class="o">/</span><span class="nx">src</span><span class="o">/</span><span class="nx">github</span><span class="p">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">silenceper</span><span class="o">/</span><span class="nx">reverse</span><span class="o">-</span><span class="nx">proxy</span><span class="o">/</span> \
   <span class="o">&amp;&amp;</span> <span class="k">go</span> <span class="nx">get</span> <span class="o">-</span><span class="nx">v</span> \
@@ -239,9 +240,12 @@ docker buildx inspect --bootstrap <span class="c1">#这一步会从外网拉取`
 <p>最方便的肯定是直接通过buildx进行打包和编译，但是我的环境没法访问外网，又没法拉取外网的镜像，所以最终还是选择使用<code>qemu-user-static</code>打包出来了。</p>
 <h3 id="参考">参考</h3>
 <ul>
-<li><a href="https://blog.fleeto.us/post/buildx-and-osx/">https://blog.fleeto.us/post/buildx-and-osx/</a></li>
-<li><a href="https://juejin.im/post/5af86fb15188251b8015c102">https://juejin.im/post/5af86fb15188251b8015c102</a></li>
-<li><a href="https://www.cnblogs.com/bamanzi/p/run-x86-linux-progs-with-qemu-user-on-arm.html">https://www.cnblogs.com/bamanzi/p/run-x86-linux-progs-with-qemu-user-on-arm.html</a></li>
+<li><a href="https://blog.fleeto.us/post/buildx-and-osx/" target="_blank" rel="noopener noreffer">https://blog.fleeto.us/post/buildx-and-osx/</a>
+</li>
+<li><a href="https://juejin.im/post/5af86fb15188251b8015c102" target="_blank" rel="noopener noreffer">https://juejin.im/post/5af86fb15188251b8015c102</a>
+</li>
+<li><a href="https://www.cnblogs.com/bamanzi/p/run-x86-linux-progs-with-qemu-user-on-arm.html" target="_blank" rel="noopener noreffer">https://www.cnblogs.com/bamanzi/p/run-x86-linux-progs-with-qemu-user-on-arm.html</a>
+</li>
 </ul>
 <hr/>
             <figure>
@@ -288,24 +292,7 @@ docker buildx inspect --bootstrap <span class="c1">#这一步会从外网拉取`
     <div class="post-nav"><a href="/blog/202005/custom-resources-and-controllers/" class="prev" rel="prev" title="如何在Kubernetes中创建一个自定义Controller?"><i class="fas fa-angle-left fa-fw"></i>如何在Kubernetes中创建一个自定义Controller?</a>
             <a href="/blog/202007/docker-tar-push/" class="next" rel="next" title="将镜像tar包通过API直接push到registry仓库">将镜像tar包通过API直接push到registry仓库<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
-<div class="comment"><div id="gitalk"></div><script>
-            document.addEventListener("DOMContentLoaded", function(event) {
-                var gitalk = new Gitalk({
-                    id: '2020-06-05 14:20:59 \u002b0800 CST',
-                    title: '在x86_64机器上构建arm64镜像',
-                    clientID: 'e708cc1fbc3e2613a24d',
-                    clientSecret: 'ffa9552c4ef788a7f135fa7b9510ffc672d0b914',
-                    repo: 'silenceper.github.io',
-                    owner: 'silenceper',
-                    admin: ['silenceper'],
-                    body: decodeURI(location.href),
-                });
-                gitalk.render('gitalk');
-            });
-        </script>
-        <noscript>
-            Please enable JavaScript to view the <a href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a>
-        </noscript></div>
+<div class="comment"></div>
     </article></div>
             </main><footer class="footer">
     <div class="copyright"><div class="copyright-line">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
@@ -326,24 +313,5 @@ docker buildx inspect --bootstrap <span class="c1">#这一步会从外网拉取`
                     { left: "\\[", right: "\\]", display: true },]
             });
         });
-    </script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.css"><link rel="stylesheet" href="/css/lib/iconfont/iconfont.min.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script><script src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.2/dist/smooth-scroll.polyfills.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazysizes@5.1.2/lazysizes.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/mhchem.min.js"></script><script src="/js/lib/sharer/sharer.min.js"></script><script src=/js/theme.min.js></script>
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-139557989-1', 'auto');
-	ga('set', 'anonymizeIp', true);
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-    hm.src = "https://hm.baidu.com/hm.js?fe23775b1a9ea11a6797646a56df1cc7";
-  var s = document.getElementsByTagName("script")[0];
-  s.parentNode.insertBefore(hm, s);
-})();
-</script></body>
+    </script><link rel="stylesheet" href="/css/lib/iconfont/iconfont.min.css"><link rel="stylesheet" href="/css/lib/katex/katex.min.css"><link rel="stylesheet" href="/css/lib/katex/copy-tex.min.css"><script src="/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script src="/js/lib/sharer/sharer.min.js"></script><script src="/js/lib/lazysizes/lazysizes.min.js"></script><script src="/js/lib/katex/katex.min.js"></script><script src="/js/lib/katex/auto-render.min.js"></script><script src="/js/lib/katex/copy-tex.min.js"></script><script src="/js/lib/katex/mhchem.min.js"></script><script src=/js/theme.min.js></script></body>
 </html>

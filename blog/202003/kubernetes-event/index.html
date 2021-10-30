@@ -9,9 +9,10 @@
         <meta name="Description" content="Kubernetes源码阅读：event是如何写入和处理的"><meta property="og:title" content="分析kubernetes中的事件机制" />
 <meta property="og:description" content="Kubernetes源码阅读：event是如何写入和处理的" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/blog/202003/kubernetes-event/" />
+<meta property="og:url" content="/blog/202003/kubernetes-event/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2020-03-03T12:40:59+08:00" />
 <meta property="article:modified_time" content="2020-03-03T12:40:59+08:00" /><meta property="og:site_name" content="silenceper" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="分析kubernetes中的事件机制"/>
 <meta name="twitter:description" content="Kubernetes源码阅读：event是如何写入和处理的"/>
@@ -23,7 +24,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="manifest" href="/site.webmanifest">
-<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="prev" href="/blog/202002/kubernetes-leaderelection/" /><link rel="next" href="/blog/202003/singleflight/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><meta name="google-site-verification" content="VJ4lE3d3A73DNoyxuuXL_Cuu6MEErPtKXqfAv69pr6E" /><meta name="baidu-site-verification" content="k061nqJczY" /><script type="application/ld+json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="prev" href="/blog/202002/kubernetes-leaderelection/" /><link rel="next" href="/blog/202003/singleflight/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/css/lib/animate/animate.min.css"><meta name="google-site-verification" content="VJ4lE3d3A73DNoyxuuXL_Cuu6MEErPtKXqfAv69pr6E" /><meta name="baidu-site-verification" content="k061nqJczY" /><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -143,7 +144,7 @@
 <p>以下是一个event的yaml文件：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -173,7 +174,7 @@
 </span><span class="lnt">28
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">apiVersion</span><span class="p">:</span> <span class="nx">v1</span>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="nx">apiVersion</span><span class="p">:</span> <span class="nx">v1</span>
 <span class="nx">count</span><span class="p">:</span> <span class="mi">1</span>
 <span class="nx">eventTime</span><span class="p">:</span> <span class="nx">null</span>
 <span class="nx">firstTimestamp</span><span class="p">:</span> <span class="s">&#34;2020-03-02T13:08:22Z&#34;</span>
@@ -230,7 +231,7 @@
 </p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -251,7 +252,7 @@
 </span><span class="lnt">19
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// makeEventRecorder sets up kubeDeps.Recorder if it&#39;s nil. It&#39;s a no-op otherwise.
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// makeEventRecorder sets up kubeDeps.Recorder if it&#39;s nil. It&#39;s a no-op otherwise.
 </span><span class="c1"></span><span class="kd">func</span> <span class="nf">makeEventRecorder</span><span class="p">(</span><span class="nx">kubeDeps</span> <span class="o">*</span><span class="nx">kubelet</span><span class="p">.</span><span class="nx">Dependencies</span><span class="p">,</span> <span class="nx">nodeName</span> <span class="nx">types</span><span class="p">.</span><span class="nx">NodeName</span><span class="p">)</span> <span class="p">{</span>
 	<span class="k">if</span> <span class="nx">kubeDeps</span><span class="p">.</span><span class="nx">Recorder</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
 		<span class="k">return</span>
@@ -279,7 +280,7 @@
 </p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -291,7 +292,7 @@
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// EventBroadcaster knows how to receive events and send them to any EventSink, watcher, or log.
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// EventBroadcaster knows how to receive events and send them to any EventSink, watcher, or log.
 </span><span class="c1"></span><span class="kd">type</span> <span class="nx">EventBroadcaster</span> <span class="kd">interface</span> <span class="p">{</span>
     <span class="c1">//
 </span><span class="c1"></span>	<span class="nf">StartEventWatcher</span><span class="p">(</span><span class="nx">eventHandler</span> <span class="kd">func</span><span class="p">(</span><span class="o">*</span><span class="nx">v1</span><span class="p">.</span><span class="nx">Event</span><span class="p">))</span> <span class="nx">watch</span><span class="p">.</span><span class="nx">Interface</span>
@@ -312,7 +313,7 @@
 ，提供了一下4个方法</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -339,7 +340,7 @@
 </span><span class="lnt">25
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// EventRecorder knows how to record events on behalf of an EventSource.
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// EventRecorder knows how to record events on behalf of an EventSource.
 </span><span class="c1"></span><span class="kd">type</span> <span class="nx">EventRecorder</span> <span class="kd">interface</span> <span class="p">{</span>
 	<span class="c1">// Event constructs an event from the given information and puts it in the queue for sending.
 </span><span class="c1"></span>	<span class="c1">// &#39;object&#39; is the object this event is about. Event will make a reference-- or you may also
@@ -377,7 +378,7 @@
 </p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -389,7 +390,7 @@
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">recorder</span> <span class="o">*</span><span class="nx">recorderImpl</span><span class="p">)</span> <span class="nf">generateEvent</span><span class="p">(</span><span class="nx">object</span> <span class="nx">runtime</span><span class="p">.</span><span class="nx">Object</span><span class="p">,</span> <span class="nx">annotations</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">,</span> <span class="nx">timestamp</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">Time</span><span class="p">,</span> <span class="nx">eventtype</span><span class="p">,</span> <span class="nx">reason</span><span class="p">,</span> <span class="nx">message</span> <span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">recorder</span> <span class="o">*</span><span class="nx">recorderImpl</span><span class="p">)</span> <span class="nf">generateEvent</span><span class="p">(</span><span class="nx">object</span> <span class="nx">runtime</span><span class="p">.</span><span class="nx">Object</span><span class="p">,</span> <span class="nx">annotations</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">,</span> <span class="nx">timestamp</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">Time</span><span class="p">,</span> <span class="nx">eventtype</span><span class="p">,</span> <span class="nx">reason</span><span class="p">,</span> <span class="nx">message</span> <span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
     <span class="o">...</span><span class="p">..</span>
 	<span class="nx">event</span> <span class="o">:=</span> <span class="nx">recorder</span><span class="p">.</span><span class="nf">makeEvent</span><span class="p">(</span><span class="nx">ref</span><span class="p">,</span> <span class="nx">annotations</span><span class="p">,</span> <span class="nx">eventtype</span><span class="p">,</span> <span class="nx">reason</span><span class="p">,</span> <span class="nx">message</span><span class="p">)</span>
 	<span class="nx">event</span><span class="p">.</span><span class="nx">Source</span> <span class="p">=</span> <span class="nx">recorder</span><span class="p">.</span><span class="nx">source</span>
@@ -407,7 +408,7 @@
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -430,7 +431,7 @@
 </span><span class="lnt">21
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">recorder</span> <span class="o">*</span><span class="nx">recorderImpl</span><span class="p">)</span> <span class="nf">makeEvent</span><span class="p">(</span><span class="nx">ref</span> <span class="o">*</span><span class="nx">v1</span><span class="p">.</span><span class="nx">ObjectReference</span><span class="p">,</span> <span class="nx">annotations</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">,</span> <span class="nx">eventtype</span><span class="p">,</span> <span class="nx">reason</span><span class="p">,</span> <span class="nx">message</span> <span class="kt">string</span><span class="p">)</span> <span class="o">*</span><span class="nx">v1</span><span class="p">.</span><span class="nx">Event</span> <span class="p">{</span>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">recorder</span> <span class="o">*</span><span class="nx">recorderImpl</span><span class="p">)</span> <span class="nf">makeEvent</span><span class="p">(</span><span class="nx">ref</span> <span class="o">*</span><span class="nx">v1</span><span class="p">.</span><span class="nx">ObjectReference</span><span class="p">,</span> <span class="nx">annotations</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">,</span> <span class="nx">eventtype</span><span class="p">,</span> <span class="nx">reason</span><span class="p">,</span> <span class="nx">message</span> <span class="kt">string</span><span class="p">)</span> <span class="o">*</span><span class="nx">v1</span><span class="p">.</span><span class="nx">Event</span> <span class="p">{</span>
 	<span class="nx">t</span> <span class="o">:=</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">Time</span><span class="p">{</span><span class="nx">Time</span><span class="p">:</span> <span class="nx">recorder</span><span class="p">.</span><span class="nx">clock</span><span class="p">.</span><span class="nf">Now</span><span class="p">()}</span>
 	<span class="nx">namespace</span> <span class="o">:=</span> <span class="nx">ref</span><span class="p">.</span><span class="nx">Namespace</span>
 	<span class="k">if</span> <span class="nx">namespace</span> <span class="o">==</span> <span class="s">&#34;&#34;</span> <span class="p">{</span>
@@ -457,13 +458,13 @@
 </p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// Action distributes the given event among all watchers.
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// Action distributes the given event among all watchers.
 </span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">m</span> <span class="o">*</span><span class="nx">Broadcaster</span><span class="p">)</span> <span class="nf">Action</span><span class="p">(</span><span class="nx">action</span> <span class="nx">EventType</span><span class="p">,</span> <span class="nx">obj</span> <span class="nx">runtime</span><span class="p">.</span><span class="nx">Object</span><span class="p">)</span> <span class="p">{</span>
 	<span class="nx">m</span><span class="p">.</span><span class="nx">incoming</span> <span class="o">&lt;-</span> <span class="nx">Event</span><span class="p">{</span><span class="nx">action</span><span class="p">,</span> <span class="nx">obj</span><span class="p">}</span>
 <span class="p">}</span>
@@ -482,7 +483,7 @@
 <p>两个方法内部都调用了 <code>StartEventWatcher</code> 方法，并且传入一个 <code>eventHandler</code> 方法对event进行处理</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -500,7 +501,7 @@
 </span><span class="lnt">16
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">e</span> <span class="o">*</span><span class="nx">eventBroadcasterImpl</span><span class="p">)</span> <span class="nf">StartEventWatcher</span><span class="p">(</span><span class="nx">eventHandler</span> <span class="kd">func</span><span class="p">(</span><span class="o">*</span><span class="nx">v1</span><span class="p">.</span><span class="nx">Event</span><span class="p">))</span> <span class="nx">watch</span><span class="p">.</span><span class="nx">Interface</span> <span class="p">{</span>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">e</span> <span class="o">*</span><span class="nx">eventBroadcasterImpl</span><span class="p">)</span> <span class="nf">StartEventWatcher</span><span class="p">(</span><span class="nx">eventHandler</span> <span class="kd">func</span><span class="p">(</span><span class="o">*</span><span class="nx">v1</span><span class="p">.</span><span class="nx">Event</span><span class="p">))</span> <span class="nx">watch</span><span class="p">.</span><span class="nx">Interface</span> <span class="p">{</span>
 	<span class="nx">watcher</span> <span class="o">:=</span> <span class="nx">e</span><span class="p">.</span><span class="nf">Watch</span><span class="p">()</span>
 	<span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
 		<span class="k">defer</span> <span class="nx">utilruntime</span><span class="p">.</span><span class="nf">HandleCrash</span><span class="p">()</span>
@@ -525,7 +526,7 @@
 <p>主要看下 <code>StartRecordingToSink</code> 提供的的<code>eventHandler</code>， <code>recordToSink</code> 方法：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -559,7 +560,7 @@
 </span><span class="lnt">32
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">recordToSink</span><span class="p">(</span><span class="nx">sink</span> <span class="nx">EventSink</span><span class="p">,</span> <span class="nx">event</span> <span class="o">*</span><span class="nx">v1</span><span class="p">.</span><span class="nx">Event</span><span class="p">,</span> <span class="nx">eventCorrelator</span> <span class="o">*</span><span class="nx">EventCorrelator</span><span class="p">,</span> <span class="nx">sleepDuration</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Duration</span><span class="p">)</span> <span class="p">{</span>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">recordToSink</span><span class="p">(</span><span class="nx">sink</span> <span class="nx">EventSink</span><span class="p">,</span> <span class="nx">event</span> <span class="o">*</span><span class="nx">v1</span><span class="p">.</span><span class="nx">Event</span><span class="p">,</span> <span class="nx">eventCorrelator</span> <span class="o">*</span><span class="nx">EventCorrelator</span><span class="p">,</span> <span class="nx">sleepDuration</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Duration</span><span class="p">)</span> <span class="p">{</span>
 	<span class="c1">// Make a copy before modification, because there could be multiple listeners.
 </span><span class="c1"></span>	<span class="c1">// Events are safe to copy like this.
 </span><span class="c1"></span>	<span class="nx">eventCopy</span> <span class="o">:=</span> <span class="o">*</span><span class="nx">event</span>
@@ -600,7 +601,7 @@
 <p>我们来看下<code>EventCorrelate</code>方法：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -615,7 +616,7 @@
 </span><span class="lnt">13
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// EventCorrelate filters, aggregates, counts, and de-duplicates all incoming events
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// EventCorrelate filters, aggregates, counts, and de-duplicates all incoming events
 </span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">EventCorrelator</span><span class="p">)</span> <span class="nf">EventCorrelate</span><span class="p">(</span><span class="nx">newEvent</span> <span class="o">*</span><span class="nx">v1</span><span class="p">.</span><span class="nx">Event</span><span class="p">)</span> <span class="p">(</span><span class="o">*</span><span class="nx">EventCorrelateResult</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
 	<span class="k">if</span> <span class="nx">newEvent</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
 		<span class="k">return</span> <span class="kc">nil</span><span class="p">,</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="s">&#34;event is nil&#34;</span><span class="p">)</span>
@@ -639,7 +640,7 @@
 <p>我们主要来看下<code>aggregator.EventAggregate</code>方法：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -701,7 +702,7 @@
 </span><span class="lnt">60
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">e</span> <span class="o">*</span><span class="nx">EventAggregator</span><span class="p">)</span> <span class="nf">EventAggregate</span><span class="p">(</span><span class="nx">newEvent</span> <span class="o">*</span><span class="nx">v1</span><span class="p">.</span><span class="nx">Event</span><span class="p">)</span> <span class="p">(</span><span class="o">*</span><span class="nx">v1</span><span class="p">.</span><span class="nx">Event</span><span class="p">,</span> <span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">e</span> <span class="o">*</span><span class="nx">EventAggregator</span><span class="p">)</span> <span class="nf">EventAggregate</span><span class="p">(</span><span class="nx">newEvent</span> <span class="o">*</span><span class="nx">v1</span><span class="p">.</span><span class="nx">Event</span><span class="p">)</span> <span class="p">(</span><span class="o">*</span><span class="nx">v1</span><span class="p">.</span><span class="nx">Event</span><span class="p">,</span> <span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
 	<span class="nx">now</span> <span class="o">:=</span> <span class="nx">metav1</span><span class="p">.</span><span class="nf">NewTime</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">clock</span><span class="p">.</span><span class="nf">Now</span><span class="p">())</span>
 	<span class="kd">var</span> <span class="nx">record</span> <span class="nx">aggregateRecord</span>
 	<span class="c1">// eventKey is the full cache key for this event
@@ -827,24 +828,7 @@
     <div class="post-nav"><a href="/blog/202002/kubernetes-leaderelection/" class="prev" rel="prev" title="利用Kubernetes中的leaderelection实现组件高可用"><i class="fas fa-angle-left fa-fw"></i>利用Kubernetes中的leaderelection实现组件高可用</a>
             <a href="/blog/202003/singleflight/" class="next" rel="next" title="singleflight包原理解析">singleflight包原理解析<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
-<div class="comment"><div id="gitalk"></div><script>
-            document.addEventListener("DOMContentLoaded", function(event) {
-                var gitalk = new Gitalk({
-                    id: '2020-03-03 12:40:59 \u002b0800 CST',
-                    title: '分析kubernetes中的事件机制',
-                    clientID: 'e708cc1fbc3e2613a24d',
-                    clientSecret: 'ffa9552c4ef788a7f135fa7b9510ffc672d0b914',
-                    repo: 'silenceper.github.io',
-                    owner: 'silenceper',
-                    admin: ['silenceper'],
-                    body: decodeURI(location.href),
-                });
-                gitalk.render('gitalk');
-            });
-        </script>
-        <noscript>
-            Please enable JavaScript to view the <a href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a>
-        </noscript></div>
+<div class="comment"></div>
     </article></div>
             </main><footer class="footer">
     <div class="copyright"><div class="copyright-line">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
@@ -865,24 +849,5 @@
                     { left: "\\[", right: "\\]", display: true },]
             });
         });
-    </script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.css"><link rel="stylesheet" href="/css/lib/iconfont/iconfont.min.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script><script src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.2/dist/smooth-scroll.polyfills.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazysizes@5.1.2/lazysizes.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/mhchem.min.js"></script><script src="/js/lib/sharer/sharer.min.js"></script><script src=/js/theme.min.js></script>
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-139557989-1', 'auto');
-	ga('set', 'anonymizeIp', true);
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-    hm.src = "https://hm.baidu.com/hm.js?fe23775b1a9ea11a6797646a56df1cc7";
-  var s = document.getElementsByTagName("script")[0];
-  s.parentNode.insertBefore(hm, s);
-})();
-</script></body>
+    </script><link rel="stylesheet" href="/css/lib/iconfont/iconfont.min.css"><link rel="stylesheet" href="/css/lib/katex/katex.min.css"><link rel="stylesheet" href="/css/lib/katex/copy-tex.min.css"><script src="/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script src="/js/lib/sharer/sharer.min.js"></script><script src="/js/lib/lazysizes/lazysizes.min.js"></script><script src="/js/lib/katex/katex.min.js"></script><script src="/js/lib/katex/auto-render.min.js"></script><script src="/js/lib/katex/copy-tex.min.js"></script><script src="/js/lib/katex/mhchem.min.js"></script><script src=/js/theme.min.js></script></body>
 </html>

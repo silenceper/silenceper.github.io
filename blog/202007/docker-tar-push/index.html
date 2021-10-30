@@ -9,9 +9,10 @@
         <meta name="Description" content="一个记录生活，工作的博客。关于Go，Kubernetes，云原生"><meta property="og:title" content="将镜像tar包通过API直接push到registry仓库" />
 <meta property="og:description" content="为了实现docker tar包能够直接通过页面上传，调研了一下registry的api，以及如何解析tar包（其实就是docker daemon" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/blog/202007/docker-tar-push/" />
+<meta property="og:url" content="/blog/202007/docker-tar-push/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2020-07-10T14:20:59+08:00" />
 <meta property="article:modified_time" content="2020-07-10T14:20:59+08:00" /><meta property="og:site_name" content="silenceper" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="将镜像tar包通过API直接push到registry仓库"/>
 <meta name="twitter:description" content="为了实现docker tar包能够直接通过页面上传，调研了一下registry的api，以及如何解析tar包（其实就是docker daemon"/>
@@ -23,7 +24,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="manifest" href="/site.webmanifest">
-<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="prev" href="/blog/202006/build-arm-image-on-x86_84/" /><link rel="next" href="/blog/202009/how-to-use-keda/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><meta name="google-site-verification" content="VJ4lE3d3A73DNoyxuuXL_Cuu6MEErPtKXqfAv69pr6E" /><meta name="baidu-site-verification" content="k061nqJczY" /><script type="application/ld+json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="prev" href="/blog/202006/build-arm-image-on-x86_84/" /><link rel="next" href="/blog/202009/how-to-use-keda/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/css/lib/animate/animate.min.css"><meta name="google-site-verification" content="VJ4lE3d3A73DNoyxuuXL_Cuu6MEErPtKXqfAv69pr6E" /><meta name="baidu-site-verification" content="k061nqJczY" /><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -126,7 +127,7 @@
 <p>拿了一个包含一个镜像的tar包进行解压：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -152,7 +153,7 @@
 </span><span class="lnt">24
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">.
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">.
 ├── 1ecf8bc84a7c3d60c0a6bbdd294f12a6b0e17a8269616fc9bdbedd926f74f50c
 │   ├── VERSION
 │   ├── json
@@ -182,7 +183,7 @@
 <p><strong>manifest.json文件</strong>：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -199,7 +200,7 @@
 </span><span class="lnt">15
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">[
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">[
     {
         &#34;Config&#34;:&#34;6f4ec1f3d7ea33646d491a705f94442f5a706e9ac9acbca22fa9b117094eb720.json&#34;,
         &#34;RepoTags&#34;:[
@@ -241,14 +242,15 @@
 <p>1、获取鉴权信息</p>
 <p>这里跟registry仓库选择的鉴权方式有关，可选basic auth或者token鉴权。
 这里我是以最基本的basic auth为例子，如果是token鉴权的方式参考这里：
-<a href="https://docs.docker.com/registry/spec/auth/jwt/">https://docs.docker.com/registry/spec/auth/jwt/</a></p>
+<a href="https://docs.docker.com/registry/spec/auth/jwt/" target="_blank" rel="noopener noreffer">https://docs.docker.com/registry/spec/auth/jwt/</a>
+</p>
 <p>2、检查上传</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">HEAD /v2/image/blobs/&lt;digest&gt;
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">HEAD /v2/image/blobs/&lt;digest&gt;
 </code></pre></td></tr></table>
 </div>
 </div><p>若返回200 OK 则表示存在，不用上传</p>
@@ -256,23 +258,23 @@
 我这里是以分块上传的方式进行</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">POST /v2/image/blobs/uploads/
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">POST /v2/image/blobs/uploads/
 </code></pre></td></tr></table>
 </div>
 </div><p>如果post请求返回202 accepted，一个url会在location字段返回.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">     202 Accepted
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">     202 Accepted
      Location: /v2/\&lt;image&gt;/blobs/uploads/\&lt;uuid&gt;
      Range: bytes=0-&lt;offset&gt;
      Content-Length: 0
@@ -284,14 +286,14 @@
 如果是最后一块数据上传，则以PUT的方式提交，如下：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback"> &gt; PUT /v2/&lt;name&gt;/blob/uploads/&lt;uuid&gt;?digest=&lt;digest&gt;
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"> &gt; PUT /v2/&lt;name&gt;/blob/uploads/&lt;uuid&gt;?digest=&lt;digest&gt;
  &gt; Content-Length: &lt;size of chunk&gt;
  &gt; Content-Range: &lt;start of range&gt;-&lt;end of range&gt;
  &gt; Content-Type: application/octet-stream
@@ -309,7 +311,7 @@
 <p><strong>Usage:</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -323,7 +325,7 @@
 </span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">push your docker tar archive image without docker.
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">push your docker tar archive image without docker.
 
 Usage:
   docker-tar-push [flags]
@@ -340,18 +342,22 @@ Flags:
 </div><p><strong>Example:</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">docker-tar-push alpine:latest --registry=http://localhost:5000
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">docker-tar-push alpine:latest --registry=http://localhost:5000
 </code></pre></td></tr></table>
 </div>
 </div><p><strong>参考</strong></p>
 <ul>
-<li><a href="https://www.jianshu.com/p/6a7b80122602">https://www.jianshu.com/p/6a7b80122602</a></li>
-<li><a href="https://github.com/Razikus/dockerregistrypusher">https://github.com/Razikus/dockerregistrypusher</a></li>
-<li><a href="https://docs.docker.com/registry/spec/auth/jwt/">https://docs.docker.com/registry/spec/auth/jwt/</a></li>
-<li><a href="https://github.com/docker/distribution/">https://github.com/docker/distribution/</a></li>
+<li><a href="https://www.jianshu.com/p/6a7b80122602" target="_blank" rel="noopener noreffer">https://www.jianshu.com/p/6a7b80122602</a>
+</li>
+<li><a href="https://github.com/Razikus/dockerregistrypusher" target="_blank" rel="noopener noreffer">https://github.com/Razikus/dockerregistrypusher</a>
+</li>
+<li><a href="https://docs.docker.com/registry/spec/auth/jwt/" target="_blank" rel="noopener noreffer">https://docs.docker.com/registry/spec/auth/jwt/</a>
+</li>
+<li><a href="https://github.com/docker/distribution/" target="_blank" rel="noopener noreffer">https://github.com/docker/distribution/</a>
+</li>
 </ul>
 <hr/>
             <figure>
@@ -398,24 +404,7 @@ Flags:
     <div class="post-nav"><a href="/blog/202006/build-arm-image-on-x86_84/" class="prev" rel="prev" title="在x86_64机器上构建arm64镜像"><i class="fas fa-angle-left fa-fw"></i>在x86_64机器上构建arm64镜像</a>
             <a href="/blog/202009/how-to-use-keda/" class="next" rel="next" title="使用keda完成基于事件的弹性伸缩">使用keda完成基于事件的弹性伸缩<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
-<div class="comment"><div id="gitalk"></div><script>
-            document.addEventListener("DOMContentLoaded", function(event) {
-                var gitalk = new Gitalk({
-                    id: '2020-07-10 14:20:59 \u002b0800 CST',
-                    title: '将镜像tar包通过API直接push到registry仓库',
-                    clientID: 'e708cc1fbc3e2613a24d',
-                    clientSecret: 'ffa9552c4ef788a7f135fa7b9510ffc672d0b914',
-                    repo: 'silenceper.github.io',
-                    owner: 'silenceper',
-                    admin: ['silenceper'],
-                    body: decodeURI(location.href),
-                });
-                gitalk.render('gitalk');
-            });
-        </script>
-        <noscript>
-            Please enable JavaScript to view the <a href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a>
-        </noscript></div>
+<div class="comment"></div>
     </article></div>
             </main><footer class="footer">
     <div class="copyright"><div class="copyright-line">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
@@ -436,24 +425,5 @@ Flags:
                     { left: "\\[", right: "\\]", display: true },]
             });
         });
-    </script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.css"><link rel="stylesheet" href="/css/lib/iconfont/iconfont.min.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script><script src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.2/dist/smooth-scroll.polyfills.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazysizes@5.1.2/lazysizes.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/mhchem.min.js"></script><script src="/js/lib/sharer/sharer.min.js"></script><script src=/js/theme.min.js></script>
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-139557989-1', 'auto');
-	ga('set', 'anonymizeIp', true);
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-    hm.src = "https://hm.baidu.com/hm.js?fe23775b1a9ea11a6797646a56df1cc7";
-  var s = document.getElementsByTagName("script")[0];
-  s.parentNode.insertBefore(hm, s);
-})();
-</script></body>
+    </script><link rel="stylesheet" href="/css/lib/iconfont/iconfont.min.css"><link rel="stylesheet" href="/css/lib/katex/katex.min.css"><link rel="stylesheet" href="/css/lib/katex/copy-tex.min.css"><script src="/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script src="/js/lib/sharer/sharer.min.js"></script><script src="/js/lib/lazysizes/lazysizes.min.js"></script><script src="/js/lib/katex/katex.min.js"></script><script src="/js/lib/katex/auto-render.min.js"></script><script src="/js/lib/katex/copy-tex.min.js"></script><script src="/js/lib/katex/mhchem.min.js"></script><script src=/js/theme.min.js></script></body>
 </html>

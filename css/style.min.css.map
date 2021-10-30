@@ -1,7 +1,7 @@
 {
 	"version": 3,
 	"file": "style.min.css",
-	"sourceRoot": "/Users/silenceper/workspace/blog/silenceper.com",
+	"sourceRoot": "/Users/zhenlinwen/workspace/go/src/github.com/silenceper/silenceper.com",
 	"sources": [
 		"themes/LoveIt/assets/css/style.template.scss",
 		"themes/LoveIt/assets/css/_variables.scss",

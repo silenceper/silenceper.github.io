@@ -9,9 +9,10 @@
         <meta name="Description" content="如何使用leaderelection以及对其源码进行分析"><meta property="og:title" content="利用Kubernetes中的leaderelection实现组件高可用" />
 <meta property="og:description" content="如何使用leaderelection以及对其源码进行分析" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/blog/202002/kubernetes-leaderelection/" />
+<meta property="og:url" content="/blog/202002/kubernetes-leaderelection/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2020-02-15T00:00:00+00:00" />
 <meta property="article:modified_time" content="2020-02-15T00:00:00+00:00" /><meta property="og:site_name" content="silenceper" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="利用Kubernetes中的leaderelection实现组件高可用"/>
 <meta name="twitter:description" content="如何使用leaderelection以及对其源码进行分析"/>
@@ -23,7 +24,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="manifest" href="/site.webmanifest">
-<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="prev" href="/blog/202001/go-import-version/" /><link rel="next" href="/blog/202003/kubernetes-event/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><meta name="google-site-verification" content="VJ4lE3d3A73DNoyxuuXL_Cuu6MEErPtKXqfAv69pr6E" /><meta name="baidu-site-verification" content="k061nqJczY" /><script type="application/ld+json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="prev" href="/blog/202001/go-import-version/" /><link rel="next" href="/blog/202003/kubernetes-event/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/css/lib/animate/animate.min.css"><meta name="google-site-verification" content="VJ4lE3d3A73DNoyxuuXL_Cuu6MEErPtKXqfAv69pr6E" /><meta name="baidu-site-verification" content="k061nqJczY" /><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -133,7 +134,7 @@
 <p>以下是一个简单使用的例子，编译完成之后同时启动多个进程，但是只有一个进程在工作，当把leader进程kill掉之后，会重新选举出一个leader进行工作，即执行其中的 <code>run</code> 方法：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">  1
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
 </span><span class="lnt">  2
 </span><span class="lnt">  3
 </span><span class="lnt">  4
@@ -282,7 +283,7 @@
 </span><span class="lnt">147
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="cm">/*
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="cm">/*
 </span><span class="cm">例子来源于client-go中的example包中
 </span><span class="cm">*/</span>
 
@@ -434,7 +435,7 @@
 </div><p>关键启动参数说明：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -442,7 +443,7 @@
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">kubeconfig: 指定kubeconfig文件地址
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">kubeconfig: 指定kubeconfig文件地址
 lease-lock-name：指定lock的名称
 lease-lock-namespace：指定lock存储的namespace
 id: 例子中提供的区别参数，用于区分实例
@@ -453,13 +454,13 @@ v: 指定日志输出级别
 </div><p><strong>同时启动两个进程：</strong><br /><strong>启动进程1</strong>：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">go run main.go -kubeconfig<span class="o">=</span>/Users/silenceper/.kube/config -logtostderr<span class="o">=</span><span class="nb">true</span> -lease-lock-name<span class="o">=</span>example -lease-lock-namespace<span class="o">=</span>default -id<span class="o">=</span><span class="m">1</span> -v<span class="o">=</span><span class="m">4</span>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">go run main.go -kubeconfig<span class="o">=</span>/Users/silenceper/.kube/config -logtostderr<span class="o">=</span><span class="nb">true</span> -lease-lock-name<span class="o">=</span>example -lease-lock-namespace<span class="o">=</span>default -id<span class="o">=</span><span class="m">1</span> -v<span class="o">=</span><span class="m">4</span>
 I0215 19:56:37.049658   <span class="m">48045</span> leaderelection.go:242<span class="o">]</span> attempting to acquire leader lease  default/example...
 I0215 19:56:37.080368   <span class="m">48045</span> leaderelection.go:252<span class="o">]</span> successfully acquired lease default/example
 I0215 19:56:37.080437   <span class="m">48045</span> main.go:87<span class="o">]</span> Controller loop...
@@ -468,7 +469,7 @@ I0215 19:56:37.080437   <span class="m">48045</span> main.go:87<span class="o">]
 </div><p><strong>启动进程2：</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -477,7 +478,7 @@ I0215 19:56:37.080437   <span class="m">48045</span> main.go:87<span class="o">]
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">➜  leaderelection git:<span class="o">(</span>master<span class="o">)</span> ✗ go run main.go -kubeconfig<span class="o">=</span>/Users/silenceper/.kube/config -logtostderr<span class="o">=</span><span class="nb">true</span> -lease-lock-name<span class="o">=</span>example -lease-lock-namespace<span class="o">=</span>default -id<span class="o">=</span><span class="m">2</span> -v<span class="o">=</span><span class="m">4</span>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">➜  leaderelection git:<span class="o">(</span>master<span class="o">)</span> ✗ go run main.go -kubeconfig<span class="o">=</span>/Users/silenceper/.kube/config -logtostderr<span class="o">=</span><span class="nb">true</span> -lease-lock-name<span class="o">=</span>example -lease-lock-namespace<span class="o">=</span>default -id<span class="o">=</span><span class="m">2</span> -v<span class="o">=</span><span class="m">4</span>
 I0215 19:57:35.870051   <span class="m">48791</span> leaderelection.go:242<span class="o">]</span> attempting to acquire leader lease  default/example...
 I0215 19:57:35.894735   <span class="m">48791</span> leaderelection.go:352<span class="o">]</span> lock is held by <span class="m">1</span> and has not yet expired
 I0215 19:57:35.894769   <span class="m">48791</span> leaderelection.go:247<span class="o">]</span> failed to acquire lease default/example
@@ -490,11 +491,11 @@ I0215 19:57:44.533028   <span class="m">48791</span> leaderelection.go:247<span 
 <p>现在kill掉id=1进程，在等待lock释放之后（有个LeaseDuration时间），leader变为id=2的进程执行工作</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">I0215 20:01:41.489300   <span class="m">48791</span> leaderelection.go:252<span class="o">]</span> successfully acquired lease default/example
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">I0215 20:01:41.489300   <span class="m">48791</span> leaderelection.go:252<span class="o">]</span> successfully acquired lease default/example
 I0215 20:01:41.489577   <span class="m">48791</span> main.go:87<span class="o">]</span> Controller loop...
 </code></pre></td></tr></table>
 </div>
@@ -506,7 +507,7 @@ I0215 20:01:41.489577   <span class="m">48791</span> main.go:87<span class="o">]
 <p>通过 <code>leaderelection.RunOrDie</code> 启动，</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -518,7 +519,7 @@ I0215 20:01:41.489577   <span class="m">48791</span> main.go:87<span class="o">]
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">RunOrDie</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">lec</span> <span class="nx">LeaderElectionConfig</span><span class="p">)</span> <span class="p">{</span>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">RunOrDie</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">lec</span> <span class="nx">LeaderElectionConfig</span><span class="p">)</span> <span class="p">{</span>
 	<span class="nx">le</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nf">NewLeaderElector</span><span class="p">(</span><span class="nx">lec</span><span class="p">)</span>
 	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
 		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
@@ -533,7 +534,7 @@ I0215 20:01:41.489577   <span class="m">48791</span> main.go:87<span class="o">]
 </div><p>传入参数 <code>LeaderElectionConfig</code> ：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -560,7 +561,7 @@ I0215 20:01:41.489577   <span class="m">48791</span> main.go:87<span class="o">]
 </span><span class="lnt">25
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">LeaderElectionConfig</span> <span class="kd">struct</span> <span class="p">{</span>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">LeaderElectionConfig</span> <span class="kd">struct</span> <span class="p">{</span>
 	<span class="c1">// Lock 的类型
 </span><span class="c1"></span>	<span class="nx">Lock</span> <span class="nx">rl</span><span class="p">.</span><span class="nx">Interface</span>
 	<span class="c1">//持有锁的时间
@@ -591,7 +592,7 @@ I0215 20:01:41.489577   <span class="m">48791</span> main.go:87<span class="o">]
 中看到：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -613,7 +614,7 @@ I0215 20:01:41.489577   <span class="m">48791</span> main.go:87<span class="o">]
 </span><span class="lnt">20
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go">	<span class="k">switch</span> <span class="nx">lockType</span> <span class="p">{</span>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go">	<span class="k">switch</span> <span class="nx">lockType</span> <span class="p">{</span>
 	<span class="k">case</span> <span class="nx">EndpointsResourceLock</span><span class="p">:</span><span class="c1">//保存在endpoints
 </span><span class="c1"></span>		<span class="k">return</span> <span class="nx">endpointsLock</span><span class="p">,</span> <span class="kc">nil</span>
 	<span class="k">case</span> <span class="nx">ConfigMapsResourceLock</span><span class="p">:</span><span class="c1">//保存在configmaps
@@ -638,7 +639,7 @@ I0215 20:01:41.489577   <span class="m">48791</span> main.go:87<span class="o">]
 </div><p>以lease资源对象为例，可以在查看到保存的内容:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -656,7 +657,7 @@ I0215 20:01:41.489577   <span class="m">48791</span> main.go:87<span class="o">]
 </span><span class="lnt">16
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="l">➜  ~ kubectl get lease example -n default -o yaml</span><span class="w">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="l">➜  ~ kubectl get lease example -n default -o yaml</span><span class="w">
 </span><span class="w"></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">coordination.k8s.io/v1</span><span class="w">
 </span><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">Lease</span><span class="w">
 </span><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
@@ -677,7 +678,7 @@ I0215 20:01:41.489577   <span class="m">48791</span> main.go:87<span class="o">]
 </div><p>关注其spec中的字段，分别进行标注,对应结构体如下：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -686,7 +687,7 @@ I0215 20:01:41.489577   <span class="m">48791</span> main.go:87<span class="o">]
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">LeaderElectionRecord</span> <span class="kd">struct</span> <span class="p">{</span>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">LeaderElectionRecord</span> <span class="kd">struct</span> <span class="p">{</span>
 	<span class="nx">HolderIdentity</span>       <span class="kt">string</span>      <span class="s">`json:&#34;holderIdentity&#34;`</span><span class="c1">//持有锁进程的标识，一般可以利用主机名
 </span><span class="c1"></span>	<span class="nx">LeaseDurationSeconds</span> <span class="kt">int</span>         <span class="s">`json:&#34;leaseDurationSeconds&#34;`</span><span class="c1">//  lock的租约
 </span><span class="c1"></span>	<span class="nx">AcquireTime</span>          <span class="nx">metav1</span><span class="p">.</span><span class="nx">Time</span> <span class="s">`json:&#34;acquireTime&#34;`</span><span class="c1">//持有锁的时间
@@ -700,7 +701,7 @@ I0215 20:01:41.489577   <span class="m">48791</span> main.go:87<span class="o">]
 <p>Run方法中包含了获取锁以及更新锁的入口</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -721,7 +722,7 @@ I0215 20:01:41.489577   <span class="m">48791</span> main.go:87<span class="o">]
 </span><span class="lnt">19
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// Run starts the leader election loop
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// Run starts the leader election loop
 </span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">le</span> <span class="o">*</span><span class="nx">LeaderElector</span><span class="p">)</span> <span class="nf">Run</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span> <span class="p">{</span>
 	<span class="k">defer</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
         <span class="c1">//进行退出执行
@@ -748,7 +749,7 @@ I0215 20:01:41.489577   <span class="m">48791</span> main.go:87<span class="o">]
 <p>我们来看看 <code>tryAcquireOrRenew</code> 方法：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -817,7 +818,7 @@ I0215 20:01:41.489577   <span class="m">48791</span> main.go:87<span class="o">]
 </span><span class="lnt">67
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">le</span> <span class="o">*</span><span class="nx">LeaderElector</span><span class="p">)</span> <span class="nf">tryAcquireOrRenew</span><span class="p">()</span> <span class="kt">bool</span> <span class="p">{</span>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">le</span> <span class="o">*</span><span class="nx">LeaderElector</span><span class="p">)</span> <span class="nf">tryAcquireOrRenew</span><span class="p">()</span> <span class="kt">bool</span> <span class="p">{</span>
 	<span class="nx">now</span> <span class="o">:=</span> <span class="nx">metav1</span><span class="p">.</span><span class="nf">Now</span><span class="p">()</span>
     <span class="c1">//锁资源对象内容
 </span><span class="c1"></span>	<span class="nx">leaderElectionRecord</span> <span class="o">:=</span> <span class="nx">rl</span><span class="p">.</span><span class="nx">LeaderElectionRecord</span><span class="p">{</span>
@@ -938,24 +939,7 @@ I0215 20:01:41.489577   <span class="m">48791</span> main.go:87<span class="o">]
     <div class="post-nav"><a href="/blog/202001/go-import-version/" class="prev" rel="prev" title="如何在Go项目中输出版本信息？"><i class="fas fa-angle-left fa-fw"></i>如何在Go项目中输出版本信息？</a>
             <a href="/blog/202003/kubernetes-event/" class="next" rel="next" title="分析kubernetes中的事件机制">分析kubernetes中的事件机制<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
-<div class="comment"><div id="gitalk"></div><script>
-            document.addEventListener("DOMContentLoaded", function(event) {
-                var gitalk = new Gitalk({
-                    id: '2020-02-15 00:00:00 \u002b0000 UTC',
-                    title: '利用Kubernetes中的leaderelection实现组件高可用',
-                    clientID: 'e708cc1fbc3e2613a24d',
-                    clientSecret: 'ffa9552c4ef788a7f135fa7b9510ffc672d0b914',
-                    repo: 'silenceper.github.io',
-                    owner: 'silenceper',
-                    admin: ['silenceper'],
-                    body: decodeURI(location.href),
-                });
-                gitalk.render('gitalk');
-            });
-        </script>
-        <noscript>
-            Please enable JavaScript to view the <a href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a>
-        </noscript></div>
+<div class="comment"></div>
     </article></div>
             </main><footer class="footer">
     <div class="copyright"><div class="copyright-line">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
@@ -976,24 +960,5 @@ I0215 20:01:41.489577   <span class="m">48791</span> main.go:87<span class="o">]
                     { left: "\\[", right: "\\]", display: true },]
             });
         });
-    </script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.css"><link rel="stylesheet" href="/css/lib/iconfont/iconfont.min.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script><script src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.2/dist/smooth-scroll.polyfills.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazysizes@5.1.2/lazysizes.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/mhchem.min.js"></script><script src="/js/lib/sharer/sharer.min.js"></script><script src=/js/theme.min.js></script>
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-139557989-1', 'auto');
-	ga('set', 'anonymizeIp', true);
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-    hm.src = "https://hm.baidu.com/hm.js?fe23775b1a9ea11a6797646a56df1cc7";
-  var s = document.getElementsByTagName("script")[0];
-  s.parentNode.insertBefore(hm, s);
-})();
-</script></body>
+    </script><link rel="stylesheet" href="/css/lib/iconfont/iconfont.min.css"><link rel="stylesheet" href="/css/lib/katex/katex.min.css"><link rel="stylesheet" href="/css/lib/katex/copy-tex.min.css"><script src="/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script src="/js/lib/sharer/sharer.min.js"></script><script src="/js/lib/lazysizes/lazysizes.min.js"></script><script src="/js/lib/katex/katex.min.js"></script><script src="/js/lib/katex/auto-render.min.js"></script><script src="/js/lib/katex/copy-tex.min.js"></script><script src="/js/lib/katex/mhchem.min.js"></script><script src=/js/theme.min.js></script></body>
 </html>

@@ -9,9 +9,10 @@
         <meta name="Description" content="singleflight包主要是用来做并发控制，常见的比如防止 缓存击穿，我们来介绍一下其使用以及原理"><meta property="og:title" content="singleflight包原理解析" />
 <meta property="og:description" content="singleflight包主要是用来做并发控制，常见的比如防止 缓存击穿，我们来介绍一下其使用以及原理" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/blog/202003/singleflight/" />
+<meta property="og:url" content="/blog/202003/singleflight/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2020-03-08T19:26:59+08:00" />
 <meta property="article:modified_time" content="2020-03-08T19:26:59+08:00" /><meta property="og:site_name" content="silenceper" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="singleflight包原理解析"/>
 <meta name="twitter:description" content="singleflight包主要是用来做并发控制，常见的比如防止 缓存击穿，我们来介绍一下其使用以及原理"/>
@@ -23,7 +24,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="manifest" href="/site.webmanifest">
-<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="prev" href="/blog/202003/kubernetes-event/" /><link rel="next" href="/blog/202004/bridge-hairpin-mod/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><meta name="google-site-verification" content="VJ4lE3d3A73DNoyxuuXL_Cuu6MEErPtKXqfAv69pr6E" /><meta name="baidu-site-verification" content="k061nqJczY" /><script type="application/ld+json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="prev" href="/blog/202003/kubernetes-event/" /><link rel="next" href="/blog/202004/bridge-hairpin-mod/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/css/lib/animate/animate.min.css"><meta name="google-site-verification" content="VJ4lE3d3A73DNoyxuuXL_Cuu6MEErPtKXqfAv69pr6E" /><meta name="baidu-site-verification" content="k061nqJczY" /><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -120,7 +121,7 @@
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -180,7 +181,7 @@
 </span><span class="lnt">58
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">main</span>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">main</span>
 
 <span class="kn">import</span> <span class="p">(</span>
 	<span class="s">&#34;errors&#34;</span>
@@ -248,7 +249,7 @@
 <p>我们模拟了10个并发请求，来同时调用 <code>getData</code> 函数，执行结果如下：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -270,7 +271,7 @@
 </span><span class="lnt">20
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">2020/03/08 17:13:11 get key from database
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">2020/03/08 17:13:11 get key from database
 2020/03/08 17:13:11 data
 2020/03/08 17:13:11 get key from database
 2020/03/08 17:13:11 data
@@ -295,7 +296,7 @@
 </div><p>可以看得到10个请求都是走的db，因为cache中不存在该值，当我们利用上 <code>singlefligth</code> 包， <code>getData</code> 改动一下：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -320,7 +321,7 @@
 </span><span class="lnt">23
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="kn">import</span> <span class="s">&#34;golang.org/x/sync/singleflight&#34;</span>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kn">import</span> <span class="s">&#34;golang.org/x/sync/singleflight&#34;</span>
 <span class="kd">var</span> <span class="nx">g</span> <span class="nx">singleflight</span><span class="p">.</span><span class="nx">Group</span>
 <span class="c1">//获取数据
 </span><span class="c1"></span><span class="kd">func</span> <span class="nf">getData</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
@@ -348,7 +349,7 @@
 </div><p>执行结果如下，可以看得到只有一个请求进入的db，其他的请求也正常返回了值，从而保护了后端DB。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -361,7 +362,7 @@
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">2020/03/08 17:18:16 get key from database
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">2020/03/08 17:18:16 get key from database
 2020/03/08 17:18:16 data
 2020/03/08 17:18:16 data
 2020/03/08 17:18:16 data
@@ -378,7 +379,7 @@
 <p><code>singleflight</code> 在 <code>golang.org/x/sync/singleflight</code> 项目下，对外提供了以下几个方法</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -389,7 +390,7 @@
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">//Do方法，传入key，以及回调函数，如果key相同，fn方法只会执行一次，同步等待
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">//Do方法，传入key，以及回调函数，如果key相同，fn方法只会执行一次，同步等待
 </span><span class="c1">//返回值v:表示fn执行结果
 </span><span class="c1">//返回值err:表示fn的返回的err
 </span><span class="c1">//第三个返回值shared：表示是否是真实fn返回的还是从保存的map[key]返回的，也就是共享的
@@ -405,7 +406,7 @@
 </p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -476,7 +477,7 @@
 </span><span class="lnt">69
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">singleflight</span> <span class="c1">// import &#34;golang.org/x/sync/singleflight&#34;
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">singleflight</span> <span class="c1">// import &#34;golang.org/x/sync/singleflight&#34;
 </span><span class="c1"></span>
 <span class="kn">import</span> <span class="s">&#34;sync&#34;</span>
 
@@ -603,24 +604,7 @@
     <div class="post-nav"><a href="/blog/202003/kubernetes-event/" class="prev" rel="prev" title="分析kubernetes中的事件机制"><i class="fas fa-angle-left fa-fw"></i>分析kubernetes中的事件机制</a>
             <a href="/blog/202004/bridge-hairpin-mod/" class="next" rel="next" title="记一次问题排查：为什么在POD无法通过Service访问自己？">记一次问题排查：为什么在POD无法通过Service访问自己？<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
-<div class="comment"><div id="gitalk"></div><script>
-            document.addEventListener("DOMContentLoaded", function(event) {
-                var gitalk = new Gitalk({
-                    id: '2020-03-08 19:26:59 \u002b0800 CST',
-                    title: 'singleflight包原理解析',
-                    clientID: 'e708cc1fbc3e2613a24d',
-                    clientSecret: 'ffa9552c4ef788a7f135fa7b9510ffc672d0b914',
-                    repo: 'silenceper.github.io',
-                    owner: 'silenceper',
-                    admin: ['silenceper'],
-                    body: decodeURI(location.href),
-                });
-                gitalk.render('gitalk');
-            });
-        </script>
-        <noscript>
-            Please enable JavaScript to view the <a href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a>
-        </noscript></div>
+<div class="comment"></div>
     </article></div>
             </main><footer class="footer">
     <div class="copyright"><div class="copyright-line">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
@@ -641,24 +625,5 @@
                     { left: "\\[", right: "\\]", display: true },]
             });
         });
-    </script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.css"><link rel="stylesheet" href="/css/lib/iconfont/iconfont.min.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script><script src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.2/dist/smooth-scroll.polyfills.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazysizes@5.1.2/lazysizes.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/mhchem.min.js"></script><script src="/js/lib/sharer/sharer.min.js"></script><script src=/js/theme.min.js></script>
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-139557989-1', 'auto');
-	ga('set', 'anonymizeIp', true);
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-    hm.src = "https://hm.baidu.com/hm.js?fe23775b1a9ea11a6797646a56df1cc7";
-  var s = document.getElementsByTagName("script")[0];
-  s.parentNode.insertBefore(hm, s);
-})();
-</script></body>
+    </script><link rel="stylesheet" href="/css/lib/iconfont/iconfont.min.css"><link rel="stylesheet" href="/css/lib/katex/katex.min.css"><link rel="stylesheet" href="/css/lib/katex/copy-tex.min.css"><script src="/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script src="/js/lib/sharer/sharer.min.js"></script><script src="/js/lib/lazysizes/lazysizes.min.js"></script><script src="/js/lib/katex/katex.min.js"></script><script src="/js/lib/katex/auto-render.min.js"></script><script src="/js/lib/katex/copy-tex.min.js"></script><script src="/js/lib/katex/mhchem.min.js"></script><script src=/js/theme.min.js></script></body>
 </html>

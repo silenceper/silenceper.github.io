@@ -9,9 +9,10 @@
         <meta name="Description" content="一个记录生活，工作的博客。关于Go，Kubernetes，云原生"><meta property="og:title" content="聊聊连接池" />
 <meta property="og:description" content="以下主要使用Golang作为编程语言 为什么需要连接池 我觉得使用连接池最大的一个好处就是减少连接的创建和关闭，增加系统负载能力， 之前就有遇到一" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/blog/201611/tcp_connection_pool/" />
+<meta property="og:url" content="/blog/201611/tcp_connection_pool/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2016-11-20T02:40:59+08:00" />
 <meta property="article:modified_time" content="2016-11-20T02:40:59+08:00" /><meta property="og:site_name" content="silenceper" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="聊聊连接池"/>
 <meta name="twitter:description" content="以下主要使用Golang作为编程语言 为什么需要连接池 我觉得使用连接池最大的一个好处就是减少连接的创建和关闭，增加系统负载能力， 之前就有遇到一"/>
@@ -23,7 +24,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="manifest" href="/site.webmanifest">
-<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="prev" href="/blog/201609/go-wechat-sdk/" /><link rel="next" href="/blog/201809/how-to-build-a-k8s-cluster/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><meta name="google-site-verification" content="VJ4lE3d3A73DNoyxuuXL_Cuu6MEErPtKXqfAv69pr6E" /><meta name="baidu-site-verification" content="k061nqJczY" /><script type="application/ld+json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="prev" href="/blog/201609/go-wechat-sdk/" /><link rel="next" href="/blog/201809/how-to-build-a-k8s-cluster/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/css/lib/animate/animate.min.css"><meta name="google-site-verification" content="VJ4lE3d3A73DNoyxuuXL_Cuu6MEErPtKXqfAv69pr6E" /><meta name="baidu-site-verification" content="k061nqJczY" /><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -155,12 +156,12 @@
 <p>在<code>database/sql</code>中使用连接连接池很简单，主要涉及下面这些配置：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go">	<span class="nx">db</span><span class="p">.</span><span class="nf">SetMaxIdleConns</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="c1">//连接池中最大空闲连接数
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go">	<span class="nx">db</span><span class="p">.</span><span class="nf">SetMaxIdleConns</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="c1">//连接池中最大空闲连接数
 </span><span class="c1"></span>	<span class="nx">db</span><span class="p">.</span><span class="nf">SetMaxOpenConns</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="c1">//打开的最大连接数
 </span><span class="c1"></span>	<span class="nx">db</span><span class="p">.</span><span class="nf">SetConnMaxLifetime</span><span class="p">(</span><span class="mi">300</span><span class="o">*</span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span><span class="c1">//连接的最大空闲时间(可选)
 </span></code></pre></td></tr></table>
@@ -171,7 +172,7 @@
 <p>来看下db这个结构，以及字段相关说明：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -208,7 +209,7 @@
 </span><span class="lnt">35
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">DB</span> <span class="kd">struct</span> <span class="p">{</span>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">DB</span> <span class="kd">struct</span> <span class="p">{</span>
 	<span class="c1">//具体的数据库实现的interface{},
 </span><span class="c1"></span>	<span class="c1">//例如https://github.com/go-sql-driver/mysql 就注册并并实现了driver.Open方法，主要是在里面实现了一些鉴权的操作
 </span><span class="c1"></span>	<span class="nx">driver</span> <span class="nx">driver</span><span class="p">.</span><span class="nx">Driver</span>
@@ -248,16 +249,16 @@
 </div><p>看一个查询数据库的例子：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">	rows, err := db.Query(&#34;select * from table1&#34;)
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">	rows, err := db.Query(&#34;select * from table1&#34;)
 </code></pre></td></tr></table>
 </div>
 </div><p>在调用<code>db.Query</code>方法如下：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -274,7 +275,7 @@
 </span><span class="lnt">15
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">db</span> <span class="o">*</span><span class="nx">DB</span><span class="p">)</span> <span class="nf">Query</span><span class="p">(</span><span class="nx">query</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">args</span> <span class="o">...</span><span class="kd">interface</span><span class="p">{})</span> <span class="p">(</span><span class="o">*</span><span class="nx">Rows</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">db</span> <span class="o">*</span><span class="nx">DB</span><span class="p">)</span> <span class="nf">Query</span><span class="p">(</span><span class="nx">query</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">args</span> <span class="o">...</span><span class="kd">interface</span><span class="p">{})</span> <span class="p">(</span><span class="o">*</span><span class="nx">Rows</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
 	<span class="kd">var</span> <span class="nx">rows</span> <span class="o">*</span><span class="nx">Rows</span>
 	<span class="kd">var</span> <span class="nx">err</span> <span class="kt">error</span>
 	<span class="c1">//这里就做了对失效的链接的重试操作
@@ -298,10 +299,10 @@
 <p>继续跟进去就到了</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">db</span> <span class="o">*</span><span class="nx">DB</span><span class="p">)</span> <span class="nf">conn</span><span class="p">(</span><span class="nx">strategy</span> <span class="nx">connReuseStrategy</span><span class="p">)</span> <span class="p">(</span><span class="o">*</span><span class="nx">driverConn</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">db</span> <span class="o">*</span><span class="nx">DB</span><span class="p">)</span> <span class="nf">conn</span><span class="p">(</span><span class="nx">strategy</span> <span class="nx">connReuseStrategy</span><span class="p">)</span> <span class="p">(</span><span class="o">*</span><span class="nx">driverConn</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>方法主要是创建tcp连接，并判断了连接的生存时间lifetime，以及连接数的一些限制，如果超过的设定的最大打开链接数限制等待<code>connRequest</code>管道中有连接产生(在<code>putConn</code>释放链接的时候就会往这个管道中写入数据)</p>
@@ -309,7 +310,7 @@
 <p>当我们调用<code>rows.Close()</code>的时候，就会把当前正在使用的链接重新放回<code>freeConn</code>或者写入到<code>db.connRequests</code>管道中</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -336,7 +337,7 @@
 </span><span class="lnt">25
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go">	<span class="c1">//putConnDBLocked 方法
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go">	<span class="c1">//putConnDBLocked 方法
 </span><span class="c1"></span>
 	<span class="c1">//如果有db.connRequests有在等待连接的话，就把当前连接给它用
 </span><span class="c1"></span>	<span class="k">if</span> <span class="nx">c</span> <span class="o">:=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">db</span><span class="p">.</span><span class="nx">connRequests</span><span class="p">);</span> <span class="nx">c</span> <span class="p">&gt;</span> <span class="mi">0</span> <span class="p">{</span>
@@ -369,7 +370,7 @@
 <p>客户端创建Thrift的代码：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -427,7 +428,7 @@
 </span><span class="lnt">56
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Client</span> <span class="kd">struct</span> <span class="p">{</span>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Client</span> <span class="kd">struct</span> <span class="p">{</span>
 	<span class="o">*</span><span class="nx">user</span><span class="p">.</span><span class="nx">UserClient</span>
 <span class="p">}</span>
 
@@ -532,24 +533,7 @@
     <div class="post-nav"><a href="/blog/201609/go-wechat-sdk/" class="prev" rel="prev" title="开源项目：wechat sdk"><i class="fas fa-angle-left fa-fw"></i>开源项目：wechat sdk</a>
             <a href="/blog/201809/how-to-build-a-k8s-cluster/" class="next" rel="next" title="在CentOS上搭建Kubernetes集群">在CentOS上搭建Kubernetes集群<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
-<div class="comment"><div id="gitalk"></div><script>
-            document.addEventListener("DOMContentLoaded", function(event) {
-                var gitalk = new Gitalk({
-                    id: '2016-11-20 02:40:59 \u002b0800 CST',
-                    title: '聊聊连接池',
-                    clientID: 'e708cc1fbc3e2613a24d',
-                    clientSecret: 'ffa9552c4ef788a7f135fa7b9510ffc672d0b914',
-                    repo: 'silenceper.github.io',
-                    owner: 'silenceper',
-                    admin: ['silenceper'],
-                    body: decodeURI(location.href),
-                });
-                gitalk.render('gitalk');
-            });
-        </script>
-        <noscript>
-            Please enable JavaScript to view the <a href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a>
-        </noscript></div>
+<div class="comment"></div>
     </article></div>
             </main><footer class="footer">
     <div class="copyright"><div class="copyright-line">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
@@ -570,24 +554,5 @@
                     { left: "\\[", right: "\\]", display: true },]
             });
         });
-    </script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.css"><link rel="stylesheet" href="/css/lib/iconfont/iconfont.min.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script><script src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.2/dist/smooth-scroll.polyfills.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazysizes@5.1.2/lazysizes.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/mhchem.min.js"></script><script src="/js/lib/sharer/sharer.min.js"></script><script src=/js/theme.min.js></script>
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-139557989-1', 'auto');
-	ga('set', 'anonymizeIp', true);
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-    hm.src = "https://hm.baidu.com/hm.js?fe23775b1a9ea11a6797646a56df1cc7";
-  var s = document.getElementsByTagName("script")[0];
-  s.parentNode.insertBefore(hm, s);
-})();
-</script></body>
+    </script><link rel="stylesheet" href="/css/lib/iconfont/iconfont.min.css"><link rel="stylesheet" href="/css/lib/katex/katex.min.css"><link rel="stylesheet" href="/css/lib/katex/copy-tex.min.css"><script src="/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script src="/js/lib/sharer/sharer.min.js"></script><script src="/js/lib/lazysizes/lazysizes.min.js"></script><script src="/js/lib/katex/katex.min.js"></script><script src="/js/lib/katex/auto-render.min.js"></script><script src="/js/lib/katex/copy-tex.min.js"></script><script src="/js/lib/katex/mhchem.min.js"></script><script src=/js/theme.min.js></script></body>
 </html>

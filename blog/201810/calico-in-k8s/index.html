@@ -9,9 +9,10 @@
         <meta name="Description" content="一个记录生活，工作的博客。关于Go，Kubernetes，云原生"><meta property="og:title" content="k8s网络组件：calico" />
 <meta property="og:description" content="前提已经安装好k8s集群 安装 calico 安装其实很简单，已经集成在两个yaml文件中 calico 版本: v3.2.3 安装必看 如果安装过flannel组件，需要先去除dock" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/blog/201810/calico-in-k8s/" />
+<meta property="og:url" content="/blog/201810/calico-in-k8s/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2018-10-12T00:00:00+00:00" />
 <meta property="article:modified_time" content="2018-10-12T00:00:00+00:00" /><meta property="og:site_name" content="silenceper" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="k8s网络组件：calico"/>
 <meta name="twitter:description" content="前提已经安装好k8s集群 安装 calico 安装其实很简单，已经集成在两个yaml文件中 calico 版本: v3.2.3 安装必看 如果安装过flannel组件，需要先去除dock"/>
@@ -23,7 +24,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="manifest" href="/site.webmanifest">
-<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="prev" href="/blog/201809/flannel-in-k8s/" /><link rel="next" href="/blog/201907/cluster-autoscaler-usage/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><meta name="google-site-verification" content="VJ4lE3d3A73DNoyxuuXL_Cuu6MEErPtKXqfAv69pr6E" /><meta name="baidu-site-verification" content="k061nqJczY" /><script type="application/ld+json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="prev" href="/blog/201809/flannel-in-k8s/" /><link rel="next" href="/blog/201907/cluster-autoscaler-usage/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/css/lib/animate/animate.min.css"><meta name="google-site-verification" content="VJ4lE3d3A73DNoyxuuXL_Cuu6MEErPtKXqfAv69pr6E" /><meta name="baidu-site-verification" content="k061nqJczY" /><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -147,7 +148,7 @@
 <p>将其中的<code>ETCD_LVS_HOST</code>修改为集群的etcd地址，并且将<code>TLS_ETCD_KEY</code>,<code>TLS_ETCD_CERT </code>,<code>TLS_ETCD_CA</code>替换为证书的内容的base64后的结果：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -161,7 +162,7 @@
 </span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback"># 其中证书的路径根据自己环境更改为正确的路径
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"># 其中证书的路径根据自己环境更改为正确的路径
 TLS_ETCD_CA=$(cat /etc/kubernetes/ssl/ca.pem | base64 |tr -d &#34;\n&#34;)
 TLS_ETCD_KEY=$(cat /etc/kubernetes/ssl/etcd-key.pem | base64 |tr -d &#34;\n&#34;)
 TLS_ETCD_CERT=$(cat /etc/kubernetes/ssl/etcd.pem | base64 |tr -d &#34;\n&#34;)
@@ -178,11 +179,11 @@ sed -i &#34;s#ETCD_LVS_HOST#192.168.99.101#g&#34; calico.yaml
 </div><p><strong>部署</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">kubectl apply -f calico.yaml
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">kubectl apply -f calico.yaml
 kubectl apply -f rbac.yaml
 </code></pre></td></tr></table>
 </div>
@@ -195,7 +196,7 @@ kubectl apply -f rbac.yaml
 <p>将以下内容写入文件<code>/etc/calico/calicoctl.cfg</code>:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -205,7 +206,7 @@ kubectl apply -f rbac.yaml
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">apiVersion: projectcalico.org/v3
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">apiVersion: projectcalico.org/v3
 kind: CalicoAPIConfig
 metadata:
 spec:
@@ -218,13 +219,13 @@ spec:
 </div><p>测试成功：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@192-168-99-101 calico]# calicoctl get node -o wide
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">[root@192-168-99-101 calico]# calicoctl get node -o wide
 NAME             ASN         IPV4                IPV6
 192-168-99-101   (unknown)   192.168.99.101/24
 192-168-99-102   (unknown)   192.168.99.102/24
@@ -242,7 +243,7 @@ NAME             ASN         IPV4                IPV6
 <p>其中<code>ippool.yaml</code>文件内容：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -255,7 +256,7 @@ NAME             ASN         IPV4                IPV6
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">apiVersion: projectcalico.org/v3
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">apiVersion: projectcalico.org/v3
 items:
 - apiVersion: projectcalico.org/v3
   kind: IPPool
@@ -309,24 +310,7 @@ kind: IPPoolList
     <div class="post-nav"><a href="/blog/201809/flannel-in-k8s/" class="prev" rel="prev" title="k8s网络组件：flannel"><i class="fas fa-angle-left fa-fw"></i>k8s网络组件：flannel</a>
             <a href="/blog/201907/cluster-autoscaler-usage/" class="next" rel="next" title="Cluster Autoscaler:集群自动扩缩容">Cluster Autoscaler:集群自动扩缩容<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
-<div class="comment"><div id="gitalk"></div><script>
-            document.addEventListener("DOMContentLoaded", function(event) {
-                var gitalk = new Gitalk({
-                    id: '2018-10-12 00:00:00 \u002b0000 UTC',
-                    title: 'k8s网络组件：calico',
-                    clientID: 'e708cc1fbc3e2613a24d',
-                    clientSecret: 'ffa9552c4ef788a7f135fa7b9510ffc672d0b914',
-                    repo: 'silenceper.github.io',
-                    owner: 'silenceper',
-                    admin: ['silenceper'],
-                    body: decodeURI(location.href),
-                });
-                gitalk.render('gitalk');
-            });
-        </script>
-        <noscript>
-            Please enable JavaScript to view the <a href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a>
-        </noscript></div>
+<div class="comment"></div>
     </article></div>
             </main><footer class="footer">
     <div class="copyright"><div class="copyright-line">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
@@ -347,24 +331,5 @@ kind: IPPoolList
                     { left: "\\[", right: "\\]", display: true },]
             });
         });
-    </script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.css"><link rel="stylesheet" href="/css/lib/iconfont/iconfont.min.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script><script src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.2/dist/smooth-scroll.polyfills.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazysizes@5.1.2/lazysizes.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/mhchem.min.js"></script><script src="/js/lib/sharer/sharer.min.js"></script><script src=/js/theme.min.js></script>
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-139557989-1', 'auto');
-	ga('set', 'anonymizeIp', true);
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-    hm.src = "https://hm.baidu.com/hm.js?fe23775b1a9ea11a6797646a56df1cc7";
-  var s = document.getElementsByTagName("script")[0];
-  s.parentNode.insertBefore(hm, s);
-})();
-</script></body>
+    </script><link rel="stylesheet" href="/css/lib/iconfont/iconfont.min.css"><link rel="stylesheet" href="/css/lib/katex/katex.min.css"><link rel="stylesheet" href="/css/lib/katex/copy-tex.min.css"><script src="/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script src="/js/lib/sharer/sharer.min.js"></script><script src="/js/lib/lazysizes/lazysizes.min.js"></script><script src="/js/lib/katex/katex.min.js"></script><script src="/js/lib/katex/auto-render.min.js"></script><script src="/js/lib/katex/copy-tex.min.js"></script><script src="/js/lib/katex/mhchem.min.js"></script><script src=/js/theme.min.js></script></body>
 </html>
