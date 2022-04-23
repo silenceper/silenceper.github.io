@@ -37,7 +37,7 @@
                 "url": "\/img\/silenceoer-avatar.jpg",
                 "width":  800 ,
                 "height":  600 
-            },"genre": "posts","keywords": "docker, arm64","wordcount":  1269 ,
+            },"genre": "posts","keywords": "docker, arm64","wordcount":  1268 ,
         "url": "\/blog\/202006\/build-arm-image-on-x86_84\/","datePublished": "2020-06-05T14:20:59\u002b08:00","dateModified": "2020-06-05T14:20:59\u002b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "silenceper",
@@ -99,7 +99,7 @@
                                 </a>
                             </span></span></div>
             <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-06-05&#32;14:20>2020-06-05 14:20</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>约 1269 字&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>约 1268 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>预计阅读 3 分钟&nbsp;</div>
         </div><div class="toc" id="toc-auto">
                 <h2 class="toc-title">目录</h2>
@@ -151,21 +151,19 @@
 </span><span class="lnt"> 8
 </span><span class="lnt"> 9
 </span><span class="lnt">10
-</span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">$ docker run --rm --privileged multiarch/qemu-user-static:register --reset
-
-$ docker build --rm -t <span class="s2">&#34;test/integration/ubuntu&#34;</span> -<span class="s">&lt;&lt;EOF
-</span><span class="s">FROM multiarch/qemu-user-static:x86_64-aarch64 as qemu
-</span><span class="s">FROM arm64v8/ubuntu
-</span><span class="s">COPY --from=qemu /usr/bin/qemu-aarch64-static /usr/bin
-</span><span class="s">EOF</span>
-
-$ docker run --rm -t <span class="s2">&#34;test/integration/ubuntu&#34;</span> uname -m
-aarch64
-
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ docker run --rm --privileged multiarch/qemu-user-static:register --reset
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">$ docker build --rm -t <span class="s2">&#34;test/integration/ubuntu&#34;</span> -<span class="s">&lt;&lt;EOF
+</span></span></span><span class="line"><span class="cl"><span class="s">FROM multiarch/qemu-user-static:x86_64-aarch64 as qemu
+</span></span></span><span class="line"><span class="cl"><span class="s">FROM arm64v8/ubuntu
+</span></span></span><span class="line"><span class="cl"><span class="s">COPY --from=qemu /usr/bin/qemu-aarch64-static /usr/bin
+</span></span></span><span class="line"><span class="cl"><span class="s">EOF</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">$ docker run --rm -t <span class="s2">&#34;test/integration/ubuntu&#34;</span> uname -m
+</span></span><span class="line"><span class="cl">aarch64
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>在运行<code>qemu-user-static:register</code>镜像的时候，就通过内核中的binfmt_misc机制注入了哪些可执行文件可以被识别。</p>
 <p>注意：需要将<code>qemu-aarch64-static</code>文件 copy 到<code>/usr/bin</code>目录。</p>
@@ -189,10 +187,10 @@ aarch64
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">docker buildx create --name builderx
-docker buildx use builderx
-docker buildx inspect --bootstrap <span class="c1">#这一步会从外网拉取`moby/buildkit`镜像，貌似还改不了</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">docker buildx create --name builderx
+</span></span><span class="line"><span class="cl">docker buildx use builderx
+</span></span><span class="line"><span class="cl">docker buildx inspect --bootstrap <span class="c1">#这一步会从外网拉取`moby/buildkit`镜像，貌似还改不了</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p><strong>接下来你就可以通过如下命令去构建多种架构的镜像：</strong></p>
 <div class="highlight"><div class="chroma">
@@ -200,8 +198,8 @@ docker buildx inspect --bootstrap <span class="c1">#这一步会从外网拉取`
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">docker buildx build --platform linux/amd64,linux/arm64 -f Dockerfile -t silenceper/reverse-proxy .  --push
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">docker buildx build --platform linux/amd64,linux/arm64 -f Dockerfile -t silenceper/reverse-proxy .  --push
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p><code>--push</code>参数表示构建完成之后，并push到镜像仓库当中。</p>
 <p>因为镜像仓库支持一个仓库上传多种架构，并且会根据构建平台pull相匹配架构的镜像，所以我们可以在一个Dockerfile，并且通过一个命令打包镜像并push。</p>
@@ -223,18 +221,18 @@ docker buildx inspect --bootstrap <span class="c1">#这一步会从外网拉取`
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="nx">FROM</span> <span class="nx">golang</span><span class="p">:</span><span class="nx">alpine</span> <span class="nx">as</span> <span class="nx">builder</span>
-<span class="nx">ADD</span> <span class="p">.</span> <span class="o">/</span><span class="k">go</span><span class="o">/</span><span class="nx">src</span><span class="o">/</span><span class="nx">github</span><span class="p">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">silenceper</span><span class="o">/</span><span class="nx">reverse</span><span class="o">-</span><span class="nx">proxy</span><span class="o">/</span>
-<span class="nx">RUN</span> <span class="nx">cd</span> <span class="o">/</span><span class="k">go</span><span class="o">/</span><span class="nx">src</span><span class="o">/</span><span class="nx">github</span><span class="p">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">silenceper</span><span class="o">/</span><span class="nx">reverse</span><span class="o">-</span><span class="nx">proxy</span><span class="o">/</span> \
-  <span class="o">&amp;&amp;</span> <span class="k">go</span> <span class="nx">get</span> <span class="o">-</span><span class="nx">v</span> \
-  <span class="o">&amp;&amp;</span> <span class="nx">CGO_ENABLED</span><span class="p">=</span><span class="mi">0</span> <span class="nx">GOOS</span><span class="p">=</span><span class="nx">linux</span> <span class="k">go</span> <span class="nx">build</span> <span class="o">-</span><span class="nx">a</span> <span class="o">-</span><span class="nx">installsuffix</span> <span class="nx">cgo</span> <span class="o">-</span><span class="nx">o</span> <span class="nx">app</span> <span class="p">.</span>
-
-<span class="nx">FROM</span> <span class="nx">alpine</span>
-<span class="nx">MAINTAINER</span> <span class="nx">silenceper</span> <span class="p">&lt;</span><span class="nx">silenceper</span><span class="err">@</span><span class="nx">gmail</span><span class="p">.</span><span class="nx">com</span><span class="p">&gt;</span>
-<span class="nx">COPY</span> <span class="o">--</span><span class="nx">from</span><span class="p">=</span><span class="nx">builder</span> <span class="o">/</span><span class="k">go</span><span class="o">/</span><span class="nx">src</span><span class="o">/</span><span class="nx">github</span><span class="p">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">silenceper</span><span class="o">/</span><span class="nx">reverse</span><span class="o">-</span><span class="nx">proxy</span><span class="o">/</span><span class="nx">app</span> <span class="o">/</span><span class="nx">bin</span><span class="o">/</span><span class="nx">app</span>
-<span class="nx">ENTRYPOINT</span> <span class="p">[</span><span class="s">&#34;/bin/app&#34;</span><span class="p">]</span>
-<span class="nx">EXPOSE</span> <span class="mi">80</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="nx">FROM</span> <span class="nx">golang</span><span class="p">:</span><span class="nx">alpine</span> <span class="nx">as</span> <span class="nx">builder</span>
+</span></span><span class="line"><span class="cl"><span class="nx">ADD</span> <span class="p">.</span> <span class="o">/</span><span class="k">go</span><span class="o">/</span><span class="nx">src</span><span class="o">/</span><span class="nx">github</span><span class="p">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">silenceper</span><span class="o">/</span><span class="nx">reverse</span><span class="o">-</span><span class="nx">proxy</span><span class="o">/</span>
+</span></span><span class="line"><span class="cl"><span class="nx">RUN</span> <span class="nx">cd</span> <span class="o">/</span><span class="k">go</span><span class="o">/</span><span class="nx">src</span><span class="o">/</span><span class="nx">github</span><span class="p">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">silenceper</span><span class="o">/</span><span class="nx">reverse</span><span class="o">-</span><span class="nx">proxy</span><span class="o">/</span> \
+</span></span><span class="line"><span class="cl">  <span class="o">&amp;&amp;</span> <span class="k">go</span> <span class="nx">get</span> <span class="o">-</span><span class="nx">v</span> \
+</span></span><span class="line"><span class="cl">  <span class="o">&amp;&amp;</span> <span class="nx">CGO_ENABLED</span><span class="p">=</span><span class="mi">0</span> <span class="nx">GOOS</span><span class="p">=</span><span class="nx">linux</span> <span class="k">go</span> <span class="nx">build</span> <span class="o">-</span><span class="nx">a</span> <span class="o">-</span><span class="nx">installsuffix</span> <span class="nx">cgo</span> <span class="o">-</span><span class="nx">o</span> <span class="nx">app</span> <span class="p">.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">FROM</span> <span class="nx">alpine</span>
+</span></span><span class="line"><span class="cl"><span class="nx">MAINTAINER</span> <span class="nx">silenceper</span> <span class="p">&lt;</span><span class="nx">silenceper</span><span class="err">@</span><span class="nx">gmail</span><span class="p">.</span><span class="nx">com</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">COPY</span> <span class="o">--</span><span class="nx">from</span><span class="p">=</span><span class="nx">builder</span> <span class="o">/</span><span class="k">go</span><span class="o">/</span><span class="nx">src</span><span class="o">/</span><span class="nx">github</span><span class="p">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">silenceper</span><span class="o">/</span><span class="nx">reverse</span><span class="o">-</span><span class="nx">proxy</span><span class="o">/</span><span class="nx">app</span> <span class="o">/</span><span class="nx">bin</span><span class="o">/</span><span class="nx">app</span>
+</span></span><span class="line"><span class="cl"><span class="nx">ENTRYPOINT</span> <span class="p">[</span><span class="s">&#34;/bin/app&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="nx">EXPOSE</span> <span class="mi">80</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="总结">总结</h2>
 <p>最方便的肯定是直接通过buildx进行打包和编译，但是我的环境没法访问外网，又没法拉取外网的镜像，所以最终还是选择使用<code>qemu-user-static</code>打包出来了。</p>
@@ -298,7 +296,7 @@ docker buildx inspect --bootstrap <span class="c1">#这一步会从外网拉取`
     <div class="copyright"><div class="copyright-line">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
         </div>
 
-        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2016 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">silenceper</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2016 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">silenceper</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
     </div>
 </footer>
 </div><a href="#" class="dynamic-to-top animated faster" id="dynamic-to-top">

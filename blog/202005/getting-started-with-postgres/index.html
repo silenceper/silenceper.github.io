@@ -37,7 +37,7 @@
                 "url": "\/img\/silenceoer-avatar.jpg",
                 "width":  800 ,
                 "height":  600 
-            },"genre": "posts","keywords": "postgres","wordcount":  1484 ,
+            },"genre": "posts","keywords": "postgres","wordcount":  1483 ,
         "url": "\/blog\/202005\/getting-started-with-postgres\/","datePublished": "2020-05-04T23:20:59\u002b08:00","dateModified": "2020-05-04T23:20:59\u002b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "silenceper",
@@ -99,7 +99,7 @@
                                 </a>
                             </span></span></div>
             <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-05-04&#32;23:20>2020-05-04 23:20</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>约 1484 字&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>约 1483 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>预计阅读 3 分钟&nbsp;</div>
         </div><div class="featured-image"><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://silenceper.oss-cn-beijing.aliyuncs.com/blog/bg/shulin.jpg" alt="featured image" title="featured image" class="lazyload">
 </div><div class="toc" id="toc-auto">
@@ -138,8 +138,8 @@
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">docker run --name postgres -v /Users/silenceper/workspace/postgres/data:/var/lib/postgresql/data -e <span class="nv">POSTGRES_PASSWORD</span><span class="o">=</span><span class="m">123</span> -p 5432:5432 -d postgres:10.3
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">docker run --name postgres -v /Users/silenceper/workspace/postgres/data:/var/lib/postgresql/data -e <span class="nv">POSTGRES_PASSWORD</span><span class="o">=</span><span class="m">123</span> -p 5432:5432 -d postgres:10.3
+</span></span></code></pre></td></tr></table>
 </div>
 </div><ul>
 <li>指定数据存储目录映射到宿主机本地，避免容器销毁后数据丢失</li>
@@ -157,11 +157,11 @@
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"># 进入容器才能使用psql命令
-docker exec -it postgres bash 
-# 以postgres角色登录
- psql -U postgres
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># 进入容器才能使用psql命令
+</span></span><span class="line"><span class="cl">docker exec -it postgres bash 
+</span></span><span class="line"><span class="cl"># 以postgres角色登录
+</span></span><span class="line"><span class="cl"> psql -U postgres
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>可以通过 <code>\?</code>查看一些常用的操作。</p>
 <div class="highlight"><div class="chroma">
@@ -177,16 +177,16 @@ docker exec -it postgres bash
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">\h：查看SQL命令的解释，比如\h select。
-\?：查看psql命令列表。
-\l：列出所有数据库。
-\c [database_name]：连接其他数据库。
-\d：列出当前数据库的所有表格。
-\d [table_name]：列出某一张表格的结构。
-\du：列出所有用户。
-\e：打开文本编辑器。
-\conninfo：列出当前数据库和连接的信息。
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">\h：查看SQL命令的解释，比如\h select。
+</span></span><span class="line"><span class="cl">\?：查看psql命令列表。
+</span></span><span class="line"><span class="cl">\l：列出所有数据库。
+</span></span><span class="line"><span class="cl">\c [database_name]：连接其他数据库。
+</span></span><span class="line"><span class="cl">\d：列出当前数据库的所有表格。
+</span></span><span class="line"><span class="cl">\d [table_name]：列出某一张表格的结构。
+</span></span><span class="line"><span class="cl">\du：列出所有用户。
+</span></span><span class="line"><span class="cl">\e：打开文本编辑器。
+</span></span><span class="line"><span class="cl">\conninfo：列出当前数据库和连接的信息。
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="创建用户以及db">创建用户以及DB</h3>
 <p>创建用户</p>
@@ -195,8 +195,8 @@ docker exec -it postgres bash
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">CREATE USER dbuser WITH PASSWORD &#39;password&#39;;
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">CREATE USER dbuser WITH PASSWORD &#39;password&#39;;
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>创建用户数据库，这里为exampledb，并指定所有者为dbuser</p>
 <div class="highlight"><div class="chroma">
@@ -204,8 +204,8 @@ docker exec -it postgres bash
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">CREATE DATABASE exampledb OWNER dbuser;
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">CREATE DATABASE exampledb OWNER dbuser;
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>将exampledb数据库的所有权限都赋予dbuser，否则dbuser只能登录控制台，没有任何数据库操作权限。</p>
 <div class="highlight"><div class="chroma">
@@ -213,19 +213,17 @@ docker exec -it postgres bash
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">GRANT ALL PRIVILEGES ON DATABASE exampledb to dbuser;
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">GRANT ALL PRIVILEGES ON DATABASE exampledb to dbuser;
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>最后，使用\q命令退出控制台（也可以直接按ctrl+D）。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">\q
-
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">\q
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="数据库操作">数据库操作</h3>
 <div class="highlight"><div class="chroma">
@@ -264,39 +262,39 @@ docker exec -it postgres bash
 </span><span class="lnt">32
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"># 创建新表
-CREATE TABLE user_tbl(name VARCHAR(20), signup_date DATE);
-
-# 插入数据
-INSERT INTO user_tbl(name, signup_date) VALUES(&#39;张三&#39;, &#39;2013-12-22&#39;);
-
-# 选择记录
-SELECT * FROM user_tbl;
-
-# 更新数据
-UPDATE user_tbl set name = &#39;李四&#39; WHERE name = &#39;张三&#39;;
-
-# 删除记录
-DELETE FROM user_tbl WHERE name = &#39;李四&#39; ;
-
-# 添加栏位
-ALTER TABLE user_tbl ADD email VARCHAR(40);
-
-# 更新结构
-ALTER TABLE user_tbl ALTER COLUMN signup_date SET NOT NULL;
-
-# 更名栏位
-ALTER TABLE user_tbl RENAME COLUMN signup_date TO signup;
-
-# 删除栏位
-ALTER TABLE user_tbl DROP COLUMN email;
-
-# 表格更名
-ALTER TABLE user_tbl RENAME TO backup_tbl;
-
-# 删除表格
-DROP TABLE IF EXISTS backup_tbl;
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># 创建新表
+</span></span><span class="line"><span class="cl">CREATE TABLE user_tbl(name VARCHAR(20), signup_date DATE);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 插入数据
+</span></span><span class="line"><span class="cl">INSERT INTO user_tbl(name, signup_date) VALUES(&#39;张三&#39;, &#39;2013-12-22&#39;);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 选择记录
+</span></span><span class="line"><span class="cl">SELECT * FROM user_tbl;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 更新数据
+</span></span><span class="line"><span class="cl">UPDATE user_tbl set name = &#39;李四&#39; WHERE name = &#39;张三&#39;;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 删除记录
+</span></span><span class="line"><span class="cl">DELETE FROM user_tbl WHERE name = &#39;李四&#39; ;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 添加栏位
+</span></span><span class="line"><span class="cl">ALTER TABLE user_tbl ADD email VARCHAR(40);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 更新结构
+</span></span><span class="line"><span class="cl">ALTER TABLE user_tbl ALTER COLUMN signup_date SET NOT NULL;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 更名栏位
+</span></span><span class="line"><span class="cl">ALTER TABLE user_tbl RENAME COLUMN signup_date TO signup;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 删除栏位
+</span></span><span class="line"><span class="cl">ALTER TABLE user_tbl DROP COLUMN email;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 表格更名
+</span></span><span class="line"><span class="cl">ALTER TABLE user_tbl RENAME TO backup_tbl;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 删除表格
+</span></span><span class="line"><span class="cl">DROP TABLE IF EXISTS backup_tbl;
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="与mysql对比">与mysql对比</h2>
 <ul>
@@ -363,7 +361,7 @@ DROP TABLE IF EXISTS backup_tbl;
     <div class="copyright"><div class="copyright-line">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
         </div>
 
-        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2016 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">silenceper</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2016 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">silenceper</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
     </div>
 </footer>
 </div><a href="#" class="dynamic-to-top animated faster" id="dynamic-to-top">

@@ -7,7 +7,16 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Sat, 30 Oct 2021 23:20:59 +0800</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 23 Apr 2022 22:20:59 +0800</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>xfsquota：一个便捷的管理xfs磁盘配额的命令行工具</title>
+      <link>/blog/202204/xfsquota-golang/</link>
+      <pubDate>Sat, 23 Apr 2022 22:20:59 +0800</pubDate>
+      
+      <guid>/blog/202204/xfsquota-golang/</guid>
+      <description>源码地址：https://github.com/silenceper/xfsquota 动机 在Linux有一个xfs_quota（在xfspr</description>
+    </item>
+    
     <item>
       <title>emptyDir 通过xfs_quota 强制限制大小</title>
       <link>/blog/202110/enforce-limit-emptydir-size/</link>
@@ -221,7 +230,7 @@
       <pubDate>Sat, 28 May 2016 18:00:59 +0800</pubDate>
       
       <guid>/blog/201605/go-http-process/</guid>
-      <description>一、执行流程 构建一个简单http server： 1 2 3 4 5 6 7 8 9 10 11 12 13 14 package main import ( &amp;#34;log&amp;#34; &amp;#34;net/http&amp;#34; ) func main() { http.HandleFunc(&amp;#34;/&amp;#34;, func(w http.ResponseWriter, r *http.Request) { w.Write([]byte(&amp;#34;hello world&amp;#34;)) }) log.Fatal(http.ListenAndServe(&amp;#34;:8080&amp;#34;, nil)) } 使用http://12</description>
+      <description>一、执行流程 构建一个简单http server： 1 2 3 4 5 6 7 8 9 10 11 12 13 package main import ( &amp;#34;log&amp;#34; &amp;#34;net/http&amp;#34; ) func main() { http.HandleFunc(&amp;#34;/&amp;#34;, func(w http.ResponseWriter, r *http.Request) { w.Write([]byte(&amp;#34;hello world&amp;#34;)) }) log.Fatal(http.ListenAndServe(&amp;#34;:8080&amp;#34;, nil)) } 使用http://127</description>
     </item>
     
     <item>

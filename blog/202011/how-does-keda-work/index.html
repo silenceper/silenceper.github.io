@@ -37,7 +37,7 @@
                 "url": "\/img\/silenceoer-avatar.jpg",
                 "width":  800 ,
                 "height":  600 
-            },"genre": "posts","keywords": "keda, kubernetes","wordcount":  3760 ,
+            },"genre": "posts","keywords": "keda, kubernetes","wordcount":  3759 ,
         "url": "\/blog\/202011\/how-does-keda-work\/","datePublished": "2020-11-08T11:20:59\u002b08:00","dateModified": "2020-11-08T11:20:59\u002b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "silenceper",
@@ -99,7 +99,7 @@
                                 </a>
                             </span></span></div>
             <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-11-08&#32;11:20>2020-11-08 11:20</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>约 3760 字&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>约 3759 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>预计阅读 8 分钟&nbsp;</div>
         </div><div class="toc" id="toc-auto">
                 <h2 class="toc-title">目录</h2>
@@ -183,36 +183,36 @@
 </span><span class="lnt">29
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">├── BRANDING.md
-├── BUILD.md    //如何在本地编译和运行
-├── CHANGELOG.md
-├── CONTRIBUTING.md   //如何参与贡献次项目
-├── CREATE-NEW-SCALER.md
-├── Dockerfile
-├── Dockerfile.adapter
-├── GOVERNANCE.md
-├── LICENSE
-├── MAINTAINERS.md
-├── Makefile    // 构建编译相关命令
-├── PROJECT
-├── README.md
-├── RELEASE-PROCESS.MD
-├── adapter  // keda-metrics-apiserver 组件入口
-├── api // 自定义资源定义，例如ScaledObject的定义
-├── bin 
-├── config //组件yaml资源，通过kustomization工具生成
-├── controllers //kubebuilder 中controller 代码控制crd资源
-├── go.mod
-├── go.sum
-├── hack
-├── images
-├── main.go //keda-operator  controller入口
-├── pkg   //包含组件核心代码实现
-├── tests //e2e测试
-├── tools  
-├── vendor
-└── version
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">├── BRANDING.md
+</span></span><span class="line"><span class="cl">├── BUILD.md    //如何在本地编译和运行
+</span></span><span class="line"><span class="cl">├── CHANGELOG.md
+</span></span><span class="line"><span class="cl">├── CONTRIBUTING.md   //如何参与贡献次项目
+</span></span><span class="line"><span class="cl">├── CREATE-NEW-SCALER.md
+</span></span><span class="line"><span class="cl">├── Dockerfile
+</span></span><span class="line"><span class="cl">├── Dockerfile.adapter
+</span></span><span class="line"><span class="cl">├── GOVERNANCE.md
+</span></span><span class="line"><span class="cl">├── LICENSE
+</span></span><span class="line"><span class="cl">├── MAINTAINERS.md
+</span></span><span class="line"><span class="cl">├── Makefile    // 构建编译相关命令
+</span></span><span class="line"><span class="cl">├── PROJECT
+</span></span><span class="line"><span class="cl">├── README.md
+</span></span><span class="line"><span class="cl">├── RELEASE-PROCESS.MD
+</span></span><span class="line"><span class="cl">├── adapter  // keda-metrics-apiserver 组件入口
+</span></span><span class="line"><span class="cl">├── api // 自定义资源定义，例如ScaledObject的定义
+</span></span><span class="line"><span class="cl">├── bin 
+</span></span><span class="line"><span class="cl">├── config //组件yaml资源，通过kustomization工具生成
+</span></span><span class="line"><span class="cl">├── controllers //kubebuilder 中controller 代码控制crd资源
+</span></span><span class="line"><span class="cl">├── go.mod
+</span></span><span class="line"><span class="cl">├── go.sum
+</span></span><span class="line"><span class="cl">├── hack
+</span></span><span class="line"><span class="cl">├── images
+</span></span><span class="line"><span class="cl">├── main.go //keda-operator  controller入口
+</span></span><span class="line"><span class="cl">├── pkg   //包含组件核心代码实现
+</span></span><span class="line"><span class="cl">├── tests //e2e测试
+</span></span><span class="line"><span class="cl">├── tools  
+</span></span><span class="line"><span class="cl">├── vendor
+</span></span><span class="line"><span class="cl">└── version
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>keda中主要是两个组件<code>keda-operator</code>以及<code>keda-metrics-apiserver</code>。</p>
 <ul>
@@ -273,46 +273,46 @@
 </span><span class="lnt">39
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="nx">mgr</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">ctrl</span><span class="p">.</span><span class="nf">NewManager</span><span class="p">(</span><span class="nx">ctrl</span><span class="p">.</span><span class="nf">GetConfigOrDie</span><span class="p">(),</span> <span class="nx">ctrl</span><span class="p">.</span><span class="nx">Options</span><span class="p">{</span>
-		<span class="nx">Scheme</span><span class="p">:</span>                 <span class="nx">scheme</span><span class="p">,</span>
-		<span class="nx">MetricsBindAddress</span><span class="p">:</span>     <span class="nx">metricsAddr</span><span class="p">,</span>
-		<span class="nx">HealthProbeBindAddress</span><span class="p">:</span> <span class="s">&#34;:8081&#34;</span><span class="p">,</span>
-		<span class="nx">Port</span><span class="p">:</span>                   <span class="mi">9443</span><span class="p">,</span>
-		<span class="nx">LeaderElection</span><span class="p">:</span>         <span class="nx">enableLeaderElection</span><span class="p">,</span>
-		<span class="nx">LeaderElectionID</span><span class="p">:</span>       <span class="s">&#34;operator.keda.sh&#34;</span><span class="p">,</span>
-	<span class="p">})</span>
-<span class="o">...</span>
-
-<span class="c1">// Add readiness probe 
-</span><span class="c1"></span><span class="nx">err</span> <span class="p">=</span> <span class="nx">mgr</span><span class="p">.</span><span class="nf">AddReadyzCheck</span><span class="p">(</span><span class="s">&#34;ready-ping&#34;</span><span class="p">,</span> <span class="nx">healthz</span><span class="p">.</span><span class="nx">Ping</span><span class="p">)</span>
-<span class="o">...</span>
-<span class="c1">// Add liveness probe
-</span><span class="c1"></span><span class="nx">err</span> <span class="p">=</span> <span class="nx">mgr</span><span class="p">.</span><span class="nf">AddHealthzCheck</span><span class="p">(</span><span class="s">&#34;health-ping&#34;</span><span class="p">,</span> <span class="nx">healthz</span><span class="p">.</span><span class="nx">Ping</span><span class="p">)</span>
-<span class="o">...</span><span class="p">.</span>
-<span class="c1">//注册 ScaledObject 处理的controller
-</span><span class="c1"></span><span class="k">if</span> <span class="nx">err</span> <span class="p">=</span> <span class="p">(</span><span class="o">&amp;</span><span class="nx">controllers</span><span class="p">.</span><span class="nx">ScaledObjectReconciler</span><span class="p">{</span>
-	<span class="nx">Client</span><span class="p">:</span> <span class="nx">mgr</span><span class="p">.</span><span class="nf">GetClient</span><span class="p">(),</span>
-	<span class="nx">Log</span><span class="p">:</span>    <span class="nx">ctrl</span><span class="p">.</span><span class="nx">Log</span><span class="p">.</span><span class="nf">WithName</span><span class="p">(</span><span class="s">&#34;controllers&#34;</span><span class="p">).</span><span class="nf">WithName</span><span class="p">(</span><span class="s">&#34;ScaledObject&#34;</span><span class="p">),</span>
-	<span class="nx">Scheme</span><span class="p">:</span> <span class="nx">mgr</span><span class="p">.</span><span class="nf">GetScheme</span><span class="p">(),</span>
-<span class="p">}).</span><span class="nf">SetupWithManager</span><span class="p">(</span><span class="nx">mgr</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-	<span class="nx">setupLog</span><span class="p">.</span><span class="nf">Error</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;unable to create controller&#34;</span><span class="p">,</span> <span class="s">&#34;controller&#34;</span><span class="p">,</span> <span class="s">&#34;ScaledObject&#34;</span><span class="p">)</span>
-	<span class="nx">os</span><span class="p">.</span><span class="nf">Exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="p">}</span>
-<span class="c1">////注册 ScaledJob 处理的controller
-</span><span class="c1"></span><span class="k">if</span> <span class="nx">err</span> <span class="p">=</span> <span class="p">(</span><span class="o">&amp;</span><span class="nx">controllers</span><span class="p">.</span><span class="nx">ScaledJobReconciler</span><span class="p">{</span>
-	<span class="nx">Client</span><span class="p">:</span> <span class="nx">mgr</span><span class="p">.</span><span class="nf">GetClient</span><span class="p">(),</span>
-	<span class="nx">Log</span><span class="p">:</span>    <span class="nx">ctrl</span><span class="p">.</span><span class="nx">Log</span><span class="p">.</span><span class="nf">WithName</span><span class="p">(</span><span class="s">&#34;controllers&#34;</span><span class="p">).</span><span class="nf">WithName</span><span class="p">(</span><span class="s">&#34;ScaledJob&#34;</span><span class="p">),</span>
-	<span class="nx">Scheme</span><span class="p">:</span> <span class="nx">mgr</span><span class="p">.</span><span class="nf">GetScheme</span><span class="p">(),</span>
-<span class="p">}).</span><span class="nf">SetupWithManager</span><span class="p">(</span><span class="nx">mgr</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-	<span class="nx">setupLog</span><span class="p">.</span><span class="nf">Error</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;unable to create controller&#34;</span><span class="p">,</span> <span class="s">&#34;controller&#34;</span><span class="p">,</span> <span class="s">&#34;ScaledJob&#34;</span><span class="p">)</span>
-	<span class="nx">os</span><span class="p">.</span><span class="nf">Exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="p">}</span>
-
-<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">mgr</span><span class="p">.</span><span class="nf">Start</span><span class="p">(</span><span class="nx">ctrl</span><span class="p">.</span><span class="nf">SetupSignalHandler</span><span class="p">());</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-	<span class="nx">setupLog</span><span class="p">.</span><span class="nf">Error</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;problem running manager&#34;</span><span class="p">)</span>
-	<span class="nx">os</span><span class="p">.</span><span class="nf">Exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="nx">mgr</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">ctrl</span><span class="p">.</span><span class="nf">NewManager</span><span class="p">(</span><span class="nx">ctrl</span><span class="p">.</span><span class="nf">GetConfigOrDie</span><span class="p">(),</span> <span class="nx">ctrl</span><span class="p">.</span><span class="nx">Options</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">Scheme</span><span class="p">:</span>                 <span class="nx">scheme</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">MetricsBindAddress</span><span class="p">:</span>     <span class="nx">metricsAddr</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">HealthProbeBindAddress</span><span class="p">:</span> <span class="s">&#34;:8081&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">Port</span><span class="p">:</span>                   <span class="mi">9443</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">LeaderElection</span><span class="p">:</span>         <span class="nx">enableLeaderElection</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">LeaderElectionID</span><span class="p">:</span>       <span class="s">&#34;operator.keda.sh&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="p">})</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// Add readiness probe 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">err</span> <span class="p">=</span> <span class="nx">mgr</span><span class="p">.</span><span class="nf">AddReadyzCheck</span><span class="p">(</span><span class="s">&#34;ready-ping&#34;</span><span class="p">,</span> <span class="nx">healthz</span><span class="p">.</span><span class="nx">Ping</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// Add liveness probe
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">err</span> <span class="p">=</span> <span class="nx">mgr</span><span class="p">.</span><span class="nf">AddHealthzCheck</span><span class="p">(</span><span class="s">&#34;health-ping&#34;</span><span class="p">,</span> <span class="nx">healthz</span><span class="p">.</span><span class="nx">Ping</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//注册 ScaledObject 处理的controller
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">if</span> <span class="nx">err</span> <span class="p">=</span> <span class="p">(</span><span class="o">&amp;</span><span class="nx">controllers</span><span class="p">.</span><span class="nx">ScaledObjectReconciler</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">Client</span><span class="p">:</span> <span class="nx">mgr</span><span class="p">.</span><span class="nf">GetClient</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">Log</span><span class="p">:</span>    <span class="nx">ctrl</span><span class="p">.</span><span class="nx">Log</span><span class="p">.</span><span class="nf">WithName</span><span class="p">(</span><span class="s">&#34;controllers&#34;</span><span class="p">).</span><span class="nf">WithName</span><span class="p">(</span><span class="s">&#34;ScaledObject&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">Scheme</span><span class="p">:</span> <span class="nx">mgr</span><span class="p">.</span><span class="nf">GetScheme</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl"><span class="p">}).</span><span class="nf">SetupWithManager</span><span class="p">(</span><span class="nx">mgr</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">setupLog</span><span class="p">.</span><span class="nf">Error</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;unable to create controller&#34;</span><span class="p">,</span> <span class="s">&#34;controller&#34;</span><span class="p">,</span> <span class="s">&#34;ScaledObject&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">os</span><span class="p">.</span><span class="nf">Exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">////注册 ScaledJob 处理的controller
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">if</span> <span class="nx">err</span> <span class="p">=</span> <span class="p">(</span><span class="o">&amp;</span><span class="nx">controllers</span><span class="p">.</span><span class="nx">ScaledJobReconciler</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">Client</span><span class="p">:</span> <span class="nx">mgr</span><span class="p">.</span><span class="nf">GetClient</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">Log</span><span class="p">:</span>    <span class="nx">ctrl</span><span class="p">.</span><span class="nx">Log</span><span class="p">.</span><span class="nf">WithName</span><span class="p">(</span><span class="s">&#34;controllers&#34;</span><span class="p">).</span><span class="nf">WithName</span><span class="p">(</span><span class="s">&#34;ScaledJob&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">Scheme</span><span class="p">:</span> <span class="nx">mgr</span><span class="p">.</span><span class="nf">GetScheme</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl"><span class="p">}).</span><span class="nf">SetupWithManager</span><span class="p">(</span><span class="nx">mgr</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">setupLog</span><span class="p">.</span><span class="nf">Error</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;unable to create controller&#34;</span><span class="p">,</span> <span class="s">&#34;controller&#34;</span><span class="p">,</span> <span class="s">&#34;ScaledJob&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">os</span><span class="p">.</span><span class="nf">Exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">mgr</span><span class="p">.</span><span class="nf">Start</span><span class="p">(</span><span class="nx">ctrl</span><span class="p">.</span><span class="nf">SetupSignalHandler</span><span class="p">());</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">setupLog</span><span class="p">.</span><span class="nf">Error</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;problem running manager&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">os</span><span class="p">.</span><span class="nf">Exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="scaledobjectreconciler-处理">ScaledObjectReconciler 处理</h3>
 <p>我们主要关注<a href="https://github.com/kedacore/keda/blob/main/controllers/scaledobject_controller.go#L100" target="_blank" rel="noopener noreffer"><code>Reconcile</code></a>
@@ -350,35 +350,35 @@
 </span><span class="lnt">28
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="o">...</span>
-<span class="c1">// 处理删除ScaledObject的情况
-</span><span class="c1"></span><span class="k">if</span> <span class="nx">scaledObject</span><span class="p">.</span><span class="nf">GetDeletionTimestamp</span><span class="p">()</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-      <span class="c1">//进入垃圾回收（比如停止goroutine中Loop，恢复原有副本数）
-</span><span class="c1"></span>	<span class="k">return</span> <span class="nx">ctrl</span><span class="p">.</span><span class="nx">Result</span><span class="p">{},</span> <span class="nx">r</span><span class="p">.</span><span class="nf">finalizeScaledObject</span><span class="p">(</span><span class="nx">reqLogger</span><span class="p">,</span> <span class="nx">scaledObject</span><span class="p">)</span>
-<span class="p">}</span>
-
-<span class="c1">// 给ScaledObject资源加上Finalizer：finalizer.keda.sh
-</span><span class="c1"></span><span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">r</span><span class="p">.</span><span class="nf">ensureFinalizer</span><span class="p">(</span><span class="nx">reqLogger</span><span class="p">,</span> <span class="nx">scaledObject</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-	<span class="k">return</span> <span class="nx">ctrl</span><span class="p">.</span><span class="nx">Result</span><span class="p">{},</span> <span class="nx">err</span>
-<span class="p">}</span>
-<span class="o">...</span>
-
-
-<span class="c1">// 真正处理ScaledObject资源
-</span><span class="c1"></span><span class="nx">msg</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">r</span><span class="p">.</span><span class="nf">reconcileScaledObject</span><span class="p">(</span><span class="nx">reqLogger</span><span class="p">,</span> <span class="nx">scaledObject</span><span class="p">)</span>
-<span class="c1">// 设置Status字段说明
-</span><span class="c1"></span><span class="nx">conditions</span> <span class="o">:=</span> <span class="nx">scaledObject</span><span class="p">.</span><span class="nx">Status</span><span class="p">.</span><span class="nx">Conditions</span><span class="p">.</span><span class="nf">DeepCopy</span><span class="p">()</span>
-<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-	<span class="nx">reqLogger</span><span class="p">.</span><span class="nf">Error</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">msg</span><span class="p">)</span>
-	<span class="nx">conditions</span><span class="p">.</span><span class="nf">SetReadyCondition</span><span class="p">(</span><span class="nx">metav1</span><span class="p">.</span><span class="nx">ConditionFalse</span><span class="p">,</span> <span class="s">&#34;ScaledObjectCheckFailed&#34;</span><span class="p">,</span> <span class="nx">msg</span><span class="p">)</span>
-	<span class="nx">conditions</span><span class="p">.</span><span class="nf">SetActiveCondition</span><span class="p">(</span><span class="nx">metav1</span><span class="p">.</span><span class="nx">ConditionUnknown</span><span class="p">,</span> <span class="s">&#34;UnkownState&#34;</span><span class="p">,</span> <span class="s">&#34;ScaledObject check failed&#34;</span><span class="p">)</span>
-<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-	<span class="nx">reqLogger</span><span class="p">.</span><span class="nf">V</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="nf">Info</span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span>
-	<span class="nx">conditions</span><span class="p">.</span><span class="nf">SetReadyCondition</span><span class="p">(</span><span class="nx">metav1</span><span class="p">.</span><span class="nx">ConditionTrue</span><span class="p">,</span> <span class="s">&#34;ScaledObjectReady&#34;</span><span class="p">,</span> <span class="nx">msg</span><span class="p">)</span>
-<span class="p">}</span>
-<span class="nx">kedacontrollerutil</span><span class="p">.</span><span class="nf">SetStatusConditions</span><span class="p">(</span><span class="nx">r</span><span class="p">.</span><span class="nx">Client</span><span class="p">,</span> <span class="nx">reqLogger</span><span class="p">,</span> <span class="nx">scaledObject</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">conditions</span><span class="p">)</span>
-<span class="k">return</span> <span class="nx">ctrl</span><span class="p">.</span><span class="nx">Result</span><span class="p">{},</span> <span class="nx">err</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="o">...</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 处理删除ScaledObject的情况
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">if</span> <span class="nx">scaledObject</span><span class="p">.</span><span class="nf">GetDeletionTimestamp</span><span class="p">()</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">//进入垃圾回收（比如停止goroutine中Loop，恢复原有副本数）
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">return</span> <span class="nx">ctrl</span><span class="p">.</span><span class="nx">Result</span><span class="p">{},</span> <span class="nx">r</span><span class="p">.</span><span class="nf">finalizeScaledObject</span><span class="p">(</span><span class="nx">reqLogger</span><span class="p">,</span> <span class="nx">scaledObject</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 给ScaledObject资源加上Finalizer：finalizer.keda.sh
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">r</span><span class="p">.</span><span class="nf">ensureFinalizer</span><span class="p">(</span><span class="nx">reqLogger</span><span class="p">,</span> <span class="nx">scaledObject</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">ctrl</span><span class="p">.</span><span class="nx">Result</span><span class="p">{},</span> <span class="nx">err</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 真正处理ScaledObject资源
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">msg</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">r</span><span class="p">.</span><span class="nf">reconcileScaledObject</span><span class="p">(</span><span class="nx">reqLogger</span><span class="p">,</span> <span class="nx">scaledObject</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 设置Status字段说明
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">conditions</span> <span class="o">:=</span> <span class="nx">scaledObject</span><span class="p">.</span><span class="nx">Status</span><span class="p">.</span><span class="nx">Conditions</span><span class="p">.</span><span class="nf">DeepCopy</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">reqLogger</span><span class="p">.</span><span class="nf">Error</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">msg</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">conditions</span><span class="p">.</span><span class="nf">SetReadyCondition</span><span class="p">(</span><span class="nx">metav1</span><span class="p">.</span><span class="nx">ConditionFalse</span><span class="p">,</span> <span class="s">&#34;ScaledObjectCheckFailed&#34;</span><span class="p">,</span> <span class="nx">msg</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">conditions</span><span class="p">.</span><span class="nf">SetActiveCondition</span><span class="p">(</span><span class="nx">metav1</span><span class="p">.</span><span class="nx">ConditionUnknown</span><span class="p">,</span> <span class="s">&#34;UnkownState&#34;</span><span class="p">,</span> <span class="s">&#34;ScaledObject check failed&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">reqLogger</span><span class="p">.</span><span class="nf">V</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="nf">Info</span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">conditions</span><span class="p">.</span><span class="nf">SetReadyCondition</span><span class="p">(</span><span class="nx">metav1</span><span class="p">.</span><span class="nx">ConditionTrue</span><span class="p">,</span> <span class="s">&#34;ScaledObjectReady&#34;</span><span class="p">,</span> <span class="nx">msg</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nx">kedacontrollerutil</span><span class="p">.</span><span class="nf">SetStatusConditions</span><span class="p">(</span><span class="nx">r</span><span class="p">.</span><span class="nx">Client</span><span class="p">,</span> <span class="nx">reqLogger</span><span class="p">,</span> <span class="nx">scaledObject</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">conditions</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">return</span> <span class="nx">ctrl</span><span class="p">.</span><span class="nx">Result</span><span class="p">{},</span> <span class="nx">err</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p><strong>r.reconcileScaledObject方法：</strong></p>
 <p>这个方法中主要两个动作：</p>
@@ -416,30 +416,30 @@
 </span><span class="lnt">23
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="nx">scaledObjectMetricSpecs</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">r</span><span class="p">.</span><span class="nf">getScaledObjectMetricSpecs</span><span class="p">(</span><span class="nx">logger</span><span class="p">,</span> <span class="nx">scaledObject</span><span class="p">)</span>
-<span class="o">...</span><span class="nx">省略代码</span>
-
-<span class="nx">hpa</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">autoscalingv2beta2</span><span class="p">.</span><span class="nx">HorizontalPodAutoscaler</span><span class="p">{</span>
-	<span class="nx">Spec</span><span class="p">:</span> <span class="nx">autoscalingv2beta2</span><span class="p">.</span><span class="nx">HorizontalPodAutoscalerSpec</span><span class="p">{</span>
-		<span class="nx">MinReplicas</span><span class="p">:</span> <span class="nf">getHPAMinReplicas</span><span class="p">(</span><span class="nx">scaledObject</span><span class="p">),</span>
-		<span class="nx">MaxReplicas</span><span class="p">:</span> <span class="nf">getHPAMaxReplicas</span><span class="p">(</span><span class="nx">scaledObject</span><span class="p">),</span>
-		<span class="nx">Metrics</span><span class="p">:</span>     <span class="nx">scaledObjectMetricSpecs</span><span class="p">,</span>
-		<span class="nx">Behavior</span><span class="p">:</span>    <span class="nx">behavior</span><span class="p">,</span>
-		<span class="nx">ScaleTargetRef</span><span class="p">:</span> <span class="nx">autoscalingv2beta2</span><span class="p">.</span><span class="nx">CrossVersionObjectReference</span><span class="p">{</span>
-			<span class="nx">Name</span><span class="p">:</span>       <span class="nx">scaledObject</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">ScaleTargetRef</span><span class="p">.</span><span class="nx">Name</span><span class="p">,</span>
-			<span class="nx">Kind</span><span class="p">:</span>       <span class="nx">gvkr</span><span class="p">.</span><span class="nx">Kind</span><span class="p">,</span>
-			<span class="nx">APIVersion</span><span class="p">:</span> <span class="nx">gvkr</span><span class="p">.</span><span class="nf">GroupVersion</span><span class="p">().</span><span class="nf">String</span><span class="p">(),</span>
-		<span class="p">}},</span>
-	<span class="nx">ObjectMeta</span><span class="p">:</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">ObjectMeta</span><span class="p">{</span>
-		<span class="nx">Name</span><span class="p">:</span>      <span class="nf">getHPAName</span><span class="p">(</span><span class="nx">scaledObject</span><span class="p">),</span>
-		<span class="nx">Namespace</span><span class="p">:</span> <span class="nx">scaledObject</span><span class="p">.</span><span class="nx">Namespace</span><span class="p">,</span>
-		<span class="nx">Labels</span><span class="p">:</span>    <span class="nx">labels</span><span class="p">,</span>
-	<span class="p">},</span>
-	<span class="nx">TypeMeta</span><span class="p">:</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">TypeMeta</span><span class="p">{</span>
-		<span class="nx">APIVersion</span><span class="p">:</span> <span class="s">&#34;v2beta2&#34;</span><span class="p">,</span>
-	<span class="p">},</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="nx">scaledObjectMetricSpecs</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">r</span><span class="p">.</span><span class="nf">getScaledObjectMetricSpecs</span><span class="p">(</span><span class="nx">logger</span><span class="p">,</span> <span class="nx">scaledObject</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span><span class="nx">省略代码</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">hpa</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">autoscalingv2beta2</span><span class="p">.</span><span class="nx">HorizontalPodAutoscaler</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">Spec</span><span class="p">:</span> <span class="nx">autoscalingv2beta2</span><span class="p">.</span><span class="nx">HorizontalPodAutoscalerSpec</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">MinReplicas</span><span class="p">:</span> <span class="nf">getHPAMinReplicas</span><span class="p">(</span><span class="nx">scaledObject</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">MaxReplicas</span><span class="p">:</span> <span class="nf">getHPAMaxReplicas</span><span class="p">(</span><span class="nx">scaledObject</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">Metrics</span><span class="p">:</span>     <span class="nx">scaledObjectMetricSpecs</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">Behavior</span><span class="p">:</span>    <span class="nx">behavior</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">ScaleTargetRef</span><span class="p">:</span> <span class="nx">autoscalingv2beta2</span><span class="p">.</span><span class="nx">CrossVersionObjectReference</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">Name</span><span class="p">:</span>       <span class="nx">scaledObject</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">ScaleTargetRef</span><span class="p">.</span><span class="nx">Name</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">Kind</span><span class="p">:</span>       <span class="nx">gvkr</span><span class="p">.</span><span class="nx">Kind</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">APIVersion</span><span class="p">:</span> <span class="nx">gvkr</span><span class="p">.</span><span class="nf">GroupVersion</span><span class="p">().</span><span class="nf">String</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}},</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">ObjectMeta</span><span class="p">:</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">ObjectMeta</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">Name</span><span class="p">:</span>      <span class="nf">getHPAName</span><span class="p">(</span><span class="nx">scaledObject</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">Namespace</span><span class="p">:</span> <span class="nx">scaledObject</span><span class="p">.</span><span class="nx">Namespace</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">Labels</span><span class="p">:</span>    <span class="nx">labels</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="p">},</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">TypeMeta</span><span class="p">:</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">TypeMeta</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">APIVersion</span><span class="p">:</span> <span class="s">&#34;v2beta2&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="p">},</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>可以看到创建ScalerObject其实最终也是创建了HPA，其实还是通过HPA本身的特性来控制应用的弹性伸缩。</p>
 <p>其中<a href="https://github.com/kedacore/keda/blob/50bec808f8b4656922797e4bcb7c2b61fabd6d0e/controllers/hpa.go#L135" target="_blank" rel="noopener noreffer">getScaledObjectMetricSpecs</a>
@@ -485,31 +485,31 @@
 </span><span class="lnt">24
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">//当前副本数为0，并是所有scaler属于active状态，则修改副本数为MinReplicaCount 或 1
-</span><span class="c1"></span><span class="k">if</span> <span class="nx">currentScale</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">Replicas</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">isActive</span> <span class="p">{</span>
-	<span class="nx">e</span><span class="p">.</span><span class="nf">scaleFromZero</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="nx">logger</span><span class="p">,</span> <span class="nx">scaledObject</span><span class="p">,</span> <span class="nx">currentScale</span><span class="p">)</span>
-<span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">!</span><span class="nx">isActive</span> <span class="o">&amp;&amp;</span>
-	<span class="nx">currentScale</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">Replicas</span> <span class="p">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span>
-	<span class="p">(</span><span class="nx">scaledObject</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">MinReplicaCount</span> <span class="o">==</span> <span class="kc">nil</span> <span class="o">||</span> <span class="o">*</span><span class="nx">scaledObject</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">MinReplicaCount</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-   <span class="c1">// 所有scaler都处理not active状态，并且当前副本数大于0，且MinReplicaCount设定为0
-</span><span class="c1"></span>   <span class="c1">// 则缩容副本数为0
-</span><span class="c1"></span>	<span class="nx">e</span><span class="p">.</span><span class="nf">scaleToZero</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="nx">logger</span><span class="p">,</span> <span class="nx">scaledObject</span><span class="p">,</span> <span class="nx">currentScale</span><span class="p">)</span>
-<span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">!</span><span class="nx">isActive</span> <span class="o">&amp;&amp;</span>
-	<span class="nx">scaledObject</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">MinReplicaCount</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="o">&amp;&amp;</span>
-	<span class="nx">currentScale</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">Replicas</span> <span class="p">&lt;</span> <span class="o">*</span><span class="nx">scaledObject</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">MinReplicaCount</span> <span class="p">{</span>
-  <span class="c1">// 所有scaler都处理not active状态，并且当前副本数小于MinReplicaCount，则修改为MinReplicaCount
-</span><span class="c1"></span>	<span class="nx">currentScale</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">Replicas</span> <span class="p">=</span> <span class="o">*</span><span class="nx">scaledObject</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">MinReplicaCount</span>
-
-	<span class="nx">err</span> <span class="o">:=</span> <span class="nx">e</span><span class="p">.</span><span class="nf">updateScaleOnScaleTarget</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="nx">scaledObject</span><span class="p">,</span> <span class="nx">currentScale</span><span class="p">)</span>
-	<span class="o">...</span><span class="p">.</span>
-<span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nx">isActive</span> <span class="p">{</span>
-<span class="c1">//  处理active状态，并且副本数大于0，则更新LastActiveTime
-</span><span class="c1"></span>	<span class="nx">e</span><span class="p">.</span><span class="nf">updateLastActiveTime</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="nx">logger</span><span class="p">,</span> <span class="nx">scaledObject</span><span class="p">)</span>
-<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-<span class="c1">// 不处理
-</span><span class="c1"></span>	<span class="nx">logger</span><span class="p">.</span><span class="nf">V</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="nf">Info</span><span class="p">(</span><span class="s">&#34;ScaleTarget no change&#34;</span><span class="p">)</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">//当前副本数为0，并是所有scaler属于active状态，则修改副本数为MinReplicaCount 或 1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">if</span> <span class="nx">currentScale</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">Replicas</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">isActive</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">e</span><span class="p">.</span><span class="nf">scaleFromZero</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="nx">logger</span><span class="p">,</span> <span class="nx">scaledObject</span><span class="p">,</span> <span class="nx">currentScale</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">!</span><span class="nx">isActive</span> <span class="o">&amp;&amp;</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">currentScale</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">Replicas</span> <span class="p">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">(</span><span class="nx">scaledObject</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">MinReplicaCount</span> <span class="o">==</span> <span class="kc">nil</span> <span class="o">||</span> <span class="o">*</span><span class="nx">scaledObject</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">MinReplicaCount</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">// 所有scaler都处理not active状态，并且当前副本数大于0，且MinReplicaCount设定为0
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="c1">// 则缩容副本数为0
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">e</span><span class="p">.</span><span class="nf">scaleToZero</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="nx">logger</span><span class="p">,</span> <span class="nx">scaledObject</span><span class="p">,</span> <span class="nx">currentScale</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">!</span><span class="nx">isActive</span> <span class="o">&amp;&amp;</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">scaledObject</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">MinReplicaCount</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="o">&amp;&amp;</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">currentScale</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">Replicas</span> <span class="p">&lt;</span> <span class="o">*</span><span class="nx">scaledObject</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">MinReplicaCount</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// 所有scaler都处理not active状态，并且当前副本数小于MinReplicaCount，则修改为MinReplicaCount
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">currentScale</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">Replicas</span> <span class="p">=</span> <span class="o">*</span><span class="nx">scaledObject</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">MinReplicaCount</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">err</span> <span class="o">:=</span> <span class="nx">e</span><span class="p">.</span><span class="nf">updateScaleOnScaleTarget</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="nx">scaledObject</span><span class="p">,</span> <span class="nx">currentScale</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="o">...</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nx">isActive</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//  处理active状态，并且副本数大于0，则更新LastActiveTime
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">e</span><span class="p">.</span><span class="nf">updateLastActiveTime</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="nx">logger</span><span class="p">,</span> <span class="nx">scaledObject</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 不处理
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">logger</span><span class="p">.</span><span class="nf">V</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="nf">Info</span><span class="p">(</span><span class="s">&#34;ScaleTarget no change&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="scaledjobreconciler-处理">ScaledJobReconciler 处理</h3>
 <p><code>ScaledJobReconciler</code>相比<code>ScalerObject</code>少了创建HPA的步骤，其余的步骤主要是通过<a href="https://github.com/kedacore/keda/blob/50bec808f8b4656922797e4bcb7c2b61fabd6d0e/pkg/scaling/scale_handler.go#L223" target="_blank" rel="noopener noreffer">checkScaledJobScalers</a>
@@ -547,33 +547,31 @@
 </span><span class="lnt">20
 </span><span class="lnt">21
 </span><span class="lnt">22
-</span><span class="lnt">23
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">h</span> <span class="o">*</span><span class="nx">scaleHandler</span><span class="p">)</span> <span class="nf">DeleteScalableObject</span><span class="p">(</span><span class="nx">scalableObject</span> <span class="kd">interface</span><span class="p">{})</span> <span class="kt">error</span> <span class="p">{</span>
-	<span class="nx">withTriggers</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nf">asDuckWithTriggers</span><span class="p">(</span><span class="nx">scalableObject</span><span class="p">)</span>
-	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-		<span class="nx">h</span><span class="p">.</span><span class="nx">logger</span><span class="p">.</span><span class="nf">Error</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;error duck typing object into withTrigger&#34;</span><span class="p">)</span>
-		<span class="k">return</span> <span class="nx">err</span>
-	<span class="p">}</span>
-
-	<span class="nx">key</span> <span class="o">:=</span> <span class="nf">generateKey</span><span class="p">(</span><span class="nx">withTriggers</span><span class="p">)</span>
-
-	<span class="nx">result</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">h</span><span class="p">.</span><span class="nx">scaleLoopContexts</span><span class="p">.</span><span class="nf">Load</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
-	<span class="k">if</span> <span class="nx">ok</span> <span class="p">{</span>
-		<span class="nx">cancel</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">result</span><span class="p">.(</span><span class="nx">context</span><span class="p">.</span><span class="nx">CancelFunc</span><span class="p">)</span>
-		<span class="k">if</span> <span class="nx">ok</span> <span class="p">{</span>
-			<span class="nf">cancel</span><span class="p">()</span>
-		<span class="p">}</span>
-		<span class="nx">h</span><span class="p">.</span><span class="nx">scaleLoopContexts</span><span class="p">.</span><span class="nf">Delete</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
-	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-		<span class="nx">h</span><span class="p">.</span><span class="nx">logger</span><span class="p">.</span><span class="nf">V</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="nf">Info</span><span class="p">(</span><span class="s">&#34;ScaleObject was not found in controller cache&#34;</span><span class="p">,</span> <span class="s">&#34;key&#34;</span><span class="p">,</span> <span class="nx">key</span><span class="p">)</span>
-	<span class="p">}</span>
-
-	<span class="k">return</span> <span class="kc">nil</span>
-<span class="p">}</span>
-
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">h</span> <span class="o">*</span><span class="nx">scaleHandler</span><span class="p">)</span> <span class="nf">DeleteScalableObject</span><span class="p">(</span><span class="nx">scalableObject</span> <span class="kd">interface</span><span class="p">{})</span> <span class="kt">error</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">withTriggers</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nf">asDuckWithTriggers</span><span class="p">(</span><span class="nx">scalableObject</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">h</span><span class="p">.</span><span class="nx">logger</span><span class="p">.</span><span class="nf">Error</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;error duck typing object into withTrigger&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="nx">err</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">key</span> <span class="o">:=</span> <span class="nf">generateKey</span><span class="p">(</span><span class="nx">withTriggers</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">result</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">h</span><span class="p">.</span><span class="nx">scaleLoopContexts</span><span class="p">.</span><span class="nf">Load</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">ok</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">cancel</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">result</span><span class="p">.(</span><span class="nx">context</span><span class="p">.</span><span class="nx">CancelFunc</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="nx">ok</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nf">cancel</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">h</span><span class="p">.</span><span class="nx">scaleLoopContexts</span><span class="p">.</span><span class="nf">Delete</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">h</span><span class="p">.</span><span class="nx">logger</span><span class="p">.</span><span class="nf">V</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="nf">Info</span><span class="p">(</span><span class="s">&#34;ScaleObject was not found in controller cache&#34;</span><span class="p">,</span> <span class="s">&#34;key&#34;</span><span class="p">,</span> <span class="nx">key</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>ps: 这里的妙啊，学到了</p>
 <h2 id="keda-metrics-apiserver">keda-metrics-apiserver</h2>
@@ -587,12 +585,12 @@
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">ExternalMetricsProvider</span> <span class="kd">interface</span> <span class="p">{</span>
-   <span class="nf">GetExternalMetric</span><span class="p">(</span><span class="nx">namespace</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">metricSelector</span> <span class="nx">labels</span><span class="p">.</span><span class="nx">Selector</span><span class="p">,</span> <span class="nx">info</span> <span class="nx">ExternalMetricInfo</span><span class="p">)</span> <span class="p">(</span><span class="o">*</span><span class="nx">external_metrics</span><span class="p">.</span><span class="nx">ExternalMetricValueList</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
-
-   <span class="nf">ListAllExternalMetrics</span><span class="p">()</span> <span class="p">[]</span><span class="nx">ExternalMetricInfo</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">ExternalMetricsProvider</span> <span class="kd">interface</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="nf">GetExternalMetric</span><span class="p">(</span><span class="nx">namespace</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">metricSelector</span> <span class="nx">labels</span><span class="p">.</span><span class="nx">Selector</span><span class="p">,</span> <span class="nx">info</span> <span class="nx">ExternalMetricInfo</span><span class="p">)</span> <span class="p">(</span><span class="o">*</span><span class="nx">external_metrics</span><span class="p">.</span><span class="nx">ExternalMetricValueList</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">   <span class="nf">ListAllExternalMetrics</span><span class="p">()</span> <span class="p">[]</span><span class="nx">ExternalMetricInfo</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><ul>
 <li>GetExternalMetric 用于返回Scaler的指标，调用<code>scaler.GetMetrics</code>方法</li>
@@ -620,24 +618,24 @@
 </span><span class="lnt">17
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">apiVersion: apiregistration.k8s.io/v1
-kind: APIService
-metadata:
-  labels:
-    app.kubernetes.io/name: v1beta1.external.metrics.k8s.io
-    app.kubernetes.io/version: latest
-    app.kubernetes.io/part-of: keda-operator
-  name: v1beta1.external.metrics.k8s.io
-spec:
-  service:
-    name: keda-metrics-apiserver
-    namespace: keda
-  group: external.metrics.k8s.io
-  version: v1beta1
-  insecureSkipTLSVerify: true
-  groupPriorityMinimum: 100
-  versionPriority: 100
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">apiVersion: apiregistration.k8s.io/v1
+</span></span><span class="line"><span class="cl">kind: APIService
+</span></span><span class="line"><span class="cl">metadata:
+</span></span><span class="line"><span class="cl">  labels:
+</span></span><span class="line"><span class="cl">    app.kubernetes.io/name: v1beta1.external.metrics.k8s.io
+</span></span><span class="line"><span class="cl">    app.kubernetes.io/version: latest
+</span></span><span class="line"><span class="cl">    app.kubernetes.io/part-of: keda-operator
+</span></span><span class="line"><span class="cl">  name: v1beta1.external.metrics.k8s.io
+</span></span><span class="line"><span class="cl">spec:
+</span></span><span class="line"><span class="cl">  service:
+</span></span><span class="line"><span class="cl">    name: keda-metrics-apiserver
+</span></span><span class="line"><span class="cl">    namespace: keda
+</span></span><span class="line"><span class="cl">  group: external.metrics.k8s.io
+</span></span><span class="line"><span class="cl">  version: v1beta1
+</span></span><span class="line"><span class="cl">  insecureSkipTLSVerify: true
+</span></span><span class="line"><span class="cl">  groupPriorityMinimum: 100
+</span></span><span class="line"><span class="cl">  versionPriority: 100
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="实现一个scaler">实现一个Scaler</h2>
 <p>其实有两种Scaler，即上面将的一个pull，一个push的模型，PushScaler多了一个Run方法：</p>
@@ -668,29 +666,29 @@ spec:
 </span><span class="lnt">22
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// Scaler interface
-</span><span class="c1"></span><span class="kd">type</span> <span class="nx">Scaler</span> <span class="kd">interface</span> <span class="p">{</span>
-
-	<span class="c1">// 返回external_metrics.ExternalMetricValue对象，其实就是用于 keda-metrics-apiserver中获取到scaler的指标
-</span><span class="c1"></span>	<span class="nf">GetMetrics</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">metricName</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">metricSelector</span> <span class="nx">labels</span><span class="p">.</span><span class="nx">Selector</span><span class="p">)</span> <span class="p">([]</span><span class="nx">external_metrics</span><span class="p">.</span><span class="nx">ExternalMetricValue</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
-
-	<span class="c1">// 返回v2beta2.MetricSpec 结构，主要用于ScalerObject描述创建HPA的类型和Target指标等
-</span><span class="c1"></span>	<span class="nf">GetMetricSpecForScaling</span><span class="p">()</span> <span class="p">[]</span><span class="nx">v2beta2</span><span class="p">.</span><span class="nx">MetricSpec</span>
-      <span class="c1">// 返回该Scaler是否Active，可能会影响Loop中直接修改副本数
-</span><span class="c1"></span>	<span class="nf">IsActive</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span> <span class="p">(</span><span class="kt">bool</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
-
-	<span class="c1">//调用完一次上面的方法就会调用一次Close 
-</span><span class="c1"></span>	<span class="nf">Close</span><span class="p">()</span> <span class="kt">error</span>
-<span class="p">}</span>
-
-<span class="c1">// PushScaler interface
-</span><span class="c1"></span><span class="kd">type</span> <span class="nx">PushScaler</span> <span class="kd">interface</span> <span class="p">{</span>
-	<span class="nx">Scaler</span>
-
-	<span class="c1">// 通过scaler实现Run方法，往active channel中，写入值，而非上面的直接调用IsActive放回
-</span><span class="c1"></span>	<span class="nf">Run</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">active</span> <span class="kd">chan</span><span class="o">&lt;-</span> <span class="kt">bool</span><span class="p">)</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// Scaler interface
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">type</span> <span class="nx">Scaler</span> <span class="kd">interface</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="c1">// 返回external_metrics.ExternalMetricValue对象，其实就是用于 keda-metrics-apiserver中获取到scaler的指标
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nf">GetMetrics</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">metricName</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">metricSelector</span> <span class="nx">labels</span><span class="p">.</span><span class="nx">Selector</span><span class="p">)</span> <span class="p">([]</span><span class="nx">external_metrics</span><span class="p">.</span><span class="nx">ExternalMetricValue</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="c1">// 返回v2beta2.MetricSpec 结构，主要用于ScalerObject描述创建HPA的类型和Target指标等
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nf">GetMetricSpecForScaling</span><span class="p">()</span> <span class="p">[]</span><span class="nx">v2beta2</span><span class="p">.</span><span class="nx">MetricSpec</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// 返回该Scaler是否Active，可能会影响Loop中直接修改副本数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nf">IsActive</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span> <span class="p">(</span><span class="kt">bool</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="c1">//调用完一次上面的方法就会调用一次Close 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nf">Close</span><span class="p">()</span> <span class="kt">error</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// PushScaler interface
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">type</span> <span class="nx">PushScaler</span> <span class="kd">interface</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">Scaler</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="c1">// 通过scaler实现Run方法，往active channel中，写入值，而非上面的直接调用IsActive放回
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nf">Run</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">active</span> <span class="kd">chan</span><span class="o">&lt;-</span> <span class="kt">bool</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="总结">总结</h2>
 <p>回过头来我们解答下在开头留下的问题：</p>
@@ -755,7 +753,7 @@ spec:
     <div class="copyright"><div class="copyright-line">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
         </div>
 
-        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2016 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">silenceper</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2016 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">silenceper</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
     </div>
 </footer>
 </div><a href="#" class="dynamic-to-top animated faster" id="dynamic-to-top">

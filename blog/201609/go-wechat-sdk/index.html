@@ -37,7 +37,7 @@
                 "url": "\/img\/silenceoer-avatar.jpg",
                 "width":  800 ,
                 "height":  600 
-            },"genre": "posts","keywords": "wechat, go","wordcount":  261 ,
+            },"genre": "posts","keywords": "wechat, go","wordcount":  259 ,
         "url": "\/blog\/201609\/go-wechat-sdk\/","datePublished": "2016-09-16T15:40:59\u002b08:00","dateModified": "2016-09-16T15:40:59\u002b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "silenceper",
@@ -99,7 +99,7 @@
                                 </a>
                             </span></span></div>
             <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2016-09-16&#32;15:40>2016-09-16 15:40</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>约 261 字&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>约 259 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>预计阅读 1 分钟&nbsp;</div>
         </div><div class="toc" id="toc-auto">
                 <h2 class="toc-title">目录</h2>
@@ -144,35 +144,31 @@
 </span><span class="lnt">20
 </span><span class="lnt">21
 </span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go">
-<span class="c1">//配置微信参数
-</span><span class="c1"></span><span class="nx">config</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">wechat</span><span class="p">.</span><span class="nx">Config</span><span class="p">{</span>
-    <span class="nx">AppID</span><span class="p">:</span>          <span class="s">&#34;xxxx&#34;</span><span class="p">,</span>
-    <span class="nx">AppSecret</span><span class="p">:</span>      <span class="s">&#34;xxxx&#34;</span><span class="p">,</span>
-    <span class="nx">Token</span><span class="p">:</span>          <span class="s">&#34;xxxx&#34;</span><span class="p">,</span>
-    <span class="nx">EncodingAESKey</span><span class="p">:</span> <span class="s">&#34;xxxx&#34;</span><span class="p">,</span>
-    <span class="nx">Cache</span><span class="p">:</span>          <span class="nx">memCache</span>
-<span class="p">}</span>
-<span class="nx">wc</span> <span class="o">:=</span> <span class="nx">wechat</span><span class="p">.</span><span class="nf">NewWechat</span><span class="p">(</span><span class="nx">config</span><span class="p">)</span>
-
-<span class="c1">// 传入request和responseWriter
-</span><span class="c1"></span><span class="nx">server</span> <span class="o">:=</span> <span class="nx">wc</span><span class="p">.</span><span class="nf">GetServer</span><span class="p">(</span><span class="nx">request</span><span class="p">,</span> <span class="nx">responseWriter</span><span class="p">)</span>
-<span class="nx">server</span><span class="p">.</span><span class="nf">SetMessageHandler</span><span class="p">(</span><span class="kd">func</span><span class="p">(</span><span class="nx">msg</span> <span class="nx">message</span><span class="p">.</span><span class="nx">MixMessage</span><span class="p">)</span> <span class="o">*</span><span class="nx">message</span><span class="p">.</span><span class="nx">Reply</span> <span class="p">{</span>
-
-    <span class="c1">//回复消息：演示回复用户发送的消息
-</span><span class="c1"></span>    <span class="nx">text</span> <span class="o">:=</span> <span class="nx">message</span><span class="p">.</span><span class="nf">NewText</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">Content</span><span class="p">)</span>
-    <span class="k">return</span> <span class="o">&amp;</span><span class="nx">message</span><span class="p">.</span><span class="nx">Reply</span><span class="p">{</span><span class="nx">message</span><span class="p">.</span><span class="nx">MsgText</span><span class="p">,</span> <span class="nx">text</span><span class="p">}</span>
-<span class="p">})</span>
-
-<span class="nx">server</span><span class="p">.</span><span class="nf">Serve</span><span class="p">()</span>
-<span class="nx">server</span><span class="p">.</span><span class="nf">Send</span><span class="p">()</span>
-
-
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//配置微信参数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">config</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">wechat</span><span class="p">.</span><span class="nx">Config</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">AppID</span><span class="p">:</span>          <span class="s">&#34;xxxx&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">AppSecret</span><span class="p">:</span>      <span class="s">&#34;xxxx&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">Token</span><span class="p">:</span>          <span class="s">&#34;xxxx&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">EncodingAESKey</span><span class="p">:</span> <span class="s">&#34;xxxx&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">Cache</span><span class="p">:</span>          <span class="nx">memCache</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nx">wc</span> <span class="o">:=</span> <span class="nx">wechat</span><span class="p">.</span><span class="nf">NewWechat</span><span class="p">(</span><span class="nx">config</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 传入request和responseWriter
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">server</span> <span class="o">:=</span> <span class="nx">wc</span><span class="p">.</span><span class="nf">GetServer</span><span class="p">(</span><span class="nx">request</span><span class="p">,</span> <span class="nx">responseWriter</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">server</span><span class="p">.</span><span class="nf">SetMessageHandler</span><span class="p">(</span><span class="kd">func</span><span class="p">(</span><span class="nx">msg</span> <span class="nx">message</span><span class="p">.</span><span class="nx">MixMessage</span><span class="p">)</span> <span class="o">*</span><span class="nx">message</span><span class="p">.</span><span class="nx">Reply</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//回复消息：演示回复用户发送的消息
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">text</span> <span class="o">:=</span> <span class="nx">message</span><span class="p">.</span><span class="nf">NewText</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">Content</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="o">&amp;</span><span class="nx">message</span><span class="p">.</span><span class="nx">Reply</span><span class="p">{</span><span class="nx">message</span><span class="p">.</span><span class="nx">MsgText</span><span class="p">,</span> <span class="nx">text</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">})</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">server</span><span class="p">.</span><span class="nf">Serve</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="nx">server</span><span class="p">.</span><span class="nf">Send</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><hr/>
             <figure>
@@ -225,7 +221,7 @@
     <div class="copyright"><div class="copyright-line">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
         </div>
 
-        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2016 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">silenceper</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2016 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">silenceper</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
     </div>
 </footer>
 </div><a href="#" class="dynamic-to-top animated faster" id="dynamic-to-top">

@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>xfsquota：一个便捷的管理xfs磁盘配额的命令行工具 | silenceper</title>
+        <meta name="Description" content="用golang实现的用于设置xfs磁盘配额的工具"><meta property="og:title" content="xfsquota：一个便捷的管理xfs磁盘配额的命令行工具" />
+<meta property="og:description" content="用golang实现的用于设置xfs磁盘配额的工具" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/202204/xfsquota-golang/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-04-23T22:20:59+08:00" />
+<meta property="article:modified_time" content="2022-04-23T22:20:59+08:00" /><meta property="og:site_name" content="silenceper" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="xfsquota：一个便捷的管理xfs磁盘配额的命令行工具"/>
+<meta name="twitter:description" content="用golang实现的用于设置xfs磁盘配额的工具"/>
+<meta name="theme-color" content="#ffffff">
+<meta name="msapplication-TileColor" content="#da532c">
+<link rel="canonical" href="/blog/202204/xfsquota-golang/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="prev" href="/blog/202110/enforce-limit-emptydir-size/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/css/lib/animate/animate.min.css"><meta name="google-site-verification" content="VJ4lE3d3A73DNoyxuuXL_Cuu6MEErPtKXqfAv69pr6E" /><meta name="baidu-site-verification" content="k061nqJczY" /><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "xfsquota：一个便捷的管理xfs磁盘配额的命令行工具",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "\/blog\/202204\/xfsquota-golang\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "\/img\/silenceoer-avatar.jpg",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "posts","keywords": "xfs","wordcount":  606 ,
+        "url": "\/blog\/202204\/xfsquota-golang\/","datePublished": "2022-04-23T22:20:59\u002b08:00","dateModified": "2022-04-23T22:20:59\u002b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "silenceper",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "\/img\/silenceper-avatar.jpg",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": "用golang实现的用于设置xfs磁盘配额的工具"
+    }
+    </script></head>
+    <body><script>
+            if (!window.localStorage || !window.localStorage.getItem('theme')) {window.isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;} else {
+                window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            }
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title animated bounceIn">
+            <a href="/">silenceper</a>
+        </div>
+        <div class="menu"><a class="menu-item" href="/posts/">文章</a><a class="menu-item" href="/tags/">标签</a><a class="menu-item" href="/categories/">分类</a><a class="menu-item" href="/about/">关于</a><a class="menu-item" href="/wechat/">微信SDK</a><a class="menu-item" href="/kubernetes-book/">Kubernetes笔记</a><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-rotate-180 fa-fw"></i>
+            </a>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-wrapper">
+        <div class="header-container">
+            <div class="header-title animated bounceIn">
+                <a href="/">silenceper</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="/wechat/" title="">微信SDK</a><a class="menu-item" href="/kubernetes-book/" title="">Kubernetes笔记</a><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-rotate-180 fa-fw"></i>
+            </a>
+        </div>
+    </div>
+</header>
+
+<script>
+    window.desktopHeaderMode = "fixed";
+    window.mobileHeaderMode = "auto";
+</script>
+<main class="main">
+                <div class="container"><article class="page single"><h1 class="single-title animated flipInX">xfsquota：一个便捷的管理xfs磁盘配额的命令行工具</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author">
+                    <a class="author" href="/" rel="author" target="_blank">
+                        <i class="fas fa-user-circle fa-fw"></i>silenceper
+                    </a>
+                </span>&nbsp;<span class="post-category">收录于&nbsp;
+                            <span>
+                                <a href="/categories/tech">
+                                    <i class="far fa-folder fa-fw"></i>Tech
+                                </a>
+                            </span></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2022-04-23&#32;22:20>2022-04-23 22:20</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>约 606 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>预计阅读 2 分钟&nbsp;</div>
+        </div><div class="toc" id="toc-auto">
+                <h2 class="toc-title">目录</h2>
+                <div class="toc-content" id="toc-content-auto"></div>
+            </div>
+            <div class="toc" id="toc-static">
+                <details>
+                    <summary>
+                        <div class="toc-title">
+                            <span>目录</span>
+                            <span><i class="details icon fas fa-angle-down"></i></span>
+                        </div>
+                    </summary>
+                    <div class="toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#动机">动机</a></li>
+    <li><a href="#主要功能">主要功能</a>
+      <ul>
+        <li><a href="#set-quota">Set Quota</a></li>
+        <li><a href="#get-quota">Get Quota</a></li>
+        <li><a href="#clean-quota">Clean Quota</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+                </details>
+            </div><div class="content"><p><strong>源码地址：</strong><a href="https://github.com/silenceper/xfsquota" target="_blank" rel="noopener noreffer">https://github.com/silenceper/xfsquota</a>
+</p>
+<h2 id="动机">动机</h2>
+<p><strong>在Linux有一个<code>xfs_quota</code>（在<code>xfsprogs</code>工具包下）命令行工具，为什么还用golang实现了？</strong></p>
+<p>主要是要因为最近要实现磁盘quota的控制，同时觉得看了docker内的源码，都是利用cgo的方式来实现的，如果直接用<code>xfs_quota</code>的方式查看配额，无法直观的看到某一个目录下的配额，只能列出所有，并且没有具体目录，类似如下结果，在设置了docker 容器的quota之后查看每个容器的配额，只有<code>Project ID</code>无法判别到具体某个目录：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"> <span class="c1"># xfs_quota -x -c &#34;report&#34; /data</span>
+</span></span><span class="line"><span class="cl"> Project quota on /data <span class="o">(</span>/dev/vdb<span class="o">)</span>
+</span></span><span class="line"><span class="cl">                               Blocks
+</span></span><span class="line"><span class="cl">Project ID       Used       Soft       Hard    Warn/Grace
+</span></span><span class="line"><span class="cl">---------- --------------------------------------------------
+</span></span><span class="line"><span class="cl"><span class="c1">#0            7394256          0          0     00 [--------]</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#2                  8   52428800   52428800     00 [--------]</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#3                  8   52428800   52428800     00 [--------]</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#4                  8   52428800   52428800     00 [--------]</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#5               2360   52428800   52428800     00 [--------]</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#6                  8   52428800   52428800     00 [--------]</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#7                  8   52428800   52428800     00 [--------]</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#8                  8   52428800   52428800     00 [--------]</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#9              10568   52428800   52428800     00 [--------]</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#10                 0   52428800   52428800     00 [--------]</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#11                 0   52428800   52428800     00 [--------]</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#12                 0   52428800   52428800     00 [--------]</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#13                 0   52428800   52428800     00 [--------]</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#14                 0   52428800   52428800     00 [--------]</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#15                 0   52428800   52428800     00 [--------]</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#16                 0   52428800   52428800     00 [--------]</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#17                 0   52428800   52428800     00 [--------]</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#18                 0   52428800   52428800     00 [--------]</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#19                 0   52428800   52428800     00 [--------]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>所有用cgo的方式，可以实现对某个目录的quota查看。</p>
+<h2 id="主要功能">主要功能</h2>
+<ul>
+<li>
+<p>support set quota</p>
+</li>
+<li>
+<p>support get quota</p>
+</li>
+<li>
+<p>clean quota</p>
+</li>
+</ul>
+<p><strong>Usage</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">xfsquota is a tool <span class="k">for</span> managing XFS quotas
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Usage:
+</span></span><span class="line"><span class="cl">  xfsquota <span class="o">[</span>command<span class="o">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Available Commands:
+</span></span><span class="line"><span class="cl">  clean       clean quota information
+</span></span><span class="line"><span class="cl">  completion  Generate the autocompletion script <span class="k">for</span> the specified shell
+</span></span><span class="line"><span class="cl">  get         Get quota information
+</span></span><span class="line"><span class="cl">  <span class="nb">help</span>        Help about any <span class="nb">command</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">set</span>         Set quota information
+</span></span><span class="line"><span class="cl">  version     get version
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Flags:
+</span></span><span class="line"><span class="cl">  -h, --help   <span class="nb">help</span> <span class="k">for</span> xfsquota
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Use <span class="s2">&#34;xfsquota [command] --help&#34;</span> <span class="k">for</span> more information about a command.
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="set-quota">Set Quota</h3>
+<p>set quota size 1MiB ,inodes 20 for path <code>/data/test/quota</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">&gt; xfsquota <span class="nb">set</span> /data/test/quota  -s 1MiB -i <span class="m">20</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">set</span> quota success, path: /data/test/quota, size:1MiB, inodes:20
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="get-quota">Get Quota</h3>
+<p>get quota for path <code>/data/test/quota</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">&gt; xfsquota get /data/test/quota
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">quota Size<span class="o">(</span>bytes<span class="o">)</span>: <span class="m">1048576</span>
+</span></span><span class="line"><span class="cl">quota Inodes: <span class="m">20</span>
+</span></span><span class="line"><span class="cl">diskUsage Size<span class="o">(</span>bytes<span class="o">)</span>: <span class="m">0</span>
+</span></span><span class="line"><span class="cl">diskUsage Inodes: <span class="m">1</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="clean-quota">Clean Quota</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">xfsquota clean /data/test/quota
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr/>
+            <figure>
+                <img src="https://silenceper.oss-cn-beijing.aliyuncs.com/qrcode/search_study_program.png" data-sizes="auto" data-src="https://silenceper.oss-cn-beijing.aliyuncs.com/qrcode/search_study_program.png" class="lazyautosizes ls-is-cached lazyloaded">
+                <figcaption class="image-caption">关注公众号，获取最新文章推送</figcaption>
+            </figure>
+        </div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>本文于 2022-04-23 22:20 更新</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/blog/202204/xfsquota-golang/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share"><span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="/blog/202204/xfsquota-golang/" data-title="xfsquota：一个便捷的管理xfs磁盘配额的命令行工具" data-hashtags="xfs"><i class="fab fa-twitter fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="/blog/202204/xfsquota-golang/" data-hashtag="xfs"><i class="fab fa-facebook-square fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="/blog/202204/xfsquota-golang/" data-title="xfsquota：一个便捷的管理xfs磁盘配额的命令行工具"><i class="fab fa-weibo fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 人人" data-sharer="renren" data-url="/blog/202204/xfsquota-golang/"><i class="fab fa-renren fa-fw"></i>
+</a><a href="javascript:void(0);" title="分享到 百度" data-sharer="baidu" data-url="/blog/202204/xfsquota-golang/" data-title="xfsquota：一个便捷的管理xfs磁盘配额的命令行工具"><i class="loveit it-baidu-fill"></i>
+</a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="/blog/202204/xfsquota-golang/" data-title="xfsquota：一个便捷的管理xfs磁盘配额的命令行工具"><i class="fab fa-evernote fa-fw"></i>
+</a></span></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section><span>
+                        <a href="/tags/xfs">
+                            <i class="fas fa-tag fa-fw"></i>xfs
+                        </a>
+                    </span>&nbsp;</section>
+        <section>
+            <span><a href="javascript:window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/blog/202110/enforce-limit-emptydir-size/" class="prev" rel="prev" title="emptyDir 通过xfs_quota 强制限制大小"><i class="fas fa-angle-left fa-fw"></i>emptyDir 通过xfs_quota 强制限制大小</a></div>
+</div>
+<div class="comment"></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright"><div class="copyright-line">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
+        </div>
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2016 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">silenceper</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+    </div>
+</footer>
+</div><a href="#" class="dynamic-to-top animated faster" id="dynamic-to-top">
+            <span>&nbsp;</span>
+        </a><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$", right: "$", display: false },
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },]
+            });
+        });
+    </script><link rel="stylesheet" href="/css/lib/iconfont/iconfont.min.css"><link rel="stylesheet" href="/css/lib/katex/katex.min.css"><link rel="stylesheet" href="/css/lib/katex/copy-tex.min.css"><script src="/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script src="/js/lib/sharer/sharer.min.js"></script><script src="/js/lib/lazysizes/lazysizes.min.js"></script><script src="/js/lib/katex/katex.min.js"></script><script src="/js/lib/katex/auto-render.min.js"></script><script src="/js/lib/katex/copy-tex.min.js"></script><script src="/js/lib/katex/mhchem.min.js"></script><script src=/js/theme.min.js></script></body>
+</html>

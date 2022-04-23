@@ -37,7 +37,7 @@
                 "url": "\/img\/silenceoer-avatar.jpg",
                 "width":  800 ,
                 "height":  600 
-            },"genre": "posts","keywords": "crd, controller, kubernetes, operator","wordcount":  3763 ,
+            },"genre": "posts","keywords": "crd, controller, kubernetes, operator","wordcount":  3762 ,
         "url": "\/blog\/202005\/custom-resources-and-controllers\/","datePublished": "2020-05-18T18:20:59\u002b08:00","dateModified": "2020-05-18T18:20:59\u002b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "silenceper",
@@ -99,7 +99,7 @@
                                 </a>
                             </span></span></div>
             <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-05-18&#32;18:20>2020-05-18 18:20</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>约 3763 字&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>约 3762 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>预计阅读 8 分钟&nbsp;</div>
         </div><div class="toc" id="toc-auto">
                 <h2 class="toc-title">目录</h2>
@@ -167,14 +167,14 @@
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">samplecontroller.k8s.io/v1alpha1</span><span class="w">
-</span><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">Foo</span><span class="w">
-</span><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">example-foo</span><span class="w">
-</span><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="nt">deploymentName</span><span class="p">:</span><span class="w"> </span><span class="l">example-foo</span><span class="w">
-</span><span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
-</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">samplecontroller.k8s.io/v1alpha1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">Foo</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">example-foo</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">deploymentName</span><span class="p">:</span><span class="w"> </span><span class="l">example-foo</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>它的CRD定义如下：</p>
 <div class="highlight"><div class="chroma">
@@ -202,28 +202,28 @@
 </span><span class="lnt">21
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">apiextensions.k8s.io/v1beta1</span><span class="w">
-</span><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">CustomResourceDefinition</span><span class="w">
-</span><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">foos.samplecontroller.k8s.io</span><span class="w">
-</span><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="l">samplecontroller.k8s.io</span><span class="w">
-</span><span class="w">  </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l">v1alpha1</span><span class="w"> </span><span class="c">#版本</span><span class="w">
-</span><span class="w">  </span><span class="nt">names</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">Foo</span><span class="w"> </span><span class="c"># kind类型</span><span class="w">
-</span><span class="w">    </span><span class="nt">plural</span><span class="p">:</span><span class="w"> </span><span class="l">foos</span><span class="w"> </span><span class="c"># API中使用的名称：/apis/&lt;group&gt;/&lt;version&gt;/&lt;plural&gt;</span><span class="w">
-</span><span class="w">  </span><span class="nt">scope</span><span class="p">:</span><span class="w"> </span><span class="l">Namespaced</span><span class="w"> </span><span class="c"># Namespaced/Cluster，表示该CRD是命令空间属性还是集群属性</span><span class="w">
-</span><span class="w">  </span><span class="nt">validation</span><span class="p">:</span><span class="w"> </span><span class="c"># 对参数进行验证，应用openAPIV3Schema规则</span><span class="w">
-</span><span class="w">    </span><span class="nt">openAPIV3Schema</span><span class="p">:</span><span class="w"> 
-</span><span class="w">      </span><span class="nt">properties</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span><span class="nt">spec</span><span class="p">:</span><span class="w">
-</span><span class="w">          </span><span class="nt">properties</span><span class="p">:</span><span class="w">
-</span><span class="w">            </span><span class="c"># 定义了一个 replicas 字段，类型为integer ，并且在1-10的范围内</span><span class="w">
-</span><span class="w">            </span><span class="nt">replicas</span><span class="p">:</span><span class="w">        
-</span><span class="w">              </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l">integer</span><span class="w">
-</span><span class="w">              </span><span class="nt">minimum</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
-</span><span class="w">              </span><span class="nt">maximum</span><span class="p">:</span><span class="w"> </span><span class="m">10</span><span class="w">
-</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">apiextensions.k8s.io/v1beta1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">CustomResourceDefinition</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">foos.samplecontroller.k8s.io</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="l">samplecontroller.k8s.io</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l">v1alpha1</span><span class="w"> </span><span class="c">#版本</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">names</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">Foo</span><span class="w"> </span><span class="c"># kind类型</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">plural</span><span class="p">:</span><span class="w"> </span><span class="l">foos</span><span class="w"> </span><span class="c"># API中使用的名称：/apis/&lt;group&gt;/&lt;version&gt;/&lt;plural&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">scope</span><span class="p">:</span><span class="w"> </span><span class="l">Namespaced</span><span class="w"> </span><span class="c"># Namespaced/Cluster，表示该CRD是命令空间属性还是集群属性</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">validation</span><span class="p">:</span><span class="w"> </span><span class="c"># 对参数进行验证，应用openAPIV3Schema规则</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">openAPIV3Schema</span><span class="p">:</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">properties</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">properties</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c"># 定义了一个 replicas 字段，类型为integer ，并且在1-10的范围内</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">replicas</span><span class="p">:</span><span class="w">        
+</span></span></span><span class="line"><span class="cl"><span class="w">              </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l">integer</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">              </span><span class="nt">minimum</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">              </span><span class="nt">maximum</span><span class="p">:</span><span class="w"> </span><span class="m">10</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>更多关于crd定义规则可以参考官方文档：<br /><a href="https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/" target="_blank" rel="noopener noreffer">https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/</a>
 <br />
@@ -279,46 +279,46 @@
 </span><span class="lnt">39
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">v1alpha1</span>
-
-<span class="kn">import</span> <span class="p">(</span>
-	<span class="nx">metav1</span> <span class="s">&#34;k8s.io/apimachinery/pkg/apis/meta/v1&#34;</span>
-<span class="p">)</span>
-
-<span class="c1">// +genclient  
-</span><span class="c1">// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
-</span><span class="c1"></span>
-<span class="c1">// Foo is a specification for a Foo resource
-</span><span class="c1"></span><span class="kd">type</span> <span class="nx">Foo</span> <span class="kd">struct</span> <span class="p">{</span>
-	<span class="nx">metav1</span><span class="p">.</span><span class="nx">TypeMeta</span>   <span class="s">`json:&#34;,inline&#34;`</span>
-	<span class="nx">metav1</span><span class="p">.</span><span class="nx">ObjectMeta</span> <span class="s">`json:&#34;metadata,omitempty&#34;`</span>
-
-	<span class="nx">Spec</span>   <span class="nx">FooSpec</span>   <span class="s">`json:&#34;spec&#34;`</span>
-	<span class="nx">Status</span> <span class="nx">FooStatus</span> <span class="s">`json:&#34;status&#34;`</span>
-<span class="p">}</span>
-
-<span class="c1">// FooSpec is the spec for a Foo resource
-</span><span class="c1">// FooSpec 定义
-</span><span class="c1"></span><span class="kd">type</span> <span class="nx">FooSpec</span> <span class="kd">struct</span> <span class="p">{</span>
-	<span class="nx">DeploymentName</span> <span class="kt">string</span> <span class="s">`json:&#34;deploymentName&#34;`</span>
-	<span class="nx">Replicas</span>       <span class="o">*</span><span class="kt">int32</span> <span class="s">`json:&#34;replicas&#34;`</span>
-<span class="p">}</span>
-
-<span class="c1">// FooStatus is the status for a Foo resource
-</span><span class="c1"></span><span class="kd">type</span> <span class="nx">FooStatus</span> <span class="kd">struct</span> <span class="p">{</span>
-	<span class="nx">AvailableReplicas</span> <span class="kt">int32</span> <span class="s">`json:&#34;availableReplicas&#34;`</span>
-<span class="p">}</span>
-
-<span class="c1">// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
-</span><span class="c1"></span>
-<span class="c1">// FooList is a list of Foo resources
-</span><span class="c1"></span><span class="kd">type</span> <span class="nx">FooList</span> <span class="kd">struct</span> <span class="p">{</span>
-	<span class="nx">metav1</span><span class="p">.</span><span class="nx">TypeMeta</span> <span class="s">`json:&#34;,inline&#34;`</span>
-	<span class="nx">metav1</span><span class="p">.</span><span class="nx">ListMeta</span> <span class="s">`json:&#34;metadata&#34;`</span>
-
-	<span class="nx">Items</span> <span class="p">[]</span><span class="nx">Foo</span> <span class="s">`json:&#34;items&#34;`</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">v1alpha1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">metav1</span> <span class="s">&#34;k8s.io/apimachinery/pkg/apis/meta/v1&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// +genclient  
+</span></span></span><span class="line"><span class="cl"><span class="c1">// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="c1">// Foo is a specification for a Foo resource
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">type</span> <span class="nx">Foo</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">metav1</span><span class="p">.</span><span class="nx">TypeMeta</span>   <span class="s">`json:&#34;,inline&#34;`</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">metav1</span><span class="p">.</span><span class="nx">ObjectMeta</span> <span class="s">`json:&#34;metadata,omitempty&#34;`</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">Spec</span>   <span class="nx">FooSpec</span>   <span class="s">`json:&#34;spec&#34;`</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">Status</span> <span class="nx">FooStatus</span> <span class="s">`json:&#34;status&#34;`</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// FooSpec is the spec for a Foo resource
+</span></span></span><span class="line"><span class="cl"><span class="c1">// FooSpec 定义
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">type</span> <span class="nx">FooSpec</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">DeploymentName</span> <span class="kt">string</span> <span class="s">`json:&#34;deploymentName&#34;`</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">Replicas</span>       <span class="o">*</span><span class="kt">int32</span> <span class="s">`json:&#34;replicas&#34;`</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// FooStatus is the status for a Foo resource
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">type</span> <span class="nx">FooStatus</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">AvailableReplicas</span> <span class="kt">int32</span> <span class="s">`json:&#34;availableReplicas&#34;`</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="c1">// FooList is a list of Foo resources
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">type</span> <span class="nx">FooList</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">metav1</span><span class="p">.</span><span class="nx">TypeMeta</span> <span class="s">`json:&#34;,inline&#34;`</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">metav1</span><span class="p">.</span><span class="nx">ListMeta</span> <span class="s">`json:&#34;metadata&#34;`</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">Items</span> <span class="p">[]</span><span class="nx">Foo</span> <span class="s">`json:&#34;items&#34;`</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>其中类似 <code>+k8s:</code> 的注释是代码生成来识别的。<br />
 <br /><a href="https://github.com/kubernetes/sample-controller/blob/master/pkg/apis/samplecontroller/v1alpha1/register.go" target="_blank" rel="noopener noreffer">register.go</a>
@@ -340,14 +340,14 @@
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// 为包中任何类型生成深拷贝方法，可以在局部tag覆盖此默认行为
-</span><span class="c1">// +groupName=example.com
-</span><span class="c1">// +k8s:deepcopy-gen=package
-</span><span class="c1">// +groupName=samplecontroller.k8s.io  // groupName指定API组的全限定名
-</span><span class="c1"></span>
-<span class="c1">// Package v1alpha1 is the v1alpha1 version of the API.
-</span><span class="c1"></span><span class="kn">package</span> <span class="nx">v1alpha1</span> <span class="c1">// import &#34;k8s.io/sample-controller/pkg/apis/samplecontroller/v1alpha1&#34;
-</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// 为包中任何类型生成深拷贝方法，可以在局部tag覆盖此默认行为
+</span></span></span><span class="line"><span class="cl"><span class="c1">// +groupName=example.com
+</span></span></span><span class="line"><span class="cl"><span class="c1">// +k8s:deepcopy-gen=package
+</span></span></span><span class="line"><span class="cl"><span class="c1">// +groupName=samplecontroller.k8s.io  // groupName指定API组的全限定名
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="c1">// Package v1alpha1 is the v1alpha1 version of the API.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kn">package</span> <span class="nx">v1alpha1</span> <span class="c1">// import &#34;k8s.io/sample-controller/pkg/apis/samplecontroller/v1alpha1&#34;
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p><a name="UUUVg"></a></p>
 <h4 id="局部tag">局部tag</h4>
@@ -365,15 +365,13 @@
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
-</span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">sample-controller/pkg/apis/samplecontroller/v1alpha1/zz_generated.deepcopy.go
-sample-controller/pkg/generated/clientset
-sample-controller/pkg/generated/informers
-sample-controller/pkg/generated/informers
-
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sample-controller/pkg/apis/samplecontroller/v1alpha1/zz_generated.deepcopy.go
+</span></span><span class="line"><span class="cl">sample-controller/pkg/generated/clientset
+</span></span><span class="line"><span class="cl">sample-controller/pkg/generated/informers
+</span></span><span class="line"><span class="cl">sample-controller/pkg/generated/informers
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>_前提：code-generator 已经在vendor中，执行 <code>go mod vendor</code> _<br /></p>
 <p><br /><a href="https://github.com/kubernetes/sample-controller/blob/master/hack/update-codegen.sh" target="_blank" rel="noopener noreffer">update-codegen.sh</a>
@@ -387,12 +385,12 @@ sample-controller/pkg/generated/informers
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">bash <span class="s2">&#34;</span><span class="si">${</span><span class="nv">CODEGEN_PKG</span><span class="si">}</span><span class="s2">&#34;</span>/generate-groups.sh <span class="s2">&#34;deepcopy,client,informer,lister&#34;</span> <span class="se">\
-</span><span class="se"></span>  k8s.io/sample-controller/pkg/generated k8s.io/sample-controller/pkg/apis <span class="se">\
-</span><span class="se"></span>  samplecontroller:v1alpha1 <span class="se">\
-</span><span class="se"></span>  --output-base <span class="s2">&#34;</span><span class="k">$(</span>dirname <span class="s2">&#34;</span><span class="si">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="si">}</span><span class="s2">&#34;</span><span class="k">)</span><span class="s2">/../../..&#34;</span> <span class="se">\
-</span><span class="se"></span>  --go-header-file <span class="s2">&#34;</span><span class="si">${</span><span class="nv">SCRIPT_ROOT</span><span class="si">}</span><span class="s2">&#34;</span>/hack/boilerplate.go.txt
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">bash <span class="s2">&#34;</span><span class="si">${</span><span class="nv">CODEGEN_PKG</span><span class="si">}</span><span class="s2">&#34;</span>/generate-groups.sh <span class="s2">&#34;deepcopy,client,informer,lister&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  k8s.io/sample-controller/pkg/generated k8s.io/sample-controller/pkg/apis <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  samplecontroller:v1alpha1 <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --output-base <span class="s2">&#34;</span><span class="k">$(</span>dirname <span class="s2">&#34;</span><span class="si">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="si">}</span><span class="s2">&#34;</span><span class="k">)</span><span class="s2">/../../..&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --go-header-file <span class="s2">&#34;</span><span class="si">${</span><span class="nv">SCRIPT_ROOT</span><span class="si">}</span><span class="s2">&#34;</span>/hack/boilerplate.go.txt
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>完整使用说明：</p>
 <div class="highlight"><div class="chroma">
@@ -412,20 +410,20 @@ sample-controller/pkg/generated/informers
 </span><span class="lnt">13
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">Usage: generate-groups.sh &lt;generators&gt; &lt;output-package&gt; &lt;apis-package&gt; &lt;groups-versions&gt; ...
-
-  &lt;generators&gt;        the generators comma separated to run <span class="o">(</span>deepcopy,defaulter,client,lister,informer<span class="o">)</span> or <span class="s2">&#34;all&#34;</span>.
-  &lt;output-package&gt;    the output package name <span class="o">(</span>e.g. github.com/example/project/pkg/generated<span class="o">)</span>.
-  &lt;apis-package&gt;      the external types dir <span class="o">(</span>e.g. github.com/example/api or github.com/example/project/pkg/apis<span class="o">)</span>.
-  &lt;groups-versions&gt;   the groups and their versions in the format <span class="s2">&#34;groupA:v1,v2 groupB:v1 groupC:v2&#34;</span>, relative
-                      to &lt;api-package&gt;.
-  ...                 arbitrary flags passed to all generator binaries.
-
-
-Examples:
-  generate-groups.sh all             github.com/example/project/pkg/client github.com/example/project/pkg/apis <span class="s2">&#34;foo:v1 bar:v1alpha1,v1beta1&#34;</span>
-  generate-groups.sh deepcopy,client github.com/example/project/pkg/client github.com/example/project/pkg/apis <span class="s2">&#34;foo:v1 bar:v1alpha1,v1beta1&#34;</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">Usage: generate-groups.sh &lt;generators&gt; &lt;output-package&gt; &lt;apis-package&gt; &lt;groups-versions&gt; ...
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  &lt;generators&gt;        the generators comma separated to run <span class="o">(</span>deepcopy,defaulter,client,lister,informer<span class="o">)</span> or <span class="s2">&#34;all&#34;</span>.
+</span></span><span class="line"><span class="cl">  &lt;output-package&gt;    the output package name <span class="o">(</span>e.g. github.com/example/project/pkg/generated<span class="o">)</span>.
+</span></span><span class="line"><span class="cl">  &lt;apis-package&gt;      the external types dir <span class="o">(</span>e.g. github.com/example/api or github.com/example/project/pkg/apis<span class="o">)</span>.
+</span></span><span class="line"><span class="cl">  &lt;groups-versions&gt;   the groups and their versions in the format <span class="s2">&#34;groupA:v1,v2 groupB:v1 groupC:v2&#34;</span>, relative
+</span></span><span class="line"><span class="cl">                      to &lt;api-package&gt;.
+</span></span><span class="line"><span class="cl">  ...                 arbitrary flags passed to all generator binaries.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Examples:
+</span></span><span class="line"><span class="cl">  generate-groups.sh all             github.com/example/project/pkg/client github.com/example/project/pkg/apis <span class="s2">&#34;foo:v1 bar:v1alpha1,v1beta1&#34;</span>
+</span></span><span class="line"><span class="cl">  generate-groups.sh deepcopy,client github.com/example/project/pkg/client github.com/example/project/pkg/apis <span class="s2">&#34;foo:v1 bar:v1alpha1,v1beta1&#34;</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p><a name="mIgAJ"></a></p>
 <h4 id="interface处理">interface{}处理</h4>
@@ -441,14 +439,14 @@ Examples:
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="w">  </span><span class="nt">validation</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">openAPIV3Schema</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="nt">properties</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span><span class="nt">spec</span><span class="p">:</span><span class="w">
-</span><span class="w">          </span><span class="nt">properties</span><span class="p">:</span><span class="w">
-</span><span class="w">            </span><span class="nt">fields</span><span class="p">:</span><span class="w">
-</span><span class="w">              </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l">object</span><span class="w">
-</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="w">  </span><span class="nt">validation</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">openAPIV3Schema</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">properties</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">properties</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">fields</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">              </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l">object</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>我们在spec里面定义了一个fields字段，类型是object（即key ,value的形式），value的值可能是int也可能是string或者bool<br />在type定义的时候我是这么写的，定义为map[string]interface{}</p>
 <div class="highlight"><div class="chroma">
@@ -459,11 +457,11 @@ Examples:
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="l">// FooSpec is the spec for a Foo resource</span><span class="w">
-</span><span class="w"></span><span class="l">type FooSpec struct {</span><span class="w">
-</span><span class="w">	</span><span class="l">Fields map[string]interface{} `json:&#34;fields&#34;`</span><span class="w">
-</span><span class="w"></span>}<span class="w">
-</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="l">// FooSpec is the spec for a Foo resource</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">type FooSpec struct {</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="l">Fields map[string]interface{} `json:&#34;fields&#34;`</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span>}<span class="w">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>当在代码生成的时候，发现会报错：</p>
 <div class="highlight"><div class="chroma">
@@ -476,13 +474,13 @@ Examples:
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="l">Generating deepcopy funcs</span><span class="w">
-</span><span class="w"></span><span class="l">F0518 17:53:33.568567   39986 deepcopy.go:750] DeepCopy of &#34;interface{}&#34; is unsupported. Instead, use named interfaces with DeepCopy&lt;named-interface&gt; as one of the methods.</span><span class="w">
-</span><span class="w"></span><span class="nt">goroutine 1 [running]</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="l">k8s.io/klog/v2.stacks(0xc000132001, 0xc0002e9000, 0xad, 0xfd)</span><span class="w">
-</span><span class="w">	</span><span class="l">/Users/silenceper/workspace/golang/pkg/mod/k8s.io/klog/v2@v2.0.0/klog.go:972 +0xb8</span><span class="w">
-</span><span class="w"> </span><span class="l">......</span><span class="w">
-</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="l">Generating deepcopy funcs</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">F0518 17:53:33.568567   39986 deepcopy.go:750] DeepCopy of &#34;interface{}&#34; is unsupported. Instead, use named interfaces with DeepCopy&lt;named-interface&gt; as one of the methods.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">goroutine 1 [running]</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">k8s.io/klog/v2.stacks(0xc000132001, 0xc0002e9000, 0xad, 0xfd)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="l">/Users/silenceper/workspace/golang/pkg/mod/k8s.io/klog/v2@v2.0.0/klog.go:972 +0xb8</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="l">......</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>遇到这种问题，需要自己实现深拷贝，例如这种：</p>
 <div class="highlight"><div class="chroma">
@@ -518,36 +516,36 @@ Examples:
 </span><span class="lnt">29
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="l">type HelmReleaseSpec struct {</span><span class="w">
-</span><span class="w">    </span><span class="l">HelmValues    `json:&#34;,inline&#34;`</span><span class="w">
-</span><span class="w"></span>}<span class="w">
-</span><span class="w"> 
-</span><span class="w"></span><span class="l">// +k8s:deepcopy-gen=false</span><span class="w">
-</span><span class="w"></span><span class="l">type HelmValues struct {</span><span class="w">
-</span><span class="w">    </span><span class="l">helm.Values `json:&#34;values,omitempty&#34;`</span><span class="w">
-</span><span class="w"></span>}<span class="w">
-</span><span class="w"> 
-</span><span class="w"></span><span class="l">// helm.Values定义：</span><span class="w">
-</span><span class="w"></span><span class="l">type Values map[string]interface{}</span><span class="w">
-</span><span class="w"> 
-</span><span class="w"></span><span class="l">// 自己实现深拷贝</span><span class="w">
-</span><span class="w"></span><span class="l">func (in *HelmValues) DeepCopyInto(out *HelmValues) {</span><span class="w">
-</span><span class="w">    </span><span class="l">if in == nil {</span><span class="w">
-</span><span class="w">        </span><span class="l">return</span><span class="w">
-</span><span class="w">    </span>}<span class="w">
-</span><span class="w"> 
-</span><span class="w">    </span><span class="l">b, err := yaml.Marshal(in.Values)</span><span class="w">
-</span><span class="w">    </span><span class="l">if err != nil {</span><span class="w">
-</span><span class="w">        </span><span class="l">return</span><span class="w">
-</span><span class="w">    </span>}<span class="w">
-</span><span class="w">    </span><span class="l">var values helm.Values</span><span class="w">
-</span><span class="w">    </span><span class="l">err = yaml.Unmarshal(b, &amp;values)</span><span class="w">
-</span><span class="w">    </span><span class="l">if err != nil {</span><span class="w">
-</span><span class="w">        </span><span class="l">return</span><span class="w">
-</span><span class="w">    </span>}<span class="w">
-</span><span class="w">    </span><span class="l">out.Values = values</span><span class="w">
-</span><span class="w"></span>}<span class="w"> 
-</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="l">type HelmReleaseSpec struct {</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="l">HelmValues    `json:&#34;,inline&#34;`</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span>}<span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">// +k8s:deepcopy-gen=false</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">type HelmValues struct {</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="l">helm.Values `json:&#34;values,omitempty&#34;`</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span>}<span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">// helm.Values定义：</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">type Values map[string]interface{}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">// 自己实现深拷贝</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">func (in *HelmValues) DeepCopyInto(out *HelmValues) {</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="l">if in == nil {</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="l">return</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>}<span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="l">b, err := yaml.Marshal(in.Values)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="l">if err != nil {</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="l">return</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>}<span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="l">var values helm.Values</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="l">err = yaml.Unmarshal(b, &amp;values)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="l">if err != nil {</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="l">return</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>}<span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="l">out.Values = values</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span>}<span class="w"> 
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p><a name="Qu2Ju"></a></p>
 <h3 id="controller编写">Controller编写</h3>
@@ -618,63 +616,63 @@ Examples:
 </span><span class="lnt">56
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">NewController</span><span class="p">(</span>
-	<span class="nx">kubeclientset</span> <span class="nx">kubernetes</span><span class="p">.</span><span class="nx">Interface</span><span class="p">,</span>
-	<span class="nx">sampleclientset</span> <span class="nx">clientset</span><span class="p">.</span><span class="nx">Interface</span><span class="p">,</span>
-	<span class="nx">deploymentInformer</span> <span class="nx">appsinformers</span><span class="p">.</span><span class="nx">DeploymentInformer</span><span class="p">,</span>
-	<span class="nx">fooInformer</span> <span class="nx">informers</span><span class="p">.</span><span class="nx">FooInformer</span><span class="p">)</span> <span class="o">*</span><span class="nx">Controller</span> <span class="p">{</span>
-    <span class="o">...</span><span class="p">.</span>
-		<span class="nx">fooInformer</span><span class="p">.</span><span class="nf">Informer</span><span class="p">().</span><span class="nf">AddEventHandler</span><span class="p">(</span><span class="nx">cache</span><span class="p">.</span><span class="nx">ResourceEventHandlerFuncs</span><span class="p">{</span>
-		<span class="nx">AddFunc</span><span class="p">:</span> <span class="nx">controller</span><span class="p">.</span><span class="nx">enqueueFoo</span><span class="p">,</span>
-		<span class="nx">UpdateFunc</span><span class="p">:</span> <span class="kd">func</span><span class="p">(</span><span class="nx">old</span><span class="p">,</span> <span class="nx">new</span> <span class="kd">interface</span><span class="p">{})</span> <span class="p">{</span>
-			<span class="nx">controller</span><span class="p">.</span><span class="nf">enqueueFoo</span><span class="p">(</span><span class="nx">new</span><span class="p">)</span>
-		<span class="p">},</span>
-	<span class="p">})</span>
-    <span class="o">...</span><span class="p">.</span>
-<span class="p">}</span>
-<span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Controller</span><span class="p">)</span> <span class="nf">Run</span><span class="p">(</span><span class="nx">threadiness</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">stopCh</span> <span class="o">&lt;-</span><span class="kd">chan</span> <span class="kd">struct</span><span class="p">{})</span> <span class="kt">error</span> <span class="p">{</span>
-    
-    <span class="c1">// Launch two workers to process Foo resources
-</span><span class="c1"></span>	<span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">threadiness</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
-		<span class="k">go</span> <span class="nx">wait</span><span class="p">.</span><span class="nf">Until</span><span class="p">(</span><span class="nx">c</span><span class="p">.</span><span class="nx">runWorker</span><span class="p">,</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">,</span> <span class="nx">stopCh</span><span class="p">)</span>
-	<span class="p">}</span>
-<span class="p">}</span>
-<span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Controller</span><span class="p">)</span> <span class="nf">runWorker</span><span class="p">()</span> <span class="p">{</span>
-	<span class="k">for</span> <span class="nx">c</span><span class="p">.</span><span class="nf">processNextWorkItem</span><span class="p">()</span> <span class="p">{</span>
-	<span class="p">}</span>
-<span class="p">}</span>
-<span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Controller</span><span class="p">)</span> <span class="nf">processNextWorkItem</span><span class="p">()</span> <span class="kt">bool</span> <span class="p">{</span>
-	<span class="nx">obj</span><span class="p">,</span> <span class="nx">shutdown</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">workqueue</span><span class="p">.</span><span class="nf">Get</span><span class="p">()</span>
-    <span class="o">...</span>
-    
-    <span class="nx">err</span> <span class="o">:=</span> <span class="kd">func</span><span class="p">(</span><span class="nx">obj</span> <span class="kd">interface</span><span class="p">{})</span> <span class="kt">error</span> <span class="p">{</span>
-    	<span class="o">...</span>
-        <span class="c1">// Run the syncHandler, passing it the namespace/name string of the
-</span><span class="c1"></span>		<span class="c1">// Foo resource to be synced.
-</span><span class="c1"></span>		<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nf">syncHandler</span><span class="p">(</span><span class="nx">key</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-			<span class="c1">// Put the item back on the workqueue to handle any transient errors.
-</span><span class="c1"></span>			<span class="nx">c</span><span class="p">.</span><span class="nx">workqueue</span><span class="p">.</span><span class="nf">AddRateLimited</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
-			<span class="k">return</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="s">&#34;error syncing &#39;%s&#39;: %s, requeuing&#34;</span><span class="p">,</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">err</span><span class="p">.</span><span class="nf">Error</span><span class="p">())</span>
-		<span class="p">}</span>
-        <span class="o">...</span>
-    <span class="p">}(</span><span class="nx">obj</span><span class="p">)</span>
-    <span class="o">...</span>
-<span class="p">}</span>
-<span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Controller</span><span class="p">)</span> <span class="nf">syncHandler</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
-    <span class="c1">// Convert the namespace/name string into a distinct namespace and name
-</span><span class="c1"></span>	<span class="nx">namespace</span><span class="p">,</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">cache</span><span class="p">.</span><span class="nf">SplitMetaNamespaceKey</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
-	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-		<span class="nx">utilruntime</span><span class="p">.</span><span class="nf">HandleError</span><span class="p">(</span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="s">&#34;invalid resource key: %s&#34;</span><span class="p">,</span> <span class="nx">key</span><span class="p">))</span>
-		<span class="k">return</span> <span class="kc">nil</span>
-	<span class="p">}</span>
-    
-    <span class="c1">//TODO 处理逻辑
-</span><span class="c1"></span><span class="p">}</span>
-<span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Controller</span><span class="p">)</span> <span class="nf">enqueueFoo</span><span class="p">(</span><span class="nx">obj</span> <span class="kd">interface</span><span class="p">{})</span> <span class="p">{</span>
-    <span class="o">...</span>
-	<span class="nx">c</span><span class="p">.</span><span class="nx">workqueue</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">NewController</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">kubeclientset</span> <span class="nx">kubernetes</span><span class="p">.</span><span class="nx">Interface</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">sampleclientset</span> <span class="nx">clientset</span><span class="p">.</span><span class="nx">Interface</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">deploymentInformer</span> <span class="nx">appsinformers</span><span class="p">.</span><span class="nx">DeploymentInformer</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">fooInformer</span> <span class="nx">informers</span><span class="p">.</span><span class="nx">FooInformer</span><span class="p">)</span> <span class="o">*</span><span class="nx">Controller</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="o">...</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">fooInformer</span><span class="p">.</span><span class="nf">Informer</span><span class="p">().</span><span class="nf">AddEventHandler</span><span class="p">(</span><span class="nx">cache</span><span class="p">.</span><span class="nx">ResourceEventHandlerFuncs</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">AddFunc</span><span class="p">:</span> <span class="nx">controller</span><span class="p">.</span><span class="nx">enqueueFoo</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">UpdateFunc</span><span class="p">:</span> <span class="kd">func</span><span class="p">(</span><span class="nx">old</span><span class="p">,</span> <span class="nx">new</span> <span class="kd">interface</span><span class="p">{})</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">controller</span><span class="p">.</span><span class="nf">enqueueFoo</span><span class="p">(</span><span class="nx">new</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="p">},</span>
+</span></span><span class="line"><span class="cl">	<span class="p">})</span>
+</span></span><span class="line"><span class="cl">    <span class="o">...</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Controller</span><span class="p">)</span> <span class="nf">Run</span><span class="p">(</span><span class="nx">threadiness</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">stopCh</span> <span class="o">&lt;-</span><span class="kd">chan</span> <span class="kd">struct</span><span class="p">{})</span> <span class="kt">error</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1">// Launch two workers to process Foo resources
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">threadiness</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">go</span> <span class="nx">wait</span><span class="p">.</span><span class="nf">Until</span><span class="p">(</span><span class="nx">c</span><span class="p">.</span><span class="nx">runWorker</span><span class="p">,</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">,</span> <span class="nx">stopCh</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Controller</span><span class="p">)</span> <span class="nf">runWorker</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="nx">c</span><span class="p">.</span><span class="nf">processNextWorkItem</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Controller</span><span class="p">)</span> <span class="nf">processNextWorkItem</span><span class="p">()</span> <span class="kt">bool</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">obj</span><span class="p">,</span> <span class="nx">shutdown</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">workqueue</span><span class="p">.</span><span class="nf">Get</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="o">...</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="nx">err</span> <span class="o">:=</span> <span class="kd">func</span><span class="p">(</span><span class="nx">obj</span> <span class="kd">interface</span><span class="p">{})</span> <span class="kt">error</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    	<span class="o">...</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// Run the syncHandler, passing it the namespace/name string of the
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="c1">// Foo resource to be synced.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nf">syncHandler</span><span class="p">(</span><span class="nx">key</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="c1">// Put the item back on the workqueue to handle any transient errors.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>			<span class="nx">c</span><span class="p">.</span><span class="nx">workqueue</span><span class="p">.</span><span class="nf">AddRateLimited</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="s">&#34;error syncing &#39;%s&#39;: %s, requeuing&#34;</span><span class="p">,</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">err</span><span class="p">.</span><span class="nf">Error</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">...</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}(</span><span class="nx">obj</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="o">...</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Controller</span><span class="p">)</span> <span class="nf">syncHandler</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// Convert the namespace/name string into a distinct namespace and name
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">namespace</span><span class="p">,</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">cache</span><span class="p">.</span><span class="nf">SplitMetaNamespaceKey</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">utilruntime</span><span class="p">.</span><span class="nf">HandleError</span><span class="p">(</span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="s">&#34;invalid resource key: %s&#34;</span><span class="p">,</span> <span class="nx">key</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1">//TODO 处理逻辑
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Controller</span><span class="p">)</span> <span class="nf">enqueueFoo</span><span class="p">(</span><span class="nx">obj</span> <span class="kd">interface</span><span class="p">{})</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="o">...</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">c</span><span class="p">.</span><span class="nx">workqueue</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><ul>
 <li>在NewController中通过fooInformer添加 <code>AddEventHandler</code> ，执行 <code>enqueueFoo</code> </li>
@@ -706,23 +704,23 @@ Examples:
 </span><span class="lnt">16
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go">
-<span class="nx">exampleClient</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">clientset</span><span class="p">.</span><span class="nf">NewForConfig</span><span class="p">(</span><span class="nx">cfg</span><span class="p">)</span>
-<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-    <span class="nx">klog</span><span class="p">.</span><span class="nf">Fatalf</span><span class="p">(</span><span class="s">&#34;Error building example clientset: %s&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">.</span><span class="nf">Error</span><span class="p">())</span>
-<span class="p">}</span>	
-<span class="nx">kubeInformerFactory</span> <span class="o">:=</span> <span class="nx">kubeinformers</span><span class="p">.</span><span class="nf">NewSharedInformerFactory</span><span class="p">(</span><span class="nx">kubeClient</span><span class="p">,</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="o">*</span><span class="mi">30</span><span class="p">)</span>
-<span class="nx">exampleInformerFactory</span> <span class="o">:=</span> <span class="nx">informers</span><span class="p">.</span><span class="nf">NewSharedInformerFactory</span><span class="p">(</span><span class="nx">exampleClient</span><span class="p">,</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="o">*</span><span class="mi">30</span><span class="p">)</span>
-
-<span class="nx">controller</span> <span class="o">:=</span> <span class="nf">NewController</span><span class="p">(</span><span class="nx">kubeClient</span><span class="p">,</span> <span class="nx">exampleClient</span><span class="p">,</span>
-                            <span class="nx">kubeInformerFactory</span><span class="p">.</span><span class="nf">Apps</span><span class="p">().</span><span class="nf">V1</span><span class="p">().</span><span class="nf">Deployments</span><span class="p">(),</span>
-                            <span class="nx">exampleInformerFactory</span><span class="p">.</span><span class="nf">Samplecontroller</span><span class="p">().</span><span class="nf">V1alpha1</span><span class="p">().</span><span class="nf">Foos</span><span class="p">())</span>
-
-<span class="c1">// notice that there is no need to run Start methods in a separate goroutine. (i.e. go kubeInformerFactory.Start(stopCh)
-</span><span class="c1">// Start method is non-blocking and runs all registered informers in a dedicated goroutine.
-</span><span class="c1"></span><span class="nx">kubeInformerFactory</span><span class="p">.</span><span class="nf">Start</span><span class="p">(</span><span class="nx">stopCh</span><span class="p">)</span>
-<span class="nx">exampleInformerFactory</span><span class="p">.</span><span class="nf">Start</span><span class="p">(</span><span class="nx">stopCh</span><span class="p">)</span>   <span class="c1">//启动informer
-</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">exampleClient</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">clientset</span><span class="p">.</span><span class="nf">NewForConfig</span><span class="p">(</span><span class="nx">cfg</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">klog</span><span class="p">.</span><span class="nf">Fatalf</span><span class="p">(</span><span class="s">&#34;Error building example clientset: %s&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">.</span><span class="nf">Error</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>	
+</span></span><span class="line"><span class="cl"><span class="nx">kubeInformerFactory</span> <span class="o">:=</span> <span class="nx">kubeinformers</span><span class="p">.</span><span class="nf">NewSharedInformerFactory</span><span class="p">(</span><span class="nx">kubeClient</span><span class="p">,</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="o">*</span><span class="mi">30</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">exampleInformerFactory</span> <span class="o">:=</span> <span class="nx">informers</span><span class="p">.</span><span class="nf">NewSharedInformerFactory</span><span class="p">(</span><span class="nx">exampleClient</span><span class="p">,</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="o">*</span><span class="mi">30</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">controller</span> <span class="o">:=</span> <span class="nf">NewController</span><span class="p">(</span><span class="nx">kubeClient</span><span class="p">,</span> <span class="nx">exampleClient</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                            <span class="nx">kubeInformerFactory</span><span class="p">.</span><span class="nf">Apps</span><span class="p">().</span><span class="nf">V1</span><span class="p">().</span><span class="nf">Deployments</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl">                            <span class="nx">exampleInformerFactory</span><span class="p">.</span><span class="nf">Samplecontroller</span><span class="p">().</span><span class="nf">V1alpha1</span><span class="p">().</span><span class="nf">Foos</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// notice that there is no need to run Start methods in a separate goroutine. (i.e. go kubeInformerFactory.Start(stopCh)
+</span></span></span><span class="line"><span class="cl"><span class="c1">// Start method is non-blocking and runs all registered informers in a dedicated goroutine.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">kubeInformerFactory</span><span class="p">.</span><span class="nf">Start</span><span class="p">(</span><span class="nx">stopCh</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">exampleInformerFactory</span><span class="p">.</span><span class="nf">Start</span><span class="p">(</span><span class="nx">stopCh</span><span class="p">)</span>   <span class="c1">//启动informer
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>就是调用通过coge-gen生成代码创建informer并启动，创建client。<br />
 <br />**思考：为什么要通过队列来控制数据的变化？ **<br />我觉得用队列一方面是解耦，因为往往一个Controller里面可能要通过informer监听各类资源对象，通过队列借助了各个informer的依赖。另一方便可以通过不同类型的队列比如限速队列，延迟队列达到不同的并发控制。<br /></p>
@@ -801,7 +799,7 @@ Examples:
     <div class="copyright"><div class="copyright-line">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
         </div>
 
-        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2016 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">silenceper</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2016 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">silenceper</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
     </div>
 </footer>
 </div><a href="#" class="dynamic-to-top animated faster" id="dynamic-to-top">

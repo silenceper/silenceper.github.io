@@ -37,7 +37,7 @@
                 "url": "\/img\/silenceoer-avatar.jpg",
                 "width":  800 ,
                 "height":  600 
-            },"genre": "posts","keywords": "go, pool","wordcount":  2529 ,
+            },"genre": "posts","keywords": "go, pool","wordcount":  2526 ,
         "url": "\/blog\/201611\/tcp_connection_pool\/","datePublished": "2016-11-20T02:40:59\u002b08:00","dateModified": "2016-11-20T02:40:59\u002b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "silenceper",
@@ -99,7 +99,7 @@
                                 </a>
                             </span></span></div>
             <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2016-11-20&#32;02:40>2016-11-20 02:40</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>约 2529 字&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>约 2526 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>预计阅读 6 分钟&nbsp;</div>
         </div><div class="toc" id="toc-auto">
                 <h2 class="toc-title">目录</h2>
@@ -161,10 +161,10 @@
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go">	<span class="nx">db</span><span class="p">.</span><span class="nf">SetMaxIdleConns</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="c1">//连接池中最大空闲连接数
-</span><span class="c1"></span>	<span class="nx">db</span><span class="p">.</span><span class="nf">SetMaxOpenConns</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="c1">//打开的最大连接数
-</span><span class="c1"></span>	<span class="nx">db</span><span class="p">.</span><span class="nf">SetConnMaxLifetime</span><span class="p">(</span><span class="mi">300</span><span class="o">*</span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span><span class="c1">//连接的最大空闲时间(可选)
-</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl">	<span class="nx">db</span><span class="p">.</span><span class="nf">SetMaxIdleConns</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="c1">//连接池中最大空闲连接数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">db</span><span class="p">.</span><span class="nf">SetMaxOpenConns</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="c1">//打开的最大连接数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">db</span><span class="p">.</span><span class="nf">SetConnMaxLifetime</span><span class="p">(</span><span class="mi">300</span><span class="o">*</span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span><span class="c1">//连接的最大空闲时间(可选)
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>注：如果<code>MaxIdleConns</code>大于0并且<code>MaxOpenConns</code>小于<code>MaxIdleConns </code>,那么会将<code>MaxIdleConns</code>置为<code>MaxOpenConns</code></p>
@@ -206,45 +206,43 @@
 </span><span class="lnt">32
 </span><span class="lnt">33
 </span><span class="lnt">34
-</span><span class="lnt">35
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">DB</span> <span class="kd">struct</span> <span class="p">{</span>
-	<span class="c1">//具体的数据库实现的interface{},
-</span><span class="c1"></span>	<span class="c1">//例如https://github.com/go-sql-driver/mysql 就注册并并实现了driver.Open方法，主要是在里面实现了一些鉴权的操作
-</span><span class="c1"></span>	<span class="nx">driver</span> <span class="nx">driver</span><span class="p">.</span><span class="nx">Driver</span>
-	<span class="c1">//dsn连接
-</span><span class="c1"></span>	<span class="nx">dsn</span>    <span class="kt">string</span>
-	<span class="c1">//在prepared statement中用到
-</span><span class="c1"></span>	<span class="nx">numClosed</span> <span class="kt">uint64</span>
-
-	<span class="nx">mu</span>           <span class="nx">sync</span><span class="p">.</span><span class="nx">Mutex</span> <span class="c1">// protects following fields
-</span><span class="c1"></span>	<span class="c1">//可使用的空闲的链接
-</span><span class="c1"></span>	<span class="nx">freeConn</span>     <span class="p">[]</span><span class="o">*</span><span class="nx">driverConn</span>
-	<span class="c1">//用来传递连接请求的管道
-</span><span class="c1"></span>	<span class="nx">connRequests</span> <span class="p">[]</span><span class="kd">chan</span> <span class="nx">connRequest</span>
-	<span class="c1">//当前打开的连接数
-</span><span class="c1"></span>	<span class="nx">numOpen</span>      <span class="kt">int</span>
-	<span class="c1">//当需要创建新的链接的时候，往这个管道中发送一个struct数据，
-</span><span class="c1"></span>	<span class="c1">//因为在Open数据库的就启用了一个goroutine执行connectionOpener方法读取管道中的数据
-</span><span class="c1"></span>	<span class="nx">openerCh</span>    <span class="kd">chan</span> <span class="kd">struct</span><span class="p">{}</span>
-	<span class="c1">//数据库是否已经被关闭
-</span><span class="c1"></span>	<span class="nx">closed</span>      <span class="kt">bool</span>
-	<span class="c1">//用来保证锁被正确的关闭
-</span><span class="c1"></span>	<span class="nx">dep</span>         <span class="kd">map</span><span class="p">[</span><span class="nx">finalCloser</span><span class="p">]</span><span class="nx">depSet</span>
-	<span class="c1">//stacktrace of last conn&#39;s put; debug only
-</span><span class="c1"></span>	<span class="nx">lastPut</span>     <span class="kd">map</span><span class="p">[</span><span class="o">*</span><span class="nx">driverConn</span><span class="p">]</span><span class="kt">string</span>
-	<span class="c1">//最大空闲连接
-</span><span class="c1"></span>	<span class="nx">maxIdle</span>     <span class="kt">int</span>
-	<span class="c1">//最大打开的连接
-</span><span class="c1"></span>	<span class="nx">maxOpen</span>     <span class="kt">int</span>
-	<span class="c1">//连接的最大空闲时间
-</span><span class="c1"></span>	<span class="nx">maxLifetime</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Duration</span>
-	<span class="c1">//定时清理空闲连接的管道
-</span><span class="c1"></span>	<span class="nx">cleanerCh</span>   <span class="kd">chan</span> <span class="kd">struct</span><span class="p">{}</span>
-<span class="p">}</span>
-
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">DB</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">//具体的数据库实现的interface{},
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="c1">//例如https://github.com/go-sql-driver/mysql 就注册并并实现了driver.Open方法，主要是在里面实现了一些鉴权的操作
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">driver</span> <span class="nx">driver</span><span class="p">.</span><span class="nx">Driver</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">//dsn连接
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">dsn</span>    <span class="kt">string</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">//在prepared statement中用到
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">numClosed</span> <span class="kt">uint64</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">mu</span>           <span class="nx">sync</span><span class="p">.</span><span class="nx">Mutex</span> <span class="c1">// protects following fields
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="c1">//可使用的空闲的链接
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">freeConn</span>     <span class="p">[]</span><span class="o">*</span><span class="nx">driverConn</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">//用来传递连接请求的管道
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">connRequests</span> <span class="p">[]</span><span class="kd">chan</span> <span class="nx">connRequest</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">//当前打开的连接数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">numOpen</span>      <span class="kt">int</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">//当需要创建新的链接的时候，往这个管道中发送一个struct数据，
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="c1">//因为在Open数据库的就启用了一个goroutine执行connectionOpener方法读取管道中的数据
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">openerCh</span>    <span class="kd">chan</span> <span class="kd">struct</span><span class="p">{}</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">//数据库是否已经被关闭
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">closed</span>      <span class="kt">bool</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">//用来保证锁被正确的关闭
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">dep</span>         <span class="kd">map</span><span class="p">[</span><span class="nx">finalCloser</span><span class="p">]</span><span class="nx">depSet</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">//stacktrace of last conn&#39;s put; debug only
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">lastPut</span>     <span class="kd">map</span><span class="p">[</span><span class="o">*</span><span class="nx">driverConn</span><span class="p">]</span><span class="kt">string</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">//最大空闲连接
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">maxIdle</span>     <span class="kt">int</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">//最大打开的连接
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">maxOpen</span>     <span class="kt">int</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">//连接的最大空闲时间
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">maxLifetime</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Duration</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">//定时清理空闲连接的管道
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">cleanerCh</span>   <span class="kd">chan</span> <span class="kd">struct</span><span class="p">{}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>看一个查询数据库的例子：</p>
 <div class="highlight"><div class="chroma">
@@ -252,8 +250,8 @@
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">	rows, err := db.Query(&#34;select * from table1&#34;)
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">	rows, err := db.Query(&#34;select * from table1&#34;)
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>在调用<code>db.Query</code>方法如下：</p>
 <div class="highlight"><div class="chroma">
@@ -275,22 +273,22 @@
 </span><span class="lnt">15
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">db</span> <span class="o">*</span><span class="nx">DB</span><span class="p">)</span> <span class="nf">Query</span><span class="p">(</span><span class="nx">query</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">args</span> <span class="o">...</span><span class="kd">interface</span><span class="p">{})</span> <span class="p">(</span><span class="o">*</span><span class="nx">Rows</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
-	<span class="kd">var</span> <span class="nx">rows</span> <span class="o">*</span><span class="nx">Rows</span>
-	<span class="kd">var</span> <span class="nx">err</span> <span class="kt">error</span>
-	<span class="c1">//这里就做了对失效的链接的重试操作
-</span><span class="c1"></span>	<span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">maxBadConnRetries</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
-		<span class="nx">rows</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">db</span><span class="p">.</span><span class="nf">query</span><span class="p">(</span><span class="nx">query</span><span class="p">,</span> <span class="nx">args</span><span class="p">,</span> <span class="nx">cachedOrNewConn</span><span class="p">)</span>
-		<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="nx">driver</span><span class="p">.</span><span class="nx">ErrBadConn</span> <span class="p">{</span>
-			<span class="k">break</span>
-		<span class="p">}</span>
-	<span class="p">}</span>
-	<span class="k">if</span> <span class="nx">err</span> <span class="o">==</span> <span class="nx">driver</span><span class="p">.</span><span class="nx">ErrBadConn</span> <span class="p">{</span>
-		<span class="k">return</span> <span class="nx">db</span><span class="p">.</span><span class="nf">query</span><span class="p">(</span><span class="nx">query</span><span class="p">,</span> <span class="nx">args</span><span class="p">,</span> <span class="nx">alwaysNewConn</span><span class="p">)</span>
-	<span class="p">}</span>
-	<span class="k">return</span> <span class="nx">rows</span><span class="p">,</span> <span class="nx">err</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">db</span> <span class="o">*</span><span class="nx">DB</span><span class="p">)</span> <span class="nf">Query</span><span class="p">(</span><span class="nx">query</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">args</span> <span class="o">...</span><span class="kd">interface</span><span class="p">{})</span> <span class="p">(</span><span class="o">*</span><span class="nx">Rows</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="kd">var</span> <span class="nx">rows</span> <span class="o">*</span><span class="nx">Rows</span>
+</span></span><span class="line"><span class="cl">	<span class="kd">var</span> <span class="nx">err</span> <span class="kt">error</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">//这里就做了对失效的链接的重试操作
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">maxBadConnRetries</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">rows</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">db</span><span class="p">.</span><span class="nf">query</span><span class="p">(</span><span class="nx">query</span><span class="p">,</span> <span class="nx">args</span><span class="p">,</span> <span class="nx">cachedOrNewConn</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="nx">driver</span><span class="p">.</span><span class="nx">ErrBadConn</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">break</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">==</span> <span class="nx">driver</span><span class="p">.</span><span class="nx">ErrBadConn</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="nx">db</span><span class="p">.</span><span class="nf">query</span><span class="p">(</span><span class="nx">query</span><span class="p">,</span> <span class="nx">args</span><span class="p">,</span> <span class="nx">alwaysNewConn</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">rows</span><span class="p">,</span> <span class="nx">err</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>在什么情况下会返回，可以从这里看到：
 <a href="https://github.com/go-sql-driver/mysql/blob/master/packets.go#L35" target="_blank" rel="noopener noreffer">readPack</a>
@@ -302,8 +300,8 @@
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">db</span> <span class="o">*</span><span class="nx">DB</span><span class="p">)</span> <span class="nf">conn</span><span class="p">(</span><span class="nx">strategy</span> <span class="nx">connReuseStrategy</span><span class="p">)</span> <span class="p">(</span><span class="o">*</span><span class="nx">driverConn</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">db</span> <span class="o">*</span><span class="nx">DB</span><span class="p">)</span> <span class="nf">conn</span><span class="p">(</span><span class="nx">strategy</span> <span class="nx">connReuseStrategy</span><span class="p">)</span> <span class="p">(</span><span class="o">*</span><span class="nx">driverConn</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>方法主要是创建tcp连接，并判断了连接的生存时间lifetime，以及连接数的一些限制，如果超过的设定的最大打开链接数限制等待<code>connRequest</code>管道中有连接产生(在<code>putConn</code>释放链接的时候就会往这个管道中写入数据)</p>
 <p><strong>何时释放链接?</strong></p>
@@ -334,35 +332,33 @@
 </span><span class="lnt">22
 </span><span class="lnt">23
 </span><span class="lnt">24
-</span><span class="lnt">25
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go">	<span class="c1">//putConnDBLocked 方法
-</span><span class="c1"></span>
-	<span class="c1">//如果有db.connRequests有在等待连接的话，就把当前连接给它用
-</span><span class="c1"></span>	<span class="k">if</span> <span class="nx">c</span> <span class="o">:=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">db</span><span class="p">.</span><span class="nx">connRequests</span><span class="p">);</span> <span class="nx">c</span> <span class="p">&gt;</span> <span class="mi">0</span> <span class="p">{</span>
-		<span class="nx">req</span> <span class="o">:=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">connRequests</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-		<span class="c1">// This copy is O(n) but in practice faster than a linked list.
-</span><span class="c1"></span>		<span class="c1">// TODO: consider compacting it down less often and
-</span><span class="c1"></span>		<span class="c1">// moving the base instead?
-</span><span class="c1"></span>		<span class="nb">copy</span><span class="p">(</span><span class="nx">db</span><span class="p">.</span><span class="nx">connRequests</span><span class="p">,</span> <span class="nx">db</span><span class="p">.</span><span class="nx">connRequests</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
-		<span class="nx">db</span><span class="p">.</span><span class="nx">connRequests</span> <span class="p">=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">connRequests</span><span class="p">[:</span><span class="nx">c</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-		<span class="k">if</span> <span class="nx">err</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
-			<span class="nx">dc</span><span class="p">.</span><span class="nx">inUse</span> <span class="p">=</span> <span class="kc">true</span>
-		<span class="p">}</span>
-		<span class="nx">req</span> <span class="o">&lt;-</span> <span class="nx">connRequest</span><span class="p">{</span>
-			<span class="nx">conn</span><span class="p">:</span> <span class="nx">dc</span><span class="p">,</span>
-			<span class="nx">err</span><span class="p">:</span>  <span class="nx">err</span><span class="p">,</span>
-		<span class="p">}</span>
-		<span class="k">return</span> <span class="kc">true</span>
-	<span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nx">err</span> <span class="o">==</span> <span class="kc">nil</span> <span class="o">&amp;&amp;</span> <span class="p">!</span><span class="nx">db</span><span class="p">.</span><span class="nx">closed</span> <span class="o">&amp;&amp;</span> <span class="nx">db</span><span class="p">.</span><span class="nf">maxIdleConnsLocked</span><span class="p">()</span> <span class="p">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">db</span><span class="p">.</span><span class="nx">freeConn</span><span class="p">)</span> <span class="p">{</span>
-	<span class="c1">//没人需要我这个链接，我就把他重新返回`freeConn`连接池中
-</span><span class="c1"></span>		<span class="nx">db</span><span class="p">.</span><span class="nx">freeConn</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">db</span><span class="p">.</span><span class="nx">freeConn</span><span class="p">,</span> <span class="nx">dc</span><span class="p">)</span>
-		<span class="nx">db</span><span class="p">.</span><span class="nf">startCleanerLocked</span><span class="p">()</span>
-		<span class="k">return</span> <span class="kc">true</span>
-	<span class="p">}</span>
-
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl">	<span class="c1">//putConnDBLocked 方法
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">	<span class="c1">//如果有db.connRequests有在等待连接的话，就把当前连接给它用
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">if</span> <span class="nx">c</span> <span class="o">:=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">db</span><span class="p">.</span><span class="nx">connRequests</span><span class="p">);</span> <span class="nx">c</span> <span class="p">&gt;</span> <span class="mi">0</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">req</span> <span class="o">:=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">connRequests</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">// This copy is O(n) but in practice faster than a linked list.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="c1">// TODO: consider compacting it down less often and
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="c1">// moving the base instead?
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="nb">copy</span><span class="p">(</span><span class="nx">db</span><span class="p">.</span><span class="nx">connRequests</span><span class="p">,</span> <span class="nx">db</span><span class="p">.</span><span class="nx">connRequests</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">db</span><span class="p">.</span><span class="nx">connRequests</span> <span class="p">=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">connRequests</span><span class="p">[:</span><span class="nx">c</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="nx">err</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">dc</span><span class="p">.</span><span class="nx">inUse</span> <span class="p">=</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">req</span> <span class="o">&lt;-</span> <span class="nx">connRequest</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">conn</span><span class="p">:</span> <span class="nx">dc</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">err</span><span class="p">:</span>  <span class="nx">err</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nx">err</span> <span class="o">==</span> <span class="kc">nil</span> <span class="o">&amp;&amp;</span> <span class="p">!</span><span class="nx">db</span><span class="p">.</span><span class="nx">closed</span> <span class="o">&amp;&amp;</span> <span class="nx">db</span><span class="p">.</span><span class="nf">maxIdleConnsLocked</span><span class="p">()</span> <span class="p">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">db</span><span class="p">.</span><span class="nx">freeConn</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">//没人需要我这个链接，我就把他重新返回`freeConn`连接池中
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="nx">db</span><span class="p">.</span><span class="nx">freeConn</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">db</span><span class="p">.</span><span class="nx">freeConn</span><span class="p">,</span> <span class="nx">dc</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">db</span><span class="p">.</span><span class="nf">startCleanerLocked</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h1 id="使用连接池管理thrift链接">使用连接池管理Thrift链接</h1>
 <p>这里是使用连接池<a href="https://github.com/silenceper/pool" target="_blank" rel="noopener noreffer">https://github.com/silenceper/pool</a>
@@ -425,66 +421,64 @@
 </span><span class="lnt">53
 </span><span class="lnt">54
 </span><span class="lnt">55
-</span><span class="lnt">56
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Client</span> <span class="kd">struct</span> <span class="p">{</span>
-	<span class="o">*</span><span class="nx">user</span><span class="p">.</span><span class="nx">UserClient</span>
-<span class="p">}</span>
-
-
-<span class="c1">//创建Thrift客户端链接的方法
-</span><span class="c1"></span><span class="nx">factory</span> <span class="o">:=</span> <span class="kd">func</span><span class="p">()</span> <span class="p">(</span><span class="kd">interface</span><span class="p">{},</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
-	<span class="nx">protocolFactory</span> <span class="o">:=</span> <span class="nx">thrift</span><span class="p">.</span><span class="nf">NewTBinaryProtocolFactoryDefault</span><span class="p">()</span>
-	<span class="nx">transportFactory</span> <span class="o">:=</span> <span class="nx">thrift</span><span class="p">.</span><span class="nf">NewTTransportFactory</span><span class="p">()</span>
-
-	<span class="kd">var</span> <span class="nx">transport</span> <span class="nx">thrift</span><span class="p">.</span><span class="nx">TTransport</span>
-	<span class="kd">var</span> <span class="nx">err</span> <span class="kt">error</span>
-	<span class="nx">transport</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">thrift</span><span class="p">.</span><span class="nf">NewTSocket</span><span class="p">(</span><span class="nx">rpcConfig</span><span class="p">.</span><span class="nx">Listen</span><span class="p">)</span>
-	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
-	<span class="p">}</span>
-	<span class="nx">transport</span> <span class="p">=</span> <span class="nx">transportFactory</span><span class="p">.</span><span class="nf">GetTransport</span><span class="p">(</span><span class="nx">transport</span><span class="p">)</span>
-	<span class="c1">//defer transport.Close()
-</span><span class="c1"></span>	<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">transport</span><span class="p">.</span><span class="nf">Open</span><span class="p">();</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
-	<span class="p">}</span>
-	<span class="nx">rpcClient</span> <span class="o">:=</span> <span class="nx">user</span><span class="p">.</span><span class="nf">NewUserClientFactory</span><span class="p">(</span><span class="nx">transport</span><span class="p">,</span> <span class="nx">protocolFactory</span><span class="p">)</span>
-	<span class="c1">//在连接池中直接放置Client对象
-</span><span class="c1"></span>	<span class="k">return</span> <span class="o">&amp;</span><span class="nx">Client</span><span class="p">{</span><span class="nx">UserClient</span><span class="p">:</span> <span class="nx">rpcClient</span><span class="p">},</span> <span class="kc">nil</span>
-<span class="p">}</span>
-<span class="c1">//关闭连接的方法
-</span><span class="c1"></span><span class="nx">close</span> <span class="o">:=</span> <span class="kd">func</span><span class="p">(</span><span class="nx">v</span> <span class="kd">interface</span><span class="p">{})</span> <span class="kt">error</span> <span class="p">{</span>
-	<span class="nx">v</span><span class="p">.(</span><span class="o">*</span><span class="nx">Client</span><span class="p">).</span><span class="nx">Transport</span><span class="p">.</span><span class="nf">Close</span><span class="p">()</span>
-	<span class="k">return</span> <span class="kc">nil</span>
-<span class="p">}</span>
-
-<span class="c1">//创建了一个 初始化连接是
-</span><span class="c1"></span><span class="nx">poolConfig</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">pool</span><span class="p">.</span><span class="nx">PoolConfig</span><span class="p">{</span>
-	<span class="nx">InitialCap</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
-	<span class="nx">MaxCap</span><span class="p">:</span>     <span class="mi">20</span><span class="p">,</span>
-	<span class="nx">Factory</span><span class="p">:</span>     <span class="nx">factory</span><span class="p">,</span>
-	<span class="nx">Close</span><span class="p">:</span>       <span class="nx">close</span><span class="p">,</span>
-	<span class="nx">IdleTimeout</span><span class="p">:</span> <span class="mi">300</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">,</span>
-<span class="p">}</span>
-<span class="nx">p</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">pool</span><span class="p">.</span><span class="nf">NewChannelPool</span><span class="p">(</span><span class="nx">poolConfig</span><span class="p">)</span>
-<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-	<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
-<span class="p">}</span>
-
-<span class="c1">//取得链接
-</span><span class="c1"></span><span class="nx">conn</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">p</span><span class="p">.</span><span class="nf">Get</span><span class="p">()</span>
-<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-	<span class="k">return</span> <span class="kc">nil</span><span class="p">,</span> <span class="nx">err</span>
-<span class="p">}</span>
-<span class="nx">v</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">conn</span><span class="p">.(</span><span class="o">*</span><span class="nx">Client</span><span class="p">)</span>
-
-<span class="o">...</span><span class="nx">使用连接调用远程方法</span>
-
-<span class="c1">//将连接重新放回连接池中
-</span><span class="c1"></span><span class="nx">p</span><span class="p">.</span><span class="nf">Put</span><span class="p">(</span><span class="nx">conn</span><span class="p">)</span>
-
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">Client</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="o">*</span><span class="nx">user</span><span class="p">.</span><span class="nx">UserClient</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//创建Thrift客户端链接的方法
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">factory</span> <span class="o">:=</span> <span class="kd">func</span><span class="p">()</span> <span class="p">(</span><span class="kd">interface</span><span class="p">{},</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">protocolFactory</span> <span class="o">:=</span> <span class="nx">thrift</span><span class="p">.</span><span class="nf">NewTBinaryProtocolFactoryDefault</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">transportFactory</span> <span class="o">:=</span> <span class="nx">thrift</span><span class="p">.</span><span class="nf">NewTTransportFactory</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="kd">var</span> <span class="nx">transport</span> <span class="nx">thrift</span><span class="p">.</span><span class="nx">TTransport</span>
+</span></span><span class="line"><span class="cl">	<span class="kd">var</span> <span class="nx">err</span> <span class="kt">error</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">transport</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">thrift</span><span class="p">.</span><span class="nf">NewTSocket</span><span class="p">(</span><span class="nx">rpcConfig</span><span class="p">.</span><span class="nx">Listen</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">transport</span> <span class="p">=</span> <span class="nx">transportFactory</span><span class="p">.</span><span class="nf">GetTransport</span><span class="p">(</span><span class="nx">transport</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">//defer transport.Close()
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">transport</span><span class="p">.</span><span class="nf">Open</span><span class="p">();</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">rpcClient</span> <span class="o">:=</span> <span class="nx">user</span><span class="p">.</span><span class="nf">NewUserClientFactory</span><span class="p">(</span><span class="nx">transport</span><span class="p">,</span> <span class="nx">protocolFactory</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">//在连接池中直接放置Client对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">return</span> <span class="o">&amp;</span><span class="nx">Client</span><span class="p">{</span><span class="nx">UserClient</span><span class="p">:</span> <span class="nx">rpcClient</span><span class="p">},</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//关闭连接的方法
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">close</span> <span class="o">:=</span> <span class="kd">func</span><span class="p">(</span><span class="nx">v</span> <span class="kd">interface</span><span class="p">{})</span> <span class="kt">error</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">v</span><span class="p">.(</span><span class="o">*</span><span class="nx">Client</span><span class="p">).</span><span class="nx">Transport</span><span class="p">.</span><span class="nf">Close</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//创建了一个 初始化连接是
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">poolConfig</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">pool</span><span class="p">.</span><span class="nx">PoolConfig</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">InitialCap</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">MaxCap</span><span class="p">:</span>     <span class="mi">20</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">Factory</span><span class="p">:</span>     <span class="nx">factory</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">Close</span><span class="p">:</span>       <span class="nx">close</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">IdleTimeout</span><span class="p">:</span> <span class="mi">300</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nx">p</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">pool</span><span class="p">.</span><span class="nf">NewChannelPool</span><span class="p">(</span><span class="nx">poolConfig</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//取得链接
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">conn</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">p</span><span class="p">.</span><span class="nf">Get</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="kc">nil</span><span class="p">,</span> <span class="nx">err</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nx">v</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">conn</span><span class="p">.(</span><span class="o">*</span><span class="nx">Client</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">...</span><span class="nx">使用连接调用远程方法</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//将连接重新放回连接池中
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">p</span><span class="p">.</span><span class="nf">Put</span><span class="p">(</span><span class="nx">conn</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><hr>
 <p>写完，听见外面的🐓开始打鸣了。</p>
@@ -539,7 +533,7 @@
     <div class="copyright"><div class="copyright-line">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
         </div>
 
-        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2016 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">silenceper</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2016 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">silenceper</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
     </div>
 </footer>
 </div><a href="#" class="dynamic-to-top animated faster" id="dynamic-to-top">
