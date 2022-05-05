@@ -9,10 +9,9 @@
         <meta name="Description" content="一个记录生活，工作的博客。关于Go，Kubernetes，云原生"><meta property="og:title" content="k8s网络组件：flannel" />
 <meta property="og:description" content="Flannel是一个专门为k8s定制的网络解决方案，主要解决POD跨主机通信问题，这里主要讲述Flannel是如何实现的。 安装 集成在k8s上" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/blog/201809/flannel-in-k8s/" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="/blog/201809/flannel-in-k8s/" />
 <meta property="article:published_time" content="2018-09-26T00:00:00+00:00" />
 <meta property="article:modified_time" content="2018-09-26T00:00:00+00:00" /><meta property="og:site_name" content="silenceper" />
-
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="k8s网络组件：flannel"/>
 <meta name="twitter:description" content="Flannel是一个专门为k8s定制的网络解决方案，主要解决POD跨主机通信问题，这里主要讲述Flannel是如何实现的。 安装 集成在k8s上"/>
@@ -37,7 +36,7 @@
                 "url": "\/img\/silenceoer-avatar.jpg",
                 "width":  800 ,
                 "height":  600 
-            },"genre": "posts","keywords": "flannel","wordcount":  1668 ,
+            },"genre": "posts","keywords": "flannel","wordcount":  1669 ,
         "url": "\/blog\/201809\/flannel-in-k8s\/","datePublished": "2018-09-26T00:00:00\u002b00:00","dateModified": "2018-09-26T00:00:00\u002b00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "silenceper",
@@ -99,7 +98,7 @@
                                 </a>
                             </span></span></div>
             <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2018-09-26&#32;00:00>2018-09-26 00:00</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>约 1668 字&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>约 1669 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>预计阅读 4 分钟&nbsp;</div>
         </div><div class="toc" id="toc-auto">
                 <h2 class="toc-title">目录</h2>
@@ -160,11 +159,13 @@
 <p>flannel组件直接以<code>daemonset</code>的方式安装在k8s集群中：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
-</span></span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+
+</code></pre></td></tr></table>
 </div>
 </div><p>其中<code>kube-flannel-cfg</code>configmap中的<code>Network</code>字段需要与<code>--cluster-cidr</code>配置的网段一致。</p>
 <p>这一步主要是安装了flanneld以及将flannel配置文件写入<code>/etc/cni/net.d</code>目录</p>

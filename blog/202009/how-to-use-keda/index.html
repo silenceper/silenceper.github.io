@@ -9,10 +9,9 @@
         <meta name="Description" content="一个记录生活，工作的博客。关于Go，Kubernetes，云原生"><meta property="og:title" content="使用keda完成基于事件的弹性伸缩" />
 <meta property="og:description" content="文章中使用的是keda 1.5版本，2.0还未release 1.5版本支持deployment，job两种资源。而在2.0增加了Statefu" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/blog/202009/how-to-use-keda/" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="/blog/202009/how-to-use-keda/" />
 <meta property="article:published_time" content="2020-09-14T11:20:59+08:00" />
 <meta property="article:modified_time" content="2020-09-14T11:20:59+08:00" /><meta property="og:site_name" content="silenceper" />
-
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="使用keda完成基于事件的弹性伸缩"/>
 <meta name="twitter:description" content="文章中使用的是keda 1.5版本，2.0还未release 1.5版本支持deployment，job两种资源。而在2.0增加了Statefu"/>
@@ -131,11 +130,10 @@
 <figcaption class="image-caption">支持的事件源</figcaption></figure>
 </p>
 <h1 id="安装keda">安装keda</h1>
-<p>从 <a href="https://github.com/kedacore/keda/releases" target="_blank" rel="noopener noreffer">https://github.com/kedacore/keda/releases</a>
- 下载1.5版本的zip包，包含了yaml和crd:</p>
+<p>从 <a href="https://github.com/kedacore/keda/releases">https://github.com/kedacore/keda/releases</a> 下载1.5版本的zip包，包含了yaml和crd:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -150,38 +148,38 @@
 </span><span class="lnt">13
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">├── 00-namespace.yaml
-</span></span><span class="line"><span class="cl">├── 01-service_account.yaml
-</span></span><span class="line"><span class="cl">├── 10-cluster_role.yaml
-</span></span><span class="line"><span class="cl">├── 11-role_binding.yaml
-</span></span><span class="line"><span class="cl">├── 12-operator.yaml
-</span></span><span class="line"><span class="cl">├── 20-metrics-cluster_role.yaml
-</span></span><span class="line"><span class="cl">├── 21-metrics-role_binding.yaml
-</span></span><span class="line"><span class="cl">├── 22-metrics-deployment.yaml
-</span></span><span class="line"><span class="cl">├── 23-metrics-service.yaml
-</span></span><span class="line"><span class="cl">├── 24-metrics-api_service.yaml
-</span></span><span class="line"><span class="cl">└── crds
-</span></span><span class="line"><span class="cl">    ├── keda.k8s.io_scaledobjects_crd.yaml
-</span></span><span class="line"><span class="cl">    └── keda.k8s.io_triggerauthentications_crd.yaml
-</span></span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">├── 00-namespace.yaml
+├── 01-service_account.yaml
+├── 10-cluster_role.yaml
+├── 11-role_binding.yaml
+├── 12-operator.yaml
+├── 20-metrics-cluster_role.yaml
+├── 21-metrics-role_binding.yaml
+├── 22-metrics-deployment.yaml
+├── 23-metrics-service.yaml
+├── 24-metrics-api_service.yaml
+└── crds
+    ├── keda.k8s.io_scaledobjects_crd.yaml
+    └── keda.k8s.io_triggerauthentications_crd.yaml
+</code></pre></td></tr></table>
 </div>
 </div><p>安装：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kubectl apply -f ./crds/
-</span></span><span class="line"><span class="cl">kubectl apply -f .
-</span></span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">kubectl apply -f ./crds/
+kubectl apply -f .
+</code></pre></td></tr></table>
 </div>
 </div><p>以prometheus 和cron两个事件源看下如何使用</p>
 <h2 id="配置-scaledobject">配置 ScaledObject</h2>
 <p>以Deployment为例，看下ScaledObject支持哪些变量</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -197,21 +195,21 @@
 </span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">apiVersion: keda.k8s.io/v1alpha1
-</span></span><span class="line"><span class="cl">kind: ScaledObject
-</span></span><span class="line"><span class="cl">metadata:
-</span></span><span class="line"><span class="cl">  name: {scaled-object-name}
-</span></span><span class="line"><span class="cl">spec:
-</span></span><span class="line"><span class="cl">  scaleTargetRef:
-</span></span><span class="line"><span class="cl">    deploymentName: {deployment-name} # must be in the same namespace as the ScaledObject
-</span></span><span class="line"><span class="cl">    containerName: {container-name}  #Optional. Default: deployment.spec.template.spec.containers[0]
-</span></span><span class="line"><span class="cl">  pollingInterval: 30  # Optional. Default: 30 seconds
-</span></span><span class="line"><span class="cl">  cooldownPeriod:  300 # Optional. Default: 300 seconds
-</span></span><span class="line"><span class="cl">  minReplicaCount: 0   # Optional. Default: 0
-</span></span><span class="line"><span class="cl">  maxReplicaCount: 100 # Optional. Default: 100
-</span></span><span class="line"><span class="cl">  triggers:
-</span></span><span class="line"><span class="cl">  # {list of triggers to activate the deployment}
-</span></span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">apiVersion: keda.k8s.io/v1alpha1
+kind: ScaledObject
+metadata:
+  name: {scaled-object-name}
+spec:
+  scaleTargetRef:
+    deploymentName: {deployment-name} # must be in the same namespace as the ScaledObject
+    containerName: {container-name}  #Optional. Default: deployment.spec.template.spec.containers[0]
+  pollingInterval: 30  # Optional. Default: 30 seconds
+  cooldownPeriod:  300 # Optional. Default: 300 seconds
+  minReplicaCount: 0   # Optional. Default: 0
+  maxReplicaCount: 100 # Optional. Default: 100
+  triggers:
+  # {list of triggers to activate the deployment}
+</code></pre></td></tr></table>
 </div>
 </div><h2 id="基于prometheus指标进行伸缩">基于prometheus指标进行伸缩</h2>
 <p>我这里有个<a href="https://github.com/silenceper/http-demo" target="_blank" rel="noopener noreffer">http demo</a>
@@ -219,7 +217,7 @@
 <p>这里我将<code>minReplicaCount</code>设置为2，因为在没有流量的时候副本数将会被keda设置为0。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -237,59 +235,59 @@
 </span><span class="lnt">16
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">apiVersion: keda.k8s.io/v1alpha1
-</span></span><span class="line"><span class="cl">kind: ScaledObject
-</span></span><span class="line"><span class="cl">metadata:
-</span></span><span class="line"><span class="cl">  name: prometheus-scaledobject
-</span></span><span class="line"><span class="cl">  namespace: default
-</span></span><span class="line"><span class="cl">spec:
-</span></span><span class="line"><span class="cl">  scaleTargetRef:
-</span></span><span class="line"><span class="cl">    deploymentName: http-demo
-</span></span><span class="line"><span class="cl">  minReplicaCount: 2
-</span></span><span class="line"><span class="cl">  triggers:
-</span></span><span class="line"><span class="cl">  - type: prometheus
-</span></span><span class="line"><span class="cl">    metadata:
-</span></span><span class="line"><span class="cl">      serverAddress: http://192.168.99.100:31046/
-</span></span><span class="line"><span class="cl">      metricName: gin_requests_total
-</span></span><span class="line"><span class="cl">      threshold: &#39;2&#39;
-</span></span><span class="line"><span class="cl">      query: sum(rate(gin_requests_total{app=&#34;http-demo&#34;,code=&#34;200&#34;}[2m]))
-</span></span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">apiVersion: keda.k8s.io/v1alpha1
+kind: ScaledObject
+metadata:
+  name: prometheus-scaledobject
+  namespace: default
+spec:
+  scaleTargetRef:
+    deploymentName: http-demo
+  minReplicaCount: 2
+  triggers:
+  - type: prometheus
+    metadata:
+      serverAddress: http://192.168.99.100:31046/
+      metricName: gin_requests_total
+      threshold: &#39;2&#39;
+      query: sum(rate(gin_requests_total{app=&#34;http-demo&#34;,code=&#34;200&#34;}[2m]))
+</code></pre></td></tr></table>
 </div>
 </div><p>当创建该<code>ScaledObject </code>，我们看到同时创建了一个hpa资源：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">➜  example kubectl get hpa
-</span></span><span class="line"><span class="cl">NAME                 REFERENCE              TARGETS     MINPODS   MAXPODS   REPLICAS   AGE
-</span></span><span class="line"><span class="cl">keda-hpa-http-demo   Deployment/http-demo   0/2 (avg)   2         100       2          70m
-</span></span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">➜  example kubectl get hpa
+NAME                 REFERENCE              TARGETS     MINPODS   MAXPODS   REPLICAS   AGE
+keda-hpa-http-demo   Deployment/http-demo   0/2 (avg)   2         100       2          70m
+</code></pre></td></tr></table>
 </div>
 </div><p>通过压测观察hpa资源变化：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&gt; ab  -c 10 -n 1000 http://127.0.0.1:8080/
-</span></span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">&gt; ab  -c 10 -n 1000 http://127.0.0.1:8080/
+</code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Every 1.0s: kubectl get hpa                                                                                      anymore.local: Mon Sep 14 14:23:59 2020
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">NAME                 REFERENCE              TARGETS     MINPODS   MAXPODS   REPLICAS   AGE
-</span></span><span class="line"><span class="cl">keda-hpa-http-demo   Deployment/http-demo   8/2 (avg)   2         100       4          73m
-</span></span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">Every 1.0s: kubectl get hpa                                                                                      anymore.local: Mon Sep 14 14:23:59 2020
+
+NAME                 REFERENCE              TARGETS     MINPODS   MAXPODS   REPLICAS   AGE
+keda-hpa-http-demo   Deployment/http-demo   8/2 (avg)   2         100       4          73m
+</code></pre></td></tr></table>
 </div>
 </div><p>可以看得到随着流量上升，由hpa控制的副本数在上升，这就达到了我们根据流量扩容的目的，当流量降下来之后，副本数也减少。</p>
 <h1 id="组件组成">组件组成</h1>
@@ -310,7 +308,7 @@ keda控制了副本0-&gt;1和1-&gt;0的变化（起到了激活和停止的作�
 主要是通过grpc实现一下接口实现：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -318,13 +316,13 @@ keda控制了副本0-&gt;1和1-&gt;0的变化（起到了激活和停止的作�
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">type Scaler interface {
-</span></span><span class="line"><span class="cl">	GetMetrics(ctx context.Context, metricName string, metricSelector labels.Selector) ([]external_metrics.ExternalMetricValue, error)
-</span></span><span class="line"><span class="cl">	GetMetricSpecForScaling() []v2beta2.MetricSpec
-</span></span><span class="line"><span class="cl">	IsActive(ctx context.Context) (bool, error)
-</span></span><span class="line"><span class="cl">	Close() error
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">type Scaler interface {
+	GetMetrics(ctx context.Context, metricName string, metricSelector labels.Selector) ([]external_metrics.ExternalMetricValue, error)
+	GetMetricSpecForScaling() []v2beta2.MetricSpec
+	IsActive(ctx context.Context) (bool, error)
+	Close() error
+}
+</code></pre></td></tr></table>
 </div>
 </div><ul>
 <li>IsActive 在ScaledObject / ScaledJob CRD中定义的pollingInterval上，每隔pollingInterval时间，调用IsActive，如果返回true，则将比例缩放为1(默认1)</li>

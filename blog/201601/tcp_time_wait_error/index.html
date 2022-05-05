@@ -9,10 +9,9 @@
         <meta name="Description" content="time_wait 连接数过多"><meta property="og:title" content="tcp time_wait问题" />
 <meta property="og:description" content="time_wait 连接数过多" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/blog/201601/tcp_time_wait_error/" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="/blog/201601/tcp_time_wait_error/" />
 <meta property="article:published_time" content="2016-01-03T15:40:59+08:00" />
 <meta property="article:modified_time" content="2016-01-03T15:40:59+08:00" /><meta property="og:site_name" content="silenceper" />
-
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="tcp time_wait问题"/>
 <meta name="twitter:description" content="time_wait 连接数过多"/>
@@ -126,13 +125,13 @@
 <p>总共的连接数在近3w(ss -s可查)，其中有2w多都是这种连接，而且都是mysql 连接（这里边服务器程序就相当于客户端去连接mysql服务器），到这里心里大致有底了，把数据库连接池加上就好了，Golang提供了两个函数可进行配置：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="nx">SetMaxOpenConns用于设置最大打开的连接数</span><span class="err">，</span><span class="nx">默认值为0表示不限制</span><span class="err">。</span>
-</span></span><span class="line"><span class="cl"><span class="nx">SetMaxIdleConns用于设置闲置的连接数</span><span class="err">。</span>
-</span></span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">SetMaxOpenConns用于设置最大打开的连接数</span><span class="err">，</span><span class="nx">默认值为0表示不限制</span><span class="err">。</span>
+<span class="nx">SetMaxIdleConns用于设置闲置的连接数</span><span class="err">。</span>
+</code></pre></td></tr></table>
 </div>
 </div><p><strong>为什么会有TIME_WAIT状态？</strong></p>
 <p>源于tcp链接关闭中的四次挥手，是主动关闭链接的一方产生的状态：

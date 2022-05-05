@@ -9,10 +9,9 @@
         <meta name="Description" content="一个记录生活，工作的博客。关于Go，Kubernetes，云原生"><meta property="og:title" content="k8s网络组件：calico" />
 <meta property="og:description" content="前提已经安装好k8s集群 安装 calico 安装其实很简单，已经集成在两个yaml文件中 calico 版本: v3.2.3 安装必看 如果安装过flannel组件，需要先去除dock" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/blog/201810/calico-in-k8s/" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="/blog/201810/calico-in-k8s/" />
 <meta property="article:published_time" content="2018-10-12T00:00:00+00:00" />
 <meta property="article:modified_time" content="2018-10-12T00:00:00+00:00" /><meta property="og:site_name" content="silenceper" />
-
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="k8s网络组件：calico"/>
 <meta name="twitter:description" content="前提已经安装好k8s集群 安装 calico 安装其实很简单，已经集成在两个yaml文件中 calico 版本: v3.2.3 安装必看 如果安装过flannel组件，需要先去除dock"/>
@@ -148,7 +147,7 @@
 <p>将其中的<code>ETCD_LVS_HOST</code>修改为集群的etcd地址，并且将<code>TLS_ETCD_KEY</code>,<code>TLS_ETCD_CERT </code>,<code>TLS_ETCD_CA</code>替换为证书的内容的base64后的结果：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -162,30 +161,30 @@
 </span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># 其中证书的路径根据自己环境更改为正确的路径
-</span></span><span class="line"><span class="cl">TLS_ETCD_CA=$(cat /etc/kubernetes/ssl/ca.pem | base64 |tr -d &#34;\n&#34;)
-</span></span><span class="line"><span class="cl">TLS_ETCD_KEY=$(cat /etc/kubernetes/ssl/etcd-key.pem | base64 |tr -d &#34;\n&#34;)
-</span></span><span class="line"><span class="cl">TLS_ETCD_CERT=$(cat /etc/kubernetes/ssl/etcd.pem | base64 |tr -d &#34;\n&#34;)
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"># 替换内容
-</span></span><span class="line"><span class="cl">sed -i &#34;s#TLS_ETCD_CA#$TLS_ETCD_CA#g&#34; calico.yaml
-</span></span><span class="line"><span class="cl">sed -i &#34;s#TLS_ETCD_CERT#$TLS_ETCD_CERT#g&#34; calico.yaml
-</span></span><span class="line"><span class="cl">sed -i &#34;s#TLS_ETCD_KEY#$TLS_ETCD_KEY#g&#34; calico.yaml
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"># 替换ETCD_LVS_HOST地址，更换为自己的etcd地址
-</span></span><span class="line"><span class="cl">sed -i &#34;s#ETCD_LVS_HOST#192.168.99.101#g&#34; calico.yaml
-</span></span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"># 其中证书的路径根据自己环境更改为正确的路径
+TLS_ETCD_CA=$(cat /etc/kubernetes/ssl/ca.pem | base64 |tr -d &#34;\n&#34;)
+TLS_ETCD_KEY=$(cat /etc/kubernetes/ssl/etcd-key.pem | base64 |tr -d &#34;\n&#34;)
+TLS_ETCD_CERT=$(cat /etc/kubernetes/ssl/etcd.pem | base64 |tr -d &#34;\n&#34;)
+
+# 替换内容
+sed -i &#34;s#TLS_ETCD_CA#$TLS_ETCD_CA#g&#34; calico.yaml
+sed -i &#34;s#TLS_ETCD_CERT#$TLS_ETCD_CERT#g&#34; calico.yaml
+sed -i &#34;s#TLS_ETCD_KEY#$TLS_ETCD_KEY#g&#34; calico.yaml
+
+# 替换ETCD_LVS_HOST地址，更换为自己的etcd地址
+sed -i &#34;s#ETCD_LVS_HOST#192.168.99.101#g&#34; calico.yaml
+</code></pre></td></tr></table>
 </div>
 </div><p><strong>部署</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kubectl apply -f calico.yaml
-</span></span><span class="line"><span class="cl">kubectl apply -f rbac.yaml
-</span></span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">kubectl apply -f calico.yaml
+kubectl apply -f rbac.yaml
+</code></pre></td></tr></table>
 </div>
 </div><h2 id="calicoctl-安装">calicoctl 安装</h2>
 <p>calicoctl 工具，主要用来配置calico，例如配置calico 网络模式等</p>
@@ -196,7 +195,7 @@
 <p>将以下内容写入文件<code>/etc/calico/calicoctl.cfg</code>:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -206,30 +205,30 @@
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">apiVersion: projectcalico.org/v3
-</span></span><span class="line"><span class="cl">kind: CalicoAPIConfig
-</span></span><span class="line"><span class="cl">metadata:
-</span></span><span class="line"><span class="cl">spec:
-</span></span><span class="line"><span class="cl">  etcdEndpoints: https://192.168.99.101:2379
-</span></span><span class="line"><span class="cl">  etcdKeyFile: /etc/kubernetes/ssl/kubernetes-key.pem
-</span></span><span class="line"><span class="cl">  etcdCertFile: /etc/kubernetes/ssl/kubernetes.pem
-</span></span><span class="line"><span class="cl">  etcdCACertFile: /etc/kubernetes/ssl/ca.pem
-</span></span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">apiVersion: projectcalico.org/v3
+kind: CalicoAPIConfig
+metadata:
+spec:
+  etcdEndpoints: https://192.168.99.101:2379
+  etcdKeyFile: /etc/kubernetes/ssl/kubernetes-key.pem
+  etcdCertFile: /etc/kubernetes/ssl/kubernetes.pem
+  etcdCACertFile: /etc/kubernetes/ssl/ca.pem
+</code></pre></td></tr></table>
 </div>
 </div><p>测试成功：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">[root@192-168-99-101 calico]# calicoctl get node -o wide
-</span></span><span class="line"><span class="cl">NAME             ASN         IPV4                IPV6
-</span></span><span class="line"><span class="cl">192-168-99-101   (unknown)   192.168.99.101/24
-</span></span><span class="line"><span class="cl">192-168-99-102   (unknown)   192.168.99.102/24
-</span></span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@192-168-99-101 calico]# calicoctl get node -o wide
+NAME             ASN         IPV4                IPV6
+192-168-99-101   (unknown)   192.168.99.101/24
+192-168-99-102   (unknown)   192.168.99.102/24
+</code></pre></td></tr></table>
 </div>
 </div><p>###修改ipipMode</p>
 <p>ipipMode有三种：</p>
@@ -243,7 +242,7 @@
 <p>其中<code>ippool.yaml</code>文件内容：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -256,18 +255,18 @@
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">apiVersion: projectcalico.org/v3
-</span></span><span class="line"><span class="cl">items:
-</span></span><span class="line"><span class="cl">- apiVersion: projectcalico.org/v3
-</span></span><span class="line"><span class="cl">  kind: IPPool
-</span></span><span class="line"><span class="cl">  metadata:
-</span></span><span class="line"><span class="cl">    name: default-ipv4-ippool
-</span></span><span class="line"><span class="cl">  spec:
-</span></span><span class="line"><span class="cl">    cidr: 172.23.0.0/16
-</span></span><span class="line"><span class="cl">    ipipMode: Always
-</span></span><span class="line"><span class="cl">    natOutgoing: true
-</span></span><span class="line"><span class="cl">kind: IPPoolList
-</span></span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">apiVersion: projectcalico.org/v3
+items:
+- apiVersion: projectcalico.org/v3
+  kind: IPPool
+  metadata:
+    name: default-ipv4-ippool
+  spec:
+    cidr: 172.23.0.0/16
+    ipipMode: Always
+    natOutgoing: true
+kind: IPPoolList
+</code></pre></td></tr></table>
 </div>
 </div><hr/>
             <figure>

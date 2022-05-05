@@ -9,10 +9,9 @@
         <meta name="Description" content="singleflight包主要是用来做并发控制，常见的比如防止 缓存击穿，我们来介绍一下其使用以及原理"><meta property="og:title" content="singleflight包原理解析" />
 <meta property="og:description" content="singleflight包主要是用来做并发控制，常见的比如防止 缓存击穿，我们来介绍一下其使用以及原理" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/blog/202003/singleflight/" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="/blog/202003/singleflight/" />
 <meta property="article:published_time" content="2020-03-08T19:26:59+08:00" />
 <meta property="article:modified_time" content="2020-03-08T19:26:59+08:00" /><meta property="og:site_name" content="silenceper" />
-
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="singleflight包原理解析"/>
 <meta name="twitter:description" content="singleflight包主要是用来做并发控制，常见的比如防止 缓存击穿，我们来介绍一下其使用以及原理"/>
@@ -121,7 +120,7 @@
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -181,65 +180,65 @@
 </span><span class="lnt">58
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
-</span></span><span class="line"><span class="cl">	<span class="s">&#34;errors&#34;</span>
-</span></span><span class="line"><span class="cl">	<span class="s">&#34;log&#34;</span>
-</span></span><span class="line"><span class="cl">	<span class="s">&#34;sync&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="s">&#34;golang.org/x/sync/singleflight&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">errorNotExist</span> <span class="p">=</span> <span class="nx">errors</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="s">&#34;not exist&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="kd">var</span> <span class="nx">wg</span> <span class="nx">sync</span><span class="p">.</span><span class="nx">WaitGroup</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">wg</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="c1">//模拟10个并发
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">			<span class="k">defer</span> <span class="nx">wg</span><span class="p">.</span><span class="nf">Done</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">			<span class="nx">data</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nf">getData</span><span class="p">(</span><span class="s">&#34;key&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">				<span class="nx">log</span><span class="p">.</span><span class="nf">Print</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">				<span class="k">return</span>
-</span></span><span class="line"><span class="cl">			<span class="p">}</span>
-</span></span><span class="line"><span class="cl">			<span class="nx">log</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">		<span class="p">}()</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">wg</span><span class="p">.</span><span class="nf">Wait</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1">//获取数据
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="nf">getData</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">data</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nf">getDataFromCache</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">==</span> <span class="nx">errorNotExist</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="c1">//模拟从db中获取数据
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="nx">data</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nf">getDataFromDB</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">			<span class="nx">log</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="nx">err</span>
-</span></span><span class="line"><span class="cl">		<span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">		<span class="c1">//TOOD: set cache
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="nx">err</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">data</span><span class="p">,</span> <span class="kc">nil</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1">//模拟从cache中获取值，cache中无该值
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="nf">getDataFromCache</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="nx">errorNotExist</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1">//模拟从数据库中获取值
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="nf">getDataFromDB</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">log</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;get %s from database&#34;</span><span class="p">,</span> <span class="nx">key</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="s">&#34;data&#34;</span><span class="p">,</span> <span class="kc">nil</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+	<span class="s">&#34;errors&#34;</span>
+	<span class="s">&#34;log&#34;</span>
+	<span class="s">&#34;sync&#34;</span>
+
+	<span class="s">&#34;golang.org/x/sync/singleflight&#34;</span>
+<span class="p">)</span>
+
+<span class="kd">var</span> <span class="nx">errorNotExist</span> <span class="p">=</span> <span class="nx">errors</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="s">&#34;not exist&#34;</span><span class="p">)</span>
+<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="kd">var</span> <span class="nx">wg</span> <span class="nx">sync</span><span class="p">.</span><span class="nx">WaitGroup</span>
+	<span class="nx">wg</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+	<span class="c1">//模拟10个并发
+</span><span class="c1"></span>	<span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+		<span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+			<span class="k">defer</span> <span class="nx">wg</span><span class="p">.</span><span class="nf">Done</span><span class="p">()</span>
+			<span class="nx">data</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nf">getData</span><span class="p">(</span><span class="s">&#34;key&#34;</span><span class="p">)</span>
+			<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+				<span class="nx">log</span><span class="p">.</span><span class="nf">Print</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+				<span class="k">return</span>
+			<span class="p">}</span>
+			<span class="nx">log</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span>
+		<span class="p">}()</span>
+	<span class="p">}</span>
+	<span class="nx">wg</span><span class="p">.</span><span class="nf">Wait</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="c1">//获取数据
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">getData</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">data</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nf">getDataFromCache</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">==</span> <span class="nx">errorNotExist</span> <span class="p">{</span>
+		<span class="c1">//模拟从db中获取数据
+</span><span class="c1"></span>		<span class="nx">data</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nf">getDataFromDB</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
+		<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+			<span class="nx">log</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+			<span class="k">return</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="nx">err</span>
+		<span class="p">}</span>
+
+		<span class="c1">//TOOD: set cache
+</span><span class="c1"></span>	<span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="nx">err</span>
+	<span class="p">}</span>
+	<span class="k">return</span> <span class="nx">data</span><span class="p">,</span> <span class="kc">nil</span>
+<span class="p">}</span>
+
+<span class="c1">//模拟从cache中获取值，cache中无该值
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">getDataFromCache</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">return</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="nx">errorNotExist</span>
+<span class="p">}</span>
+
+<span class="c1">//模拟从数据库中获取值
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">getDataFromDB</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">log</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;get %s from database&#34;</span><span class="p">,</span> <span class="nx">key</span><span class="p">)</span>
+	<span class="k">return</span> <span class="s">&#34;data&#34;</span><span class="p">,</span> <span class="kc">nil</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
 </div><p>其中通过 <code>getData(key)</code>方法获取数据，逻辑是：</p>
 <ol>
@@ -249,7 +248,7 @@
 <p>我们模拟了10个并发请求，来同时调用 <code>getData</code> 函数，执行结果如下：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -271,32 +270,32 @@
 </span><span class="lnt">20
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">2020/03/08 17:13:11 get key from database
-</span></span><span class="line"><span class="cl">2020/03/08 17:13:11 data
-</span></span><span class="line"><span class="cl">2020/03/08 17:13:11 get key from database
-</span></span><span class="line"><span class="cl">2020/03/08 17:13:11 data
-</span></span><span class="line"><span class="cl">2020/03/08 17:13:11 get key from database
-</span></span><span class="line"><span class="cl">2020/03/08 17:13:11 data
-</span></span><span class="line"><span class="cl">2020/03/08 17:13:11 get key from database
-</span></span><span class="line"><span class="cl">2020/03/08 17:13:11 data
-</span></span><span class="line"><span class="cl">2020/03/08 17:13:11 get key from database
-</span></span><span class="line"><span class="cl">2020/03/08 17:13:11 data
-</span></span><span class="line"><span class="cl">2020/03/08 17:13:11 get key from database
-</span></span><span class="line"><span class="cl">2020/03/08 17:13:11 data
-</span></span><span class="line"><span class="cl">2020/03/08 17:13:11 get key from database
-</span></span><span class="line"><span class="cl">2020/03/08 17:13:11 data
-</span></span><span class="line"><span class="cl">2020/03/08 17:13:11 get key from database
-</span></span><span class="line"><span class="cl">2020/03/08 17:13:11 data
-</span></span><span class="line"><span class="cl">2020/03/08 17:13:11 get key from database
-</span></span><span class="line"><span class="cl">2020/03/08 17:13:11 data
-</span></span><span class="line"><span class="cl">2020/03/08 17:13:11 get key from database
-</span></span><span class="line"><span class="cl">2020/03/08 17:13:11 data
-</span></span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash">2020/03/08 17:13:11 get key from database
+2020/03/08 17:13:11 data
+2020/03/08 17:13:11 get key from database
+2020/03/08 17:13:11 data
+2020/03/08 17:13:11 get key from database
+2020/03/08 17:13:11 data
+2020/03/08 17:13:11 get key from database
+2020/03/08 17:13:11 data
+2020/03/08 17:13:11 get key from database
+2020/03/08 17:13:11 data
+2020/03/08 17:13:11 get key from database
+2020/03/08 17:13:11 data
+2020/03/08 17:13:11 get key from database
+2020/03/08 17:13:11 data
+2020/03/08 17:13:11 get key from database
+2020/03/08 17:13:11 data
+2020/03/08 17:13:11 get key from database
+2020/03/08 17:13:11 data
+2020/03/08 17:13:11 get key from database
+2020/03/08 17:13:11 data
+</code></pre></td></tr></table>
 </div>
 </div><p>可以看得到10个请求都是走的db，因为cache中不存在该值，当我们利用上 <code>singlefligth</code> 包， <code>getData</code> 改动一下：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -321,35 +320,35 @@
 </span><span class="lnt">23
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">import</span> <span class="s">&#34;golang.org/x/sync/singleflight&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">g</span> <span class="nx">singleflight</span><span class="p">.</span><span class="nx">Group</span>
-</span></span><span class="line"><span class="cl"><span class="c1">//获取数据
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="nf">getData</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">data</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nf">getDataFromCache</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">==</span> <span class="nx">errorNotExist</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="c1">//模拟从db中获取数据
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="nx">v</span><span class="p">,</span> <span class="nx">err</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">g</span><span class="p">.</span><span class="nf">Do</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="kd">func</span><span class="p">()</span> <span class="p">(</span><span class="kd">interface</span><span class="p">{},</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="nf">getDataFromDB</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">			<span class="c1">//set cache
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="p">})</span>
-</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">			<span class="nx">log</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="nx">err</span>
-</span></span><span class="line"><span class="cl">		<span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">		<span class="c1">//TOOD: set cache
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="nx">data</span> <span class="p">=</span> <span class="nx">v</span><span class="p">.(</span><span class="kt">string</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="nx">err</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">data</span><span class="p">,</span> <span class="kc">nil</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kn">import</span> <span class="s">&#34;golang.org/x/sync/singleflight&#34;</span>
+<span class="kd">var</span> <span class="nx">g</span> <span class="nx">singleflight</span><span class="p">.</span><span class="nx">Group</span>
+<span class="c1">//获取数据
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">getData</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">data</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nf">getDataFromCache</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">==</span> <span class="nx">errorNotExist</span> <span class="p">{</span>
+		<span class="c1">//模拟从db中获取数据
+</span><span class="c1"></span>		<span class="nx">v</span><span class="p">,</span> <span class="nx">err</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">g</span><span class="p">.</span><span class="nf">Do</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="kd">func</span><span class="p">()</span> <span class="p">(</span><span class="kd">interface</span><span class="p">{},</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+			<span class="k">return</span> <span class="nf">getDataFromDB</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
+			<span class="c1">//set cache
+</span><span class="c1"></span>		<span class="p">})</span>
+		<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+			<span class="nx">log</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+			<span class="k">return</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="nx">err</span>
+		<span class="p">}</span>
+
+		<span class="c1">//TOOD: set cache
+</span><span class="c1"></span>		<span class="nx">data</span> <span class="p">=</span> <span class="nx">v</span><span class="p">.(</span><span class="kt">string</span><span class="p">)</span>
+	<span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="nx">err</span>
+	<span class="p">}</span>
+	<span class="k">return</span> <span class="nx">data</span><span class="p">,</span> <span class="kc">nil</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
 </div><p>执行结果如下，可以看得到只有一个请求进入的db，其他的请求也正常返回了值，从而保护了后端DB。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -362,24 +361,24 @@
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">2020/03/08 17:18:16 get key from database
-</span></span><span class="line"><span class="cl">2020/03/08 17:18:16 data
-</span></span><span class="line"><span class="cl">2020/03/08 17:18:16 data
-</span></span><span class="line"><span class="cl">2020/03/08 17:18:16 data
-</span></span><span class="line"><span class="cl">2020/03/08 17:18:16 data
-</span></span><span class="line"><span class="cl">2020/03/08 17:18:16 data
-</span></span><span class="line"><span class="cl">2020/03/08 17:18:16 data
-</span></span><span class="line"><span class="cl">2020/03/08 17:18:16 data
-</span></span><span class="line"><span class="cl">2020/03/08 17:18:16 data
-</span></span><span class="line"><span class="cl">2020/03/08 17:18:16 data
-</span></span><span class="line"><span class="cl">2020/03/08 17:18:16 data
-</span></span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash">2020/03/08 17:18:16 get key from database
+2020/03/08 17:18:16 data
+2020/03/08 17:18:16 data
+2020/03/08 17:18:16 data
+2020/03/08 17:18:16 data
+2020/03/08 17:18:16 data
+2020/03/08 17:18:16 data
+2020/03/08 17:18:16 data
+2020/03/08 17:18:16 data
+2020/03/08 17:18:16 data
+2020/03/08 17:18:16 data
+</code></pre></td></tr></table>
 </div>
 </div><h1 id="原理解析">原理解析</h1>
 <p><code>singleflight</code> 在 <code>golang.org/x/sync/singleflight</code> 项目下，对外提供了以下几个方法</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -390,23 +389,23 @@
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">//Do方法，传入key，以及回调函数，如果key相同，fn方法只会执行一次，同步等待
-</span></span></span><span class="line"><span class="cl"><span class="c1">//返回值v:表示fn执行结果
-</span></span></span><span class="line"><span class="cl"><span class="c1">//返回值err:表示fn的返回的err
-</span></span></span><span class="line"><span class="cl"><span class="c1">//第三个返回值shared：表示是否是真实fn返回的还是从保存的map[key]返回的，也就是共享的
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">g</span> <span class="o">*</span><span class="nx">Group</span><span class="p">)</span> <span class="nf">Do</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">fn</span> <span class="kd">func</span><span class="p">()</span> <span class="p">(</span><span class="kd">interface</span><span class="p">{},</span> <span class="kt">error</span><span class="p">))</span> <span class="p">(</span><span class="nx">v</span> <span class="kd">interface</span><span class="p">{},</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">,</span> <span class="nx">shared</span> <span class="kt">bool</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl"><span class="c1">//DoChan方法类似Do方法，只是返回的是一个chan
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">g</span> <span class="o">*</span><span class="nx">Group</span><span class="p">)</span> <span class="nf">DoChan</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">fn</span> <span class="kd">func</span><span class="p">()</span> <span class="p">(</span><span class="kd">interface</span><span class="p">{},</span> <span class="kt">error</span><span class="p">))</span> <span class="o">&lt;-</span><span class="kd">chan</span> <span class="nx">Result</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl"><span class="c1">//暂时未用到：设计Forget 控制key关联的值是否失效，默认以上两个方法只要fn方法执行完成后，内部维护的fn的值也删除（即并发结束后就失效了）
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">g</span> <span class="o">*</span><span class="nx">Group</span><span class="p">)</span> <span class="nf">Forget</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
-</span></span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">//Do方法，传入key，以及回调函数，如果key相同，fn方法只会执行一次，同步等待
+</span><span class="c1">//返回值v:表示fn执行结果
+</span><span class="c1">//返回值err:表示fn的返回的err
+</span><span class="c1">//第三个返回值shared：表示是否是真实fn返回的还是从保存的map[key]返回的，也就是共享的
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">g</span> <span class="o">*</span><span class="nx">Group</span><span class="p">)</span> <span class="nf">Do</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">fn</span> <span class="kd">func</span><span class="p">()</span> <span class="p">(</span><span class="kd">interface</span><span class="p">{},</span> <span class="kt">error</span><span class="p">))</span> <span class="p">(</span><span class="nx">v</span> <span class="kd">interface</span><span class="p">{},</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">,</span> <span class="nx">shared</span> <span class="kt">bool</span><span class="p">)</span> <span class="p">{</span>
+<span class="c1">//DoChan方法类似Do方法，只是返回的是一个chan
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">g</span> <span class="o">*</span><span class="nx">Group</span><span class="p">)</span> <span class="nf">DoChan</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">fn</span> <span class="kd">func</span><span class="p">()</span> <span class="p">(</span><span class="kd">interface</span><span class="p">{},</span> <span class="kt">error</span><span class="p">))</span> <span class="o">&lt;-</span><span class="kd">chan</span> <span class="nx">Result</span> <span class="p">{</span>
+<span class="c1">//暂时未用到：设计Forget 控制key关联的值是否失效，默认以上两个方法只要fn方法执行完成后，内部维护的fn的值也删除（即并发结束后就失效了）
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">g</span> <span class="o">*</span><span class="nx">Group</span><span class="p">)</span> <span class="nf">Forget</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
+</code></pre></td></tr></table>
 </div>
 </div><p>代码也很简单，我们打开上看下，截取了部分：
 <a href="https://github.com/golang/sync/blob/master/singleflight/singleflight.go" target="_blank" rel="noopener noreffer">singleflight/singleflight.go</a>
 </p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -477,76 +476,76 @@
 </span><span class="lnt">69
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">singleflight</span> <span class="c1">// import &#34;golang.org/x/sync/singleflight&#34;
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
-</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="s">&#34;sync&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1">// call is an in-flight or completed singleflight.Do call
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">type</span> <span class="nx">call</span> <span class="kd">struct</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">wg</span> <span class="nx">sync</span><span class="p">.</span><span class="nx">WaitGroup</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="c1">// These fields are written once before the WaitGroup is done
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="c1">// and are only read after the WaitGroup is done.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//val和err用来记录fn发放执行的返回值
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">val</span> <span class="kd">interface</span><span class="p">{}</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">err</span> <span class="kt">error</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="c1">// forgotten indicates whether Forget was called with this call&#39;s key
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="c1">// while the call was still in flight.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 用来标识fn方法执行完成之后结果是否立马删除还是保留在singleflight中
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">forgotten</span> <span class="kt">bool</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="c1">// These fields are read and written with the singleflight
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="c1">// mutex held before the WaitGroup is done, and are read but
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="c1">// not written after the WaitGroup is done.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//dups 用来记录fn方法执行的次数
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">dups</span>  <span class="kt">int</span>
-</span></span><span class="line"><span class="cl">    <span class="c1">//用来记录DoChan中调用次数以及需要返回的数据
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">chans</span> <span class="p">[]</span><span class="kd">chan</span><span class="o">&lt;-</span> <span class="nx">Result</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1">// Group represents a class of work and forms a namespace in
-</span></span></span><span class="line"><span class="cl"><span class="c1">// which units of work can be executed with duplicate suppression.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">type</span> <span class="nx">Group</span> <span class="kd">struct</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">mu</span> <span class="nx">sync</span><span class="p">.</span><span class="nx">Mutex</span>       <span class="c1">// protects m
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">m</span>  <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="o">*</span><span class="nx">call</span> <span class="c1">// lazily initialized
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1">// Do executes and returns the results of the given function, making
-</span></span></span><span class="line"><span class="cl"><span class="c1">// sure that only one execution is in-flight for a given key at a
-</span></span></span><span class="line"><span class="cl"><span class="c1">// time. If a duplicate comes in, the duplicate caller waits for the
-</span></span></span><span class="line"><span class="cl"><span class="c1">// original to complete and receives the same results.
-</span></span></span><span class="line"><span class="cl"><span class="c1">// The return value shared indicates whether v was given to multiple callers.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">g</span> <span class="o">*</span><span class="nx">Group</span><span class="p">)</span> <span class="nf">Do</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">fn</span> <span class="kd">func</span><span class="p">()</span> <span class="p">(</span><span class="kd">interface</span><span class="p">{},</span> <span class="kt">error</span><span class="p">))</span> <span class="p">(</span><span class="nx">v</span> <span class="kd">interface</span><span class="p">{},</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">,</span> <span class="nx">shared</span> <span class="kt">bool</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">g</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">g</span><span class="p">.</span><span class="nx">m</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">g</span><span class="p">.</span><span class="nx">m</span> <span class="p">=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="o">*</span><span class="nx">call</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="c1">//check map是否已经存在值
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">if</span> <span class="nx">c</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">g</span><span class="p">.</span><span class="nx">m</span><span class="p">[</span><span class="nx">key</span><span class="p">];</span> <span class="nx">ok</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">c</span><span class="p">.</span><span class="nx">dups</span><span class="o">++</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">g</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">c</span><span class="p">.</span><span class="nx">wg</span><span class="p">.</span><span class="nf">Wait</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="nx">c</span><span class="p">.</span><span class="nx">val</span><span class="p">,</span> <span class="nx">c</span><span class="p">.</span><span class="nx">err</span><span class="p">,</span> <span class="kc">true</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">c</span> <span class="o">:=</span> <span class="nb">new</span><span class="p">(</span><span class="nx">call</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">c</span><span class="p">.</span><span class="nx">wg</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">g</span><span class="p">.</span><span class="nx">m</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="p">=</span> <span class="nx">c</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">g</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="nx">g</span><span class="p">.</span><span class="nf">doCall</span><span class="p">(</span><span class="nx">c</span><span class="p">,</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">fn</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">c</span><span class="p">.</span><span class="nx">val</span><span class="p">,</span> <span class="nx">c</span><span class="p">.</span><span class="nx">err</span><span class="p">,</span> <span class="nx">c</span><span class="p">.</span><span class="nx">dups</span> <span class="p">&gt;</span> <span class="mi">0</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="c1">//执行fn方法，并且wg.Done
-</span></span></span><span class="line"><span class="cl"><span class="c1">// doCall handles the single call for a key.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">g</span> <span class="o">*</span><span class="nx">Group</span><span class="p">)</span> <span class="nf">doCall</span><span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">call</span><span class="p">,</span> <span class="nx">key</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">fn</span> <span class="kd">func</span><span class="p">()</span> <span class="p">(</span><span class="kd">interface</span><span class="p">{},</span> <span class="kt">error</span><span class="p">))</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">c</span><span class="p">.</span><span class="nx">val</span><span class="p">,</span> <span class="nx">c</span><span class="p">.</span><span class="nx">err</span> <span class="p">=</span> <span class="nf">fn</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">c</span><span class="p">.</span><span class="nx">wg</span><span class="p">.</span><span class="nf">Done</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="o">...</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">singleflight</span> <span class="c1">// import &#34;golang.org/x/sync/singleflight&#34;
+</span><span class="c1"></span>
+<span class="kn">import</span> <span class="s">&#34;sync&#34;</span>
+
+<span class="c1">// call is an in-flight or completed singleflight.Do call
+</span><span class="c1"></span><span class="kd">type</span> <span class="nx">call</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="nx">wg</span> <span class="nx">sync</span><span class="p">.</span><span class="nx">WaitGroup</span>
+
+	<span class="c1">// These fields are written once before the WaitGroup is done
+</span><span class="c1"></span>	<span class="c1">// and are only read after the WaitGroup is done.
+</span><span class="c1"></span>    <span class="c1">//val和err用来记录fn发放执行的返回值
+</span><span class="c1"></span>	<span class="nx">val</span> <span class="kd">interface</span><span class="p">{}</span>
+	<span class="nx">err</span> <span class="kt">error</span>
+
+	<span class="c1">// forgotten indicates whether Forget was called with this call&#39;s key
+</span><span class="c1"></span>	<span class="c1">// while the call was still in flight.
+</span><span class="c1"></span>    <span class="c1">// 用来标识fn方法执行完成之后结果是否立马删除还是保留在singleflight中
+</span><span class="c1"></span>	<span class="nx">forgotten</span> <span class="kt">bool</span>
+
+	<span class="c1">// These fields are read and written with the singleflight
+</span><span class="c1"></span>	<span class="c1">// mutex held before the WaitGroup is done, and are read but
+</span><span class="c1"></span>	<span class="c1">// not written after the WaitGroup is done.
+</span><span class="c1"></span>    <span class="c1">//dups 用来记录fn方法执行的次数
+</span><span class="c1"></span>	<span class="nx">dups</span>  <span class="kt">int</span>
+    <span class="c1">//用来记录DoChan中调用次数以及需要返回的数据
+</span><span class="c1"></span>	<span class="nx">chans</span> <span class="p">[]</span><span class="kd">chan</span><span class="o">&lt;-</span> <span class="nx">Result</span>
+<span class="p">}</span>
+
+<span class="c1">// Group represents a class of work and forms a namespace in
+</span><span class="c1">// which units of work can be executed with duplicate suppression.
+</span><span class="c1"></span><span class="kd">type</span> <span class="nx">Group</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="nx">mu</span> <span class="nx">sync</span><span class="p">.</span><span class="nx">Mutex</span>       <span class="c1">// protects m
+</span><span class="c1"></span>	<span class="nx">m</span>  <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="o">*</span><span class="nx">call</span> <span class="c1">// lazily initialized
+</span><span class="c1"></span><span class="p">}</span>
+
+
+<span class="c1">// Do executes and returns the results of the given function, making
+</span><span class="c1">// sure that only one execution is in-flight for a given key at a
+</span><span class="c1">// time. If a duplicate comes in, the duplicate caller waits for the
+</span><span class="c1">// original to complete and receives the same results.
+</span><span class="c1">// The return value shared indicates whether v was given to multiple callers.
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">g</span> <span class="o">*</span><span class="nx">Group</span><span class="p">)</span> <span class="nf">Do</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">fn</span> <span class="kd">func</span><span class="p">()</span> <span class="p">(</span><span class="kd">interface</span><span class="p">{},</span> <span class="kt">error</span><span class="p">))</span> <span class="p">(</span><span class="nx">v</span> <span class="kd">interface</span><span class="p">{},</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">,</span> <span class="nx">shared</span> <span class="kt">bool</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">g</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
+	<span class="k">if</span> <span class="nx">g</span><span class="p">.</span><span class="nx">m</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">g</span><span class="p">.</span><span class="nx">m</span> <span class="p">=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="o">*</span><span class="nx">call</span><span class="p">)</span>
+	<span class="p">}</span>
+    <span class="c1">//check map是否已经存在值
+</span><span class="c1"></span>	<span class="k">if</span> <span class="nx">c</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">g</span><span class="p">.</span><span class="nx">m</span><span class="p">[</span><span class="nx">key</span><span class="p">];</span> <span class="nx">ok</span> <span class="p">{</span>
+		<span class="nx">c</span><span class="p">.</span><span class="nx">dups</span><span class="o">++</span>
+		<span class="nx">g</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
+		<span class="nx">c</span><span class="p">.</span><span class="nx">wg</span><span class="p">.</span><span class="nf">Wait</span><span class="p">()</span>
+		<span class="k">return</span> <span class="nx">c</span><span class="p">.</span><span class="nx">val</span><span class="p">,</span> <span class="nx">c</span><span class="p">.</span><span class="nx">err</span><span class="p">,</span> <span class="kc">true</span>
+	<span class="p">}</span>
+	<span class="nx">c</span> <span class="o">:=</span> <span class="nb">new</span><span class="p">(</span><span class="nx">call</span><span class="p">)</span>
+	<span class="nx">c</span><span class="p">.</span><span class="nx">wg</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+	<span class="nx">g</span><span class="p">.</span><span class="nx">m</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="p">=</span> <span class="nx">c</span>
+	<span class="nx">g</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
+
+	<span class="nx">g</span><span class="p">.</span><span class="nf">doCall</span><span class="p">(</span><span class="nx">c</span><span class="p">,</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">fn</span><span class="p">)</span>
+	<span class="k">return</span> <span class="nx">c</span><span class="p">.</span><span class="nx">val</span><span class="p">,</span> <span class="nx">c</span><span class="p">.</span><span class="nx">err</span><span class="p">,</span> <span class="nx">c</span><span class="p">.</span><span class="nx">dups</span> <span class="p">&gt;</span> <span class="mi">0</span>
+<span class="p">}</span>
+<span class="c1">//执行fn方法，并且wg.Done
+</span><span class="c1">// doCall handles the single call for a key.
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">g</span> <span class="o">*</span><span class="nx">Group</span><span class="p">)</span> <span class="nf">doCall</span><span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">call</span><span class="p">,</span> <span class="nx">key</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">fn</span> <span class="kd">func</span><span class="p">()</span> <span class="p">(</span><span class="kd">interface</span><span class="p">{},</span> <span class="kt">error</span><span class="p">))</span> <span class="p">{</span>
+	<span class="nx">c</span><span class="p">.</span><span class="nx">val</span><span class="p">,</span> <span class="nx">c</span><span class="p">.</span><span class="nx">err</span> <span class="p">=</span> <span class="nf">fn</span><span class="p">()</span>
+	<span class="nx">c</span><span class="p">.</span><span class="nx">wg</span><span class="p">.</span><span class="nf">Done</span><span class="p">()</span>
+
+	<span class="o">...</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
 </div><p>在Do方法中主要是通过waitgroup来控制的，主要流程如下：</p>
 <ol>

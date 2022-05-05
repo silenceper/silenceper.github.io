@@ -9,10 +9,9 @@
         <meta name="Description" content="k8s源码包的作用，手动编译k8s源码以及如何阅读k8s源代码"><meta property="og:title" content="k8s源码阅读(一)：源码结构" />
 <meta property="og:description" content="k8s源码包的作用，手动编译k8s源码以及如何阅读k8s源代码" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/blog/201809/k8s-source-code-structure/" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="/blog/201809/k8s-source-code-structure/" />
 <meta property="article:published_time" content="2018-09-12T11:45:59+08:00" />
 <meta property="article:modified_time" content="2018-09-12T11:45:59+08:00" /><meta property="og:site_name" content="silenceper" />
-
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="k8s源码阅读(一)：源码结构"/>
 <meta name="twitter:description" content="k8s源码包的作用，手动编译k8s源码以及如何阅读k8s源代码"/>
@@ -37,7 +36,7 @@
                 "url": "\/img\/silenceoer-avatar.jpg",
                 "width":  800 ,
                 "height":  600 
-            },"genre": "posts","keywords": "k8s","wordcount":  642 ,
+            },"genre": "posts","keywords": "k8s","wordcount":  643 ,
         "url": "\/blog\/201809\/k8s-source-code-structure\/","datePublished": "2018-09-12T11:45:59\u002b08:00","dateModified": "2018-09-12T11:45:59\u002b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "silenceper",
@@ -99,7 +98,7 @@
                                 </a>
                             </span></span></div>
             <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2018-09-12&#32;11:45>2018-09-12 11:45</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>约 642 字&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>约 643 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>预计阅读 2 分钟&nbsp;</div>
         </div><div class="toc" id="toc-auto">
                 <h2 class="toc-title">目录</h2>
@@ -124,18 +123,18 @@
 <p>下载代码，并放入gopath中，方便编译：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ mkdir -p $GOPATH/src/k8s.io  &amp;&amp; cd $GOPATH/src/k8s.io
-</span></span><span class="line"><span class="cl">$ git clone https://github.com/kubernetes/kubernetes # 有墙
-</span></span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ mkdir -p $GOPATH/src/k8s.io  &amp;&amp; cd $GOPATH/src/k8s.io
+$ git clone https://github.com/kubernetes/kubernetes # 有墙
+</code></pre></td></tr></table>
 </div>
 </div><h1 id="代码结构">代码结构</h1>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -151,38 +150,40 @@
 </span><span class="lnt">14
 </span><span class="lnt">15
 </span><span class="lnt">16
+</span><span class="lnt">17
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">├── Godeps        godep依赖文件
-</span></span><span class="line"><span class="cl">├── api           swagger api文档
-</span></span><span class="line"><span class="cl">├── build         构建用到的命令
-</span></span><span class="line"><span class="cl">├── cluster       自动构建和快速构建k8s集群的脚本(进入维护阶段)
-</span></span><span class="line"><span class="cl">├── cmd           核心：命令入口
-</span></span><span class="line"><span class="cl">├── docs          文档
-</span></span><span class="line"><span class="cl">├── examples      一些部署样例yaml文件
-</span></span><span class="line"><span class="cl">├── hack          hack代码
-</span></span><span class="line"><span class="cl">├── logo          logo图片
-</span></span><span class="line"><span class="cl">├── pkg           核心：具体命令的逻辑代码
-</span></span><span class="line"><span class="cl">├── plugin        主要是kube-scheduler
-</span></span><span class="line"><span class="cl">├── staging       暂存区，用于分离仓库
-</span></span><span class="line"><span class="cl">├── test          test
-</span></span><span class="line"><span class="cl">├── third_party   一些第三方工具
-</span></span><span class="line"><span class="cl">├── translations  多语言文件
-</span></span><span class="line"><span class="cl">└── vendor        依赖代码
-</span></span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">├── Godeps        godep依赖文件
+├── api           swagger api文档
+├── build         构建用到的命令
+├── cluster       自动构建和快速构建k8s集群的脚本(进入维护阶段)
+├── cmd           核心：命令入口
+├── docs          文档
+├── examples      一些部署样例yaml文件
+├── hack          hack代码
+├── logo          logo图片
+├── pkg           核心：具体命令的逻辑代码
+├── plugin        主要是kube-scheduler
+├── staging       暂存区，用于分离仓库
+├── test          test
+├── third_party   一些第三方工具
+├── translations  多语言文件
+└── vendor        依赖代码
+
+</code></pre></td></tr></table>
 </div>
 </div><p>组件入口基本都在<code>/cmd/</code>目录下，并且可直接通过<code>go build</code>单独编译（通过<code>make xxxx</code>也行，<code>make help</code>查看具体指令）</p>
 <h1 id="dlv调试阅读">DLV调试阅读</h1>
 <p>有两种方式，一种是直接通过<code>dlv</code>命令进行调试，比如调试kubelet组件：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ cd cmd/kubelet
-</span></span><span class="line"><span class="cl">$ dlv debug . -- --logtostderr=true --v=5 --address=192.168.99.102 --hostname-override=192.168.99.102 --allow-privileged=true --bootstrap-kubeconfig=/etc/kubernetes/bootstrap.kubeconfig --kubeconfig=/etc/kubernetes/kubelet.kubeconfig --cert-dir=/etc/kubernetes/ssl --cluster-domain=cluster.local --hairpin-mode promiscuous-bridge --serialize-image-pulls=false
-</span></span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ cd cmd/kubelet
+$ dlv debug . -- --logtostderr=true --v=5 --address=192.168.99.102 --hostname-override=192.168.99.102 --allow-privileged=true --bootstrap-kubeconfig=/etc/kubernetes/bootstrap.kubeconfig --kubeconfig=/etc/kubernetes/kubelet.kubeconfig --cert-dir=/etc/kubernetes/ssl --cluster-domain=cluster.local --hairpin-mode promiscuous-bridge --serialize-image-pulls=false
+</code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>其中<code>--</code>后为程序运行参数</p>
@@ -191,7 +192,7 @@
 <p>通过我配置<code>launch.json</code>文件的<code>args</code>参数，让<code>kubelet</code>运行起来：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -202,16 +203,16 @@
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&#34;args&#34;: [
-</span></span><span class="line"><span class="cl">    &#34;--address=192.168.186.219&#34;,
-</span></span><span class="line"><span class="cl">    &#34;--hostname-override=192.168.186.219&#34;,
-</span></span><span class="line"><span class="cl">    &#34;--cluster-domain=cluster.local&#34;,
-</span></span><span class="line"><span class="cl">    &#34;--root-dir=/Users/silenceper/workspace/golang/src/k8s.io/kubelet&#34;,
-</span></span><span class="line"><span class="cl">    &#34;--bootstrap-kubeconfig=/Users/silenceper/workspace/golang/src/k8s.io/kubelet/kubernetes/bootstrap.kubeconfig&#34;,
-</span></span><span class="line"><span class="cl">    &#34;--kubeconfig=/Users/silenceper/workspace/golang/src/k8s.io/kubelet/kubernetes/kubelet.kubeconfig&#34;,
-</span></span><span class="line"><span class="cl">    &#34;--cert-dir=/Users/silenceper/workspace/golang/src/k8s.io/kubelet/kubernetes/ssl&#34;,
-</span></span><span class="line"><span class="cl">],
-</span></span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">&#34;args&#34;: [
+    &#34;--address=192.168.186.219&#34;,
+    &#34;--hostname-override=192.168.186.219&#34;,
+    &#34;--cluster-domain=cluster.local&#34;,
+    &#34;--root-dir=/Users/silenceper/workspace/golang/src/k8s.io/kubelet&#34;,
+    &#34;--bootstrap-kubeconfig=/Users/silenceper/workspace/golang/src/k8s.io/kubelet/kubernetes/bootstrap.kubeconfig&#34;,
+    &#34;--kubeconfig=/Users/silenceper/workspace/golang/src/k8s.io/kubelet/kubernetes/kubelet.kubeconfig&#34;,
+    &#34;--cert-dir=/Users/silenceper/workspace/golang/src/k8s.io/kubelet/kubernetes/ssl&#34;,
+],
+</code></pre></td></tr></table>
 </div>
 </div><p>通过调试，可以做到边看代码，变追踪kubelet的执行过程</p>
 <blockquote>

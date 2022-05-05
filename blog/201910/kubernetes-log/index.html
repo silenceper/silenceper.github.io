@@ -9,10 +9,9 @@
         <meta name="Description" content="容器日志收集方案对比，以及对log-pilot组件原理分析"><meta property="og:title" content="Kubernetes容器日志收集方案" />
 <meta property="og:description" content="容器日志收集方案对比，以及对log-pilot组件原理分析" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/blog/201910/kubernetes-log/" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="/blog/201910/kubernetes-log/" />
 <meta property="article:published_time" content="2019-10-22T00:00:00+00:00" />
 <meta property="article:modified_time" content="2019-10-22T00:00:00+00:00" /><meta property="og:site_name" content="silenceper" />
-
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Kubernetes容器日志收集方案"/>
 <meta name="twitter:description" content="容器日志收集方案对比，以及对log-pilot组件原理分析"/>
@@ -136,7 +135,7 @@
 </p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -163,32 +162,32 @@
 </span><span class="lnt">25
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">	msgs, errs := p.client.Events(ctx, options)chenqz1987, 1 year ago: • fix issue #40 and update log-pilot capability…
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	go func() {
-</span></span><span class="line"><span class="cl">		defer func() {
-</span></span><span class="line"><span class="cl">			log.Warn(&#34;finish to watch event&#34;)
-</span></span><span class="line"><span class="cl">			p.stopChan &lt;- true
-</span></span><span class="line"><span class="cl">		}()
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">		log.Info(&#34;begin to watch event&#34;)
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">		for {
-</span></span><span class="line"><span class="cl">			select {
-</span></span><span class="line"><span class="cl">			case msg := &lt;-msgs:
-</span></span><span class="line"><span class="cl">				if err := p.processEvent(msg); err != nil {
-</span></span><span class="line"><span class="cl">					log.Errorf(&#34;fail to process event: %v,  %v&#34;, msg, err)
-</span></span><span class="line"><span class="cl">				}
-</span></span><span class="line"><span class="cl">			case err := &lt;-errs:
-</span></span><span class="line"><span class="cl">				log.Warnf(&#34;error: %v&#34;, err)
-</span></span><span class="line"><span class="cl">				if err == io.EOF || err == io.ErrUnexpectedEOF {
-</span></span><span class="line"><span class="cl">					return
-</span></span><span class="line"><span class="cl">				}
-</span></span><span class="line"><span class="cl">				msgs, errs = p.client.Events(ctx, options)
-</span></span><span class="line"><span class="cl">			}
-</span></span><span class="line"><span class="cl">		}
-</span></span><span class="line"><span class="cl">	}()
-</span></span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">	msgs, errs := p.client.Events(ctx, options)chenqz1987, 1 year ago: • fix issue #40 and update log-pilot capability…
+
+	go func() {
+		defer func() {
+			log.Warn(&#34;finish to watch event&#34;)
+			p.stopChan &lt;- true
+		}()
+
+		log.Info(&#34;begin to watch event&#34;)
+
+		for {
+			select {
+			case msg := &lt;-msgs:
+				if err := p.processEvent(msg); err != nil {
+					log.Errorf(&#34;fail to process event: %v,  %v&#34;, msg, err)
+				}
+			case err := &lt;-errs:
+				log.Warnf(&#34;error: %v&#34;, err)
+				if err == io.EOF || err == io.ErrUnexpectedEOF {
+					return
+				}
+				msgs, errs = p.client.Events(ctx, options)
+			}
+		}
+	}()
+</code></pre></td></tr></table>
 </div>
 </div><p><strong>对接不同收集器</strong></p>
 <p>log-pilot支持<code>filebeat</code>和<code>fluentd</code>两种日志收集器，目的主要是刷新对应的配置文件。主要是实现了<code>Piloter</code>接口：</p>
@@ -196,7 +195,7 @@
 </p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -212,21 +211,21 @@
 </span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">// Piloter interface for piloter
-</span></span><span class="line"><span class="cl">type Piloter interface {
-</span></span><span class="line"><span class="cl">	Name() string
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	Start() error
-</span></span><span class="line"><span class="cl">	Reload() error
-</span></span><span class="line"><span class="cl">	Stop() error
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	GetBaseConf() string
-</span></span><span class="line"><span class="cl">	GetConfHome() string
-</span></span><span class="line"><span class="cl">	GetConfPath(container string) string
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	OnDestroyEvent(container string) error
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">// Piloter interface for piloter
+type Piloter interface {
+	Name() string
+
+	Start() error
+	Reload() error
+	Stop() error
+
+	GetBaseConf() string
+	GetConfHome() string
+	GetConfPath(container string) string
+
+	OnDestroyEvent(container string) error
+}
+</code></pre></td></tr></table>
 </div>
 </div><p>至于在启动log-pilot选择哪种采集器进行采集，是通过在容器的<a href="https://github.com/AliyunContainerService/log-pilot/blob/master/assets/entrypoint" target="_blank" rel="noopener noreffer">entrypoint</a>
 文件中通过制定环境变量<code>PILOT_TYPE</code>的方式进行选择性渲染的。</p>

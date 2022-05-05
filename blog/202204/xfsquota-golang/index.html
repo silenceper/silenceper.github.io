@@ -9,10 +9,9 @@
         <meta name="Description" content="用golang实现的用于设置xfs磁盘配额的工具"><meta property="og:title" content="xfsquota：一个便捷的管理xfs磁盘配额的命令行工具" />
 <meta property="og:description" content="用golang实现的用于设置xfs磁盘配额的工具" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/blog/202204/xfsquota-golang/" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="/blog/202204/xfsquota-golang/" />
 <meta property="article:published_time" content="2022-04-23T22:20:59+08:00" />
 <meta property="article:modified_time" content="2022-04-23T22:20:59+08:00" /><meta property="og:site_name" content="silenceper" />
-
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="xfsquota：一个便捷的管理xfs磁盘配额的命令行工具"/>
 <meta name="twitter:description" content="用golang实现的用于设置xfs磁盘配额的工具"/>
@@ -133,7 +132,7 @@
 <p>主要是要因为最近要实现磁盘quota的控制，同时觉得看了docker内的源码，都是利用cgo的方式来实现的，如果直接用<code>xfs_quota</code>的方式查看配额，无法直观的看到某一个目录下的配额，只能列出所有，并且没有具体目录，类似如下结果，在设置了docker 容器的quota之后查看每个容器的配额，只有<code>Project ID</code>无法判别到具体某个目录：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -159,31 +158,31 @@
 </span><span class="lnt">24
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"> <span class="c1"># xfs_quota -x -c &#34;report&#34; /data</span>
-</span></span><span class="line"><span class="cl"> Project quota on /data <span class="o">(</span>/dev/vdb<span class="o">)</span>
-</span></span><span class="line"><span class="cl">                               Blocks
-</span></span><span class="line"><span class="cl">Project ID       Used       Soft       Hard    Warn/Grace
-</span></span><span class="line"><span class="cl">---------- --------------------------------------------------
-</span></span><span class="line"><span class="cl"><span class="c1">#0            7394256          0          0     00 [--------]</span>
-</span></span><span class="line"><span class="cl"><span class="c1">#2                  8   52428800   52428800     00 [--------]</span>
-</span></span><span class="line"><span class="cl"><span class="c1">#3                  8   52428800   52428800     00 [--------]</span>
-</span></span><span class="line"><span class="cl"><span class="c1">#4                  8   52428800   52428800     00 [--------]</span>
-</span></span><span class="line"><span class="cl"><span class="c1">#5               2360   52428800   52428800     00 [--------]</span>
-</span></span><span class="line"><span class="cl"><span class="c1">#6                  8   52428800   52428800     00 [--------]</span>
-</span></span><span class="line"><span class="cl"><span class="c1">#7                  8   52428800   52428800     00 [--------]</span>
-</span></span><span class="line"><span class="cl"><span class="c1">#8                  8   52428800   52428800     00 [--------]</span>
-</span></span><span class="line"><span class="cl"><span class="c1">#9              10568   52428800   52428800     00 [--------]</span>
-</span></span><span class="line"><span class="cl"><span class="c1">#10                 0   52428800   52428800     00 [--------]</span>
-</span></span><span class="line"><span class="cl"><span class="c1">#11                 0   52428800   52428800     00 [--------]</span>
-</span></span><span class="line"><span class="cl"><span class="c1">#12                 0   52428800   52428800     00 [--------]</span>
-</span></span><span class="line"><span class="cl"><span class="c1">#13                 0   52428800   52428800     00 [--------]</span>
-</span></span><span class="line"><span class="cl"><span class="c1">#14                 0   52428800   52428800     00 [--------]</span>
-</span></span><span class="line"><span class="cl"><span class="c1">#15                 0   52428800   52428800     00 [--------]</span>
-</span></span><span class="line"><span class="cl"><span class="c1">#16                 0   52428800   52428800     00 [--------]</span>
-</span></span><span class="line"><span class="cl"><span class="c1">#17                 0   52428800   52428800     00 [--------]</span>
-</span></span><span class="line"><span class="cl"><span class="c1">#18                 0   52428800   52428800     00 [--------]</span>
-</span></span><span class="line"><span class="cl"><span class="c1">#19                 0   52428800   52428800     00 [--------]</span>
-</span></span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-shell" data-lang="shell"> <span class="c1"># xfs_quota -x -c &#34;report&#34; /data</span>
+ Project quota on /data <span class="o">(</span>/dev/vdb<span class="o">)</span>
+                               Blocks
+Project ID       Used       Soft       Hard    Warn/Grace
+---------- --------------------------------------------------
+<span class="c1">#0            7394256          0          0     00 [--------]</span>
+<span class="c1">#2                  8   52428800   52428800     00 [--------]</span>
+<span class="c1">#3                  8   52428800   52428800     00 [--------]</span>
+<span class="c1">#4                  8   52428800   52428800     00 [--------]</span>
+<span class="c1">#5               2360   52428800   52428800     00 [--------]</span>
+<span class="c1">#6                  8   52428800   52428800     00 [--------]</span>
+<span class="c1">#7                  8   52428800   52428800     00 [--------]</span>
+<span class="c1">#8                  8   52428800   52428800     00 [--------]</span>
+<span class="c1">#9              10568   52428800   52428800     00 [--------]</span>
+<span class="c1">#10                 0   52428800   52428800     00 [--------]</span>
+<span class="c1">#11                 0   52428800   52428800     00 [--------]</span>
+<span class="c1">#12                 0   52428800   52428800     00 [--------]</span>
+<span class="c1">#13                 0   52428800   52428800     00 [--------]</span>
+<span class="c1">#14                 0   52428800   52428800     00 [--------]</span>
+<span class="c1">#15                 0   52428800   52428800     00 [--------]</span>
+<span class="c1">#16                 0   52428800   52428800     00 [--------]</span>
+<span class="c1">#17                 0   52428800   52428800     00 [--------]</span>
+<span class="c1">#18                 0   52428800   52428800     00 [--------]</span>
+<span class="c1">#19                 0   52428800   52428800     00 [--------]</span>
+</code></pre></td></tr></table>
 </div>
 </div><p>所有用cgo的方式，可以实现对某个目录的quota查看。</p>
 <h2 id="主要功能">主要功能</h2>
@@ -201,7 +200,7 @@
 <p><strong>Usage</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -220,44 +219,44 @@
 </span><span class="lnt">17
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">xfsquota is a tool <span class="k">for</span> managing XFS quotas
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">Usage:
-</span></span><span class="line"><span class="cl">  xfsquota <span class="o">[</span>command<span class="o">]</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">Available Commands:
-</span></span><span class="line"><span class="cl">  clean       clean quota information
-</span></span><span class="line"><span class="cl">  completion  Generate the autocompletion script <span class="k">for</span> the specified shell
-</span></span><span class="line"><span class="cl">  get         Get quota information
-</span></span><span class="line"><span class="cl">  <span class="nb">help</span>        Help about any <span class="nb">command</span>
-</span></span><span class="line"><span class="cl">  <span class="nb">set</span>         Set quota information
-</span></span><span class="line"><span class="cl">  version     get version
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">Flags:
-</span></span><span class="line"><span class="cl">  -h, --help   <span class="nb">help</span> <span class="k">for</span> xfsquota
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">Use <span class="s2">&#34;xfsquota [command] --help&#34;</span> <span class="k">for</span> more information about a command.
-</span></span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-shell" data-lang="shell">xfsquota is a tool <span class="k">for</span> managing XFS quotas
+
+Usage:
+  xfsquota <span class="o">[</span>command<span class="o">]</span>
+
+Available Commands:
+  clean       clean quota information
+  completion  Generate the autocompletion script <span class="k">for</span> the specified shell
+  get         Get quota information
+  <span class="nb">help</span>        Help about any <span class="nb">command</span>
+  <span class="nb">set</span>         Set quota information
+  version     get version
+
+Flags:
+  -h, --help   <span class="nb">help</span> <span class="k">for</span> xfsquota
+
+Use <span class="s2">&#34;xfsquota [command] --help&#34;</span> <span class="k">for</span> more information about a command.
+</code></pre></td></tr></table>
 </div>
 </div><h3 id="set-quota">Set Quota</h3>
 <p>set quota size 1MiB ,inodes 20 for path <code>/data/test/quota</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">&gt; xfsquota <span class="nb">set</span> /data/test/quota  -s 1MiB -i <span class="m">20</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nb">set</span> quota success, path: /data/test/quota, size:1MiB, inodes:20
-</span></span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-shell" data-lang="shell">&gt; xfsquota <span class="nb">set</span> /data/test/quota  -s 1MiB -i <span class="m">20</span>
+
+<span class="nb">set</span> quota success, path: /data/test/quota, size:1MiB, inodes:20
+</code></pre></td></tr></table>
 </div>
 </div><h3 id="get-quota">Get Quota</h3>
 <p>get quota for path <code>/data/test/quota</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -265,22 +264,22 @@
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">&gt; xfsquota get /data/test/quota
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">quota Size<span class="o">(</span>bytes<span class="o">)</span>: <span class="m">1048576</span>
-</span></span><span class="line"><span class="cl">quota Inodes: <span class="m">20</span>
-</span></span><span class="line"><span class="cl">diskUsage Size<span class="o">(</span>bytes<span class="o">)</span>: <span class="m">0</span>
-</span></span><span class="line"><span class="cl">diskUsage Inodes: <span class="m">1</span>
-</span></span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-shell" data-lang="shell">&gt; xfsquota get /data/test/quota
+
+quota Size<span class="o">(</span>bytes<span class="o">)</span>: <span class="m">1048576</span>
+quota Inodes: <span class="m">20</span>
+diskUsage Size<span class="o">(</span>bytes<span class="o">)</span>: <span class="m">0</span>
+diskUsage Inodes: <span class="m">1</span>
+</code></pre></td></tr></table>
 </div>
 </div><h3 id="clean-quota">Clean Quota</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">xfsquota clean /data/test/quota
-</span></span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">xfsquota clean /data/test/quota
+</code></pre></td></tr></table>
 </div>
 </div><hr/>
             <figure>

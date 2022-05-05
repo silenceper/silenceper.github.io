@@ -7,15 +7,14 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
         <title>Golang中http包默认路由匹配规则阅读笔记 | silenceper</title>
         <meta name="Description" content="一个记录生活，工作的博客。关于Go，Kubernetes，云原生"><meta property="og:title" content="Golang中http包默认路由匹配规则阅读笔记" />
-<meta property="og:description" content="一、执行流程 构建一个简单http server： 1 2 3 4 5 6 7 8 9 10 11 12 13 package main import ( &#34;log&#34; &#34;net/http&#34; ) func main() { http.HandleFunc(&#34;/&#34;, func(w http.ResponseWriter, r *http.Request) { w.Write([]byte(&#34;hello world&#34;)) }) log.Fatal(http.ListenAndServe(&#34;:8080&#34;, nil)) } 使用http://127" />
+<meta property="og:description" content="一、执行流程 构建一个简单http server： 1 2 3 4 5 6 7 8 9 10 11 12 13 14 package main import ( &#34;log&#34; &#34;net/http&#34; ) func main() { http.HandleFunc(&#34;/&#34;, func(w http.ResponseWriter, r *http.Request) { w.Write([]byte(&#34;hello world&#34;)) }) log.Fatal(http.ListenAndServe(&#34;:8080&#34;, nil)) } 使用http://12" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/blog/201605/go-http-process/" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="/blog/201605/go-http-process/" />
 <meta property="article:published_time" content="2016-05-28T18:00:59+08:00" />
 <meta property="article:modified_time" content="2016-05-28T18:00:59+08:00" /><meta property="og:site_name" content="silenceper" />
-
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Golang中http包默认路由匹配规则阅读笔记"/>
-<meta name="twitter:description" content="一、执行流程 构建一个简单http server： 1 2 3 4 5 6 7 8 9 10 11 12 13 package main import ( &#34;log&#34; &#34;net/http&#34; ) func main() { http.HandleFunc(&#34;/&#34;, func(w http.ResponseWriter, r *http.Request) { w.Write([]byte(&#34;hello world&#34;)) }) log.Fatal(http.ListenAndServe(&#34;:8080&#34;, nil)) } 使用http://127"/>
+<meta name="twitter:description" content="一、执行流程 构建一个简单http server： 1 2 3 4 5 6 7 8 9 10 11 12 13 14 package main import ( &#34;log&#34; &#34;net/http&#34; ) func main() { http.HandleFunc(&#34;/&#34;, func(w http.ResponseWriter, r *http.Request) { w.Write([]byte(&#34;hello world&#34;)) }) log.Fatal(http.ListenAndServe(&#34;:8080&#34;, nil)) } 使用http://12"/>
 <meta name="theme-color" content="#ffffff">
 <meta name="msapplication-TileColor" content="#da532c">
 <link rel="canonical" href="/blog/201605/go-http-process/" />
@@ -37,7 +36,7 @@
                 "url": "\/img\/silenceoer-avatar.jpg",
                 "width":  800 ,
                 "height":  600 
-            },"genre": "posts","keywords": "wechat, go","wordcount":  2230 ,
+            },"genre": "posts","keywords": "wechat, go","wordcount":  2235 ,
         "url": "\/blog\/201605\/go-http-process\/","datePublished": "2016-05-28T18:00:59\u002b08:00","dateModified": "2016-05-28T18:00:59\u002b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "silenceper",
@@ -99,7 +98,7 @@
                                 </a>
                             </span></span></div>
             <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2016-05-28&#32;18:00>2016-05-28 18:00</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>约 2230 字&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>约 2235 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>预计阅读 5 分钟&nbsp;</div>
         </div><div class="toc" id="toc-auto">
                 <h2 class="toc-title">目录</h2>
@@ -124,7 +123,7 @@
 <p>构建一个简单http server：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -137,22 +136,24 @@
 </span><span class="lnt">11
 </span><span class="lnt">12
 </span><span class="lnt">13
+</span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
-</span></span><span class="line"><span class="cl">	<span class="s">&#34;log&#34;</span>
-</span></span><span class="line"><span class="cl">	<span class="s">&#34;net/http&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">http</span><span class="p">.</span><span class="nf">HandleFunc</span><span class="p">(</span><span class="s">&#34;/&#34;</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">w</span><span class="p">.</span><span class="nf">Write</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&#34;hello world&#34;</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">	<span class="p">})</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">log</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nf">ListenAndServe</span><span class="p">(</span><span class="s">&#34;:8080&#34;</span><span class="p">,</span> <span class="kc">nil</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+	<span class="s">&#34;log&#34;</span>
+	<span class="s">&#34;net/http&#34;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="nx">http</span><span class="p">.</span><span class="nf">HandleFunc</span><span class="p">(</span><span class="s">&#34;/&#34;</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
+		<span class="nx">w</span><span class="p">.</span><span class="nf">Write</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&#34;hello world&#34;</span><span class="p">))</span>
+	<span class="p">})</span>
+	<span class="nx">log</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nf">ListenAndServe</span><span class="p">(</span><span class="s">&#34;:8080&#34;</span><span class="p">,</span> <span class="kc">nil</span><span class="p">))</span>
+<span class="p">}</span>
+
+</code></pre></td></tr></table>
 </div>
 </div><p>使用<code>http://127.0.0.1:8080/</code> 就可以看到输出了</p>
 <p>通过跟踪http.go包代码，可以发现执行流程基本如下：</p>
@@ -175,7 +176,7 @@
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -191,21 +192,21 @@
 </span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">sh</span> <span class="nx">serverHandler</span><span class="p">)</span> <span class="nf">ServeHTTP</span><span class="p">(</span><span class="nx">rw</span> <span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">req</span> <span class="o">*</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="c1">//此handler即为http.ListenAndServe 中的第二个参数
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">handler</span> <span class="o">:=</span> <span class="nx">sh</span><span class="p">.</span><span class="nx">srv</span><span class="p">.</span><span class="nx">Handler</span> 
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">handler</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="c1">//如果handler为空则使用内部的DefaultServeMux 进行处理
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="nx">handler</span> <span class="p">=</span> <span class="nx">DefaultServeMux</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">req</span><span class="p">.</span><span class="nx">RequestURI</span> <span class="o">==</span> <span class="s">&#34;*&#34;</span> <span class="o">&amp;&amp;</span> <span class="nx">req</span><span class="p">.</span><span class="nx">Method</span> <span class="o">==</span> <span class="s">&#34;OPTIONS&#34;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">handler</span> <span class="p">=</span> <span class="nx">globalOptionsHandler</span><span class="p">{}</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="c1">//这里就开始处理http请求
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="c1">//如果需要使用自定义的mux，就需要实现ServeHTTP方法，即实现Handler接口。
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">handler</span><span class="p">.</span><span class="nf">ServeHTTP</span><span class="p">(</span><span class="nx">rw</span><span class="p">,</span> <span class="nx">req</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">sh</span> <span class="nx">serverHandler</span><span class="p">)</span> <span class="nf">ServeHTTP</span><span class="p">(</span><span class="nx">rw</span> <span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">req</span> <span class="o">*</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
+	<span class="c1">//此handler即为http.ListenAndServe 中的第二个参数
+</span><span class="c1"></span>	<span class="nx">handler</span> <span class="o">:=</span> <span class="nx">sh</span><span class="p">.</span><span class="nx">srv</span><span class="p">.</span><span class="nx">Handler</span> 
+	<span class="k">if</span> <span class="nx">handler</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="c1">//如果handler为空则使用内部的DefaultServeMux 进行处理
+</span><span class="c1"></span>		<span class="nx">handler</span> <span class="p">=</span> <span class="nx">DefaultServeMux</span>
+	<span class="p">}</span>
+	<span class="k">if</span> <span class="nx">req</span><span class="p">.</span><span class="nx">RequestURI</span> <span class="o">==</span> <span class="s">&#34;*&#34;</span> <span class="o">&amp;&amp;</span> <span class="nx">req</span><span class="p">.</span><span class="nx">Method</span> <span class="o">==</span> <span class="s">&#34;OPTIONS&#34;</span> <span class="p">{</span>
+		<span class="nx">handler</span> <span class="p">=</span> <span class="nx">globalOptionsHandler</span><span class="p">{}</span>
+	<span class="p">}</span>
+	<span class="c1">//这里就开始处理http请求
+</span><span class="c1"></span>	<span class="c1">//如果需要使用自定义的mux，就需要实现ServeHTTP方法，即实现Handler接口。
+</span><span class="c1"></span>	<span class="nx">handler</span><span class="p">.</span><span class="nf">ServeHTTP</span><span class="p">(</span><span class="nx">rw</span><span class="p">,</span> <span class="nx">req</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
 </div><ul>
 <li>6.进入DefaultServeMux中的逻辑就是根据请求path在map中匹配查找handler，并交由handler处理</li>
@@ -219,7 +220,7 @@
 <p>先看几个路由规则：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -244,34 +245,36 @@
 </span><span class="lnt">23
 </span><span class="lnt">24
 </span><span class="lnt">25
+</span><span class="lnt">26
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
-</span></span><span class="line"><span class="cl">	<span class="s">&#34;log&#34;</span>
-</span></span><span class="line"><span class="cl">	<span class="s">&#34;net/http&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="c1">//规则1
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">http</span><span class="p">.</span><span class="nf">HandleFunc</span><span class="p">(</span><span class="s">&#34;/&#34;</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">w</span><span class="p">.</span><span class="nf">Write</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&#34;hello world&#34;</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">	<span class="p">})</span>
-</span></span><span class="line"><span class="cl">	
-</span></span><span class="line"><span class="cl">	<span class="c1">//规则2
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">http</span><span class="p">.</span><span class="nf">HandleFunc</span><span class="p">(</span><span class="s">&#34;/path/&#34;</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">w</span><span class="p">.</span><span class="nf">Write</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&#34;pattern path: /path/ &#34;</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">	<span class="p">})</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="c1">//规则3
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">http</span><span class="p">.</span><span class="nf">HandleFunc</span><span class="p">(</span><span class="s">&#34;/path/subpath&#34;</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">w</span><span class="p">.</span><span class="nf">Write</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&#34;pattern path: /path/subpath&#34;</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">	<span class="p">})</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="nx">log</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nf">ListenAndServe</span><span class="p">(</span><span class="s">&#34;:8080&#34;</span><span class="p">,</span> <span class="kc">nil</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+	<span class="s">&#34;log&#34;</span>
+	<span class="s">&#34;net/http&#34;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="c1">//规则1
+</span><span class="c1"></span>	<span class="nx">http</span><span class="p">.</span><span class="nf">HandleFunc</span><span class="p">(</span><span class="s">&#34;/&#34;</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
+		<span class="nx">w</span><span class="p">.</span><span class="nf">Write</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&#34;hello world&#34;</span><span class="p">))</span>
+	<span class="p">})</span>
+	
+	<span class="c1">//规则2
+</span><span class="c1"></span>	<span class="nx">http</span><span class="p">.</span><span class="nf">HandleFunc</span><span class="p">(</span><span class="s">&#34;/path/&#34;</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
+		<span class="nx">w</span><span class="p">.</span><span class="nf">Write</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&#34;pattern path: /path/ &#34;</span><span class="p">))</span>
+	<span class="p">})</span>
+
+	<span class="c1">//规则3
+</span><span class="c1"></span>	<span class="nx">http</span><span class="p">.</span><span class="nf">HandleFunc</span><span class="p">(</span><span class="s">&#34;/path/subpath&#34;</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
+		<span class="nx">w</span><span class="p">.</span><span class="nf">Write</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&#34;pattern path: /path/subpath&#34;</span><span class="p">))</span>
+	<span class="p">})</span>
+
+	<span class="nx">log</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nf">ListenAndServe</span><span class="p">(</span><span class="s">&#34;:8080&#34;</span><span class="p">,</span> <span class="kc">nil</span><span class="p">))</span>
+<span class="p">}</span>
+
+</code></pre></td></tr></table>
 </div>
 </div><p>情景一：</p>
 <p>访问：<code>http://127.0.0.1:8080/</code></p>
@@ -292,7 +295,7 @@
 <p>先看两个struct，这是存放默认路由规则的：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -303,25 +306,27 @@
 </span><span class="lnt"> 9
 </span><span class="lnt">10
 </span><span class="lnt">11
+</span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">ServeMux</span> <span class="kd">struct</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">mu</span>    <span class="nx">sync</span><span class="p">.</span><span class="nx">RWMutex</span>  <span class="c1">//处理并发，增加读写锁
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">m</span>     <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="nx">muxEntry</span>  <span class="c1">//存放规则map，key即为设置的path
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">hosts</span> <span class="kt">bool</span> <span class="c1">// whether any patterns contain hostnames（是否包含host）
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">muxEntry</span> <span class="kd">struct</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">explicit</span> <span class="kt">bool</span> <span class="c1">//是否完全匹配
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">h</span>        <span class="nx">Handler</span><span class="c1">//相应匹配规则的handler
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">pattern</span>  <span class="kt">string</span><span class="c1">//匹配路径
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">ServeMux</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="nx">mu</span>    <span class="nx">sync</span><span class="p">.</span><span class="nx">RWMutex</span>  <span class="c1">//处理并发，增加读写锁
+</span><span class="c1"></span>	<span class="nx">m</span>     <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="nx">muxEntry</span>  <span class="c1">//存放规则map，key即为设置的path
+</span><span class="c1"></span>	<span class="nx">hosts</span> <span class="kt">bool</span> <span class="c1">// whether any patterns contain hostnames（是否包含host）
+</span><span class="c1"></span><span class="p">}</span>
+
+<span class="kd">type</span> <span class="nx">muxEntry</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="nx">explicit</span> <span class="kt">bool</span> <span class="c1">//是否完全匹配
+</span><span class="c1"></span>	<span class="nx">h</span>        <span class="nx">Handler</span><span class="c1">//相应匹配规则的handler
+</span><span class="c1"></span>	<span class="nx">pattern</span>  <span class="kt">string</span><span class="c1">//匹配路径
+</span><span class="c1"></span><span class="p">}</span>
+
+</code></pre></td></tr></table>
 </div>
 </div><p>通过跟踪<code>http.HandleFunc</code>定位到如下代码，正是往上面两个<code>struct</code>中增加规则：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -359,47 +364,49 @@
 </span><span class="lnt">36
 </span><span class="lnt">37
 </span><span class="lnt">38
+</span><span class="lnt">39
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">mux</span> <span class="o">*</span><span class="nx">ServeMux</span><span class="p">)</span> <span class="nf">Handle</span><span class="p">(</span><span class="nx">pattern</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">handler</span> <span class="nx">Handler</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">mux</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">	<span class="k">defer</span> <span class="nx">mux</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">pattern</span> <span class="o">==</span> <span class="s">&#34;&#34;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="nb">panic</span><span class="p">(</span><span class="s">&#34;http: invalid pattern &#34;</span> <span class="o">+</span> <span class="nx">pattern</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">handler</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="nb">panic</span><span class="p">(</span><span class="s">&#34;http: nil handler&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="c1">//如果已经匹配到了则panic
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">if</span> <span class="nx">mux</span><span class="p">.</span><span class="nx">m</span><span class="p">[</span><span class="nx">pattern</span><span class="p">].</span><span class="nx">explicit</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="nb">panic</span><span class="p">(</span><span class="s">&#34;http: multiple registrations for &#34;</span> <span class="o">+</span> <span class="nx">pattern</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">    <span class="c1">//增加一个新的匹配规则
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">mux</span><span class="p">.</span><span class="nx">m</span><span class="p">[</span><span class="nx">pattern</span><span class="p">]</span> <span class="p">=</span> <span class="nx">muxEntry</span><span class="p">{</span><span class="nx">explicit</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">h</span><span class="p">:</span> <span class="nx">handler</span><span class="p">,</span> <span class="nx">pattern</span><span class="p">:</span> <span class="nx">pattern</span><span class="p">}</span>
-</span></span><span class="line"><span class="cl">	
-</span></span><span class="line"><span class="cl">	<span class="c1">//根据path的第一个字母判断是否有host
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">if</span> <span class="nx">pattern</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="sc">&#39;/&#39;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">mux</span><span class="p">.</span><span class="nx">hosts</span> <span class="p">=</span> <span class="kc">true</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="c1">//！！这里看清楚 就是实现了情景二的情况 ，看判断条件
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">n</span> <span class="o">:=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">pattern</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">n</span> <span class="p">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">pattern</span><span class="p">[</span><span class="nx">n</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;/&#39;</span> <span class="o">&amp;&amp;</span> <span class="p">!</span><span class="nx">mux</span><span class="p">.</span><span class="nx">m</span><span class="p">[</span><span class="nx">pattern</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="nx">n</span><span class="o">-</span><span class="mi">1</span><span class="p">]].</span><span class="nx">explicit</span><span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="c1">// If pattern contains a host name, strip it and use remaining
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="c1">// path for redirect.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="nx">path</span> <span class="o">:=</span> <span class="nx">pattern</span>
-</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="nx">pattern</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="sc">&#39;/&#39;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">			<span class="c1">// In pattern, at least the last character is a &#39;/&#39;, so
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>			<span class="c1">// strings.Index can&#39;t be -1.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>			<span class="nx">path</span> <span class="p">=</span> <span class="nx">pattern</span><span class="p">[</span><span class="nx">strings</span><span class="p">.</span><span class="nf">Index</span><span class="p">(</span><span class="nx">pattern</span><span class="p">,</span> <span class="s">&#34;/&#34;</span><span class="p">):]</span>
-</span></span><span class="line"><span class="cl">		<span class="p">}</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">url</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">url</span><span class="p">.</span><span class="nx">URL</span><span class="p">{</span><span class="nx">Path</span><span class="p">:</span> <span class="nx">path</span><span class="p">}</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">mux</span><span class="p">.</span><span class="nx">m</span><span class="p">[</span><span class="nx">pattern</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="nx">n</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span> <span class="p">=</span> <span class="nx">muxEntry</span><span class="p">{</span><span class="nx">h</span><span class="p">:</span> <span class="nf">RedirectHandler</span><span class="p">(</span><span class="nx">url</span><span class="p">.</span><span class="nf">String</span><span class="p">(),</span> <span class="nx">StatusMovedPermanently</span><span class="p">),</span> <span class="nx">pattern</span><span class="p">:</span> <span class="nx">pattern</span><span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">mux</span> <span class="o">*</span><span class="nx">ServeMux</span><span class="p">)</span> <span class="nf">Handle</span><span class="p">(</span><span class="nx">pattern</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">handler</span> <span class="nx">Handler</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">mux</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
+	<span class="k">defer</span> <span class="nx">mux</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
+
+	<span class="k">if</span> <span class="nx">pattern</span> <span class="o">==</span> <span class="s">&#34;&#34;</span> <span class="p">{</span>
+		<span class="nb">panic</span><span class="p">(</span><span class="s">&#34;http: invalid pattern &#34;</span> <span class="o">+</span> <span class="nx">pattern</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="k">if</span> <span class="nx">handler</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nb">panic</span><span class="p">(</span><span class="s">&#34;http: nil handler&#34;</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="c1">//如果已经匹配到了则panic
+</span><span class="c1"></span>	<span class="k">if</span> <span class="nx">mux</span><span class="p">.</span><span class="nx">m</span><span class="p">[</span><span class="nx">pattern</span><span class="p">].</span><span class="nx">explicit</span> <span class="p">{</span>
+		<span class="nb">panic</span><span class="p">(</span><span class="s">&#34;http: multiple registrations for &#34;</span> <span class="o">+</span> <span class="nx">pattern</span><span class="p">)</span>
+	<span class="p">}</span>
+    
+    <span class="c1">//增加一个新的匹配规则
+</span><span class="c1"></span>	<span class="nx">mux</span><span class="p">.</span><span class="nx">m</span><span class="p">[</span><span class="nx">pattern</span><span class="p">]</span> <span class="p">=</span> <span class="nx">muxEntry</span><span class="p">{</span><span class="nx">explicit</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">h</span><span class="p">:</span> <span class="nx">handler</span><span class="p">,</span> <span class="nx">pattern</span><span class="p">:</span> <span class="nx">pattern</span><span class="p">}</span>
+	
+	<span class="c1">//根据path的第一个字母判断是否有host
+</span><span class="c1"></span>	<span class="k">if</span> <span class="nx">pattern</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="sc">&#39;/&#39;</span> <span class="p">{</span>
+		<span class="nx">mux</span><span class="p">.</span><span class="nx">hosts</span> <span class="p">=</span> <span class="kc">true</span>
+	<span class="p">}</span>
+
+	<span class="c1">//！！这里看清楚 就是实现了情景二的情况 ，看判断条件
+</span><span class="c1"></span>	<span class="nx">n</span> <span class="o">:=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">pattern</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">n</span> <span class="p">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">pattern</span><span class="p">[</span><span class="nx">n</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;/&#39;</span> <span class="o">&amp;&amp;</span> <span class="p">!</span><span class="nx">mux</span><span class="p">.</span><span class="nx">m</span><span class="p">[</span><span class="nx">pattern</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="nx">n</span><span class="o">-</span><span class="mi">1</span><span class="p">]].</span><span class="nx">explicit</span><span class="p">{</span>
+		<span class="c1">// If pattern contains a host name, strip it and use remaining
+</span><span class="c1"></span>		<span class="c1">// path for redirect.
+</span><span class="c1"></span>		<span class="nx">path</span> <span class="o">:=</span> <span class="nx">pattern</span>
+		<span class="k">if</span> <span class="nx">pattern</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="sc">&#39;/&#39;</span> <span class="p">{</span>
+			<span class="c1">// In pattern, at least the last character is a &#39;/&#39;, so
+</span><span class="c1"></span>			<span class="c1">// strings.Index can&#39;t be -1.
+</span><span class="c1"></span>			<span class="nx">path</span> <span class="p">=</span> <span class="nx">pattern</span><span class="p">[</span><span class="nx">strings</span><span class="p">.</span><span class="nf">Index</span><span class="p">(</span><span class="nx">pattern</span><span class="p">,</span> <span class="s">&#34;/&#34;</span><span class="p">):]</span>
+		<span class="p">}</span>
+		<span class="nx">url</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">url</span><span class="p">.</span><span class="nx">URL</span><span class="p">{</span><span class="nx">Path</span><span class="p">:</span> <span class="nx">path</span><span class="p">}</span>
+		<span class="nx">mux</span><span class="p">.</span><span class="nx">m</span><span class="p">[</span><span class="nx">pattern</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="nx">n</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span> <span class="p">=</span> <span class="nx">muxEntry</span><span class="p">{</span><span class="nx">h</span><span class="p">:</span> <span class="nf">RedirectHandler</span><span class="p">(</span><span class="nx">url</span><span class="p">.</span><span class="nf">String</span><span class="p">(),</span> <span class="nx">StatusMovedPermanently</span><span class="p">),</span> <span class="nx">pattern</span><span class="p">:</span> <span class="nx">pattern</span><span class="p">}</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></td></tr></table>
 </div>
 </div><p>上面有个<code>Helpful behavior</code>的注释行为，就是实现了情景二的情况，他是判断如果匹配的路径中最后含有<code>/</code>，并且之前也不存在添加去除反斜杠的规则的话，就自动给他增加一个301的跳转指向<code>/path/</code></p>
 <h2 id="22-查找路由规则">2.2 查找路由规则</h2>
@@ -410,7 +417,7 @@
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -427,22 +434,22 @@
 </span><span class="lnt">15
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">mux</span> <span class="o">*</span><span class="nx">ServeMux</span><span class="p">)</span> <span class="nf">match</span><span class="p">(</span><span class="nx">path</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="nx">h</span> <span class="nx">Handler</span><span class="p">,</span> <span class="nx">pattern</span> <span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="kd">var</span> <span class="nx">n</span> <span class="p">=</span> <span class="mi">0</span>
-</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="nx">k</span><span class="p">,</span> <span class="nx">v</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">mux</span><span class="p">.</span><span class="nx">m</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="p">!</span><span class="nf">pathMatch</span><span class="p">(</span><span class="nx">k</span><span class="p">,</span> <span class="nx">path</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">			<span class="k">continue</span>
-</span></span><span class="line"><span class="cl">		<span class="p">}</span>
-</span></span><span class="line"><span class="cl">		<span class="c1">//如果匹配到了一个规则，并没有马上返回handler，而且继续匹配并且判断path的长度是否是最长的，这是关键！！！
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="k">if</span> <span class="nx">h</span> <span class="o">==</span> <span class="kc">nil</span> <span class="o">||</span> <span class="nb">len</span><span class="p">(</span><span class="nx">k</span><span class="p">)</span> <span class="p">&gt;</span> <span class="nx">n</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">			<span class="nx">n</span> <span class="p">=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">k</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">			<span class="nx">h</span> <span class="p">=</span> <span class="nx">v</span><span class="p">.</span><span class="nx">h</span>
-</span></span><span class="line"><span class="cl">			<span class="nx">pattern</span> <span class="p">=</span> <span class="nx">v</span><span class="p">.</span><span class="nx">pattern</span>
-</span></span><span class="line"><span class="cl">		<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="k">return</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">mux</span> <span class="o">*</span><span class="nx">ServeMux</span><span class="p">)</span> <span class="nf">match</span><span class="p">(</span><span class="nx">path</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="nx">h</span> <span class="nx">Handler</span><span class="p">,</span> <span class="nx">pattern</span> <span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
+	<span class="kd">var</span> <span class="nx">n</span> <span class="p">=</span> <span class="mi">0</span>
+	<span class="k">for</span> <span class="nx">k</span><span class="p">,</span> <span class="nx">v</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">mux</span><span class="p">.</span><span class="nx">m</span> <span class="p">{</span>
+		<span class="k">if</span> <span class="p">!</span><span class="nf">pathMatch</span><span class="p">(</span><span class="nx">k</span><span class="p">,</span> <span class="nx">path</span><span class="p">)</span> <span class="p">{</span>
+			<span class="k">continue</span>
+		<span class="p">}</span>
+		<span class="c1">//如果匹配到了一个规则，并没有马上返回handler，而且继续匹配并且判断path的长度是否是最长的，这是关键！！！
+</span><span class="c1"></span>		<span class="k">if</span> <span class="nx">h</span> <span class="o">==</span> <span class="kc">nil</span> <span class="o">||</span> <span class="nb">len</span><span class="p">(</span><span class="nx">k</span><span class="p">)</span> <span class="p">&gt;</span> <span class="nx">n</span> <span class="p">{</span>
+			<span class="nx">n</span> <span class="p">=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">k</span><span class="p">)</span>
+			<span class="nx">h</span> <span class="p">=</span> <span class="nx">v</span><span class="p">.</span><span class="nx">h</span>
+			<span class="nx">pattern</span> <span class="p">=</span> <span class="nx">v</span><span class="p">.</span><span class="nx">pattern</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	<span class="k">return</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
 </div><p>1.这里就解释了为什么设置的精确的path是最优匹配到的，因为它是根据path的长度判断。
 当然也就解释了为什么<code>/</code>可以匹配所有（看<code>pathMatch</code>函数就知道了，<code>/</code>是匹配所有的，只是这是最后才被匹配成功）</p>
@@ -451,21 +458,23 @@
 <p>因为在调用 <code>http.HandleFunc</code>的时候已经将自定义的handler处理函数，强制转为<code>HandlerFunc</code>类型的，就拥有了<code>ServeHTTP</code>方法：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span><span class="lnt">6
+</span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">HandlerFunc</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="o">*</span><span class="nx">Request</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1">// ServeHTTP calls f(w, r).
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">f</span> <span class="nx">HandlerFunc</span><span class="p">)</span> <span class="nf">ServeHTTP</span><span class="p">(</span><span class="nx">w</span> <span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="nf">f</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="nx">r</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">HandlerFunc</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="o">*</span><span class="nx">Request</span><span class="p">)</span>
+
+<span class="c1">// ServeHTTP calls f(w, r).
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">f</span> <span class="nx">HandlerFunc</span><span class="p">)</span> <span class="nf">ServeHTTP</span><span class="p">(</span><span class="nx">w</span> <span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nf">f</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="nx">r</span><span class="p">)</span>
+<span class="p">}</span>
+
+</code></pre></td></tr></table>
 </div>
 </div><p><code>f(w,r)</code>就实现了handler的执行。</p>
 <blockquote>

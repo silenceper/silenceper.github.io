@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh">
     <head>
-	<meta name="generator" content="Hugo 0.96.0" />
+	<meta name="generator" content="Hugo 0.76.4" />
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
@@ -10,8 +10,8 @@
         <meta name="Description" content="一个记录生活，工作的博客。关于Go，Kubernetes，云原生"><meta property="og:title" content="silenceper" />
 <meta property="og:description" content="一个记录生活，工作的博客。关于Go，Kubernetes，云原生" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="/" /><meta property="og:site_name" content="silenceper" />
-
+<meta property="og:url" content="/" />
+<meta property="og:updated_time" content="2022-04-23T22:20:59+08:00" /><meta property="og:site_name" content="silenceper" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="silenceper"/>
 <meta name="twitter:description" content="一个记录生活，工作的博客。关于Go，Kubernetes，云原生"/>
@@ -95,7 +95,7 @@
                         <a href="/categories/tech">
                             <i class="far fa-folder fa-fw"></i>Tech
                         </a>
-                    </span></span></div><div class="content">一、执行流程 构建一个简单http server： 1 2 3 4 5 6 7 8 9 10 11 12 13 package main import ( &#34;log&#34; &#34;net/http&#34; ) func main() { http.HandleFunc(&#34;/&#34;, func(w http.ResponseWriter, r *http.Request) { w.Write([]byte(&#34;hello world&#34;)) }) log.Fatal(http.ListenAndServe(&#34;:8080&#34;, nil)) } 使用http://127</div><div class="post-footer">
+                    </span></span></div><div class="content">一、执行流程 构建一个简单http server： 1 2 3 4 5 6 7 8 9 10 11 12 13 14 package main import ( &#34;log&#34; &#34;net/http&#34; ) func main() { http.HandleFunc(&#34;/&#34;, func(w http.ResponseWriter, r *http.Request) { w.Write([]byte(&#34;hello world&#34;)) }) log.Fatal(http.ListenAndServe(&#34;:8080&#34;, nil)) } 使用http://12</div><div class="post-footer">
         <a href="/blog/201605/go-http-process/">阅读全文</a><div class="post-tags">&nbsp;<span>
                         <a href="/tags/wechat">
                             <i class="fas fa-tag fa-fw"></i>wechat

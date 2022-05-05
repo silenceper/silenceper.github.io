@@ -9,10 +9,9 @@
         <meta name="Description" content="CA 组件可以实现集群节点的自动增删，关于基本使用以及原理部分介绍"><meta property="og:title" content="Cluster Autoscaler:集群自动扩缩容" />
 <meta property="og:description" content="CA 组件可以实现集群节点的自动增删，关于基本使用以及原理部分介绍" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/blog/201907/cluster-autoscaler-usage/" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="/blog/201907/cluster-autoscaler-usage/" />
 <meta property="article:published_time" content="2019-07-02T00:00:00+00:00" />
 <meta property="article:modified_time" content="2019-07-02T00:00:00+00:00" /><meta property="og:site_name" content="silenceper" />
-
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Cluster Autoscaler:集群自动扩缩容"/>
 <meta name="twitter:description" content="CA 组件可以实现集群节点的自动增删，关于基本使用以及原理部分介绍"/>
@@ -37,7 +36,7 @@
                 "url": "\/img\/silenceoer-avatar.jpg",
                 "width":  800 ,
                 "height":  600 
-            },"genre": "posts","keywords": "k8s, ca","wordcount":  3170 ,
+            },"genre": "posts","keywords": "k8s, ca","wordcount":  3126 ,
         "url": "\/blog\/201907\/cluster-autoscaler-usage\/","datePublished": "2019-07-02T00:00:00\u002b00:00","dateModified": "2019-07-02T00:00:00\u002b00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "silenceper",
@@ -99,7 +98,7 @@
                                 </a>
                             </span></span></div>
             <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2019-07-02&#32;00:00>2019-07-02 00:00</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>约 3170 字&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>约 3126 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>预计阅读 7 分钟&nbsp;</div>
         </div><div class="toc" id="toc-auto">
                 <h2 class="toc-title">目录</h2>
@@ -160,7 +159,7 @@
 <p>其中关键yaml文件如下：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -209,54 +208,54 @@
 </span><span class="lnt">47
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">apiVersion: extensions/v1beta1
-</span></span><span class="line"><span class="cl">kind: Deployment
-</span></span><span class="line"><span class="cl">metadata:
-</span></span><span class="line"><span class="cl">  name: cluster-autoscaler
-</span></span><span class="line"><span class="cl">  namespace: kube-system
-</span></span><span class="line"><span class="cl">  labels:
-</span></span><span class="line"><span class="cl">    app: cluster-autoscaler
-</span></span><span class="line"><span class="cl">spec:
-</span></span><span class="line"><span class="cl">  replicas: 1
-</span></span><span class="line"><span class="cl">  selector:
-</span></span><span class="line"><span class="cl">    matchLabels:
-</span></span><span class="line"><span class="cl">      app: cluster-autoscaler
-</span></span><span class="line"><span class="cl">  template:
-</span></span><span class="line"><span class="cl">    metadata:
-</span></span><span class="line"><span class="cl">      labels:
-</span></span><span class="line"><span class="cl">        app: cluster-autoscaler
-</span></span><span class="line"><span class="cl">    spec:
-</span></span><span class="line"><span class="cl">      serviceAccountName: admin
-</span></span><span class="line"><span class="cl">      containers:
-</span></span><span class="line"><span class="cl">        - image: registry.cn-hangzhou.aliyuncs.com/google-containers/cluster-autoscaler:v1.1.0
-</span></span><span class="line"><span class="cl">          name: cluster-autoscaler
-</span></span><span class="line"><span class="cl">          resources:
-</span></span><span class="line"><span class="cl">            limits:
-</span></span><span class="line"><span class="cl">              cpu: 100m
-</span></span><span class="line"><span class="cl">              memory: 300Mi
-</span></span><span class="line"><span class="cl">            requests:
-</span></span><span class="line"><span class="cl">              cpu: 100m
-</span></span><span class="line"><span class="cl">              memory: 300Mi
-</span></span><span class="line"><span class="cl">          command:
-</span></span><span class="line"><span class="cl">            - ./cluster-autoscaler
-</span></span><span class="line"><span class="cl">            - --v=4
-</span></span><span class="line"><span class="cl">            - --stderrthreshold=info
-</span></span><span class="line"><span class="cl">            - --cloud-provider=alicloud
-</span></span><span class="line"><span class="cl">            - --skip-nodes-with-local-storage=false
-</span></span><span class="line"><span class="cl">            - --nodes=1💯${AUTO_SCALER_GROUP}
-</span></span><span class="line"><span class="cl">          env:
-</span></span><span class="line"><span class="cl">          - name: ACCESS_KEY_ID
-</span></span><span class="line"><span class="cl">            valueFrom:
-</span></span><span class="line"><span class="cl">              secretKeyRef:
-</span></span><span class="line"><span class="cl">                name: cloud-config
-</span></span><span class="line"><span class="cl">                key: access-key-id
-</span></span><span class="line"><span class="cl">          - name: ACCESS_KEY_SECRET
-</span></span><span class="line"><span class="cl">            valueFrom:
-</span></span><span class="line"><span class="cl">              secretKeyRef:
-</span></span><span class="line"><span class="cl">                name: cloud-config
-</span></span><span class="line"><span class="cl">                key: access-key-secret
-</span></span><span class="line"><span class="cl">          imagePullPolicy: &#34;Always&#34;
-</span></span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: cluster-autoscaler
+  namespace: kube-system
+  labels:
+    app: cluster-autoscaler
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cluster-autoscaler
+  template:
+    metadata:
+      labels:
+        app: cluster-autoscaler
+    spec:
+      serviceAccountName: admin
+      containers:
+        - image: registry.cn-hangzhou.aliyuncs.com/google-containers/cluster-autoscaler:v1.1.0
+          name: cluster-autoscaler
+          resources:
+            limits:
+              cpu: 100m
+              memory: 300Mi
+            requests:
+              cpu: 100m
+              memory: 300Mi
+          command:
+            - ./cluster-autoscaler
+            - --v=4
+            - --stderrthreshold=info
+            - --cloud-provider=alicloud
+            - --skip-nodes-with-local-storage=false
+            - --nodes=1💯${AUTO_SCALER_GROUP}
+          env:
+          - name: ACCESS_KEY_ID
+            valueFrom:
+              secretKeyRef:
+                name: cloud-config
+                key: access-key-id
+          - name: ACCESS_KEY_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: cloud-config
+                key: access-key-secret
+          imagePullPolicy: &#34;Always&#34;
+</code></pre></td></tr></table>
 </div>
 </div><p>其中 <code>--nodes=1💯${AUTO_SCALER_GROUP}</code>参数，表示扩容最大100个，缩容最小1个节点，后面<code>${AUTO_SCALER_GROUP}</code>表示伸缩组ID</p>
 <h2 id="工作原理">工作原理</h2>
@@ -288,7 +287,7 @@
 <p>如果想要对接自己的IaaS层，只需要实现其中的接口就可以了，接口定义如下：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -335,57 +334,57 @@
 </span><span class="lnt">45
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-zed" data-lang="zed"><span class="line"><span class="cl"><span class="c1">// CloudProvider contains configuration info and functions for interacting with
-</span></span></span><span class="line"><span class="cl"><span class="c1">// cloud provider (GCE, AWS, etc).
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">type</span><span class="w"> </span><span class="n">CloudProvider</span><span class="w"> </span><span class="n">interface</span><span class="w"> </span><span class="p">{</span><span class="n">Marcin</span><span class="w"> </span><span class="n">Wielgus</span><span class="p">,</span><span class="w"> </span><span class="err">3</span><span class="w"> </span><span class="n">years</span><span class="w"> </span><span class="n">ago</span><span class="o">:</span><span class="w"> </span><span class="err">•</span><span class="w"> </span><span class="n">Cluster</span><span class="o">-</span><span class="n">autoscaler</span><span class="o">:</span><span class="w"> </span><span class="n">cloud</span><span class="w"> </span><span class="n">provider</span><span class="w"> </span><span class="n">interface</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="c1">// Name returns name of the cloud provider.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">	</span><span class="n">Name</span><span class="p">()</span><span class="w"> </span><span class="n">string</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="c1">// NodeGroups returns all node groups configured for this cloud provider.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">	</span><span class="c1">//返回所有伸缩组
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">	</span><span class="n">NodeGroups</span><span class="p">()</span><span class="w"> </span><span class="p">[]</span><span class="n">NodeGroup</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="c1">// NodeGroupForNode returns the node group for the given node, nil if the node
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">	</span><span class="c1">// should not be processed by cluster autoscaler, or non-nil error if such
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">	</span><span class="c1">// occurred. Must be implemented.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">	</span><span class="n">NodeGroupForNode</span><span class="p">(</span><span class="o">*</span><span class="n">apiv1</span><span class="p">.</span><span class="n">Node</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="n">NodeGroup</span><span class="p">,</span><span class="w"> </span><span class="n">error</span><span class="p">)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="c1">// Pricing returns pricing model for this cloud provider or error if not available.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">	</span><span class="c1">// Implementation optional.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">	</span><span class="n">Pricing</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="n">PricingModel</span><span class="p">,</span><span class="w"> </span><span class="n">errors</span><span class="p">.</span><span class="n">AutoscalerError</span><span class="p">)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="c1">// GetAvailableMachineTypes get all machine types that can be requested from the cloud provider.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">	</span><span class="c1">// Implementation optional.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">	</span><span class="n">GetAvailableMachineTypes</span><span class="p">()</span><span class="w"> </span><span class="p">([]</span><span class="n">string</span><span class="p">,</span><span class="w"> </span><span class="n">error</span><span class="p">)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="c1">// NewNodeGroup builds a theoretical node group based on the node definition provided. The node group is not automatically
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">	</span><span class="c1">// created on the cloud provider side. The node group is not returned by NodeGroups() until it is created.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">	</span><span class="c1">// Implementation optional.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">	</span><span class="n">NewNodeGroup</span><span class="p">(</span><span class="n">machineType</span><span class="w"> </span><span class="n">string</span><span class="p">,</span><span class="w"> </span><span class="n">labels</span><span class="w"> </span><span class="n">map</span><span class="p">[</span><span class="n">string</span><span class="p">]</span><span class="n">string</span><span class="p">,</span><span class="w"> </span><span class="n">systemLabels</span><span class="w"> </span><span class="n">map</span><span class="p">[</span><span class="n">string</span><span class="p">]</span><span class="n">string</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="n">taints</span><span class="w"> </span><span class="p">[]</span><span class="n">apiv1</span><span class="p">.</span><span class="n">Taint</span><span class="p">,</span><span class="w"> </span><span class="n">extraResources</span><span class="w"> </span><span class="n">map</span><span class="p">[</span><span class="n">string</span><span class="p">]</span><span class="n">resource</span><span class="p">.</span><span class="n">Quantity</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="n">NodeGroup</span><span class="p">,</span><span class="w"> </span><span class="n">error</span><span class="p">)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="c1">// GetResourceLimiter returns struct containing limits (max, min) for resources (cores, memory etc.).
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">	</span><span class="n">GetResourceLimiter</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">ResourceLimiter</span><span class="p">,</span><span class="w"> </span><span class="n">error</span><span class="p">)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="c1">// GPULabel returns the label added to nodes with GPU resource.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">	</span><span class="n">GPULabel</span><span class="p">()</span><span class="w"> </span><span class="n">string</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="c1">// GetAvailableGPUTypes return all available GPU types cloud provider supports.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">	</span><span class="n">GetAvailableGPUTypes</span><span class="p">()</span><span class="w"> </span><span class="n">map</span><span class="p">[</span><span class="n">string</span><span class="p">]</span><span class="n">struct</span><span class="p">{}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="c1">// Cleanup cleans up open resources before the cloud provider is destroyed, i.e. go routines etc.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">	</span><span class="n">Cleanup</span><span class="p">()</span><span class="w"> </span><span class="n">error</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="c1">// Refresh is called before every main loop and can be used to dynamically update cloud provider state.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">	</span><span class="c1">// In particular the list of node groups returned by NodeGroups can change as a result of CloudProvider.Refresh().
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">	</span><span class="n">Refresh</span><span class="p">()</span><span class="w"> </span><span class="n">error</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">// CloudProvider contains configuration info and functions for interacting with
+// cloud provider (GCE, AWS, etc).
+type CloudProvider interface {Marcin Wielgus, 3 years ago: • Cluster-autoscaler: cloud provider interface
+	// Name returns name of the cloud provider.
+	Name() string
+
+	// NodeGroups returns all node groups configured for this cloud provider.
+	//返回所有伸缩组
+	NodeGroups() []NodeGroup
+
+	// NodeGroupForNode returns the node group for the given node, nil if the node
+	// should not be processed by cluster autoscaler, or non-nil error if such
+	// occurred. Must be implemented.
+	NodeGroupForNode(*apiv1.Node) (NodeGroup, error)
+
+	// Pricing returns pricing model for this cloud provider or error if not available.
+	// Implementation optional.
+	Pricing() (PricingModel, errors.AutoscalerError)
+
+	// GetAvailableMachineTypes get all machine types that can be requested from the cloud provider.
+	// Implementation optional.
+	GetAvailableMachineTypes() ([]string, error)
+
+	// NewNodeGroup builds a theoretical node group based on the node definition provided. The node group is not automatically
+	// created on the cloud provider side. The node group is not returned by NodeGroups() until it is created.
+	// Implementation optional.
+	NewNodeGroup(machineType string, labels map[string]string, systemLabels map[string]string,
+		taints []apiv1.Taint, extraResources map[string]resource.Quantity) (NodeGroup, error)
+
+	// GetResourceLimiter returns struct containing limits (max, min) for resources (cores, memory etc.).
+	GetResourceLimiter() (*ResourceLimiter, error)
+
+	// GPULabel returns the label added to nodes with GPU resource.
+	GPULabel() string
+
+	// GetAvailableGPUTypes return all available GPU types cloud provider supports.
+	GetAvailableGPUTypes() map[string]struct{}
+
+	// Cleanup cleans up open resources before the cloud provider is destroyed, i.e. go routines etc.
+	Cleanup() error
+
+	// Refresh is called before every main loop and can be used to dynamically update cloud provider state.
+	// In particular the list of node groups returned by NodeGroups can change as a result of CloudProvider.Refresh().
+	Refresh() error
+}
+</code></pre></td></tr></table>
 </div>
 </div><p>其中NodeGroup接口定义：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -454,78 +453,80 @@
 </span><span class="lnt">67
 </span><span class="lnt">68
 </span><span class="lnt">69
+</span><span class="lnt">70
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">// NodeGroup contains configuration info and functions to control a set
-</span></span><span class="line"><span class="cl">// of nodes that have the same capacity and set of labels.
-</span></span><span class="line"><span class="cl">type NodeGroup interface {
-</span></span><span class="line"><span class="cl">	// MaxSize returns maximum size of the node group.
-</span></span><span class="line"><span class="cl">	MaxSize() int
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	// MinSize returns minimum size of the node group.
-</span></span><span class="line"><span class="cl">	MinSize() int
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	// TargetSize returns the current target size of the node group. It is possible that the
-</span></span><span class="line"><span class="cl">	// number of nodes in Kubernetes is different at the moment but should be equal
-</span></span><span class="line"><span class="cl">	// to Size() once everything stabilizes (new nodes finish startup and registration or
-</span></span><span class="line"><span class="cl">	// removed nodes are deleted completely). Implementation required.
-</span></span><span class="line"><span class="cl">	TargetSize() (int, error)
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	// IncreaseSize increases the size of the node group. To delete a node you need
-</span></span><span class="line"><span class="cl">	// to explicitly name it and use DeleteNode. This function should wait until
-</span></span><span class="line"><span class="cl">	// node group size is updated. Implementation required.
-</span></span><span class="line"><span class="cl">	//扩容伸缩组
-</span></span><span class="line"><span class="cl">	IncreaseSize(delta int) error
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	// DeleteNodes deletes nodes from this node group. Error is returned either on
-</span></span><span class="line"><span class="cl">	// failure or if the given node doesn&#39;t belong to this node group. This function
-</span></span><span class="line"><span class="cl">	// should wait until node group size is updated. Implementation required.
-</span></span><span class="line"><span class="cl">	//从伸缩组中删除节点
-</span></span><span class="line"><span class="cl">	DeleteNodes([]*apiv1.Node) error
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	// DecreaseTargetSize decreases the target size of the node group. This function
-</span></span><span class="line"><span class="cl">	// doesn&#39;t permit to delete any existing node and can be used only to reduce the
-</span></span><span class="line"><span class="cl">	// request for new nodes that have not been yet fulfilled. Delta should be negative.
-</span></span><span class="line"><span class="cl">	// It is assumed that cloud provider will not delete the existing nodes when there
-</span></span><span class="line"><span class="cl">	// is an option to just decrease the target. Implementation required.
-</span></span><span class="line"><span class="cl">	DecreaseTargetSize(delta int) error
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	// Id returns an unique identifier of the node group.
-</span></span><span class="line"><span class="cl">	Id() string
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	// Debug returns a string containing all information regarding this node group.
-</span></span><span class="line"><span class="cl">	Debug() string
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	// Nodes returns a list of all nodes that belong to this node group.
-</span></span><span class="line"><span class="cl">	// It is required that Instance objects returned by this method have Id field set.
-</span></span><span class="line"><span class="cl">	// Other fields are optional.
-</span></span><span class="line"><span class="cl">	Nodes() ([]Instance, error)
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	// TemplateNodeInfo returns a schedulernodeinfo.NodeInfo structure of an empty
-</span></span><span class="line"><span class="cl">	// (as if just started) node. This will be used in scale-up simulations to
-</span></span><span class="line"><span class="cl">	// predict what would a new node look like if a node group was expanded. The returned
-</span></span><span class="line"><span class="cl">	// NodeInfo is expected to have a fully populated Node object, with all of the labels,
-</span></span><span class="line"><span class="cl">	// capacity and allocatable information as well as all pods that are started on
-</span></span><span class="line"><span class="cl">	// the node by default, using manifest (most likely only kube-proxy). Implementation optional.
-</span></span><span class="line"><span class="cl">	TemplateNodeInfo() (*schedulernodeinfo.NodeInfo, error)
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	// Exist checks if the node group really exists on the cloud provider side. Allows to tell the
-</span></span><span class="line"><span class="cl">	// theoretical node group from the real one. Implementation required.
-</span></span><span class="line"><span class="cl">	Exist() bool
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	// Create creates the node group on the cloud provider side. Implementation optional.
-</span></span><span class="line"><span class="cl">	Create() (NodeGroup, error)
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	// Delete deletes the node group on the cloud provider side.
-</span></span><span class="line"><span class="cl">	// This will be executed only for autoprovisioned node groups, once their size drops to 0.
-</span></span><span class="line"><span class="cl">	// Implementation optional.
-</span></span><span class="line"><span class="cl">	Delete() error
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	// Autoprovisioned returns true if the node group is autoprovisioned. An autoprovisioned group
-</span></span><span class="line"><span class="cl">	// was created by CA and can be deleted when scaled to 0.
-</span></span><span class="line"><span class="cl">	Autoprovisioned() bool
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">// NodeGroup contains configuration info and functions to control a set
+// of nodes that have the same capacity and set of labels.
+type NodeGroup interface {
+	// MaxSize returns maximum size of the node group.
+	MaxSize() int
+
+	// MinSize returns minimum size of the node group.
+	MinSize() int
+
+	// TargetSize returns the current target size of the node group. It is possible that the
+	// number of nodes in Kubernetes is different at the moment but should be equal
+	// to Size() once everything stabilizes (new nodes finish startup and registration or
+	// removed nodes are deleted completely). Implementation required.
+	TargetSize() (int, error)
+
+	// IncreaseSize increases the size of the node group. To delete a node you need
+	// to explicitly name it and use DeleteNode. This function should wait until
+	// node group size is updated. Implementation required.
+	//扩容伸缩组
+	IncreaseSize(delta int) error
+
+	// DeleteNodes deletes nodes from this node group. Error is returned either on
+	// failure or if the given node doesn&#39;t belong to this node group. This function
+	// should wait until node group size is updated. Implementation required.
+	//从伸缩组中删除节点
+	DeleteNodes([]*apiv1.Node) error
+
+	// DecreaseTargetSize decreases the target size of the node group. This function
+	// doesn&#39;t permit to delete any existing node and can be used only to reduce the
+	// request for new nodes that have not been yet fulfilled. Delta should be negative.
+	// It is assumed that cloud provider will not delete the existing nodes when there
+	// is an option to just decrease the target. Implementation required.
+	DecreaseTargetSize(delta int) error
+
+	// Id returns an unique identifier of the node group.
+	Id() string
+
+	// Debug returns a string containing all information regarding this node group.
+	Debug() string
+
+	// Nodes returns a list of all nodes that belong to this node group.
+	// It is required that Instance objects returned by this method have Id field set.
+	// Other fields are optional.
+	Nodes() ([]Instance, error)
+
+	// TemplateNodeInfo returns a schedulernodeinfo.NodeInfo structure of an empty
+	// (as if just started) node. This will be used in scale-up simulations to
+	// predict what would a new node look like if a node group was expanded. The returned
+	// NodeInfo is expected to have a fully populated Node object, with all of the labels,
+	// capacity and allocatable information as well as all pods that are started on
+	// the node by default, using manifest (most likely only kube-proxy). Implementation optional.
+	TemplateNodeInfo() (*schedulernodeinfo.NodeInfo, error)
+
+	// Exist checks if the node group really exists on the cloud provider side. Allows to tell the
+	// theoretical node group from the real one. Implementation required.
+	Exist() bool
+
+	// Create creates the node group on the cloud provider side. Implementation optional.
+	Create() (NodeGroup, error)
+
+	// Delete deletes the node group on the cloud provider side.
+	// This will be executed only for autoprovisioned node groups, once their size drops to 0.
+	// Implementation optional.
+	Delete() error
+
+	// Autoprovisioned returns true if the node group is autoprovisioned. An autoprovisioned group
+	// was created by CA and can be deleted when scaled to 0.
+	Autoprovisioned() bool
+}
+
+</code></pre></td></tr></table>
 </div>
 </div><p>其中<code>IncreaseSize</code>，<code>IncreaseSize</code>才是关键的方法，分别对用扩容伸缩组和增加节点。</p>
 <p>在调用<code>IncreaseSize</code>接口后，需要完成节点自动添加进集群。参考阿里云是通过配置shell脚本到伸缩组中的ECS启动脚本中，当ECS启动，自动执行该脚本。当然我们也可以自定义通过其他方式加入集群。</p>
