@@ -1,25 +1,440 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>event on silenceper</title>
-    <link>/tags/event/</link>
-    <description>Recent content in event on silenceper</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>zh</language>
-    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Tue, 03 Mar 2020 12:40:59 +0800</lastBuildDate>
-    
-	<atom:link href="/tags/event/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>分析kubernetes中的事件机制</title>
-      <link>/blog/202003/kubernetes-event/</link>
-      <pubDate>Tue, 03 Mar 2020 12:40:59 +0800</pubDate>
-      
-      <guid>/blog/202003/kubernetes-event/</guid>
-      <description>我们通过 kubectl describe [资源] 命令，可以在看到Event输出，并且经常依赖event进行问题定位，从event中可以分析整个POD的运行轨迹，为服务的</description>
-    </item>
-    
-  </channel>
-</rss>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – Event</title><link>//localhost:1313/tags/event/</link><description>Recent content in Event on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 03 Mar 2020 12:40:59 +0800</lastBuildDate><atom:link href="//localhost:1313/tags/event/index.xml" rel="self" type="application/rss+xml"/><item><title>分析kubernetes中的事件机制</title><link>//localhost:1313/blog/202003/kubernetes-event/</link><pubDate>Tue, 03 Mar 2020 12:40:59 +0800</pubDate><guid>//localhost:1313/blog/202003/kubernetes-event/</guid><description>
+&lt;p>我们通过 &lt;code>kubectl describe [资源]&lt;/code> 命令，可以在看到Event输出，并且经常依赖event进行问题定位，从event中可以分析整个POD的运行轨迹，为服务的客观测性提供数据来源，由此可见，event在Kubernetes中起着举足轻重的作用。&lt;/p>
+&lt;p>&lt;img src="//localhost:1313/img/20200303/event.png" alt="event展示" loading="lazy" />&lt;/p>
+&lt;p>event并不只是kubelet中都有的，关于event的操作被封装在&lt;a href="https://github.com/kubernetes/kubernetes/tree/v1.17.3/staging/src/k8s.io/client-go/tools/record" target="_blank" rel="noopener">client-go/tools/record&lt;/a>包，我们完全可以在写入自定义的event。&lt;/p>
+&lt;p>现在让我们来一步步揭开event的面纱。
+&lt;a name="EBJdC">&lt;/a>&lt;/p>
+&lt;h2>Event定义&lt;span class="hx-absolute -hx-mt-20" id="event定义">&lt;/span>
+&lt;a href="#event%e5%ae%9a%e4%b9%89" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>其实event也是一个资源对象，并且通过apiserver将event存储在etcd中，所以我们也可以通过 &lt;code>kubectl get event&lt;/code> 命令查看对应的event对象。&lt;/p>
+&lt;p>以下是一个event的yaml文件：&lt;/p>
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="line">&lt;span class="cl">&lt;span class="nx">apiVersion&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nx">v1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">count&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="mi">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">eventTime&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nx">null&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">firstTimestamp&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s">&amp;#34;2020-03-02T13:08:22Z&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">involvedObject&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">apiVersion&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nx">v1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">kind&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nx">Pod&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">name&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nx">example&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="nx">foo&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="nx">d75d8587c&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="nx">xsf64&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">namespace&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="k">default&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">resourceVersion&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s">&amp;#34;429837&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">uid&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nx">ce611c62&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">6&lt;/span>&lt;span class="nx">c1a&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">4&lt;/span>&lt;span class="nx">bd8&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">9029&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">136&lt;/span>&lt;span class="nx">a1adf7de4&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">kind&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nx">Event&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">lastTimestamp&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s">&amp;#34;2020-03-02T13:08:22Z&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">message&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nx">Pod&lt;/span> &lt;span class="nx">sandbox&lt;/span> &lt;span class="nx">changed&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">it&lt;/span> &lt;span class="nx">will&lt;/span> &lt;span class="nx">be&lt;/span> &lt;span class="nx">killed&lt;/span> &lt;span class="nx">and&lt;/span> &lt;span class="nx">re&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="nx">created&lt;/span>&lt;span class="p">.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">metadata&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">creationTimestamp&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s">&amp;#34;2020-03-02T13:08:30Z&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">name&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nx">example&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="nx">foo&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="nx">d75d8587c&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="nx">xsf64&lt;/span>&lt;span class="mf">.15&lt;/span>&lt;span class="nx">f87ea1df862b64&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">namespace&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="k">default&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">resourceVersion&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s">&amp;#34;479466&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">selfLink&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="nx">api&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="nx">v1&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="nx">namespaces&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="k">default&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="nx">events&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="nx">example&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="nx">foo&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="nx">d75d8587c&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="nx">xsf64&lt;/span>&lt;span class="mf">.15&lt;/span>&lt;span class="nx">f87ea1df862b64&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">uid&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="mi">9&lt;/span>&lt;span class="nx">fe6f72a&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">341&lt;/span>&lt;span class="nx">d&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">4&lt;/span>&lt;span class="nx">c49&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">960&lt;/span>&lt;span class="nx">b&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="nx">e185982d331a&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">reason&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nx">SandboxChanged&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">reportingComponent&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s">&amp;#34;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">reportingInstance&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s">&amp;#34;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">source&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">component&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nx">kubelet&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">host&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nx">minikube&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kd">type&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nx">Normal&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+>
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>**&lt;br />&lt;strong>主要字段说明：&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>involvedObject： 触发event的资源类型&lt;/li>
+&lt;li>lastTimestamp：最后一次触发的时间&lt;/li>
+&lt;li>message：事件说明&lt;/li>
+&lt;li>metadata :event的元信息，name，namespace等&lt;/li>
+&lt;li>reason：event的原因&lt;/li>
+&lt;li>source：上报事件的来源，比如kubelet中的某个节点&lt;/li>
+&lt;li>type:事件类型，Normal或Warning&lt;/li>
+&lt;/ul>
+&lt;p>event字段定义可以看这里：&lt;a href="https://github.com/kubernetes/kubernetes/blob/v1.17.3/staging/src/k8s.io/api/core/v1/types.go#L5078" target="_blank" rel="noopener">types.go#L5078&lt;/a>&lt;/p>
+&lt;p>接下来我们来看看，整个event是如何下入的。&lt;/p>
+&lt;p>&lt;a name="MUouw">&lt;/a>&lt;/p>
+&lt;h2>写入事件&lt;span class="hx-absolute -hx-mt-20" id="写入事件">&lt;/span>
+&lt;a href="#%e5%86%99%e5%85%a5%e4%ba%8b%e4%bb%b6" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;blockquote>
+&lt;p>1、这里以kubelet为例，看看是如何进行事件写入的&lt;/p>
+&lt;p>2、文中代码以Kubernetes 1.17.3为例进行分析&lt;/p>
+&lt;/blockquote>
+&lt;p>先以一幅图来看下整个的处理流程
+&lt;img src="//localhost:1313/img/20200303/kubernetes-event.png" alt="event处理过程" loading="lazy" />&lt;/p>
+&lt;p>创建操作事件的客户端：&lt;br />&lt;a href="https://github.com/kubernetes/kubernetes/blob/v1.17.3/cmd/kubelet/app/server.go#L461" target="_blank" rel="noopener">kubelet/app/server.go#L461&lt;/a>&lt;/p>
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// makeEventRecorder sets up kubeDeps.Recorder if it&amp;#39;s nil. It&amp;#39;s a no-op otherwise.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kd">func&lt;/span> &lt;span class="nf">makeEventRecorder&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">kubeDeps&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="nx">kubelet&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Dependencies&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">nodeName&lt;/span> &lt;span class="nx">types&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">NodeName&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="nx">kubeDeps&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Recorder&lt;/span> &lt;span class="o">!=&lt;/span> &lt;span class="kc">nil&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">//事件广播&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">eventBroadcaster&lt;/span> &lt;span class="o">:=&lt;/span> &lt;span class="nx">record&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">NewBroadcaster&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">//创建EventRecorder&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">kubeDeps&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Recorder&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="nx">eventBroadcaster&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">NewRecorder&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">legacyscheme&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Scheme&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">v1&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">EventSource&lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="nx">Component&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nx">componentKubelet&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">Host&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">string&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">nodeName&lt;/span>&lt;span class="p">)})&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">//发送event至log输出&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">eventBroadcaster&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">StartLogging&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">klog&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">V&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="p">).&lt;/span>&lt;span class="nx">Infof&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="nx">kubeDeps&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">EventClient&lt;/span> &lt;span class="o">!=&lt;/span> &lt;span class="kc">nil&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">klog&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">V&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">4&lt;/span>&lt;span class="p">).&lt;/span>&lt;span class="nf">Infof&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;Sending events to api server.&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">//发送event至apiserver&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">eventBroadcaster&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">StartRecordingToSink&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="o">&amp;amp;&lt;/span>&lt;span class="nx">v1core&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">EventSinkImpl&lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="nx">Interface&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nx">kubeDeps&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">EventClient&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Events&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;&amp;#34;&lt;/span>&lt;span class="p">)})&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span> &lt;span class="k">else&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">klog&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Warning&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;No api server defined - no events will be sent to API server.&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+>
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>通过 &lt;code>makeEventRecorder&lt;/code> 创建了 &lt;code>EventRecorder&lt;/code> 实例，这是一个事件广播器，通过它提供了StartLogging和StartRecordingToSink两个事件处理函数，分别将event发送给log和apiserver。&lt;br />&lt;code>NewRecorder&lt;/code>创建了 &lt;code>EventRecorder&lt;/code> 的实例，它提供了 &lt;code>Event&lt;/code> ，&lt;code>Eventf&lt;/code> 等方法供事件记录。&lt;/p>
+&lt;p>&lt;a name="3klAc">&lt;/a>&lt;/p>
+&lt;h3>EventBroadcaster&lt;span class="hx-absolute -hx-mt-20" id="eventbroadcaster">&lt;/span>
+&lt;a href="#eventbroadcaster" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h3>&lt;p>我们来看下EventBroadcaster接口定义：&lt;a href="https://github.com/kubernetes/kubernetes/blob/v1.17.3/staging/src/k8s.io/client-go/tools/record/event.go#L113" target="_blank" rel="noopener">event.go#L113&lt;/a>&lt;/p>
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// EventBroadcaster knows how to receive events and send them to any EventSink, watcher, or log.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kd">type&lt;/span> &lt;span class="nx">EventBroadcaster&lt;/span> &lt;span class="kd">interface&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">//&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">StartEventWatcher&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">eventHandler&lt;/span> &lt;span class="kd">func&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="o">*&lt;/span>&lt;span class="nx">v1&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Event&lt;/span>&lt;span class="p">))&lt;/span> &lt;span class="nx">watch&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Interface&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">StartRecordingToSink&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">sink&lt;/span> &lt;span class="nx">EventSink&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="nx">watch&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Interface&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">StartLogging&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">logf&lt;/span> &lt;span class="kd">func&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">format&lt;/span> &lt;span class="kt">string&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">args&lt;/span> &lt;span class="o">...&lt;/span>&lt;span class="kd">interface&lt;/span>&lt;span class="p">{}))&lt;/span> &lt;span class="nx">watch&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Interface&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">NewRecorder&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">scheme&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="nx">runtime&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Scheme&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">source&lt;/span> &lt;span class="nx">v1&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">EventSource&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="nx">EventRecorder&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">Shutdown&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+>
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>具体实现是通过 &lt;a href="https://github.com/kubernetes/kubernetes/blob/v1.17.3/staging/src/k8s.io/client-go/tools/record/event.go#L155" target="_blank" rel="noopener">eventBroadcasterImpl&lt;/a>  struct来实现了各个方法。&lt;/p>
+&lt;p>其中StartLogging 和 StartRecordingToSink 其实就是完成了对事件的消费，EventRecorder实现对事件的写入，中间通过channel实现了生产者消费者模型。
+&lt;a name="uX4b1">&lt;/a>&lt;/p>
+&lt;h3>&lt;code>EventRecorder&lt;/code>&lt;span class="hx-absolute -hx-mt-20" id="eventrecorder">&lt;/span>
+&lt;a href="#eventrecorder" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h3>&lt;p>我们先来看下&lt;code>EventRecorder&lt;/code> 接口定义：&lt;a href="https://github.com/kubernetes/kubernetes/blob/v1.17.3/staging/src/k8s.io/client-go/tools/record/event.go#L88" target="_blank" rel="noopener">event.go#L88&lt;/a>，提供了一下4个方法&lt;/p>
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// EventRecorder knows how to record events on behalf of an EventSource.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kd">type&lt;/span> &lt;span class="nx">EventRecorder&lt;/span> &lt;span class="kd">interface&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// Event constructs an event from the given information and puts it in the queue for sending.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// &amp;#39;object&amp;#39; is the object this event is about. Event will make a reference-- or you may also&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// pass a reference to the object directly.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// &amp;#39;type&amp;#39; of this event, and can be one of Normal, Warning. New types could be added in future&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// &amp;#39;reason&amp;#39; is the reason this event is generated. &amp;#39;reason&amp;#39; should be short and unique; it&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// should be in UpperCamelCase format (starting with a capital letter). &amp;#34;reason&amp;#34; will be used&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// to automate handling of events, so imagine people writing switch statements to handle them.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// You want to make that easy.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// &amp;#39;message&amp;#39; is intended to be human readable.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">//&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// The resulting event will be created in the same namespace as the reference object.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">Event&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">object&lt;/span> &lt;span class="nx">runtime&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Object&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">eventtype&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">reason&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">message&lt;/span> &lt;span class="kt">string&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// Eventf is just like Event, but with Sprintf for the message field.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">Eventf&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">object&lt;/span> &lt;span class="nx">runtime&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Object&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">eventtype&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">reason&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">messageFmt&lt;/span> &lt;span class="kt">string&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">args&lt;/span> &lt;span class="o">...&lt;/span>&lt;span class="kd">interface&lt;/span>&lt;span class="p">{})&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// PastEventf is just like Eventf, but with an option to specify the event&amp;#39;s &amp;#39;timestamp&amp;#39; field.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">PastEventf&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">object&lt;/span> &lt;span class="nx">runtime&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Object&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">timestamp&lt;/span> &lt;span class="nx">metav1&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Time&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">eventtype&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">reason&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">messageFmt&lt;/span> &lt;span class="kt">string&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">args&lt;/span> &lt;span class="o">...&lt;/span>&lt;span class="kd">interface&lt;/span>&lt;span class="p">{})&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// AnnotatedEventf is just like eventf, but with annotations attached&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">AnnotatedEventf&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">object&lt;/span> &lt;span class="nx">runtime&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Object&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">annotations&lt;/span> &lt;span class="kd">map&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="kt">string&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="kt">string&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">eventtype&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">reason&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">messageFmt&lt;/span> &lt;span class="kt">string&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">args&lt;/span> &lt;span class="o">...&lt;/span>&lt;span class="kd">interface&lt;/span>&lt;span class="p">{})&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+>
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>主要参数说明：&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>object&lt;/code> 对应event资源定义中的 &lt;code>involvedObject&lt;/code>&lt;/li>
+&lt;li>&lt;code>eventtype&lt;/code> 对应event资源定义中的type，可选Normal，Warning.&lt;/li>
+&lt;li>&lt;code>reason&lt;/code> ：事件原因&lt;/li>
+&lt;li>&lt;code>message&lt;/code> ：事件消息&lt;/li>
+&lt;/ul>
+&lt;p>我们来看下当我们调用 &lt;code>Event(object runtime.Object, eventtype, reason, message string)&lt;/code> 的整个过程。&lt;br />发现最终都调用到了 &lt;code>generateEvent&lt;/code> 方法：&lt;a href="https://github.com/kubernetes/kubernetes/blob/v1.17.3/staging/src/k8s.io/client-go/tools/record/event.go#L316" target="_blank" rel="noopener">event.go#L316&lt;/a>&lt;/p>
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">func&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">recorder&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="nx">recorderImpl&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="nf">generateEvent&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">object&lt;/span> &lt;span class="nx">runtime&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Object&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">annotations&lt;/span> &lt;span class="kd">map&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="kt">string&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="kt">string&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">timestamp&lt;/span> &lt;span class="nx">metav1&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Time&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">eventtype&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">reason&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">message&lt;/span> &lt;span class="kt">string&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">...&lt;/span>&lt;span class="p">..&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">event&lt;/span> &lt;span class="o">:=&lt;/span> &lt;span class="nx">recorder&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">makeEvent&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">ref&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">annotations&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">eventtype&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">reason&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">message&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">event&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Source&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="nx">recorder&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">source&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">go&lt;/span> &lt;span class="kd">func&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// NOTE: events should be a non-blocking operation&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">defer&lt;/span> &lt;span class="nx">utilruntime&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">HandleCrash&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">recorder&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Action&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">watch&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Added&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">event&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+>
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>最终事件在一个 &lt;code>goroutine&lt;/code> 中通过调用 &lt;code>recorder.Action&lt;/code> 进入处理，这里保证了每次调用event方法都是非阻塞的。&lt;br />其中 &lt;code>makeEvent&lt;/code> 的作用主要是构造了一个event对象，事件name根据InvolvedObject中的name加上时间戳生成：&lt;/p>
+&lt;blockquote>
+&lt;p>注意看：对于一些非namespace资源产生的event，event的namespace是default&lt;/p>
+&lt;/blockquote>
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">func&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">recorder&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="nx">recorderImpl&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="nf">makeEvent&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">ref&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="nx">v1&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">ObjectReference&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">annotations&lt;/span> &lt;span class="kd">map&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="kt">string&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="kt">string&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">eventtype&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">reason&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">message&lt;/span> &lt;span class="kt">string&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="nx">v1&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Event&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">t&lt;/span> &lt;span class="o">:=&lt;/span> &lt;span class="nx">metav1&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Time&lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="nx">Time&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nx">recorder&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">clock&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Now&lt;/span>&lt;span class="p">()}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">namespace&lt;/span> &lt;span class="o">:=&lt;/span> &lt;span class="nx">ref&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Namespace&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="nx">namespace&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="s">&amp;#34;&amp;#34;&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">namespace&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="nx">metav1&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">NamespaceDefault&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="o">&amp;amp;&lt;/span>&lt;span class="nx">v1&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Event&lt;/span>&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">ObjectMeta&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nx">metav1&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">ObjectMeta&lt;/span>&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">Name&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nx">fmt&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Sprintf&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;%v.%x&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">ref&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Name&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">t&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">UnixNano&lt;/span>&lt;span class="p">()),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">Namespace&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nx">namespace&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">Annotations&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nx">annotations&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">},&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">InvolvedObject&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="nx">ref&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">Reason&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nx">reason&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">Message&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nx">message&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">FirstTimestamp&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nx">t&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">LastTimestamp&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nx">t&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">Count&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">Type&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nx">eventtype&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+>
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>进一步跟踪&lt;code>Action&lt;/code>方法，&lt;a href="https://github.com/kubernetes/apimachinery/blob/master/pkg/watch/mux.go#L188:23" target="_blank" rel="noopener">apimachinery/blob/master/pkg/watch/mux.go#L188:23&lt;/a>&lt;/p>
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// Action distributes the given event among all watchers.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kd">func&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">m&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="nx">Broadcaster&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="nf">Action&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">action&lt;/span> &lt;span class="nx">EventType&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">obj&lt;/span> &lt;span class="nx">runtime&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Object&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">m&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">incoming&lt;/span> &lt;span class="o">&amp;lt;-&lt;/span> &lt;span class="nx">Event&lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="nx">action&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">obj&lt;/span>&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+>
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>将event写入到了一个channel里面。&lt;br />&lt;strong>注意：&lt;/strong>&lt;br />这个Action方式是&lt;a href="https://github.com/kubernetes/apimachinery/blob/master/pkg/watch/mux.go#L188:23" target="_blank" rel="noopener">apimachinery&lt;/a>包中的方法，因为实现的sturt &lt;code>recorderImpl&lt;/code>&lt;br />将 &lt;code>*watch.Broadcaster&lt;/code> 作为一个匿名struct，并且在 &lt;code>NewRecorder&lt;/code> 进行 &lt;code>Broadcaster&lt;/code> 赋值，这个&lt;code>Broadcaster&lt;/code>其实就是 &lt;code>eventBroadcasterImpl&lt;/code> 中的&lt;code>Broadcaster&lt;/code>。&lt;/p>
+&lt;p>到此，基本清楚了event最终被写入到了 &lt;code>Broadcaster&lt;/code> 中的 &lt;code>incoming&lt;/code> channel中，下面看下是怎么进行消费的。&lt;/p>
+&lt;p>&lt;a name="Mwa4D">&lt;/a>&lt;/p>
+&lt;h2>消费事件&lt;span class="hx-absolute -hx-mt-20" id="消费事件">&lt;/span>
+&lt;a href="#%e6%b6%88%e8%b4%b9%e4%ba%8b%e4%bb%b6" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>在 &lt;code>makeEventRecorder&lt;/code> 调用的 &lt;code>StartLogging&lt;/code> 和 &lt;code>StartRecordingToSink&lt;/code> 其实就是完成了对事件的消费。&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>StartLogging&lt;/code>直接将event输出到日志&lt;/li>
+&lt;li>&lt;code>StartRecordingToSink&lt;/code>将事件写入到apiserver&lt;/li>
+&lt;/ul>
+&lt;p>两个方法内部都调用了 &lt;code>StartEventWatcher&lt;/code> 方法，并且传入一个 &lt;code>eventHandler&lt;/code> 方法对event进行处理&lt;/p>
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">func&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">e&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="nx">eventBroadcasterImpl&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="nf">StartEventWatcher&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">eventHandler&lt;/span> &lt;span class="kd">func&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="o">*&lt;/span>&lt;span class="nx">v1&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Event&lt;/span>&lt;span class="p">))&lt;/span> &lt;span class="nx">watch&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Interface&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">watcher&lt;/span> &lt;span class="o">:=&lt;/span> &lt;span class="nx">e&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Watch&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">go&lt;/span> &lt;span class="kd">func&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">defer&lt;/span> &lt;span class="nx">utilruntime&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">HandleCrash&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="nx">watchEvent&lt;/span> &lt;span class="o">:=&lt;/span> &lt;span class="k">range&lt;/span> &lt;span class="nx">watcher&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">ResultChan&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">event&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">ok&lt;/span> &lt;span class="o">:=&lt;/span> &lt;span class="nx">watchEvent&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Object&lt;/span>&lt;span class="p">.(&lt;/span>&lt;span class="o">*&lt;/span>&lt;span class="nx">v1&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Event&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">!&lt;/span>&lt;span class="nx">ok&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// This is all local, so there&amp;#39;s no reason this should&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// ever happen.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">continue&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">eventHandler&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">event&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="nx">watcher&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+>
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>其中 &lt;code>watcher.ResultChan&lt;/code> 方法就拿到了事件，这里是在一个goroutine中通过&lt;a href="https://github.com/kubernetes/apimachinery/blob/master/pkg/watch/mux.go#L204" target="_blank" rel="noopener">func (m *Broadcaster) loop() &lt;/a>==&amp;gt;&lt;a href="https://github.com/kubernetes/apimachinery/blob/master/pkg/watch/mux.go#L219" target="_blank" rel="noopener">func (m *Broadcaster) distribute(event Event)&lt;/a> 方法调用将event又写入了&lt;a href="https://github.com/kubernetes/apimachinery/blob/master/pkg/watch/mux.go#L242" target="_blank" rel="noopener">broadcasterWatcher.result&lt;/a>&lt;/p>
+&lt;p>主要看下 &lt;code>StartRecordingToSink&lt;/code> 提供的的&lt;code>eventHandler&lt;/code>， &lt;code>recordToSink&lt;/code> 方法：&lt;/p>
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">func&lt;/span> &lt;span class="nf">recordToSink&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">sink&lt;/span> &lt;span class="nx">EventSink&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">event&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="nx">v1&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Event&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">eventCorrelator&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="nx">EventCorrelator&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">sleepDuration&lt;/span> &lt;span class="nx">time&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Duration&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// Make a copy before modification, because there could be multiple listeners.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// Events are safe to copy like this.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">eventCopy&lt;/span> &lt;span class="o">:=&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="nx">event&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">event&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="o">&amp;amp;&lt;/span>&lt;span class="nx">eventCopy&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">result&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">err&lt;/span> &lt;span class="o">:=&lt;/span> &lt;span class="nx">eventCorrelator&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">EventCorrelate&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">event&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="nx">err&lt;/span> &lt;span class="o">!=&lt;/span> &lt;span class="kc">nil&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">utilruntime&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">HandleError&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">err&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="nx">result&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Skip&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">tries&lt;/span> &lt;span class="o">:=&lt;/span> &lt;span class="mi">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="nf">recordEvent&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">sink&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">result&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Event&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">result&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Patch&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">result&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Event&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Count&lt;/span> &lt;span class="p">&amp;gt;&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">eventCorrelator&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">break&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">tries&lt;/span>&lt;span class="o">++&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="nx">tries&lt;/span> &lt;span class="o">&amp;gt;=&lt;/span> &lt;span class="nx">maxTriesPerEvent&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">klog&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Errorf&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;Unable to write event &amp;#39;%#v&amp;#39; (retry limit exceeded!)&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">event&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">break&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// Randomize the first sleep so that various clients won&amp;#39;t all be&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// synced up if the master goes down.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// 第一次重试增加随机性，防止 apiserver 重启的时候所有的事件都在同一时间发送事件&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="nx">tries&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="mi">1&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">time&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Sleep&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">time&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Duration&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nb">float64&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">sleepDuration&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="nx">rand&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Float64&lt;/span>&lt;span class="p">()))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span> &lt;span class="k">else&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">time&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Sleep&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">sleepDuration&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+>
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>其中event被经过了一个 &lt;code>eventCorrelator.EventCorrelate(event)&lt;/code> 方法做预处理，主要是聚合相同的事件（避免产生的事件过多，增加 etcd 和 apiserver 的压力，也会导致查看 pod 事件很不清晰）&lt;/p>
+&lt;p>下面一个for循环就是在进行重试，最大重试次数是12次，调用 &lt;code>recordEvent&lt;/code>  方法才真正将event写入到了apiserver。&lt;/p>
+&lt;p>&lt;a name="QwCYz">&lt;/a>&lt;/p>
+&lt;h3>事件处理&lt;span class="hx-absolute -hx-mt-20" id="事件处理">&lt;/span>
+&lt;a href="#%e4%ba%8b%e4%bb%b6%e5%a4%84%e7%90%86" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h3>&lt;p>我们来看下&lt;code>EventCorrelate&lt;/code>方法：&lt;/p>
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// EventCorrelate filters, aggregates, counts, and de-duplicates all incoming events&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kd">func&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">c&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="nx">EventCorrelator&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="nf">EventCorrelate&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">newEvent&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="nx">v1&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Event&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="o">*&lt;/span>&lt;span class="nx">EventCorrelateResult&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">error&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="nx">newEvent&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="kc">nil&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="kc">nil&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">fmt&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Errorf&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;event is nil&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">aggregateEvent&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">ckey&lt;/span> &lt;span class="o">:=&lt;/span> &lt;span class="nx">c&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">aggregator&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">EventAggregate&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">newEvent&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">observedEvent&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">patch&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">err&lt;/span> &lt;span class="o">:=&lt;/span> &lt;span class="nx">c&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">logger&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">eventObserve&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">aggregateEvent&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">ckey&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="nx">c&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">filterFunc&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">observedEvent&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="o">&amp;amp;&lt;/span>&lt;span class="nx">EventCorrelateResult&lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="nx">Skip&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="kc">true&lt;/span>&lt;span class="p">},&lt;/span> &lt;span class="kc">nil&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="o">&amp;amp;&lt;/span>&lt;span class="nx">EventCorrelateResult&lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="nx">Event&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nx">observedEvent&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">Patch&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nx">patch&lt;/span>&lt;span class="p">},&lt;/span> &lt;span class="nx">err&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+>
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>分别调用了 &lt;code>aggregator.EventAggregate&lt;/code> ，&lt;code> logger.eventObserve&lt;/code> ， &lt;code>filterFunc&lt;/code> 三个方法，分别作用是：&lt;/p>
+&lt;ol>
+&lt;li>&lt;strong>&lt;code>aggregator.EventAggregate&lt;/code>&lt;/strong>：聚合event，如果在最近 10 分钟出现过 10 个相似的事件（除了 message 和时间戳之外其他关键字段都相同的事件），aggregator 会把它们的 message 设置为 &lt;code>(combined from similar events)+event.Message&lt;/code>&lt;/li>
+&lt;li> &lt;strong>&lt;code>logger.eventObserve&lt;/code>&lt;/strong>：它会把相同的事件以及包含 &lt;code>aggregator&lt;/code> 被聚合了的相似的事件，通过增加 &lt;code>Count&lt;/code> 字段来记录事件发生了多少次。&lt;/li>
+&lt;li>&lt;strong>&lt;code>filterFunc&lt;/code>&lt;/strong>: 这里实现了一个基于&lt;strong>令牌桶的限流算法&lt;/strong>，如果超过设定的速率则丢弃，保证了apiserver的安全。&lt;/li>
+&lt;/ol>
+&lt;p>我们主要来看下&lt;code>aggregator.EventAggregate&lt;/code>方法：&lt;/p>
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">func&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">e&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="nx">EventAggregator&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="nf">EventAggregate&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">newEvent&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="nx">v1&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Event&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="o">*&lt;/span>&lt;span class="nx">v1&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Event&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">string&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">now&lt;/span> &lt;span class="o">:=&lt;/span> &lt;span class="nx">metav1&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">NewTime&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">e&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">clock&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Now&lt;/span>&lt;span class="p">())&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">var&lt;/span> &lt;span class="nx">record&lt;/span> &lt;span class="nx">aggregateRecord&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// eventKey is the full cache key for this event&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">//eventKey 是将除了时间戳外所有字段结合在一起&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">eventKey&lt;/span> &lt;span class="o">:=&lt;/span> &lt;span class="nf">getEventKey&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">newEvent&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// aggregateKey is for the aggregate event, if one is needed.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">//aggregateKey 是除了message和时间戳外的字段结合在一起，localKey 是message&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">aggregateKey&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">localKey&lt;/span> &lt;span class="o">:=&lt;/span> &lt;span class="nx">e&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">keyFunc&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">newEvent&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// Do we have a record of similar events in our cache?&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">e&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Lock&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">defer&lt;/span> &lt;span class="nx">e&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Unlock&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">//从cache中根据aggregateKey查询是否存在，如果是相同或者相类似的事件会被放入cache中&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">value&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">found&lt;/span> &lt;span class="o">:=&lt;/span> &lt;span class="nx">e&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">cache&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">aggregateKey&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="nx">found&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">record&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="nx">value&lt;/span>&lt;span class="p">.(&lt;/span>&lt;span class="nx">aggregateRecord&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">//判断上次事件产生的时间是否超过10分钟，如何操作则重新生成一个localKeys集合（集合中存放message）&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">maxInterval&lt;/span> &lt;span class="o">:=&lt;/span> &lt;span class="nx">time&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Duration&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">e&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">maxIntervalInSeconds&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="nx">time&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Second&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">interval&lt;/span> &lt;span class="o">:=&lt;/span> &lt;span class="nx">now&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Time&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Sub&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">record&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">lastTimestamp&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Time&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="nx">interval&lt;/span> &lt;span class="p">&amp;gt;&lt;/span> &lt;span class="nx">maxInterval&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">record&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="nx">aggregateRecord&lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="nx">localKeys&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nx">sets&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">NewString&lt;/span>&lt;span class="p">()}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// Write the new event into the aggregation record and put it on the cache&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">//将locakKey也就是message放入集合中，如果message相同就是覆盖了&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">record&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">localKeys&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Insert&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">localKey&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">record&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">lastTimestamp&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="nx">now&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">e&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">cache&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Add&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">aggregateKey&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">record&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// If we are not yet over the threshold for unique events, don&amp;#39;t correlate them&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">//判断localKeys集合中存放的类似事件是否超过10个，&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="nb">uint&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">record&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">localKeys&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Len&lt;/span>&lt;span class="p">())&lt;/span> &lt;span class="p">&amp;lt;&lt;/span> &lt;span class="nx">e&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">maxEvents&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="nx">newEvent&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">eventKey&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// do not grow our local key set any larger than max&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">record&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">localKeys&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">PopAny&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// create a new aggregate event, and return the aggregateKey as the cache key&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// (so that it can be overwritten.)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">eventCopy&lt;/span> &lt;span class="o">:=&lt;/span> &lt;span class="o">&amp;amp;&lt;/span>&lt;span class="nx">v1&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Event&lt;/span>&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">ObjectMeta&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nx">metav1&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">ObjectMeta&lt;/span>&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">Name&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nx">fmt&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Sprintf&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;%v.%x&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">newEvent&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">InvolvedObject&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Name&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">now&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">UnixNano&lt;/span>&lt;span class="p">()),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">Namespace&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nx">newEvent&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Namespace&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">},&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">Count&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">FirstTimestamp&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nx">now&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">InvolvedObject&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nx">newEvent&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">InvolvedObject&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">LastTimestamp&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nx">now&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">//这里会对message加个前缀：(combined from similar events):&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">Message&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nx">e&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">messageFunc&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">newEvent&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">Type&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nx">newEvent&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Type&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">Reason&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nx">newEvent&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Reason&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">Source&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nx">newEvent&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Source&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="nx">eventCopy&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">aggregateKey&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+>
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>&lt;code>aggregator.EventAggregate&lt;/code>方法中其实就是判断了通过cache和localKeys判断事件是否相似，如果最近 10 分钟出现过 10 个相似的事件就合并并加上前缀，后续通过&lt;code>logger.eventObserve&lt;/code>方法进行count累加，如果message也相同，肯定就是直接count++。&lt;/p>
+&lt;p>&lt;a name="yEk1J">&lt;/a>&lt;/p>
+&lt;h2>总结&lt;span class="hx-absolute -hx-mt-20" id="总结">&lt;/span>
+&lt;a href="#%e6%80%bb%e7%bb%93" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>好了，event处理的整个流程基本就是这样，我们可以概括一下，可以结合文中的图对比一起看下：&lt;/p>
+&lt;ol>
+&lt;li>创建 &lt;code>EventRecorder&lt;/code> 对象，通过其提供的 &lt;code>Event&lt;/code> 等方法，创建好event对象&lt;/li>
+&lt;li>将创建出来的对象发送给 &lt;code>EventBroadcaster&lt;/code> 中的channel中&lt;/li>
+&lt;li>&lt;code>EventBroadcaster&lt;/code> 通过后台运行的goroutine，从管道中取出事件，并广播给提前注册好的handler处理&lt;/li>
+&lt;li>当输出log的handler收到事件就直接打印事件&lt;/li>
+&lt;li>当 &lt;code>EventSink&lt;/code> handler收到处理事件就通过预处理之后将事件发送给apiserver&lt;/li>
+&lt;li>其中预处理包含三个动作，1、限流 2、聚合 3、计数&lt;/li>
+&lt;li>apiserver收到事件处理之后就存储在etcd中&lt;/li>
+&lt;/ol>
+&lt;p>回顾event的整个流程，可以看到event并不是保证100%事件写入（从预处理的过程来看），这样做是为了后端服务etcd的可用性，因为event事件在整个集群中产生是非常频繁的，尤其在服务不稳定的时候，而相比Deployment,Pod等其他资源，又没那么的重要。所以这里做了个取舍。&lt;/p>
+&lt;p>&lt;strong>参考文档：&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://cizixs.com/2017/06/22/kubelet-source-code-analysis-part4-event/" target="_blank" rel="noopener">https://cizixs.com/2017/06/22/kubelet-source-code-analysis-part4-event/&lt;/a>&lt;/li>
+&lt;/ul></description></item></channel></rss>

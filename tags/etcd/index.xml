@@ -1,25 +1,10 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>etcd on silenceper</title>
-    <link>/tags/etcd/</link>
-    <description>Recent content in etcd on silenceper</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>zh</language>
-    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Tue, 02 Aug 2016 15:40:59 +0800</lastBuildDate>
-    
-	<atom:link href="/tags/etcd/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>dcmp</title>
-      <link>/blog/201608/dcmp/</link>
-      <pubDate>Tue, 02 Aug 2016 15:40:59 +0800</pubDate>
-      
-      <guid>/blog/201608/dcmp/</guid>
-      <description>Distributed Configuration Management Platform 提供了一个etcd的管理界面，可通过界面修改配置信息，借助confd可实现配置文件的同步。 dcmp image GITHUB：https://gith</description>
-    </item>
-    
-  </channel>
-</rss>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – Etcd</title><link>//localhost:1313/tags/etcd/</link><description>Recent content in Etcd on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 02 Aug 2016 15:40:59 +0800</lastBuildDate><atom:link href="//localhost:1313/tags/etcd/index.xml" rel="self" type="application/rss+xml"/><item><title>dcmp</title><link>//localhost:1313/blog/201608/dcmp/</link><pubDate>Tue, 02 Aug 2016 15:40:59 +0800</pubDate><guid>//localhost:1313/blog/201608/dcmp/</guid><description>
+&lt;p>Distributed Configuration Management Platform&lt;/p>
+&lt;p>提供了一个etcd的管理界面，可通过界面修改配置信息，借助confd可实现配置文件的同步。&lt;/p>
+&lt;p>&lt;img src="https://raw.githubusercontent.com/silenceper/dcmp/master/docs/image.png" alt="dcmp image" loading="lazy" />&lt;/p>
+&lt;p>GITHUB：&lt;a href="https://github.com/silenceper/dcmp" target="_blank" rel="noopener">https://github.com/silenceper/dcmp&lt;/a>&lt;/p>
+&lt;hr>
+&lt;p>API采用的是Gin Framework，写起api应用来非常方便，前端尝试了一下react。&lt;/p>
+&lt;blockquote>
+&lt;p>传到Github一看，发现css，js的代码比golang还要多 。 😢&lt;/p>
+&lt;/blockquote></description></item></channel></rss>
