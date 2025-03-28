@@ -1,4 +1,4 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – K8s</title><link>//localhost:1313/tags/k8s/</link><description>Recent content in K8s on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 22 Oct 2019 00:00:00 +0000</lastBuildDate><atom:link href="//localhost:1313/tags/k8s/index.xml" rel="self" type="application/rss+xml"/><item><title>Kubernetes容器日志收集方案</title><link>//localhost:1313/blog/201910/kubernetes-log/</link><pubDate>Tue, 22 Oct 2019 00:00:00 +0000</pubDate><guid>//localhost:1313/blog/201910/kubernetes-log/</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – K8s</title><link>/tags/k8s/</link><description>Recent content in K8s on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 22 Oct 2019 00:00:00 +0000</lastBuildDate><atom:link href="/tags/k8s/index.xml" rel="self" type="application/rss+xml"/><item><title>Kubernetes容器日志收集方案</title><link>/blog/201910/kubernetes-log/</link><pubDate>Tue, 22 Oct 2019 00:00:00 +0000</pubDate><guid>/blog/201910/kubernetes-log/</guid><description>
 &lt;p>收集POD中container日志，日志还分为两种一种是容器标准输出日志和容器内日志。&lt;/p>
 &lt;h1>方案&lt;/h1>&lt;p>从日志的采集方式上，在我看来方案大致主要分为两种：&lt;/p>
 &lt;p>&lt;strong>（1）POD 里面安装logging agent&lt;/strong>&lt;/p>
@@ -84,7 +84,7 @@ title="Copy code"
 &lt;p>3、资源限制&lt;/p>
 &lt;blockquote>
 &lt;p>在k8s中通过制定limit，限制log-pilot的资源占用（主要还是日志采集器）&lt;/p>
-&lt;/blockquote></description></item><item><title>Cluster Autoscaler:集群自动扩缩容</title><link>//localhost:1313/blog/201907/cluster-autoscaler-usage/</link><pubDate>Tue, 02 Jul 2019 00:00:00 +0000</pubDate><guid>//localhost:1313/blog/201907/cluster-autoscaler-usage/</guid><description>
+&lt;/blockquote></description></item><item><title>Cluster Autoscaler:集群自动扩缩容</title><link>/blog/201907/cluster-autoscaler-usage/</link><pubDate>Tue, 02 Jul 2019 00:00:00 +0000</pubDate><guid>/blog/201907/cluster-autoscaler-usage/</guid><description>
 &lt;p>Cluster AutoScaler 是一个自动扩展和收缩 Kubernetes 集群 Node 的扩展。当集群容量不足时，它会自动去 Cloud Provider （支持 GCE、GKE 和 AWS）创建新的 Node，而在 Node 长时间资源利用率很低时自动将其删除以节省开支。&lt;/p>
 &lt;p>在Kubernetes中关于弹性伸缩主要有三种格式：&lt;/p>
 &lt;ul>
@@ -305,7 +305,7 @@ title="Copy code"
 &lt;/div>
 &lt;/div>
 &lt;p>其中&lt;code>IncreaseSize&lt;/code>，&lt;code>IncreaseSize&lt;/code>才是关键的方法，分别对用扩容伸缩组和增加节点。&lt;/p>
-&lt;p>在调用&lt;code>IncreaseSize&lt;/code>接口后，需要完成节点自动添加进集群。参考阿里云是通过配置shell脚本到伸缩组中的ECS启动脚本中，当ECS启动，自动执行该脚本。当然我们也可以自定义通过其他方式加入集群。&lt;/p></description></item><item><title>k8s源码阅读(一)：源码结构</title><link>//localhost:1313/blog/201809/k8s-source-code-structure/</link><pubDate>Wed, 12 Sep 2018 11:45:59 +0800</pubDate><guid>//localhost:1313/blog/201809/k8s-source-code-structure/</guid><description>
+&lt;p>在调用&lt;code>IncreaseSize&lt;/code>接口后，需要完成节点自动添加进集群。参考阿里云是通过配置shell脚本到伸缩组中的ECS启动脚本中，当ECS启动，自动执行该脚本。当然我们也可以自定义通过其他方式加入集群。&lt;/p></description></item><item><title>k8s源码阅读(一)：源码结构</title><link>/blog/201809/k8s-source-code-structure/</link><pubDate>Wed, 12 Sep 2018 11:45:59 +0800</pubDate><guid>/blog/201809/k8s-source-code-structure/</guid><description>
 &lt;h1>环境&lt;/h1>&lt;ul>
 &lt;li>k8s代码版本：&lt;a href="https://github.com/silenceper/kubernetes" target="_blank" rel="noopener">release-1.9&lt;/a>&lt;/li>
 &lt;li>工具：vscode, dlv&lt;/li>
@@ -391,7 +391,7 @@ title="Copy code"
 &lt;blockquote>
 &lt;p>因为os的原因，执行流程可能与目标平台的执行结果可能不一致，不过可以手动改代码达到预期结果，或者直接在Linux下调试&lt;/p>
 &lt;/blockquote>
-&lt;p>&lt;img src="https://ws1.sinaimg.cn/large/65209136gy1fv6z2jx1ajj21g20sc7b3.jpg" alt="11" loading="lazy" />&lt;/p></description></item><item><title>在CentOS上搭建Kubernetes集群</title><link>//localhost:1313/blog/201809/how-to-build-a-k8s-cluster/</link><pubDate>Fri, 07 Sep 2018 11:45:59 +0800</pubDate><guid>//localhost:1313/blog/201809/how-to-build-a-k8s-cluster/</guid><description>
+&lt;p>&lt;img src="https://ws1.sinaimg.cn/large/65209136gy1fv6z2jx1ajj21g20sc7b3.jpg" alt="11" loading="lazy" />&lt;/p></description></item><item><title>在CentOS上搭建Kubernetes集群</title><link>/blog/201809/how-to-build-a-k8s-cluster/</link><pubDate>Fri, 07 Sep 2018 11:45:59 +0800</pubDate><guid>/blog/201809/how-to-build-a-k8s-cluster/</guid><description>
 &lt;p>以下是我自己在部署k8s集群上做的一些记录，部署了一个master，一个node节点。&lt;/p>
 &lt;h1>环境准备&lt;/h1>&lt;p>我在VirtualBox中建的两个CentOS容器，并且互通：&lt;/p>
 &lt;table>

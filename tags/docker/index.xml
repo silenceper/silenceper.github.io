@@ -1,4 +1,4 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – Docker</title><link>//localhost:1313/tags/docker/</link><description>Recent content in Docker on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Fri, 10 Jul 2020 14:20:59 +0800</lastBuildDate><atom:link href="//localhost:1313/tags/docker/index.xml" rel="self" type="application/rss+xml"/><item><title>将镜像tar包通过API直接push到registry仓库</title><link>//localhost:1313/blog/202007/docker-tar-push/</link><pubDate>Fri, 10 Jul 2020 14:20:59 +0800</pubDate><guid>//localhost:1313/blog/202007/docker-tar-push/</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – Docker</title><link>/tags/docker/</link><description>Recent content in Docker on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Fri, 10 Jul 2020 14:20:59 +0800</lastBuildDate><atom:link href="/tags/docker/index.xml" rel="self" type="application/rss+xml"/><item><title>将镜像tar包通过API直接push到registry仓库</title><link>/blog/202007/docker-tar-push/</link><pubDate>Fri, 10 Jul 2020 14:20:59 +0800</pubDate><guid>/blog/202007/docker-tar-push/</guid><description>
 &lt;p>为了实现docker tar包能够直接通过页面上传，调研了一下registry的api，以及如何解析tar包（其实就是docker daemon程序实现的部分）。&lt;/p>
 &lt;p>要想实现，首先要了解docker tar包中结构组成：&lt;/p>
 &lt;h2>tar包结构&lt;span class="hx-absolute -hx-mt-20" id="tar包结构">&lt;/span>
@@ -195,7 +195,7 @@ title="Copy code"
 &lt;li>&lt;a href="https://github.com/Razikus/dockerregistrypusher" target="_blank" rel="noopener">https://github.com/Razikus/dockerregistrypusher&lt;/a>&lt;/li>
 &lt;li>&lt;a href="https://docs.docker.com/registry/spec/auth/jwt/" target="_blank" rel="noopener">https://docs.docker.com/registry/spec/auth/jwt/&lt;/a>&lt;/li>
 &lt;li>&lt;a href="https://github.com/docker/distribution/" target="_blank" rel="noopener">https://github.com/docker/distribution/&lt;/a>&lt;/li>
-&lt;/ul></description></item><item><title>在x86_64机器上构建arm64镜像</title><link>//localhost:1313/blog/202006/build-arm-image-on-x86_84/</link><pubDate>Fri, 05 Jun 2020 14:20:59 +0800</pubDate><guid>//localhost:1313/blog/202006/build-arm-image-on-x86_84/</guid><description>
+&lt;/ul></description></item><item><title>在x86_64机器上构建arm64镜像</title><link>/blog/202006/build-arm-image-on-x86_84/</link><pubDate>Fri, 05 Jun 2020 14:20:59 +0800</pubDate><guid>/blog/202006/build-arm-image-on-x86_84/</guid><description>
 &lt;p>有几种办法可以打包出arm64的镜像&lt;/p>
 &lt;ul>
 &lt;li>直接在arm机器上执行编译和打包&lt;/li>
@@ -296,7 +296,7 @@ title="Copy code"
 &lt;li>&lt;a href="https://blog.fleeto.us/post/buildx-and-osx/" target="_blank" rel="noopener">https://blog.fleeto.us/post/buildx-and-osx/&lt;/a>&lt;/li>
 &lt;li>&lt;a href="https://juejin.im/post/5af86fb15188251b8015c102" target="_blank" rel="noopener">https://juejin.im/post/5af86fb15188251b8015c102&lt;/a>&lt;/li>
 &lt;li>&lt;a href="https://www.cnblogs.com/bamanzi/p/run-x86-linux-progs-with-qemu-user-on-arm.html" target="_blank" rel="noopener">https://www.cnblogs.com/bamanzi/p/run-x86-linux-progs-with-qemu-user-on-arm.html&lt;/a>&lt;/li>
-&lt;/ul></description></item><item><title>docker pull 翻墙下载镜像</title><link>//localhost:1313/blog/201809/over-the-wall-pull-docker-mirror/</link><pubDate>Sun, 09 Sep 2018 11:45:59 +0800</pubDate><guid>//localhost:1313/blog/201809/over-the-wall-pull-docker-mirror/</guid><description>
+&lt;/ul></description></item><item><title>docker pull 翻墙下载镜像</title><link>/blog/201809/over-the-wall-pull-docker-mirror/</link><pubDate>Sun, 09 Sep 2018 11:45:59 +0800</pubDate><guid>/blog/201809/over-the-wall-pull-docker-mirror/</guid><description>
 &lt;p>我们一般通过设置&lt;code>http_proxy&lt;/code>环境变量，使得http请求，可以走我们设置的proxy，（一些go get镜像无法下载可以这么用），但是对于&lt;code>docker pull&lt;/code>命令是不生效的，因为systemd引导启动的service默认不会读取这些变量，所以我们可以通过在service文件中加入环境变量解决：&lt;/p>
 &lt;h1>设置变量 http_proxy&lt;/h1>&lt;p>主要是通过在docker启动的时候指定&lt;code>HTTP_PROXY &lt;/code>，&lt;code>HTTPS_PROXY&lt;/code>。&lt;/p>
 &lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">

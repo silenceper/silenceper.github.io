@@ -1,4 +1,4 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – Wechat</title><link>//localhost:1313/tags/wechat/</link><description>Recent content in Wechat on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Fri, 16 Sep 2016 15:40:59 +0800</lastBuildDate><atom:link href="//localhost:1313/tags/wechat/index.xml" rel="self" type="application/rss+xml"/><item><title>开源项目：wechat sdk</title><link>//localhost:1313/blog/201609/go-wechat-sdk/</link><pubDate>Fri, 16 Sep 2016 15:40:59 +0800</pubDate><guid>//localhost:1313/blog/201609/go-wechat-sdk/</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – Wechat</title><link>/tags/wechat/</link><description>Recent content in Wechat on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Fri, 16 Sep 2016 15:40:59 +0800</lastBuildDate><atom:link href="/tags/wechat/index.xml" rel="self" type="application/rss+xml"/><item><title>开源项目：wechat sdk</title><link>/blog/201609/go-wechat-sdk/</link><pubDate>Fri, 16 Sep 2016 15:40:59 +0800</pubDate><guid>/blog/201609/go-wechat-sdk/</guid><description>
 &lt;p>一直很想自己用golang写个微信的sdk，目标是简单好用，所以利用闲暇时间（周末，中秋😁），就做出来。&lt;/p>
 &lt;p>项目地址:&lt;a href="https://github.com/silenceper/wechat" target="_blank" rel="noopener">https://github.com/silenceper/wechat&lt;/a>&lt;/p>
 &lt;p>目前实现了消息管理，微信网页授权，菜单管理，素材管理几个接口，看下他的基本使用：&lt;/p>
@@ -34,7 +34,7 @@ title="Copy code"
 &lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
 &lt;/button>
 &lt;/div>
-&lt;/div></description></item><item><title>Golang中http包默认路由匹配规则阅读笔记</title><link>//localhost:1313/blog/201605/go-http-process/</link><pubDate>Sat, 28 May 2016 18:00:59 +0800</pubDate><guid>//localhost:1313/blog/201605/go-http-process/</guid><description>
+&lt;/div></description></item><item><title>Golang中http包默认路由匹配规则阅读笔记</title><link>/blog/201605/go-http-process/</link><pubDate>Sat, 28 May 2016 18:00:59 +0800</pubDate><guid>/blog/201605/go-http-process/</guid><description>
 &lt;h1>一、执行流程&lt;/h1>&lt;p>构建一个简单http server：&lt;/p>
 &lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
 &lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="line">&lt;span class="cl">&lt;span class="kn">package&lt;/span> &lt;span class="nx">main&lt;/span>

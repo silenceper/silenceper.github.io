@@ -1,4 +1,4 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – Flannel</title><link>//localhost:1313/tags/flannel/</link><description>Recent content in Flannel on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Fri, 12 Oct 2018 00:00:00 +0000</lastBuildDate><atom:link href="//localhost:1313/tags/flannel/index.xml" rel="self" type="application/rss+xml"/><item><title>k8s网络组件：calico</title><link>//localhost:1313/blog/201810/calico-in-k8s/</link><pubDate>Fri, 12 Oct 2018 00:00:00 +0000</pubDate><guid>//localhost:1313/blog/201810/calico-in-k8s/</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – Flannel</title><link>/tags/flannel/</link><description>Recent content in Flannel on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Fri, 12 Oct 2018 00:00:00 +0000</lastBuildDate><atom:link href="/tags/flannel/index.xml" rel="self" type="application/rss+xml"/><item><title>k8s网络组件：calico</title><link>/blog/201810/calico-in-k8s/</link><pubDate>Fri, 12 Oct 2018 00:00:00 +0000</pubDate><guid>/blog/201810/calico-in-k8s/</guid><description>
 &lt;p>前提已经安装好k8s集群&lt;/p>
 &lt;h1>安装&lt;/h1>&lt;p>calico 安装其实很简单，已经集成在两个yaml文件中&lt;/p>
 &lt;p>calico 版本: v3.2.3&lt;/p>
@@ -123,7 +123,7 @@ title="Copy code"
 &lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
 &lt;/button>
 &lt;/div>
-&lt;/div></description></item><item><title>k8s网络组件：flannel</title><link>//localhost:1313/blog/201809/flannel-in-k8s/</link><pubDate>Wed, 26 Sep 2018 00:00:00 +0000</pubDate><guid>//localhost:1313/blog/201809/flannel-in-k8s/</guid><description>
+&lt;/div></description></item><item><title>k8s网络组件：flannel</title><link>/blog/201809/flannel-in-k8s/</link><pubDate>Wed, 26 Sep 2018 00:00:00 +0000</pubDate><guid>/blog/201809/flannel-in-k8s/</guid><description>
 &lt;p>Flannel是一个专门为k8s定制的网络解决方案，主要解决POD跨主机通信问题，这里主要讲述Flannel是如何实现的。&lt;/p>
 &lt;h1>安装&lt;/h1>&lt;p>集成在k8s上有两种方式，一种是利用etcd存储整个集群的网络配置，另外一种是利用kubernetes的api 获取网络配置信息，分别如下：&lt;/p>
 &lt;h2>ETCD 方式&lt;span class="hx-absolute -hx-mt-20" id="etcd-方式">&lt;/span>

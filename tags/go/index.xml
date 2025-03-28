@@ -1,4 +1,4 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – Go</title><link>//localhost:1313/tags/go/</link><description>Recent content in Go on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sat, 15 Feb 2020 00:00:00 +0000</lastBuildDate><atom:link href="//localhost:1313/tags/go/index.xml" rel="self" type="application/rss+xml"/><item><title>利用Kubernetes中的leaderelection实现组件高可用</title><link>//localhost:1313/blog/202002/kubernetes-leaderelection/</link><pubDate>Sat, 15 Feb 2020 00:00:00 +0000</pubDate><guid>//localhost:1313/blog/202002/kubernetes-leaderelection/</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – Go</title><link>/tags/go/</link><description>Recent content in Go on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sat, 15 Feb 2020 00:00:00 +0000</lastBuildDate><atom:link href="/tags/go/index.xml" rel="self" type="application/rss+xml"/><item><title>利用Kubernetes中的leaderelection实现组件高可用</title><link>/blog/202002/kubernetes-leaderelection/</link><pubDate>Sat, 15 Feb 2020 00:00:00 +0000</pubDate><guid>/blog/202002/kubernetes-leaderelection/</guid><description>
 &lt;p>在Kubernetes中，通常kube-schduler和kube-controller-manager都是多副本进行部署的来保证高可用，而真正在工作的实例其实只有一个。这里就利用到 &lt;code>leaderelection&lt;/code> 的选主机制，保证leader是处于工作状态，并且在leader挂掉之后，从其他节点选取新的leader保证组件正常工作。&lt;/p>
 &lt;p>不单单只是k8s中的这两个组件用到，在其他服务中也可以看到这个包的使用，比如&lt;a href="https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/" target="_blank" rel="noopener">cluster-autoscaler&lt;/a>等都能看得到这个包的，今天就来看看这个包的使用以及它内部是如何实现的。&lt;/p>
 &lt;h2>使用&lt;span class="hx-absolute -hx-mt-20" id="使用">&lt;/span>
@@ -479,7 +479,7 @@ title="Copy code"
 &lt;p>在 &lt;code>le.config.Lock.Get()&lt;/code> 中会获取到锁的对象，其中有一个 &lt;code>resourceVersion&lt;/code> 字段用于标识一个资源对象的内部版本，每次更新操作都会更新其值。如果一个更新操作附加上了 &lt;code>resourceVersion&lt;/code> 字段，那么 apiserver 就会通过验证当前 &lt;code>resourceVersion&lt;/code> 的值与指定的值是否相匹配来确保在此次更新操作周期内没有其他的更新操作，从而保证了更新操作的原子性。&lt;/p>
 &lt;h2>总结&lt;span class="hx-absolute -hx-mt-20" id="总结">&lt;/span>
 &lt;a href="#%e6%80%bb%e7%bb%93" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>leaderelection 主要是利用了k8s API操作的原子性实现了一个分布式锁，在不断的竞争中进行选举。选中为leader的进行才会执行具体的业务代码，这在k8s中非常的常见，而且我们很方便的利用这个包完成组件的编写，从而实现组件的高可用，比如部署为一个多副本的Deployment，当leader的pod退出后会重新启动，可能锁就被其他pod获取继续执行。&lt;/p>
-&lt;p>完整代码：&lt;a href="https://github.com/go-demo/leaderelection" target="_blank" rel="noopener">https://github.com/go-demo/leaderelection&lt;/a>&lt;/p></description></item><item><title>如何在Go项目中输出版本信息？</title><link>//localhost:1313/blog/202001/go-import-version/</link><pubDate>Fri, 10 Jan 2020 00:00:00 +0000</pubDate><guid>//localhost:1313/blog/202001/go-import-version/</guid><description>
+&lt;p>完整代码：&lt;a href="https://github.com/go-demo/leaderelection" target="_blank" rel="noopener">https://github.com/go-demo/leaderelection&lt;/a>&lt;/p></description></item><item><title>如何在Go项目中输出版本信息？</title><link>/blog/202001/go-import-version/</link><pubDate>Fri, 10 Jan 2020 00:00:00 +0000</pubDate><guid>/blog/202001/go-import-version/</guid><description>
 &lt;p>我们经常在使用CLI工具的时候，都会有这样的参数输出：&lt;/p>
 &lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
 &lt;div>&lt;pre>&lt;code>➜ ~ docker version
@@ -649,7 +649,7 @@ title="Copy code"
 &lt;/button>
 &lt;/div>
 &lt;/div>
-&lt;p>完整代码：&lt;a href="https://github.com/go-demo/version" target="_blank" rel="noopener">https://github.com/go-demo/version&lt;/a>&lt;/p></description></item><item><title>聊聊连接池</title><link>//localhost:1313/blog/201611/tcp_connection_pool/</link><pubDate>Sun, 20 Nov 2016 02:40:59 +0800</pubDate><guid>//localhost:1313/blog/201611/tcp_connection_pool/</guid><description>
+&lt;p>完整代码：&lt;a href="https://github.com/go-demo/version" target="_blank" rel="noopener">https://github.com/go-demo/version&lt;/a>&lt;/p></description></item><item><title>聊聊连接池</title><link>/blog/201611/tcp_connection_pool/</link><pubDate>Sun, 20 Nov 2016 02:40:59 +0800</pubDate><guid>/blog/201611/tcp_connection_pool/</guid><description>
 &lt;p>以下主要使用Golang作为编程语言&lt;/p>
 &lt;h1>为什么需要连接池&lt;/h1>&lt;p>我觉得使用连接池最大的一个好处就是&lt;strong>减少连接的创建和关闭，增加系统负载能力&lt;/strong>，
 之前就有遇到一个问题：&lt;a href="http://silenceper.com/blog/201601/tcp-time_wait%E8%BF%9E%E6%8E%A5%E6%95%B0%E8%BF%87%E5%A4%9A%E5%AF%BC%E8%87%B4%E6%9C%8D%E5%8A%A1%E4%B8%8D%E5%8F%AF%E7%94%A8/" target="_blank" rel="noopener">TCP TIME_WAIT连接数过多导致服务不可用&lt;/a>，因为未开启数据库连接池，再加上mysql并发较大，导致需要频繁的创建链接，最终产生了上万的TIME_WAIT的tcp链接，影响了系统性能。&lt;/p>
@@ -894,7 +894,7 @@ title="Copy code"
 &lt;/div>
 &lt;/div>
 &lt;hr>
-&lt;p>写完，听见外面的🐓开始打鸣了。&lt;/p></description></item><item><title>开源项目：wechat sdk</title><link>//localhost:1313/blog/201609/go-wechat-sdk/</link><pubDate>Fri, 16 Sep 2016 15:40:59 +0800</pubDate><guid>//localhost:1313/blog/201609/go-wechat-sdk/</guid><description>
+&lt;p>写完，听见外面的🐓开始打鸣了。&lt;/p></description></item><item><title>开源项目：wechat sdk</title><link>/blog/201609/go-wechat-sdk/</link><pubDate>Fri, 16 Sep 2016 15:40:59 +0800</pubDate><guid>/blog/201609/go-wechat-sdk/</guid><description>
 &lt;p>一直很想自己用golang写个微信的sdk，目标是简单好用，所以利用闲暇时间（周末，中秋😁），就做出来。&lt;/p>
 &lt;p>项目地址:&lt;a href="https://github.com/silenceper/wechat" target="_blank" rel="noopener">https://github.com/silenceper/wechat&lt;/a>&lt;/p>
 &lt;p>目前实现了消息管理，微信网页授权，菜单管理，素材管理几个接口，看下他的基本使用：&lt;/p>
@@ -930,7 +930,7 @@ title="Copy code"
 &lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
 &lt;/button>
 &lt;/div>
-&lt;/div></description></item><item><title>Golang中http包默认路由匹配规则阅读笔记</title><link>//localhost:1313/blog/201605/go-http-process/</link><pubDate>Sat, 28 May 2016 18:00:59 +0800</pubDate><guid>//localhost:1313/blog/201605/go-http-process/</guid><description>
+&lt;/div></description></item><item><title>Golang中http包默认路由匹配规则阅读笔记</title><link>/blog/201605/go-http-process/</link><pubDate>Sat, 28 May 2016 18:00:59 +0800</pubDate><guid>/blog/201605/go-http-process/</guid><description>
 &lt;h1>一、执行流程&lt;/h1>&lt;p>构建一个简单http server：&lt;/p>
 &lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
 &lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="line">&lt;span class="cl">&lt;span class="kn">package&lt;/span> &lt;span class="nx">main&lt;/span>
@@ -1184,7 +1184,7 @@ title="Copy code"
 &lt;p>&lt;code>f(w,r)&lt;/code>就实现了handler的执行。&lt;/p>
 &lt;blockquote>
 &lt;p>脑子里面清楚，但真到表述的时候，呵呵，当做笔记啦。。。&lt;/p>
-&lt;/blockquote></description></item><item><title>tcp time_wait问题</title><link>//localhost:1313/blog/201601/tcp_time_wait_error/</link><pubDate>Sun, 03 Jan 2016 15:40:59 +0800</pubDate><guid>//localhost:1313/blog/201601/tcp_time_wait_error/</guid><description>
+&lt;/blockquote></description></item><item><title>tcp time_wait问题</title><link>/blog/201601/tcp_time_wait_error/</link><pubDate>Sun, 03 Jan 2016 15:40:59 +0800</pubDate><guid>/blog/201601/tcp_time_wait_error/</guid><description>
 &lt;h1>问题出现：&lt;/h1>&lt;p>在元旦前夕，自己维护的一个服务突然在高峰时期收到大量报警，赶紧登上服务器看一下：&lt;/p>
 &lt;p>最开始的反应是memcache tcp read time out ,因为之前也出现过类似的警告所以开始尝试切换memcache，但是运维反馈已经切换了好几台还是不起作用。&lt;/p>
 &lt;p>又看到有mysql 连接不上报错，怀疑机房内网有问题，然后有开始切换机房加机器，当时问题还是没有得到解决，这下真晕了。。。。 完全排查不出什么问题（因为是高峰时期，tcp连接数自然很高，没有在意是这个问题，自己预估不够）&lt;/p>

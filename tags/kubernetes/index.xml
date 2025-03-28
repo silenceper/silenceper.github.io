@@ -1,4 +1,4 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – Kubernetes</title><link>//localhost:1313/tags/kubernetes/</link><description>Recent content in Kubernetes on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sat, 30 Oct 2021 23:20:59 +0800</lastBuildDate><atom:link href="//localhost:1313/tags/kubernetes/index.xml" rel="self" type="application/rss+xml"/><item><title>emptyDir 通过xfs_quota 强制限制大小</title><link>//localhost:1313/blog/202110/enforce-limit-emptydir-size/</link><pubDate>Sat, 30 Oct 2021 23:20:59 +0800</pubDate><guid>//localhost:1313/blog/202110/enforce-limit-emptydir-size/</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – Kubernetes</title><link>/tags/kubernetes/</link><description>Recent content in Kubernetes on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sat, 30 Oct 2021 23:20:59 +0800</lastBuildDate><atom:link href="/tags/kubernetes/index.xml" rel="self" type="application/rss+xml"/><item><title>emptyDir 通过xfs_quota 强制限制大小</title><link>/blog/202110/enforce-limit-emptydir-size/</link><pubDate>Sat, 30 Oct 2021 23:20:59 +0800</pubDate><guid>/blog/202110/enforce-limit-emptydir-size/</guid><description>
 &lt;p>emptyDir支持三种类型的，通过设置 &lt;code>medium&lt;/code> 字段 ：&lt;/p>
 &lt;ul>
 &lt;li>文件：默认情况&lt;/li>
@@ -100,7 +100,7 @@ title="Copy code"
 &lt;/div>
 &lt;p>达到我们的预期。&lt;/p>
 &lt;h3>参考&lt;span class="hx-absolute -hx-mt-20" id="参考">&lt;/span>
-&lt;a href="#%e5%8f%82%e8%80%83" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h3>&lt;p>&lt;a href="https://kubernetes.io/zh/docs/concepts/storage/volumes/#emptydir" target="_blank" rel="noopener">https://kubernetes.io/zh/docs/concepts/storage/volumes/#emptydir&lt;/a>&lt;/p></description></item><item><title>源码剖析：KEDA是如何工作的?</title><link>//localhost:1313/blog/202011/how-does-keda-work/</link><pubDate>Sun, 08 Nov 2020 11:20:59 +0800</pubDate><guid>//localhost:1313/blog/202011/how-does-keda-work/</guid><description>
+&lt;a href="#%e5%8f%82%e8%80%83" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h3>&lt;p>&lt;a href="https://kubernetes.io/zh/docs/concepts/storage/volumes/#emptydir" target="_blank" rel="noopener">https://kubernetes.io/zh/docs/concepts/storage/volumes/#emptydir&lt;/a>&lt;/p></description></item><item><title>源码剖析：KEDA是如何工作的?</title><link>/blog/202011/how-does-keda-work/</link><pubDate>Sun, 08 Nov 2020 11:20:59 +0800</pubDate><guid>/blog/202011/how-does-keda-work/</guid><description>
 &lt;blockquote>
 &lt;p>文章中源码是基于KEDA 2.0( &lt;a href="https://github.com/kedacore/keda/commit/50bec808f8b4656922797e4bcb7c2b61fabd6d0e" target="_blank" rel="noopener">50bec80
 &lt;/a>)来进行分析&lt;/p>
@@ -161,9 +161,9 @@ title="Copy code"
 &lt;/ul>
 &lt;h2>keda-operator&lt;span class="hx-absolute -hx-mt-20" id="keda-operator">&lt;/span>
 &lt;a href="#keda-operator" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>项目中用到了&lt;a href="https://github.com/kubernetes-sigs/kubebuilder" target="_blank" rel="noopener">kubebuilder&lt;/a> SDK，用来完成这个Operator的编写。&lt;/p>
-&lt;p>对于k8s中的自定义controller不了解的可以看看这边文章：&lt;a href="//localhost:1313/blog/202005/custom-resources-and-controllers/" >如何在Kubernetes中创建一个自定义Controller?&lt;/a>。&lt;/p>
+&lt;p>对于k8s中的自定义controller不了解的可以看看这边文章：&lt;a href="/blog/202005/custom-resources-and-controllers/" >如何在Kubernetes中创建一个自定义Controller?&lt;/a>。&lt;/p>
 &lt;p>keda controller的主要流程，画了幅图：
-&lt;img src="//localhost:1313/img/20201111/keda-controller-analyze.png" alt="keda-controller 分析流程" loading="lazy" />&lt;/p>
+&lt;img src="/img/20201111/keda-controller-analyze.png" alt="keda-controller 分析流程" loading="lazy" />&lt;/p>
 &lt;p>组件启动入口在于&lt;code>main.go&lt;/code>文件中：&lt;/p>
 &lt;p>通过&lt;code>controller-runtime&lt;/code>组件启动两个自定义controller：&lt;code>ScaledObjectReconciler&lt;/code>,&lt;code>ScaledJobReconciler&lt;/code>:&lt;/p>
 &lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
@@ -482,14 +482,14 @@ title="Copy code"
 &lt;p>KEDA是如何做到将应用的副本数缩容0，依据是什么？&lt;/p>
 &lt;p>答： keda 内部有个loop，不断的check isActive状态，会主动的修改应用副本&lt;/p>
 &lt;/li>
-&lt;/ul></description></item><item><title>使用keda完成基于事件的弹性伸缩</title><link>//localhost:1313/blog/202009/how-to-use-keda/</link><pubDate>Mon, 14 Sep 2020 11:20:59 +0800</pubDate><guid>//localhost:1313/blog/202009/how-to-use-keda/</guid><description>
+&lt;/ul></description></item><item><title>使用keda完成基于事件的弹性伸缩</title><link>/blog/202009/how-to-use-keda/</link><pubDate>Mon, 14 Sep 2020 11:20:59 +0800</pubDate><guid>/blog/202009/how-to-use-keda/</guid><description>
 &lt;blockquote>
 &lt;p>文章中使用的是keda 1.5版本，2.0还未release
 1.5版本支持deployment，job两种资源。而在2.0增加了StatefulSet以及自定义资源&lt;/p>
 &lt;/blockquote>
 &lt;p>&lt;a href="https://keda.sh/" target="_blank" rel="noopener">keda&lt;/a> 是一个支持多种事件源来对应用进行弹性伸缩的控制器。
 我觉得keda可以认为是基于HPA的external metrics的一种扩展，因为它利用了hpa中external metrics的能力，允许直接配置多个事件源：
-&lt;img src="//localhost:1313/img/20200914/keda-scalers.png" alt="支持的事件源" loading="lazy" />&lt;/p>
+&lt;img src="/img/20200914/keda-scalers.png" alt="支持的事件源" loading="lazy" />&lt;/p>
 &lt;h1>安装keda&lt;/h1>&lt;p>从 &lt;a href="https://github.com/kedacore/keda/releases" target="_blank" rel="noopener">https://github.com/kedacore/keda/releases&lt;/a> 下载1.5版本的zip包，包含了yaml和crd:&lt;/p>
 &lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
 &lt;div>&lt;pre>&lt;code>├── 00-namespace.yaml
@@ -627,7 +627,7 @@ title="Copy code"
 &lt;ul>
 &lt;li>keda operator： 负责创建维护hpa对象资源，同时激活和停止hpa伸缩。在无事件的时候将副本数降低为0(如果未设置minReplicaCount的话)&lt;/li>
 &lt;li>metrics server: 实现了hpa中external metrics，根据事件源配置返回计算结果。
-&lt;img src="//localhost:1313/img/20200914/keda-arch.png" alt="keda架构图" loading="lazy" />&lt;/li>
+&lt;img src="/img/20200914/keda-arch.png" alt="keda架构图" loading="lazy" />&lt;/li>
 &lt;/ul>
 &lt;p>可以看得到HPA控制了副本1-&amp;gt;N和N-&amp;gt;1的变化。
 keda控制了副本0-&amp;gt;1和1-&amp;gt;0的变化（起到了激活和停止的作用，对于一些消费型的任务副本比较有用，比如在凌晨启动任务进行消费）&lt;/p>
@@ -662,7 +662,7 @@ title="Copy code"
 &lt;h1>总结&lt;/h1>&lt;p>之前用过k8s-prometheus-adapter项目来进行应用的自定义指标进行扩展，对比keda感觉keda操作更简单，配置更加动态化，因为抽象了hpa，用户直接操作&lt;code>ScaledObject&lt;/code>即可，不需要关注hpa如何进行配置。而且支持将副本数设置为0，同时又拥有类似cronhpa(定时伸缩)的功能，扩展能力比较强。&lt;/p>
 &lt;blockquote>
 &lt;p>阅读原文体验更加，文中链接支持跳转&lt;/p>
-&lt;/blockquote></description></item><item><title>如何在Kubernetes中创建一个自定义Controller?</title><link>//localhost:1313/blog/202005/custom-resources-and-controllers/</link><pubDate>Mon, 18 May 2020 18:20:59 +0800</pubDate><guid>//localhost:1313/blog/202005/custom-resources-and-controllers/</guid><description>
+&lt;/blockquote></description></item><item><title>如何在Kubernetes中创建一个自定义Controller?</title><link>/blog/202005/custom-resources-and-controllers/</link><pubDate>Mon, 18 May 2020 18:20:59 +0800</pubDate><guid>/blog/202005/custom-resources-and-controllers/</guid><description>
 &lt;h2>目的&lt;span class="hx-absolute -hx-mt-20" id="目的">&lt;/span>
 &lt;a href="#%e7%9b%ae%e7%9a%84" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>Custom Resource是扩展Kubernetes的一种方式（另外一种就是通过聚合层API apiserver-aggregation），而controller对指定的resource进行监听和执行对应的动作(watch,diff,action)。&lt;br />
 &lt;br />&lt;strong>Operator与Controller区别&lt;/strong>&lt;/p>
@@ -1087,7 +1087,7 @@ title="Copy code"
 &lt;li>&lt;a href="https://juejin.im/post/5de097bbf265da05d849ab53" target="_blank" rel="noopener">https://juejin.im/post/5de097bbf265da05d849ab53&lt;/a>&lt;/li>
 &lt;li>&lt;a href="https://blog.fatedier.com/2019/04/02/k8s-custom-controller/" target="_blank" rel="noopener">https://blog.fatedier.com/2019/04/02/k8s-custom-controller/&lt;/a>&lt;/li>
 &lt;li>&lt;a href="https://blog.gmem.cc/crd" target="_blank" rel="noopener">https://blog.gmem.cc/crd&lt;/a>&lt;/li>
-&lt;/ul></description></item><item><title>记一次问题排查：为什么在POD无法通过Service访问自己？</title><link>//localhost:1313/blog/202004/bridge-hairpin-mod/</link><pubDate>Thu, 30 Apr 2020 11:26:59 +0800</pubDate><guid>//localhost:1313/blog/202004/bridge-hairpin-mod/</guid><description>
+&lt;/ul></description></item><item><title>记一次问题排查：为什么在POD无法通过Service访问自己？</title><link>/blog/202004/bridge-hairpin-mod/</link><pubDate>Thu, 30 Apr 2020 11:26:59 +0800</pubDate><guid>/blog/202004/bridge-hairpin-mod/</guid><description>
 &lt;h2>问题现象&lt;span class="hx-absolute -hx-mt-20" id="问题现象">&lt;/span>
 &lt;a href="#%e9%97%ae%e9%a2%98%e7%8e%b0%e8%b1%a1" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>创建一个nginx pod，并配置了service访问，service后端指向pod。&lt;/p>
 &lt;p>进入pod中使用service ip 或者service 域名，无法访问。&lt;/p>
@@ -1160,9 +1160,9 @@ title="Copy code"
 &lt;code>ifconfig docker0 promisc on/off&lt;/code>&lt;/p>
 &lt;h2>总结&lt;span class="hx-absolute -hx-mt-20" id="总结">&lt;/span>
 &lt;a href="#%e6%80%bb%e7%bb%93" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>其实我们集群通过这种比较另类的方式来分配POD IP也用了了很久了，之所以没出问题，应该是业务基本没遇到这种pod内通过service访问自己的情况。&lt;/p>
-&lt;p>所以还是要跟着标准的k8s方式来安装cni，避免入坑，比如flannel就已经提供给了&lt;code>hairpinMode &lt;/code>参数来进行配置开启。&lt;/p></description></item><item><title>分析kubernetes中的事件机制</title><link>//localhost:1313/blog/202003/kubernetes-event/</link><pubDate>Tue, 03 Mar 2020 12:40:59 +0800</pubDate><guid>//localhost:1313/blog/202003/kubernetes-event/</guid><description>
+&lt;p>所以还是要跟着标准的k8s方式来安装cni，避免入坑，比如flannel就已经提供给了&lt;code>hairpinMode &lt;/code>参数来进行配置开启。&lt;/p></description></item><item><title>分析kubernetes中的事件机制</title><link>/blog/202003/kubernetes-event/</link><pubDate>Tue, 03 Mar 2020 12:40:59 +0800</pubDate><guid>/blog/202003/kubernetes-event/</guid><description>
 &lt;p>我们通过 &lt;code>kubectl describe [资源]&lt;/code> 命令，可以在看到Event输出，并且经常依赖event进行问题定位，从event中可以分析整个POD的运行轨迹，为服务的客观测性提供数据来源，由此可见，event在Kubernetes中起着举足轻重的作用。&lt;/p>
-&lt;p>&lt;img src="//localhost:1313/img/20200303/event.png" alt="event展示" loading="lazy" />&lt;/p>
+&lt;p>&lt;img src="/img/20200303/event.png" alt="event展示" loading="lazy" />&lt;/p>
 &lt;p>event并不只是kubelet中都有的，关于event的操作被封装在&lt;a href="https://github.com/kubernetes/kubernetes/tree/v1.17.3/staging/src/k8s.io/client-go/tools/record" target="_blank" rel="noopener">client-go/tools/record&lt;/a>包，我们完全可以在写入自定义的event。&lt;/p>
 &lt;p>现在让我们来一步步揭开event的面纱。
 &lt;a name="EBJdC">&lt;/a>&lt;/p>
@@ -1226,7 +1226,7 @@ title="Copy code"
 &lt;p>2、文中代码以Kubernetes 1.17.3为例进行分析&lt;/p>
 &lt;/blockquote>
 &lt;p>先以一幅图来看下整个的处理流程
-&lt;img src="//localhost:1313/img/20200303/kubernetes-event.png" alt="event处理过程" loading="lazy" />&lt;/p>
+&lt;img src="/img/20200303/kubernetes-event.png" alt="event处理过程" loading="lazy" />&lt;/p>
 &lt;p>创建操作事件的客户端：&lt;br />&lt;a href="https://github.com/kubernetes/kubernetes/blob/v1.17.3/cmd/kubelet/app/server.go#L461" target="_blank" rel="noopener">kubelet/app/server.go#L461&lt;/a>&lt;/p>
 &lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
 &lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// makeEventRecorder sets up kubeDeps.Recorder if it&amp;#39;s nil. It&amp;#39;s a no-op otherwise.&lt;/span>
@@ -1599,7 +1599,7 @@ title="Copy code"
 &lt;p>&lt;strong>参考文档：&lt;/strong>&lt;/p>
 &lt;ul>
 &lt;li>&lt;a href="https://cizixs.com/2017/06/22/kubelet-source-code-analysis-part4-event/" target="_blank" rel="noopener">https://cizixs.com/2017/06/22/kubelet-source-code-analysis-part4-event/&lt;/a>&lt;/li>
-&lt;/ul></description></item><item><title>利用Kubernetes中的leaderelection实现组件高可用</title><link>//localhost:1313/blog/202002/kubernetes-leaderelection/</link><pubDate>Sat, 15 Feb 2020 00:00:00 +0000</pubDate><guid>//localhost:1313/blog/202002/kubernetes-leaderelection/</guid><description>
+&lt;/ul></description></item><item><title>利用Kubernetes中的leaderelection实现组件高可用</title><link>/blog/202002/kubernetes-leaderelection/</link><pubDate>Sat, 15 Feb 2020 00:00:00 +0000</pubDate><guid>/blog/202002/kubernetes-leaderelection/</guid><description>
 &lt;p>在Kubernetes中，通常kube-schduler和kube-controller-manager都是多副本进行部署的来保证高可用，而真正在工作的实例其实只有一个。这里就利用到 &lt;code>leaderelection&lt;/code> 的选主机制，保证leader是处于工作状态，并且在leader挂掉之后，从其他节点选取新的leader保证组件正常工作。&lt;/p>
 &lt;p>不单单只是k8s中的这两个组件用到，在其他服务中也可以看到这个包的使用，比如&lt;a href="https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/" target="_blank" rel="noopener">cluster-autoscaler&lt;/a>等都能看得到这个包的，今天就来看看这个包的使用以及它内部是如何实现的。&lt;/p>
 &lt;h2>使用&lt;span class="hx-absolute -hx-mt-20" id="使用">&lt;/span>

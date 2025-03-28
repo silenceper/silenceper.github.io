@@ -1,4 +1,4 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – Csi</title><link>//localhost:1313/tags/csi/</link><description>Recent content in Csi on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sat, 28 Nov 2020 15:40:59 +0800</lastBuildDate><atom:link href="//localhost:1313/tags/csi/index.xml" rel="self" type="application/rss+xml"/><item><title>csi-driver-host-path安装</title><link>//localhost:1313/kubernetes-book/csi/csi-driver-host-path.html</link><pubDate>Sat, 28 Nov 2020 15:40:59 +0800</pubDate><guid>//localhost:1313/kubernetes-book/csi/csi-driver-host-path.html</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – Csi</title><link>/tags/csi/</link><description>Recent content in Csi on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sat, 28 Nov 2020 15:40:59 +0800</lastBuildDate><atom:link href="/tags/csi/index.xml" rel="self" type="application/rss+xml"/><item><title>csi-driver-host-path安装</title><link>/kubernetes-book/csi/csi-driver-host-path.html</link><pubDate>Sat, 28 Nov 2020 15:40:59 +0800</pubDate><guid>/kubernetes-book/csi/csi-driver-host-path.html</guid><description>
 &lt;blockquote>
 &lt;p>集群 v1.19.0&lt;/p>
 &lt;/blockquote>
@@ -138,7 +138,7 @@ title="Copy code"
 &lt;a href="#%e5%8f%82%e8%80%83" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;ul>
 &lt;li>&lt;a href="https://github.com/kubernetes-csi/csi-driver-host-path/blob/master/docs/deploy-1.17-and-later.md" target="_blank" rel="noopener">https://github.com/kubernetes-csi/csi-driver-host-path/blob/master/docs/deploy-1.17-and-later.md&lt;/a>&lt;/li>
 &lt;li>&lt;a href="https://arslan.io/2018/06/21/how-to-write-a-container-storage-interface-csi-plugin/" target="_blank" rel="noopener">https://arslan.io/2018/06/21/how-to-write-a-container-storage-interface-csi-plugin/&lt;/a>&lt;/li>
-&lt;/ul></description></item><item><title>如何编写一个CSI插件</title><link>//localhost:1313/kubernetes-book/csi/how-to-write-csi-driver.html</link><pubDate>Fri, 27 Nov 2020 15:40:59 +0800</pubDate><guid>//localhost:1313/kubernetes-book/csi/how-to-write-csi-driver.html</guid><description>
+&lt;/ul></description></item><item><title>如何编写一个CSI插件</title><link>/kubernetes-book/csi/how-to-write-csi-driver.html</link><pubDate>Fri, 27 Nov 2020 15:40:59 +0800</pubDate><guid>/kubernetes-book/csi/how-to-write-csi-driver.html</guid><description>
 &lt;blockquote>
 &lt;p>这里以&lt;a href="https://github.com/kubernetes-csi/csi-driver-host-path" target="_blank" rel="noopener">csi-driver-host-path&lt;/a>作为例子，来看看是如何实现一个csi插件的？&lt;/p>
 &lt;/blockquote>
@@ -772,7 +772,7 @@ title="Copy code"
 &lt;li>
 &lt;p>&lt;a href="https://kubernetes-csi.github.io/docs/developing.html" target="_blank" rel="noopener">https://kubernetes-csi.github.io/docs/developing.html&lt;/a>&lt;/p>
 &lt;/li>
-&lt;/ul></description></item><item><title>CSI - 容器存储接口</title><link>//localhost:1313/kubernetes-book/csi/</link><pubDate>Thu, 26 Nov 2020 15:40:59 +0800</pubDate><guid>//localhost:1313/kubernetes-book/csi/</guid><description>
+&lt;/ul></description></item><item><title>CSI - 容器存储接口</title><link>/kubernetes-book/csi/</link><pubDate>Thu, 26 Nov 2020 15:40:59 +0800</pubDate><guid>/kubernetes-book/csi/</guid><description>
 &lt;p>&lt;a href="https://github.com/container-storage-interface/spec/blob/master/spec.md" target="_blank" rel="noopener">容器存储接口&lt;/a>（CSI）是用于将任意块和文件存储系统暴露给诸如Kubernetes之类的容器编排系统（CO）上的容器化工作负载的标准。 使用CSI的第三方存储提供商可以编写和部署在Kubernetes中公开新存储系统的插件，而无需接触核心的Kubernetes代码。&lt;/p>
 &lt;p>具体来说，Kubernetes针对CSI规定了以下内容：&lt;/p>
 &lt;ul>

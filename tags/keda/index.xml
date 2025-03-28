@@ -1,4 +1,4 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – Keda</title><link>//localhost:1313/tags/keda/</link><description>Recent content in Keda on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 08 Nov 2020 11:20:59 +0800</lastBuildDate><atom:link href="//localhost:1313/tags/keda/index.xml" rel="self" type="application/rss+xml"/><item><title>源码剖析：KEDA是如何工作的?</title><link>//localhost:1313/blog/202011/how-does-keda-work/</link><pubDate>Sun, 08 Nov 2020 11:20:59 +0800</pubDate><guid>//localhost:1313/blog/202011/how-does-keda-work/</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – Keda</title><link>/tags/keda/</link><description>Recent content in Keda on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 08 Nov 2020 11:20:59 +0800</lastBuildDate><atom:link href="/tags/keda/index.xml" rel="self" type="application/rss+xml"/><item><title>源码剖析：KEDA是如何工作的?</title><link>/blog/202011/how-does-keda-work/</link><pubDate>Sun, 08 Nov 2020 11:20:59 +0800</pubDate><guid>/blog/202011/how-does-keda-work/</guid><description>
 &lt;blockquote>
 &lt;p>文章中源码是基于KEDA 2.0( &lt;a href="https://github.com/kedacore/keda/commit/50bec808f8b4656922797e4bcb7c2b61fabd6d0e" target="_blank" rel="noopener">50bec80
 &lt;/a>)来进行分析&lt;/p>
@@ -59,9 +59,9 @@ title="Copy code"
 &lt;/ul>
 &lt;h2>keda-operator&lt;span class="hx-absolute -hx-mt-20" id="keda-operator">&lt;/span>
 &lt;a href="#keda-operator" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>项目中用到了&lt;a href="https://github.com/kubernetes-sigs/kubebuilder" target="_blank" rel="noopener">kubebuilder&lt;/a> SDK，用来完成这个Operator的编写。&lt;/p>
-&lt;p>对于k8s中的自定义controller不了解的可以看看这边文章：&lt;a href="//localhost:1313/blog/202005/custom-resources-and-controllers/" >如何在Kubernetes中创建一个自定义Controller?&lt;/a>。&lt;/p>
+&lt;p>对于k8s中的自定义controller不了解的可以看看这边文章：&lt;a href="/blog/202005/custom-resources-and-controllers/" >如何在Kubernetes中创建一个自定义Controller?&lt;/a>。&lt;/p>
 &lt;p>keda controller的主要流程，画了幅图：
-&lt;img src="//localhost:1313/img/20201111/keda-controller-analyze.png" alt="keda-controller 分析流程" loading="lazy" />&lt;/p>
+&lt;img src="/img/20201111/keda-controller-analyze.png" alt="keda-controller 分析流程" loading="lazy" />&lt;/p>
 &lt;p>组件启动入口在于&lt;code>main.go&lt;/code>文件中：&lt;/p>
 &lt;p>通过&lt;code>controller-runtime&lt;/code>组件启动两个自定义controller：&lt;code>ScaledObjectReconciler&lt;/code>,&lt;code>ScaledJobReconciler&lt;/code>:&lt;/p>
 &lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
@@ -380,7 +380,7 @@ title="Copy code"
 &lt;p>KEDA是如何做到将应用的副本数缩容0，依据是什么？&lt;/p>
 &lt;p>答： keda 内部有个loop，不断的check isActive状态，会主动的修改应用副本&lt;/p>
 &lt;/li>
-&lt;/ul></description></item><item><title>KEDA - 一个基于事件驱动的伸缩控制器</title><link>//localhost:1313/kubernetes-book/keda/</link><pubDate>Wed, 04 Nov 2020 15:40:59 +0800</pubDate><guid>//localhost:1313/kubernetes-book/keda/</guid><description>
+&lt;/ul></description></item><item><title>KEDA - 一个基于事件驱动的伸缩控制器</title><link>/kubernetes-book/keda/</link><pubDate>Wed, 04 Nov 2020 15:40:59 +0800</pubDate><guid>/kubernetes-book/keda/</guid><description>
 &lt;p>keda是一个基于事件驱动的伸缩控制器，可以实现应用缩容至0，以及从0开始扩容。目前已支持像CPU/Memroy、Mysql、Prometheus、Redis等20多种事件来源(Scaler)。&lt;/p>
 &lt;p>目前也是CNCF下的sandbox项目，最初主要由微软、redhat以及社区的人员参与贡献。&lt;/p>
 &lt;p>&lt;strong>网站&lt;/strong>：https://keda.sh/&lt;/p>
@@ -640,7 +640,7 @@ title="Copy code"
 &lt;li>RabbitMQ Queue&lt;/li>
 &lt;li>Redis Lists&lt;/li>
 &lt;li>Redis Streams&lt;/li>
-&lt;/ul></description></item><item><title>源码分析：KEDA是如何工作的?</title><link>//localhost:1313/kubernetes-book/keda/source.html</link><pubDate>Wed, 04 Nov 2020 15:40:59 +0800</pubDate><guid>//localhost:1313/kubernetes-book/keda/source.html</guid><description>
+&lt;/ul></description></item><item><title>源码分析：KEDA是如何工作的?</title><link>/kubernetes-book/keda/source.html</link><pubDate>Wed, 04 Nov 2020 15:40:59 +0800</pubDate><guid>/kubernetes-book/keda/source.html</guid><description>
 &lt;blockquote>
 &lt;p>文章中源码是基于KEDA 2.0( &lt;a href="https://github.com/kedacore/keda/commit/50bec808f8b4656922797e4bcb7c2b61fabd6d0e" target="_blank" rel="noopener">50bec80&lt;/a>)来进行分析&lt;/p>
 &lt;p>keda 2.0 要求k8s集群版本 &amp;gt;=1.16&lt;/p>
@@ -700,7 +700,7 @@ title="Copy code"
 &lt;/ul>
 &lt;h2>keda-operator&lt;span class="hx-absolute -hx-mt-20" id="keda-operator">&lt;/span>
 &lt;a href="#keda-operator" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>项目中用到了&lt;a href="https://github.com/kubernetes-sigs/kubebuilder" target="_blank" rel="noopener">kubebuilder&lt;/a> SDK，用来完成这个Operator的编写。&lt;/p>
-&lt;p>对于k8s中的自定义controller不了解的可以看看这边文章：&lt;a href="//localhost:1313/blog/202005/custom-resources-and-controllers/" >如何在Kubernetes中创建一个自定义Controller?&lt;/a>。&lt;/p>
+&lt;p>对于k8s中的自定义controller不了解的可以看看这边文章：&lt;a href="/blog/202005/custom-resources-and-controllers/" >如何在Kubernetes中创建一个自定义Controller?&lt;/a>。&lt;/p>
 &lt;p>keda controller的主要流程，画了幅图：
 &lt;img src="https://silenceper.oss-cn-beijing.aliyuncs.com/images/keda-controller-analyze.png" alt="keda-controller 分析流程" loading="lazy" />&lt;/p>
 &lt;p>组件启动入口在于&lt;code>main.go&lt;/code>文件中：&lt;/p>
@@ -1021,14 +1021,14 @@ title="Copy code"
 &lt;p>KEDA是如何做到将应用的副本数缩容0，依据是什么？&lt;/p>
 &lt;p>答： keda 内部有个loop，不断的check isActive状态，会主动的修改应用副本&lt;/p>
 &lt;/li>
-&lt;/ul></description></item><item><title>使用keda完成基于事件的弹性伸缩</title><link>//localhost:1313/blog/202009/how-to-use-keda/</link><pubDate>Mon, 14 Sep 2020 11:20:59 +0800</pubDate><guid>//localhost:1313/blog/202009/how-to-use-keda/</guid><description>
+&lt;/ul></description></item><item><title>使用keda完成基于事件的弹性伸缩</title><link>/blog/202009/how-to-use-keda/</link><pubDate>Mon, 14 Sep 2020 11:20:59 +0800</pubDate><guid>/blog/202009/how-to-use-keda/</guid><description>
 &lt;blockquote>
 &lt;p>文章中使用的是keda 1.5版本，2.0还未release
 1.5版本支持deployment，job两种资源。而在2.0增加了StatefulSet以及自定义资源&lt;/p>
 &lt;/blockquote>
 &lt;p>&lt;a href="https://keda.sh/" target="_blank" rel="noopener">keda&lt;/a> 是一个支持多种事件源来对应用进行弹性伸缩的控制器。
 我觉得keda可以认为是基于HPA的external metrics的一种扩展，因为它利用了hpa中external metrics的能力，允许直接配置多个事件源：
-&lt;img src="//localhost:1313/img/20200914/keda-scalers.png" alt="支持的事件源" loading="lazy" />&lt;/p>
+&lt;img src="/img/20200914/keda-scalers.png" alt="支持的事件源" loading="lazy" />&lt;/p>
 &lt;h1>安装keda&lt;/h1>&lt;p>从 &lt;a href="https://github.com/kedacore/keda/releases" target="_blank" rel="noopener">https://github.com/kedacore/keda/releases&lt;/a> 下载1.5版本的zip包，包含了yaml和crd:&lt;/p>
 &lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
 &lt;div>&lt;pre>&lt;code>├── 00-namespace.yaml
@@ -1166,7 +1166,7 @@ title="Copy code"
 &lt;ul>
 &lt;li>keda operator： 负责创建维护hpa对象资源，同时激活和停止hpa伸缩。在无事件的时候将副本数降低为0(如果未设置minReplicaCount的话)&lt;/li>
 &lt;li>metrics server: 实现了hpa中external metrics，根据事件源配置返回计算结果。
-&lt;img src="//localhost:1313/img/20200914/keda-arch.png" alt="keda架构图" loading="lazy" />&lt;/li>
+&lt;img src="/img/20200914/keda-arch.png" alt="keda架构图" loading="lazy" />&lt;/li>
 &lt;/ul>
 &lt;p>可以看得到HPA控制了副本1-&amp;gt;N和N-&amp;gt;1的变化。
 keda控制了副本0-&amp;gt;1和1-&amp;gt;0的变化（起到了激活和停止的作用，对于一些消费型的任务副本比较有用，比如在凌晨启动任务进行消费）&lt;/p>

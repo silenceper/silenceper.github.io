@@ -1,4 +1,4 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – 源码阅读</title><link>//localhost:1313/tags/%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/</link><description>Recent content in 源码阅读 on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Wed, 04 Nov 2020 15:40:59 +0800</lastBuildDate><atom:link href="//localhost:1313/tags/%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/index.xml" rel="self" type="application/rss+xml"/><item><title>源码分析：KEDA是如何工作的?</title><link>//localhost:1313/kubernetes-book/keda/source.html</link><pubDate>Wed, 04 Nov 2020 15:40:59 +0800</pubDate><guid>//localhost:1313/kubernetes-book/keda/source.html</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – 源码阅读</title><link>/tags/%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/</link><description>Recent content in 源码阅读 on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Wed, 04 Nov 2020 15:40:59 +0800</lastBuildDate><atom:link href="/tags/%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/index.xml" rel="self" type="application/rss+xml"/><item><title>源码分析：KEDA是如何工作的?</title><link>/kubernetes-book/keda/source.html</link><pubDate>Wed, 04 Nov 2020 15:40:59 +0800</pubDate><guid>/kubernetes-book/keda/source.html</guid><description>
 &lt;blockquote>
 &lt;p>文章中源码是基于KEDA 2.0( &lt;a href="https://github.com/kedacore/keda/commit/50bec808f8b4656922797e4bcb7c2b61fabd6d0e" target="_blank" rel="noopener">50bec80&lt;/a>)来进行分析&lt;/p>
 &lt;p>keda 2.0 要求k8s集群版本 &amp;gt;=1.16&lt;/p>
@@ -58,7 +58,7 @@ title="Copy code"
 &lt;/ul>
 &lt;h2>keda-operator&lt;span class="hx-absolute -hx-mt-20" id="keda-operator">&lt;/span>
 &lt;a href="#keda-operator" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>项目中用到了&lt;a href="https://github.com/kubernetes-sigs/kubebuilder" target="_blank" rel="noopener">kubebuilder&lt;/a> SDK，用来完成这个Operator的编写。&lt;/p>
-&lt;p>对于k8s中的自定义controller不了解的可以看看这边文章：&lt;a href="//localhost:1313/blog/202005/custom-resources-and-controllers/" >如何在Kubernetes中创建一个自定义Controller?&lt;/a>。&lt;/p>
+&lt;p>对于k8s中的自定义controller不了解的可以看看这边文章：&lt;a href="/blog/202005/custom-resources-and-controllers/" >如何在Kubernetes中创建一个自定义Controller?&lt;/a>。&lt;/p>
 &lt;p>keda controller的主要流程，画了幅图：
 &lt;img src="https://silenceper.oss-cn-beijing.aliyuncs.com/images/keda-controller-analyze.png" alt="keda-controller 分析流程" loading="lazy" />&lt;/p>
 &lt;p>组件启动入口在于&lt;code>main.go&lt;/code>文件中：&lt;/p>

@@ -1,4 +1,4 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – 微信开放平台</title><link>//localhost:1313/wechat/openplatform/</link><description>Recent content in 微信开放平台 on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en</language><atom:link href="//localhost:1313/wechat/openplatform/index.xml" rel="self" type="application/rss+xml"/><item><title>全网发布校验</title><link>//localhost:1313/wechat/openplatform/publish_verify.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>//localhost:1313/wechat/openplatform/publish_verify.html</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – 微信开放平台</title><link>/wechat/openplatform/</link><description>Recent content in 微信开放平台 on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en</language><atom:link href="/wechat/openplatform/index.xml" rel="self" type="application/rss+xml"/><item><title>全网发布校验</title><link>/wechat/openplatform/publish_verify.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/wechat/openplatform/publish_verify.html</guid><description>
 &lt;h1>全网发布校验&lt;/h1>&lt;p>微信第三方平台进行全网发布的时候，会有一个全网发布接入检测的过程。&lt;br>
 &lt;a href="https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Post_Application_on_the_Entire_Network/releases_instructions.html" target="_blank" rel="noopener">官方文档&lt;/a>&lt;/p>
 &lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
@@ -74,7 +74,7 @@ title="Copy code"
 &lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
 &lt;/button>
 &lt;/div>
-&lt;/div></description></item><item><title>公众号授权流程</title><link>//localhost:1313/wechat/openplatform/account_verify.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>//localhost:1313/wechat/openplatform/account_verify.html</guid><description>
+&lt;/div></description></item><item><title>公众号授权流程</title><link>/wechat/openplatform/account_verify.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/wechat/openplatform/account_verify.html</guid><description>
 &lt;h1>公众号授权流程&lt;/h1>&lt;p>小程序或者公众号授权给第三方平台的流程
 &lt;a href="https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Authorization_Process_Technical_Description.html" target="_blank" rel="noopener">官方文档&lt;/a>&lt;/p>
 &lt;h2>扫码授权&lt;span class="hx-absolute -hx-mt-20" id="扫码授权">&lt;/span>

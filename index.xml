@@ -1,4 +1,4 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper –</title><link>//localhost:1313/</link><description>Recent content on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en</language><atom:link href="//localhost:1313/index.xml" rel="self" type="application/rss+xml"/><item><title>xfsquota：一个便捷的管理xfs磁盘配额的命令行工具</title><link>//localhost:1313/blog/202204/xfsquota-golang/</link><pubDate>Sat, 23 Apr 2022 22:20:59 +0800</pubDate><guid>//localhost:1313/blog/202204/xfsquota-golang/</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper –</title><link>/</link><description>Recent content on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en</language><atom:link href="/index.xml" rel="self" type="application/rss+xml"/><item><title>xfsquota：一个便捷的管理xfs磁盘配额的命令行工具</title><link>/blog/202204/xfsquota-golang/</link><pubDate>Sat, 23 Apr 2022 22:20:59 +0800</pubDate><guid>/blog/202204/xfsquota-golang/</guid><description>
 &lt;p>&lt;strong>源码地址：&lt;/strong>&lt;a href="https://github.com/silenceper/xfsquota" target="_blank" rel="noopener">https://github.com/silenceper/xfsquota&lt;/a>&lt;/p>
 &lt;h2>动机&lt;span class="hx-absolute -hx-mt-20" id="动机">&lt;/span>
 &lt;a href="#%e5%8a%a8%e6%9c%ba" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>&lt;strong>在Linux有一个&lt;code>xfs_quota&lt;/code>（在&lt;code>xfsprogs&lt;/code>工具包下）命令行工具，为什么还用golang实现了？&lt;/strong>&lt;/p>
@@ -122,7 +122,7 @@ title="Copy code"
 &lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
 &lt;/button>
 &lt;/div>
-&lt;/div></description></item><item><title>emptyDir 通过xfs_quota 强制限制大小</title><link>//localhost:1313/blog/202110/enforce-limit-emptydir-size/</link><pubDate>Sat, 30 Oct 2021 23:20:59 +0800</pubDate><guid>//localhost:1313/blog/202110/enforce-limit-emptydir-size/</guid><description>
+&lt;/div></description></item><item><title>emptyDir 通过xfs_quota 强制限制大小</title><link>/blog/202110/enforce-limit-emptydir-size/</link><pubDate>Sat, 30 Oct 2021 23:20:59 +0800</pubDate><guid>/blog/202110/enforce-limit-emptydir-size/</guid><description>
 &lt;p>emptyDir支持三种类型的，通过设置 &lt;code>medium&lt;/code> 字段 ：&lt;/p>
 &lt;ul>
 &lt;li>文件：默认情况&lt;/li>
@@ -224,7 +224,7 @@ title="Copy code"
 &lt;/div>
 &lt;p>达到我们的预期。&lt;/p>
 &lt;h3>参考&lt;span class="hx-absolute -hx-mt-20" id="参考">&lt;/span>
-&lt;a href="#%e5%8f%82%e8%80%83" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h3>&lt;p>&lt;a href="https://kubernetes.io/zh/docs/concepts/storage/volumes/#emptydir" target="_blank" rel="noopener">https://kubernetes.io/zh/docs/concepts/storage/volumes/#emptydir&lt;/a>&lt;/p></description></item><item><title>csi-driver-host-path安装</title><link>//localhost:1313/kubernetes-book/csi/csi-driver-host-path.html</link><pubDate>Sat, 28 Nov 2020 15:40:59 +0800</pubDate><guid>//localhost:1313/kubernetes-book/csi/csi-driver-host-path.html</guid><description>
+&lt;a href="#%e5%8f%82%e8%80%83" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h3>&lt;p>&lt;a href="https://kubernetes.io/zh/docs/concepts/storage/volumes/#emptydir" target="_blank" rel="noopener">https://kubernetes.io/zh/docs/concepts/storage/volumes/#emptydir&lt;/a>&lt;/p></description></item><item><title>csi-driver-host-path安装</title><link>/kubernetes-book/csi/csi-driver-host-path.html</link><pubDate>Sat, 28 Nov 2020 15:40:59 +0800</pubDate><guid>/kubernetes-book/csi/csi-driver-host-path.html</guid><description>
 &lt;blockquote>
 &lt;p>集群 v1.19.0&lt;/p>
 &lt;/blockquote>
@@ -364,7 +364,7 @@ title="Copy code"
 &lt;a href="#%e5%8f%82%e8%80%83" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;ul>
 &lt;li>&lt;a href="https://github.com/kubernetes-csi/csi-driver-host-path/blob/master/docs/deploy-1.17-and-later.md" target="_blank" rel="noopener">https://github.com/kubernetes-csi/csi-driver-host-path/blob/master/docs/deploy-1.17-and-later.md&lt;/a>&lt;/li>
 &lt;li>&lt;a href="https://arslan.io/2018/06/21/how-to-write-a-container-storage-interface-csi-plugin/" target="_blank" rel="noopener">https://arslan.io/2018/06/21/how-to-write-a-container-storage-interface-csi-plugin/&lt;/a>&lt;/li>
-&lt;/ul></description></item><item><title>如何编写一个CSI插件</title><link>//localhost:1313/kubernetes-book/csi/how-to-write-csi-driver.html</link><pubDate>Fri, 27 Nov 2020 15:40:59 +0800</pubDate><guid>//localhost:1313/kubernetes-book/csi/how-to-write-csi-driver.html</guid><description>
+&lt;/ul></description></item><item><title>如何编写一个CSI插件</title><link>/kubernetes-book/csi/how-to-write-csi-driver.html</link><pubDate>Fri, 27 Nov 2020 15:40:59 +0800</pubDate><guid>/kubernetes-book/csi/how-to-write-csi-driver.html</guid><description>
 &lt;blockquote>
 &lt;p>这里以&lt;a href="https://github.com/kubernetes-csi/csi-driver-host-path" target="_blank" rel="noopener">csi-driver-host-path&lt;/a>作为例子，来看看是如何实现一个csi插件的？&lt;/p>
 &lt;/blockquote>
@@ -998,7 +998,7 @@ title="Copy code"
 &lt;li>
 &lt;p>&lt;a href="https://kubernetes-csi.github.io/docs/developing.html" target="_blank" rel="noopener">https://kubernetes-csi.github.io/docs/developing.html&lt;/a>&lt;/p>
 &lt;/li>
-&lt;/ul></description></item><item><title>CSI - 容器存储接口</title><link>//localhost:1313/kubernetes-book/csi/</link><pubDate>Thu, 26 Nov 2020 15:40:59 +0800</pubDate><guid>//localhost:1313/kubernetes-book/csi/</guid><description>
+&lt;/ul></description></item><item><title>CSI - 容器存储接口</title><link>/kubernetes-book/csi/</link><pubDate>Thu, 26 Nov 2020 15:40:59 +0800</pubDate><guid>/kubernetes-book/csi/</guid><description>
 &lt;p>&lt;a href="https://github.com/container-storage-interface/spec/blob/master/spec.md" target="_blank" rel="noopener">容器存储接口&lt;/a>（CSI）是用于将任意块和文件存储系统暴露给诸如Kubernetes之类的容器编排系统（CO）上的容器化工作负载的标准。 使用CSI的第三方存储提供商可以编写和部署在Kubernetes中公开新存储系统的插件，而无需接触核心的Kubernetes代码。&lt;/p>
 &lt;p>具体来说，Kubernetes针对CSI规定了以下内容：&lt;/p>
 &lt;ul>
@@ -1181,7 +1181,7 @@ external-attacher还支持快照数据源。 如果将快照CRD资源指定为PV
 &lt;li>
 &lt;p>&lt;a href="https://www.dazhuanlan.com/2020/01/31/5e33a33ba05d1/" target="_blank" rel="noopener">CSI存储接口解释&lt;/a>&lt;/p>
 &lt;/li>
-&lt;/ul></description></item><item><title>源码剖析：KEDA是如何工作的?</title><link>//localhost:1313/blog/202011/how-does-keda-work/</link><pubDate>Sun, 08 Nov 2020 11:20:59 +0800</pubDate><guid>//localhost:1313/blog/202011/how-does-keda-work/</guid><description>
+&lt;/ul></description></item><item><title>源码剖析：KEDA是如何工作的?</title><link>/blog/202011/how-does-keda-work/</link><pubDate>Sun, 08 Nov 2020 11:20:59 +0800</pubDate><guid>/blog/202011/how-does-keda-work/</guid><description>
 &lt;blockquote>
 &lt;p>文章中源码是基于KEDA 2.0( &lt;a href="https://github.com/kedacore/keda/commit/50bec808f8b4656922797e4bcb7c2b61fabd6d0e" target="_blank" rel="noopener">50bec80
 &lt;/a>)来进行分析&lt;/p>
@@ -1242,9 +1242,9 @@ title="Copy code"
 &lt;/ul>
 &lt;h2>keda-operator&lt;span class="hx-absolute -hx-mt-20" id="keda-operator">&lt;/span>
 &lt;a href="#keda-operator" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>项目中用到了&lt;a href="https://github.com/kubernetes-sigs/kubebuilder" target="_blank" rel="noopener">kubebuilder&lt;/a> SDK，用来完成这个Operator的编写。&lt;/p>
-&lt;p>对于k8s中的自定义controller不了解的可以看看这边文章：&lt;a href="//localhost:1313/blog/202005/custom-resources-and-controllers/" >如何在Kubernetes中创建一个自定义Controller?&lt;/a>。&lt;/p>
+&lt;p>对于k8s中的自定义controller不了解的可以看看这边文章：&lt;a href="/blog/202005/custom-resources-and-controllers/" >如何在Kubernetes中创建一个自定义Controller?&lt;/a>。&lt;/p>
 &lt;p>keda controller的主要流程，画了幅图：
-&lt;img src="//localhost:1313/img/20201111/keda-controller-analyze.png" alt="keda-controller 分析流程" loading="lazy" />&lt;/p>
+&lt;img src="/img/20201111/keda-controller-analyze.png" alt="keda-controller 分析流程" loading="lazy" />&lt;/p>
 &lt;p>组件启动入口在于&lt;code>main.go&lt;/code>文件中：&lt;/p>
 &lt;p>通过&lt;code>controller-runtime&lt;/code>组件启动两个自定义controller：&lt;code>ScaledObjectReconciler&lt;/code>,&lt;code>ScaledJobReconciler&lt;/code>:&lt;/p>
 &lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
@@ -1563,7 +1563,7 @@ title="Copy code"
 &lt;p>KEDA是如何做到将应用的副本数缩容0，依据是什么？&lt;/p>
 &lt;p>答： keda 内部有个loop，不断的check isActive状态，会主动的修改应用副本&lt;/p>
 &lt;/li>
-&lt;/ul></description></item><item><title>KEDA - 一个基于事件驱动的伸缩控制器</title><link>//localhost:1313/kubernetes-book/keda/</link><pubDate>Wed, 04 Nov 2020 15:40:59 +0800</pubDate><guid>//localhost:1313/kubernetes-book/keda/</guid><description>
+&lt;/ul></description></item><item><title>KEDA - 一个基于事件驱动的伸缩控制器</title><link>/kubernetes-book/keda/</link><pubDate>Wed, 04 Nov 2020 15:40:59 +0800</pubDate><guid>/kubernetes-book/keda/</guid><description>
 &lt;p>keda是一个基于事件驱动的伸缩控制器，可以实现应用缩容至0，以及从0开始扩容。目前已支持像CPU/Memroy、Mysql、Prometheus、Redis等20多种事件来源(Scaler)。&lt;/p>
 &lt;p>目前也是CNCF下的sandbox项目，最初主要由微软、redhat以及社区的人员参与贡献。&lt;/p>
 &lt;p>&lt;strong>网站&lt;/strong>：https://keda.sh/&lt;/p>
@@ -1823,7 +1823,7 @@ title="Copy code"
 &lt;li>RabbitMQ Queue&lt;/li>
 &lt;li>Redis Lists&lt;/li>
 &lt;li>Redis Streams&lt;/li>
-&lt;/ul></description></item><item><title>源码分析：KEDA是如何工作的?</title><link>//localhost:1313/kubernetes-book/keda/source.html</link><pubDate>Wed, 04 Nov 2020 15:40:59 +0800</pubDate><guid>//localhost:1313/kubernetes-book/keda/source.html</guid><description>
+&lt;/ul></description></item><item><title>源码分析：KEDA是如何工作的?</title><link>/kubernetes-book/keda/source.html</link><pubDate>Wed, 04 Nov 2020 15:40:59 +0800</pubDate><guid>/kubernetes-book/keda/source.html</guid><description>
 &lt;blockquote>
 &lt;p>文章中源码是基于KEDA 2.0( &lt;a href="https://github.com/kedacore/keda/commit/50bec808f8b4656922797e4bcb7c2b61fabd6d0e" target="_blank" rel="noopener">50bec80&lt;/a>)来进行分析&lt;/p>
 &lt;p>keda 2.0 要求k8s集群版本 &amp;gt;=1.16&lt;/p>
@@ -1883,7 +1883,7 @@ title="Copy code"
 &lt;/ul>
 &lt;h2>keda-operator&lt;span class="hx-absolute -hx-mt-20" id="keda-operator">&lt;/span>
 &lt;a href="#keda-operator" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>项目中用到了&lt;a href="https://github.com/kubernetes-sigs/kubebuilder" target="_blank" rel="noopener">kubebuilder&lt;/a> SDK，用来完成这个Operator的编写。&lt;/p>
-&lt;p>对于k8s中的自定义controller不了解的可以看看这边文章：&lt;a href="//localhost:1313/blog/202005/custom-resources-and-controllers/" >如何在Kubernetes中创建一个自定义Controller?&lt;/a>。&lt;/p>
+&lt;p>对于k8s中的自定义controller不了解的可以看看这边文章：&lt;a href="/blog/202005/custom-resources-and-controllers/" >如何在Kubernetes中创建一个自定义Controller?&lt;/a>。&lt;/p>
 &lt;p>keda controller的主要流程，画了幅图：
 &lt;img src="https://silenceper.oss-cn-beijing.aliyuncs.com/images/keda-controller-analyze.png" alt="keda-controller 分析流程" loading="lazy" />&lt;/p>
 &lt;p>组件启动入口在于&lt;code>main.go&lt;/code>文件中：&lt;/p>
@@ -2204,14 +2204,14 @@ title="Copy code"
 &lt;p>KEDA是如何做到将应用的副本数缩容0，依据是什么？&lt;/p>
 &lt;p>答： keda 内部有个loop，不断的check isActive状态，会主动的修改应用副本&lt;/p>
 &lt;/li>
-&lt;/ul></description></item><item><title>使用keda完成基于事件的弹性伸缩</title><link>//localhost:1313/blog/202009/how-to-use-keda/</link><pubDate>Mon, 14 Sep 2020 11:20:59 +0800</pubDate><guid>//localhost:1313/blog/202009/how-to-use-keda/</guid><description>
+&lt;/ul></description></item><item><title>使用keda完成基于事件的弹性伸缩</title><link>/blog/202009/how-to-use-keda/</link><pubDate>Mon, 14 Sep 2020 11:20:59 +0800</pubDate><guid>/blog/202009/how-to-use-keda/</guid><description>
 &lt;blockquote>
 &lt;p>文章中使用的是keda 1.5版本，2.0还未release
 1.5版本支持deployment，job两种资源。而在2.0增加了StatefulSet以及自定义资源&lt;/p>
 &lt;/blockquote>
 &lt;p>&lt;a href="https://keda.sh/" target="_blank" rel="noopener">keda&lt;/a> 是一个支持多种事件源来对应用进行弹性伸缩的控制器。
 我觉得keda可以认为是基于HPA的external metrics的一种扩展，因为它利用了hpa中external metrics的能力，允许直接配置多个事件源：
-&lt;img src="//localhost:1313/img/20200914/keda-scalers.png" alt="支持的事件源" loading="lazy" />&lt;/p>
+&lt;img src="/img/20200914/keda-scalers.png" alt="支持的事件源" loading="lazy" />&lt;/p>
 &lt;h1>安装keda&lt;/h1>&lt;p>从 &lt;a href="https://github.com/kedacore/keda/releases" target="_blank" rel="noopener">https://github.com/kedacore/keda/releases&lt;/a> 下载1.5版本的zip包，包含了yaml和crd:&lt;/p>
 &lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
 &lt;div>&lt;pre>&lt;code>├── 00-namespace.yaml
@@ -2349,7 +2349,7 @@ title="Copy code"
 &lt;ul>
 &lt;li>keda operator： 负责创建维护hpa对象资源，同时激活和停止hpa伸缩。在无事件的时候将副本数降低为0(如果未设置minReplicaCount的话)&lt;/li>
 &lt;li>metrics server: 实现了hpa中external metrics，根据事件源配置返回计算结果。
-&lt;img src="//localhost:1313/img/20200914/keda-arch.png" alt="keda架构图" loading="lazy" />&lt;/li>
+&lt;img src="/img/20200914/keda-arch.png" alt="keda架构图" loading="lazy" />&lt;/li>
 &lt;/ul>
 &lt;p>可以看得到HPA控制了副本1-&amp;gt;N和N-&amp;gt;1的变化。
 keda控制了副本0-&amp;gt;1和1-&amp;gt;0的变化（起到了激活和停止的作用，对于一些消费型的任务副本比较有用，比如在凌晨启动任务进行消费）&lt;/p>
@@ -2384,7 +2384,7 @@ title="Copy code"
 &lt;h1>总结&lt;/h1>&lt;p>之前用过k8s-prometheus-adapter项目来进行应用的自定义指标进行扩展，对比keda感觉keda操作更简单，配置更加动态化，因为抽象了hpa，用户直接操作&lt;code>ScaledObject&lt;/code>即可，不需要关注hpa如何进行配置。而且支持将副本数设置为0，同时又拥有类似cronhpa(定时伸缩)的功能，扩展能力比较强。&lt;/p>
 &lt;blockquote>
 &lt;p>阅读原文体验更加，文中链接支持跳转&lt;/p>
-&lt;/blockquote></description></item><item><title>将镜像tar包通过API直接push到registry仓库</title><link>//localhost:1313/blog/202007/docker-tar-push/</link><pubDate>Fri, 10 Jul 2020 14:20:59 +0800</pubDate><guid>//localhost:1313/blog/202007/docker-tar-push/</guid><description>
+&lt;/blockquote></description></item><item><title>将镜像tar包通过API直接push到registry仓库</title><link>/blog/202007/docker-tar-push/</link><pubDate>Fri, 10 Jul 2020 14:20:59 +0800</pubDate><guid>/blog/202007/docker-tar-push/</guid><description>
 &lt;p>为了实现docker tar包能够直接通过页面上传，调研了一下registry的api，以及如何解析tar包（其实就是docker daemon程序实现的部分）。&lt;/p>
 &lt;p>要想实现，首先要了解docker tar包中结构组成：&lt;/p>
 &lt;h2>tar包结构&lt;span class="hx-absolute -hx-mt-20" id="tar包结构">&lt;/span>
@@ -2581,7 +2581,7 @@ title="Copy code"
 &lt;li>&lt;a href="https://github.com/Razikus/dockerregistrypusher" target="_blank" rel="noopener">https://github.com/Razikus/dockerregistrypusher&lt;/a>&lt;/li>
 &lt;li>&lt;a href="https://docs.docker.com/registry/spec/auth/jwt/" target="_blank" rel="noopener">https://docs.docker.com/registry/spec/auth/jwt/&lt;/a>&lt;/li>
 &lt;li>&lt;a href="https://github.com/docker/distribution/" target="_blank" rel="noopener">https://github.com/docker/distribution/&lt;/a>&lt;/li>
-&lt;/ul></description></item><item><title>在x86_64机器上构建arm64镜像</title><link>//localhost:1313/blog/202006/build-arm-image-on-x86_84/</link><pubDate>Fri, 05 Jun 2020 14:20:59 +0800</pubDate><guid>//localhost:1313/blog/202006/build-arm-image-on-x86_84/</guid><description>
+&lt;/ul></description></item><item><title>在x86_64机器上构建arm64镜像</title><link>/blog/202006/build-arm-image-on-x86_84/</link><pubDate>Fri, 05 Jun 2020 14:20:59 +0800</pubDate><guid>/blog/202006/build-arm-image-on-x86_84/</guid><description>
 &lt;p>有几种办法可以打包出arm64的镜像&lt;/p>
 &lt;ul>
 &lt;li>直接在arm机器上执行编译和打包&lt;/li>
@@ -2682,7 +2682,7 @@ title="Copy code"
 &lt;li>&lt;a href="https://blog.fleeto.us/post/buildx-and-osx/" target="_blank" rel="noopener">https://blog.fleeto.us/post/buildx-and-osx/&lt;/a>&lt;/li>
 &lt;li>&lt;a href="https://juejin.im/post/5af86fb15188251b8015c102" target="_blank" rel="noopener">https://juejin.im/post/5af86fb15188251b8015c102&lt;/a>&lt;/li>
 &lt;li>&lt;a href="https://www.cnblogs.com/bamanzi/p/run-x86-linux-progs-with-qemu-user-on-arm.html" target="_blank" rel="noopener">https://www.cnblogs.com/bamanzi/p/run-x86-linux-progs-with-qemu-user-on-arm.html&lt;/a>&lt;/li>
-&lt;/ul></description></item><item><title>如何在Kubernetes中创建一个自定义Controller?</title><link>//localhost:1313/blog/202005/custom-resources-and-controllers/</link><pubDate>Mon, 18 May 2020 18:20:59 +0800</pubDate><guid>//localhost:1313/blog/202005/custom-resources-and-controllers/</guid><description>
+&lt;/ul></description></item><item><title>如何在Kubernetes中创建一个自定义Controller?</title><link>/blog/202005/custom-resources-and-controllers/</link><pubDate>Mon, 18 May 2020 18:20:59 +0800</pubDate><guid>/blog/202005/custom-resources-and-controllers/</guid><description>
 &lt;h2>目的&lt;span class="hx-absolute -hx-mt-20" id="目的">&lt;/span>
 &lt;a href="#%e7%9b%ae%e7%9a%84" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>Custom Resource是扩展Kubernetes的一种方式（另外一种就是通过聚合层API apiserver-aggregation），而controller对指定的resource进行监听和执行对应的动作(watch,diff,action)。&lt;br />
 &lt;br />&lt;strong>Operator与Controller区别&lt;/strong>&lt;/p>
@@ -3107,7 +3107,7 @@ title="Copy code"
 &lt;li>&lt;a href="https://juejin.im/post/5de097bbf265da05d849ab53" target="_blank" rel="noopener">https://juejin.im/post/5de097bbf265da05d849ab53&lt;/a>&lt;/li>
 &lt;li>&lt;a href="https://blog.fatedier.com/2019/04/02/k8s-custom-controller/" target="_blank" rel="noopener">https://blog.fatedier.com/2019/04/02/k8s-custom-controller/&lt;/a>&lt;/li>
 &lt;li>&lt;a href="https://blog.gmem.cc/crd" target="_blank" rel="noopener">https://blog.gmem.cc/crd&lt;/a>&lt;/li>
-&lt;/ul></description></item><item><title>用vim保存文件和echo命令到底有什么不同？</title><link>//localhost:1313/blog/202005/difference-vim-and-echo/</link><pubDate>Wed, 13 May 2020 20:20:59 +0800</pubDate><guid>//localhost:1313/blog/202005/difference-vim-and-echo/</guid><description>
+&lt;/ul></description></item><item><title>用vim保存文件和echo命令到底有什么不同？</title><link>/blog/202005/difference-vim-and-echo/</link><pubDate>Wed, 13 May 2020 20:20:59 +0800</pubDate><guid>/blog/202005/difference-vim-and-echo/</guid><description>
 &lt;h2>现象&lt;span class="hx-absolute -hx-mt-20" id="现象">&lt;/span>
 &lt;a href="#%e7%8e%b0%e8%b1%a1" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>最近在调试一个filebeat程序时需要制造一些log，我是直接使用vim直接对文件打开然后直接保存的。&lt;/p>
 &lt;p>但是有个&lt;strong>奇怪的现象&lt;/strong>：每次写入一行新的日志，filebeat都会将整个文件的内容又重新进行上报一遍导致日志上传重复，同时观察到filebeat的文件采集状态文件&lt;code>registry&lt;/code>都会进行增加一个重复的文件(source相同，inode不同)。&lt;/p>
@@ -3343,7 +3343,7 @@ title="Copy code"
 &lt;li>产生后缀带 ~ 的备份文件，这个是在对文件进行保存时产生，如果文件被正常保存则该文件会被立即删除，正常情况下是看不到这个文件&lt;/li>
 &lt;li>如果文件other有write权限（&lt;code>chmod o+w xxx&lt;/code>），则当进行vi写入内容的时候文件inode不会改变。&lt;/li>
 &lt;li>如果关闭vim备份，则inode信息也不会改变&lt;/li>
-&lt;/ul></description></item><item><title>postgres入门</title><link>//localhost:1313/blog/202005/getting-started-with-postgres/</link><pubDate>Mon, 04 May 2020 23:20:59 +0800</pubDate><guid>//localhost:1313/blog/202005/getting-started-with-postgres/</guid><description>
+&lt;/ul></description></item><item><title>postgres入门</title><link>/blog/202005/getting-started-with-postgres/</link><pubDate>Mon, 04 May 2020 23:20:59 +0800</pubDate><guid>/blog/202005/getting-started-with-postgres/</guid><description>
 &lt;p>最近需要将mysql数据库切换到pg数据库（公司要求新上的应用DB首选postgres），所以对pg进行基本学习了下，总体感觉相差不大，在一些细节以及需要上可能需要注意。&lt;/p>
 &lt;h2>安装&lt;span class="hx-absolute -hx-mt-20" id="安装">&lt;/span>
 &lt;a href="#%e5%ae%89%e8%a3%85" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>我这里是以docker的方式来进行安装的。&lt;/p>
@@ -3501,7 +3501,7 @@ title="Copy code"
 &lt;p>如果是业务系统是比较清晰的，已经被拆分的够简单，我基本上都会使用orm工具。&lt;/p>
 &lt;blockquote>
 &lt;p>参考文档：https://www.ruanyifeng.com/blog/2013/12/getting_started_with_postgresql.html&lt;/p>
-&lt;/blockquote></description></item><item><title>记一次问题排查：为什么在POD无法通过Service访问自己？</title><link>//localhost:1313/blog/202004/bridge-hairpin-mod/</link><pubDate>Thu, 30 Apr 2020 11:26:59 +0800</pubDate><guid>//localhost:1313/blog/202004/bridge-hairpin-mod/</guid><description>
+&lt;/blockquote></description></item><item><title>记一次问题排查：为什么在POD无法通过Service访问自己？</title><link>/blog/202004/bridge-hairpin-mod/</link><pubDate>Thu, 30 Apr 2020 11:26:59 +0800</pubDate><guid>/blog/202004/bridge-hairpin-mod/</guid><description>
 &lt;h2>问题现象&lt;span class="hx-absolute -hx-mt-20" id="问题现象">&lt;/span>
 &lt;a href="#%e9%97%ae%e9%a2%98%e7%8e%b0%e8%b1%a1" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>创建一个nginx pod，并配置了service访问，service后端指向pod。&lt;/p>
 &lt;p>进入pod中使用service ip 或者service 域名，无法访问。&lt;/p>
@@ -3574,7 +3574,7 @@ title="Copy code"
 &lt;code>ifconfig docker0 promisc on/off&lt;/code>&lt;/p>
 &lt;h2>总结&lt;span class="hx-absolute -hx-mt-20" id="总结">&lt;/span>
 &lt;a href="#%e6%80%bb%e7%bb%93" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>其实我们集群通过这种比较另类的方式来分配POD IP也用了了很久了，之所以没出问题，应该是业务基本没遇到这种pod内通过service访问自己的情况。&lt;/p>
-&lt;p>所以还是要跟着标准的k8s方式来安装cni，避免入坑，比如flannel就已经提供给了&lt;code>hairpinMode &lt;/code>参数来进行配置开启。&lt;/p></description></item><item><title>singleflight包原理解析</title><link>//localhost:1313/blog/202003/singleflight/</link><pubDate>Sun, 08 Mar 2020 19:26:59 +0800</pubDate><guid>//localhost:1313/blog/202003/singleflight/</guid><description>
+&lt;p>所以还是要跟着标准的k8s方式来安装cni，避免入坑，比如flannel就已经提供给了&lt;code>hairpinMode &lt;/code>参数来进行配置开启。&lt;/p></description></item><item><title>singleflight包原理解析</title><link>/blog/202003/singleflight/</link><pubDate>Sun, 08 Mar 2020 19:26:59 +0800</pubDate><guid>/blog/202003/singleflight/</guid><description>
 &lt;p>&lt;code>singleflight&lt;/code> 包主要是用来做并发控制，常见的比如防止 &lt;code>缓存击穿&lt;/code> ，我们来模拟一下这种场景：&lt;/p>
 &lt;blockquote>
 &lt;p>缓存击穿：缓存在某个时间点过期的时候，恰好在这个时间点对这个Key有大量的并发请求过来，这些请求发现缓存过期一般都会从后端DB加载数据并回设到缓存，这个时候大并发的请求可能会瞬间把后端DB压垮。 &lt;/p>
@@ -3849,9 +3849,9 @@ title="Copy code"
 &lt;/ol>
 &lt;p>其他的DoChan方法也是类似的逻辑，只是返回的是一个chan。&lt;/p>
 &lt;p>&lt;strong>文中用到的实例代码放在github上：&lt;/strong>
-&lt;a href="https://github.com/go-demo/singleflight-demo" target="_blank" rel="noopener">https://github.com/go-demo/singleflight-demo&lt;/a>&lt;/p></description></item><item><title>分析kubernetes中的事件机制</title><link>//localhost:1313/blog/202003/kubernetes-event/</link><pubDate>Tue, 03 Mar 2020 12:40:59 +0800</pubDate><guid>//localhost:1313/blog/202003/kubernetes-event/</guid><description>
+&lt;a href="https://github.com/go-demo/singleflight-demo" target="_blank" rel="noopener">https://github.com/go-demo/singleflight-demo&lt;/a>&lt;/p></description></item><item><title>分析kubernetes中的事件机制</title><link>/blog/202003/kubernetes-event/</link><pubDate>Tue, 03 Mar 2020 12:40:59 +0800</pubDate><guid>/blog/202003/kubernetes-event/</guid><description>
 &lt;p>我们通过 &lt;code>kubectl describe [资源]&lt;/code> 命令，可以在看到Event输出，并且经常依赖event进行问题定位，从event中可以分析整个POD的运行轨迹，为服务的客观测性提供数据来源，由此可见，event在Kubernetes中起着举足轻重的作用。&lt;/p>
-&lt;p>&lt;img src="//localhost:1313/img/20200303/event.png" alt="event展示" loading="lazy" />&lt;/p>
+&lt;p>&lt;img src="/img/20200303/event.png" alt="event展示" loading="lazy" />&lt;/p>
 &lt;p>event并不只是kubelet中都有的，关于event的操作被封装在&lt;a href="https://github.com/kubernetes/kubernetes/tree/v1.17.3/staging/src/k8s.io/client-go/tools/record" target="_blank" rel="noopener">client-go/tools/record&lt;/a>包，我们完全可以在写入自定义的event。&lt;/p>
 &lt;p>现在让我们来一步步揭开event的面纱。
 &lt;a name="EBJdC">&lt;/a>&lt;/p>
@@ -3915,7 +3915,7 @@ title="Copy code"
 &lt;p>2、文中代码以Kubernetes 1.17.3为例进行分析&lt;/p>
 &lt;/blockquote>
 &lt;p>先以一幅图来看下整个的处理流程
-&lt;img src="//localhost:1313/img/20200303/kubernetes-event.png" alt="event处理过程" loading="lazy" />&lt;/p>
+&lt;img src="/img/20200303/kubernetes-event.png" alt="event处理过程" loading="lazy" />&lt;/p>
 &lt;p>创建操作事件的客户端：&lt;br />&lt;a href="https://github.com/kubernetes/kubernetes/blob/v1.17.3/cmd/kubelet/app/server.go#L461" target="_blank" rel="noopener">kubelet/app/server.go#L461&lt;/a>&lt;/p>
 &lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
 &lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// makeEventRecorder sets up kubeDeps.Recorder if it&amp;#39;s nil. It&amp;#39;s a no-op otherwise.&lt;/span>
@@ -4288,7 +4288,7 @@ title="Copy code"
 &lt;p>&lt;strong>参考文档：&lt;/strong>&lt;/p>
 &lt;ul>
 &lt;li>&lt;a href="https://cizixs.com/2017/06/22/kubelet-source-code-analysis-part4-event/" target="_blank" rel="noopener">https://cizixs.com/2017/06/22/kubelet-source-code-analysis-part4-event/&lt;/a>&lt;/li>
-&lt;/ul></description></item><item><title>利用Kubernetes中的leaderelection实现组件高可用</title><link>//localhost:1313/blog/202002/kubernetes-leaderelection/</link><pubDate>Sat, 15 Feb 2020 00:00:00 +0000</pubDate><guid>//localhost:1313/blog/202002/kubernetes-leaderelection/</guid><description>
+&lt;/ul></description></item><item><title>利用Kubernetes中的leaderelection实现组件高可用</title><link>/blog/202002/kubernetes-leaderelection/</link><pubDate>Sat, 15 Feb 2020 00:00:00 +0000</pubDate><guid>/blog/202002/kubernetes-leaderelection/</guid><description>
 &lt;p>在Kubernetes中，通常kube-schduler和kube-controller-manager都是多副本进行部署的来保证高可用，而真正在工作的实例其实只有一个。这里就利用到 &lt;code>leaderelection&lt;/code> 的选主机制，保证leader是处于工作状态，并且在leader挂掉之后，从其他节点选取新的leader保证组件正常工作。&lt;/p>
 &lt;p>不单单只是k8s中的这两个组件用到，在其他服务中也可以看到这个包的使用，比如&lt;a href="https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/" target="_blank" rel="noopener">cluster-autoscaler&lt;/a>等都能看得到这个包的，今天就来看看这个包的使用以及它内部是如何实现的。&lt;/p>
 &lt;h2>使用&lt;span class="hx-absolute -hx-mt-20" id="使用">&lt;/span>
@@ -4769,7 +4769,7 @@ title="Copy code"
 &lt;p>在 &lt;code>le.config.Lock.Get()&lt;/code> 中会获取到锁的对象，其中有一个 &lt;code>resourceVersion&lt;/code> 字段用于标识一个资源对象的内部版本，每次更新操作都会更新其值。如果一个更新操作附加上了 &lt;code>resourceVersion&lt;/code> 字段，那么 apiserver 就会通过验证当前 &lt;code>resourceVersion&lt;/code> 的值与指定的值是否相匹配来确保在此次更新操作周期内没有其他的更新操作，从而保证了更新操作的原子性。&lt;/p>
 &lt;h2>总结&lt;span class="hx-absolute -hx-mt-20" id="总结">&lt;/span>
 &lt;a href="#%e6%80%bb%e7%bb%93" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>leaderelection 主要是利用了k8s API操作的原子性实现了一个分布式锁，在不断的竞争中进行选举。选中为leader的进行才会执行具体的业务代码，这在k8s中非常的常见，而且我们很方便的利用这个包完成组件的编写，从而实现组件的高可用，比如部署为一个多副本的Deployment，当leader的pod退出后会重新启动，可能锁就被其他pod获取继续执行。&lt;/p>
-&lt;p>完整代码：&lt;a href="https://github.com/go-demo/leaderelection" target="_blank" rel="noopener">https://github.com/go-demo/leaderelection&lt;/a>&lt;/p></description></item><item><title>如何在Go项目中输出版本信息？</title><link>//localhost:1313/blog/202001/go-import-version/</link><pubDate>Fri, 10 Jan 2020 00:00:00 +0000</pubDate><guid>//localhost:1313/blog/202001/go-import-version/</guid><description>
+&lt;p>完整代码：&lt;a href="https://github.com/go-demo/leaderelection" target="_blank" rel="noopener">https://github.com/go-demo/leaderelection&lt;/a>&lt;/p></description></item><item><title>如何在Go项目中输出版本信息？</title><link>/blog/202001/go-import-version/</link><pubDate>Fri, 10 Jan 2020 00:00:00 +0000</pubDate><guid>/blog/202001/go-import-version/</guid><description>
 &lt;p>我们经常在使用CLI工具的时候，都会有这样的参数输出：&lt;/p>
 &lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
 &lt;div>&lt;pre>&lt;code>➜ ~ docker version
@@ -4939,7 +4939,7 @@ title="Copy code"
 &lt;/button>
 &lt;/div>
 &lt;/div>
-&lt;p>完整代码：&lt;a href="https://github.com/go-demo/version" target="_blank" rel="noopener">https://github.com/go-demo/version&lt;/a>&lt;/p></description></item><item><title>Kubernetes容器日志收集方案</title><link>//localhost:1313/blog/201910/kubernetes-log/</link><pubDate>Tue, 22 Oct 2019 00:00:00 +0000</pubDate><guid>//localhost:1313/blog/201910/kubernetes-log/</guid><description>
+&lt;p>完整代码：&lt;a href="https://github.com/go-demo/version" target="_blank" rel="noopener">https://github.com/go-demo/version&lt;/a>&lt;/p></description></item><item><title>Kubernetes容器日志收集方案</title><link>/blog/201910/kubernetes-log/</link><pubDate>Tue, 22 Oct 2019 00:00:00 +0000</pubDate><guid>/blog/201910/kubernetes-log/</guid><description>
 &lt;p>收集POD中container日志，日志还分为两种一种是容器标准输出日志和容器内日志。&lt;/p>
 &lt;h1>方案&lt;/h1>&lt;p>从日志的采集方式上，在我看来方案大致主要分为两种：&lt;/p>
 &lt;p>&lt;strong>（1）POD 里面安装logging agent&lt;/strong>&lt;/p>
@@ -5025,7 +5025,7 @@ title="Copy code"
 &lt;p>3、资源限制&lt;/p>
 &lt;blockquote>
 &lt;p>在k8s中通过制定limit，限制log-pilot的资源占用（主要还是日志采集器）&lt;/p>
-&lt;/blockquote></description></item><item><title>Cluster Autoscaler:集群自动扩缩容</title><link>//localhost:1313/blog/201907/cluster-autoscaler-usage/</link><pubDate>Tue, 02 Jul 2019 00:00:00 +0000</pubDate><guid>//localhost:1313/blog/201907/cluster-autoscaler-usage/</guid><description>
+&lt;/blockquote></description></item><item><title>Cluster Autoscaler:集群自动扩缩容</title><link>/blog/201907/cluster-autoscaler-usage/</link><pubDate>Tue, 02 Jul 2019 00:00:00 +0000</pubDate><guid>/blog/201907/cluster-autoscaler-usage/</guid><description>
 &lt;p>Cluster AutoScaler 是一个自动扩展和收缩 Kubernetes 集群 Node 的扩展。当集群容量不足时，它会自动去 Cloud Provider （支持 GCE、GKE 和 AWS）创建新的 Node，而在 Node 长时间资源利用率很低时自动将其删除以节省开支。&lt;/p>
 &lt;p>在Kubernetes中关于弹性伸缩主要有三种格式：&lt;/p>
 &lt;ul>
@@ -5246,7 +5246,7 @@ title="Copy code"
 &lt;/div>
 &lt;/div>
 &lt;p>其中&lt;code>IncreaseSize&lt;/code>，&lt;code>IncreaseSize&lt;/code>才是关键的方法，分别对用扩容伸缩组和增加节点。&lt;/p>
-&lt;p>在调用&lt;code>IncreaseSize&lt;/code>接口后，需要完成节点自动添加进集群。参考阿里云是通过配置shell脚本到伸缩组中的ECS启动脚本中，当ECS启动，自动执行该脚本。当然我们也可以自定义通过其他方式加入集群。&lt;/p></description></item><item><title>k8s网络组件：calico</title><link>//localhost:1313/blog/201810/calico-in-k8s/</link><pubDate>Fri, 12 Oct 2018 00:00:00 +0000</pubDate><guid>//localhost:1313/blog/201810/calico-in-k8s/</guid><description>
+&lt;p>在调用&lt;code>IncreaseSize&lt;/code>接口后，需要完成节点自动添加进集群。参考阿里云是通过配置shell脚本到伸缩组中的ECS启动脚本中，当ECS启动，自动执行该脚本。当然我们也可以自定义通过其他方式加入集群。&lt;/p></description></item><item><title>k8s网络组件：calico</title><link>/blog/201810/calico-in-k8s/</link><pubDate>Fri, 12 Oct 2018 00:00:00 +0000</pubDate><guid>/blog/201810/calico-in-k8s/</guid><description>
 &lt;p>前提已经安装好k8s集群&lt;/p>
 &lt;h1>安装&lt;/h1>&lt;p>calico 安装其实很简单，已经集成在两个yaml文件中&lt;/p>
 &lt;p>calico 版本: v3.2.3&lt;/p>
@@ -5371,7 +5371,7 @@ title="Copy code"
 &lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
 &lt;/button>
 &lt;/div>
-&lt;/div></description></item><item><title>k8s网络组件：flannel</title><link>//localhost:1313/blog/201809/flannel-in-k8s/</link><pubDate>Wed, 26 Sep 2018 00:00:00 +0000</pubDate><guid>//localhost:1313/blog/201809/flannel-in-k8s/</guid><description>
+&lt;/div></description></item><item><title>k8s网络组件：flannel</title><link>/blog/201809/flannel-in-k8s/</link><pubDate>Wed, 26 Sep 2018 00:00:00 +0000</pubDate><guid>/blog/201809/flannel-in-k8s/</guid><description>
 &lt;p>Flannel是一个专门为k8s定制的网络解决方案，主要解决POD跨主机通信问题，这里主要讲述Flannel是如何实现的。&lt;/p>
 &lt;h1>安装&lt;/h1>&lt;p>集成在k8s上有两种方式，一种是利用etcd存储整个集群的网络配置，另外一种是利用kubernetes的api 获取网络配置信息，分别如下：&lt;/p>
 &lt;h2>ETCD 方式&lt;span class="hx-absolute -hx-mt-20" id="etcd-方式">&lt;/span>
@@ -5439,7 +5439,7 @@ title="Copy code"
 &lt;/ul>
 &lt;p>更多插件参考文档：&lt;a href="https://github.com/coreos/flannel/blob/master/Documentation/backends.md" target="_blank" rel="noopener">https://github.com/coreos/flannel/blob/master/Documentation/backends.md&lt;/a>&lt;/p>
 &lt;p>&lt;strong>如何选择？&lt;/strong>&lt;/p>
-&lt;p>&lt;code>vxlan&lt;/code>在功能上，和性能上基本满足我们的要求，可以直接跨网段间通信，同时性能上又比udp的方式高效&lt;/p></description></item><item><title>k8s源码阅读(一)：源码结构</title><link>//localhost:1313/blog/201809/k8s-source-code-structure/</link><pubDate>Wed, 12 Sep 2018 11:45:59 +0800</pubDate><guid>//localhost:1313/blog/201809/k8s-source-code-structure/</guid><description>
+&lt;p>&lt;code>vxlan&lt;/code>在功能上，和性能上基本满足我们的要求，可以直接跨网段间通信，同时性能上又比udp的方式高效&lt;/p></description></item><item><title>k8s源码阅读(一)：源码结构</title><link>/blog/201809/k8s-source-code-structure/</link><pubDate>Wed, 12 Sep 2018 11:45:59 +0800</pubDate><guid>/blog/201809/k8s-source-code-structure/</guid><description>
 &lt;h1>环境&lt;/h1>&lt;ul>
 &lt;li>k8s代码版本：&lt;a href="https://github.com/silenceper/kubernetes" target="_blank" rel="noopener">release-1.9&lt;/a>&lt;/li>
 &lt;li>工具：vscode, dlv&lt;/li>
@@ -5525,7 +5525,7 @@ title="Copy code"
 &lt;blockquote>
 &lt;p>因为os的原因，执行流程可能与目标平台的执行结果可能不一致，不过可以手动改代码达到预期结果，或者直接在Linux下调试&lt;/p>
 &lt;/blockquote>
-&lt;p>&lt;img src="https://ws1.sinaimg.cn/large/65209136gy1fv6z2jx1ajj21g20sc7b3.jpg" alt="11" loading="lazy" />&lt;/p></description></item><item><title>docker pull 翻墙下载镜像</title><link>//localhost:1313/blog/201809/over-the-wall-pull-docker-mirror/</link><pubDate>Sun, 09 Sep 2018 11:45:59 +0800</pubDate><guid>//localhost:1313/blog/201809/over-the-wall-pull-docker-mirror/</guid><description>
+&lt;p>&lt;img src="https://ws1.sinaimg.cn/large/65209136gy1fv6z2jx1ajj21g20sc7b3.jpg" alt="11" loading="lazy" />&lt;/p></description></item><item><title>docker pull 翻墙下载镜像</title><link>/blog/201809/over-the-wall-pull-docker-mirror/</link><pubDate>Sun, 09 Sep 2018 11:45:59 +0800</pubDate><guid>/blog/201809/over-the-wall-pull-docker-mirror/</guid><description>
 &lt;p>我们一般通过设置&lt;code>http_proxy&lt;/code>环境变量，使得http请求，可以走我们设置的proxy，（一些go get镜像无法下载可以这么用），但是对于&lt;code>docker pull&lt;/code>命令是不生效的，因为systemd引导启动的service默认不会读取这些变量，所以我们可以通过在service文件中加入环境变量解决：&lt;/p>
 &lt;h1>设置变量 http_proxy&lt;/h1>&lt;p>主要是通过在docker启动的时候指定&lt;code>HTTP_PROXY &lt;/code>，&lt;code>HTTPS_PROXY&lt;/code>。&lt;/p>
 &lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
@@ -5567,7 +5567,7 @@ title="Copy code"
 &lt;p>&lt;strong>TIPS: &lt;code>polipo&lt;/code> 可以将&lt;code>socks5&lt;/code>协议转换成&lt;code>http&lt;/code>代理。&lt;/strong>&lt;/p>
 &lt;h1>参考资料&lt;/h1>&lt;blockquote>
 &lt;p>&lt;a href="https://docs.docker.com/config/daemon/systemd/#httphttps-proxy" target="_blank" rel="noopener">https://docs.docker.com/config/daemon/systemd/#httphttps-proxy&lt;/a>&lt;/p>
-&lt;/blockquote></description></item><item><title>在CentOS上搭建Kubernetes集群</title><link>//localhost:1313/blog/201809/how-to-build-a-k8s-cluster/</link><pubDate>Fri, 07 Sep 2018 11:45:59 +0800</pubDate><guid>//localhost:1313/blog/201809/how-to-build-a-k8s-cluster/</guid><description>
+&lt;/blockquote></description></item><item><title>在CentOS上搭建Kubernetes集群</title><link>/blog/201809/how-to-build-a-k8s-cluster/</link><pubDate>Fri, 07 Sep 2018 11:45:59 +0800</pubDate><guid>/blog/201809/how-to-build-a-k8s-cluster/</guid><description>
 &lt;p>以下是我自己在部署k8s集群上做的一些记录，部署了一个master，一个node节点。&lt;/p>
 &lt;h1>环境准备&lt;/h1>&lt;p>我在VirtualBox中建的两个CentOS容器，并且互通：&lt;/p>
 &lt;table>
@@ -6756,7 +6756,7 @@ title="Copy code"
 &lt;blockquote>
 &lt;p>参考资料：&lt;/p>
 &lt;p>&lt;a href="https://jimmysong.io/kubernetes-handbook/practice/install-kubernetes-on-centos.html" target="_blank" rel="noopener">https://jimmysong.io/kubernetes-handbook/practice/install-kubernetes-on-centos.html&lt;/a>&lt;/p>
-&lt;/blockquote></description></item><item><title>聊聊连接池</title><link>//localhost:1313/blog/201611/tcp_connection_pool/</link><pubDate>Sun, 20 Nov 2016 02:40:59 +0800</pubDate><guid>//localhost:1313/blog/201611/tcp_connection_pool/</guid><description>
+&lt;/blockquote></description></item><item><title>聊聊连接池</title><link>/blog/201611/tcp_connection_pool/</link><pubDate>Sun, 20 Nov 2016 02:40:59 +0800</pubDate><guid>/blog/201611/tcp_connection_pool/</guid><description>
 &lt;p>以下主要使用Golang作为编程语言&lt;/p>
 &lt;h1>为什么需要连接池&lt;/h1>&lt;p>我觉得使用连接池最大的一个好处就是&lt;strong>减少连接的创建和关闭，增加系统负载能力&lt;/strong>，
 之前就有遇到一个问题：&lt;a href="http://silenceper.com/blog/201601/tcp-time_wait%E8%BF%9E%E6%8E%A5%E6%95%B0%E8%BF%87%E5%A4%9A%E5%AF%BC%E8%87%B4%E6%9C%8D%E5%8A%A1%E4%B8%8D%E5%8F%AF%E7%94%A8/" target="_blank" rel="noopener">TCP TIME_WAIT连接数过多导致服务不可用&lt;/a>，因为未开启数据库连接池，再加上mysql并发较大，导致需要频繁的创建链接，最终产生了上万的TIME_WAIT的tcp链接，影响了系统性能。&lt;/p>
@@ -7001,7 +7001,7 @@ title="Copy code"
 &lt;/div>
 &lt;/div>
 &lt;hr>
-&lt;p>写完，听见外面的🐓开始打鸣了。&lt;/p></description></item><item><title>开源项目：wechat sdk</title><link>//localhost:1313/blog/201609/go-wechat-sdk/</link><pubDate>Fri, 16 Sep 2016 15:40:59 +0800</pubDate><guid>//localhost:1313/blog/201609/go-wechat-sdk/</guid><description>
+&lt;p>写完，听见外面的🐓开始打鸣了。&lt;/p></description></item><item><title>开源项目：wechat sdk</title><link>/blog/201609/go-wechat-sdk/</link><pubDate>Fri, 16 Sep 2016 15:40:59 +0800</pubDate><guid>/blog/201609/go-wechat-sdk/</guid><description>
 &lt;p>一直很想自己用golang写个微信的sdk，目标是简单好用，所以利用闲暇时间（周末，中秋😁），就做出来。&lt;/p>
 &lt;p>项目地址:&lt;a href="https://github.com/silenceper/wechat" target="_blank" rel="noopener">https://github.com/silenceper/wechat&lt;/a>&lt;/p>
 &lt;p>目前实现了消息管理，微信网页授权，菜单管理，素材管理几个接口，看下他的基本使用：&lt;/p>
@@ -7037,7 +7037,7 @@ title="Copy code"
 &lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
 &lt;/button>
 &lt;/div>
-&lt;/div></description></item><item><title>dcmp</title><link>//localhost:1313/blog/201608/dcmp/</link><pubDate>Tue, 02 Aug 2016 15:40:59 +0800</pubDate><guid>//localhost:1313/blog/201608/dcmp/</guid><description>
+&lt;/div></description></item><item><title>dcmp</title><link>/blog/201608/dcmp/</link><pubDate>Tue, 02 Aug 2016 15:40:59 +0800</pubDate><guid>/blog/201608/dcmp/</guid><description>
 &lt;p>Distributed Configuration Management Platform&lt;/p>
 &lt;p>提供了一个etcd的管理界面，可通过界面修改配置信息，借助confd可实现配置文件的同步。&lt;/p>
 &lt;p>&lt;img src="https://raw.githubusercontent.com/silenceper/dcmp/master/docs/image.png" alt="dcmp image" loading="lazy" />&lt;/p>
@@ -7046,7 +7046,7 @@ title="Copy code"
 &lt;p>API采用的是Gin Framework，写起api应用来非常方便，前端尝试了一下react。&lt;/p>
 &lt;blockquote>
 &lt;p>传到Github一看，发现css，js的代码比golang还要多 。 😢&lt;/p>
-&lt;/blockquote></description></item><item><title>Golang中http包默认路由匹配规则阅读笔记</title><link>//localhost:1313/blog/201605/go-http-process/</link><pubDate>Sat, 28 May 2016 18:00:59 +0800</pubDate><guid>//localhost:1313/blog/201605/go-http-process/</guid><description>
+&lt;/blockquote></description></item><item><title>Golang中http包默认路由匹配规则阅读笔记</title><link>/blog/201605/go-http-process/</link><pubDate>Sat, 28 May 2016 18:00:59 +0800</pubDate><guid>/blog/201605/go-http-process/</guid><description>
 &lt;h1>一、执行流程&lt;/h1>&lt;p>构建一个简单http server：&lt;/p>
 &lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
 &lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="line">&lt;span class="cl">&lt;span class="kn">package&lt;/span> &lt;span class="nx">main&lt;/span>
@@ -7300,7 +7300,7 @@ title="Copy code"
 &lt;p>&lt;code>f(w,r)&lt;/code>就实现了handler的执行。&lt;/p>
 &lt;blockquote>
 &lt;p>脑子里面清楚，但真到表述的时候，呵呵，当做笔记啦。。。&lt;/p>
-&lt;/blockquote></description></item><item><title>tcp time_wait问题</title><link>//localhost:1313/blog/201601/tcp_time_wait_error/</link><pubDate>Sun, 03 Jan 2016 15:40:59 +0800</pubDate><guid>//localhost:1313/blog/201601/tcp_time_wait_error/</guid><description>
+&lt;/blockquote></description></item><item><title>tcp time_wait问题</title><link>/blog/201601/tcp_time_wait_error/</link><pubDate>Sun, 03 Jan 2016 15:40:59 +0800</pubDate><guid>/blog/201601/tcp_time_wait_error/</guid><description>
 &lt;h1>问题出现：&lt;/h1>&lt;p>在元旦前夕，自己维护的一个服务突然在高峰时期收到大量报警，赶紧登上服务器看一下：&lt;/p>
 &lt;p>最开始的反应是memcache tcp read time out ,因为之前也出现过类似的警告所以开始尝试切换memcache，但是运维反馈已经切换了好几台还是不起作用。&lt;/p>
 &lt;p>又看到有mysql 连接不上报错，怀疑机房内网有问题，然后有开始切换机房加机器，当时问题还是没有得到解决，这下真晕了。。。。 完全排查不出什么问题（因为是高峰时期，tcp连接数自然很高，没有在意是这个问题，自己预估不够）&lt;/p>
