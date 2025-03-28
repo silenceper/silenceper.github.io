@@ -1,5 +1,5 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – 小程序</title><link>/wechat/miniprogram/</link><description>Recent content in 小程序 on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en</language><atom:link href="/wechat/miniprogram/index.xml" rel="self" type="application/rss+xml"/><item><title>微信登录</title><link>/wechat/miniprogram/auth.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/wechat/miniprogram/auth.html</guid><description>
-&lt;h1>微信登录&lt;/h1>&lt;h2>获取操作实例&lt;span class="hx-absolute -hx-mt-20" id="获取操作实例">&lt;/span>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – 小程序 - 微信SDK开发文档</title><link>/wechat/miniprogram/</link><description>Recent content in 小程序 - 微信SDK开发文档 on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en</language><atom:link href="/wechat/miniprogram/index.xml" rel="self" type="application/rss+xml"/><item><title>微信登录 - 微信SDK开发文档</title><link>/wechat/miniprogram/auth.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/wechat/miniprogram/auth.html</guid><description>
+&lt;h2>获取操作实例&lt;span class="hx-absolute -hx-mt-20" id="获取操作实例">&lt;/span>
 &lt;a href="#%e8%8e%b7%e5%8f%96%e6%93%8d%e4%bd%9c%e5%ae%9e%e4%be%8b" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
 &lt;div>&lt;pre>&lt;code>mini := wc.GetMiniProgram(cfg)
 a:=mini.GetAuth()&lt;/code>&lt;/pre>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
@@ -23,8 +23,8 @@ title="Copy code"
 &lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
 &lt;/button>
 &lt;/div>
-&lt;/div></description></item><item><title>消息解密</title><link>/wechat/miniprogram/decrypt.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/wechat/miniprogram/decrypt.html</guid><description>
-&lt;h1>消息解密&lt;/h1>&lt;h2>获取操作实例&lt;span class="hx-absolute -hx-mt-20" id="获取操作实例">&lt;/span>
+&lt;/div></description></item><item><title>消息解密 - 微信SDK开发文档</title><link>/wechat/miniprogram/decrypt.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/wechat/miniprogram/decrypt.html</guid><description>
+&lt;h2>获取操作实例&lt;span class="hx-absolute -hx-mt-20" id="获取操作实例">&lt;/span>
 &lt;a href="#%e8%8e%b7%e5%8f%96%e6%93%8d%e4%bd%9c%e5%ae%9e%e4%be%8b" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
 &lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="line">&lt;span class="cl">&lt;span class="nx">mini&lt;/span> &lt;span class="o">:=&lt;/span> &lt;span class="nx">wc&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">GetMiniProgram&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">cfg&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">a&lt;/span>&lt;span class="o">:=&lt;/span>&lt;span class="nx">mini&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">GetEncryptor&lt;/span>&lt;span class="p">()&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
@@ -78,8 +78,8 @@ title="Copy code"
 &lt;/button>
 &lt;/div>
 &lt;/div>
-&lt;p>根据需要取用户信息还是手机号信息&lt;/p></description></item><item><title>小程序码</title><link>/wechat/miniprogram/qrcode.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/wechat/miniprogram/qrcode.html</guid><description>
-&lt;h1>小程序码&lt;/h1>&lt;h2>获取操作实例&lt;span class="hx-absolute -hx-mt-20" id="获取操作实例">&lt;/span>
+&lt;p>根据需要取用户信息还是手机号信息&lt;/p></description></item><item><title>小程序码 - 微信SDK开发文档</title><link>/wechat/miniprogram/qrcode.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/wechat/miniprogram/qrcode.html</guid><description>
+&lt;h2>获取操作实例&lt;span class="hx-absolute -hx-mt-20" id="获取操作实例">&lt;/span>
 &lt;a href="#%e8%8e%b7%e5%8f%96%e6%93%8d%e4%bd%9c%e5%ae%9e%e4%be%8b" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
 &lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="line">&lt;span class="cl">&lt;span class="nx">mini&lt;/span> &lt;span class="o">:=&lt;/span> &lt;span class="nx">wc&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">GetMiniProgram&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">cfg&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">qr&lt;/span>&lt;span class="o">:=&lt;/span>&lt;span class="nx">mini&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">GetQrcode&lt;/span>&lt;span class="p">()&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
@@ -127,8 +127,8 @@ title="Copy code"
 &lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
 &lt;/button>
 &lt;/div>
-&lt;/div></description></item><item><title>云开发</title><link>/wechat/miniprogram/tcb.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/wechat/miniprogram/tcb.html</guid><description>
-&lt;h1>小程序-云开发 SDK&lt;/h1>&lt;p>Tencent Cloud Base &lt;a href="https://developers.weixin.qq.com/miniprogram/dev/wxcloud/reference-http-api/" target="_blank" rel="noopener">文档&lt;/a>&lt;/p>
+&lt;/div></description></item><item><title>云开发 - 微信SDK开发文档</title><link>/wechat/miniprogram/tcb.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/wechat/miniprogram/tcb.html</guid><description>
+&lt;p>Tencent Cloud Base &lt;a href="https://developers.weixin.qq.com/miniprogram/dev/wxcloud/reference-http-api/" target="_blank" rel="noopener">文档&lt;/a>&lt;/p>
 &lt;h2>使用说明&lt;span class="hx-absolute -hx-mt-20" id="使用说明">&lt;/span>
 &lt;a href="#%e4%bd%bf%e7%94%a8%e8%af%b4%e6%98%8e" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>&lt;strong>初始化配置&lt;/strong>&lt;/p>
 &lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
@@ -169,8 +169,8 @@ title="Copy code"
 &lt;/button>
 &lt;/div>
 &lt;/div>
-&lt;p>更多使用方法参考&lt;a href="https://godoc.org/github.com/silenceper/wechat/v2/miniprogram/tcb" target="_blank" rel="noopener">GODOC&lt;/a>&lt;/p></description></item><item><title>订阅消息</title><link>/wechat/miniprogram/subscribe.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/wechat/miniprogram/subscribe.html</guid><description>
-&lt;h1>订阅消息&lt;/h1>&lt;p>&lt;a href="https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.send.html" target="_blank" rel="noopener">微信文档&lt;/a>&lt;/p>
+&lt;p>更多使用方法参考&lt;a href="https://godoc.org/github.com/silenceper/wechat/v2/miniprogram/tcb" target="_blank" rel="noopener">GODOC&lt;/a>&lt;/p></description></item><item><title>订阅消息 - 微信SDK开发文档</title><link>/wechat/miniprogram/subscribe.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/wechat/miniprogram/subscribe.html</guid><description>
+&lt;p>&lt;a href="https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.send.html" target="_blank" rel="noopener">微信文档&lt;/a>&lt;/p>
 &lt;h2>获取操作实例&lt;span class="hx-absolute -hx-mt-20" id="获取操作实例">&lt;/span>
 &lt;a href="#%e8%8e%b7%e5%8f%96%e6%93%8d%e4%bd%9c%e5%ae%9e%e4%be%8b" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
 &lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="line">&lt;span class="cl">&lt;span class="nx">mini&lt;/span> &lt;span class="o">:=&lt;/span> &lt;span class="nx">wc&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">GetMiniProgram&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">cfg&lt;/span>&lt;span class="p">)&lt;/span>
