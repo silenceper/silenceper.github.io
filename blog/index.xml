@@ -1,5 +1,5 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – 博客</title><link>/blog/</link><description>Recent content in 博客 on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en</language><atom:link href="/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>如何使用Golang开发MCP服务器：从mcp-go到mcp-k8s实践</title><link>/blog/2025-04-19-how-to-write-mcp-in-golang/</link><pubDate>Sat, 19 Apr 2025 09:00:00 +0800</pubDate><guid>/blog/2025-04-19-how-to-write-mcp-in-golang/</guid><description>
-&lt;h1>如何使用Golang开发MCP服务器：从mcp-go到mcp-k8s实践&lt;/h1>&lt;p>随着大语言模型(LLM)与开发工具的深度融合，Model Control Protocol (MCP)协议正在成为AI与软件工具交互的重要桥梁。MCP允许LLM以结构化的方式调用工具，使AI能够执行具体的操作而不仅仅是生成文本。&lt;/p>
+&lt;p>随着大语言模型(LLM)与开发工具的深度融合，Model Control Protocol (MCP)协议正在成为AI与软件工具交互的重要桥梁。MCP允许LLM以结构化的方式调用工具，使AI能够执行具体的操作而不仅仅是生成文本。&lt;/p>
 &lt;p>本文将详细介绍如何使用Golang和&lt;a href="https://github.com/mark3labs/mcp-go" target="_blank" rel="noopener">mcp-go&lt;/a>这个SDK来开发MCP服务器，并以我的开源项目&lt;a href="https://github.com/silenceper/mcp-k8s" target="_blank" rel="noopener">mcp-k8s&lt;/a>为具体案例，讲解如何构建一个与Kubernetes集群交互的MCP服务器。&lt;/p>
 &lt;h2>MCP协议简介&lt;span class="hx-absolute -hx-mt-20" id="mcp协议简介">&lt;/span>
 &lt;a href="#mcp%e5%8d%8f%e8%ae%ae%e7%ae%80%e4%bb%8b" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>MCP (Model Control Protocol)是一种协议，允许LLM与外部工具进行结构化交互。通过MCP，LLM可以：&lt;/p>
@@ -452,7 +452,9 @@ title="Copy code"
 &lt;li>&lt;a href="https://github.com/mark3labs/mcp-go" target="_blank" rel="noopener">mcp-go SDK&lt;/a>&lt;/li>
 &lt;li>&lt;a href="https://github.com/silenceper/mcp-k8s" target="_blank" rel="noopener">mcp-k8s项目&lt;/a>&lt;/li>
 &lt;li>&lt;a href="https://github.com/kubernetes/client-go" target="_blank" rel="noopener">Kubernetes client-go文档&lt;/a>&lt;/li>
-&lt;/ol></description></item><item><title>MCP-K8s：当AI成为我的Kubernetes小助手</title><link>/blog/202504/mcp-k8s/</link><pubDate>Thu, 03 Apr 2025 22:20:59 +0800</pubDate><guid>/blog/202504/mcp-k8s/</guid><description>
+&lt;/ol>
+&lt;h2>AI&amp;amp;&amp;amp;MCP交流群&lt;span class="hx-absolute -hx-mt-20" id="aimcp交流群">&lt;/span>
+&lt;a href="#aimcp%e4%ba%a4%e6%b5%81%e7%be%a4" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>我建了一个AI技术交流群，大家可以关注入群关注公众号，发送关键字”加群“，拉你进去，目的是为了方便大家交流AI相关的知识和共享资源，目前AI变化真的是太快了；&lt;/p></description></item><item><title>MCP-K8s：当AI成为我的Kubernetes小助手</title><link>/blog/202504/mcp-k8s/</link><pubDate>Thu, 03 Apr 2025 22:20:59 +0800</pubDate><guid>/blog/202504/mcp-k8s/</guid><description>
 &lt;p>还记得刚开始接触Kubernetes时的感受吗？复杂的架构、繁多的概念、以及那些需要记忆的kubectl命令&amp;hellip;，现在有了MCP可以让这种交互变得更加简单，尝试通过AI自然语言对话来完成对k8s集群各种资源的操作乃至于定于集群的问题。&lt;/p>
 &lt;h2>它是怎么工作的？&lt;span class="hx-absolute -hx-mt-20" id="它是怎么工作的">&lt;/span>
 &lt;a href="#%e5%ae%83%e6%98%af%e6%80%8e%e4%b9%88%e5%b7%a5%e4%bd%9c%e7%9a%84" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>说起来很简单，MCP-K8s就像是在Kubernetes和AI之间搭了一座桥。通过MCP（Model Control Protocol）协议，它能让AI理解你的自然语言指令，并转换成对应的Kubernetes操作。&lt;/p>
