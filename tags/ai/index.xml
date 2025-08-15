@@ -1,4 +1,198 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – AI</title><link>/tags/ai/</link><description>Recent content in AI on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sat, 19 Apr 2025 09:00:00 +0800</lastBuildDate><atom:link href="/tags/ai/index.xml" rel="self" type="application/rss+xml"/><item><title>如何使用Golang开发MCP服务器：从mcp-go到mcp-k8s实践</title><link>/blog/2025-04-19-how-to-write-mcp-in-golang/</link><pubDate>Sat, 19 Apr 2025 09:00:00 +0800</pubDate><guid>/blog/2025-04-19-how-to-write-mcp-in-golang/</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – AI</title><link>/tags/ai/</link><description>Recent content in AI on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Fri, 15 Aug 2025 00:00:00 +0000</lastBuildDate><atom:link href="/tags/ai/index.xml" rel="self" type="application/rss+xml"/><item><title>Windows-MCP：让AI直接操作你的Windows系统</title><link>/blog/2025-08-15-windows-mcp/</link><pubDate>Fri, 15 Aug 2025 00:00:00 +0000</pubDate><guid>/blog/2025-08-15-windows-mcp/</guid><description>
+&lt;h2>项目信息&lt;span class="hx-absolute -hx-mt-20" id="项目信息">&lt;/span>
+&lt;a href="#%e9%a1%b9%e7%9b%ae%e4%bf%a1%e6%81%af" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>项目名称&lt;/th>
+&lt;th>Windows-MCP&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>开源协议&lt;/td>
+&lt;td>MIT License&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>GitHub Stars&lt;/td>
+&lt;td>2k+&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>项目地址&lt;/td>
+&lt;td>&lt;a href="https://github.com/CursorTouch/Windows-MCP" target="_blank" rel="noopener">https://github.com/CursorTouch/Windows-MCP&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>所属公司&lt;/td>
+&lt;td>CursorTouch&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>支持系统&lt;/td>
+&lt;td>Windows 7/8/8.1/10/11&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>编程语言&lt;/td>
+&lt;td>Python&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2>演示视频&lt;span class="hx-absolute -hx-mt-20" id="演示视频">&lt;/span>
+&lt;a href="#%e6%bc%94%e7%a4%ba%e8%a7%86%e9%a2%91" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;h2>什么是Windows-MCP？&lt;span class="hx-absolute -hx-mt-20" id="什么是windows-mcp">&lt;/span>
+&lt;a href="#%e4%bb%80%e4%b9%88%e6%98%afwindows-mcp" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>&lt;strong>Windows-MCP&lt;/strong> 是一个轻量级的开源项目，它作为MCP（Model Context Protocol）服务器，在AI代理和Windows操作系统之间架起了一座桥梁。通过这个工具，AI代理可以直接与Windows系统交互，执行各种自动化任务。&lt;/p>
+&lt;h2>核心特性&lt;span class="hx-absolute -hx-mt-20" id="核心特性">&lt;/span>
+&lt;a href="#%e6%a0%b8%e5%bf%83%e7%89%b9%e6%80%a7" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;h3>🎯 无缝Windows集成&lt;span class="hx-absolute -hx-mt-20" id="-无缝windows集成">&lt;/span>
+&lt;a href="#-%e6%97%a0%e7%bc%9dwindows%e9%9b%86%e6%88%90" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h3>&lt;ul>
+&lt;li>与Windows UI元素原生交互&lt;/li>
+&lt;li>打开应用程序、控制窗口&lt;/li>
+&lt;li>模拟用户输入操作&lt;/li>
+&lt;li>支持文件导航和管理&lt;/li>
+&lt;/ul>
+&lt;h3>🤖 支持任意LLM&lt;span class="hx-absolute -hx-mt-20" id="-支持任意llm">&lt;/span>
+&lt;a href="#-%e6%94%af%e6%8c%81%e4%bb%bb%e6%84%8fllm" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h3>&lt;p>与许多自动化工具不同，Windows-MCP不依赖传统的计算机视觉技术或特定的微调模型。它可以使用任何LLM，降低了复杂性和设置时间。&lt;/p>
+&lt;h3>🛠️ 丰富的UI自动化工具集&lt;span class="hx-absolute -hx-mt-20" id="-丰富的ui自动化工具集">&lt;/span>
+&lt;a href="#-%e4%b8%b0%e5%af%8c%e7%9a%84ui%e8%87%aa%e5%8a%a8%e5%8c%96%e5%b7%a5%e5%85%b7%e9%9b%86" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h3>&lt;ul>
+&lt;li>基础键盘和鼠标操作&lt;/li>
+&lt;li>窗口/UI状态捕获&lt;/li>
+&lt;li>实时交互（典型延迟0.7-2.5秒）&lt;/li>
+&lt;/ul>
+&lt;h3>🔧 轻量级和可扩展&lt;span class="hx-absolute -hx-mt-20" id="-轻量级和可扩展">&lt;/span>
+&lt;a href="#-%e8%bd%bb%e9%87%8f%e7%ba%a7%e5%92%8c%e5%8f%af%e6%89%a9%e5%b1%95" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h3>&lt;ul>
+&lt;li>最小依赖&lt;/li>
+&lt;li>易于设置&lt;/li>
+&lt;li>完全开源（MIT许可证）&lt;/li>
+&lt;li>可根据需求自定义和扩展&lt;/li>
+&lt;/ul>
+&lt;h2>支持的MCP工具&lt;span class="hx-absolute -hx-mt-20" id="支持的mcp工具">&lt;/span>
+&lt;a href="#%e6%94%af%e6%8c%81%e7%9a%84mcp%e5%b7%a5%e5%85%b7" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>Windows-MCP提供了以下工具来与Windows交互：&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>Click-Tool&lt;/strong>: 在指定坐标点击屏幕&lt;/li>
+&lt;li>&lt;strong>Type-Tool&lt;/strong>: 在元素上输入文本（可选择清除现有文本）&lt;/li>
+&lt;li>&lt;strong>Clipboard-Tool&lt;/strong>: 使用系统剪贴板复制或粘贴&lt;/li>
+&lt;li>&lt;strong>Scroll-Tool&lt;/strong>: 在窗口或特定区域垂直或水平滚动&lt;/li>
+&lt;li>&lt;strong>Drag-Tool&lt;/strong>: 从一个点拖拽到另一个点&lt;/li>
+&lt;li>&lt;strong>Move-Tool&lt;/strong>: 移动鼠标指针&lt;/li>
+&lt;li>&lt;strong>Shortcut-Tool&lt;/strong>: 按下键盘快捷键（Ctrl+c、Alt+Tab等）&lt;/li>
+&lt;li>&lt;strong>Key-Tool&lt;/strong>: 按下单个键&lt;/li>
+&lt;li>&lt;strong>Wait-Tool&lt;/strong>: 暂停指定时间&lt;/li>
+&lt;li>&lt;strong>State-Tool&lt;/strong>: 获取默认语言、浏览器、活动应用程序和交互式、文本和可滚动元素的组合快照，以及桌面截图&lt;/li>
+&lt;li>&lt;strong>Resize-Tool&lt;/strong>: 更改应用程序的窗口大小或位置&lt;/li>
+&lt;li>&lt;strong>Launch-Tool&lt;/strong>: 从开始菜单启动应用程序&lt;/li>
+&lt;li>&lt;strong>Shell-Tool&lt;/strong>: 执行PowerShell命令&lt;/li>
+&lt;li>&lt;strong>Scrape-Tool&lt;/strong>: 抓取整个网页信息&lt;/li>
+&lt;/ul>
+&lt;h2>系统要求&lt;span class="hx-absolute -hx-mt-20" id="系统要求">&lt;/span>
+&lt;a href="#%e7%b3%bb%e7%bb%9f%e8%a6%81%e6%b1%82" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;h3>前置条件&lt;span class="hx-absolute -hx-mt-20" id="前置条件">&lt;/span>
+&lt;a href="#%e5%89%8d%e7%bd%ae%e6%9d%a1%e4%bb%b6" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h3>&lt;ul>
+&lt;li>Python 3.13+&lt;/li>
+&lt;li>Anthropic Claude Desktop应用或其他MCP客户端&lt;/li>
+&lt;li>UV（包管理器），通过&lt;code>pip install uv&lt;/code>安装&lt;/li>
+&lt;li>DXT（桌面扩展），通过&lt;code>npm install -g @anthropic-ai/dxt&lt;/code>安装&lt;/li>
+&lt;li>Windows默认语言为英语，或禁用MCP服务器中的Launch-Tool和Resize-Tool&lt;/li>
+&lt;/ul>
+&lt;h2>快速开始&lt;span class="hx-absolute -hx-mt-20" id="快速开始">&lt;/span>
+&lt;a href="#%e5%bf%ab%e9%80%9f%e5%bc%80%e5%a7%8b" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;h3>Gemini CLI集成&lt;span class="hx-absolute -hx-mt-20" id="gemini-cli集成">&lt;/span>
+&lt;a href="#gemini-cli%e9%9b%86%e6%88%90" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h3>&lt;ol>
+&lt;li>在文件资源管理器中导航到&lt;code>%USERPROFILE%/.gemini&lt;/code>并打开&lt;code>settings.json&lt;/code>&lt;/li>
+&lt;li>在&lt;code>settings.json&lt;/code>中添加&lt;code>windows-mcp&lt;/code>配置并保存：&lt;/li>
+&lt;/ol>
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-json" data-lang="json">&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;theme&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;Default&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;mcpServers&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;windows-mcp&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;command&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;uv&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;args&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="p">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;--directory&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;&amp;lt;windows-mcp目录的路径&amp;gt;&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;run&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;main.py&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+>
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;ol start="3">
+&lt;li>在终端中重新运行Gemini CLI，开始使用！&lt;/li>
+&lt;/ol>
+&lt;h3>Claude Desktop集成&lt;span class="hx-absolute -hx-mt-20" id="claude-desktop集成">&lt;/span>
+&lt;a href="#claude-desktop%e9%9b%86%e6%88%90" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h3>&lt;ol>
+&lt;li>克隆仓库：&lt;/li>
+&lt;/ol>
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">git clone https://github.com/CursorTouch/Windows-MCP.git
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">cd&lt;/span> Windows-MCP&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+>
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;ol start="2">
+&lt;li>构建桌面扩展DXT：&lt;/li>
+&lt;/ol>
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">npx @anthropic-ai/dxt pack&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+>
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;ol start="3">
+&lt;li>打开Claude Desktop：
+&lt;ul>
+&lt;li>进入设置 -&amp;gt; 扩展 -&amp;gt; 安装扩展（定位.dxt文件）-&amp;gt; 安装&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ol>
+&lt;h2>实际应用场景&lt;span class="hx-absolute -hx-mt-20" id="实际应用场景">&lt;/span>
+&lt;a href="#%e5%ae%9e%e9%99%85%e5%ba%94%e7%94%a8%e5%9c%ba%e6%99%af" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;h3>自动化测试&lt;span class="hx-absolute -hx-mt-20" id="自动化测试">&lt;/span>
+&lt;a href="#%e8%87%aa%e5%8a%a8%e5%8c%96%e6%b5%8b%e8%af%95" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h3>&lt;ul>
+&lt;li>应用程序UI测试&lt;/li>
+&lt;li>功能验证&lt;/li>
+&lt;li>回归测试&lt;/li>
+&lt;/ul>
+&lt;h3>工作流程自动化&lt;span class="hx-absolute -hx-mt-20" id="工作流程自动化">&lt;/span>
+&lt;a href="#%e5%b7%a5%e4%bd%9c%e6%b5%81%e7%a8%8b%e8%87%aa%e5%8a%a8%e5%8c%96" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h3>&lt;ul>
+&lt;li>文件处理&lt;/li>
+&lt;li>应用程序操作&lt;/li>
+&lt;li>数据录入&lt;/li>
+&lt;/ul>
+&lt;h3>远程控制&lt;span class="hx-absolute -hx-mt-20" id="远程控制">&lt;/span>
+&lt;a href="#%e8%bf%9c%e7%a8%8b%e6%8e%a7%e5%88%b6" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h3>&lt;ul>
+&lt;li>通过SSH远程操作电脑&lt;/li>
+&lt;li>移动设备控制桌面&lt;/li>
+&lt;li>跨平台任务执行&lt;/li>
+&lt;/ul>
+&lt;h2>注意事项&lt;span class="hx-absolute -hx-mt-20" id="注意事项">&lt;/span>
+&lt;a href="#%e6%b3%a8%e6%84%8f%e4%ba%8b%e9%a1%b9" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;h3>⚠️ 安全提醒&lt;span class="hx-absolute -hx-mt-20" id="-安全提醒">&lt;/span>
+&lt;a href="#-%e5%ae%89%e5%85%a8%e6%8f%90%e9%86%92" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h3>&lt;p>此MCP直接与Windows操作系统交互以执行操作。请谨慎使用，避免在无法承受此类风险的环境中部署。&lt;/p>
+&lt;h3>📝 当前限制&lt;span class="hx-absolute -hx-mt-20" id="-当前限制">&lt;/span>
+&lt;a href="#-%e5%bd%93%e5%89%8d%e9%99%90%e5%88%b6" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h3>&lt;ul>
+&lt;li>在段落中选择特定文本部分（正在开发中）&lt;/li>
+&lt;li>Type-Tool主要用于输入文本，不适合在IDE中编程（正在开发中）&lt;/li>
+&lt;/ul>
+&lt;h2>相关资源&lt;span class="hx-absolute -hx-mt-20" id="相关资源">&lt;/span>
+&lt;a href="#%e7%9b%b8%e5%85%b3%e8%b5%84%e6%ba%90" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;ul>
+&lt;li>&lt;a href="https://github.com/CursorTouch/Windows-MCP" target="_blank" rel="noopener">Windows-MCP GitHub仓库&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener">MCP官方文档&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://docs.anthropic.com/claude/docs/claude-desktop-extensions" target="_blank" rel="noopener">Claude Desktop集成指南&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2>总结&lt;span class="hx-absolute -hx-mt-20" id="总结">&lt;/span>
+&lt;a href="#%e6%80%bb%e7%bb%93" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>Windows-MCP为AI代理提供了与Windows系统深度集成的能力，开启了AI自动化操作的新时代。无论是日常任务自动化、应用程序测试，还是远程系统管理，Windows-MCP都提供了强大而灵活的工具集。&lt;/p>
+&lt;p>随着AI技术的不断发展，这类工具将变得越来越重要，为个人和企业用户提供更高效的工作方式。如果你对AI自动化感兴趣，Windows-MCP绝对值得一试！&lt;/p></description></item><item><title>如何使用Golang开发MCP服务器：从mcp-go到mcp-k8s实践</title><link>/blog/2025-04-19-how-to-write-mcp-in-golang/</link><pubDate>Sat, 19 Apr 2025 09:00:00 +0800</pubDate><guid>/blog/2025-04-19-how-to-write-mcp-in-golang/</guid><description>
 &lt;p>随着大语言模型(LLM)与开发工具的深度融合，Model Control Protocol (MCP)协议正在成为AI与软件工具交互的重要桥梁。MCP允许LLM以结构化的方式调用工具，使AI能够执行具体的操作而不仅仅是生成文本。&lt;/p>
 &lt;p>本文将详细介绍如何使用Golang和&lt;a href="https://github.com/mark3labs/mcp-go" target="_blank" rel="noopener">mcp-go&lt;/a>这个SDK来开发MCP服务器，并以我的开源项目&lt;a href="https://github.com/silenceper/mcp-k8s" target="_blank" rel="noopener">mcp-k8s&lt;/a>为具体案例，讲解如何构建一个与Kubernetes集群交互的MCP服务器。&lt;/p>
 &lt;h2>MCP协议简介&lt;span class="hx-absolute -hx-mt-20" id="mcp协议简介">&lt;/span>
