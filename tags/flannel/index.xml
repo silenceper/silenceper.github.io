@@ -1,0 +1,194 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – Flannel</title><link>/tags/flannel/</link><description>Recent content in Flannel on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Fri, 12 Oct 2018 00:00:00 +0000</lastBuildDate><atom:link href="/tags/flannel/index.xml" rel="self" type="application/rss+xml"/><item><title>k8s网络组件：calico</title><link>/blog/201810/calico-in-k8s/</link><pubDate>Fri, 12 Oct 2018 00:00:00 +0000</pubDate><guid>/blog/201810/calico-in-k8s/</guid><description>
+&lt;p&gt;前提已经安装好k8s集群&lt;/p&gt;
+&lt;h1&gt;安装&lt;/h1&gt;&lt;p&gt;calico 安装其实很简单，已经集成在两个yaml文件中&lt;/p&gt;
+&lt;p&gt;calico 版本: v3.2.3&lt;/p&gt;
+&lt;h2&gt;安装必看&lt;span class="hx-absolute -hx-mt-20" id="安装必看"&gt;&lt;/span&gt;
+&lt;a href="#%e5%ae%89%e8%a3%85%e5%bf%85%e7%9c%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;如果安装过&lt;code&gt;flannel&lt;/code&gt;组件，需要先去除docker启动项中 &lt;code&gt;$DOCKER_NETWORK_OPTIONS&lt;/code&gt;参数&lt;/li&gt;
+&lt;li&gt;删除已有的&lt;code&gt;/etc/cni/net.d&lt;/code&gt;，&lt;code&gt;/opt/cni/bin&lt;/code&gt;文件&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;kubelet&lt;/code&gt;和&lt;code&gt;kube-apiserver&lt;/code&gt;启动项中需要加上&lt;code&gt;--allow-privileged=true&lt;/code&gt;，保证&lt;code&gt;calico-node&lt;/code&gt;需要以特权模式运行&lt;/li&gt;
+&lt;li&gt;这里calico文件采用了&lt;code&gt;CrossSubnet&lt;/code&gt;模式&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;指定k8s使用CNI插件&lt;span class="hx-absolute -hx-mt-20" id="指定k8s使用cni插件"&gt;&lt;/span&gt;
+&lt;a href="#%e6%8c%87%e5%ae%9ak8s%e4%bd%bf%e7%94%a8cni%e6%8f%92%e4%bb%b6" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;在kubelet启动参数中加入以下参数:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;--network-plugin=cni&lt;/code&gt;: 指定使用cni插件&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--cni-bin-dir=/opt/cni/bin&lt;/code&gt;： 存放网络配置的可执行文件&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--cni-conf-dir=/etc/cni/net.d&lt;/code&gt;: 存放网络配置文件，如果有多个文件，则只会选择一个(根据文件名排序)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;部署&lt;span class="hx-absolute -hx-mt-20" id="部署"&gt;&lt;/span&gt;
+&lt;a href="#%e9%83%a8%e7%bd%b2" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;安装文件放在: &lt;a href="https://github.com/silenceper/k8s-install/tree/master/calico" target="_blank" rel="noopener"&gt;https://github.com/silenceper/k8s-install/tree/master/calico&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;主要包含两个文件&lt;code&gt;calico.yaml&lt;/code&gt;，&lt;code&gt;rbac.yaml&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;需要做如下参数修改：&lt;/p&gt;
+&lt;p&gt;将其中的&lt;code&gt;ETCD_LVS_HOST&lt;/code&gt;修改为集群的etcd地址，并且将&lt;code&gt;TLS_ETCD_KEY&lt;/code&gt;,&lt;code&gt;TLS_ETCD_CERT &lt;/code&gt;,&lt;code&gt;TLS_ETCD_CA&lt;/code&gt;替换为证书的内容的base64后的结果：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;# 其中证书的路径根据自己环境更改为正确的路径
+TLS_ETCD_CA=$(cat /etc/kubernetes/ssl/ca.pem | base64 |tr -d &amp;#34;\n&amp;#34;)
+TLS_ETCD_KEY=$(cat /etc/kubernetes/ssl/etcd-key.pem | base64 |tr -d &amp;#34;\n&amp;#34;)
+TLS_ETCD_CERT=$(cat /etc/kubernetes/ssl/etcd.pem | base64 |tr -d &amp;#34;\n&amp;#34;)
+# 替换内容
+sed -i &amp;#34;s#TLS_ETCD_CA#$TLS_ETCD_CA#g&amp;#34; calico.yaml
+sed -i &amp;#34;s#TLS_ETCD_CERT#$TLS_ETCD_CERT#g&amp;#34; calico.yaml
+sed -i &amp;#34;s#TLS_ETCD_KEY#$TLS_ETCD_KEY#g&amp;#34; calico.yaml
+# 替换ETCD_LVS_HOST地址，更换为自己的etcd地址
+sed -i &amp;#34;s#ETCD_LVS_HOST#192.168.99.101#g&amp;#34; calico.yaml&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;部署&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;kubectl apply -f calico.yaml
+kubectl apply -f rbac.yaml&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h2&gt;calicoctl 安装&lt;span class="hx-absolute -hx-mt-20" id="calicoctl-安装"&gt;&lt;/span&gt;
+&lt;a href="#calicoctl-%e5%ae%89%e8%a3%85" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;calicoctl 工具，主要用来配置calico，例如配置calico 网络模式等&lt;/p&gt;
+&lt;p&gt;下载地址：&lt;a href="https://github.com/projectcalico/calicoctl/releases" target="_blank" rel="noopener"&gt;https://github.com/projectcalico/calicoctl/releases&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;将下载和二进制文件放在&lt;code&gt;/usr/local/bin&lt;/code&gt;目录下&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;calicoctl 配置文件&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;将以下内容写入文件&lt;code&gt;/etc/calico/calicoctl.cfg&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;apiVersion: projectcalico.org/v3
+kind: CalicoAPIConfig
+metadata:
+spec:
+etcdEndpoints: https://192.168.99.101:2379
+etcdKeyFile: /etc/kubernetes/ssl/kubernetes-key.pem
+etcdCertFile: /etc/kubernetes/ssl/kubernetes.pem
+etcdCACertFile: /etc/kubernetes/ssl/ca.pem&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;测试成功：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;[root@192-168-99-101 calico]# calicoctl get node -o wide
+NAME ASN IPV4 IPV6
+192-168-99-101 (unknown) 192.168.99.101/24
+192-168-99-102 (unknown) 192.168.99.102/24&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;###修改ipipMode&lt;/p&gt;
+&lt;p&gt;ipipMode有三种：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Never： bgp模式&lt;/li&gt;
+&lt;li&gt;Always：IPIP模式&lt;/li&gt;
+&lt;li&gt;CrossSubnet：自动选择，同一网段选择bgp模式，跨网段IPIP模式&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;通过&lt;code&gt;calicoctl get ippool -o yaml&lt;/code&gt;命令可以查看到当前使用的ipipMode为&lt;code&gt;CrossSubnet&lt;/code&gt;，通过如下方式可以修改：&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;calictl apply -f ippool.yaml&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;code&gt;ippool.yaml&lt;/code&gt;文件内容：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;apiVersion: projectcalico.org/v3
+items:
+- apiVersion: projectcalico.org/v3
+kind: IPPool
+metadata:
+name: default-ipv4-ippool
+spec:
+cidr: 172.23.0.0/16
+ipipMode: Always
+natOutgoing: true
+kind: IPPoolList&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description></item><item><title>k8s网络组件：flannel</title><link>/blog/201809/flannel-in-k8s/</link><pubDate>Wed, 26 Sep 2018 00:00:00 +0000</pubDate><guid>/blog/201809/flannel-in-k8s/</guid><description>
+&lt;p&gt;Flannel是一个专门为k8s定制的网络解决方案，主要解决POD跨主机通信问题，这里主要讲述Flannel是如何实现的。&lt;/p&gt;
+&lt;h1&gt;安装&lt;/h1&gt;&lt;p&gt;集成在k8s上有两种方式，一种是利用etcd存储整个集群的网络配置，另外一种是利用kubernetes的api 获取网络配置信息，分别如下：&lt;/p&gt;
+&lt;h2&gt;ETCD 方式&lt;span class="hx-absolute -hx-mt-20" id="etcd-方式"&gt;&lt;/span&gt;
+&lt;a href="#etcd-%e6%96%b9%e5%bc%8f" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;这种方式在前面的&lt;a href="http://silenceper.com/blog/201809/how-to-build-a-k8s-cluster/#%e5%ae%89%e8%a3%85flannel%e7%bd%91%e7%bb%9c%e6%8f%92%e4%bb%b6" target="_blank" rel="noopener"&gt;k8s集群安装-安装Flannel网络插件&lt;/a&gt;已经介绍过，就是利用etcd存储网络配置信息，并且利用dockerd启动参数&lt;code&gt;--bip&lt;/code&gt;来指定每个节点的网段信息，我们指定vxlan作为数据传输的backend。&lt;/p&gt;
+&lt;h2&gt;CNI插件方式&lt;span class="hx-absolute -hx-mt-20" id="cni插件方式"&gt;&lt;/span&gt;
+&lt;a href="#cni%e6%8f%92%e4%bb%b6%e6%96%b9%e5%bc%8f" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;这种方式是利用cni插件，并且将网络配置信息存储在kubernetes api中：&lt;/p&gt;
+&lt;h3&gt;配置网段&lt;span class="hx-absolute -hx-mt-20" id="配置网段"&gt;&lt;/span&gt;
+&lt;a href="#%e9%85%8d%e7%bd%ae%e7%bd%91%e6%ae%b5" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;在&lt;code&gt;kube-controller-manager&lt;/code&gt;启动脚本中加入&lt;code&gt;--allocate-node-cidrs=true&lt;/code&gt;，&lt;code&gt;--cluster-cidr=10.244.0.0/16&lt;/code&gt; 参数。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;10.244.0.0/16&lt;/code&gt;为我们指定的集群的网段，这样每一个docker节点都会分别使用自网段&lt;code&gt;10.244.0.0/24&lt;/code&gt;，&lt;code&gt;10.244.1.0/24&lt;/code&gt;作为每个pod的网段，可以通过&lt;code&gt;kubectl get pod 192.168.99.101 -o yaml&lt;/code&gt;命令查看&lt;code&gt;spec.podCIDR&lt;/code&gt;字段。&lt;/p&gt;
+&lt;p&gt;如果不配置该步骤可能会flannel出现&lt;code&gt;error registering network: failed to acquire lease: node &amp;quot;192.168.99.101&amp;quot; pod&lt;/code&gt;的错误&lt;/p&gt;
+&lt;h3&gt;指定kublet网络插件&lt;span class="hx-absolute -hx-mt-20" id="指定kublet网络插件"&gt;&lt;/span&gt;
+&lt;a href="#%e6%8c%87%e5%ae%9akublet%e7%bd%91%e7%bb%9c%e6%8f%92%e4%bb%b6" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;在kubelet中指定三个参数&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;--network-plugin=cni&lt;/code&gt; : 网络插件使用cni&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--cni-conf-dir=/etc/cni/net.d&lt;/code&gt; cni配置文件 ，默认&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--cni-bin-dir=/opt/cni/bin&lt;/code&gt; cni可执行文件，默认&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这样在kublet启动的时候，就会去&lt;code&gt;/etc/cni/net.d&lt;/code&gt;目录查找配置文件，并解析，使用相应的插件配置网络&lt;/p&gt;
+&lt;h3&gt;下载cni依赖插件&lt;span class="hx-absolute -hx-mt-20" id="下载cni依赖插件"&gt;&lt;/span&gt;
+&lt;a href="#%e4%b8%8b%e8%bd%bdcni%e4%be%9d%e8%b5%96%e6%8f%92%e4%bb%b6" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;下载cni官方提供的组件：&lt;a href="https://github.com/containernetworking/plugins/releases/download/v0.7.1/cni-plugins-amd64-v0.7.1.tgz" target="_blank" rel="noopener"&gt;cni-plugins-amd64-v0.7.1.tgz&lt;/a&gt; ，并将可执行文件放在&lt;code&gt;/opt/cni/bin&lt;/code&gt;目录。&lt;/p&gt;
+&lt;p&gt;这里不单单只会用到flannel文件，也会用到brage用来创建网桥以及host-local用来分配ip&lt;/p&gt;
+&lt;h3&gt;安装flanneld组件&lt;span class="hx-absolute -hx-mt-20" id="安装flanneld组件"&gt;&lt;/span&gt;
+&lt;a href="#%e5%ae%89%e8%a3%85flanneld%e7%bb%84%e4%bb%b6" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;flannel组件直接以&lt;code&gt;daemonset&lt;/code&gt;的方式安装在k8s集群中：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;其中&lt;code&gt;kube-flannel-cfg&lt;/code&gt;configmap中的&lt;code&gt;Network&lt;/code&gt;字段需要与&lt;code&gt;--cluster-cidr&lt;/code&gt;配置的网段一致。&lt;/p&gt;
+&lt;p&gt;这一步主要是安装了flanneld以及将flannel配置文件写入&lt;code&gt;/etc/cni/net.d&lt;/code&gt;目录&lt;/p&gt;
+&lt;p&gt;查看&lt;code&gt;kube-flannel.yml&lt;/code&gt;中flanneld的启动参数为：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;--ip-masq &lt;/code&gt;: 需要为其配置SNAT&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--kube-subnet-mgr&lt;/code&gt; : 代表其使用kube类型的subnet-manager。该类型有别于使用etcd的local-subnet-mgr类型，使用kube类型后，flannel上各Node的IP子网分配均基于K8S Node的spec.podCIDR属性&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;我的是多网卡的机器，发现网络不通，所以我特别指定的flanneld用来对外通信的网卡
+增加&amp;ndash;iface 参数，指定可以进行外部通信的网卡&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2&gt;区别&lt;span class="hx-absolute -hx-mt-20" id="区别"&gt;&lt;/span&gt;
+&lt;a href="#%e5%8c%ba%e5%88%ab" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;flanneld 容器化了&lt;/li&gt;
+&lt;li&gt;flanneld 网段信息来源于kubernetes api，而不依赖etcd&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1&gt;原理&lt;/h1&gt;&lt;p&gt;以上两种方式的对比可以发现，通过cni方式安装的flannel会多一个&lt;code&gt;cni0&lt;/code&gt;的网桥，其实这个与&lt;code&gt;docker0&lt;/code&gt;网桥的作用是一样的，创建了一对veth pair 分别联通容器内部与主机网络，并把其中一端接入&lt;code&gt;cni0&lt;/code&gt;网桥。&lt;/p&gt;
+&lt;p&gt;整个通信过程如图：&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://ws1.sinaimg.cn/large/65209136gy1fvmsrceiq7j20oh0gv0ut.jpg" alt="" loading="lazy" /&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;图中的ip信息与本机不一致，主要说明通信过程&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;容器内部-&amp;gt;docker0-&amp;gt;flanneld-&amp;gt;网络传输-&amp;gt;对端flanneld-&amp;gt;对端docker0-&amp;gt;对端容器内&lt;/p&gt;
+&lt;p&gt;当数据包到吧flanneld后支持多种backend进行转发&lt;/p&gt;
+&lt;h2&gt;Flannel backend&lt;span class="hx-absolute -hx-mt-20" id="flannel-backend"&gt;&lt;/span&gt;
+&lt;a href="#flannel-backend" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Host-gw: 同一网段直接通信，速度快&lt;/li&gt;
+&lt;li&gt;udp： 用户空间的udp封装&lt;/li&gt;
+&lt;li&gt;vxlan: 利用内核vxlan协议进行传输&lt;/li&gt;
+&lt;li&gt;aws vpc: 利用aws平台内部提供的功能进行传输&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;更多插件参考文档：&lt;a href="https://github.com/coreos/flannel/blob/master/Documentation/backends.md" target="_blank" rel="noopener"&gt;https://github.com/coreos/flannel/blob/master/Documentation/backends.md&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;如何选择？&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;vxlan&lt;/code&gt;在功能上，和性能上基本满足我们的要求，可以直接跨网段间通信，同时性能上又比udp的方式高效&lt;/p&gt;</description></item></channel></rss>

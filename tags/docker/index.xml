@@ -1,0 +1,341 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – Docker</title><link>/tags/docker/</link><description>Recent content in Docker on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Fri, 10 Jul 2020 14:20:59 +0800</lastBuildDate><atom:link href="/tags/docker/index.xml" rel="self" type="application/rss+xml"/><item><title>将镜像tar包通过API直接push到registry仓库</title><link>/blog/202007/docker-tar-push/</link><pubDate>Fri, 10 Jul 2020 14:20:59 +0800</pubDate><guid>/blog/202007/docker-tar-push/</guid><description>
+&lt;p&gt;为了实现docker tar包能够直接通过页面上传，调研了一下registry的api，以及如何解析tar包（其实就是docker daemon程序实现的部分）。&lt;/p&gt;
+&lt;p&gt;要想实现，首先要了解docker tar包中结构组成：&lt;/p&gt;
+&lt;h2&gt;tar包结构&lt;span class="hx-absolute -hx-mt-20" id="tar包结构"&gt;&lt;/span&gt;
+&lt;a href="#tar%e5%8c%85%e7%bb%93%e6%9e%84" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;拿了一个包含一个镜像的tar包进行解压：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;.
+├── 1ecf8bc84a7c3d60c0a6bbdd294f12a6b0e17a8269616fc9bdbedd926f74f50c
+│   ├── VERSION
+│   ├── json
+│   └── layer.tar
+├── 6f4ec1f3d7ea33646d491a705f94442f5a706e9ac9acbca22fa9b117094eb720.json
+├── aaac5bde2c2bcb6cc28b1e6d3f29fe13efce6d6b669300cc2c6bfab96b942af4
+│   ├── VERSION
+│   ├── json
+│   └── layer.tar
+├── b63363f0d2ac8b3dca6f903bb5a7301bf497b1e5be8dc4f57a14e4dc649ef9bb
+│   ├── VERSION
+│   ├── json
+│   └── layer.tar
+├── c453224a84b8318b0a09a83052314dd876899d3a1a1cf2379e74bba410415059
+│   ├── VERSION
+│   ├── json
+│   └── layer.tar
+├── dd8ef1d42fbcccc87927eee94e57519c401b84437b98fcf35505fb6b7267a375
+│   ├── VERSION
+│   ├── json
+│   └── layer.tar
+├── manifest.json
+└── repositories&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;文件说明：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;manifest.json文件&lt;/strong&gt;：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;[
+{
+&amp;#34;Config&amp;#34;:&amp;#34;6f4ec1f3d7ea33646d491a705f94442f5a706e9ac9acbca22fa9b117094eb720.json&amp;#34;,
+&amp;#34;RepoTags&amp;#34;:[
+&amp;#34;alpine:filebeat-6.8.7-arm64&amp;#34;
+],
+&amp;#34;Layers&amp;#34;:[
+&amp;#34;aaac5bde2c2bcb6cc28b1e6d3f29fe13efce6d6b669300cc2c6bfab96b942af4/layer.tar&amp;#34;,
+&amp;#34;dd8ef1d42fbcccc87927eee94e57519c401b84437b98fcf35505fb6b7267a375/layer.tar&amp;#34;,
+&amp;#34;c453224a84b8318b0a09a83052314dd876899d3a1a1cf2379e74bba410415059/layer.tar&amp;#34;,
+&amp;#34;b63363f0d2ac8b3dca6f903bb5a7301bf497b1e5be8dc4f57a14e4dc649ef9bb/layer.tar&amp;#34;,
+&amp;#34;1ecf8bc84a7c3d60c0a6bbdd294f12a6b0e17a8269616fc9bdbedd926f74f50c/layer.tar&amp;#34;
+]
+}
+]&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;manifest.json 包含了对这个tar包的描述信息，比如image config文件地址，tags说明，镜像layer信息，在解析的时候也是根据这个文件去获取关联的文件。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;image config文件&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;比如：&lt;code&gt;6f4ec1f3d7ea33646d491a705f94442f5a706e9ac9acbca22fa9b117094eb720.json&lt;/code&gt;文件：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;内容太多就不贴了
+这里包含了镜像运行的信息，比如env，执行参数，以及镜像历史等。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;layer层文件：layer.tar&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;镜像的每一层的文件信息都打包在了一个单独的&lt;code&gt;layer.tar&lt;/code&gt;包中，也是在上传的时候需要用到的。&lt;/p&gt;
+&lt;h2&gt;registry api&lt;span class="hx-absolute -hx-mt-20" id="registry-api"&gt;&lt;/span&gt;
+&lt;a href="#registry-api" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;流程：&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;1、获取鉴权信息&lt;/li&gt;
+&lt;li&gt;2、检查layer.tar是否已经存在&lt;/li&gt;
+&lt;li&gt;3、上传layer.tar&lt;/li&gt;
+&lt;li&gt;4、上传image config&lt;/li&gt;
+&lt;li&gt;5、上传manifest（非包中的&lt;code&gt;manifest.json&lt;/code&gt;而是&lt;a href="https://github.com/docker/distribution/blob/master/manifest/schema2/manifest.go#L63" target="_blank" rel="noopener"&gt;Manifest struct&lt;/a&gt;）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;这里只列出了在上传的时候需要用的api&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;1、获取鉴权信息&lt;/p&gt;
+&lt;p&gt;这里跟registry仓库选择的鉴权方式有关，可选basic auth或者token鉴权。
+这里我是以最基本的basic auth为例子，如果是token鉴权的方式参考这里：
+&lt;a href="https://docs.docker.com/registry/spec/auth/jwt/" target="_blank" rel="noopener"&gt;https://docs.docker.com/registry/spec/auth/jwt/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;2、检查上传&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;HEAD /v2/image/blobs/&amp;lt;digest&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;若返回200 OK 则表示存在，不用上传&lt;/p&gt;
+&lt;p&gt;3、开始上传服务
+我这里是以分块上传的方式进行&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;POST /v2/image/blobs/uploads/&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;如果post请求返回202 accepted，一个url会在location字段返回.&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;pre&gt;&lt;code&gt; 202 Accepted
+Location: /v2/\&amp;lt;image&amp;gt;/blobs/uploads/\&amp;lt;uuid&amp;gt;
+Range: bytes=0-&amp;lt;offset&amp;gt;
+Content-Length: 0
+Docker-Upload-UUID: &amp;lt;uuid&amp;gt; # 可以用来查看上传状态和实现断点续传&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;4、分块上传
+根据上一步获取的url，以&lt;code&gt;PATCH&lt;/code&gt;的方式提交分块数据。
+如果是最后一块数据上传，则以PUT的方式提交，如下：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;pre&gt;&lt;code&gt; &amp;gt; PUT /v2/&amp;lt;name&amp;gt;/blob/uploads/&amp;lt;uuid&amp;gt;?digest=&amp;lt;digest&amp;gt;
+&amp;gt; Content-Length: &amp;lt;size of chunk&amp;gt;
+&amp;gt; Content-Range: &amp;lt;start of range&amp;gt;-&amp;lt;end of range&amp;gt;
+&amp;gt; Content-Type: application/octet-stream
+&amp;lt;Last Layer Chunk Binary Data&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;上传layer，image config，manifests信息都是一样的。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;我暂时只用到了以上api，更多的api参考：https://docs.docker.com/registry/spec/api/&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2&gt;实现&lt;span class="hx-absolute -hx-mt-20" id="实现"&gt;&lt;/span&gt;
+&lt;a href="#%e5%ae%9e%e7%8e%b0" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;上面说API没啥感觉，还是看代码比较明白，所以实现了这么一个工具：&lt;a href="https://github.com/silenceper/docker-tar-push" target="_blank" rel="noopener"&gt;https://github.com/silenceper/docker-tar-push
+&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Usage:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;push your docker tar archive image without docker.
+Usage:
+docker-tar-push [flags]
+Flags:
+-h, --help help for docker-tar-push
+--log-level int log-level, 0:Fatal,1:Error,2:Warn,3:Info,4:Debug (default 3)
+--password string registry auth password
+--registry string registry url
+--skip-ssl-verify skip ssl verify
+--username string registry auth username&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;Example:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;docker-tar-push alpine:latest --registry=http://localhost:5000&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;参考&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://www.jianshu.com/p/6a7b80122602" target="_blank" rel="noopener"&gt;https://www.jianshu.com/p/6a7b80122602&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/Razikus/dockerregistrypusher" target="_blank" rel="noopener"&gt;https://github.com/Razikus/dockerregistrypusher&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://docs.docker.com/registry/spec/auth/jwt/" target="_blank" rel="noopener"&gt;https://docs.docker.com/registry/spec/auth/jwt/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/docker/distribution/" target="_blank" rel="noopener"&gt;https://github.com/docker/distribution/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description></item><item><title>在x86_64机器上构建arm64镜像</title><link>/blog/202006/build-arm-image-on-x86_84/</link><pubDate>Fri, 05 Jun 2020 14:20:59 +0800</pubDate><guid>/blog/202006/build-arm-image-on-x86_84/</guid><description>
+&lt;p&gt;有几种办法可以打包出arm64的镜像&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;直接在arm机器上执行编译和打包&lt;/li&gt;
+&lt;li&gt;通过qemu模拟arm环境&lt;/li&gt;
+&lt;li&gt;利用docker提供的buildx（需要启用试验性特性）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;我没有arm的机器~，所以我主要试了一下下面两种方式。&lt;/p&gt;
+&lt;h3&gt;借助qemu-user-static镜像打包&lt;span class="hx-absolute -hx-mt-20" id="借助qemu-user-static镜像打包"&gt;&lt;/span&gt;
+&lt;a href="#%e5%80%9f%e5%8a%a9qemu-user-static%e9%95%9c%e5%83%8f%e6%89%93%e5%8c%85" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;文档：https://github.com/multiarch/qemu-user-static&lt;/p&gt;
+&lt;p&gt;开启arm平台支持：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-sh" data-lang="sh"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;$ docker run --rm --privileged multiarch/qemu-user-static:register --reset
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;$ docker build --rm -t &lt;span class="s2"&gt;&amp;#34;test/integration/ubuntu&amp;#34;&lt;/span&gt; -&lt;span class="s"&gt;&amp;lt;&amp;lt;EOF
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;FROM multiarch/qemu-user-static:x86_64-aarch64 as qemu
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;FROM arm64v8/ubuntu
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;COPY --from=qemu /usr/bin/qemu-aarch64-static /usr/bin
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;EOF&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;$ docker run --rm -t &lt;span class="s2"&gt;&amp;#34;test/integration/ubuntu&amp;#34;&lt;/span&gt; uname -m
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;aarch64&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;在运行&lt;code&gt;qemu-user-static:register&lt;/code&gt;镜像的时候，就通过内核中的binfmt_misc机制注入了哪些可执行文件可以被识别。&lt;/p&gt;
+&lt;p&gt;注意：需要将&lt;code&gt;qemu-aarch64-static&lt;/code&gt;文件 copy 到&lt;code&gt;/usr/bin&lt;/code&gt;目录。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;binfmt_misc&lt;/code&gt;是Linux内核说提供的一种扩展机制, 使得更多类型的文件得以成为＂可执行＂文件．Linux内核本身支持ELF、a.out、脚本（也就是上面所说的第一行#!指定解释器的方式）这集中＂可执行文件＂．但它还提供了一个称为&lt;code&gt;binfmt_misc&lt;/code&gt;的内核模块, 通过这个模块可以动态注册一些＂可执行文件格式＂,注册之后我们就可以直接＂执行＂这个程序文件了．&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3&gt;通过buildx打包支持多架构的镜像&lt;span class="hx-absolute -hx-mt-20" id="通过buildx打包支持多架构的镜像"&gt;&lt;/span&gt;
+&lt;a href="#%e9%80%9a%e8%bf%87buildx%e6%89%93%e5%8c%85%e6%94%af%e6%8c%81%e5%a4%9a%e6%9e%b6%e6%9e%84%e7%9a%84%e9%95%9c%e5%83%8f" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;文档：&lt;a href="https://docs.docker.com/buildx/working-with-buildx/" target="_blank" rel="noopener"&gt;https://docs.docker.com/buildx/working-with-buildx/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;首先需要开启这个实验性的功能，怎么开启看这里：&lt;a href="https://github.com/docker/cli/blob/master/experimental/README.md" target="_blank" rel="noopener"&gt;https://github.com/docker/cli/blob/master/experimental/README.md&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;docker cloent: 在&lt;code&gt;~/.docker/config.json 加入``写入&amp;quot;experimental&amp;quot;:&amp;quot;enabled&amp;quot;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;dcoker daemon: 启动参数上加上&amp;ndash;experimental或者&lt;code&gt;/etc/docker/daemon.json&lt;/code&gt;写入&lt;code&gt; &amp;quot;experimental&amp;quot;: true&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;进行初始化：&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;docker buildx create --name builderx
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;docker buildx use builderx
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;docker buildx inspect --bootstrap &lt;span class="c1"&gt;#这一步会从外网拉取`moby/buildkit`镜像，貌似还改不了&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;接下来你就可以通过如下命令去构建多种架构的镜像：&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;docker buildx build --platform linux/amd64,linux/arm64 -f Dockerfile -t silenceper/reverse-proxy . --push&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;--push&lt;/code&gt;参数表示构建完成之后，并push到镜像仓库当中。&lt;/p&gt;
+&lt;p&gt;因为镜像仓库支持一个仓库上传多种架构，并且会根据构建平台pull相匹配架构的镜像，所以我们可以在一个Dockerfile，并且通过一个命令打包镜像并push。&lt;/p&gt;
+&lt;p&gt;这里用到的Dockerfile在这里：&lt;a href="https://github.com/silenceper/reverse-proxy/blob/master/Dockerfile" target="_blank" rel="noopener"&gt;https://github.com/silenceper/reverse-proxy/blob/master/Dockerfile&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;通过docker的多阶段构建将编译和打包放在一起了，隔离了环境的差异。&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;FROM&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;golang&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nx"&gt;alpine&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;as&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;builder&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="nx"&gt;ADD&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="k"&gt;go&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nx"&gt;src&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nx"&gt;github&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;com&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nx"&gt;silenceper&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nx"&gt;reverse&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nx"&gt;proxy&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="nx"&gt;RUN&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;cd&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="k"&gt;go&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nx"&gt;src&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nx"&gt;github&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;com&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nx"&gt;silenceper&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nx"&gt;reverse&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nx"&gt;proxy&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;go&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;get&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nx"&gt;v&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;CGO_ENABLED&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;GOOS&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="nx"&gt;linux&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;go&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;build&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nx"&gt;a&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nx"&gt;installsuffix&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;cgo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nx"&gt;o&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;app&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="nx"&gt;FROM&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;alpine&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="nx"&gt;MAINTAINER&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;silenceper&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;silenceper&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="nx"&gt;gmail&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;com&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="nx"&gt;COPY&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="nx"&gt;from&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="nx"&gt;builder&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="k"&gt;go&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nx"&gt;src&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nx"&gt;github&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;com&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nx"&gt;silenceper&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nx"&gt;reverse&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nx"&gt;proxy&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nx"&gt;app&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nx"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nx"&gt;app&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="nx"&gt;ENTRYPOINT&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;/bin/app&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="nx"&gt;EXPOSE&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;80&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h2&gt;总结&lt;span class="hx-absolute -hx-mt-20" id="总结"&gt;&lt;/span&gt;
+&lt;a href="#%e6%80%bb%e7%bb%93" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;最方便的肯定是直接通过buildx进行打包和编译，但是我的环境没法访问外网，又没法拉取外网的镜像，所以最终还是选择使用&lt;code&gt;qemu-user-static&lt;/code&gt;打包出来了。&lt;/p&gt;
+&lt;h3&gt;参考&lt;span class="hx-absolute -hx-mt-20" id="参考"&gt;&lt;/span&gt;
+&lt;a href="#%e5%8f%82%e8%80%83" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://blog.fleeto.us/post/buildx-and-osx/" target="_blank" rel="noopener"&gt;https://blog.fleeto.us/post/buildx-and-osx/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://juejin.im/post/5af86fb15188251b8015c102" target="_blank" rel="noopener"&gt;https://juejin.im/post/5af86fb15188251b8015c102&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.cnblogs.com/bamanzi/p/run-x86-linux-progs-with-qemu-user-on-arm.html" target="_blank" rel="noopener"&gt;https://www.cnblogs.com/bamanzi/p/run-x86-linux-progs-with-qemu-user-on-arm.html&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description></item><item><title>docker pull 翻墙下载镜像</title><link>/blog/201809/over-the-wall-pull-docker-mirror/</link><pubDate>Sun, 09 Sep 2018 11:45:59 +0800</pubDate><guid>/blog/201809/over-the-wall-pull-docker-mirror/</guid><description>
+&lt;p&gt;我们一般通过设置&lt;code&gt;http_proxy&lt;/code&gt;环境变量，使得http请求，可以走我们设置的proxy，（一些go get镜像无法下载可以这么用），但是对于&lt;code&gt;docker pull&lt;/code&gt;命令是不生效的，因为systemd引导启动的service默认不会读取这些变量，所以我们可以通过在service文件中加入环境变量解决：&lt;/p&gt;
+&lt;h1&gt;设置变量 http_proxy&lt;/h1&gt;&lt;p&gt;主要是通过在docker启动的时候指定&lt;code&gt;HTTP_PROXY &lt;/code&gt;，&lt;code&gt;HTTPS_PROXY&lt;/code&gt;。&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;[Service]
+Environment=&amp;#34;HTTP_PROXY=http://proxy.example.com:80/&amp;#34; &amp;#34;HTTPS_PROXY=http://proxy.example.com:80/&amp;#34;&amp;#34;NO_PROXY=localhost,127.0.0.1,docker-registry.somecorporation.com&amp;#34;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;其中&lt;code&gt;NO_PROXY&lt;/code&gt;变量指的是那些http请求不走代理。&lt;/p&gt;
+&lt;p&gt;下面两种都是一样的效果，推荐方式二，可以避免直接修改&lt;code&gt;docker.service&lt;/code&gt;文件，防止升级之后文件覆盖。&lt;/p&gt;
+&lt;h2&gt;方式一： 直接修改docker.service 文件&lt;span class="hx-absolute -hx-mt-20" id="方式一-直接修改dockerservice-文件"&gt;&lt;/span&gt;
+&lt;a href="#%e6%96%b9%e5%bc%8f%e4%b8%80-%e7%9b%b4%e6%8e%a5%e4%bf%ae%e6%94%b9dockerservice-%e6%96%87%e4%bb%b6" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;docker service文件&lt;code&gt;/usr/lib/systemd/system/docker.service&lt;/code&gt;，在Service段配置中加入。&lt;/p&gt;
+&lt;h2&gt;方式二：通过override.conf文件(推荐)&lt;span class="hx-absolute -hx-mt-20" id="方式二通过overrideconf文件推荐"&gt;&lt;/span&gt;
+&lt;a href="#%e6%96%b9%e5%bc%8f%e4%ba%8c%e9%80%9a%e8%bf%87overrideconf%e6%96%87%e4%bb%b6%e6%8e%a8%e8%8d%90" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;文件路径：
+&lt;code&gt;/etc/systemd/system/docker.service.d/override.conf&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;可以直接通过&lt;code&gt;systemctl edit docker&lt;/code&gt;打开文件进行编辑，加入上述配置，重启生效。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;这种方式来之 &lt;a href="https://github.com/abcfy2" target="_blank" rel="noopener"&gt;@Feng_Yu&lt;/a&gt;的提醒，THK&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2&gt;重启docker&lt;span class="hx-absolute -hx-mt-20" id="重启docker"&gt;&lt;/span&gt;
+&lt;a href="#%e9%87%8d%e5%90%afdocker" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;systemctl daemon-reload
+systemctl restart docker&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;TIPS: &lt;code&gt;polipo&lt;/code&gt; 可以将&lt;code&gt;socks5&lt;/code&gt;协议转换成&lt;code&gt;http&lt;/code&gt;代理。&lt;/strong&gt;&lt;/p&gt;
+&lt;h1&gt;参考资料&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;&lt;a href="https://docs.docker.com/config/daemon/systemd/#httphttps-proxy" target="_blank" rel="noopener"&gt;https://docs.docker.com/config/daemon/systemd/#httphttps-proxy&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;</description></item></channel></rss>
