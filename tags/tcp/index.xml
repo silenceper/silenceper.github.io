@@ -1,47 +1,47 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – Tcp</title><link>/tags/tcp/</link><description>Recent content in Tcp on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 03 Jan 2016 15:40:59 +0800</lastBuildDate><atom:link href="/tags/tcp/index.xml" rel="self" type="application/rss+xml"/><item><title>tcp time_wait问题</title><link>/blog/201601/tcp_time_wait_error/</link><pubDate>Sun, 03 Jan 2016 15:40:59 +0800</pubDate><guid>/blog/201601/tcp_time_wait_error/</guid><description>
-&lt;h1>问题出现：&lt;/h1>&lt;p>在元旦前夕，自己维护的一个服务突然在高峰时期收到大量报警，赶紧登上服务器看一下：&lt;/p>
-&lt;p>最开始的反应是memcache tcp read time out ,因为之前也出现过类似的警告所以开始尝试切换memcache，但是运维反馈已经切换了好几台还是不起作用。&lt;/p>
-&lt;p>又看到有mysql 连接不上报错，怀疑机房内网有问题，然后有开始切换机房加机器，当时问题还是没有得到解决，这下真晕了。。。。 完全排查不出什么问题（因为是高峰时期，tcp连接数自然很高，没有在意是这个问题，自己预估不够）&lt;/p>
-&lt;p>后来反应过来看到有好几个接口请求数增加，因为发版本的原因，是新版本才会请求这些接口，所以 我暂时屏蔽了这几个口接口问题得到遏制（幸好是用户感知不到的接口）。&lt;/p>
-&lt;h1>排查：&lt;/h1>&lt;p>这个问题围绕我好几天，我屏蔽的那几个接口，反复看了好几遍，而且又将其中的sql查询分析，并没有慢请求。。。 这下又彻底懵了，没有头绪。&lt;/p>
-&lt;p>说来也巧，高峰时期我用&lt;code>netstat -an&lt;/code> 命令查看了一些，看到大量tcp time_wait 的连接，赶紧Google了下，tcp time_wait状态是在主动关闭连接的一方保持的一个状态（一般指客户端），&lt;/p>
-&lt;p>总共的连接数在近3w(ss -s可查)，其中有2w多都是这种连接，而且都是mysql 连接（这里边服务器程序就相当于客户端去连接mysql服务器），到这里心里大致有底了，把数据库连接池加上就好了，Golang提供了两个函数可进行配置：&lt;/p>
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
-&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="line">&lt;span class="cl">&lt;span class="nx">SetMaxOpenConns用于设置最大打开的连接数&lt;/span>&lt;span class="err">，&lt;/span>&lt;span class="nx">默认值为0表示不限制&lt;/span>&lt;span class="err">。&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">SetMaxIdleConns用于设置闲置的连接数&lt;/span>&lt;span class="err">。&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+&lt;h1&gt;问题出现：&lt;/h1&gt;&lt;p&gt;在元旦前夕，自己维护的一个服务突然在高峰时期收到大量报警，赶紧登上服务器看一下：&lt;/p&gt;
+&lt;p&gt;最开始的反应是memcache tcp read time out ,因为之前也出现过类似的警告所以开始尝试切换memcache，但是运维反馈已经切换了好几台还是不起作用。&lt;/p&gt;
+&lt;p&gt;又看到有mysql 连接不上报错，怀疑机房内网有问题，然后有开始切换机房加机器，当时问题还是没有得到解决，这下真晕了。。。。 完全排查不出什么问题（因为是高峰时期，tcp连接数自然很高，没有在意是这个问题，自己预估不够）&lt;/p&gt;
+&lt;p&gt;后来反应过来看到有好几个接口请求数增加，因为发版本的原因，是新版本才会请求这些接口，所以 我暂时屏蔽了这几个口接口问题得到遏制（幸好是用户感知不到的接口）。&lt;/p&gt;
+&lt;h1&gt;排查：&lt;/h1&gt;&lt;p&gt;这个问题围绕我好几天，我屏蔽的那几个接口，反复看了好几遍，而且又将其中的sql查询分析，并没有慢请求。。。 这下又彻底懵了，没有头绪。&lt;/p&gt;
+&lt;p&gt;说来也巧，高峰时期我用&lt;code&gt;netstat -an&lt;/code&gt; 命令查看了一些，看到大量tcp time_wait 的连接，赶紧Google了下，tcp time_wait状态是在主动关闭连接的一方保持的一个状态（一般指客户端），&lt;/p&gt;
+&lt;p&gt;总共的连接数在近3w(ss -s可查)，其中有2w多都是这种连接，而且都是mysql 连接（这里边服务器程序就相当于客户端去连接mysql服务器），到这里心里大致有底了，把数据库连接池加上就好了，Golang提供了两个函数可进行配置：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;SetMaxOpenConns用于设置最大打开的连接数&lt;/span&gt;&lt;span class="err"&gt;，&lt;/span&gt;&lt;span class="nx"&gt;默认值为0表示不限制&lt;/span&gt;&lt;span class="err"&gt;。&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="nx"&gt;SetMaxIdleConns用于设置闲置的连接数&lt;/span&gt;&lt;span class="err"&gt;。&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
 &lt;button
 class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
 title="Copy code"
->
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
-&lt;/button>
-&lt;/div>
-&lt;/div>
-&lt;p>&lt;strong>为什么会有TIME_WAIT状态？&lt;/strong>&lt;/p>
-&lt;p>源于tcp链接关闭中的四次挥手，是主动关闭链接的一方产生的状态：
-TCP状态转化图三次握手/四次挥手：&lt;/p>
-&lt;p>
-&lt;img src=".././images/tcp.png" alt="TCP状态转化图" loading="lazy" />&lt;/p>
-&lt;p>四次挥手的过程如下：&lt;/p>
-&lt;ul>
-&lt;li>
-&lt;p>主动关闭连接的一方，调用close()；协议层发送FIN包&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>被动关闭的一方收到FIN包后，协议层回复ACK；然后被动关闭的一方，进入CLOSE_WAIT状态，主动关闭的一方等待对方关闭，则进入FIN_WAIT_2状态；此时，主动关闭的一方 等待 被动关闭一方的应用程序，调用close操作&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>被动关闭的一方在完成所有数据发送后，调用close()操作；此时，协议层发送FIN包给主动关闭的一方，等待对方的ACK，被动关闭的一方进入LAST_ACK状态；&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>主动关闭的一方收到FIN包，协议层回复ACK；此时，主动关闭连接的一方，进入TIME_WAIT状态；而被动关闭的一方，进入CLOSED状态&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>等待2MSL时间，主动关闭的一方，结束TIME_WAIT，进入CLOSED状态&lt;/p>
-&lt;/li>
-&lt;/ul>
-&lt;p>所以time_wait属于tcp正常的一个状态，是为了解决网络的丢包和网络不稳定锁存在的一个状态。&lt;/p>
-&lt;p>因为当前服务器并发相对较大，所以存在了大量的链接为关闭，如果只是几百的话，也不会影响服务器性能。&lt;/p>
-&lt;p>使用连接池保存长链接，可使得链接复用，不会出现大量的这种状态。&lt;/p>
-&lt;h1>反思：&lt;/h1>&lt;p>问题终于找到解决，但是回过头来想了一下，其实一开始就可以定位到的，只是很多问题集中在一起出现反而让自己不知所措，这个时候如果是敏感的人的话应该马上能够从tcp状态上看出问题，之后线上遇到问题，重要的是先解决（不管通过什么方式），之后再一步步排查。&lt;/p></description></item></channel></rss>
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;为什么会有TIME_WAIT状态？&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;源于tcp链接关闭中的四次挥手，是主动关闭链接的一方产生的状态：
+TCP状态转化图三次握手/四次挥手：&lt;/p&gt;
+&lt;p&gt;
+&lt;img src=".././images/tcp.png" alt="TCP状态转化图" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;四次挥手的过程如下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;主动关闭连接的一方，调用close()；协议层发送FIN包&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;被动关闭的一方收到FIN包后，协议层回复ACK；然后被动关闭的一方，进入CLOSE_WAIT状态，主动关闭的一方等待对方关闭，则进入FIN_WAIT_2状态；此时，主动关闭的一方 等待 被动关闭一方的应用程序，调用close操作&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;被动关闭的一方在完成所有数据发送后，调用close()操作；此时，协议层发送FIN包给主动关闭的一方，等待对方的ACK，被动关闭的一方进入LAST_ACK状态；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;主动关闭的一方收到FIN包，协议层回复ACK；此时，主动关闭连接的一方，进入TIME_WAIT状态；而被动关闭的一方，进入CLOSED状态&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;等待2MSL时间，主动关闭的一方，结束TIME_WAIT，进入CLOSED状态&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;所以time_wait属于tcp正常的一个状态，是为了解决网络的丢包和网络不稳定锁存在的一个状态。&lt;/p&gt;
+&lt;p&gt;因为当前服务器并发相对较大，所以存在了大量的链接为关闭，如果只是几百的话，也不会影响服务器性能。&lt;/p&gt;
+&lt;p&gt;使用连接池保存长链接，可使得链接复用，不会出现大量的这种状态。&lt;/p&gt;
+&lt;h1&gt;反思：&lt;/h1&gt;&lt;p&gt;问题终于找到解决，但是回过头来想了一下，其实一开始就可以定位到的，只是很多问题集中在一起出现反而让自己不知所措，这个时候如果是敏感的人的话应该马上能够从tcp状态上看出问题，之后线上遇到问题，重要的是先解决（不管通过什么方式），之后再一步步排查。&lt;/p&gt;</description></item></channel></rss>

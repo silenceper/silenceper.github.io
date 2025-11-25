@@ -1,29 +1,29 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – Ca</title><link>/tags/ca/</link><description>Recent content in Ca on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 02 Jul 2019 00:00:00 +0000</lastBuildDate><atom:link href="/tags/ca/index.xml" rel="self" type="application/rss+xml"/><item><title>Cluster Autoscaler:集群自动扩缩容</title><link>/blog/201907/cluster-autoscaler-usage/</link><pubDate>Tue, 02 Jul 2019 00:00:00 +0000</pubDate><guid>/blog/201907/cluster-autoscaler-usage/</guid><description>
-&lt;p>Cluster AutoScaler 是一个自动扩展和收缩 Kubernetes 集群 Node 的扩展。当集群容量不足时，它会自动去 Cloud Provider （支持 GCE、GKE 和 AWS）创建新的 Node，而在 Node 长时间资源利用率很低时自动将其删除以节省开支。&lt;/p>
-&lt;p>在Kubernetes中关于弹性伸缩主要有三种格式：&lt;/p>
-&lt;ul>
-&lt;li>&lt;strong>HPA&lt;/strong>：Horizontal Pod Autoscaling可以根据CPU利用率自动伸缩一个Replication Controller、Deployment 或者Replica Set中的Pod数量&lt;/li>
-&lt;li>&lt;strong>VPA&lt;/strong>：Vertical Pod Autoscaler（VPA）使用户无需为其pods中的容器设置最新的资源request。配置后，它将根据使用情况自动设置request，从而允许在节点上进行适当的调度，以便为每个pod提供适当的资源量。&lt;/li>
-&lt;li>&lt;strong>CA&lt;/strong>：自动伸缩NODE节点&lt;/li>
-&lt;/ul>
-&lt;h2>部署&lt;span class="hx-absolute -hx-mt-20" id="部署">&lt;/span>
-&lt;a href="#%e9%83%a8%e7%bd%b2" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>Cluster Autoscaler代码地址：&lt;a href="https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler" target="_blank" rel="noopener">https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler&lt;/a>&lt;/p>
-&lt;p>CA 提供了&lt;a href="https://github.com/kubernetes/autoscaler/blob/7cfa98b4ca308fbede1a2f1054ef3f00daf560dd/cluster-autoscaler/cloudprovider/cloud_provider.go#L31" target="_blank" rel="noopener">Cloud Provider&lt;/a>接口供各个云厂商接入，主要是针对厂商自己的API，应对节点添加以及删除的请求。&lt;/p>
-&lt;p>目前云厂商的ECS产品都会有扩缩容的功能（例如阿里云ESS，就是CA中伸缩组的概念），CA就可以结合ESS完成集群的扩缩容功能。&lt;/p>
-&lt;p>各大厂商节点扩缩容安装：&lt;/p>
-&lt;ul>
-&lt;li>GCE: &lt;a href="https://kubernetes.io/docs/concepts/cluster-administration/cluster-management/" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/cluster-administration/cluster-management/&lt;/a>&lt;/li>
-&lt;li>GKE: &lt;a href="https://cloud.google.com/container-engine/docs/cluster-autoscaler" target="_blank" rel="noopener">https://cloud.google.com/container-engine/docs/cluster-autoscaler&lt;/a>&lt;/li>
-&lt;li>AWS: &lt;a href="https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/cloudprovider/aws/README.md" target="_blank" rel="noopener">https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/cloudprovider/aws/README.md&lt;/a>&lt;/li>
-&lt;li>Azure: &lt;a href="https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler/cloudprovider/azure" target="_blank" rel="noopener">https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler/cloudprovider/azure&lt;/a>&lt;/li>
-&lt;li>alicloud：&lt;a href="https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/cloudprovider/alicloud/README.md" target="_blank" rel="noopener">https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/cloudprovider/alicloud/README.md&lt;/a>&lt;/li>
-&lt;li>baiducloud：&lt;a href="https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/cloudprovider/baiducloud/README.md" target="_blank" rel="noopener">https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/cloudprovider/baiducloud/README.md&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;p>以阿里云为例，具体安装可以参考这篇文章：&lt;a href="https://yq.aliyun.com/articles/392170" target="_blank" rel="noopener">阿里云上弹性伸缩kubernetes集群 - autoscaler
-&lt;/a>&lt;/p>
-&lt;p>其中关键yaml文件如下：&lt;/p>
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
-&lt;div>&lt;pre>&lt;code>apiVersion: extensions/v1beta1
+&lt;p&gt;Cluster AutoScaler 是一个自动扩展和收缩 Kubernetes 集群 Node 的扩展。当集群容量不足时，它会自动去 Cloud Provider （支持 GCE、GKE 和 AWS）创建新的 Node，而在 Node 长时间资源利用率很低时自动将其删除以节省开支。&lt;/p&gt;
+&lt;p&gt;在Kubernetes中关于弹性伸缩主要有三种格式：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;HPA&lt;/strong&gt;：Horizontal Pod Autoscaling可以根据CPU利用率自动伸缩一个Replication Controller、Deployment 或者Replica Set中的Pod数量&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;VPA&lt;/strong&gt;：Vertical Pod Autoscaler（VPA）使用户无需为其pods中的容器设置最新的资源request。配置后，它将根据使用情况自动设置request，从而允许在节点上进行适当的调度，以便为每个pod提供适当的资源量。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;CA&lt;/strong&gt;：自动伸缩NODE节点&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;部署&lt;span class="hx-absolute -hx-mt-20" id="部署"&gt;&lt;/span&gt;
+&lt;a href="#%e9%83%a8%e7%bd%b2" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Cluster Autoscaler代码地址：&lt;a href="https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler" target="_blank" rel="noopener"&gt;https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;CA 提供了&lt;a href="https://github.com/kubernetes/autoscaler/blob/7cfa98b4ca308fbede1a2f1054ef3f00daf560dd/cluster-autoscaler/cloudprovider/cloud_provider.go#L31" target="_blank" rel="noopener"&gt;Cloud Provider&lt;/a&gt;接口供各个云厂商接入，主要是针对厂商自己的API，应对节点添加以及删除的请求。&lt;/p&gt;
+&lt;p&gt;目前云厂商的ECS产品都会有扩缩容的功能（例如阿里云ESS，就是CA中伸缩组的概念），CA就可以结合ESS完成集群的扩缩容功能。&lt;/p&gt;
+&lt;p&gt;各大厂商节点扩缩容安装：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;GCE: &lt;a href="https://kubernetes.io/docs/concepts/cluster-administration/cluster-management/" target="_blank" rel="noopener"&gt;https://kubernetes.io/docs/concepts/cluster-administration/cluster-management/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;GKE: &lt;a href="https://cloud.google.com/container-engine/docs/cluster-autoscaler" target="_blank" rel="noopener"&gt;https://cloud.google.com/container-engine/docs/cluster-autoscaler&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;AWS: &lt;a href="https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/cloudprovider/aws/README.md" target="_blank" rel="noopener"&gt;https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/cloudprovider/aws/README.md&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Azure: &lt;a href="https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler/cloudprovider/azure" target="_blank" rel="noopener"&gt;https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler/cloudprovider/azure&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;alicloud：&lt;a href="https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/cloudprovider/alicloud/README.md" target="_blank" rel="noopener"&gt;https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/cloudprovider/alicloud/README.md&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;baiducloud：&lt;a href="https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/cloudprovider/baiducloud/README.md" target="_blank" rel="noopener"&gt;https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/cloudprovider/baiducloud/README.md&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;以阿里云为例，具体安装可以参考这篇文章：&lt;a href="https://yq.aliyun.com/articles/392170" target="_blank" rel="noopener"&gt;阿里云上弹性伸缩kubernetes集群 - autoscaler
+&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;其中关键yaml文件如下：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
 name: cluster-autoscaler
@@ -69,45 +69,45 @@ valueFrom:
 secretKeyRef:
 name: cloud-config
 key: access-key-secret
-imagePullPolicy: &amp;#34;Always&amp;#34;&lt;/code>&lt;/pre>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+imagePullPolicy: &amp;#34;Always&amp;#34;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
 &lt;button
 class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
 title="Copy code"
->
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
-&lt;/button>
-&lt;/div>
-&lt;/div>
-&lt;p>其中 &lt;code>--nodes=1:100:${AUTO_SCALER_GROUP}&lt;/code>参数，表示扩容最大100个，缩容最小1个节点，后面&lt;code>${AUTO_SCALER_GROUP}&lt;/code>表示伸缩组ID&lt;/p>
-&lt;h2>工作原理&lt;span class="hx-absolute -hx-mt-20" id="工作原理">&lt;/span>
-&lt;a href="#%e5%b7%a5%e4%bd%9c%e5%8e%9f%e7%90%86" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;h3>扩容&lt;span class="hx-absolute -hx-mt-20" id="扩容">&lt;/span>
-&lt;a href="#%e6%89%a9%e5%ae%b9" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h3>&lt;p>CA会定期(默认10s,通过参数&lt;code>--scan-interval&lt;/code>设置)检测当前集群状态下是否存在pending的pod，然后经过计算，判断需要扩容几个节点，最终从node group中进行节点的扩容：&lt;/p>
-&lt;p>Node Group 就对应伸缩组的概念，可以支持配置支持多个伸缩组，通过策略来进行选择，目前支持的策略为：&lt;/p>
-&lt;ul>
-&lt;li>random：随机选择&lt;/li>
-&lt;li>most-pods：选择能够创建pod最多的Node Group&lt;/li>
-&lt;li>least-waste：以最小浪费原则选择，即选择有最少可用资源的 Node Group&lt;/li>
-&lt;li>price：根据主机的价格选择，选择最便宜的&lt;/li>
-&lt;li>priority：根据优先级进行选择，通过配置&lt;code>cluster-autoscaler-priority-expander&lt;/code> configMap，具体参考：&lt;a href="https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler/expander/priority" target="_blank" rel="noopener">https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler/expander/priority&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;h3>缩容&lt;span class="hx-absolute -hx-mt-20" id="缩容">&lt;/span>
-&lt;a href="#%e7%bc%a9%e5%ae%b9" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h3>&lt;p>集群缩容其实是一个可选的选项，通过参数&lt;code>--scale-down-enabled&lt;/code>控制是否开启缩容。&lt;/p>
-&lt;p>CA定期会检测集群状态，判断当前集群状态下，哪些节点资源利用率小于50%(通过参数&lt;code>--scale-down-utilization-threshold&lt;/code>控制)。&lt;/p>
-&lt;p>资源利用率计算是通过判断集群cpu，mem 中request值占用率计算的，只要有一个指标超了就可能会出发缩容，之所以说是可能会触发扩容，是因为要保证被驱逐节点上的POD能够正确调度到其他节点上。&lt;/p>
-&lt;p>&lt;strong>哪些NODE不会缩容：&lt;/strong>&lt;/p>
-&lt;ul>
-&lt;li>当您设置了严格的 PodDisruptionBudget 的 Pod 不满足 PDB 时，不会缩容。&lt;/li>
-&lt;li>Kube-system 下的 Pod。通过参数&lt;code>--skip-nodes-with-system-pods&lt;/code>控制&lt;/li>
-&lt;li>节点上有非 deployment，replica set，job，stateful set 等控制器创建的 Pod。&lt;/li>
-&lt;li>Pod 有本地存储。通过参数&lt;code>--skip-nodes-with-local-storage&lt;/code>控制&lt;/li>
-&lt;li>Pod 不能被调度到其他节点上。例如资源不满足等&lt;/li>
-&lt;/ul>
-&lt;h2>实现Cluster Provider&lt;span class="hx-absolute -hx-mt-20" id="实现cluster-provider">&lt;/span>
-&lt;a href="#%e5%ae%9e%e7%8e%b0cluster-provider" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>如果你使用的以上主流的几个云厂商的主机资源/k8s集群，可以直接使用官方的CA版本，只需要通过参数&lt;code>--cloud-provider&lt;/code>控制来自哪个云厂商就可以。&lt;/p>
-&lt;p>如果想要对接自己的IaaS层，只需要实现其中的接口就可以了，接口定义如下：&lt;/p>
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
-&lt;div>&lt;pre>&lt;code>// CloudProvider contains configuration info and functions for interacting with
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;其中 &lt;code&gt;--nodes=1:100:${AUTO_SCALER_GROUP}&lt;/code&gt;参数，表示扩容最大100个，缩容最小1个节点，后面&lt;code&gt;${AUTO_SCALER_GROUP}&lt;/code&gt;表示伸缩组ID&lt;/p&gt;
+&lt;h2&gt;工作原理&lt;span class="hx-absolute -hx-mt-20" id="工作原理"&gt;&lt;/span&gt;
+&lt;a href="#%e5%b7%a5%e4%bd%9c%e5%8e%9f%e7%90%86" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;扩容&lt;span class="hx-absolute -hx-mt-20" id="扩容"&gt;&lt;/span&gt;
+&lt;a href="#%e6%89%a9%e5%ae%b9" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;CA会定期(默认10s,通过参数&lt;code&gt;--scan-interval&lt;/code&gt;设置)检测当前集群状态下是否存在pending的pod，然后经过计算，判断需要扩容几个节点，最终从node group中进行节点的扩容：&lt;/p&gt;
+&lt;p&gt;Node Group 就对应伸缩组的概念，可以支持配置支持多个伸缩组，通过策略来进行选择，目前支持的策略为：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;random：随机选择&lt;/li&gt;
+&lt;li&gt;most-pods：选择能够创建pod最多的Node Group&lt;/li&gt;
+&lt;li&gt;least-waste：以最小浪费原则选择，即选择有最少可用资源的 Node Group&lt;/li&gt;
+&lt;li&gt;price：根据主机的价格选择，选择最便宜的&lt;/li&gt;
+&lt;li&gt;priority：根据优先级进行选择，通过配置&lt;code&gt;cluster-autoscaler-priority-expander&lt;/code&gt; configMap，具体参考：&lt;a href="https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler/expander/priority" target="_blank" rel="noopener"&gt;https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler/expander/priority&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;缩容&lt;span class="hx-absolute -hx-mt-20" id="缩容"&gt;&lt;/span&gt;
+&lt;a href="#%e7%bc%a9%e5%ae%b9" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;集群缩容其实是一个可选的选项，通过参数&lt;code&gt;--scale-down-enabled&lt;/code&gt;控制是否开启缩容。&lt;/p&gt;
+&lt;p&gt;CA定期会检测集群状态，判断当前集群状态下，哪些节点资源利用率小于50%(通过参数&lt;code&gt;--scale-down-utilization-threshold&lt;/code&gt;控制)。&lt;/p&gt;
+&lt;p&gt;资源利用率计算是通过判断集群cpu，mem 中request值占用率计算的，只要有一个指标超了就可能会出发缩容，之所以说是可能会触发扩容，是因为要保证被驱逐节点上的POD能够正确调度到其他节点上。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;哪些NODE不会缩容：&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;当您设置了严格的 PodDisruptionBudget 的 Pod 不满足 PDB 时，不会缩容。&lt;/li&gt;
+&lt;li&gt;Kube-system 下的 Pod。通过参数&lt;code&gt;--skip-nodes-with-system-pods&lt;/code&gt;控制&lt;/li&gt;
+&lt;li&gt;节点上有非 deployment，replica set，job，stateful set 等控制器创建的 Pod。&lt;/li&gt;
+&lt;li&gt;Pod 有本地存储。通过参数&lt;code&gt;--skip-nodes-with-local-storage&lt;/code&gt;控制&lt;/li&gt;
+&lt;li&gt;Pod 不能被调度到其他节点上。例如资源不满足等&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;实现Cluster Provider&lt;span class="hx-absolute -hx-mt-20" id="实现cluster-provider"&gt;&lt;/span&gt;
+&lt;a href="#%e5%ae%9e%e7%8e%b0cluster-provider" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;如果你使用的以上主流的几个云厂商的主机资源/k8s集群，可以直接使用官方的CA版本，只需要通过参数&lt;code&gt;--cloud-provider&lt;/code&gt;控制来自哪个云厂商就可以。&lt;/p&gt;
+&lt;p&gt;如果想要对接自己的IaaS层，只需要实现其中的接口就可以了，接口定义如下：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;// CloudProvider contains configuration info and functions for interacting with
 // cloud provider (GCE, AWS, etc).
 type CloudProvider interface {Marcin Wielgus, 3 years ago: • Cluster-autoscaler: cloud provider interface
 // Name returns name of the cloud provider.
@@ -141,19 +141,19 @@ Cleanup() error
 // Refresh is called before every main loop and can be used to dynamically update cloud provider state.
 // In particular the list of node groups returned by NodeGroups can change as a result of CloudProvider.Refresh().
 Refresh() error
-}&lt;/code>&lt;/pre>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
 &lt;button
 class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
 title="Copy code"
->
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
-&lt;/button>
-&lt;/div>
-&lt;/div>
-&lt;p>其中NodeGroup接口定义：&lt;/p>
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
-&lt;div>&lt;pre>&lt;code>// NodeGroup contains configuration info and functions to control a set
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;其中NodeGroup接口定义：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;// NodeGroup contains configuration info and functions to control a set
 // of nodes that have the same capacity and set of labels.
 type NodeGroup interface {
 // MaxSize returns maximum size of the node group.
@@ -208,15 +208,15 @@ Delete() error
 // Autoprovisioned returns true if the node group is autoprovisioned. An autoprovisioned group
 // was created by CA and can be deleted when scaled to 0.
 Autoprovisioned() bool
-}&lt;/code>&lt;/pre>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
 &lt;button
 class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
 title="Copy code"
->
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
-&lt;/button>
-&lt;/div>
-&lt;/div>
-&lt;p>其中&lt;code>IncreaseSize&lt;/code>，&lt;code>IncreaseSize&lt;/code>才是关键的方法，分别对用扩容伸缩组和增加节点。&lt;/p>
-&lt;p>在调用&lt;code>IncreaseSize&lt;/code>接口后，需要完成节点自动添加进集群。参考阿里云是通过配置shell脚本到伸缩组中的ECS启动脚本中，当ECS启动，自动执行该脚本。当然我们也可以自定义通过其他方式加入集群。&lt;/p></description></item></channel></rss>
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;其中&lt;code&gt;IncreaseSize&lt;/code&gt;，&lt;code&gt;IncreaseSize&lt;/code&gt;才是关键的方法，分别对用扩容伸缩组和增加节点。&lt;/p&gt;
+&lt;p&gt;在调用&lt;code&gt;IncreaseSize&lt;/code&gt;接口后，需要完成节点自动添加进集群。参考阿里云是通过配置shell脚本到伸缩组中的ECS启动脚本中，当ECS启动，自动执行该脚本。当然我们也可以自定义通过其他方式加入集群。&lt;/p&gt;</description></item></channel></rss>
