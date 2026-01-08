@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – 小程序</title><link>/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/</link><description>Recent content in 小程序 on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Wed, 26 Nov 2025 00:00:00 +0000</lastBuildDate><atom:link href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/index.xml" rel="self" type="application/rss+xml"/><item><title>AI辅助开发小程序的实践分享</title><link>/blog/2025-11-26-ai-minigrogram/</link><pubDate>Wed, 26 Nov 2025 00:00:00 +0000</pubDate><guid>/blog/2025-11-26-ai-minigrogram/</guid><description>
-&lt;h1>背景&lt;/h1>&lt;p>没写过前端，只写过后端主要熟悉的语言是golang，完成这个小程序主要分为了以下几个阶段：&lt;/p>
-&lt;h2>需求分析&lt;span class="hx-absolute -hx-mt-20" id="需求分析">&lt;/span>
-&lt;a href="#%e9%9c%80%e6%b1%82%e5%88%86%e6%9e%90" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>通过 Google AI Studio 中的gemini进行规划进行需求分析以及列出详细的需求说明；
+&lt;h1&gt;背景&lt;/h1&gt;&lt;p&gt;没写过前端，只写过后端主要熟悉的语言是golang，完成这个小程序主要分为了以下几个阶段：&lt;/p&gt;
+&lt;h2&gt;需求分析&lt;span class="hx-absolute -hx-mt-20" id="需求分析"&gt;&lt;/span&gt;
+&lt;a href="#%e9%9c%80%e6%b1%82%e5%88%86%e6%9e%90" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;通过 Google AI Studio 中的gemini进行规划进行需求分析以及列出详细的需求说明；
 这个小程序的主要功能主要是进行万能的记录类应用，同时我也给出了几个同类的APP让它进行分析；
-包括名字也是它给取的&lt;/p>
-&lt;p>最后得到如下的项目介绍，当然还有其他的一些项目的描述（这里没有记录下来）&lt;/p>
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
-&lt;div>&lt;pre>&lt;code># 星轨纪 (Star Trace)
+包括名字也是它给取的&lt;/p&gt;
+&lt;p&gt;最后得到如下的项目介绍，当然还有其他的一些项目的描述（这里没有记录下来）&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;# 星轨纪 (Star Trace)
 &amp;gt; 记录点滴，看见轨迹 ✨
 ## 📖 项目理念
 **星**：是您记录下的每一个数据点
@@ -17,22 +17,22 @@
 - 🌟 **记录每一颗星** - 轻松捕捉生活中的每个数据点
 - 🛤️ **绘制生命轨迹** - 用时间串联起零散的记录
 - 📚 **铭记成长历程** - 将数据转化为有意义的洞察
-无论是健康管理、习惯养成，还是生活记录，星轨纪都能成为您忠实的数字伙伴。&lt;/code>&lt;/pre>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+无论是健康管理、习惯养成，还是生活记录，星轨纪都能成为您忠实的数字伙伴。&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
 &lt;button
 class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
 title="Copy code"
->
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
-&lt;/button>
-&lt;/div>
-&lt;/div>
-&lt;h2>AI编码&lt;span class="hx-absolute -hx-mt-20" id="ai编码">&lt;/span>
-&lt;a href="#ai%e7%bc%96%e7%a0%81" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>编码我用的是vscode 中的copilot；&lt;/p>
-&lt;p>为了能够让AI能够进行完全的全栈式的编写，后端也一起放在同一个仓库了，分为了backend和miniprogram目录。&lt;/p>
-&lt;p>我指定了技术栈，后端使用golang+gin+gorm的方式，前端使用tdesign库保证美观。&lt;/p>
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
-&lt;div>&lt;pre>&lt;code>
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h2&gt;AI编码&lt;span class="hx-absolute -hx-mt-20" id="ai编码"&gt;&lt;/span&gt;
+&lt;a href="#ai%e7%bc%96%e7%a0%81" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;编码我用的是vscode 中的copilot；&lt;/p&gt;
+&lt;p&gt;为了能够让AI能够进行完全的全栈式的编写，后端也一起放在同一个仓库了，分为了backend和miniprogram目录。&lt;/p&gt;
+&lt;p&gt;我指定了技术栈，后端使用golang+gin+gorm的方式，前端使用tdesign库保证美观。&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;
 ## 后端项目结构
 backend/
 ├── cmd/ # 命令行工具
@@ -69,16 +69,16 @@ miniprogram/
 ├── utils/ # 工具函数
 │ ├── storage.js # 数据存储管理
 │ └── util.js # 通用工具函数
-└── custom-tab-bar/ # 自定义底部导航&lt;/code>&lt;/pre>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+└── custom-tab-bar/ # 自定义底部导航&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
 &lt;button
 class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
 title="Copy code"
->
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
-&lt;/button>
-&lt;/div>
-&lt;/div>
-&lt;p>当然在实现的过程中还要不断地调教，不过最后实现的效果还可以，用的越多发现要时不时的切换新的会话，不然会“降智”，我基本用的是CLaude Sonnet4模型。&lt;/p>
-&lt;p>最后放几个效果图：&lt;/p>
-&lt;p>&lt;img src="/img/star-trace.png" alt="星轨纪" loading="lazy" />&lt;/p></description></item></channel></rss>
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;当然在实现的过程中还要不断地调教，不过最后实现的效果还可以，用的越多发现要时不时的切换新的会话，不然会“降智”，我基本用的是CLaude Sonnet4模型。&lt;/p&gt;
+&lt;p&gt;最后放几个效果图：&lt;/p&gt;
+&lt;p&gt;&lt;img src="/img/star-trace.png" alt="星轨纪" loading="lazy" /&gt;&lt;/p&gt;</description></item></channel></rss>

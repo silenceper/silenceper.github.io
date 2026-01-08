@@ -1,37 +1,37 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – Inotify</title><link>/tags/inotify/</link><description>Recent content in Inotify on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Wed, 13 May 2020 20:20:59 +0800</lastBuildDate><atom:link href="/tags/inotify/index.xml" rel="self" type="application/rss+xml"/><item><title>用vim保存文件和echo命令到底有什么不同？</title><link>/blog/202005/difference-vim-and-echo/</link><pubDate>Wed, 13 May 2020 20:20:59 +0800</pubDate><guid>/blog/202005/difference-vim-and-echo/</guid><description>
-&lt;h2>现象&lt;span class="hx-absolute -hx-mt-20" id="现象">&lt;/span>
-&lt;a href="#%e7%8e%b0%e8%b1%a1" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>最近在调试一个filebeat程序时需要制造一些log，我是直接使用vim直接对文件打开然后直接保存的。&lt;/p>
-&lt;p>但是有个&lt;strong>奇怪的现象&lt;/strong>：每次写入一行新的日志，filebeat都会将整个文件的内容又重新进行上报一遍导致日志上传重复，同时观察到filebeat的文件采集状态文件&lt;code>registry&lt;/code>都会进行增加一个重复的文件(source相同，inode不同)。&lt;/p>
-&lt;p>操作一番后以为是程序的问题，最后才反应过来（一开始没注意到inode不同 :&amp;lt;），最终使用&lt;code>echo &amp;quot;test some log&amp;quot;&amp;gt;&amp;gt;test.log&lt;/code>追加的方式发现不会有此问题。&lt;/p>
-&lt;p>同时看了下两者的&lt;code>inode&lt;/code>信息，确认了是因为&lt;code>vim&lt;/code>会改变文件的inode(一个新的文件)，echo则不会：&lt;/p>
-&lt;blockquote>
-&lt;p>2020-05-14更新：也跟文件权限有关，如果文件没有o没有w权限，则inode信息会改变，如果&lt;code>chmod o+w test.log&lt;/code>则inode信息不会变&lt;/p>
-&lt;p>同时vim也是开了备份文件&lt;/p>
-&lt;/blockquote>
-&lt;p>&lt;strong>1、查看文件inode为908488&lt;/strong>&lt;/p>
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
-&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@localhost work&lt;span class="o">]&lt;/span>&lt;span class="c1"># stat test.log&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 文件：&lt;span class="s2">&amp;#34;test.log&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 大小：0 块：0 IO 块：4096 普通空文件
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">设备：fd00h/64768d Inode：908488 硬链接：1
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">权限：&lt;span class="o">(&lt;/span>0644/-rw-r--r--&lt;span class="o">)&lt;/span> Uid：&lt;span class="o">(&lt;/span> 0/ root&lt;span class="o">)&lt;/span> Gid：&lt;span class="o">(&lt;/span> 0/ root&lt;span class="o">)&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">环境：unconfined_u:object_r:admin_home_t:s0
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">最近访问：2020-05-10 04:38:39.399791808 -0400
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">最近更改：2020-05-10 04:38:39.399791808 -0400
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">最近改动：2020-05-10 04:38:39.399791808 -0400
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">创建时间：-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+&lt;h2&gt;现象&lt;span class="hx-absolute -hx-mt-20" id="现象"&gt;&lt;/span&gt;
+&lt;a href="#%e7%8e%b0%e8%b1%a1" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;最近在调试一个filebeat程序时需要制造一些log，我是直接使用vim直接对文件打开然后直接保存的。&lt;/p&gt;
+&lt;p&gt;但是有个&lt;strong&gt;奇怪的现象&lt;/strong&gt;：每次写入一行新的日志，filebeat都会将整个文件的内容又重新进行上报一遍导致日志上传重复，同时观察到filebeat的文件采集状态文件&lt;code&gt;registry&lt;/code&gt;都会进行增加一个重复的文件(source相同，inode不同)。&lt;/p&gt;
+&lt;p&gt;操作一番后以为是程序的问题，最后才反应过来（一开始没注意到inode不同 :&amp;lt;），最终使用&lt;code&gt;echo &amp;quot;test some log&amp;quot;&amp;gt;&amp;gt;test.log&lt;/code&gt;追加的方式发现不会有此问题。&lt;/p&gt;
+&lt;p&gt;同时看了下两者的&lt;code&gt;inode&lt;/code&gt;信息，确认了是因为&lt;code&gt;vim&lt;/code&gt;会改变文件的inode(一个新的文件)，echo则不会：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;2020-05-14更新：也跟文件权限有关，如果文件没有o没有w权限，则inode信息会改变，如果&lt;code&gt;chmod o+w test.log&lt;/code&gt;则inode信息不会变&lt;/p&gt;
+&lt;p&gt;同时vim也是开了备份文件&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;1、查看文件inode为908488&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;[&lt;/span&gt;root@localhost work&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="c1"&gt;# stat test.log&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; 文件：&lt;span class="s2"&gt;&amp;#34;test.log&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; 大小：0 块：0 IO 块：4096 普通空文件
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;设备：fd00h/64768d Inode：908488 硬链接：1
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;权限：&lt;span class="o"&gt;(&lt;/span&gt;0644/-rw-r--r--&lt;span class="o"&gt;)&lt;/span&gt; Uid：&lt;span class="o"&gt;(&lt;/span&gt; 0/ root&lt;span class="o"&gt;)&lt;/span&gt; Gid：&lt;span class="o"&gt;(&lt;/span&gt; 0/ root&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;环境：unconfined_u:object_r:admin_home_t:s0
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;最近访问：2020-05-10 04:38:39.399791808 -0400
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;最近更改：2020-05-10 04:38:39.399791808 -0400
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;最近改动：2020-05-10 04:38:39.399791808 -0400
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;创建时间：-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
 &lt;button
 class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
 title="Copy code"
->
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
-&lt;/button>
-&lt;/div>
-&lt;/div>
-&lt;p>&lt;strong>2、当我用vim/vi工具进行编辑保存之后，变为了：908490&lt;/strong>&lt;/p>
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
-&lt;div>&lt;pre>&lt;code>[root@localhost work]# vi test.log
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;2、当我用vim/vi工具进行编辑保存之后，变为了：908490&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;[root@localhost work]# vi test.log
 [root@localhost work]# stat test.log
 文件：&amp;#34;test.log&amp;#34;
 大小：7 块：8 IO 块：4096 普通文件
@@ -41,19 +41,19 @@ title="Copy code"
 最近访问：2020-05-10 04:39:01.950055784 -0400
 最近更改：2020-05-10 04:39:01.950055784 -0400
 最近改动：2020-05-10 04:39:01.953305882 -0400
-创建时间：-&lt;/code>&lt;/pre>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+创建时间：-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
 &lt;button
 class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
 title="Copy code"
->
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
-&lt;/button>
-&lt;/div>
-&lt;/div>
-&lt;p>&lt;strong>3、而用echo命令修改看到inode信息并没有改变, 908490&lt;/strong>&lt;/p>
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
-&lt;div>&lt;pre>&lt;code>[root@localhost work]# echo &amp;#34;test some log&amp;#34;&amp;gt;&amp;gt;test.log
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;3、而用echo命令修改看到inode信息并没有改变, 908490&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;[root@localhost work]# echo &amp;#34;test some log&amp;#34;&amp;gt;&amp;gt;test.log
 [root@localhost work]# stat test.log
 文件：&amp;#34;test.log&amp;#34;
 大小：21 块：8 IO 块：4096 普通文件
@@ -63,48 +63,48 @@ title="Copy code"
 最近访问：2020-05-10 04:39:01.950055784 -0400
 最近更改：2020-05-10 04:41:16.794459151 -0400
 最近改动：2020-05-10 04:41:16.794459151 -0400
-创建时间：-&lt;/code>&lt;/pre>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+创建时间：-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
 &lt;button
 class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
 title="Copy code"
->
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
-&lt;/button>
-&lt;/div>
-&lt;/div>
-&lt;h2>验证&lt;span class="hx-absolute -hx-mt-20" id="验证">&lt;/span>
-&lt;a href="#%e9%aa%8c%e8%af%81" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>其实通过inode的改变以及可以猜测出在使用vi/vim进行编辑的时候，文件以及变为了一个新的文件，这里我主要通过&lt;code>inotifywait&lt;/code>来看一下，在进行vim编辑的时候，文件会产生什么时间&lt;/p>
-&lt;blockquote>
-&lt;p>一开始本来打算使用golang中&lt;code>github.com/fsnotify/fsnotify&lt;/code>去看的，但是发现包中对event进行了合并，不够原始。所以才直接使用&lt;code>inotifywait &lt;/code>来看&lt;/p>
-&lt;/blockquote>
-&lt;p>inotifywait命令：&lt;/p>
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
-&lt;div>&lt;pre>&lt;code>inotifywait -rm test.log&lt;/code>&lt;/pre>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h2&gt;验证&lt;span class="hx-absolute -hx-mt-20" id="验证"&gt;&lt;/span&gt;
+&lt;a href="#%e9%aa%8c%e8%af%81" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;其实通过inode的改变以及可以猜测出在使用vi/vim进行编辑的时候，文件以及变为了一个新的文件，这里我主要通过&lt;code&gt;inotifywait&lt;/code&gt;来看一下，在进行vim编辑的时候，文件会产生什么时间&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;一开始本来打算使用golang中&lt;code&gt;github.com/fsnotify/fsnotify&lt;/code&gt;去看的，但是发现包中对event进行了合并，不够原始。所以才直接使用&lt;code&gt;inotifywait &lt;/code&gt;来看&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;inotifywait命令：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;inotifywait -rm test.log&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
 &lt;button
 class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
 title="Copy code"
->
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
-&lt;/button>
-&lt;/div>
-&lt;/div>
-&lt;p>文件权限：&lt;/p>
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
-&lt;div>&lt;pre>&lt;code>-rw-r--r--. 1 root root 49 5月 14 05:40 test.log&lt;/code>&lt;/pre>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;文件权限：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;-rw-r--r--. 1 root root 49 5月 14 05:40 test.log&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
 &lt;button
 class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
 title="Copy code"
->
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
-&lt;/button>
-&lt;/div>
-&lt;/div>
-&lt;p>&lt;strong>1、使用vim进行编辑的结果：&lt;/strong>&lt;/p>
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
-&lt;div>&lt;pre>&lt;code>[root@localhost work]# inotifywait -rm test.log
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;1、使用vim进行编辑的结果：&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;[root@localhost work]# inotifywait -rm test.log
 Setting up watches. Beware: since -r was given, this may take a while!
 Watches established.
 test.log OPEN
@@ -112,38 +112,38 @@ test.log ACCESS
 test.log CLOSE_NOWRITE,CLOSE
 test.log MOVE_SELF
 test.log ATTRIB
-test.log DELETE_SELF&lt;/code>&lt;/pre>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+test.log DELETE_SELF&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
 &lt;button
 class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
 title="Copy code"
->
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
-&lt;/button>
-&lt;/div>
-&lt;/div>
-&lt;p>可以看到对文件进行了&lt;code>DELETE_SELF&lt;/code>&lt;/p>
-&lt;p>&lt;strong>注意当再次进行编辑的时候，已经无法监听到了，因为原有文件已经被删除，需要重新监听&lt;/strong>&lt;/p>
-&lt;p>&lt;strong>2、使用echo进行追加写入的结果&lt;/strong>&lt;/p>
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
-&lt;div>&lt;pre>&lt;code>[root@localhost work]# inotifywait -rm test.log
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;可以看到对文件进行了&lt;code&gt;DELETE_SELF&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;注意当再次进行编辑的时候，已经无法监听到了，因为原有文件已经被删除，需要重新监听&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2、使用echo进行追加写入的结果&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;[root@localhost work]# inotifywait -rm test.log
 Setting up watches. Beware: since -r was given, this may take a while!
 Watches established.
 test.log OPEN
 test.log MODIFY
-test.log CLOSE_WRITE,CLOSE&lt;/code>&lt;/pre>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+test.log CLOSE_WRITE,CLOSE&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
 &lt;button
 class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
 title="Copy code"
->
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
-&lt;/button>
-&lt;/div>
-&lt;/div>
-&lt;p>&lt;strong>3、监听整个目录，可以看到更多信息&lt;/strong>&lt;/p>
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
-&lt;div>&lt;pre>&lt;code>[root@localhost work]# inotifywait -rm ./dir/
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;3、监听整个目录，可以看到更多信息&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;[root@localhost work]# inotifywait -rm ./dir/
 Setting up watches. Beware: since -r was given, this may take a while!
 Watches established.
 # 当进行文件写入时
@@ -179,20 +179,20 @@ Watches established.
 ./dir/ MODIFY .test.log.swp
 ./dir/ DELETE test.log~
 ./dir/ CLOSE_WRITE,CLOSE .test.log.swp
-./dir/ DELETE .test.log.swp&lt;/code>&lt;/pre>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+./dir/ DELETE .test.log.swp&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
 &lt;button
 class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
 title="Copy code"
->
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
-&lt;/button>
-&lt;/div>
-&lt;/div>
-&lt;p>可以看到在进行文件保存时，将原有test.log 移动为test.log~，并新创建一个文件test.log，最后对test.log~备份文件和.test.log.swp缓冲区文件进行删除&lt;/p>
-&lt;p>&lt;strong>4、当进行&lt;code>chmod o+w test.log&lt;/code>时，看到的信息如下：&lt;/strong>&lt;/p>
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
-&lt;div>&lt;pre>&lt;code>./dir/ CREATE 4913
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;可以看到在进行文件保存时，将原有test.log 移动为test.log~，并新创建一个文件test.log，最后对test.log~备份文件和.test.log.swp缓冲区文件进行删除&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;4、当进行&lt;code&gt;chmod o+w test.log&lt;/code&gt;时，看到的信息如下：&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;./dir/ CREATE 4913
 ./dir/ OPEN 4913
 ./dir/ ATTRIB 4913
 ./dir/ CLOSE_WRITE,CLOSE 4913
@@ -214,24 +214,24 @@ title="Copy code"
 ./dir/ MODIFY .test.log.swp
 ./dir/ DELETE test.log~
 ./dir/ CLOSE_WRITE,CLOSE .test.log.swp
-./dir/ DELETE .test.log.swp&lt;/code>&lt;/pre>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+./dir/ DELETE .test.log.swp&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
 &lt;button
 class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
 title="Copy code"
->
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
-&lt;/button>
-&lt;/div>
-&lt;/div>
-&lt;p>对比3中的结果没有将test.log move to test.log~的操作，而是直接对test.log文件进行更改，所以此时inode信息并没有改变&lt;/p>
-&lt;p>&lt;strong>5、如果关闭vim备份&lt;/strong>&lt;/p>
-&lt;p>通过设置vim参数&lt;code>set nobackup nowritebackup&lt;/code>关闭vim的备份，则在保存的时候不会生成&lt;code>test.log~&lt;/code>文件，这种情况下，inode信息也是不会改变的&lt;/p>
-&lt;h2>总结&lt;span class="hx-absolute -hx-mt-20" id="总结">&lt;/span>
-&lt;a href="#%e6%80%bb%e7%bb%93" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;ul>
-&lt;li>vim编辑是产生了一个新的文件，所以看到inode信息变化了，而echo仅仅只是对文件进行写入。&lt;/li>
-&lt;li>在vim编辑过程中，会生成swp缓冲区文件，在进行vim编辑时时刻将内容保存进入swp，防止程序退出未保存&lt;/li>
-&lt;li>产生后缀带 ~ 的备份文件，这个是在对文件进行保存时产生，如果文件被正常保存则该文件会被立即删除，正常情况下是看不到这个文件&lt;/li>
-&lt;li>如果文件other有write权限（&lt;code>chmod o+w xxx&lt;/code>），则当进行vi写入内容的时候文件inode不会改变。&lt;/li>
-&lt;li>如果关闭vim备份，则inode信息也不会改变&lt;/li>
-&lt;/ul></description></item></channel></rss>
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;对比3中的结果没有将test.log move to test.log~的操作，而是直接对test.log文件进行更改，所以此时inode信息并没有改变&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;5、如果关闭vim备份&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;通过设置vim参数&lt;code&gt;set nobackup nowritebackup&lt;/code&gt;关闭vim的备份，则在保存的时候不会生成&lt;code&gt;test.log~&lt;/code&gt;文件，这种情况下，inode信息也是不会改变的&lt;/p&gt;
+&lt;h2&gt;总结&lt;span class="hx-absolute -hx-mt-20" id="总结"&gt;&lt;/span&gt;
+&lt;a href="#%e6%80%bb%e7%bb%93" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;vim编辑是产生了一个新的文件，所以看到inode信息变化了，而echo仅仅只是对文件进行写入。&lt;/li&gt;
+&lt;li&gt;在vim编辑过程中，会生成swp缓冲区文件，在进行vim编辑时时刻将内容保存进入swp，防止程序退出未保存&lt;/li&gt;
+&lt;li&gt;产生后缀带 ~ 的备份文件，这个是在对文件进行保存时产生，如果文件被正常保存则该文件会被立即删除，正常情况下是看不到这个文件&lt;/li&gt;
+&lt;li&gt;如果文件other有write权限（&lt;code&gt;chmod o+w xxx&lt;/code&gt;），则当进行vi写入内容的时候文件inode不会改变。&lt;/li&gt;
+&lt;li&gt;如果关闭vim备份，则inode信息也不会改变&lt;/li&gt;
+&lt;/ul&gt;</description></item></channel></rss>
