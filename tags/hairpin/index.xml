@@ -1,74 +1,74 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – Hairpin</title><link>/tags/hairpin/</link><description>Recent content in Hairpin on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Thu, 30 Apr 2020 11:26:59 +0800</lastBuildDate><atom:link href="/tags/hairpin/index.xml" rel="self" type="application/rss+xml"/><item><title>记一次问题排查：为什么在POD无法通过Service访问自己？</title><link>/blog/202004/bridge-hairpin-mod/</link><pubDate>Thu, 30 Apr 2020 11:26:59 +0800</pubDate><guid>/blog/202004/bridge-hairpin-mod/</guid><description>
-&lt;h2&gt;问题现象&lt;span class="hx-absolute -hx-mt-20" id="问题现象"&gt;&lt;/span&gt;
-&lt;a href="#%e9%97%ae%e9%a2%98%e7%8e%b0%e8%b1%a1" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;创建一个nginx pod，并配置了service访问，service后端指向pod。&lt;/p&gt;
-&lt;p&gt;进入pod中使用service ip 或者service 域名，无法访问。&lt;/p&gt;
-&lt;p&gt;一开始以为是环境配置或者k8s版本（1.9）的问题，在其他1.13的kubernetes环境下也试了，还是同样的问题。&lt;/p&gt;
-&lt;h2&gt;环境配置&lt;span class="hx-absolute -hx-mt-20" id="环境配置"&gt;&lt;/span&gt;
-&lt;a href="#%e7%8e%af%e5%a2%83%e9%85%8d%e7%bd%ae" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;使用的cni插件是flannel，但不是容器化安装，也不是标准化的通过kubelet指定cni plugin（&amp;ndash;cni-bin-dir,&amp;ndash;cni-conf-dir参数），而是通过dockerd 提供的&lt;code&gt;-bip&lt;/code&gt;参数指定容器的子网，而这个值是从&lt;code&gt;/run/flannel/subnet.env&lt;/code&gt;(flannel会将获取到的子网写入到该文件)&lt;/p&gt;
-&lt;h2&gt;排查过程&lt;span class="hx-absolute -hx-mt-20" id="排查过程"&gt;&lt;/span&gt;
-&lt;a href="#%e6%8e%92%e6%9f%a5%e8%bf%87%e7%a8%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;1、首先尝试通过pod ip尝试是否可访问，已验证是可通的。&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;2、尝试对docker0网桥进行抓包&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
-&lt;div&gt;&lt;pre&gt;&lt;code&gt;tcpdump -i docker0&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;h2>问题现象&lt;span class="hx-absolute -hx-mt-20" id="问题现象">&lt;/span>
+&lt;a href="#%e9%97%ae%e9%a2%98%e7%8e%b0%e8%b1%a1" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>创建一个nginx pod，并配置了service访问，service后端指向pod。&lt;/p>
+&lt;p>进入pod中使用service ip 或者service 域名，无法访问。&lt;/p>
+&lt;p>一开始以为是环境配置或者k8s版本（1.9）的问题，在其他1.13的kubernetes环境下也试了，还是同样的问题。&lt;/p>
+&lt;h2>环境配置&lt;span class="hx-absolute -hx-mt-20" id="环境配置">&lt;/span>
+&lt;a href="#%e7%8e%af%e5%a2%83%e9%85%8d%e7%bd%ae" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>使用的cni插件是flannel，但不是容器化安装，也不是标准化的通过kubelet指定cni plugin（&amp;ndash;cni-bin-dir,&amp;ndash;cni-conf-dir参数），而是通过dockerd 提供的&lt;code>-bip&lt;/code>参数指定容器的子网，而这个值是从&lt;code>/run/flannel/subnet.env&lt;/code>(flannel会将获取到的子网写入到该文件)&lt;/p>
+&lt;h2>排查过程&lt;span class="hx-absolute -hx-mt-20" id="排查过程">&lt;/span>
+&lt;a href="#%e6%8e%92%e6%9f%a5%e8%bf%87%e7%a8%8b" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>&lt;strong>1、首先尝试通过pod ip尝试是否可访问，已验证是可通的。&lt;/strong>&lt;/p>
+&lt;p>&lt;strong>2、尝试对docker0网桥进行抓包&lt;/strong>&lt;/p>
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+&lt;div>&lt;pre>&lt;code>tcpdump -i docker0&lt;/code>&lt;/pre>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
 &lt;button
 class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
 title="Copy code"
-&gt;
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;/button&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;神奇的在这里，再次尝试通过service 访问是居然可以通，发现只要tcpdump断开就不行了。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;到这里的时候有点觉得诡异了&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;在pod内通过service访问的时候网络的流向应该是&lt;/p&gt;
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
-&lt;div&gt;&lt;pre&gt;&lt;code&gt;pod内部访问service-&amp;gt;docker0网桥-&amp;gt;宿主机的iptables规则-&amp;gt;docker0网桥-&amp;gt;pod内部&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+>
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>神奇的在这里，再次尝试通过service 访问是居然可以通，发现只要tcpdump断开就不行了。&lt;/p>
+&lt;blockquote>
+&lt;p>到这里的时候有点觉得诡异了&lt;/p>
+&lt;/blockquote>
+&lt;p>在pod内通过service访问的时候网络的流向应该是&lt;/p>
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+&lt;div>&lt;pre>&lt;code>pod内部访问service-&amp;gt;docker0网桥-&amp;gt;宿主机的iptables规则-&amp;gt;docker0网桥-&amp;gt;pod内部&lt;/code>&lt;/pre>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
 &lt;button
 class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
 title="Copy code"
-&gt;
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;/button&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;查阅了相关资料后，看到kubelet有个&lt;code&gt;--hairpin-mod&lt;/code&gt;参数：&lt;/p&gt;
-&lt;p&gt;文档说明：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;如果网络没有为“发夹模式”流量生成正确配置，通常当 kube-proxy 以 iptables 模式运行，并且 Pod 与桥接网络连接时，就会发生这种情况。Kubelet 公开了一个 hairpin-mode 标志，如果 pod 试图访问它们自己的 Service VIP，就可以让 Service 的端点重新负载到他们自己身上。hairpin-mode 标志必须设置为 hairpin-veth 或者 promiscuous-bridge。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;可是我设置之后还是没有还是不行，翻了一下kubelet里面的代码，发现cni组件并没有取这个值做任何才做（在kubnet中有）&lt;/p&gt;
-&lt;p&gt;查看这个讨论：
-&lt;a href="https://github.com/kubernetes/kubernetes/issues/45790" target="_blank" rel="noopener"&gt;https://github.com/kubernetes/kubernetes/issues/45790&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;大致结论是，应该由cni插件来根据这个值来做对应的操作。&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;还是没解决我的问题？&lt;/p&gt;
-&lt;p&gt;不过我看到hairpin开启的标志位是通过&lt;code&gt;/sys/devices/virtual/net/docker0/brif/veth-xxx/hairpin_mod&lt;/code&gt; 内容设置为1开启的。&lt;/p&gt;
-&lt;p&gt;所以我将所有veth该文件内容设置&lt;code&gt;1&lt;/code&gt;&lt;/p&gt;
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
-&lt;div&gt;&lt;pre&gt;&lt;code&gt;for intf in /sys/devices/virtual/net/docker0/brif/*; do echo 1&amp;gt; $intf/hairpin_mod; done&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+>
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>查阅了相关资料后，看到kubelet有个&lt;code>--hairpin-mod&lt;/code>参数：&lt;/p>
+&lt;p>文档说明：&lt;/p>
+&lt;blockquote>
+&lt;p>如果网络没有为“发夹模式”流量生成正确配置，通常当 kube-proxy 以 iptables 模式运行，并且 Pod 与桥接网络连接时，就会发生这种情况。Kubelet 公开了一个 hairpin-mode 标志，如果 pod 试图访问它们自己的 Service VIP，就可以让 Service 的端点重新负载到他们自己身上。hairpin-mode 标志必须设置为 hairpin-veth 或者 promiscuous-bridge。&lt;/p>
+&lt;/blockquote>
+&lt;p>可是我设置之后还是没有还是不行，翻了一下kubelet里面的代码，发现cni组件并没有取这个值做任何才做（在kubnet中有）&lt;/p>
+&lt;p>查看这个讨论：
+&lt;a href="https://github.com/kubernetes/kubernetes/issues/45790" target="_blank" rel="noopener">https://github.com/kubernetes/kubernetes/issues/45790&lt;/a>&lt;/p>
+&lt;p>&lt;strong>大致结论是，应该由cni插件来根据这个值来做对应的操作。&lt;/strong>&lt;/p>
+&lt;p>还是没解决我的问题？&lt;/p>
+&lt;p>不过我看到hairpin开启的标志位是通过&lt;code>/sys/devices/virtual/net/docker0/brif/veth-xxx/hairpin_mod&lt;/code> 内容设置为1开启的。&lt;/p>
+&lt;p>所以我将所有veth该文件内容设置&lt;code>1&lt;/code>&lt;/p>
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+&lt;div>&lt;pre>&lt;code>for intf in /sys/devices/virtual/net/docker0/brif/*; do echo 1&amp;gt; $intf/hairpin_mod; done&lt;/code>&lt;/pre>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
 &lt;button
 class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
 title="Copy code"
-&gt;
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;/button&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;可以访问了。😺&lt;/p&gt;
-&lt;h2&gt;解疑：promiscuous-bridge 与 hairpin-veth&lt;span class="hx-absolute -hx-mt-20" id="解疑promiscuous-bridge-与-hairpin-veth"&gt;&lt;/span&gt;
-&lt;a href="#%e8%a7%a3%e7%96%91promiscuous-bridge-%e4%b8%8e-hairpin-veth" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;为什么我无法访问&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;bridge不允许包从收到包的端口发出，比如这种情况，在pod内通过docker0访问service，后续又通过docker0网桥进来，所以需要开启&lt;code&gt;hairpin_mod&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;为什么使用tcpdump 可以让访问可通？&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;因为tcpdump要抓取所有经过该网卡，所以需要开启混杂模式。可以在/var/log/message看到&lt;code&gt;device docker0 entered promiscuous mode&lt;/code&gt;的log。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;混杂模式（英語：promiscuous mode）是电脑网络中的术语。 是指一台机器的网卡能够接收所有经过它的数据流，而不论其目的地址是否是它。 一般计算机网卡都工作在非混杂模式下，此时网卡只接受来自网络端口的目的地址指向自己的数据。 当网卡工作在混杂模式下时，网卡将来自接口的所有数据都捕获并交给相应的驱动程序。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;手动开关命令：
-&lt;code&gt;ifconfig docker0 promisc on/off&lt;/code&gt;&lt;/p&gt;
-&lt;h2&gt;总结&lt;span class="hx-absolute -hx-mt-20" id="总结"&gt;&lt;/span&gt;
-&lt;a href="#%e6%80%bb%e7%bb%93" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;其实我们集群通过这种比较另类的方式来分配POD IP也用了了很久了，之所以没出问题，应该是业务基本没遇到这种pod内通过service访问自己的情况。&lt;/p&gt;
-&lt;p&gt;所以还是要跟着标准的k8s方式来安装cni，避免入坑，比如flannel就已经提供给了&lt;code&gt;hairpinMode &lt;/code&gt;参数来进行配置开启。&lt;/p&gt;</description></item></channel></rss>
+>
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>可以访问了。😺&lt;/p>
+&lt;h2>解疑：promiscuous-bridge 与 hairpin-veth&lt;span class="hx-absolute -hx-mt-20" id="解疑promiscuous-bridge-与-hairpin-veth">&lt;/span>
+&lt;a href="#%e8%a7%a3%e7%96%91promiscuous-bridge-%e4%b8%8e-hairpin-veth" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>&lt;strong>为什么我无法访问&lt;/strong>&lt;/p>
+&lt;p>bridge不允许包从收到包的端口发出，比如这种情况，在pod内通过docker0访问service，后续又通过docker0网桥进来，所以需要开启&lt;code>hairpin_mod&lt;/code>&lt;/p>
+&lt;p>&lt;strong>为什么使用tcpdump 可以让访问可通？&lt;/strong>&lt;/p>
+&lt;p>因为tcpdump要抓取所有经过该网卡，所以需要开启混杂模式。可以在/var/log/message看到&lt;code>device docker0 entered promiscuous mode&lt;/code>的log。&lt;/p>
+&lt;blockquote>
+&lt;p>混杂模式（英語：promiscuous mode）是电脑网络中的术语。 是指一台机器的网卡能够接收所有经过它的数据流，而不论其目的地址是否是它。 一般计算机网卡都工作在非混杂模式下，此时网卡只接受来自网络端口的目的地址指向自己的数据。 当网卡工作在混杂模式下时，网卡将来自接口的所有数据都捕获并交给相应的驱动程序。&lt;/p>
+&lt;/blockquote>
+&lt;p>手动开关命令：
+&lt;code>ifconfig docker0 promisc on/off&lt;/code>&lt;/p>
+&lt;h2>总结&lt;span class="hx-absolute -hx-mt-20" id="总结">&lt;/span>
+&lt;a href="#%e6%80%bb%e7%bb%93" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>其实我们集群通过这种比较另类的方式来分配POD IP也用了了很久了，之所以没出问题，应该是业务基本没遇到这种pod内通过service访问自己的情况。&lt;/p>
+&lt;p>所以还是要跟着标准的k8s方式来安装cni，避免入坑，比如flannel就已经提供给了&lt;code>hairpinMode &lt;/code>参数来进行配置开启。&lt;/p></description></item></channel></rss>
