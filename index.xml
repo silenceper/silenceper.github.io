@@ -1,4 +1,7 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper –</title><link>/</link><description>Recent content on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en</language><atom:link href="/index.xml" rel="self" type="application/rss+xml"/><item><title>告别"上下文爆炸"：深入解析 AI Skills 的核心价值与开源实践</title><link>/blog/2026-01-19-ai-skills/</link><pubDate>Thu, 08 Jan 2026 00:00:00 +0800</pubDate><guid>/blog/2026-01-19-ai-skills/</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper –</title><link>/</link><description>Recent content on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en</language><atom:link href="/index.xml" rel="self" type="application/rss+xml"/><item><title>收集Vibe Coding 的AI工具集合</title><link>/blog/2026-01-08-awesome-ai-vibe-coding/</link><pubDate>Mon, 19 Jan 2026 00:00:00 +0800</pubDate><guid>/blog/2026-01-08-awesome-ai-vibe-coding/</guid><description>
+&lt;p&gt;日常开发中已经离不开AI工具，我创建了一个GitHub仓库，用于收集Vibe Coding 的AI工具集合，欢迎大家一起维护，目前收集的工具如下：&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/silenceper/awesome-ai-vibe-coding" target="_blank" rel="noopener"&gt;Vibe Coding AI Tools&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="/img/20260108/vibe-coding-ai-tools.png" alt="" loading="lazy" /&gt;&lt;/p&gt;</description></item><item><title>告别"上下文爆炸"：深入解析 AI Skills 的核心价值与开源实践</title><link>/blog/2026-01-19-ai-skills/</link><pubDate>Thu, 08 Jan 2026 00:00:00 +0800</pubDate><guid>/blog/2026-01-19-ai-skills/</guid><description>
 &lt;p&gt;在 AI Agent（智能体）的开发中，我们经常面临一个两难困境：想让 AI 处理复杂的项目，必须提供足够的信息；但如果把整个项目代码或数据库都塞进 Prompt，不仅 &lt;strong&gt;Token 费用惊人&lt;/strong&gt;，还会迅速撑爆模型的上下文窗口（Context Window），导致 AI &amp;ldquo;变笨&amp;quot;或遗忘。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Skills（技能）&lt;strong&gt;正是为了解决这个问题而生。它不仅仅是给 AI 装上双手，更重要的是给 AI 一个&lt;/strong&gt;&amp;ldquo;按需索取&amp;quot;的过滤器&lt;/strong&gt;，让 AI 能够主动检索、精准操作，而不是被动接收海量数据。&lt;/p&gt;
 &lt;h2&gt;1. 核心痛点：为什么我们需要 Skills 来省 Token？&lt;span class="hx-absolute -hx-mt-20" id="1-核心痛点为什么我们需要-skills-来省-token"&gt;&lt;/span&gt;
@@ -71,10 +74,7 @@ style Skill fill:#ffffcc
 &lt;li&gt;&lt;strong&gt;现在&lt;/strong&gt;：用户给指令 → AI 利用 Skills 低成本试错、检索、验证 → AI 解决问题&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;这不仅让 AI 变得更聪明（拥有实时数据和行动力），更关键的是，它让复杂的 AI 应用在**成本（Token）&lt;strong&gt;和&lt;/strong&gt;规模（上下文长度）**上变得真正可行。&lt;/p&gt;
-&lt;p&gt;随着开源 Skills 生态系统的不断成熟，我们有理由相信，未来的 AI Agent 将更加智能、高效，能够处理更复杂的任务，同时保持合理的成本。&lt;/p&gt;</description></item><item><title>收集Vibe Coding 的AI工具集合</title><link>/blog/2026-01-08-awesome-ai-vibe-coding/</link><pubDate>Thu, 08 Jan 2026 00:00:00 +0800</pubDate><guid>/blog/2026-01-08-awesome-ai-vibe-coding/</guid><description>
-&lt;p&gt;日常开发中已经离不开AI工具，我创建了一个GitHub仓库，用于收集Vibe Coding 的AI工具集合，欢迎大家一起维护，目前收集的工具如下：&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://github.com/silenceper/awesome-ai-vibe-coding" target="_blank" rel="noopener"&gt;Vibe Coding AI Tools&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="/img/20260108/vibe-coding-ai-tools.png" alt="" loading="lazy" /&gt;&lt;/p&gt;</description></item><item><title>免费体验 Google AI 图片生成神器：Nano Banana Pro 完整教程</title><link>/blog/2025-11-30-nano-banana-pro/</link><pubDate>Sun, 30 Nov 2025 00:00:00 +0800</pubDate><guid>/blog/2025-11-30-nano-banana-pro/</guid><description>
+&lt;p&gt;随着开源 Skills 生态系统的不断成熟，我们有理由相信，未来的 AI Agent 将更加智能、高效，能够处理更复杂的任务，同时保持合理的成本。&lt;/p&gt;</description></item><item><title>免费体验 Google AI 图片生成神器：Nano Banana Pro 完整教程</title><link>/blog/2025-11-30-nano-banana-pro/</link><pubDate>Sun, 30 Nov 2025 00:00:00 +0800</pubDate><guid>/blog/2025-11-30-nano-banana-pro/</guid><description>
 &lt;h2&gt;简介&lt;span class="hx-absolute -hx-mt-20" id="简介"&gt;&lt;/span&gt;
 &lt;a href="#%e7%ae%80%e4%bb%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Google Cloud Platform (GCP) 为新用户提供了 300 美元的免费试用额度，可以用来体验各种 Google Cloud 服务。本文将详细介绍如何利用这个免费试用额度来使用 Google AI Studio 中的 Nano Banana Pro 模型。&lt;/p&gt;
 &lt;p&gt;Nano Banana Pro 是 Google 推出的轻量级 AI 模型，适合快速原型开发和实验。通过本文的步骤，你可以免费体验这个强大的 AI 模型。&lt;/p&gt;
