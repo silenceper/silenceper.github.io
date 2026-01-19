@@ -1,0 +1,74 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – Skills</title><link>/tags/skills/</link><description>Recent content in Skills on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Thu, 08 Jan 2026 00:00:00 +0800</lastBuildDate><atom:link href="/tags/skills/index.xml" rel="self" type="application/rss+xml"/><item><title>告别"上下文爆炸"：深入解析 AI Skills 的核心价值与开源实践</title><link>/blog/2026-01-19-ai-skills/</link><pubDate>Thu, 08 Jan 2026 00:00:00 +0800</pubDate><guid>/blog/2026-01-19-ai-skills/</guid><description>
+&lt;p&gt;在 AI Agent（智能体）的开发中，我们经常面临一个两难困境：想让 AI 处理复杂的项目，必须提供足够的信息；但如果把整个项目代码或数据库都塞进 Prompt，不仅 &lt;strong&gt;Token 费用惊人&lt;/strong&gt;，还会迅速撑爆模型的上下文窗口（Context Window），导致 AI &amp;ldquo;变笨&amp;quot;或遗忘。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Skills（技能）&lt;strong&gt;正是为了解决这个问题而生。它不仅仅是给 AI 装上双手，更重要的是给 AI 一个&lt;/strong&gt;&amp;ldquo;按需索取&amp;quot;的过滤器&lt;/strong&gt;，让 AI 能够主动检索、精准操作，而不是被动接收海量数据。&lt;/p&gt;
+&lt;h2&gt;1. 核心痛点：为什么我们需要 Skills 来省 Token？&lt;span class="hx-absolute -hx-mt-20" id="1-核心痛点为什么我们需要-skills-来省-token"&gt;&lt;/span&gt;
+&lt;a href="#1-%e6%a0%b8%e5%bf%83%e7%97%9b%e7%82%b9%e4%b8%ba%e4%bb%80%e4%b9%88%e6%88%91%e4%bb%ac%e9%9c%80%e8%a6%81-skills-%e6%9d%a5%e7%9c%81-token" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;传统模式：Context Stuffing（上下文填充）&lt;span class="hx-absolute -hx-mt-20" id="传统模式context-stuffing上下文填充"&gt;&lt;/span&gt;
+&lt;a href="#%e4%bc%a0%e7%bb%9f%e6%a8%a1%e5%bc%8fcontext-stuffing%e4%b8%8a%e4%b8%8b%e6%96%87%e5%a1%ab%e5%85%85" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;在没有 Skills 之前，如果你想让 AI 修复一个 Bug，你可能需要把整个文件夹的代码复制粘贴给它。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;后果&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;费用高&lt;/strong&gt;：输入 10 万行代码可能消耗几十美元&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;效果差&lt;/strong&gt;：大量无关信息（噪音）干扰 AI 的注意力，导致幻觉&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;不可行&lt;/strong&gt;：如果你的数据库有 1TB 数据，你根本无法塞进 Prompt&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;进化模式：Skills（动态检索）&lt;span class="hx-absolute -hx-mt-20" id="进化模式skills动态检索"&gt;&lt;/span&gt;
+&lt;a href="#%e8%bf%9b%e5%8c%96%e6%a8%a1%e5%bc%8fskills%e5%8a%a8%e6%80%81%e6%a3%80%e7%b4%a2" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;有了 Skills，AI 变身为一个&amp;quot;主动调查员&amp;rdquo;。它不再被动接收庞大的数据投喂，而是拥有了&lt;strong&gt;检索工具&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;场景对比：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;假设你要在一个包含 1000 个文件的项目中找一个变量定义的错误。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;没有 Skills&lt;/strong&gt;：你需要把 1000 个文件全部喂给 AI（Token 爆炸）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;有 Skills（如 &lt;code&gt;grep_search&lt;/code&gt;, &lt;code&gt;read_file&lt;/code&gt;）&lt;/strong&gt;：
+&lt;ol&gt;
+&lt;li&gt;AI 思考：&amp;ldquo;我需要先找一下这个变量在哪里&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;AI 调用 &lt;code&gt;grep_search&lt;/code&gt; Skill → &lt;strong&gt;消耗极少 Token&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Skills 返回 3 个相关文件路径&lt;/li&gt;
+&lt;li&gt;AI 调用 &lt;code&gt;read_file&lt;/code&gt; 只读取这 3 个文件 → &lt;strong&gt;只消耗这 3 个文件的 Token&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;AI 解决问题&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;结论&lt;/strong&gt;：Skills 将&amp;quot;全量数据处理&amp;quot;变成了&amp;quot;精准数据交互&amp;rdquo;，&lt;strong&gt;Token 消耗可能降低 90% 以上&lt;/strong&gt;。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2&gt;2. 图解：Skills 如何优化 Token 流量&lt;span class="hx-absolute -hx-mt-20" id="2-图解skills-如何优化-token-流量"&gt;&lt;/span&gt;
+&lt;a href="#2-%e5%9b%be%e8%a7%a3skills-%e5%a6%82%e4%bd%95%e4%bc%98%e5%8c%96-token-%e6%b5%81%e9%87%8f" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;我们可以通过数据流向图来直观对比：&lt;/p&gt;
+&lt;pre class="mermaid hx-mt-6"&gt;
+graph TD
+subgraph &amp;#34;传统方式: 上下文填充&amp;#34;
+DB[整个数据库/所有代码] --&amp;gt;|全部通过 Context 传输 (巨大 Token 消耗)| LLM1[AI 模型]
+LLM1 --&amp;gt;|处理过载| Result1[结果: 往往不准确]
+end
+subgraph &amp;#34;新方式: Skills 动态检索&amp;#34;
+LLM2[AI 模型] --&amp;gt;|1. 仅发送查询指令 (极小 Token)| Skill[Skill: 搜索/查询]
+DB2[整个数据库/所有代码] -- 过滤 --&amp;gt; Skill
+Skill --&amp;gt;|2. 仅返回相关的那几行数据 (少量 Token)| LLM2
+LLM2 --&amp;gt;|精准处理| Result2[结果: 精准且便宜]
+end
+style DB fill:#ffcccc
+style DB2 fill:#ccffcc
+style Skill fill:#ffffcc
+&lt;/pre&gt;&lt;hr&gt;
+&lt;h2&gt;3. Skills 的三大核心优势&lt;span class="hx-absolute -hx-mt-20" id="3-skills-的三大核心优势"&gt;&lt;/span&gt;
+&lt;a href="#3-skills-%e7%9a%84%e4%b8%89%e5%a4%a7%e6%a0%b8%e5%bf%83%e4%bc%98%e5%8a%bf" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;除了降低 Token，Skills 还有什么不可替代的优点？&lt;/p&gt;
+&lt;h3&gt;优势一：无限的&amp;quot;虚拟上下文&amp;quot;（Infinite Context）&lt;span class="hx-absolute -hx-mt-20" id="优势一无限的虚拟上下文infinite-context"&gt;&lt;/span&gt;
+&lt;a href="#%e4%bc%98%e5%8a%bf%e4%b8%80%e6%97%a0%e9%99%90%e7%9a%84%e8%99%9a%e6%8b%9f%e4%b8%8a%e4%b8%8b%e6%96%87infinite-context" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;这是 Skills &lt;strong&gt;最大&lt;/strong&gt;的优点。虽然现在的模型（如 Claude 3、GPT-4）支持 128k 甚至更多上下文，但依然有限。通过 Skills（如数据库查询、搜索引擎、文件系统访问），AI 实际上连接到了&lt;strong&gt;无限&lt;/strong&gt;的外部存储。AI 不需要&amp;quot;记住&amp;quot;所有维基百科的内容，它只需要&amp;quot;拥有&amp;quot;搜索维基百科的 Skill。&lt;/p&gt;
+&lt;h3&gt;优势二：数据的实时性（Freshness）&lt;span class="hx-absolute -hx-mt-20" id="优势二数据的实时性freshness"&gt;&lt;/span&gt;
+&lt;a href="#%e4%bc%98%e5%8a%bf%e4%ba%8c%e6%95%b0%e6%8d%ae%e7%9a%84%e5%ae%9e%e6%97%b6%e6%80%a7freshness" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;大模型的知识是静止的（训练截止日期）。Skills 是动态的。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;例子&lt;/strong&gt;：模型不知道今天英伟达的股价，但 &lt;code&gt;fetch_stock_price&lt;/code&gt; Skill 知道&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;价值&lt;/strong&gt;：让 AI 从&amp;quot;历史学家&amp;quot;变成了&amp;quot;实时分析师&amp;quot;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;优势三：副作用与行动力（Agency）&lt;span class="hx-absolute -hx-mt-20" id="优势三副作用与行动力agency"&gt;&lt;/span&gt;
+&lt;a href="#%e4%bc%98%e5%8a%bf%e4%b8%89%e5%89%af%e4%bd%9c%e7%94%a8%e4%b8%8e%e8%a1%8c%e5%8a%a8%e5%8a%9bagency" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;这是从&amp;quot;读&amp;quot;到&amp;quot;写&amp;quot;的跨越。Skills 允许 AI 对现实世界产生影响（Side Effects）。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;不仅仅是建议代码&lt;/strong&gt;，而是直接 &lt;code&gt;write_file&lt;/code&gt; 到磁盘&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;不仅仅是写邮件草稿&lt;/strong&gt;，而是通过 API &lt;code&gt;send_email&lt;/code&gt; 发送出去&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2&gt;4. 总结&lt;span class="hx-absolute -hx-mt-20" id="4-总结"&gt;&lt;/span&gt;
+&lt;a href="#4-%e6%80%bb%e7%bb%93" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Skills 的引入，本质上是一场**&amp;ldquo;上下文管理的革命&amp;rdquo;**。&lt;/p&gt;
+&lt;p&gt;它不再强迫用户去&amp;quot;筛选信息&amp;quot;喂给 AI，而是把这个筛选的权利交给了 AI 自己。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;以前&lt;/strong&gt;：用户手动从海量数据中人肉检索 → 喂给 AI → AI 处理&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;现在&lt;/strong&gt;：用户给指令 → AI 利用 Skills 低成本试错、检索、验证 → AI 解决问题&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这不仅让 AI 变得更聪明（拥有实时数据和行动力），更关键的是，它让复杂的 AI 应用在**成本（Token）&lt;strong&gt;和&lt;/strong&gt;规模（上下文长度）**上变得真正可行。&lt;/p&gt;
+&lt;p&gt;随着开源 Skills 生态系统的不断成熟，我们有理由相信，未来的 AI Agent 将更加智能、高效，能够处理更复杂的任务，同时保持合理的成本。&lt;/p&gt;</description></item></channel></rss>
