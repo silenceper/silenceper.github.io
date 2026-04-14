@@ -1,0 +1,37 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – 效率工具</title><link>https://silenceper.com/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/</link><description>Recent content in 效率工具 on silenceper</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 10 Mar 2026 09:00:00 +0800</lastBuildDate><atom:link href="https://silenceper.com/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/index.xml" rel="self" type="application/rss+xml"/><item><title>OpenClaw 介绍：把 AI 变成真正能干活的个人助理</title><link>https://silenceper.com/article/2026-03-10-first-article/</link><pubDate>Tue, 10 Mar 2026 09:00:00 +0800</pubDate><guid>https://silenceper.com/article/2026-03-10-first-article/</guid><description>
+&lt;h2&gt;OpenClaw 是什么？&lt;span class="hx-absolute -hx-mt-20" id="openclaw-是什么"&gt;&lt;/span&gt;
+&lt;a href="#openclaw-%e6%98%af%e4%bb%80%e4%b9%88" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;OpenClaw 是一个面向个人与团队的 &lt;strong&gt;AI Agent 平台&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;它不只是“会聊天”的 AI，而是可以连接你的常用工具，真正执行任务：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;回消息、整理信息&lt;/li&gt;
+&lt;li&gt;控制浏览器完成网页操作&lt;/li&gt;
+&lt;li&gt;调用本地脚本与命令&lt;/li&gt;
+&lt;li&gt;接入 Telegram / WhatsApp 等消息渠道&lt;/li&gt;
+&lt;li&gt;通过技能（Skills）扩展专业能力&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;简单说：&lt;strong&gt;让 AI 从“回答问题”进化到“帮你做事”。&lt;/strong&gt;&lt;/p&gt;
+&lt;h2&gt;它解决了什么问题？&lt;span class="hx-absolute -hx-mt-20" id="它解决了什么问题"&gt;&lt;/span&gt;
+&lt;a href="#%e5%ae%83%e8%a7%a3%e5%86%b3%e4%ba%86%e4%bb%80%e4%b9%88%e9%97%ae%e9%a2%98" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;很多时候我们并不缺一个会回答问题的模型，而是缺一个能持续执行任务的“数字助理”。&lt;/p&gt;
+&lt;p&gt;OpenClaw 的价值在于：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;统一入口&lt;/strong&gt;：通过消息就能下达任务，不用来回切工具&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;执行闭环&lt;/strong&gt;：从理解需求到执行动作再到反馈结果&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;可持续协作&lt;/strong&gt;：把重复工作流程化，减少手工操作&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;典型使用场景&lt;span class="hx-absolute -hx-mt-20" id="典型使用场景"&gt;&lt;/span&gt;
+&lt;a href="#%e5%85%b8%e5%9e%8b%e4%bd%bf%e7%94%a8%e5%9c%ba%e6%99%af" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;内容创作&lt;/strong&gt;：收集素材、整理提纲、发布前检查&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;运维与开发&lt;/strong&gt;：执行脚本、检查服务状态、更新文档&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;个人效率&lt;/strong&gt;：日程提醒、消息整理、待办追踪&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;业务自动化&lt;/strong&gt;：线索跟进、表单处理、日报生成&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;为什么值得尝试？&lt;span class="hx-absolute -hx-mt-20" id="为什么值得尝试"&gt;&lt;/span&gt;
+&lt;a href="#%e4%b8%ba%e4%bb%80%e4%b9%88%e5%80%bc%e5%be%97%e5%b0%9d%e8%af%95" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;如果你已经在用各种 AI 工具，那么 OpenClaw 能把它们“串起来”：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;让能力从单点工具变成工作流&lt;/li&gt;
+&lt;li&gt;把临时操作沉淀成可复用流程&lt;/li&gt;
+&lt;li&gt;让你把时间花在更有价值的事情上&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;一句话总结&lt;span class="hx-absolute -hx-mt-20" id="一句话总结"&gt;&lt;/span&gt;
+&lt;a href="#%e4%b8%80%e5%8f%a5%e8%af%9d%e6%80%bb%e7%bb%93" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;OpenClaw = 能连接工具、可执行任务、可持续协作的 AI 助理框架。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如果你希望 AI 真正参与日常工作，而不只是当问答机器人，OpenClaw 是一条非常值得走的路线。&lt;/p&gt;</description></item></channel></rss>

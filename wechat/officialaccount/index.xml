@@ -1,4 +1,4 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – 公众号 - 微信SDK开发文档</title><link>/wechat/officialaccount/</link><description>Recent content in 公众号 - 微信SDK开发文档 on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en</language><atom:link href="/wechat/officialaccount/index.xml" rel="self" type="application/rss+xml"/><item><title>快速入门 - 微信SDK开发文档</title><link>/wechat/officialaccount/start.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/wechat/officialaccount/start.html</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – 公众号 - 微信SDK开发文档</title><link>https://silenceper.com/wechat/officialaccount/</link><description>Recent content in 公众号 - 微信SDK开发文档 on silenceper</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><atom:link href="https://silenceper.com/wechat/officialaccount/index.xml" rel="self" type="application/rss+xml"/><item><title>快速入门 - 微信SDK开发文档</title><link>https://silenceper.com/wechat/officialaccount/start.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://silenceper.com/wechat/officialaccount/start.html</guid><description>
 &lt;p&gt;以下例子就演示了一个启动一个server，接收到用户发往公众号的消息然后做处理。&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;ul&gt;
@@ -98,7 +98,7 @@ title="Copy code"
 &lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
 &lt;/button&gt;
 &lt;/div&gt;
-&lt;/div&gt;</description></item><item><title>配置 - 微信SDK开发文档</title><link>/wechat/officialaccount/configuration.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/wechat/officialaccount/configuration.html</guid><description>
+&lt;/div&gt;</description></item><item><title>配置 - 微信SDK开发文档</title><link>https://silenceper.com/wechat/officialaccount/configuration.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://silenceper.com/wechat/officialaccount/configuration.html</guid><description>
 &lt;p&gt;通常通过如下配置就可以获取到一个&lt;code&gt;officialAccount&lt;/code&gt;的操作实例了。&lt;/p&gt;
 &lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
 &lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;//使用memcache保存access_token，也可选择redis或自定义cache&lt;/span&gt;&lt;span class="w"&gt;
@@ -299,7 +299,7 @@ title="Copy code"
 &lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
 &lt;/button&gt;
 &lt;/div&gt;
-&lt;/div&gt;</description></item><item><title>基础接口 - 微信SDK开发文档</title><link>/wechat/officialaccount/basic.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/wechat/officialaccount/basic.html</guid><description>
+&lt;/div&gt;</description></item><item><title>基础接口 - 微信SDK开发文档</title><link>https://silenceper.com/wechat/officialaccount/basic.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://silenceper.com/wechat/officialaccount/basic.html</guid><description>
 &lt;p&gt;微信公众号操作基础接口&lt;/p&gt;
 &lt;h2&gt;获取&lt;code&gt;access_token&lt;/code&gt;&lt;span class="hx-absolute -hx-mt-20" id="获取access_token"&gt;&lt;/span&gt;
 &lt;a href="#%e8%8e%b7%e5%8f%96access_token" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;blockquote&gt;
@@ -384,7 +384,7 @@ title="Copy code"
 &lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
 &lt;/button&gt;
 &lt;/div&gt;
-&lt;/div&gt;</description></item><item><title>消息管理 - 微信SDK开发文档</title><link>/wechat/officialaccount/message.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/wechat/officialaccount/message.html</guid><description>
+&lt;/div&gt;</description></item><item><title>消息管理 - 微信SDK开发文档</title><link>https://silenceper.com/wechat/officialaccount/message.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://silenceper.com/wechat/officialaccount/message.html</guid><description>
 &lt;blockquote&gt;
 &lt;p&gt;当普通微信用户向公众账号发消息时，微信服务器将POST消息的XML数据包到开发者填写的URL上。&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -610,7 +610,7 @@ title="Copy code"
 &lt;/table&gt;
 &lt;p&gt;其中不必须的参数可以填写空字符串&lt;code&gt;&amp;quot;&amp;quot;&lt;/code&gt;&lt;/p&gt;
 &lt;h3&gt;多客服消息转发&lt;span class="hx-absolute -hx-mt-20" id="多客服消息转发"&gt;&lt;/span&gt;
-&lt;a href="#%e5%a4%9a%e5%ae%a2%e6%9c%8d%e6%b6%88%e6%81%af%e8%bd%ac%e5%8f%91" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;请参考 &lt;a href="./message-transfer.html" &gt;多客服消息转发&lt;/a&gt;&lt;/p&gt;</description></item><item><title>多客服消息转发 - 微信SDK开发文档</title><link>/wechat/officialaccount/message_transfer.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/wechat/officialaccount/message_transfer.html</guid><description>
+&lt;a href="#%e5%a4%9a%e5%ae%a2%e6%9c%8d%e6%b6%88%e6%81%af%e8%bd%ac%e5%8f%91" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;请参考 &lt;a href="./message-transfer.html" &gt;多客服消息转发&lt;/a&gt;&lt;/p&gt;</description></item><item><title>多客服消息转发 - 微信SDK开发文档</title><link>https://silenceper.com/wechat/officialaccount/message_transfer.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://silenceper.com/wechat/officialaccount/message_transfer.html</guid><description>
 &lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
 &lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;transferCustomer&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;message&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;NewTransferCustomer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="nx"&gt;message&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Reply&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nx"&gt;MsgType&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;message&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;MsgTypeTransfer&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;MsgData&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;transferCustomer&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
@@ -623,7 +623,7 @@ title="Copy code"
 &lt;/button&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;strong&gt;其中&lt;code&gt;NewTransferCustomer&lt;/code&gt;如果参数可选，表示指定客服账号&lt;/strong&gt;&lt;/p&gt;</description></item><item><title>消息群发 - 微信SDK开发文档</title><link>/wechat/officialaccount/broadcast.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/wechat/officialaccount/broadcast.html</guid><description>
+&lt;p&gt;&lt;strong&gt;其中&lt;code&gt;NewTransferCustomer&lt;/code&gt;如果参数可选，表示指定客服账号&lt;/strong&gt;&lt;/p&gt;</description></item><item><title>消息群发 - 微信SDK开发文档</title><link>https://silenceper.com/wechat/officialaccount/broadcast.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://silenceper.com/wechat/officialaccount/broadcast.html</guid><description>
 &lt;h2&gt;获取群发操作实例&lt;span class="hx-absolute -hx-mt-20" id="获取群发操作实例"&gt;&lt;/span&gt;
 &lt;a href="#%e8%8e%b7%e5%8f%96%e7%be%a4%e5%8f%91%e6%93%8d%e4%bd%9c%e5%ae%9e%e4%be%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
 &lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;oa&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;wc&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;GetOfficialAccount&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;cfg&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;
@@ -704,7 +704,7 @@ title="Copy code"
 &lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
 &lt;/button&gt;
 &lt;/div&gt;
-&lt;/div&gt;</description></item><item><title>素材管理 - 微信SDK开发文档</title><link>/wechat/officialaccount/material.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/wechat/officialaccount/material.html</guid><description>
+&lt;/div&gt;</description></item><item><title>素材管理 - 微信SDK开发文档</title><link>https://silenceper.com/wechat/officialaccount/material.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://silenceper.com/wechat/officialaccount/material.html</guid><description>
 &lt;h2&gt;获取素材操作实例&lt;span class="hx-absolute -hx-mt-20" id="获取素材操作实例"&gt;&lt;/span&gt;
 &lt;a href="#%e8%8e%b7%e5%8f%96%e7%b4%a0%e6%9d%90%e6%93%8d%e4%bd%9c%e5%ae%9e%e4%be%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
 &lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;oa&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;wc&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;GetOfficialAccount&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;cfg&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;
@@ -789,7 +789,7 @@ title="Copy code"
 &lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
 &lt;/button&gt;
 &lt;/div&gt;
-&lt;/div&gt;</description></item><item><title>JS-SDK - 微信SDK开发文档</title><link>/wechat/officialaccount/js.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/wechat/officialaccount/js.html</guid><description>
+&lt;/div&gt;</description></item><item><title>JS-SDK - 微信SDK开发文档</title><link>https://silenceper.com/wechat/officialaccount/js.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://silenceper.com/wechat/officialaccount/js.html</guid><description>
 &lt;h2&gt;获取js-sdk操作实例&lt;span class="hx-absolute -hx-mt-20" id="获取js-sdk操作实例"&gt;&lt;/span&gt;
 &lt;a href="#%e8%8e%b7%e5%8f%96js-sdk%e6%93%8d%e4%bd%9c%e5%ae%9e%e4%be%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
 &lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;oa&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;wc&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;GetOfficialAccount&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;cfg&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;
@@ -850,7 +850,7 @@ title="Copy code"
 &lt;/button&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;然后通过&lt;code&gt;js.SetJsTicketHandle(ticketHandle credential.JsTicketHandle)&lt;/code&gt;进行设置&lt;/p&gt;</description></item><item><title>菜单管理 - 微信SDK开发文档</title><link>/wechat/officialaccount/menu.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/wechat/officialaccount/menu.html</guid><description>
+&lt;p&gt;然后通过&lt;code&gt;js.SetJsTicketHandle(ticketHandle credential.JsTicketHandle)&lt;/code&gt;进行设置&lt;/p&gt;</description></item><item><title>菜单管理 - 微信SDK开发文档</title><link>https://silenceper.com/wechat/officialaccount/menu.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://silenceper.com/wechat/officialaccount/menu.html</guid><description>
 &lt;h2&gt;获取菜单操作实例&lt;span class="hx-absolute -hx-mt-20" id="获取菜单操作实例"&gt;&lt;/span&gt;
 &lt;a href="#%e8%8e%b7%e5%8f%96%e8%8f%9c%e5%8d%95%e6%93%8d%e4%bd%9c%e5%ae%9e%e4%be%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
 &lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;oa&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;wc&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;GetOfficialAccount&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;cfg&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;
@@ -1013,7 +1013,7 @@ title="Copy code"
 &lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
 &lt;/button&gt;
 &lt;/div&gt;
-&lt;/div&gt;</description></item><item><title>用户管理 - 微信SDK开发文档</title><link>/wechat/officialaccount/user.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/wechat/officialaccount/user.html</guid><description>
+&lt;/div&gt;</description></item><item><title>用户管理 - 微信SDK开发文档</title><link>https://silenceper.com/wechat/officialaccount/user.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://silenceper.com/wechat/officialaccount/user.html</guid><description>
 &lt;h2&gt;获取用户管理操作实例&lt;span class="hx-absolute -hx-mt-20" id="获取用户管理操作实例"&gt;&lt;/span&gt;
 &lt;a href="#%e8%8e%b7%e5%8f%96%e7%94%a8%e6%88%b7%e7%ae%a1%e7%90%86%e6%93%8d%e4%bd%9c%e5%ae%9e%e4%be%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
 &lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;oa&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;wc&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;GetOfficialAccount&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;cfg&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;
@@ -1082,8 +1082,8 @@ title="Copy code"
 &lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
 &lt;/button&gt;
 &lt;/div&gt;
-&lt;/div&gt;</description></item><item><title>新版客服消息 - 微信SDK开发文档</title><link>/wechat/officialaccount/customer_service.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/wechat/officialaccount/customer_service.html</guid><description>
-&lt;h1&gt;新版客服消息&lt;/h1&gt;&lt;p&gt;TODO&lt;/p&gt;</description></item><item><title>模板消息 - 微信SDK开发文档</title><link>/wechat/officialaccount/template_message.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/wechat/officialaccount/template_message.html</guid><description>
+&lt;/div&gt;</description></item><item><title>新版客服消息 - 微信SDK开发文档</title><link>https://silenceper.com/wechat/officialaccount/customer_service.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://silenceper.com/wechat/officialaccount/customer_service.html</guid><description>
+&lt;h1&gt;新版客服消息&lt;/h1&gt;&lt;p&gt;TODO&lt;/p&gt;</description></item><item><title>模板消息 - 微信SDK开发文档</title><link>https://silenceper.com/wechat/officialaccount/template_message.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://silenceper.com/wechat/officialaccount/template_message.html</guid><description>
 &lt;h2&gt;获取模板消息实例&lt;span class="hx-absolute -hx-mt-20" id="获取模板消息实例"&gt;&lt;/span&gt;
 &lt;a href="#%e8%8e%b7%e5%8f%96%e6%a8%a1%e6%9d%bf%e6%b6%88%e6%81%af%e5%ae%9e%e4%be%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
 &lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;oa&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;wc&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;GetOfficialAccount&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;cfg&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;

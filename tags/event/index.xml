@@ -1,6 +1,6 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – Event</title><link>/tags/event/</link><description>Recent content in Event on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 03 Mar 2020 12:40:59 +0800</lastBuildDate><atom:link href="/tags/event/index.xml" rel="self" type="application/rss+xml"/><item><title>分析kubernetes中的事件机制</title><link>/blog/202003/kubernetes-event/</link><pubDate>Tue, 03 Mar 2020 12:40:59 +0800</pubDate><guid>/blog/202003/kubernetes-event/</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – Event</title><link>https://silenceper.com/tags/event/</link><description>Recent content in Event on silenceper</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 03 Mar 2020 12:40:59 +0800</lastBuildDate><atom:link href="https://silenceper.com/tags/event/index.xml" rel="self" type="application/rss+xml"/><item><title>分析kubernetes中的事件机制</title><link>https://silenceper.com/blog/202003/kubernetes-event/</link><pubDate>Tue, 03 Mar 2020 12:40:59 +0800</pubDate><guid>https://silenceper.com/blog/202003/kubernetes-event/</guid><description>
 &lt;p&gt;我们通过 &lt;code&gt;kubectl describe [资源]&lt;/code&gt; 命令，可以在看到Event输出，并且经常依赖event进行问题定位，从event中可以分析整个POD的运行轨迹，为服务的客观测性提供数据来源，由此可见，event在Kubernetes中起着举足轻重的作用。&lt;/p&gt;
-&lt;p&gt;&lt;img src="/img/20200303/event.png" alt="event展示" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20200303/event.png" alt="event展示" loading="lazy" /&gt;&lt;/p&gt;
 &lt;p&gt;event并不只是kubelet中都有的，关于event的操作被封装在&lt;a href="https://github.com/kubernetes/kubernetes/tree/v1.17.3/staging/src/k8s.io/client-go/tools/record" target="_blank" rel="noopener"&gt;client-go/tools/record&lt;/a&gt;包，我们完全可以在写入自定义的event。&lt;/p&gt;
 &lt;p&gt;现在让我们来一步步揭开event的面纱。
 &lt;a name="EBJdC"&gt;&lt;/a&gt;&lt;/p&gt;
@@ -64,7 +64,7 @@ title="Copy code"
 &lt;p&gt;2、文中代码以Kubernetes 1.17.3为例进行分析&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;先以一幅图来看下整个的处理流程
-&lt;img src="/img/20200303/kubernetes-event.png" alt="event处理过程" loading="lazy" /&gt;&lt;/p&gt;
+&lt;img src="https://silenceper.com/img/20200303/kubernetes-event.png" alt="event处理过程" loading="lazy" /&gt;&lt;/p&gt;
 &lt;p&gt;创建操作事件的客户端：&lt;br /&gt;&lt;a href="https://github.com/kubernetes/kubernetes/blob/v1.17.3/cmd/kubelet/app/server.go#L461" target="_blank" rel="noopener"&gt;kubelet/app/server.go#L461&lt;/a&gt;&lt;/p&gt;
 &lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
 &lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// makeEventRecorder sets up kubeDeps.Recorder if it&amp;#39;s nil. It&amp;#39;s a no-op otherwise.&lt;/span&gt;&lt;span class="w"&gt;

@@ -1,4 +1,4 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – Kubernetes</title><link>/tags/kubernetes/</link><description>Recent content in Kubernetes on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sat, 19 Apr 2025 09:00:00 +0800</lastBuildDate><atom:link href="/tags/kubernetes/index.xml" rel="self" type="application/rss+xml"/><item><title>如何使用Golang开发MCP服务器：从mcp-go到mcp-k8s实践</title><link>/blog/2025-04-19-how-to-write-mcp-in-golang/</link><pubDate>Sat, 19 Apr 2025 09:00:00 +0800</pubDate><guid>/blog/2025-04-19-how-to-write-mcp-in-golang/</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – Kubernetes</title><link>https://silenceper.com/tags/kubernetes/</link><description>Recent content in Kubernetes on silenceper</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sat, 19 Apr 2025 09:00:00 +0800</lastBuildDate><atom:link href="https://silenceper.com/tags/kubernetes/index.xml" rel="self" type="application/rss+xml"/><item><title>如何使用Golang开发MCP服务器：从mcp-go到mcp-k8s实践</title><link>https://silenceper.com/blog/2025-04-19-how-to-write-mcp-in-golang/</link><pubDate>Sat, 19 Apr 2025 09:00:00 +0800</pubDate><guid>https://silenceper.com/blog/2025-04-19-how-to-write-mcp-in-golang/</guid><description>
 &lt;p&gt;随着大语言模型(LLM)与开发工具的深度融合，Model Control Protocol (MCP)协议正在成为AI与软件工具交互的重要桥梁。MCP允许LLM以结构化的方式调用工具，使AI能够执行具体的操作而不仅仅是生成文本。&lt;/p&gt;
 &lt;p&gt;本文将详细介绍如何使用Golang和&lt;a href="https://github.com/mark3labs/mcp-go" target="_blank" rel="noopener"&gt;mcp-go&lt;/a&gt;这个SDK来开发MCP服务器，并以我的开源项目&lt;a href="https://github.com/silenceper/mcp-k8s" target="_blank" rel="noopener"&gt;mcp-k8s&lt;/a&gt;为具体案例，讲解如何构建一个与Kubernetes集群交互的MCP服务器。&lt;/p&gt;
 &lt;h2&gt;MCP协议简介&lt;span class="hx-absolute -hx-mt-20" id="mcp协议简介"&gt;&lt;/span&gt;
@@ -456,7 +456,7 @@ title="Copy code"
 &lt;h2&gt;AI&amp;amp;&amp;amp;MCP交流群&lt;span class="hx-absolute -hx-mt-20" id="aimcp交流群"&gt;&lt;/span&gt;
 &lt;a href="#aimcp%e4%ba%a4%e6%b5%81%e7%be%a4" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;我建了一个&amp;quot;AI技术交流群&amp;quot;，目的是为了方便大家交流AI相关的知识和共享资源，目前AI变化真的是太快了，如果二维码失效大家关注公众号&amp;quot;AI技术小林&amp;quot;，发送关键字”加群“，拉你进去，；
 &lt;img src="https://public-1251960616.cos.ap-nanjing.myqcloud.com/images/WechatIMG247.jpg" alt="" loading="lazy" /&gt;
-&lt;img src="https://public-1251960616.cos.ap-nanjing.myqcloud.com/images/qrcode-ai.bmp" alt="" loading="lazy" /&gt;&lt;/p&gt;</description></item><item><title>MCP-K8s：当AI成为我的Kubernetes小助手</title><link>/blog/202504/mcp-k8s/</link><pubDate>Thu, 03 Apr 2025 22:20:59 +0800</pubDate><guid>/blog/202504/mcp-k8s/</guid><description>
+&lt;img src="https://public-1251960616.cos.ap-nanjing.myqcloud.com/images/qrcode-ai.bmp" alt="" loading="lazy" /&gt;&lt;/p&gt;</description></item><item><title>MCP-K8s：当AI成为我的Kubernetes小助手</title><link>https://silenceper.com/blog/202504/mcp-k8s/</link><pubDate>Thu, 03 Apr 2025 22:20:59 +0800</pubDate><guid>https://silenceper.com/blog/202504/mcp-k8s/</guid><description>
 &lt;p&gt;还记得刚开始接触Kubernetes时的感受吗？复杂的架构、繁多的概念、以及那些需要记忆的kubectl命令&amp;hellip;，现在有了MCP可以让这种交互变得更加简单，尝试通过AI自然语言对话来完成对k8s集群各种资源的操作乃至于定于集群的问题。&lt;/p&gt;
 &lt;h2&gt;它是怎么工作的？&lt;span class="hx-absolute -hx-mt-20" id="它是怎么工作的"&gt;&lt;/span&gt;
 &lt;a href="#%e5%ae%83%e6%98%af%e6%80%8e%e4%b9%88%e5%b7%a5%e4%bd%9c%e7%9a%84" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;说起来很简单，MCP-K8s就像是在Kubernetes和AI之间搭了一座桥。通过MCP（Model Control Protocol）协议，它能让AI理解你的自然语言指令，并转换成对应的Kubernetes操作。&lt;/p&gt;
@@ -533,7 +533,7 @@ title="Copy code"
 &lt;/ol&gt;
 &lt;h2&gt;写在最后&lt;span class="hx-absolute -hx-mt-20" id="写在最后"&gt;&lt;/span&gt;
 &lt;a href="#%e5%86%99%e5%9c%a8%e6%9c%80%e5%90%8e" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;做这个项目的过程中，最大的感受就是：技术发展真的太快了，AI给我们带来了太多可能性。虽然现在还有很多可以改进的地方，但我相信这只是开始。期待看到更多人加入进来，一起把Kubernetes运维变得更简单、更智能。&lt;/p&gt;
-&lt;p&gt;如果你也对这个项目感兴趣，欢迎来&lt;a href="https://github.com/silenceper/mcp-k8s" target="_blank" rel="noopener"&gt;GitHub&lt;/a&gt;看看，一起讨论，一起改进。&lt;/p&gt;</description></item><item><title>emptyDir 通过xfs_quota 强制限制大小</title><link>/blog/202110/enforce-limit-emptydir-size/</link><pubDate>Sat, 30 Oct 2021 23:20:59 +0800</pubDate><guid>/blog/202110/enforce-limit-emptydir-size/</guid><description>
+&lt;p&gt;如果你也对这个项目感兴趣，欢迎来&lt;a href="https://github.com/silenceper/mcp-k8s" target="_blank" rel="noopener"&gt;GitHub&lt;/a&gt;看看，一起讨论，一起改进。&lt;/p&gt;</description></item><item><title>emptyDir 通过xfs_quota 强制限制大小</title><link>https://silenceper.com/blog/202110/enforce-limit-emptydir-size/</link><pubDate>Sat, 30 Oct 2021 23:20:59 +0800</pubDate><guid>https://silenceper.com/blog/202110/enforce-limit-emptydir-size/</guid><description>
 &lt;p&gt;emptyDir支持三种类型的，通过设置 &lt;code&gt;medium&lt;/code&gt; 字段 ：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;文件：默认情况&lt;/li&gt;
@@ -635,7 +635,7 @@ title="Copy code"
 &lt;/div&gt;
 &lt;p&gt;达到我们的预期。&lt;/p&gt;
 &lt;h3&gt;参考&lt;span class="hx-absolute -hx-mt-20" id="参考"&gt;&lt;/span&gt;
-&lt;a href="#%e5%8f%82%e8%80%83" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;&lt;a href="https://kubernetes.io/zh/docs/concepts/storage/volumes/#emptydir" target="_blank" rel="noopener"&gt;https://kubernetes.io/zh/docs/concepts/storage/volumes/#emptydir&lt;/a&gt;&lt;/p&gt;</description></item><item><title>源码剖析：KEDA是如何工作的?</title><link>/blog/202011/how-does-keda-work/</link><pubDate>Sun, 08 Nov 2020 11:20:59 +0800</pubDate><guid>/blog/202011/how-does-keda-work/</guid><description>
+&lt;a href="#%e5%8f%82%e8%80%83" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;&lt;a href="https://kubernetes.io/zh/docs/concepts/storage/volumes/#emptydir" target="_blank" rel="noopener"&gt;https://kubernetes.io/zh/docs/concepts/storage/volumes/#emptydir&lt;/a&gt;&lt;/p&gt;</description></item><item><title>源码剖析：KEDA是如何工作的?</title><link>https://silenceper.com/blog/202011/how-does-keda-work/</link><pubDate>Sun, 08 Nov 2020 11:20:59 +0800</pubDate><guid>https://silenceper.com/blog/202011/how-does-keda-work/</guid><description>
 &lt;blockquote&gt;
 &lt;p&gt;文章中源码是基于KEDA 2.0( &lt;a href="https://github.com/kedacore/keda/commit/50bec808f8b4656922797e4bcb7c2b61fabd6d0e" target="_blank" rel="noopener"&gt;50bec80
 &lt;/a&gt;)来进行分析&lt;/p&gt;
@@ -696,9 +696,9 @@ title="Copy code"
 &lt;/ul&gt;
 &lt;h2&gt;keda-operator&lt;span class="hx-absolute -hx-mt-20" id="keda-operator"&gt;&lt;/span&gt;
 &lt;a href="#keda-operator" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;项目中用到了&lt;a href="https://github.com/kubernetes-sigs/kubebuilder" target="_blank" rel="noopener"&gt;kubebuilder&lt;/a&gt; SDK，用来完成这个Operator的编写。&lt;/p&gt;
-&lt;p&gt;对于k8s中的自定义controller不了解的可以看看这边文章：&lt;a href="/blog/202005/custom-resources-and-controllers/" &gt;如何在Kubernetes中创建一个自定义Controller?&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;对于k8s中的自定义controller不了解的可以看看这边文章：&lt;a href="https://silenceper.com/blog/202005/custom-resources-and-controllers/" &gt;如何在Kubernetes中创建一个自定义Controller?&lt;/a&gt;。&lt;/p&gt;
 &lt;p&gt;keda controller的主要流程，画了幅图：
-&lt;img src="/img/20201111/keda-controller-analyze.png" alt="keda-controller 分析流程" loading="lazy" /&gt;&lt;/p&gt;
+&lt;img src="https://silenceper.com/img/20201111/keda-controller-analyze.png" alt="keda-controller 分析流程" loading="lazy" /&gt;&lt;/p&gt;
 &lt;p&gt;组件启动入口在于&lt;code&gt;main.go&lt;/code&gt;文件中：&lt;/p&gt;
 &lt;p&gt;通过&lt;code&gt;controller-runtime&lt;/code&gt;组件启动两个自定义controller：&lt;code&gt;ScaledObjectReconciler&lt;/code&gt;,&lt;code&gt;ScaledJobReconciler&lt;/code&gt;:&lt;/p&gt;
 &lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
@@ -1017,14 +1017,14 @@ title="Copy code"
 &lt;p&gt;KEDA是如何做到将应用的副本数缩容0，依据是什么？&lt;/p&gt;
 &lt;p&gt;答： keda 内部有个loop，不断的check isActive状态，会主动的修改应用副本&lt;/p&gt;
 &lt;/li&gt;
-&lt;/ul&gt;</description></item><item><title>使用keda完成基于事件的弹性伸缩</title><link>/blog/202009/how-to-use-keda/</link><pubDate>Mon, 14 Sep 2020 11:20:59 +0800</pubDate><guid>/blog/202009/how-to-use-keda/</guid><description>
+&lt;/ul&gt;</description></item><item><title>使用keda完成基于事件的弹性伸缩</title><link>https://silenceper.com/blog/202009/how-to-use-keda/</link><pubDate>Mon, 14 Sep 2020 11:20:59 +0800</pubDate><guid>https://silenceper.com/blog/202009/how-to-use-keda/</guid><description>
 &lt;blockquote&gt;
 &lt;p&gt;文章中使用的是keda 1.5版本，2.0还未release
 1.5版本支持deployment，job两种资源。而在2.0增加了StatefulSet以及自定义资源&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;&lt;a href="https://keda.sh/" target="_blank" rel="noopener"&gt;keda&lt;/a&gt; 是一个支持多种事件源来对应用进行弹性伸缩的控制器。
 我觉得keda可以认为是基于HPA的external metrics的一种扩展，因为它利用了hpa中external metrics的能力，允许直接配置多个事件源：
-&lt;img src="/img/20200914/keda-scalers.png" alt="支持的事件源" loading="lazy" /&gt;&lt;/p&gt;
+&lt;img src="https://silenceper.com/img/20200914/keda-scalers.png" alt="支持的事件源" loading="lazy" /&gt;&lt;/p&gt;
 &lt;h1&gt;安装keda&lt;/h1&gt;&lt;p&gt;从 &lt;a href="https://github.com/kedacore/keda/releases" target="_blank" rel="noopener"&gt;https://github.com/kedacore/keda/releases&lt;/a&gt; 下载1.5版本的zip包，包含了yaml和crd:&lt;/p&gt;
 &lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
 &lt;div&gt;&lt;pre&gt;&lt;code&gt;├── 00-namespace.yaml
@@ -1162,7 +1162,7 @@ title="Copy code"
 &lt;ul&gt;
 &lt;li&gt;keda operator： 负责创建维护hpa对象资源，同时激活和停止hpa伸缩。在无事件的时候将副本数降低为0(如果未设置minReplicaCount的话)&lt;/li&gt;
 &lt;li&gt;metrics server: 实现了hpa中external metrics，根据事件源配置返回计算结果。
-&lt;img src="/img/20200914/keda-arch.png" alt="keda架构图" loading="lazy" /&gt;&lt;/li&gt;
+&lt;img src="https://silenceper.com/img/20200914/keda-arch.png" alt="keda架构图" loading="lazy" /&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;可以看得到HPA控制了副本1-&amp;gt;N和N-&amp;gt;1的变化。
 keda控制了副本0-&amp;gt;1和1-&amp;gt;0的变化（起到了激活和停止的作用，对于一些消费型的任务副本比较有用，比如在凌晨启动任务进行消费）&lt;/p&gt;
@@ -1197,7 +1197,7 @@ title="Copy code"
 &lt;h1&gt;总结&lt;/h1&gt;&lt;p&gt;之前用过k8s-prometheus-adapter项目来进行应用的自定义指标进行扩展，对比keda感觉keda操作更简单，配置更加动态化，因为抽象了hpa，用户直接操作&lt;code&gt;ScaledObject&lt;/code&gt;即可，不需要关注hpa如何进行配置。而且支持将副本数设置为0，同时又拥有类似cronhpa(定时伸缩)的功能，扩展能力比较强。&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;阅读原文体验更加，文中链接支持跳转&lt;/p&gt;
-&lt;/blockquote&gt;</description></item><item><title>如何在Kubernetes中创建一个自定义Controller?</title><link>/blog/202005/custom-resources-and-controllers/</link><pubDate>Mon, 18 May 2020 18:20:59 +0800</pubDate><guid>/blog/202005/custom-resources-and-controllers/</guid><description>
+&lt;/blockquote&gt;</description></item><item><title>如何在Kubernetes中创建一个自定义Controller?</title><link>https://silenceper.com/blog/202005/custom-resources-and-controllers/</link><pubDate>Mon, 18 May 2020 18:20:59 +0800</pubDate><guid>https://silenceper.com/blog/202005/custom-resources-and-controllers/</guid><description>
 &lt;h2&gt;目的&lt;span class="hx-absolute -hx-mt-20" id="目的"&gt;&lt;/span&gt;
 &lt;a href="#%e7%9b%ae%e7%9a%84" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Custom Resource是扩展Kubernetes的一种方式（另外一种就是通过聚合层API apiserver-aggregation），而controller对指定的resource进行监听和执行对应的动作(watch,diff,action)。&lt;br /&gt;
 &lt;br /&gt;&lt;strong&gt;Operator与Controller区别&lt;/strong&gt;&lt;/p&gt;
@@ -1622,7 +1622,7 @@ title="Copy code"
 &lt;li&gt;&lt;a href="https://juejin.im/post/5de097bbf265da05d849ab53" target="_blank" rel="noopener"&gt;https://juejin.im/post/5de097bbf265da05d849ab53&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://blog.fatedier.com/2019/04/02/k8s-custom-controller/" target="_blank" rel="noopener"&gt;https://blog.fatedier.com/2019/04/02/k8s-custom-controller/&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://blog.gmem.cc/crd" target="_blank" rel="noopener"&gt;https://blog.gmem.cc/crd&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description></item><item><title>记一次问题排查：为什么在POD无法通过Service访问自己？</title><link>/blog/202004/bridge-hairpin-mod/</link><pubDate>Thu, 30 Apr 2020 11:26:59 +0800</pubDate><guid>/blog/202004/bridge-hairpin-mod/</guid><description>
+&lt;/ul&gt;</description></item><item><title>记一次问题排查：为什么在POD无法通过Service访问自己？</title><link>https://silenceper.com/blog/202004/bridge-hairpin-mod/</link><pubDate>Thu, 30 Apr 2020 11:26:59 +0800</pubDate><guid>https://silenceper.com/blog/202004/bridge-hairpin-mod/</guid><description>
 &lt;h2&gt;问题现象&lt;span class="hx-absolute -hx-mt-20" id="问题现象"&gt;&lt;/span&gt;
 &lt;a href="#%e9%97%ae%e9%a2%98%e7%8e%b0%e8%b1%a1" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;创建一个nginx pod，并配置了service访问，service后端指向pod。&lt;/p&gt;
 &lt;p&gt;进入pod中使用service ip 或者service 域名，无法访问。&lt;/p&gt;
@@ -1695,9 +1695,9 @@ title="Copy code"
 &lt;code&gt;ifconfig docker0 promisc on/off&lt;/code&gt;&lt;/p&gt;
 &lt;h2&gt;总结&lt;span class="hx-absolute -hx-mt-20" id="总结"&gt;&lt;/span&gt;
 &lt;a href="#%e6%80%bb%e7%bb%93" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;其实我们集群通过这种比较另类的方式来分配POD IP也用了了很久了，之所以没出问题，应该是业务基本没遇到这种pod内通过service访问自己的情况。&lt;/p&gt;
-&lt;p&gt;所以还是要跟着标准的k8s方式来安装cni，避免入坑，比如flannel就已经提供给了&lt;code&gt;hairpinMode &lt;/code&gt;参数来进行配置开启。&lt;/p&gt;</description></item><item><title>分析kubernetes中的事件机制</title><link>/blog/202003/kubernetes-event/</link><pubDate>Tue, 03 Mar 2020 12:40:59 +0800</pubDate><guid>/blog/202003/kubernetes-event/</guid><description>
+&lt;p&gt;所以还是要跟着标准的k8s方式来安装cni，避免入坑，比如flannel就已经提供给了&lt;code&gt;hairpinMode &lt;/code&gt;参数来进行配置开启。&lt;/p&gt;</description></item><item><title>分析kubernetes中的事件机制</title><link>https://silenceper.com/blog/202003/kubernetes-event/</link><pubDate>Tue, 03 Mar 2020 12:40:59 +0800</pubDate><guid>https://silenceper.com/blog/202003/kubernetes-event/</guid><description>
 &lt;p&gt;我们通过 &lt;code&gt;kubectl describe [资源]&lt;/code&gt; 命令，可以在看到Event输出，并且经常依赖event进行问题定位，从event中可以分析整个POD的运行轨迹，为服务的客观测性提供数据来源，由此可见，event在Kubernetes中起着举足轻重的作用。&lt;/p&gt;
-&lt;p&gt;&lt;img src="/img/20200303/event.png" alt="event展示" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20200303/event.png" alt="event展示" loading="lazy" /&gt;&lt;/p&gt;
 &lt;p&gt;event并不只是kubelet中都有的，关于event的操作被封装在&lt;a href="https://github.com/kubernetes/kubernetes/tree/v1.17.3/staging/src/k8s.io/client-go/tools/record" target="_blank" rel="noopener"&gt;client-go/tools/record&lt;/a&gt;包，我们完全可以在写入自定义的event。&lt;/p&gt;
 &lt;p&gt;现在让我们来一步步揭开event的面纱。
 &lt;a name="EBJdC"&gt;&lt;/a&gt;&lt;/p&gt;
@@ -1761,7 +1761,7 @@ title="Copy code"
 &lt;p&gt;2、文中代码以Kubernetes 1.17.3为例进行分析&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;先以一幅图来看下整个的处理流程
-&lt;img src="/img/20200303/kubernetes-event.png" alt="event处理过程" loading="lazy" /&gt;&lt;/p&gt;
+&lt;img src="https://silenceper.com/img/20200303/kubernetes-event.png" alt="event处理过程" loading="lazy" /&gt;&lt;/p&gt;
 &lt;p&gt;创建操作事件的客户端：&lt;br /&gt;&lt;a href="https://github.com/kubernetes/kubernetes/blob/v1.17.3/cmd/kubelet/app/server.go#L461" target="_blank" rel="noopener"&gt;kubelet/app/server.go#L461&lt;/a&gt;&lt;/p&gt;
 &lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
 &lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// makeEventRecorder sets up kubeDeps.Recorder if it&amp;#39;s nil. It&amp;#39;s a no-op otherwise.&lt;/span&gt;&lt;span class="w"&gt;
@@ -2134,7 +2134,7 @@ title="Copy code"
 &lt;p&gt;&lt;strong&gt;参考文档：&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://cizixs.com/2017/06/22/kubelet-source-code-analysis-part4-event/" target="_blank" rel="noopener"&gt;https://cizixs.com/2017/06/22/kubelet-source-code-analysis-part4-event/&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description></item><item><title>利用Kubernetes中的leaderelection实现组件高可用</title><link>/blog/202002/kubernetes-leaderelection/</link><pubDate>Sat, 15 Feb 2020 00:00:00 +0000</pubDate><guid>/blog/202002/kubernetes-leaderelection/</guid><description>
+&lt;/ul&gt;</description></item><item><title>利用Kubernetes中的leaderelection实现组件高可用</title><link>https://silenceper.com/blog/202002/kubernetes-leaderelection/</link><pubDate>Sat, 15 Feb 2020 00:00:00 +0000</pubDate><guid>https://silenceper.com/blog/202002/kubernetes-leaderelection/</guid><description>
 &lt;p&gt;在Kubernetes中，通常kube-schduler和kube-controller-manager都是多副本进行部署的来保证高可用，而真正在工作的实例其实只有一个。这里就利用到 &lt;code&gt;leaderelection&lt;/code&gt; 的选主机制，保证leader是处于工作状态，并且在leader挂掉之后，从其他节点选取新的leader保证组件正常工作。&lt;/p&gt;
 &lt;p&gt;不单单只是k8s中的这两个组件用到，在其他服务中也可以看到这个包的使用，比如&lt;a href="https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/" target="_blank" rel="noopener"&gt;cluster-autoscaler&lt;/a&gt;等都能看得到这个包的，今天就来看看这个包的使用以及它内部是如何实现的。&lt;/p&gt;
 &lt;h2&gt;使用&lt;span class="hx-absolute -hx-mt-20" id="使用"&gt;&lt;/span&gt;

@@ -1,4 +1,4 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – 技术教程</title><link>/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/</link><description>Recent content in 技术教程 on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 30 Nov 2025 00:00:00 +0800</lastBuildDate><atom:link href="/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/index.xml" rel="self" type="application/rss+xml"/><item><title>免费体验 Google AI 图片生成神器：Nano Banana Pro 完整教程</title><link>/blog/2025-11-30-nano-banana-pro/</link><pubDate>Sun, 30 Nov 2025 00:00:00 +0800</pubDate><guid>/blog/2025-11-30-nano-banana-pro/</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – 技术教程</title><link>https://silenceper.com/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/</link><description>Recent content in 技术教程 on silenceper</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sun, 30 Nov 2025 00:00:00 +0800</lastBuildDate><atom:link href="https://silenceper.com/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/index.xml" rel="self" type="application/rss+xml"/><item><title>免费体验 Google AI 图片生成神器：Nano Banana Pro 完整教程</title><link>https://silenceper.com/blog/2025-11-30-nano-banana-pro/</link><pubDate>Sun, 30 Nov 2025 00:00:00 +0800</pubDate><guid>https://silenceper.com/blog/2025-11-30-nano-banana-pro/</guid><description>
 &lt;h2&gt;简介&lt;span class="hx-absolute -hx-mt-20" id="简介"&gt;&lt;/span&gt;
 &lt;a href="#%e7%ae%80%e4%bb%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Google Cloud Platform (GCP) 为新用户提供了 300 美元的免费试用额度，可以用来体验各种 Google Cloud 服务。本文将详细介绍如何利用这个免费试用额度来使用 Google AI Studio 中的 Nano Banana Pro 模型。&lt;/p&gt;
 &lt;p&gt;Nano Banana Pro 是 Google 推出的轻量级 AI 模型，适合快速原型开发和实验。通过本文的步骤，你可以免费体验这个强大的 AI 模型。&lt;/p&gt;
@@ -20,7 +20,7 @@
 &lt;li&gt;输入项目名称（例如：&lt;code&gt;Free300API&lt;/code&gt;）&lt;/li&gt;
 &lt;li&gt;点击 &lt;strong&gt;Setup billing&lt;/strong&gt; 设置账单&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;img src="/img/20251130/nano-banana-pro-step2.png" alt="创建项目界面" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20251130/nano-banana-pro-step2.png" alt="创建项目界面" loading="lazy" /&gt;&lt;/p&gt;
 &lt;h3&gt;步骤 3：填写信用卡以及地址信息&lt;span class="hx-absolute -hx-mt-20" id="步骤-3填写信用卡以及地址信息"&gt;&lt;/span&gt;
 &lt;a href="#%e6%ad%a5%e9%aa%a4-3%e5%a1%ab%e5%86%99%e4%bf%a1%e7%94%a8%e5%8d%a1%e4%bb%a5%e5%8f%8a%e5%9c%b0%e5%9d%80%e4%bf%a1%e6%81%af" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;blockquote&gt;
 &lt;p&gt;地区选择美国，通过用https://www.meiguodizhi.com/ 生成一个美国地址，然后填写到账单设置页面。
@@ -29,14 +29,14 @@
 &lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;：确保你的信用卡信息正确，Google 可能会进行小额验证（通常会在验证后立即退还）。&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;&lt;img src="/img/20251130/nano-banana-pro-step3.png" alt="账单设置界面" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20251130/nano-banana-pro-step3.png" alt="账单设置界面" loading="lazy" /&gt;&lt;/p&gt;
 &lt;h3&gt;步骤 4：启动免费试用&lt;span class="hx-absolute -hx-mt-20" id="步骤-4启动免费试用"&gt;&lt;/span&gt;
 &lt;a href="#%e6%ad%a5%e9%aa%a4-4%e5%90%af%e5%8a%a8%e5%85%8d%e8%b4%b9%e8%af%95%e7%94%a8" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;ol&gt;
 &lt;li&gt;完成信用卡验证后，前往 &lt;a href="https://console.cloud.google.com/" target="_blank" rel="noopener"&gt;Google Cloud Console&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;在控制台中，找到并点击 &lt;strong&gt;启动免费使用&lt;/strong&gt; 或 &lt;strong&gt;Start Free Trial&lt;/strong&gt; 按钮&lt;/li&gt;
 &lt;li&gt;确认激活 300 美元的免费试用额度&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;img src="/img/20251130/nano-banana-pro-step4.png" alt="Google Cloud Console 免费试用" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20251130/nano-banana-pro-step4.png" alt="Google Cloud Console 免费试用" loading="lazy" /&gt;&lt;/p&gt;
 &lt;h3&gt;步骤 5：创建 API Key&lt;span class="hx-absolute -hx-mt-20" id="步骤-5创建-api-key"&gt;&lt;/span&gt;
 &lt;a href="#%e6%ad%a5%e9%aa%a4-5%e5%88%9b%e5%bb%ba-api-key" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;ol&gt;
 &lt;li&gt;返回 &lt;a href="https://aistudio.google.com/" target="_blank" rel="noopener"&gt;Google AI Studio&lt;/a&gt;&lt;/li&gt;
@@ -53,12 +53,12 @@
 &lt;li&gt;点击 &lt;strong&gt;Link API Keys&lt;/strong&gt; 或 &lt;strong&gt;链接 API Keys&lt;/strong&gt;&lt;/li&gt;
 &lt;li&gt;选择刚才创建的 API Key&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;img src="/img/20251130/nano-banana-pro-step6.png" alt="链接 API Key" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20251130/nano-banana-pro-step6.png" alt="链接 API Key" loading="lazy" /&gt;&lt;/p&gt;
 &lt;h3&gt;步骤 7：开始使用 Nano Banana Pro&lt;span class="hx-absolute -hx-mt-20" id="步骤-7开始使用-nano-banana-pro"&gt;&lt;/span&gt;
 &lt;a href="#%e6%ad%a5%e9%aa%a4-7%e5%bc%80%e5%a7%8b%e4%bd%bf%e7%94%a8-nano-banana-pro" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;完成以上步骤后，你就可以在 Playground 中免费使用 Nano Banana Pro 模型了。你可以在输入框中输入提示词，与模型进行交互。&lt;/p&gt;
 &lt;h2&gt;使用效果展示&lt;span class="hx-absolute -hx-mt-20" id="使用效果展示"&gt;&lt;/span&gt;
 &lt;a href="#%e4%bd%bf%e7%94%a8%e6%95%88%e6%9e%9c%e5%b1%95%e7%a4%ba" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;以下是通过 Nano Banana Pro 生成的一些示例效果：&lt;/p&gt;
-&lt;p&gt;&lt;img src="/img/20251130/nano-banana-pro-demo.png" alt="Nano Banana Pro 使用效果" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20251130/nano-banana-pro-demo.png" alt="Nano Banana Pro 使用效果" loading="lazy" /&gt;&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;提示词：电影级史诗镜头，一名未来超级战士站在废墟中，全身正在被黑色的纳米液态金属迅速覆盖，六边形蜂巢结构的装甲正在自动组装与闭合，装甲缝隙中流动着高亮的青色能量电流，极其精细的机械纹理，微观视角下可见无数微小的纳米机器人在工作，体积光，火花飞溅，丁达尔效应，超写实，8k分辨率，虚幻引擎5渲染，压迫感，赛博朋克风格。&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -84,7 +84,7 @@ A: 可以，你可以在多个项目中使用同一个 API Key，但建议为不
 &lt;li&gt;&lt;a href="https://aistudio.google.com/" target="_blank" rel="noopener"&gt;Google AI Studio&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://cloud.google.com/free" target="_blank" rel="noopener"&gt;Google Cloud Platform 免费试用&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://console.cloud.google.com/" target="_blank" rel="noopener"&gt;Google Cloud Console&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description></item><item><title>AI辅助开发小程序的实践分享</title><link>/blog/2025-11-26-ai-minigrogram/</link><pubDate>Wed, 26 Nov 2025 00:00:00 +0000</pubDate><guid>/blog/2025-11-26-ai-minigrogram/</guid><description>
+&lt;/ul&gt;</description></item><item><title>AI辅助开发小程序的实践分享</title><link>https://silenceper.com/blog/2025-11-26-ai-minigrogram/</link><pubDate>Wed, 26 Nov 2025 00:00:00 +0000</pubDate><guid>https://silenceper.com/blog/2025-11-26-ai-minigrogram/</guid><description>
 &lt;h1&gt;背景&lt;/h1&gt;&lt;p&gt;没写过前端，只写过后端主要熟悉的语言是golang，完成这个小程序主要分为了以下几个阶段：&lt;/p&gt;
 &lt;h2&gt;需求分析&lt;span class="hx-absolute -hx-mt-20" id="需求分析"&gt;&lt;/span&gt;
 &lt;a href="#%e9%9c%80%e6%b1%82%e5%88%86%e6%9e%90" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;通过 Google AI Studio 中的gemini进行规划进行需求分析以及列出详细的需求说明；
@@ -167,7 +167,7 @@ title="Copy code"
 &lt;/div&gt;
 &lt;p&gt;当然在实现的过程中还要不断地调教，不过最后实现的效果还可以，用的越多发现要时不时的切换新的会话，不然会“降智”，我基本用的是CLaude Sonnet4模型。&lt;/p&gt;
 &lt;p&gt;最后放几个效果图：&lt;/p&gt;
-&lt;p&gt;&lt;img src="/img/star-trace.png" alt="星轨纪" loading="lazy" /&gt;&lt;/p&gt;</description></item><item><title>在Claude Code中使用DeepSeek v3.1模型：完整指南</title><link>/blog/2025-08-21-deepseek-claude-code/</link><pubDate>Thu, 21 Aug 2025 00:00:00 +0000</pubDate><guid>/blog/2025-08-21-deepseek-claude-code/</guid><description>
+&lt;p&gt;&lt;img src="https://silenceper.com/img/star-trace.png" alt="星轨纪" loading="lazy" /&gt;&lt;/p&gt;</description></item><item><title>在Claude Code中使用DeepSeek v3.1模型：完整指南</title><link>https://silenceper.com/blog/2025-08-21-deepseek-claude-code/</link><pubDate>Thu, 21 Aug 2025 00:00:00 +0000</pubDate><guid>https://silenceper.com/blog/2025-08-21-deepseek-claude-code/</guid><description>
 &lt;h2&gt;DeepSeek v3.1 模型介绍&lt;span class="hx-absolute -hx-mt-20" id="deepseek-v31-模型介绍"&gt;&lt;/span&gt;
 &lt;a href="#deepseek-v31-%e6%a8%a1%e5%9e%8b%e4%bb%8b%e7%bb%8d" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;DeepSeek v3.1 于 2025 年 8 月 21 日发布，是在 V3 基础上的重要升级，具有以下核心特性：&lt;/p&gt;
 &lt;ul&gt;

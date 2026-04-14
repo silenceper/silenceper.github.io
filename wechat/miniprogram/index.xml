@@ -1,4 +1,4 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – 小程序 - 微信SDK开发文档</title><link>/wechat/miniprogram/</link><description>Recent content in 小程序 - 微信SDK开发文档 on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en</language><atom:link href="/wechat/miniprogram/index.xml" rel="self" type="application/rss+xml"/><item><title>微信登录 - 微信SDK开发文档</title><link>/wechat/miniprogram/auth.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/wechat/miniprogram/auth.html</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – 小程序 - 微信SDK开发文档</title><link>https://silenceper.com/wechat/miniprogram/</link><description>Recent content in 小程序 - 微信SDK开发文档 on silenceper</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><atom:link href="https://silenceper.com/wechat/miniprogram/index.xml" rel="self" type="application/rss+xml"/><item><title>微信登录 - 微信SDK开发文档</title><link>https://silenceper.com/wechat/miniprogram/auth.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://silenceper.com/wechat/miniprogram/auth.html</guid><description>
 &lt;h2&gt;获取操作实例&lt;span class="hx-absolute -hx-mt-20" id="获取操作实例"&gt;&lt;/span&gt;
 &lt;a href="#%e8%8e%b7%e5%8f%96%e6%93%8d%e4%bd%9c%e5%ae%9e%e4%be%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
 &lt;div&gt;&lt;pre&gt;&lt;code&gt;mini := wc.GetMiniProgram(cfg)
@@ -23,7 +23,7 @@ title="Copy code"
 &lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
 &lt;/button&gt;
 &lt;/div&gt;
-&lt;/div&gt;</description></item><item><title>消息解密 - 微信SDK开发文档</title><link>/wechat/miniprogram/decrypt.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/wechat/miniprogram/decrypt.html</guid><description>
+&lt;/div&gt;</description></item><item><title>消息解密 - 微信SDK开发文档</title><link>https://silenceper.com/wechat/miniprogram/decrypt.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://silenceper.com/wechat/miniprogram/decrypt.html</guid><description>
 &lt;h2&gt;获取操作实例&lt;span class="hx-absolute -hx-mt-20" id="获取操作实例"&gt;&lt;/span&gt;
 &lt;a href="#%e8%8e%b7%e5%8f%96%e6%93%8d%e4%bd%9c%e5%ae%9e%e4%be%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
 &lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;mini&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;wc&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;GetMiniProgram&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;cfg&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;
@@ -78,7 +78,7 @@ title="Copy code"
 &lt;/button&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;根据需要取用户信息还是手机号信息&lt;/p&gt;</description></item><item><title>小程序码 - 微信SDK开发文档</title><link>/wechat/miniprogram/qrcode.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/wechat/miniprogram/qrcode.html</guid><description>
+&lt;p&gt;根据需要取用户信息还是手机号信息&lt;/p&gt;</description></item><item><title>小程序码 - 微信SDK开发文档</title><link>https://silenceper.com/wechat/miniprogram/qrcode.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://silenceper.com/wechat/miniprogram/qrcode.html</guid><description>
 &lt;h2&gt;获取操作实例&lt;span class="hx-absolute -hx-mt-20" id="获取操作实例"&gt;&lt;/span&gt;
 &lt;a href="#%e8%8e%b7%e5%8f%96%e6%93%8d%e4%bd%9c%e5%ae%9e%e4%be%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
 &lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;mini&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;wc&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;GetMiniProgram&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;cfg&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;
@@ -127,7 +127,7 @@ title="Copy code"
 &lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
 &lt;/button&gt;
 &lt;/div&gt;
-&lt;/div&gt;</description></item><item><title>云开发 - 微信SDK开发文档</title><link>/wechat/miniprogram/tcb.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/wechat/miniprogram/tcb.html</guid><description>
+&lt;/div&gt;</description></item><item><title>云开发 - 微信SDK开发文档</title><link>https://silenceper.com/wechat/miniprogram/tcb.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://silenceper.com/wechat/miniprogram/tcb.html</guid><description>
 &lt;p&gt;Tencent Cloud Base &lt;a href="https://developers.weixin.qq.com/miniprogram/dev/wxcloud/reference-http-api/" target="_blank" rel="noopener"&gt;文档&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;使用说明&lt;span class="hx-absolute -hx-mt-20" id="使用说明"&gt;&lt;/span&gt;
 &lt;a href="#%e4%bd%bf%e7%94%a8%e8%af%b4%e6%98%8e" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;初始化配置&lt;/strong&gt;&lt;/p&gt;
@@ -169,7 +169,7 @@ title="Copy code"
 &lt;/button&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;更多使用方法参考&lt;a href="https://godoc.org/github.com/silenceper/wechat/v2/miniprogram/tcb" target="_blank" rel="noopener"&gt;GODOC&lt;/a&gt;&lt;/p&gt;</description></item><item><title>订阅消息 - 微信SDK开发文档</title><link>/wechat/miniprogram/subscribe.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/wechat/miniprogram/subscribe.html</guid><description>
+&lt;p&gt;更多使用方法参考&lt;a href="https://godoc.org/github.com/silenceper/wechat/v2/miniprogram/tcb" target="_blank" rel="noopener"&gt;GODOC&lt;/a&gt;&lt;/p&gt;</description></item><item><title>订阅消息 - 微信SDK开发文档</title><link>https://silenceper.com/wechat/miniprogram/subscribe.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://silenceper.com/wechat/miniprogram/subscribe.html</guid><description>
 &lt;p&gt;&lt;a href="https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.send.html" target="_blank" rel="noopener"&gt;微信文档&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;获取操作实例&lt;span class="hx-absolute -hx-mt-20" id="获取操作实例"&gt;&lt;/span&gt;
 &lt;a href="#%e8%8e%b7%e5%8f%96%e6%93%8d%e4%bd%9c%e5%ae%9e%e4%be%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
