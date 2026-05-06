@@ -1,0 +1,205 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – Multica</title><link>https://silenceper.com/tags/multica/</link><description>Recent content in Multica on silenceper</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 30 Apr 2026 17:44:00 +0800</lastBuildDate><atom:link href="https://silenceper.com/tags/multica/index.xml" rel="self" type="application/rss+xml"/><item><title>Multica：把编码 Agent 当成团队成员管理的开源平台</title><link>https://silenceper.com/article/2026-04-30-multica-managed-agents/</link><pubDate>Thu, 30 Apr 2026 17:44:00 +0800</pubDate><guid>https://silenceper.com/article/2026-04-30-multica-managed-agents/</guid><description>
+&lt;h2&gt;一句话定位&lt;span class="hx-absolute -hx-mt-20" id="一句话定位"&gt;&lt;/span&gt;
+&lt;a href="#%e4%b8%80%e5%8f%a5%e8%af%9d%e5%ae%9a%e4%bd%8d" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Multica 是一个开源的 Managed Agents 平台，用看板、Issue、运行时和技能系统，把 Claude Code、Codex、OpenCode、Hermes 等编码 Agent 管理成可以被分配任务、跟踪进度、复用经验的“团队成员”。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260430/multica-issues-kanban.png" alt="Multica Issues 看板界面" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;官方 README 将 Multica 定位为开源的 Managed Agents 平台。它的重点不是再造一个新的编码 Agent，而是把 Claude Code、Codex、OpenCode、Hermes 等已有 Agent 纳入团队协作流：分配任务、跟踪进度、管理运行时，并把常见工程动作沉淀成可复用技能。&lt;/p&gt;
+&lt;p&gt;官方 README 列出的支持范围包括 Claude Code、Codex、OpenClaw、OpenCode、Hermes、Gemini、Pi、Cursor Agent、Kimi、Kiro CLI。实际支持能力建议以仓库最新 README 和本机 CLI 检测结果为准。&lt;/p&gt;
+&lt;h2&gt;基础信息卡片&lt;span class="hx-absolute -hx-mt-20" id="基础信息卡片"&gt;&lt;/span&gt;
+&lt;a href="#%e5%9f%ba%e7%a1%80%e4%bf%a1%e6%81%af%e5%8d%a1%e7%89%87" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;项目&lt;/th&gt;
+&lt;th&gt;信息&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;GitHub&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://github.com/multica-ai/multica" target="_blank" rel="noopener"&gt;https://github.com/multica-ai/multica&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;官网&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://multica.ai" target="_blank" rel="noopener"&gt;https://multica.ai&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;项目定位&lt;/td&gt;
+&lt;td&gt;Human + Agent 团队协作 / 编码 Agent 管理平台&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;主要语言&lt;/td&gt;
+&lt;td&gt;TypeScript（前端为主），后端使用 Go&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;默认分支&lt;/td&gt;
+&lt;td&gt;main&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Stars&lt;/td&gt;
+&lt;td&gt;约 22.7k&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Forks&lt;/td&gt;
+&lt;td&gt;约 2.8k&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;协议&lt;/td&gt;
+&lt;td&gt;修改版 Apache License 2.0（商业使用有附加条款，正式采用前建议阅读 LICENSE）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;支持的 Agent/CLI&lt;/td&gt;
+&lt;td&gt;Claude Code、Codex、OpenClaw、OpenCode、Hermes、Gemini、Pi、Cursor Agent、Kimi、Kiro CLI 等&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2&gt;解决什么问题&lt;span class="hx-absolute -hx-mt-20" id="解决什么问题"&gt;&lt;/span&gt;
+&lt;a href="#%e8%a7%a3%e5%86%b3%e4%bb%80%e4%b9%88%e9%97%ae%e9%a2%98" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;现在很多团队已经开始使用编码 Agent，但常见用法仍然偏“临时对话”：打开一个 CLI、复制一段需求、等待它跑完，再人工确认结果。这个模式适合个人效率工具，却很难自然进入团队协作流程。&lt;/p&gt;
+&lt;p&gt;Multica 想解决的是另一类问题：当团队里不止一个人、也不止一个 Agent 时，如何把 Agent 纳入日常工作流？&lt;/p&gt;
+&lt;p&gt;它把 Agent 放到类似项目管理工具的上下文里：任务可以被分配，执行过程可以被观察，阻塞可以被报告，结果可以沉淀为可复用技能。这样 Agent 不再只是一个命令行窗口，而更像看板里的协作者。&lt;/p&gt;
+&lt;p&gt;Multica 的核心界面接近团队项目管理工具：左侧是工作区导航，中间是 Issues 看板，任务按 Backlog、Todo、In Progress、In Review、Done 等状态流转，Agent 和人类成员共享同一套任务视图。&lt;/p&gt;
+&lt;h2&gt;核心功能&lt;span class="hx-absolute -hx-mt-20" id="核心功能"&gt;&lt;/span&gt;
+&lt;a href="#%e6%a0%b8%e5%bf%83%e5%8a%9f%e8%83%bd" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;1. Agent 像队友一样被分配任务&lt;span class="hx-absolute -hx-mt-20" id="1-agent-像队友一样被分配任务"&gt;&lt;/span&gt;
+&lt;a href="#1-agent-%e5%83%8f%e9%98%9f%e5%8f%8b%e4%b8%80%e6%a0%b7%e8%a2%ab%e5%88%86%e9%85%8d%e4%bb%bb%e5%8a%a1" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;在 Multica 里，Agent 可以出现在看板、成员列表、任务负责人和评论区中。你可以像给同事分配 Issue 一样，把任务分配给某个 Agent。&lt;/p&gt;
+&lt;p&gt;它接手后会更新状态、发表评论、报告阻塞，也可以创建新的 Issue。对团队来说，重点不是“又多了一个 AI 工具”，而是 Agent 的动作被放进了统一的协作记录里。&lt;/p&gt;
+&lt;p&gt;这也是 Multica 和单个编码 Agent CLI 最大的区别：CLI 解决的是“让 Agent 做事”，而 Multica 解决的是“让团队知道 Agent 在做什么、由谁负责、做到哪一步、结果如何沉淀”。&lt;/p&gt;
+&lt;h3&gt;2. 完整的任务生命周期管理&lt;span class="hx-absolute -hx-mt-20" id="2-完整的任务生命周期管理"&gt;&lt;/span&gt;
+&lt;a href="#2-%e5%ae%8c%e6%95%b4%e7%9a%84%e4%bb%bb%e5%8a%a1%e7%94%9f%e5%91%bd%e5%91%a8%e6%9c%9f%e7%ae%a1%e7%90%86" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Multica 不只关注一次 prompt 的输出，而是关注任务从排队、认领、开始执行到完成或失败的全过程。&lt;/p&gt;
+&lt;p&gt;官方 README 中提到，Multica 支持完整的任务生命周期管理，包括 enqueue、claim、start、complete/fail，并通过 WebSocket 实时推送进度。这样团队可以看到 Agent 正在做什么、卡在哪里、最终产出了什么，而不是几个小时后才发现任务没有继续推进。&lt;/p&gt;
+&lt;p&gt;这对于团队场景很重要。因为团队协作里，任务是否完成只是结果，过程中的状态、阻塞、上下文和责任归属同样重要。&lt;/p&gt;
+&lt;h3&gt;3. 统一运行时：本地机器和云端都能管理&lt;span class="hx-absolute -hx-mt-20" id="3-统一运行时本地机器和云端都能管理"&gt;&lt;/span&gt;
+&lt;a href="#3-%e7%bb%9f%e4%b8%80%e8%bf%90%e8%a1%8c%e6%97%b6%e6%9c%ac%e5%9c%b0%e6%9c%ba%e5%99%a8%e5%92%8c%e4%ba%91%e7%ab%af%e9%83%bd%e8%83%bd%e7%ae%a1%e7%90%86" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Multica 通过本地 daemon 连接你的机器，也支持云端运行时。daemon 会自动检测本机 PATH 中可用的 Agent CLI，例如 Claude Code、Codex、OpenCode、Hermes、Gemini、Cursor Agent 等。&lt;/p&gt;
+&lt;p&gt;这意味着团队可以在一个控制台里管理不同运行环境：有人用本地 MacBook 跑 Agent，有人用云端实例跑任务，Multica 负责把这些运行时统一呈现和调度。&lt;/p&gt;
+&lt;p&gt;从架构上看，Runtime 是 Multica 很关键的一层。它不只是展示一个看板，而是把“任务”和“执行环境”连接起来，让 Agent 真正可以在指定环境里接手工作。&lt;/p&gt;
+&lt;h3&gt;4. 技能系统：把经验沉淀给整个团队&lt;span class="hx-absolute -hx-mt-20" id="4-技能系统把经验沉淀给整个团队"&gt;&lt;/span&gt;
+&lt;a href="#4-%e6%8a%80%e8%83%bd%e7%b3%bb%e7%bb%9f%e6%8a%8a%e7%bb%8f%e9%aa%8c%e6%b2%89%e6%b7%80%e7%bb%99%e6%95%b4%e4%b8%aa%e5%9b%a2%e9%98%9f" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Multica 的 Skills 设计很关键。它把“如何完成某类任务”的步骤、配置、上下文和模板沉淀下来，让之后的 Agent 可以复用。&lt;/p&gt;
+&lt;p&gt;例如部署到测试环境、编写数据库迁移、做 PR Review、补测试等，都可以被整理成技能。一次解决方案不只是一次性结果，而会变成团队后续可调用的能力。&lt;/p&gt;
+&lt;p&gt;这也是 Managed Agents 平台和普通 AI 工具的区别之一：普通 AI 工具更多是在单次对话里产生结果，而 Managed Agents 平台需要让经验可以积累、复用和团队共享。&lt;/p&gt;
+&lt;h3&gt;5. 多工作区与团队隔离&lt;span class="hx-absolute -hx-mt-20" id="5-多工作区与团队隔离"&gt;&lt;/span&gt;
+&lt;a href="#5-%e5%a4%9a%e5%b7%a5%e4%bd%9c%e5%8c%ba%e4%b8%8e%e5%9b%a2%e9%98%9f%e9%9a%94%e7%a6%bb" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Multica 支持 workspace 级别的隔离，每个工作区可以有独立的 Agent、Issue 和设置。对于多团队、多项目场景，这比单机工具或单人看板更接近真实协作需求。&lt;/p&gt;
+&lt;p&gt;如果团队同时维护多个项目，或者不同业务线有不同的 Agent、运行时和权限边界，多工作区设计会比单一全局配置更可控。&lt;/p&gt;
+&lt;h2&gt;适合谁&lt;span class="hx-absolute -hx-mt-20" id="适合谁"&gt;&lt;/span&gt;
+&lt;a href="#%e9%80%82%e5%90%88%e8%b0%81" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Multica 比较适合以下几类团队或个人：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;已经在使用 Claude Code、Codex、OpenCode、Hermes 等编码 Agent，希望把它们纳入团队流程；&lt;/li&gt;
+&lt;li&gt;有多个项目、多个运行环境，需要统一管理 Agent 执行位置和状态；&lt;/li&gt;
+&lt;li&gt;希望减少“复制 prompt、盯着终端、人工汇报进度”的重复操作；&lt;/li&gt;
+&lt;li&gt;想把常见工程动作沉淀为团队级技能，而不是让每个人各自维护脚本和经验；&lt;/li&gt;
+&lt;li&gt;对自部署、厂商中立、可控基础设施有要求的团队。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如果只是偶尔让 AI 帮忙改一个小函数，Multica 可能显得偏重；但如果团队已经开始认真把编码 Agent 当成协作者，它的价值会更明显。&lt;/p&gt;
+&lt;h2&gt;快速上手&lt;span class="hx-absolute -hx-mt-20" id="快速上手"&gt;&lt;/span&gt;
+&lt;a href="#%e5%bf%ab%e9%80%9f%e4%b8%8a%e6%89%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;macOS / Linux 推荐使用 Homebrew 安装：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;brew install multica-ai/tap/multica&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;也可以使用安装脚本：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -fsSL https://raw.githubusercontent.com/multica-ai/multica/main/scripts/install.sh &lt;span class="p"&gt;|&lt;/span&gt; bash&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Windows PowerShell：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-powershell" data-lang="powershell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;irm &lt;/span&gt;&lt;span class="n"&gt;https&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt;&lt;span class="p"&gt;//&lt;/span&gt;&lt;span class="n"&gt;raw&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="py"&gt;githubusercontent&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;com&lt;/span&gt;&lt;span class="p"&gt;/&lt;/span&gt;&lt;span class="nb"&gt;multica-ai&lt;/span&gt;&lt;span class="p"&gt;/&lt;/span&gt;&lt;span class="n"&gt;multica&lt;/span&gt;&lt;span class="p"&gt;/&lt;/span&gt;&lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="p"&gt;/&lt;/span&gt;&lt;span class="n"&gt;scripts&lt;/span&gt;&lt;span class="p"&gt;/&lt;/span&gt;&lt;span class="n"&gt;install&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="py"&gt;ps1&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="n"&gt;iex&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;安装后，一条命令完成配置、认证和启动 daemon：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;multica setup&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;如果要自部署完整服务，可以使用：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -fsSL https://raw.githubusercontent.com/multica-ai/multica/main/scripts/install.sh &lt;span class="p"&gt;|&lt;/span&gt; bash -s -- --with-server
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;multica setup self-host&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;官方架构大致如下：&lt;/p&gt;
+&lt;pre class="mermaid hx-mt-6"&gt;
+flowchart LR
+A[Next.js 前端] &amp;lt;--&amp;gt; B[Go Backend\nChi + WebSocket]
+B &amp;lt;--&amp;gt; C[PostgreSQL 17\npgvector]
+B &amp;lt;--&amp;gt; D[Agent Daemon]
+D --&amp;gt; E[Claude Code]
+D --&amp;gt; F[Codex]
+D --&amp;gt; G[OpenCode / OpenClaw]
+D --&amp;gt; H[Hermes / Gemini / Cursor Agent 等]
+&lt;/pre&gt;&lt;p&gt;前端使用 Next.js 16，后端使用 Go、Chi、sqlc 和 gorilla/websocket，数据库是 PostgreSQL 17 + pgvector。整体架构并不只是一个 UI 壳，而是围绕 Agent 执行、状态同步、运行时管理和技能复用做了一套完整平台。&lt;/p&gt;
+&lt;h2&gt;Multica 和普通编码 Agent 的区别&lt;span class="hx-absolute -hx-mt-20" id="multica-和普通编码-agent-的区别"&gt;&lt;/span&gt;
+&lt;a href="#multica-%e5%92%8c%e6%99%ae%e9%80%9a%e7%bc%96%e7%a0%81-agent-%e7%9a%84%e5%8c%ba%e5%88%ab" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;很多编码 Agent 解决的是“执行”问题，例如根据提示修改代码、运行命令、生成测试或提交补丁。&lt;/p&gt;
+&lt;p&gt;Multica 解决的是更上层的“管理”问题：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;维度&lt;/th&gt;
+&lt;th&gt;普通编码 Agent CLI&lt;/th&gt;
+&lt;th&gt;Multica&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;使用方式&lt;/td&gt;
+&lt;td&gt;单次对话或命令行任务&lt;/td&gt;
+&lt;td&gt;Issue / 看板 / 工作区协作&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;关注重点&lt;/td&gt;
+&lt;td&gt;生成代码、修改文件、执行命令&lt;/td&gt;
+&lt;td&gt;分配任务、跟踪进度、管理运行时&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;团队可见性&lt;/td&gt;
+&lt;td&gt;依赖人工同步&lt;/td&gt;
+&lt;td&gt;状态、评论、阻塞、结果进入统一记录&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;执行环境&lt;/td&gt;
+&lt;td&gt;通常绑定本机或单一环境&lt;/td&gt;
+&lt;td&gt;本地 daemon + 云端 Runtime&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;经验复用&lt;/td&gt;
+&lt;td&gt;依赖个人 prompt 或脚本&lt;/td&gt;
+&lt;td&gt;通过 Skills 沉淀为团队资产&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;所以它不是 Claude Code、Codex、OpenCode 的替代品，而更像是这些 Agent 之上的协作和管理层。&lt;/p&gt;
+&lt;h2&gt;结论&lt;span class="hx-absolute -hx-mt-20" id="结论"&gt;&lt;/span&gt;
+&lt;a href="#%e7%bb%93%e8%ae%ba" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Multica 的核心价值，是把“编码 Agent”从个人命令行工具提升为团队协作对象。&lt;/p&gt;
+&lt;p&gt;它没有把重点放在再造一个 Agent，而是站在管理层：谁来做、在哪里跑、进度如何、失败怎么暴露、经验如何复用。对于正在把 AI 编程工具接入真实研发流程的团队来说，这个方向很值得关注。&lt;/p&gt;
+&lt;p&gt;从当前关注度和功能迭代节奏看，Multica 已经是 Managed Agents 方向里值得关注的开源项目之一。如果你已经在使用多个编码 Agent，并且开始遇到任务分配、运行监控、团队复用这些问题，Multica 可以作为一个开源方案优先试用。&lt;/p&gt;</description></item></channel></rss>

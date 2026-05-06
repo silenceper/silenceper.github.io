@@ -1,4 +1,1937 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – 工具介绍</title><link>https://silenceper.com/categories/%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/</link><description>Recent content in 工具介绍 on silenceper</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 14 Apr 2026 00:00:00 +0800</lastBuildDate><atom:link href="https://silenceper.com/categories/%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/index.xml" rel="self" type="application/rss+xml"/><item><title>Paseo 是什么？一个用来远程管理 coding agent 的开源项目</title><link>https://silenceper.com/blog/2026-04-14-paseo/</link><pubDate>Tue, 14 Apr 2026 00:00:00 +0800</pubDate><guid>https://silenceper.com/blog/2026-04-14-paseo/</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – 工具介绍</title><link>https://silenceper.com/categories/%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/</link><description>Recent content in 工具介绍 on silenceper</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Mon, 04 May 2026 15:49:45 +0800</lastBuildDate><atom:link href="https://silenceper.com/categories/%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/index.xml" rel="self" type="application/rss+xml"/><item><title>Keep Codex Fast：让 Codex 本地状态保持轻快的安全维护技能</title><link>https://silenceper.com/article/2026-05-04-keep-codex-fast/</link><pubDate>Mon, 04 May 2026 15:49:45 +0800</pubDate><guid>https://silenceper.com/article/2026-05-04-keep-codex-fast/</guid><description>
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260504/keep-codex-fast-cover.png" alt="Keep Codex Fast" loading="lazy" /&gt;&lt;/p&gt;
+&lt;h2&gt;一句话定位&lt;span class="hx-absolute -hx-mt-20" id="一句话定位"&gt;&lt;/span&gt;
+&lt;a href="#%e4%b8%80%e5%8f%a5%e8%af%9d%e5%ae%9a%e4%bd%8d" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Keep Codex Fast 是一个面向 Codex 重度用户的本地状态维护 Skill：先检查、先交接、先备份，再把旧会话、日志、临时工作区等“拖慢体验”的本地状态安全归档。&lt;/p&gt;
+&lt;h2&gt;基础信息卡片&lt;span class="hx-absolute -hx-mt-20" id="基础信息卡片"&gt;&lt;/span&gt;
+&lt;a href="#%e5%9f%ba%e7%a1%80%e4%bf%a1%e6%81%af%e5%8d%a1%e7%89%87" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;项目&lt;/th&gt;
+&lt;th&gt;信息&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;GitHub&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://github.com/vibeforge1111/keep-codex-fast" target="_blank" rel="noopener"&gt;https://github.com/vibeforge1111/keep-codex-fast&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;作者&lt;/td&gt;
+&lt;td&gt;vibeforge1111&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;开源协议&lt;/td&gt;
+&lt;td&gt;MIT&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;主要语言&lt;/td&gt;
+&lt;td&gt;Python&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;默认分支&lt;/td&gt;
+&lt;td&gt;main&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;项目定位&lt;/td&gt;
+&lt;td&gt;Codex 本地状态检查与安全维护 Skill&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;当前热度&lt;/td&gt;
+&lt;td&gt;约 559 Stars、29 Forks（2026-05-04 查询）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2&gt;解决什么问题&lt;span class="hx-absolute -hx-mt-20" id="解决什么问题"&gt;&lt;/span&gt;
+&lt;a href="#%e8%a7%a3%e5%86%b3%e4%bb%80%e4%b9%88%e9%97%ae%e9%a2%98" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Codex 用久之后，很多人会遇到一种不太容易定位的“变重”：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;长对话越积越多；&lt;/li&gt;
+&lt;li&gt;经常恢复旧线程；&lt;/li&gt;
+&lt;li&gt;同时维护多个仓库；&lt;/li&gt;
+&lt;li&gt;本地终端、开发服务器、日志、工作区持续堆积；&lt;/li&gt;
+&lt;li&gt;想清理，又担心误删历史上下文。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Keep Codex Fast 关注的不是“让模型回答更快”，而是整理 Codex 在本机留下的运行状态。它的核心原则很克制：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Make handoffs first. Archive, don&amp;rsquo;t delete. Apply changes only when you are ready.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;也就是：先做交接文档，归档而不是删除，只有在你确认准备好时才真正应用改动。&lt;/p&gt;
+&lt;p&gt;这对长期使用 Codex 做开发的人很实用。因为真正让人犹豫清理的，往往不是文件本身，而是旧会话里还藏着项目决策、排错过程、失败命令和下一步计划。Keep Codex Fast 把“清理”拆成了更安全的流程：先看清楚，再保留可恢复的上下文，最后再归档。&lt;/p&gt;
+&lt;h2&gt;核心功能&lt;span class="hx-absolute -hx-mt-20" id="核心功能"&gt;&lt;/span&gt;
+&lt;a href="#%e6%a0%b8%e5%bf%83%e5%8a%9f%e8%83%bd" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;pre class="mermaid hx-mt-6"&gt;
+flowchart TD
+A[Codex 本地状态变重] --&amp;gt; B[只读检查]
+B --&amp;gt; C[生成维护报告]
+C --&amp;gt; D{是否还有重要旧会话?}
+D -- 有 --&amp;gt; E[创建 handoff 交接文档]
+E --&amp;gt; F[备份重要状态]
+D -- 没有 --&amp;gt; F
+F --&amp;gt; G[归档旧会话/旧工作区]
+G --&amp;gt; H[轮转大日志]
+H --&amp;gt; I[清理失效项目引用]
+I --&amp;gt; J[再次检查并确认结果]
+&lt;/pre&gt;&lt;p&gt;这张流程图里最关键的是第一步：默认只读检查。Keep Codex Fast 不会一上来就移动文件或删除历史，而是先报告本地状态，让你知道问题主要来自哪里。&lt;/p&gt;
+&lt;h3&gt;1. 默认只读报告&lt;span class="hx-absolute -hx-mt-20" id="1-默认只读报告"&gt;&lt;/span&gt;
+&lt;a href="#1-%e9%bb%98%e8%ae%a4%e5%8f%aa%e8%af%bb%e6%8a%a5%e5%91%8a" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;项目 README 明确说明：默认模式只做报告，不写文件、不创建备份、不移动目录，也不会修改本地 Codex 状态。它会帮助你看到哪些本地状态增长明显，例如活跃会话、归档会话、日志、旧工作区、失效项目引用以及较重的 Node/开发进程。&lt;/p&gt;
+&lt;p&gt;这让第一次使用的心理负担比较低：你可以先把它当成一次体检，而不是一次清理操作。&lt;/p&gt;
+&lt;h3&gt;2. Handoffs First：先交接，再归档&lt;span class="hx-absolute -hx-mt-20" id="2-handoffs-first先交接再归档"&gt;&lt;/span&gt;
+&lt;a href="#2-handoffs-first%e5%85%88%e4%ba%a4%e6%8e%a5%e5%86%8d%e5%bd%92%e6%a1%a3" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Keep Codex Fast 特别强调 handoff 文档。所谓 handoff，就是一份小型连续性笔记，记录：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;当前在做什么；&lt;/li&gt;
+&lt;li&gt;已经改了什么；&lt;/li&gt;
+&lt;li&gt;哪些文件重要；&lt;/li&gt;
+&lt;li&gt;已经跑过哪些命令或检查；&lt;/li&gt;
+&lt;li&gt;还有什么错误、警告或未决问题；&lt;/li&gt;
+&lt;li&gt;下一步应该怎么继续。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;有了这份文档，你就可以把沉重的旧聊天归档，然后在新的 Codex 会话里从 handoff 继续，不必一直依赖越来越长的历史线程。&lt;/p&gt;
+&lt;h3&gt;3. 备份优先，归档而不是删除&lt;span class="hx-absolute -hx-mt-20" id="3-备份优先归档而不是删除"&gt;&lt;/span&gt;
+&lt;a href="#3-%e5%a4%87%e4%bb%bd%e4%bc%98%e5%85%88%e5%bd%92%e6%a1%a3%e8%80%8c%e4%b8%8d%e6%98%af%e5%88%a0%e9%99%a4" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;真正执行维护时，Keep Codex Fast 的策略也是保守的：先备份重要状态，再把旧会话、旧工作区、大日志移动到归档位置。它处理的是“从热路径移走”，而不是“永久删除”。&lt;/p&gt;
+&lt;p&gt;根据项目说明，它可以处理的内容包括：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;旧的非置顶活跃会话；&lt;/li&gt;
+&lt;li&gt;过期 worktrees；&lt;/li&gt;
+&lt;li&gt;较大的 &lt;code&gt;logs_2.sqlite*&lt;/code&gt; 日志文件；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;config.toml&lt;/code&gt; 中失效或临时项目引用；&lt;/li&gt;
+&lt;li&gt;Windows &lt;code&gt;\\?\C:\...&lt;/code&gt; 这类扩展路径不一致问题；&lt;/li&gt;
+&lt;li&gt;较重的 Node/开发进程报告。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;4. 手动应用，不建议自动清理&lt;span class="hx-absolute -hx-mt-20" id="4-手动应用不建议自动清理"&gt;&lt;/span&gt;
+&lt;a href="#4-%e6%89%8b%e5%8a%a8%e5%ba%94%e7%94%a8%e4%b8%8d%e5%bb%ba%e8%ae%ae%e8%87%aa%e5%8a%a8%e6%b8%85%e7%90%86" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;项目也给出了一个很重要的边界：周期性维护更适合做“提醒”和“报告”，不适合自动执行清理。原因很简单，自动化并不知道哪些旧会话对你仍然重要，也不知道 handoff 是否已经准备好。&lt;/p&gt;
+&lt;p&gt;所以更稳妥的方式是：定期检查，人工确认，然后在 Codex 关闭或明确等待 Codex 退出后再应用维护。&lt;/p&gt;
+&lt;h2&gt;适合谁&lt;span class="hx-absolute -hx-mt-20" id="适合谁"&gt;&lt;/span&gt;
+&lt;a href="#%e9%80%82%e5%90%88%e8%b0%81" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Keep Codex Fast 更适合这些 Codex 用户：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;每天高频使用 Codex 做开发；&lt;/li&gt;
+&lt;li&gt;经常跨多个仓库工作；&lt;/li&gt;
+&lt;li&gt;习惯保留很长的历史会话；&lt;/li&gt;
+&lt;li&gt;经常恢复旧线程继续排错或开发；&lt;/li&gt;
+&lt;li&gt;本地同时运行多个终端、服务或 worktree；&lt;/li&gt;
+&lt;li&gt;想清理 Codex 本地状态，但不想冒丢上下文的风险。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如果你只是偶尔打开 Codex 问几个问题，可能暂时感受不到它的价值。但只要 Codex 已经成为日常开发工作流的一部分，这类“本地状态维护”就会越来越重要。&lt;/p&gt;
+&lt;h2&gt;快速上手&lt;span class="hx-absolute -hx-mt-20" id="快速上手"&gt;&lt;/span&gt;
+&lt;a href="#%e5%bf%ab%e9%80%9f%e4%b8%8a%e6%89%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;在 Codex 中可以直接让它安装这个 Skill：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Install the keep-codex-fast skill from https://github.com/vibeforge1111/keep-codex-fast&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;安装后，先做一次只读检查：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Use $keep-codex-fast to inspect my Codex local state and recommend a safe maintenance plan.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;如果检查结果显示有旧会话值得归档，先为还可能继续的项目创建 handoff：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Create a comprehensive handoff document for this repo/session before I archive Codex history.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Include:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- repo/path and branch
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- current goal
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- what we already completed
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- files touched or investigated
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- commands/tests already run
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- known errors, warnings, or failing checks
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- open decisions
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- constraints, user preferences, and do-not-touch areas
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- the next 3-7 concrete steps
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Also include a reactivation prompt I can paste into a fresh Codex chat so it can continue from this handoff without relying on the old chat context.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;确认重要会话都有交接文档后，再考虑应用安全维护：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Use $keep-codex-fast to apply safe Codex maintenance.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Before changing anything, confirm that important active repo chats have handoff docs or do not need them.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Then back up first, archive instead of deleting, move stale worktrees, rotate large logs, prune dead config references, and verify the result.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;If Codex is currently running, do not mutate local state. Tell me to close Codex first.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;如果你想直接运行脚本，项目也提供了命令行方式：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;python scripts/keep_codex_fast.py&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;只读报告之外，还可以按需使用：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;python scripts/keep_codex_fast.py --details
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;python scripts/keep_codex_fast.py --backup-only
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;python scripts/keep_codex_fast.py --apply --archive-older-than-days &lt;span class="m"&gt;10&lt;/span&gt; --worktree-older-than-days &lt;span class="m"&gt;7&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;python scripts/keep_codex_fast.py --apply --wait-for-codex-exit&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h2&gt;结论&lt;span class="hx-absolute -hx-mt-20" id="结论"&gt;&lt;/span&gt;
+&lt;a href="#%e7%bb%93%e8%ae%ba" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Keep Codex Fast 的价值不在于做一次“激进清理”，而在于把 Codex 本地维护变成一个可控流程：先报告，先交接，先备份，再归档。&lt;/p&gt;
+&lt;p&gt;对重度 Codex 用户来说，旧会话和本地状态既是负担，也是资产。这个项目提供的思路很实用：把真正有价值的上下文沉淀成 handoff，把不需要长期留在热路径里的状态移出去，让新的 Codex 会话重新变轻。&lt;/p&gt;
+&lt;p&gt;如果你已经明显感觉 Codex 本地使用体验变重，Keep Codex Fast 值得先跑一次只读检查。即使暂时不执行清理，它也能帮你看清楚：到底是哪些本地状态在增长，以及后续应该怎样安全地处理。&lt;/p&gt;</description></item><item><title>HyperFrames：用 HTML 生成视频的开源渲染框架</title><link>https://silenceper.com/article/2026-05-02-hyperframes-html-video-rendering/</link><pubDate>Sat, 02 May 2026 10:39:18 +0800</pubDate><guid>https://silenceper.com/article/2026-05-02-hyperframes-html-video-rendering/</guid><description>
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260502/hyperframes-demo.gif" alt="HyperFrames demo" loading="lazy" /&gt;&lt;/p&gt;
+&lt;h2&gt;一句话定位&lt;span class="hx-absolute -hx-mt-20" id="一句话定位"&gt;&lt;/span&gt;
+&lt;a href="#%e4%b8%80%e5%8f%a5%e8%af%9d%e5%ae%9a%e4%bd%8d" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;HyperFrames 是 HeyGen 开源的 HTML 视频渲染框架：用写网页的方式定义视频画面、时间轴和动画，再通过浏览器预览并渲染成 MP4。&lt;/p&gt;
+&lt;h2&gt;基础信息卡片&lt;span class="hx-absolute -hx-mt-20" id="基础信息卡片"&gt;&lt;/span&gt;
+&lt;a href="#%e5%9f%ba%e7%a1%80%e4%bf%a1%e6%81%af%e5%8d%a1%e7%89%87" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;项目&lt;/th&gt;
+&lt;th&gt;信息&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;GitHub&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://github.com/heygen-com/hyperframes" target="_blank" rel="noopener"&gt;https://github.com/heygen-com/hyperframes&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;官方文档&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://hyperframes.heygen.com/introduction" target="_blank" rel="noopener"&gt;https://hyperframes.heygen.com/introduction&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;NPM 包&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;hyperframes&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;主要语言&lt;/td&gt;
+&lt;td&gt;TypeScript&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;开源协议&lt;/td&gt;
+&lt;td&gt;Apache-2.0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;当前版本&lt;/td&gt;
+&lt;td&gt;0.4.41&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;运行要求&lt;/td&gt;
+&lt;td&gt;Node.js &amp;gt;= 22、FFmpeg&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;项目定位&lt;/td&gt;
+&lt;td&gt;HTML-native、AI-first、deterministic video rendering&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2&gt;解决什么问题&lt;span class="hx-absolute -hx-mt-20" id="解决什么问题"&gt;&lt;/span&gt;
+&lt;a href="#%e8%a7%a3%e5%86%b3%e4%bb%80%e4%b9%88%e9%97%ae%e9%a2%98" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;做视频自动化时，常见路线大概有两种：一种是使用传统剪辑工具，适合人工制作，但不适合批量生成；另一种是使用代码化视频框架，适合自动化，但经常要求开发者进入特定组件体系或 DSL。&lt;/p&gt;
+&lt;p&gt;HyperFrames 选择了一条更贴近 Web 开发的路线：视频本身就是 HTML。&lt;/p&gt;
+&lt;p&gt;它把视频里的片段、字幕、图片、音频、时间点、轨道关系都放进 HTML 元素和 &lt;code&gt;data-*&lt;/code&gt; 属性里。你可以像写页面一样组织画面，用 CSS / GSAP / Lottie / Three.js 等熟悉的前端技术做动画，再用命令行把它渲染成 MP4。&lt;/p&gt;
+&lt;p&gt;这个思路对 AI Agent 也很友好。因为大模型本来就擅长生成 HTML、CSS 和简单脚本，HyperFrames 又提供了面向 Agent 的 skills / plugin / CLI 工作流，让 Agent 可以从“描述一个视频”一路做到“生成项目、预览、检查、渲染”。&lt;/p&gt;
+&lt;h2&gt;核心功能&lt;span class="hx-absolute -hx-mt-20" id="核心功能"&gt;&lt;/span&gt;
+&lt;a href="#%e6%a0%b8%e5%bf%83%e5%8a%9f%e8%83%bd" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;1. 用 HTML 描述视频结构&lt;span class="hx-absolute -hx-mt-20" id="1-用-html-描述视频结构"&gt;&lt;/span&gt;
+&lt;a href="#1-%e7%94%a8-html-%e6%8f%8f%e8%bf%b0%e8%a7%86%e9%a2%91%e7%bb%93%e6%9e%84" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;HyperFrames 的核心输入是一份 HTML。每个元素通过 &lt;code&gt;data-start&lt;/code&gt;、&lt;code&gt;data-duration&lt;/code&gt;、&lt;code&gt;data-track-index&lt;/code&gt; 等属性表达它在视频中的出现时间、持续时间和轨道位置。&lt;/p&gt;
+&lt;p&gt;一个简单的视频可以由视频素材、标题、图片、背景音乐这些普通 HTML 元素组成：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-html" data-lang="html"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;stage&amp;#34;&lt;/span&gt; &lt;span class="na"&gt;data-composition-id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;my-video&amp;#34;&lt;/span&gt; &lt;span class="na"&gt;data-start&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;0&amp;#34;&lt;/span&gt; &lt;span class="na"&gt;data-width&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;1920&amp;#34;&lt;/span&gt; &lt;span class="na"&gt;data-height&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;1080&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;video&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;clip-1&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;data-start&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;0&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;data-duration&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;5&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;data-track-index&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;0&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;intro.mp4&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;muted&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;playsinline&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;video&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;h1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;clip&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;data-start&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;1&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;data-duration&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;4&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;data-track-index&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;1&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Welcome to HyperFrames
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;h1&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;audio&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;data-start&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;0&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;data-duration&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;5&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;data-track-index&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;2&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;data-volume&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;0.5&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;music.wav&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;audio&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;这种设计的好处是门槛很低：不需要先学习一个全新的视频编辑格式，也不要求把所有内容改写成 React 组件。&lt;/p&gt;
+&lt;h3&gt;2. 浏览器预览，本地渲染成 MP4&lt;span class="hx-absolute -hx-mt-20" id="2-浏览器预览本地渲染成-mp4"&gt;&lt;/span&gt;
+&lt;a href="#2-%e6%b5%8f%e8%a7%88%e5%99%a8%e9%a2%84%e8%a7%88%e6%9c%ac%e5%9c%b0%e6%b8%b2%e6%9f%93%e6%88%90-mp4" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;HyperFrames 提供 CLI，可以直接初始化、预览和渲染项目：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx hyperframes init my-video
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; my-video
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx hyperframes preview
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx hyperframes render&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;预览阶段会在浏览器里实时查看效果；渲染阶段则通过 headless Chrome 逐帧捕获画面，并交给 FFmpeg 输出最终视频。官方文档强调的是确定性渲染：同样的输入应得到一致的输出，这对自动化流水线很重要。&lt;/p&gt;
+&lt;h3&gt;3. 面向 AI Agent 的工作流&lt;span class="hx-absolute -hx-mt-20" id="3-面向-ai-agent-的工作流"&gt;&lt;/span&gt;
+&lt;a href="#3-%e9%9d%a2%e5%90%91-ai-agent-%e7%9a%84%e5%b7%a5%e4%bd%9c%e6%b5%81" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;HyperFrames 不只是一个 CLI，还提供了面向 AI 编程工具的配套能力。项目 README 中推荐先安装 skills：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx skills add heygen-com/hyperframes&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;这些 skills 会教 Agent 如何写正确的 composition、GSAP 时间线、Tailwind v4 浏览器运行时样式，以及不同动画运行时的适配方式。&lt;/p&gt;
+&lt;p&gt;项目还提供了面向 Claude Code、Cursor、Codex、Gemini CLI 等工具的使用说明或插件入口。也就是说，它不是只把“AI 支持”当营销词，而是把 Agent 能不能无交互地初始化、lint、预览、渲染，作为框架设计的一部分。&lt;/p&gt;
+&lt;h3&gt;4. 支持多种动画与素材运行时&lt;span class="hx-absolute -hx-mt-20" id="4-支持多种动画与素材运行时"&gt;&lt;/span&gt;
+&lt;a href="#4-%e6%94%af%e6%8c%81%e5%a4%9a%e7%a7%8d%e5%8a%a8%e7%94%bb%e4%b8%8e%e7%b4%a0%e6%9d%90%e8%bf%90%e8%a1%8c%e6%97%b6" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;HyperFrames 使用 Frame Adapter 模式来接入动画运行时。你可以使用 GSAP、Lottie、CSS animation、Three.js、Web Animations API 等方式构建动画，只要它们能够按帧 seek，就可以被纳入确定性渲染流程。&lt;/p&gt;
+&lt;p&gt;这点对视频自动化很关键：视频不是简单录屏，而是要在指定帧上得到确定画面。HyperFrames 把“页面如何播放”和“渲染器如何按帧捕获”之间的关系抽象出来，让不同动画技术能进入同一条视频生成链路。&lt;/p&gt;
+&lt;h3&gt;5. 内置组件目录与多个子包&lt;span class="hx-absolute -hx-mt-20" id="5-内置组件目录与多个子包"&gt;&lt;/span&gt;
+&lt;a href="#5-%e5%86%85%e7%bd%ae%e7%bb%84%e4%bb%b6%e7%9b%ae%e5%bd%95%e4%b8%8e%e5%a4%9a%e4%b8%aa%e5%ad%90%e5%8c%85" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;项目提供了 50+ ready-to-use blocks and components，例如社交媒体覆盖层、shader transition、数据可视化、电影感效果等，可以通过命令添加：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx hyperframes add flash-through-white
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx hyperframes add instagram-follow
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx hyperframes add data-chart&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;从仓库结构看，它是一个 monorepo，主要包含：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;包&lt;/th&gt;
+&lt;th&gt;作用&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;hyperframes&lt;/code&gt; / &lt;code&gt;@hyperframes/cli&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;初始化、预览、lint、渲染的 CLI&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;@hyperframes/core&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;类型、解析器、生成器、linter、runtime、frame adapters&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;@hyperframes/engine&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;基于 Puppeteer + FFmpeg 的页面到视频渲染引擎&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;@hyperframes/producer&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;完整渲染流水线，包括捕获、编码和音频混合&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;@hyperframes/studio&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;浏览器端 composition editor UI&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;@hyperframes/player&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;可嵌入的 &lt;code&gt;&amp;lt;hyperframes-player&amp;gt;&lt;/code&gt; Web Component&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;@hyperframes/shader-transitions&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;用于 composition 的 WebGL shader transitions&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2&gt;官方视频示例&lt;span class="hx-absolute -hx-mt-20" id="官方视频示例"&gt;&lt;/span&gt;
+&lt;a href="#%e5%ae%98%e6%96%b9%e8%a7%86%e9%a2%91%e7%a4%ba%e4%be%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx hyperframes init my-video --example warm-grain&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;示例&lt;/th&gt;
+&lt;th&gt;类型&lt;/th&gt;
+&lt;th&gt;视频链接&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Warm Grain&lt;/td&gt;
+&lt;td&gt;品牌 / 生活方式&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://static.heygen.ai/hyperframes-oss/docs/images/templates/warm-grain.mp4" target="_blank" rel="noopener"&gt;https://static.heygen.ai/hyperframes-oss/docs/images/templates/warm-grain.mp4&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Play Mode&lt;/td&gt;
+&lt;td&gt;社交媒体 / 产品发布&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://static.heygen.ai/hyperframes-oss/docs/images/templates/play-mode.mp4" target="_blank" rel="noopener"&gt;https://static.heygen.ai/hyperframes-oss/docs/images/templates/play-mode.mp4&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Swiss Grid&lt;/td&gt;
+&lt;td&gt;企业 / 技术 / 数据&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://static.heygen.ai/hyperframes-oss/docs/images/templates/swiss-grid.mp4" target="_blank" rel="noopener"&gt;https://static.heygen.ai/hyperframes-oss/docs/images/templates/swiss-grid.mp4&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Kinetic Type&lt;/td&gt;
+&lt;td&gt;标题卡 / 宣传片&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://static.heygen.ai/hyperframes-oss/docs/images/templates/kinetic-type.mp4" target="_blank" rel="noopener"&gt;https://static.heygen.ai/hyperframes-oss/docs/images/templates/kinetic-type.mp4&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Decision Tree&lt;/td&gt;
+&lt;td&gt;解释型视频 / 教程&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://static.heygen.ai/hyperframes-oss/docs/images/templates/decision-tree.mp4" target="_blank" rel="noopener"&gt;https://static.heygen.ai/hyperframes-oss/docs/images/templates/decision-tree.mp4&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Product Promo&lt;/td&gt;
+&lt;td&gt;产品展示&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://static.heygen.ai/hyperframes-oss/docs/images/templates/product-promo.mp4" target="_blank" rel="noopener"&gt;https://static.heygen.ai/hyperframes-oss/docs/images/templates/product-promo.mp4&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;NYT Graph&lt;/td&gt;
+&lt;td&gt;数据故事 / 图表视频&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://static.heygen.ai/hyperframes-oss/docs/images/templates/nyt-graph.mp4" target="_blank" rel="noopener"&gt;https://static.heygen.ai/hyperframes-oss/docs/images/templates/nyt-graph.mp4&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Vignelli&lt;/td&gt;
+&lt;td&gt;竖屏标题 / 公告&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://static.heygen.ai/hyperframes-oss/docs/images/templates/vignelli.mp4" target="_blank" rel="noopener"&gt;https://static.heygen.ai/hyperframes-oss/docs/images/templates/vignelli.mp4&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2&gt;适合谁&lt;span class="hx-absolute -hx-mt-20" id="适合谁"&gt;&lt;/span&gt;
+&lt;a href="#%e9%80%82%e5%90%88%e8%b0%81" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;HyperFrames 比较适合这几类场景：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;熟悉前端技术、想用代码生成视频的开发者&lt;/strong&gt;&lt;br&gt;
+如果你会写 HTML、CSS、JS，理解它的成本会比较低。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;需要批量生成营销视频、教程视频、数据视频的团队&lt;/strong&gt;&lt;br&gt;
+例如把 CSV 变成动态图表、把产品文档变成短视频、把模板批量填充成不同版本的视频。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;正在搭建 AI Agent 内容生产流程的人&lt;/strong&gt;&lt;br&gt;
+它的 CLI、skills 和插件设计都偏向自动化，适合作为 Agent 生成视频的执行层。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;希望视频生成链路可复现、可集成到流水线的人&lt;/strong&gt;&lt;br&gt;
+相比人工剪辑工具，HyperFrames 更适合放进脚本、CI、Docker 或后端任务里运行。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;快速上手&lt;span class="hx-absolute -hx-mt-20" id="快速上手"&gt;&lt;/span&gt;
+&lt;a href="#%e5%bf%ab%e9%80%9f%e4%b8%8a%e6%89%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;如果想让 AI Agent 参与生成，官方推荐先安装 skills：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx skills add heygen-com/hyperframes&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;然后可以直接让 Agent 按 &lt;code&gt;/hyperframes&lt;/code&gt; 的上下文生成视频，例如：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Using /hyperframes, create a 10-second product intro with a fade-in title, a background video, and background music.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;如果想手动创建项目，可以走 CLI：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx hyperframes init my-video
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; my-video
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx hyperframes preview
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx hyperframes render --output output.mp4&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;本地需要准备：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Node.js &amp;gt;= 22&lt;/li&gt;
+&lt;li&gt;FFmpeg&lt;/li&gt;
+&lt;li&gt;可以运行 Chromium / Puppeteer 的环境&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;结论&lt;span class="hx-absolute -hx-mt-20" id="结论"&gt;&lt;/span&gt;
+&lt;a href="#%e7%bb%93%e8%ae%ba" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;HyperFrames 的核心价值不在于“又做了一个视频编辑器”，而在于它把视频生成问题重新拉回 Web 技术栈：HTML 负责结构，CSS 和动画库负责表现，浏览器负责渲染，FFmpeg 负责输出。&lt;/p&gt;
+&lt;p&gt;对于开发者来说，这意味着视频可以像页面一样被生成、版本管理和自动化；对于 AI Agent 来说，这意味着它有了一个更容易理解和操作的视频生成目标格式。&lt;/p&gt;
+&lt;p&gt;如果你正在做内容自动化、批量视频生成、数据视频，或者想让 AI Agent 从文本直接生成可渲染的视频项目，HyperFrames 是一个值得关注的开源项目。&lt;/p&gt;</description></item><item><title>Multica：把编码 Agent 当成团队成员管理的开源平台</title><link>https://silenceper.com/article/2026-04-30-multica-managed-agents/</link><pubDate>Thu, 30 Apr 2026 17:44:00 +0800</pubDate><guid>https://silenceper.com/article/2026-04-30-multica-managed-agents/</guid><description>
+&lt;h2&gt;一句话定位&lt;span class="hx-absolute -hx-mt-20" id="一句话定位"&gt;&lt;/span&gt;
+&lt;a href="#%e4%b8%80%e5%8f%a5%e8%af%9d%e5%ae%9a%e4%bd%8d" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Multica 是一个开源的 Managed Agents 平台，用看板、Issue、运行时和技能系统，把 Claude Code、Codex、OpenCode、Hermes 等编码 Agent 管理成可以被分配任务、跟踪进度、复用经验的“团队成员”。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260430/multica-issues-kanban.png" alt="Multica Issues 看板界面" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;官方 README 将 Multica 定位为开源的 Managed Agents 平台。它的重点不是再造一个新的编码 Agent，而是把 Claude Code、Codex、OpenCode、Hermes 等已有 Agent 纳入团队协作流：分配任务、跟踪进度、管理运行时，并把常见工程动作沉淀成可复用技能。&lt;/p&gt;
+&lt;p&gt;官方 README 列出的支持范围包括 Claude Code、Codex、OpenClaw、OpenCode、Hermes、Gemini、Pi、Cursor Agent、Kimi、Kiro CLI。实际支持能力建议以仓库最新 README 和本机 CLI 检测结果为准。&lt;/p&gt;
+&lt;h2&gt;基础信息卡片&lt;span class="hx-absolute -hx-mt-20" id="基础信息卡片"&gt;&lt;/span&gt;
+&lt;a href="#%e5%9f%ba%e7%a1%80%e4%bf%a1%e6%81%af%e5%8d%a1%e7%89%87" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;项目&lt;/th&gt;
+&lt;th&gt;信息&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;GitHub&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://github.com/multica-ai/multica" target="_blank" rel="noopener"&gt;https://github.com/multica-ai/multica&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;官网&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://multica.ai" target="_blank" rel="noopener"&gt;https://multica.ai&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;项目定位&lt;/td&gt;
+&lt;td&gt;Human + Agent 团队协作 / 编码 Agent 管理平台&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;主要语言&lt;/td&gt;
+&lt;td&gt;TypeScript（前端为主），后端使用 Go&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;默认分支&lt;/td&gt;
+&lt;td&gt;main&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Stars&lt;/td&gt;
+&lt;td&gt;约 22.7k&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Forks&lt;/td&gt;
+&lt;td&gt;约 2.8k&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;协议&lt;/td&gt;
+&lt;td&gt;修改版 Apache License 2.0（商业使用有附加条款，正式采用前建议阅读 LICENSE）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;支持的 Agent/CLI&lt;/td&gt;
+&lt;td&gt;Claude Code、Codex、OpenClaw、OpenCode、Hermes、Gemini、Pi、Cursor Agent、Kimi、Kiro CLI 等&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2&gt;解决什么问题&lt;span class="hx-absolute -hx-mt-20" id="解决什么问题"&gt;&lt;/span&gt;
+&lt;a href="#%e8%a7%a3%e5%86%b3%e4%bb%80%e4%b9%88%e9%97%ae%e9%a2%98" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;现在很多团队已经开始使用编码 Agent，但常见用法仍然偏“临时对话”：打开一个 CLI、复制一段需求、等待它跑完，再人工确认结果。这个模式适合个人效率工具，却很难自然进入团队协作流程。&lt;/p&gt;
+&lt;p&gt;Multica 想解决的是另一类问题：当团队里不止一个人、也不止一个 Agent 时，如何把 Agent 纳入日常工作流？&lt;/p&gt;
+&lt;p&gt;它把 Agent 放到类似项目管理工具的上下文里：任务可以被分配，执行过程可以被观察，阻塞可以被报告，结果可以沉淀为可复用技能。这样 Agent 不再只是一个命令行窗口，而更像看板里的协作者。&lt;/p&gt;
+&lt;p&gt;Multica 的核心界面接近团队项目管理工具：左侧是工作区导航，中间是 Issues 看板，任务按 Backlog、Todo、In Progress、In Review、Done 等状态流转，Agent 和人类成员共享同一套任务视图。&lt;/p&gt;
+&lt;h2&gt;核心功能&lt;span class="hx-absolute -hx-mt-20" id="核心功能"&gt;&lt;/span&gt;
+&lt;a href="#%e6%a0%b8%e5%bf%83%e5%8a%9f%e8%83%bd" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;1. Agent 像队友一样被分配任务&lt;span class="hx-absolute -hx-mt-20" id="1-agent-像队友一样被分配任务"&gt;&lt;/span&gt;
+&lt;a href="#1-agent-%e5%83%8f%e9%98%9f%e5%8f%8b%e4%b8%80%e6%a0%b7%e8%a2%ab%e5%88%86%e9%85%8d%e4%bb%bb%e5%8a%a1" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;在 Multica 里，Agent 可以出现在看板、成员列表、任务负责人和评论区中。你可以像给同事分配 Issue 一样，把任务分配给某个 Agent。&lt;/p&gt;
+&lt;p&gt;它接手后会更新状态、发表评论、报告阻塞，也可以创建新的 Issue。对团队来说，重点不是“又多了一个 AI 工具”，而是 Agent 的动作被放进了统一的协作记录里。&lt;/p&gt;
+&lt;p&gt;这也是 Multica 和单个编码 Agent CLI 最大的区别：CLI 解决的是“让 Agent 做事”，而 Multica 解决的是“让团队知道 Agent 在做什么、由谁负责、做到哪一步、结果如何沉淀”。&lt;/p&gt;
+&lt;h3&gt;2. 完整的任务生命周期管理&lt;span class="hx-absolute -hx-mt-20" id="2-完整的任务生命周期管理"&gt;&lt;/span&gt;
+&lt;a href="#2-%e5%ae%8c%e6%95%b4%e7%9a%84%e4%bb%bb%e5%8a%a1%e7%94%9f%e5%91%bd%e5%91%a8%e6%9c%9f%e7%ae%a1%e7%90%86" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Multica 不只关注一次 prompt 的输出，而是关注任务从排队、认领、开始执行到完成或失败的全过程。&lt;/p&gt;
+&lt;p&gt;官方 README 中提到，Multica 支持完整的任务生命周期管理，包括 enqueue、claim、start、complete/fail，并通过 WebSocket 实时推送进度。这样团队可以看到 Agent 正在做什么、卡在哪里、最终产出了什么，而不是几个小时后才发现任务没有继续推进。&lt;/p&gt;
+&lt;p&gt;这对于团队场景很重要。因为团队协作里，任务是否完成只是结果，过程中的状态、阻塞、上下文和责任归属同样重要。&lt;/p&gt;
+&lt;h3&gt;3. 统一运行时：本地机器和云端都能管理&lt;span class="hx-absolute -hx-mt-20" id="3-统一运行时本地机器和云端都能管理"&gt;&lt;/span&gt;
+&lt;a href="#3-%e7%bb%9f%e4%b8%80%e8%bf%90%e8%a1%8c%e6%97%b6%e6%9c%ac%e5%9c%b0%e6%9c%ba%e5%99%a8%e5%92%8c%e4%ba%91%e7%ab%af%e9%83%bd%e8%83%bd%e7%ae%a1%e7%90%86" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Multica 通过本地 daemon 连接你的机器，也支持云端运行时。daemon 会自动检测本机 PATH 中可用的 Agent CLI，例如 Claude Code、Codex、OpenCode、Hermes、Gemini、Cursor Agent 等。&lt;/p&gt;
+&lt;p&gt;这意味着团队可以在一个控制台里管理不同运行环境：有人用本地 MacBook 跑 Agent，有人用云端实例跑任务，Multica 负责把这些运行时统一呈现和调度。&lt;/p&gt;
+&lt;p&gt;从架构上看，Runtime 是 Multica 很关键的一层。它不只是展示一个看板，而是把“任务”和“执行环境”连接起来，让 Agent 真正可以在指定环境里接手工作。&lt;/p&gt;
+&lt;h3&gt;4. 技能系统：把经验沉淀给整个团队&lt;span class="hx-absolute -hx-mt-20" id="4-技能系统把经验沉淀给整个团队"&gt;&lt;/span&gt;
+&lt;a href="#4-%e6%8a%80%e8%83%bd%e7%b3%bb%e7%bb%9f%e6%8a%8a%e7%bb%8f%e9%aa%8c%e6%b2%89%e6%b7%80%e7%bb%99%e6%95%b4%e4%b8%aa%e5%9b%a2%e9%98%9f" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Multica 的 Skills 设计很关键。它把“如何完成某类任务”的步骤、配置、上下文和模板沉淀下来，让之后的 Agent 可以复用。&lt;/p&gt;
+&lt;p&gt;例如部署到测试环境、编写数据库迁移、做 PR Review、补测试等，都可以被整理成技能。一次解决方案不只是一次性结果，而会变成团队后续可调用的能力。&lt;/p&gt;
+&lt;p&gt;这也是 Managed Agents 平台和普通 AI 工具的区别之一：普通 AI 工具更多是在单次对话里产生结果，而 Managed Agents 平台需要让经验可以积累、复用和团队共享。&lt;/p&gt;
+&lt;h3&gt;5. 多工作区与团队隔离&lt;span class="hx-absolute -hx-mt-20" id="5-多工作区与团队隔离"&gt;&lt;/span&gt;
+&lt;a href="#5-%e5%a4%9a%e5%b7%a5%e4%bd%9c%e5%8c%ba%e4%b8%8e%e5%9b%a2%e9%98%9f%e9%9a%94%e7%a6%bb" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Multica 支持 workspace 级别的隔离，每个工作区可以有独立的 Agent、Issue 和设置。对于多团队、多项目场景，这比单机工具或单人看板更接近真实协作需求。&lt;/p&gt;
+&lt;p&gt;如果团队同时维护多个项目，或者不同业务线有不同的 Agent、运行时和权限边界，多工作区设计会比单一全局配置更可控。&lt;/p&gt;
+&lt;h2&gt;适合谁&lt;span class="hx-absolute -hx-mt-20" id="适合谁"&gt;&lt;/span&gt;
+&lt;a href="#%e9%80%82%e5%90%88%e8%b0%81" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Multica 比较适合以下几类团队或个人：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;已经在使用 Claude Code、Codex、OpenCode、Hermes 等编码 Agent，希望把它们纳入团队流程；&lt;/li&gt;
+&lt;li&gt;有多个项目、多个运行环境，需要统一管理 Agent 执行位置和状态；&lt;/li&gt;
+&lt;li&gt;希望减少“复制 prompt、盯着终端、人工汇报进度”的重复操作；&lt;/li&gt;
+&lt;li&gt;想把常见工程动作沉淀为团队级技能，而不是让每个人各自维护脚本和经验；&lt;/li&gt;
+&lt;li&gt;对自部署、厂商中立、可控基础设施有要求的团队。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如果只是偶尔让 AI 帮忙改一个小函数，Multica 可能显得偏重；但如果团队已经开始认真把编码 Agent 当成协作者，它的价值会更明显。&lt;/p&gt;
+&lt;h2&gt;快速上手&lt;span class="hx-absolute -hx-mt-20" id="快速上手"&gt;&lt;/span&gt;
+&lt;a href="#%e5%bf%ab%e9%80%9f%e4%b8%8a%e6%89%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;macOS / Linux 推荐使用 Homebrew 安装：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;brew install multica-ai/tap/multica&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;也可以使用安装脚本：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -fsSL https://raw.githubusercontent.com/multica-ai/multica/main/scripts/install.sh &lt;span class="p"&gt;|&lt;/span&gt; bash&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Windows PowerShell：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-powershell" data-lang="powershell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;irm &lt;/span&gt;&lt;span class="n"&gt;https&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt;&lt;span class="p"&gt;//&lt;/span&gt;&lt;span class="n"&gt;raw&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="py"&gt;githubusercontent&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;com&lt;/span&gt;&lt;span class="p"&gt;/&lt;/span&gt;&lt;span class="nb"&gt;multica-ai&lt;/span&gt;&lt;span class="p"&gt;/&lt;/span&gt;&lt;span class="n"&gt;multica&lt;/span&gt;&lt;span class="p"&gt;/&lt;/span&gt;&lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="p"&gt;/&lt;/span&gt;&lt;span class="n"&gt;scripts&lt;/span&gt;&lt;span class="p"&gt;/&lt;/span&gt;&lt;span class="n"&gt;install&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="py"&gt;ps1&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="n"&gt;iex&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;安装后，一条命令完成配置、认证和启动 daemon：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;multica setup&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;如果要自部署完整服务，可以使用：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -fsSL https://raw.githubusercontent.com/multica-ai/multica/main/scripts/install.sh &lt;span class="p"&gt;|&lt;/span&gt; bash -s -- --with-server
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;multica setup self-host&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;官方架构大致如下：&lt;/p&gt;
+&lt;pre class="mermaid hx-mt-6"&gt;
+flowchart LR
+A[Next.js 前端] &amp;lt;--&amp;gt; B[Go Backend\nChi + WebSocket]
+B &amp;lt;--&amp;gt; C[PostgreSQL 17\npgvector]
+B &amp;lt;--&amp;gt; D[Agent Daemon]
+D --&amp;gt; E[Claude Code]
+D --&amp;gt; F[Codex]
+D --&amp;gt; G[OpenCode / OpenClaw]
+D --&amp;gt; H[Hermes / Gemini / Cursor Agent 等]
+&lt;/pre&gt;&lt;p&gt;前端使用 Next.js 16，后端使用 Go、Chi、sqlc 和 gorilla/websocket，数据库是 PostgreSQL 17 + pgvector。整体架构并不只是一个 UI 壳，而是围绕 Agent 执行、状态同步、运行时管理和技能复用做了一套完整平台。&lt;/p&gt;
+&lt;h2&gt;Multica 和普通编码 Agent 的区别&lt;span class="hx-absolute -hx-mt-20" id="multica-和普通编码-agent-的区别"&gt;&lt;/span&gt;
+&lt;a href="#multica-%e5%92%8c%e6%99%ae%e9%80%9a%e7%bc%96%e7%a0%81-agent-%e7%9a%84%e5%8c%ba%e5%88%ab" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;很多编码 Agent 解决的是“执行”问题，例如根据提示修改代码、运行命令、生成测试或提交补丁。&lt;/p&gt;
+&lt;p&gt;Multica 解决的是更上层的“管理”问题：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;维度&lt;/th&gt;
+&lt;th&gt;普通编码 Agent CLI&lt;/th&gt;
+&lt;th&gt;Multica&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;使用方式&lt;/td&gt;
+&lt;td&gt;单次对话或命令行任务&lt;/td&gt;
+&lt;td&gt;Issue / 看板 / 工作区协作&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;关注重点&lt;/td&gt;
+&lt;td&gt;生成代码、修改文件、执行命令&lt;/td&gt;
+&lt;td&gt;分配任务、跟踪进度、管理运行时&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;团队可见性&lt;/td&gt;
+&lt;td&gt;依赖人工同步&lt;/td&gt;
+&lt;td&gt;状态、评论、阻塞、结果进入统一记录&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;执行环境&lt;/td&gt;
+&lt;td&gt;通常绑定本机或单一环境&lt;/td&gt;
+&lt;td&gt;本地 daemon + 云端 Runtime&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;经验复用&lt;/td&gt;
+&lt;td&gt;依赖个人 prompt 或脚本&lt;/td&gt;
+&lt;td&gt;通过 Skills 沉淀为团队资产&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;所以它不是 Claude Code、Codex、OpenCode 的替代品，而更像是这些 Agent 之上的协作和管理层。&lt;/p&gt;
+&lt;h2&gt;结论&lt;span class="hx-absolute -hx-mt-20" id="结论"&gt;&lt;/span&gt;
+&lt;a href="#%e7%bb%93%e8%ae%ba" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Multica 的核心价值，是把“编码 Agent”从个人命令行工具提升为团队协作对象。&lt;/p&gt;
+&lt;p&gt;它没有把重点放在再造一个 Agent，而是站在管理层：谁来做、在哪里跑、进度如何、失败怎么暴露、经验如何复用。对于正在把 AI 编程工具接入真实研发流程的团队来说，这个方向很值得关注。&lt;/p&gt;
+&lt;p&gt;从当前关注度和功能迭代节奏看，Multica 已经是 Managed Agents 方向里值得关注的开源项目之一。如果你已经在使用多个编码 Agent，并且开始遇到任务分配、运行监控、团队复用这些问题，Multica 可以作为一个开源方案优先试用。&lt;/p&gt;</description></item><item><title>Codex 使用最佳实践：别把它当聊天机器人，要当成一个可配置的工程队友</title><link>https://silenceper.com/article/2026-04-26-codex-best-practices/</link><pubDate>Sun, 26 Apr 2026 23:27:33 +0800</pubDate><guid>https://silenceper.com/article/2026-04-26-codex-best-practices/</guid><description>
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260426/codex-best-practices-cover.png" alt="Codex 使用最佳实践" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;一句话定位：&lt;strong&gt;Codex 的关键不是“写一句 prompt 让它生成代码”，而是把它当成一个可以被配置、被训练工作方式、能持续沉淀经验的工程队友。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;这篇文章参考了 OpenAI 官方的 &lt;a href="https://developers.openai.com/codex/learn/best-practices" target="_blank" rel="noopener"&gt;Codex best practices&lt;/a&gt;，但不会逐条翻译官方文档，而是整理成更适合日常使用的实践方法。&lt;/p&gt;
+&lt;h2&gt;先说结论&lt;span class="hx-absolute -hx-mt-20" id="先说结论"&gt;&lt;/span&gt;
+&lt;a href="#%e5%85%88%e8%af%b4%e7%bb%93%e8%ae%ba" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;很多人刚开始用 Codex，会把它当成一个更强的代码聊天机器人：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;描述一个需求&lt;/li&gt;
+&lt;li&gt;等它生成代码&lt;/li&gt;
+&lt;li&gt;看看能不能跑&lt;/li&gt;
+&lt;li&gt;不行再继续追问&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这种方式能用，但很容易不稳定。&lt;/p&gt;
+&lt;p&gt;更好的方式是：&lt;strong&gt;把 Codex 放进一套工程工作流里&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;也就是说，不只是让它“写代码”，还要让它知道：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;目标是什么&lt;/li&gt;
+&lt;li&gt;项目上下文在哪里&lt;/li&gt;
+&lt;li&gt;需要遵守哪些约束&lt;/li&gt;
+&lt;li&gt;怎么判断任务完成&lt;/li&gt;
+&lt;li&gt;应该跑哪些测试&lt;/li&gt;
+&lt;li&gt;哪些经验以后要沉淀下来&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;当这些东西逐渐固定下来，Codex 的表现会明显更像一个熟悉项目的队友，而不是每次都从零开始的临时助手。&lt;/p&gt;
+&lt;h2&gt;1. Prompt 不用花哨，但上下文要完整&lt;span class="hx-absolute -hx-mt-20" id="1-prompt-不用花哨但上下文要完整"&gt;&lt;/span&gt;
+&lt;a href="#1-prompt-%e4%b8%8d%e7%94%a8%e8%8a%b1%e5%93%a8%e4%bd%86%e4%b8%8a%e4%b8%8b%e6%96%87%e8%a6%81%e5%ae%8c%e6%95%b4" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Codex 已经足够强，即使 prompt 写得不完美，也经常能给出不错的结果。&lt;/p&gt;
+&lt;p&gt;但在真实项目里，尤其是代码量较大、约束较多的项目里，真正影响结果的不是文案写得多漂亮，而是你有没有把关键上下文说清楚。&lt;/p&gt;
+&lt;p&gt;一个比较稳的任务描述，可以包含四块：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;目标&lt;/strong&gt;：你到底想改什么、做什么。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;上下文&lt;/strong&gt;：相关文件、目录、错误日志、接口文档、历史实现在哪里。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;约束&lt;/strong&gt;：代码风格、架构边界、安全要求、不能改的东西。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;完成标准&lt;/strong&gt;：什么情况算完成，比如测试通过、bug 不再复现、页面行为符合预期。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;比如不要只说：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;帮我修一下登录问题。&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;可以改成：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;目标：修复用户登录后偶尔跳回首页的问题。
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;上下文：登录逻辑在 src/auth，路由守卫在 src/router，最近错误日志见 logs/login-error.log。
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;约束：不要改数据库结构，不要重写登录流程，只修复当前跳转问题。
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;完成标准：补充或更新测试，确认登录后能回到原访问页面，相关测试通过。&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;这不是为了“教模型怎么写代码”，而是为了减少它做无谓假设。&lt;/p&gt;
+&lt;h2&gt;2. 复杂任务先 Plan，再让它动手&lt;span class="hx-absolute -hx-mt-20" id="2-复杂任务先-plan再让它动手"&gt;&lt;/span&gt;
+&lt;a href="#2-%e5%a4%8d%e6%9d%82%e4%bb%bb%e5%8a%a1%e5%85%88-plan%e5%86%8d%e8%ae%a9%e5%ae%83%e5%8a%a8%e6%89%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;如果任务简单，比如改一个文案、修一个小 bug，可以直接让 Codex 做。&lt;/p&gt;
+&lt;p&gt;但如果任务具备这些特征，就应该先让它计划：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;涉及多个模块&lt;/li&gt;
+&lt;li&gt;需求还不清楚&lt;/li&gt;
+&lt;li&gt;可能影响现有架构&lt;/li&gt;
+&lt;li&gt;需要排查原因&lt;/li&gt;
+&lt;li&gt;需要分阶段上线&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这时不要急着说“直接改”，而是先让它：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;阅读相关代码&lt;/li&gt;
+&lt;li&gt;复述它对问题的理解&lt;/li&gt;
+&lt;li&gt;找出可能的风险点&lt;/li&gt;
+&lt;li&gt;给出修改方案&lt;/li&gt;
+&lt;li&gt;说明验证方式&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;官方文档里也强调了 Plan mode。它的价值不是让流程变慢，而是先把“怎么做”暴露出来，避免 Codex 一上来就改一大片代码。&lt;/p&gt;
+&lt;p&gt;一个好用的说法是：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;先不要写代码。请先阅读相关文件，给出你的理解、修改计划、风险点和验证方式。等我确认后再开始实现。&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;对于不确定的需求，还可以让 Codex 反过来采访你：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;我现在只有一个粗略想法，请你先问我问题，帮我把需求变成可执行的开发任务。&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;这一步对产品功能、重构、复杂 bug 都很有用。&lt;/p&gt;
+&lt;h2&gt;3. 把重复要求写进 AGENTS.md&lt;span class="hx-absolute -hx-mt-20" id="3-把重复要求写进-agentsmd"&gt;&lt;/span&gt;
+&lt;a href="#3-%e6%8a%8a%e9%87%8d%e5%a4%8d%e8%a6%81%e6%b1%82%e5%86%99%e8%bf%9b-agentsmd" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;如果你发现自己经常反复提醒 Codex：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;不要改无关文件&lt;/li&gt;
+&lt;li&gt;改完要跑测试&lt;/li&gt;
+&lt;li&gt;提交前先看 diff&lt;/li&gt;
+&lt;li&gt;API 返回格式不能变&lt;/li&gt;
+&lt;li&gt;某些目录不能碰&lt;/li&gt;
+&lt;li&gt;这个项目用 pnpm，不要用 npm&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;那这些就不应该每次都写进 prompt，而应该沉淀到 &lt;code&gt;AGENTS.md&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;可以把 &lt;code&gt;AGENTS.md&lt;/code&gt; 理解成“给 AI Agent 看的项目 README”。&lt;/p&gt;
+&lt;p&gt;它适合写：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;项目目录结构&lt;/li&gt;
+&lt;li&gt;本地启动方式&lt;/li&gt;
+&lt;li&gt;测试、构建、lint 命令&lt;/li&gt;
+&lt;li&gt;代码风格和工程约定&lt;/li&gt;
+&lt;li&gt;Pull Request 要求&lt;/li&gt;
+&lt;li&gt;禁止事项&lt;/li&gt;
+&lt;li&gt;什么情况算完成&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;官方建议可以用 &lt;code&gt;/init&lt;/code&gt; 快速生成一个初版，但不要停在生成结果上。真正有价值的是根据项目实际情况持续修改。&lt;/p&gt;
+&lt;p&gt;一个短但准确的 &lt;code&gt;AGENTS.md&lt;/code&gt;，通常比一份很长但空泛的规则更有用。&lt;/p&gt;
+&lt;p&gt;我更建议这样维护：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;先写最核心的启动、测试、约束。&lt;/li&gt;
+&lt;li&gt;当 Codex 犯同一个错误第二次，就把规则补进去。&lt;/li&gt;
+&lt;li&gt;如果文件变得太长，把 code review、发布流程、调试流程拆成独立文档，再从 &lt;code&gt;AGENTS.md&lt;/code&gt; 引用。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;也就是说，&lt;code&gt;AGENTS.md&lt;/code&gt; 不应该是一次性写完的文档，而应该是团队和 Codex 磨合出来的工作说明书。&lt;/p&gt;
+&lt;h2&gt;4. 配置比临场提醒更稳定&lt;span class="hx-absolute -hx-mt-20" id="4-配置比临场提醒更稳定"&gt;&lt;/span&gt;
+&lt;a href="#4-%e9%85%8d%e7%bd%ae%e6%af%94%e4%b8%b4%e5%9c%ba%e6%8f%90%e9%86%92%e6%9b%b4%e7%a8%b3%e5%ae%9a" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;很多 Codex 使用问题，本质不是模型能力问题，而是环境配置问题。&lt;/p&gt;
+&lt;p&gt;比如：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;工作目录不对&lt;/li&gt;
+&lt;li&gt;没有写权限&lt;/li&gt;
+&lt;li&gt;默认模型不合适&lt;/li&gt;
+&lt;li&gt;sandbox 权限太松或太紧&lt;/li&gt;
+&lt;li&gt;缺少必要工具&lt;/li&gt;
+&lt;li&gt;MCP 没配好&lt;/li&gt;
+&lt;li&gt;每次都用命令行参数临时覆盖&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;官方文档里提到，可以通过 &lt;code&gt;config.toml&lt;/code&gt; 固化默认配置，包括模型、reasoning effort、sandbox、approval policy、profiles、MCP 等。&lt;/p&gt;
+&lt;p&gt;一个比较稳的习惯是：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;个人默认配置放在 &lt;code&gt;~/.codex/config.toml&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;项目级配置放在 &lt;code&gt;.codex/config.toml&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;临时命令行参数只用于一次性场景&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如果是新手，不建议一开始就给 Codex 很大权限。&lt;/p&gt;
+&lt;p&gt;更安全的方式是：先用默认权限，让它在需要执行高风险命令时请求确认；等你熟悉某个项目和工作流之后，再逐步放宽。&lt;/p&gt;
+&lt;p&gt;这点很重要：&lt;strong&gt;权限不是越大越好，合适才好。&lt;/strong&gt;&lt;/p&gt;
+&lt;h2&gt;5. 不要只让 Codex 写代码，也要让它验证代码&lt;span class="hx-absolute -hx-mt-20" id="5-不要只让-codex-写代码也要让它验证代码"&gt;&lt;/span&gt;
+&lt;a href="#5-%e4%b8%8d%e8%a6%81%e5%8f%aa%e8%ae%a9-codex-%e5%86%99%e4%bb%a3%e7%a0%81%e4%b9%9f%e8%a6%81%e8%ae%a9%e5%ae%83%e9%aa%8c%e8%af%81%e4%bb%a3%e7%a0%81" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;很多人用 Codex 的流程停在“代码写出来了”。&lt;/p&gt;
+&lt;p&gt;但在工程里，真正的完成应该是：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;测试补了没有&lt;/li&gt;
+&lt;li&gt;相关测试跑了没有&lt;/li&gt;
+&lt;li&gt;lint / format / type check 过了没有&lt;/li&gt;
+&lt;li&gt;diff 有没有异常&lt;/li&gt;
+&lt;li&gt;有没有引入回归&lt;/li&gt;
+&lt;li&gt;最终行为是否符合需求&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;所以你可以直接把验证要求写进任务：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;实现后请运行相关测试，并检查 git diff，确认没有无关修改。如果测试无法运行，请说明原因和你已经做过的验证。&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Codex 不是只能生成代码。用得好时，它也可以帮你做：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;补测试&lt;/li&gt;
+&lt;li&gt;跑测试&lt;/li&gt;
+&lt;li&gt;看日志&lt;/li&gt;
+&lt;li&gt;review diff&lt;/li&gt;
+&lt;li&gt;找潜在回归&lt;/li&gt;
+&lt;li&gt;根据 checklist 做 PR review&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;官方也提到 &lt;code&gt;/review&lt;/code&gt; 这类能力。对团队来说，如果能把 code review 规则写成 &lt;code&gt;code_review.md&lt;/code&gt;，再从 &lt;code&gt;AGENTS.md&lt;/code&gt; 引用，就可以让 Codex 的 review 行为更稳定。&lt;/p&gt;
+&lt;h2&gt;6. 外部上下文用 MCP，不要一直复制粘贴&lt;span class="hx-absolute -hx-mt-20" id="6-外部上下文用-mcp不要一直复制粘贴"&gt;&lt;/span&gt;
+&lt;a href="#6-%e5%a4%96%e9%83%a8%e4%b8%8a%e4%b8%8b%e6%96%87%e7%94%a8-mcp%e4%b8%8d%e8%a6%81%e4%b8%80%e7%9b%b4%e5%a4%8d%e5%88%b6%e7%b2%98%e8%b4%b4" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;有些上下文不在代码仓库里，比如：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;issue 系统&lt;/li&gt;
+&lt;li&gt;文档系统&lt;/li&gt;
+&lt;li&gt;数据库&lt;/li&gt;
+&lt;li&gt;监控平台&lt;/li&gt;
+&lt;li&gt;日志系统&lt;/li&gt;
+&lt;li&gt;内部 API&lt;/li&gt;
+&lt;li&gt;设计稿&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如果每次都手动复制粘贴，很快就会变成负担，也容易过期。&lt;/p&gt;
+&lt;p&gt;这时可以考虑 MCP。&lt;/p&gt;
+&lt;p&gt;MCP 的价值不是“把所有工具都接进去”，而是让 Codex 能稳定访问某些真正高频、会变化、和任务强相关的信息。&lt;/p&gt;
+&lt;p&gt;比较适合接 MCP 的场景：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;经常需要查 issue / PR / CI 状态&lt;/li&gt;
+&lt;li&gt;经常需要读内部文档&lt;/li&gt;
+&lt;li&gt;经常需要查日志或监控&lt;/li&gt;
+&lt;li&gt;多人协作时希望上下文来源一致&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;但不要一上来就把所有工具都接进去。更好的方式是：先找一个你每天都在手动复制的信息源，把它接好，用顺了再扩展。&lt;/p&gt;
+&lt;h2&gt;7. 重复工作做成 Skill&lt;span class="hx-absolute -hx-mt-20" id="7-重复工作做成-skill"&gt;&lt;/span&gt;
+&lt;a href="#7-%e9%87%8d%e5%a4%8d%e5%b7%a5%e4%bd%9c%e5%81%9a%e6%88%90-skill" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;如果一个流程你已经重复做了很多次，而且每次都要写一大段 prompt，那它就应该变成 Skill。&lt;/p&gt;
+&lt;p&gt;Skill 适合封装一类稳定任务，比如：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;日志排查&lt;/li&gt;
+&lt;li&gt;发布说明生成&lt;/li&gt;
+&lt;li&gt;PR checklist review&lt;/li&gt;
+&lt;li&gt;数据迁移计划&lt;/li&gt;
+&lt;li&gt;事故复盘摘要&lt;/li&gt;
+&lt;li&gt;标准调试流程&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;一个好的 Skill 不需要一开始覆盖所有边界。&lt;/p&gt;
+&lt;p&gt;更现实的做法是：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;先选一个典型任务。&lt;/li&gt;
+&lt;li&gt;把输入、输出、执行步骤写清楚。&lt;/li&gt;
+&lt;li&gt;跑几次，看哪里容易失败。&lt;/li&gt;
+&lt;li&gt;再把失败经验补进去。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;官方文档里有一句很实用的判断标准：如果你反复使用同一段 prompt，或者反复纠正同一个流程，它大概率应该变成一个 Skill。&lt;/p&gt;
+&lt;p&gt;这也是 Codex 从“会帮你写代码”变成“懂你工作方式”的关键。&lt;/p&gt;
+&lt;h2&gt;8. 稳定流程再自动化&lt;span class="hx-absolute -hx-mt-20" id="8-稳定流程再自动化"&gt;&lt;/span&gt;
+&lt;a href="#8-%e7%a8%b3%e5%ae%9a%e6%b5%81%e7%a8%8b%e5%86%8d%e8%87%aa%e5%8a%a8%e5%8c%96" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;自动化很诱人，但不要太早。&lt;/p&gt;
+&lt;p&gt;如果一个任务还需要你频繁盯着、反复纠正，就不适合直接自动化。&lt;/p&gt;
+&lt;p&gt;更好的顺序是：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;先手动跑通。&lt;/li&gt;
+&lt;li&gt;把方法沉淀成 Skill。&lt;/li&gt;
+&lt;li&gt;确认输出稳定。&lt;/li&gt;
+&lt;li&gt;再放到 automation 里定时执行。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;适合自动化的任务包括：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;汇总最近 commits&lt;/li&gt;
+&lt;li&gt;扫描潜在 bug&lt;/li&gt;
+&lt;li&gt;生成 release notes&lt;/li&gt;
+&lt;li&gt;检查 CI 失败&lt;/li&gt;
+&lt;li&gt;生成站会摘要&lt;/li&gt;
+&lt;li&gt;定期跑某类分析报告&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;可以简单理解为：&lt;strong&gt;Skill 定义方法，Automation 定义时间。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如果方法还不稳定，先别急着定时跑。&lt;/p&gt;
+&lt;h2&gt;9. 长任务要管理 session，不要一个线程聊到底&lt;span class="hx-absolute -hx-mt-20" id="9-长任务要管理-session不要一个线程聊到底"&gt;&lt;/span&gt;
+&lt;a href="#9-%e9%95%bf%e4%bb%bb%e5%8a%a1%e8%a6%81%e7%ae%a1%e7%90%86-session%e4%b8%8d%e8%a6%81%e4%b8%80%e4%b8%aa%e7%ba%bf%e7%a8%8b%e8%81%8a%e5%88%b0%e5%ba%95" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Codex 的 session 不只是聊天记录，它会积累上下文、决策和中间状态。&lt;/p&gt;
+&lt;p&gt;所以 session 管理会直接影响结果质量。&lt;/p&gt;
+&lt;p&gt;一个实用原则是：&lt;strong&gt;一个 session 对应一个相对完整的任务。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;不要一个项目永远用同一个 session。这样上下文会越来越臃肿，后面反而更容易跑偏。&lt;/p&gt;
+&lt;p&gt;如果任务还在同一个问题里，继续用同一个线程是合理的，因为它保留了推理过程。&lt;/p&gt;
+&lt;p&gt;但如果任务已经分叉，就应该 fork 新线程，或者用 subagent 去做边界清晰的子任务，比如：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;代码探索&lt;/li&gt;
+&lt;li&gt;测试补充&lt;/li&gt;
+&lt;li&gt;日志分析&lt;/li&gt;
+&lt;li&gt;方案对比&lt;/li&gt;
+&lt;li&gt;风险排查&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;主线程负责推进核心判断，子线程负责消化局部信息。这样更容易保持清晰。&lt;/p&gt;
+&lt;h2&gt;常见误区&lt;span class="hx-absolute -hx-mt-20" id="常见误区"&gt;&lt;/span&gt;
+&lt;a href="#%e5%b8%b8%e8%a7%81%e8%af%af%e5%8c%ba" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;最后总结几个常见误区：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;把长期规则全塞进 prompt，而不是放进 &lt;code&gt;AGENTS.md&lt;/code&gt; 或 Skill。&lt;/li&gt;
+&lt;li&gt;只让 Codex 写代码，不告诉它怎么运行、测试、验证。&lt;/li&gt;
+&lt;li&gt;复杂任务不先计划，直接让它改。&lt;/li&gt;
+&lt;li&gt;一开始就给它过大的本机权限。&lt;/li&gt;
+&lt;li&gt;多个 live thread 同时改同一批文件，却不用 git worktree 隔离。&lt;/li&gt;
+&lt;li&gt;还没稳定的流程，过早做 automation。&lt;/li&gt;
+&lt;li&gt;把 Codex 当成必须一步步盯着的工具，而不是可以并行工作的队友。&lt;/li&gt;
+&lt;li&gt;一个项目只开一个巨大 session，长期混用所有任务。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;结论&lt;span class="hx-absolute -hx-mt-20" id="结论"&gt;&lt;/span&gt;
+&lt;a href="#%e7%bb%93%e8%ae%ba" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Codex 的最佳实践，其实不是某个神奇 prompt。&lt;/p&gt;
+&lt;p&gt;真正重要的是把它纳入工程化使用方式：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;用清晰上下文启动任务&lt;/li&gt;
+&lt;li&gt;复杂需求先计划&lt;/li&gt;
+&lt;li&gt;用 &lt;code&gt;AGENTS.md&lt;/code&gt; 沉淀项目规则&lt;/li&gt;
+&lt;li&gt;用配置保证一致性&lt;/li&gt;
+&lt;li&gt;用测试和 review 闭环&lt;/li&gt;
+&lt;li&gt;用 MCP 接入外部上下文&lt;/li&gt;
+&lt;li&gt;用 Skill 固化重复流程&lt;/li&gt;
+&lt;li&gt;用 automation 放大稳定工作流&lt;/li&gt;
+&lt;li&gt;用 session 管理保持上下文干净&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如果只把 Codex 当成“代码生成器”，它能帮你省一些时间。&lt;/p&gt;
+&lt;p&gt;但如果把它当成一个可配置、可复盘、可沉淀经验的工程队友，它带来的效率提升会大很多。&lt;/p&gt;</description></item><item><title>Obscura：一个为 AI Agent 和网页抓取而生的 Rust 无头浏览器</title><link>https://silenceper.com/article/2026-04-26-obscura-rust-headless-browser/</link><pubDate>Sun, 26 Apr 2026 13:55:19 +0800</pubDate><guid>https://silenceper.com/article/2026-04-26-obscura-rust-headless-browser/</guid><description>
+&lt;p&gt;一句话定位：&lt;strong&gt;Obscura 是一个面向 AI Agent 和网页抓取场景的开源无头浏览器，用 Rust 实现，主打轻量、隐身和兼容 Puppeteer/Playwright。&lt;/strong&gt;&lt;/p&gt;
+&lt;h2&gt;基础信息卡片&lt;span class="hx-absolute -hx-mt-20" id="基础信息卡片"&gt;&lt;/span&gt;
+&lt;a href="#%e5%9f%ba%e7%a1%80%e4%bf%a1%e6%81%af%e5%8d%a1%e7%89%87" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;项目名&lt;/strong&gt;：Obscura&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;仓库&lt;/strong&gt;：&lt;code&gt;h4ckf0r0day/obscura&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;定位&lt;/strong&gt;：Headless browser for AI agents and web scraping&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;技术栈&lt;/strong&gt;：Rust + V8&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;协议兼容&lt;/strong&gt;：Chrome DevTools Protocol（CDP）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;可接入&lt;/strong&gt;：Puppeteer、Playwright&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;License&lt;/strong&gt;：Apache 2.0&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;当前热度&lt;/strong&gt;：约 &lt;strong&gt;5k Stars / 292 Forks&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;最近更新&lt;/strong&gt;：仓库页面显示 &lt;strong&gt;2026-04-25&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;发布情况&lt;/strong&gt;：目前有 &lt;strong&gt;2 个 Release&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;解决什么问题&lt;span class="hx-absolute -hx-mt-20" id="解决什么问题"&gt;&lt;/span&gt;
+&lt;a href="#%e8%a7%a3%e5%86%b3%e4%bb%80%e4%b9%88%e9%97%ae%e9%a2%98" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;这个项目主要解决的是：&lt;strong&gt;做自动化抓取或 AI Agent 浏览网页时，传统 Headless Chrome 太重、启动慢、资源占用高，而且容易被识别。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260426/obscura-agent-browser-flow.png" alt="Obscura 在自动化链路中的位置" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;这张图想表达的是：Obscura 不是替代 Puppeteer / Playwright 这些上层框架，而是把一个更轻的浏览器执行层放在 AI Agent、抓取任务和目标网页之间。&lt;/p&gt;
+&lt;p&gt;Obscura 想提供一个更适合这类场景的替代方案：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;不依赖完整 Chrome&lt;/li&gt;
+&lt;li&gt;单二进制即可运行&lt;/li&gt;
+&lt;li&gt;启动更快、内存更低&lt;/li&gt;
+&lt;li&gt;自带一定的反检测能力&lt;/li&gt;
+&lt;li&gt;又能兼容现有 Puppeteer / Playwright 生态&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如果你现在做的是：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;大规模网页抓取&lt;/li&gt;
+&lt;li&gt;AI Agent 自动操作网页&lt;/li&gt;
+&lt;li&gt;需要执行真实 JavaScript 的采集任务&lt;/li&gt;
+&lt;li&gt;想减少 Chrome/Node 依赖&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;那它的切入点就很明确。&lt;/p&gt;
+&lt;h2&gt;核心功能&lt;span class="hx-absolute -hx-mt-20" id="核心功能"&gt;&lt;/span&gt;
+&lt;a href="#%e6%a0%b8%e5%bf%83%e5%8a%9f%e8%83%bd" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;1）真正执行 JavaScript&lt;span class="hx-absolute -hx-mt-20" id="1真正执行-javascript"&gt;&lt;/span&gt;
+&lt;a href="#1%e7%9c%9f%e6%ad%a3%e6%89%a7%e8%a1%8c-javascript" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;它不是简单 HTTP 抓页面，而是基于 &lt;strong&gt;V8&lt;/strong&gt; 跑真实前端逻辑，所以适合：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;SPA 页面&lt;/li&gt;
+&lt;li&gt;动态渲染内容&lt;/li&gt;
+&lt;li&gt;XHR / fetch 加载后的数据提取&lt;/li&gt;
+&lt;li&gt;表单提交、登录态保持&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;2）兼容 CDP，可接 Puppeteer / Playwright&lt;span class="hx-absolute -hx-mt-20" id="2兼容-cdp可接-puppeteer--playwright"&gt;&lt;/span&gt;
+&lt;a href="#2%e5%85%bc%e5%ae%b9-cdp%e5%8f%af%e6%8e%a5-puppeteer--playwright" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;README 里明确写了，它实现了 &lt;strong&gt;Chrome DevTools Protocol&lt;/strong&gt;，可以作为 headless Chrome 的替代后端来接：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Puppeteer&lt;/li&gt;
+&lt;li&gt;Playwright&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这点很实用，因为你不一定要改整套自动化代码。&lt;/p&gt;
+&lt;h3&gt;3）自带 CLI，适合直接抓取&lt;span class="hx-absolute -hx-mt-20" id="3自带-cli适合直接抓取"&gt;&lt;/span&gt;
+&lt;a href="#3%e8%87%aa%e5%b8%a6-cli%e9%80%82%e5%90%88%e7%9b%b4%e6%8e%a5%e6%8a%93%e5%8f%96" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;它提供了几个很直观的命令：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;obscura fetch&lt;/code&gt;：抓单页&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;obscura scrape&lt;/code&gt;：并发抓多个 URL&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;obscura serve&lt;/code&gt;：启动 CDP 服务&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;适合两类人：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;直接命令行跑抓取&lt;/li&gt;
+&lt;li&gt;作为底层浏览器接入现有自动化脚本&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;4）隐身模式&lt;span class="hx-absolute -hx-mt-20" id="4隐身模式"&gt;&lt;/span&gt;
+&lt;a href="#4%e9%9a%90%e8%ba%ab%e6%a8%a1%e5%bc%8f" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;这是它比较突出的卖点。README 提到 stealth 模式包括：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;指纹随机化&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;navigator.webdriver&lt;/code&gt; 伪装&lt;/li&gt;
+&lt;li&gt;原生函数伪装&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;userAgentData&lt;/code&gt; 模拟&lt;/li&gt;
+&lt;li&gt;tracker blocking（拦截追踪/分析脚本）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;对于容易被识别的抓取场景，这部分很有吸引力。&lt;/p&gt;
+&lt;h3&gt;5）资源占用轻&lt;span class="hx-absolute -hx-mt-20" id="5资源占用轻"&gt;&lt;/span&gt;
+&lt;a href="#5%e8%b5%84%e6%ba%90%e5%8d%a0%e7%94%a8%e8%bd%bb" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;README 给出的对比数据里，Obscura 主打：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;内存约 30MB&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;二进制约 70MB&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;启动接近即时&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;页面加载明显快于 Headless Chrome&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这里要注意：&lt;strong&gt;这些是项目 README 自述数据&lt;/strong&gt;，可以作为方向参考，但真实效果还得看你的目标网站和部署环境。&lt;/p&gt;
+&lt;h2&gt;适合谁&lt;span class="hx-absolute -hx-mt-20" id="适合谁"&gt;&lt;/span&gt;
+&lt;a href="#%e9%80%82%e5%90%88%e8%b0%81" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;我觉得它比较适合这几类人：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;做 AI Agent 的开发者&lt;/strong&gt;：需要一个更轻的浏览器执行层&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;做网页抓取的工程师&lt;/strong&gt;：尤其是高并发、批量抓取场景&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;做自动化平台的人&lt;/strong&gt;：希望兼容 Puppeteer/Playwright，但不想带完整 Chrome&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Rust / 基础设施方向开发者&lt;/strong&gt;：愿意尝试新一代浏览器自动化底座&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;不太适合的点我也顺带提醒一下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;它目前看还是&lt;strong&gt;相对较新的项目&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;生态成熟度、兼容性边角、复杂站点稳定性，可能还需要更多实战验证&lt;/li&gt;
+&lt;li&gt;如果你要的是“最稳、最成熟、社区最大”的方案，Chrome/Playwright 仍然更稳妥&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;快速上手&lt;span class="hx-absolute -hx-mt-20" id="快速上手"&gt;&lt;/span&gt;
+&lt;a href="#%e5%bf%ab%e9%80%9f%e4%b8%8a%e6%89%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;它的上手路径很简单。&lt;/p&gt;
+&lt;h3&gt;直接下载二进制&lt;span class="hx-absolute -hx-mt-20" id="直接下载二进制"&gt;&lt;/span&gt;
+&lt;a href="#%e7%9b%b4%e6%8e%a5%e4%b8%8b%e8%bd%bd%e4%ba%8c%e8%bf%9b%e5%88%b6" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Linux 示例：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -LO https://github.com/h4ckf0r0day/obscura/releases/latest/download/obscura-x86_64-linux.tar.gz
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;tar xzf obscura-x86_64-linux.tar.gz
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;./obscura fetch https://example.com --eval &lt;span class="s2"&gt;&amp;#34;document.title&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;常见用法&lt;span class="hx-absolute -hx-mt-20" id="常见用法"&gt;&lt;/span&gt;
+&lt;a href="#%e5%b8%b8%e8%a7%81%e7%94%a8%e6%b3%95" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;获取标题：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;obscura fetch https://example.com --eval &lt;span class="s2"&gt;&amp;#34;document.title&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;导出链接：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;obscura fetch https://example.com --dump links&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;渲染 JS 后导出 HTML：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;obscura fetch https://news.ycombinator.com --dump html&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;启动 CDP 服务：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;obscura serve --port &lt;span class="m"&gt;9222&lt;/span&gt; --stealth&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;然后 Puppeteer / Playwright 就可以连这个端口。&lt;/p&gt;
+&lt;h2&gt;结论&lt;span class="hx-absolute -hx-mt-20" id="结论"&gt;&lt;/span&gt;
+&lt;a href="#%e7%bb%93%e8%ae%ba" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Obscura 的价值不在“再做一个浏览器”，而在于它试图成为 AI Agent / 抓取场景下更轻、更快、更隐蔽的浏览器执行层。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如果你现在正遇到这些问题：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Headless Chrome 太重&lt;/li&gt;
+&lt;li&gt;启动慢&lt;/li&gt;
+&lt;li&gt;部署麻烦&lt;/li&gt;
+&lt;li&gt;抓取容易被识别&lt;/li&gt;
+&lt;li&gt;想保留 Puppeteer / Playwright 使用习惯&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;那这个项目&lt;strong&gt;非常值得关注和试用&lt;/strong&gt;。&lt;/p&gt;</description></item><item><title>andrej-karpathy-skills：把 AI 编程助手调教得更稳一点</title><link>https://silenceper.com/article/2026-04-26-andrej-karpathy-skills/</link><pubDate>Sun, 26 Apr 2026 00:44:55 +0800</pubDate><guid>https://silenceper.com/article/2026-04-26-andrej-karpathy-skills/</guid><description>
+&lt;p&gt;一句话定位：&lt;strong&gt;&lt;code&gt;andrej-karpathy-skills&lt;/code&gt; 不是新的 AI 编程工具，而是一套把 Andrej Karpathy 对 LLM 编码常见问题的观察，整理成可直接放进 Claude Code、Cursor 或个人技能系统里的行为准则。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260425/andrej-karpathy-skills-cover-v2.jpg" alt="" loading="lazy" /&gt;&lt;/p&gt;
+&lt;h2&gt;基础信息卡片&lt;span class="hx-absolute -hx-mt-20" id="基础信息卡片"&gt;&lt;/span&gt;
+&lt;a href="#%e5%9f%ba%e7%a1%80%e4%bf%a1%e6%81%af%e5%8d%a1%e7%89%87" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;项目名称&lt;/strong&gt;：&lt;code&gt;forrestchang/andrej-karpathy-skills&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;项目地址&lt;/strong&gt;：https://github.com/forrestchang/andrej-karpathy-skills&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;项目定位&lt;/strong&gt;：用一份 &lt;code&gt;CLAUDE.md&lt;/code&gt; / 规则文件改善 AI 编程助手的协作方式&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;核心形式&lt;/strong&gt;：&lt;code&gt;CLAUDE.md&lt;/code&gt;、Claude Code 插件、Cursor rule、Skill 文件&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;开源协议&lt;/strong&gt;：MIT&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;默认分支&lt;/strong&gt;：&lt;code&gt;main&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;创建时间&lt;/strong&gt;：2026-01-27&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;最近活跃&lt;/strong&gt;：2026-04-25&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;热度参考&lt;/strong&gt;：86k+ Stars、8.2k+ Forks&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;解决什么问题&lt;span class="hx-absolute -hx-mt-20" id="解决什么问题"&gt;&lt;/span&gt;
+&lt;a href="#%e8%a7%a3%e5%86%b3%e4%bb%80%e4%b9%88%e9%97%ae%e9%a2%98" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;如果你经常让 AI 参与写代码，大概率已经碰到过几类典型问题：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;模型会默认替你做假设，没确认清楚就直接开始写。&lt;/li&gt;
+&lt;li&gt;一件本来很小的需求，最后被写成过度抽象、层层包装的大工程。&lt;/li&gt;
+&lt;li&gt;改一个点的时候，顺手把无关代码、注释、结构也改掉了，diff 越看越心慌。&lt;/li&gt;
+&lt;li&gt;用户说的是“修一下”“补一下”，模型却没有把任务转成可验证目标，最后只能靠人反复返工。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;这个项目的价值就在于，它不试图再造一个编码框架，而是直接约束 AI 助手的工作方式：先想清楚，再少改、精改，并且用能验证的目标去推进任务。&lt;/p&gt;
+&lt;h2&gt;核心功能&lt;span class="hx-absolute -hx-mt-20" id="核心功能"&gt;&lt;/span&gt;
+&lt;a href="#%e6%a0%b8%e5%bf%83%e5%8a%9f%e8%83%bd" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;1. 用四个原则约束 AI 的默认行为&lt;span class="hx-absolute -hx-mt-20" id="1-用四个原则约束-ai-的默认行为"&gt;&lt;/span&gt;
+&lt;a href="#1-%e7%94%a8%e5%9b%9b%e4%b8%aa%e5%8e%9f%e5%88%99%e7%ba%a6%e6%9d%9f-ai-%e7%9a%84%e9%bb%98%e8%ae%a4%e8%a1%8c%e4%b8%ba" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;项目把整套方法压缩成四条非常明确的原则：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;编码前思考&lt;/strong&gt;：不要默认假设，遇到歧义先澄清，把权衡说出来。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;简洁优先&lt;/strong&gt;：能简单解决就不要过度设计，不为没被要求的灵活性买单。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;精准修改&lt;/strong&gt;：只改和当前任务直接相关的内容，减少“顺手优化”的副作用。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;目标驱动执行&lt;/strong&gt;：把“去做某件事”改成可验证目标，比如先写测试，再迭代到通过。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这四条听起来像原则，但本质上是在减少 AI 写代码时最常见的失控点。&lt;/p&gt;
+&lt;h3&gt;2. 不只适用于 Claude Code，也照顾到不同使用场景&lt;span class="hx-absolute -hx-mt-20" id="2-不只适用于-claude-code也照顾到不同使用场景"&gt;&lt;/span&gt;
+&lt;a href="#2-%e4%b8%8d%e5%8f%aa%e9%80%82%e7%94%a8%e4%ba%8e-claude-code%e4%b9%9f%e7%85%a7%e9%a1%be%e5%88%b0%e4%b8%8d%e5%90%8c%e4%bd%bf%e7%94%a8%e5%9c%ba%e6%99%af" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;仓库不只是放了一份 &lt;code&gt;CLAUDE.md&lt;/code&gt;，还把同样的思路整理成了多种可落地形式：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Claude Code 插件安装方式&lt;/li&gt;
+&lt;li&gt;按项目落地的 &lt;code&gt;CLAUDE.md&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Cursor 可直接使用的 &lt;code&gt;.cursor/rules/karpathy-guidelines.mdc&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;可放进个人技能目录的 &lt;code&gt;SKILL.md&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;也就是说，它不是“看完就结束”的经验贴，而是尽量把原则做成了能直接复制、安装和复用的东西。&lt;/p&gt;
+&lt;h3&gt;3. 强调“让 AI 围绕成功标准工作”&lt;span class="hx-absolute -hx-mt-20" id="3-强调让-ai-围绕成功标准工作"&gt;&lt;/span&gt;
+&lt;a href="#3-%e5%bc%ba%e8%b0%83%e8%ae%a9-ai-%e5%9b%b4%e7%bb%95%e6%88%90%e5%8a%9f%e6%a0%87%e5%87%86%e5%b7%a5%e4%bd%9c" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;我觉得这个项目最值得看的点，不是四条原则本身，而是它对任务表达方式的强调：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;不要只说“修 bug”&lt;/li&gt;
+&lt;li&gt;不要只说“加校验”&lt;/li&gt;
+&lt;li&gt;不要只说“重构一下”&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;而是把这些话改成 AI 更容易闭环的目标，例如：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;先写一个能复现问题的测试&lt;/li&gt;
+&lt;li&gt;再修改实现&lt;/li&gt;
+&lt;li&gt;最后以测试通过作为结束条件&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这会明显降低“看起来做了很多，实际没有真正完成”的情况。&lt;/p&gt;
+&lt;h2&gt;适合谁&lt;span class="hx-absolute -hx-mt-20" id="适合谁"&gt;&lt;/span&gt;
+&lt;a href="#%e9%80%82%e5%90%88%e8%b0%81" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;这个项目比较适合下面几类人：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;经常使用 Claude Code、Cursor 或其他 AI 编程助手的开发者&lt;/li&gt;
+&lt;li&gt;已经被 AI 的“自作主张”“过度发挥”“过度工程”折腾过的人&lt;/li&gt;
+&lt;li&gt;想给团队沉淀一套统一协作规则，而不是每次都临时口头提醒的人&lt;/li&gt;
+&lt;li&gt;希望把 AI 从“会写代码”进一步拉到“更稳、更可控、更贴近真实工程协作”的人&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如果你已经有自己的项目规范，这个仓库也很适合当一个基础模板，再叠加你自己的技术栈要求。&lt;/p&gt;
+&lt;h2&gt;快速上手&lt;span class="hx-absolute -hx-mt-20" id="快速上手"&gt;&lt;/span&gt;
+&lt;a href="#%e5%bf%ab%e9%80%9f%e4%b8%8a%e6%89%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;项目给了几种很直接的接入方式。&lt;/p&gt;
+&lt;h3&gt;方式一：作为 Claude Code 插件安装&lt;span class="hx-absolute -hx-mt-20" id="方式一作为-claude-code-插件安装"&gt;&lt;/span&gt;
+&lt;a href="#%e6%96%b9%e5%bc%8f%e4%b8%80%e4%bd%9c%e4%b8%ba-claude-code-%e6%8f%92%e4%bb%b6%e5%ae%89%e8%a3%85" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;/plugin marketplace add forrestchang/andrej-karpathy-skills
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;/plugin install andrej-karpathy-skills@karpathy-skills&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;方式二：直接把 &lt;code&gt;CLAUDE.md&lt;/code&gt; 放进项目里&lt;span class="hx-absolute -hx-mt-20" id="方式二直接把-claudemd-放进项目里"&gt;&lt;/span&gt;
+&lt;a href="#%e6%96%b9%e5%bc%8f%e4%ba%8c%e7%9b%b4%e6%8e%a5%e6%8a%8a-claudemd-%e6%94%be%e8%bf%9b%e9%a1%b9%e7%9b%ae%e9%87%8c" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;新项目：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -o CLAUDE.md https://raw.githubusercontent.com/forrestchang/andrej-karpathy-skills/main/CLAUDE.md&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;已有项目追加：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;&amp;#34;&lt;/span&gt; &amp;gt;&amp;gt; CLAUDE.md
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl https://raw.githubusercontent.com/forrestchang/andrej-karpathy-skills/main/CLAUDE.md &amp;gt;&amp;gt; CLAUDE.md&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;方式三：在 Cursor 中使用同样规则&lt;span class="hx-absolute -hx-mt-20" id="方式三在-cursor-中使用同样规则"&gt;&lt;/span&gt;
+&lt;a href="#%e6%96%b9%e5%bc%8f%e4%b8%89%e5%9c%a8-cursor-%e4%b8%ad%e4%bd%bf%e7%94%a8%e5%90%8c%e6%a0%b7%e8%a7%84%e5%88%99" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;仓库已经提供 &lt;code&gt;.cursor/rules/karpathy-guidelines.mdc&lt;/code&gt;，把对应规则文件带进项目，就能把这套原则继续用在 Cursor 里。&lt;/p&gt;
+&lt;h2&gt;结论&lt;span class="hx-absolute -hx-mt-20" id="结论"&gt;&lt;/span&gt;
+&lt;a href="#%e7%bb%93%e8%ae%ba" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;code&gt;andrej-karpathy-skills&lt;/code&gt; 的亮点不在于“功能很多”，而在于它把 AI 编程里那些最容易踩坑的地方，整理成了一套足够简单、又能立刻落地的约束方式。&lt;/p&gt;
+&lt;p&gt;如果你已经在用 AI 写代码，这个项目值得看一遍；如果你已经被 AI 改坏过项目、写复杂过实现、或者因为没有明确验证目标而反复返工，那它的价值会更直接。&lt;/p&gt;
+&lt;p&gt;从定位上看，它更像一份高复用的协作说明书，而不是另一个新工具。但很多时候，真正缺的恰恰不是更多工具，而是一套更稳的工作方式。&lt;/p&gt;</description></item><item><title>DESIGN.md：给 AI 编程工具看的设计规范文件</title><link>https://silenceper.com/article/2026-04-23-design-md-ai-coding-design-spec/</link><pubDate>Thu, 23 Apr 2026 09:57:00 +0800</pubDate><guid>https://silenceper.com/article/2026-04-23-design-md-ai-coding-design-spec/</guid><description>
+&lt;p&gt;一句话定位：&lt;strong&gt;DESIGN.md 是 Google Labs 推出的一份开放格式规范，用一个 &lt;code&gt;DESIGN.md&lt;/code&gt; 文件同时承载机器可读的 design tokens 和人类可读的设计说明，让 AI 编程工具更稳定地理解界面风格。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260422/design-md-issue-preview-v2.png" alt="" loading="lazy" /&gt;&lt;/p&gt;
+&lt;h2&gt;基础信息卡片&lt;span class="hx-absolute -hx-mt-20" id="基础信息卡片"&gt;&lt;/span&gt;
+&lt;a href="#%e5%9f%ba%e7%a1%80%e4%bf%a1%e6%81%af%e5%8d%a1%e7%89%87" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;项目名称&lt;/strong&gt;：DESIGN.md&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;仓库地址&lt;/strong&gt;：https://github.com/google-labs-code/design.md&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;规范文档&lt;/strong&gt;：https://stitch.withgoogle.com/docs/design-md/specification&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;NPM 包&lt;/strong&gt;：&lt;code&gt;@google/design.md&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;命令入口&lt;/strong&gt;：&lt;code&gt;design.md&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;项目定位&lt;/strong&gt;：A format specification for describing a visual identity to coding agents&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;开源协议&lt;/strong&gt;：Apache-2.0&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;当前版本&lt;/strong&gt;：0.1.1&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;解决什么问题&lt;span class="hx-absolute -hx-mt-20" id="解决什么问题"&gt;&lt;/span&gt;
+&lt;a href="#%e8%a7%a3%e5%86%b3%e4%bb%80%e4%b9%88%e9%97%ae%e9%a2%98" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;如果只是把一套颜色、字号、间距丢给 AI，它能读到值，但很难真正理解这套设计背后的意图。&lt;/p&gt;
+&lt;p&gt;比如下面这些问题，在实际使用 AI 生成页面时都很常见：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;它知道主色是什么，却不知道什么场景才该用主色强调&lt;/li&gt;
+&lt;li&gt;它知道按钮圆角和字号，却不知道这套界面整体是偏克制、偏轻盈还是偏活泼&lt;/li&gt;
+&lt;li&gt;它能读到 token，却很难稳定理解组件语义、品牌气质和使用边界&lt;/li&gt;
+&lt;li&gt;换一个 Agent、换一次会话，生成出来的页面风格就开始漂&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;DESIGN.md 处理的，就是这类“有数值但没语境，有说明但不够结构化”的问题。&lt;/p&gt;
+&lt;p&gt;它的核心思路很直接：&lt;strong&gt;把精确 token 和设计说明放进同一个文件里，让机器和人看到的是同一份设计系统。&lt;/strong&gt;&lt;/p&gt;
+&lt;h2&gt;核心功能&lt;span class="hx-absolute -hx-mt-20" id="核心功能"&gt;&lt;/span&gt;
+&lt;a href="#%e6%a0%b8%e5%bf%83%e5%8a%9f%e8%83%bd" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;1. 用 YAML Front Matter 描述机器可读 token&lt;span class="hx-absolute -hx-mt-20" id="1-用-yaml-front-matter-描述机器可读-token"&gt;&lt;/span&gt;
+&lt;a href="#1-%e7%94%a8-yaml-front-matter-%e6%8f%8f%e8%bf%b0%e6%9c%ba%e5%99%a8%e5%8f%af%e8%af%bb-token" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;在 &lt;code&gt;DESIGN.md&lt;/code&gt; 顶部，可以写结构化的设计 token，比如：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;colors&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;typography&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;rounded&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;spacing&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;components&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;README 里的最小示例就是这样的：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-md" data-lang="md"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;---
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;name: Heritage
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;colors:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; primary: &amp;#34;&lt;span class="ni"&gt;#1A1C1E&lt;/span&gt;&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; secondary: &amp;#34;&lt;span class="ni"&gt;#6C7278&lt;/span&gt;&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; tertiary: &amp;#34;&lt;span class="ni"&gt;#B8422E&lt;/span&gt;&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; neutral: &amp;#34;&lt;span class="ni"&gt;#F7F5F2&lt;/span&gt;&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;typography:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; h1:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; fontFamily: Public Sans
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; fontSize: 3rem
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;rounded:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; sm: 4px
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; md: 8px
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;spacing:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; sm: 8px
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; md: 16px
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;---&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;这部分的价值很明确：&lt;strong&gt;AI 工具不需要再从一大段自然语言里猜颜色、字号和间距，而是可以直接读取确定值。&lt;/strong&gt;&lt;/p&gt;
+&lt;h3&gt;2. 用 Markdown Body 描述设计意图和使用方式&lt;span class="hx-absolute -hx-mt-20" id="2-用-markdown-body-描述设计意图和使用方式"&gt;&lt;/span&gt;
+&lt;a href="#2-%e7%94%a8-markdown-body-%e6%8f%8f%e8%bf%b0%e8%ae%be%e8%ae%a1%e6%84%8f%e5%9b%be%e5%92%8c%e4%bd%bf%e7%94%a8%e6%96%b9%e5%bc%8f" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;DESIGN.md 不只放 token，还要求在正文里继续写清楚：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;整体风格和品牌气质&lt;/li&gt;
+&lt;li&gt;配色策略为什么这么定&lt;/li&gt;
+&lt;li&gt;排版该呈现什么感觉&lt;/li&gt;
+&lt;li&gt;组件应该怎么用&lt;/li&gt;
+&lt;li&gt;哪些做法应该避免&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;官方 spec 把这部分定义成标准章节顺序，常见包括：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Overview&lt;/li&gt;
+&lt;li&gt;Colors&lt;/li&gt;
+&lt;li&gt;Typography&lt;/li&gt;
+&lt;li&gt;Layout&lt;/li&gt;
+&lt;li&gt;Elevation &amp;amp; Depth&lt;/li&gt;
+&lt;li&gt;Shapes&lt;/li&gt;
+&lt;li&gt;Components&lt;/li&gt;
+&lt;li&gt;Do&amp;rsquo;s and Don&amp;rsquo;ts&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;这一步很关键，因为很多设计系统真正难传达的不是 token 本身，而是 token 背后的语义。&lt;/p&gt;
+&lt;h3&gt;3. 允许 token 引用，方便形成完整系统&lt;span class="hx-absolute -hx-mt-20" id="3-允许-token-引用方便形成完整系统"&gt;&lt;/span&gt;
+&lt;a href="#3-%e5%85%81%e8%ae%b8-token-%e5%bc%95%e7%94%a8%e6%96%b9%e4%be%bf%e5%bd%a2%e6%88%90%e5%ae%8c%e6%95%b4%e7%b3%bb%e7%bb%9f" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;在 DESIGN.md 里，token 不只是散值，还支持引用关系，比如：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;components&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;button-primary&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;backgroundColor&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;{colors.tertiary}&amp;#34;&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;textColor&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;{colors.on-tertiary}&amp;#34;&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;rounded&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;{rounded.sm}&amp;#34;&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;padding&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;12px&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;这意味着它不只是在记录“颜色表”和“字号表”，而是在描述一个更完整的设计系统结构。&lt;/p&gt;
+&lt;h3&gt;4. 自带 CLI 工具链，不只是文档格式&lt;span class="hx-absolute -hx-mt-20" id="4-自带-cli-工具链不只是文档格式"&gt;&lt;/span&gt;
+&lt;a href="#4-%e8%87%aa%e5%b8%a6-cli-%e5%b7%a5%e5%85%b7%e9%93%be%e4%b8%8d%e5%8f%aa%e6%98%af%e6%96%87%e6%a1%a3%e6%a0%bc%e5%bc%8f" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;项目不只是定义格式，还提供了 CLI 能力。README 和包信息里已经给出了完整入口：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx @google/design.md lint DESIGN.md
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx @google/design.md diff DESIGN.md DESIGN-v2.md
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx @google/design.md &lt;span class="nb"&gt;export&lt;/span&gt; --format tailwind DESIGN.md
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx @google/design.md spec&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;目前能直接看到的能力包括：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;lint&lt;/strong&gt;：校验结构、token 引用、颜色对比度等&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;diff&lt;/strong&gt;：比较两个 DESIGN.md 的 token 和说明变化&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;export&lt;/strong&gt;：导出到 Tailwind、DTCG 等格式&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;spec&lt;/strong&gt;：输出完整规范内容，方便直接给 Agent 使用&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;也就是说，DESIGN.md 并不是“写一份规范给人看”就结束，而是可以真的进入工程流程。&lt;/p&gt;
+&lt;h3&gt;5. 仓库已经给了完整示例，不只是抽象概念&lt;span class="hx-absolute -hx-mt-20" id="5-仓库已经给了完整示例不只是抽象概念"&gt;&lt;/span&gt;
+&lt;a href="#5-%e4%bb%93%e5%ba%93%e5%b7%b2%e7%bb%8f%e7%bb%99%e4%ba%86%e5%ae%8c%e6%95%b4%e7%a4%ba%e4%be%8b%e4%b8%8d%e5%8f%aa%e6%98%af%e6%8a%bd%e8%b1%a1%e6%a6%82%e5%bf%b5" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;这个仓库里已经带了多套示例设计系统，比如：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Atmospheric Glass&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Paws &amp;amp; Paths&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Totality Festival Design System&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这些示例不是只写几行 token，而是把颜色、字体、圆角、组件配置和整套设计说明都写进了 &lt;code&gt;DESIGN.md&lt;/code&gt;，很适合直接拿来理解它到底想解决什么问题。&lt;/p&gt;
+&lt;h2&gt;适合谁&lt;span class="hx-absolute -hx-mt-20" id="适合谁"&gt;&lt;/span&gt;
+&lt;a href="#%e9%80%82%e5%90%88%e8%b0%81" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;我觉得它尤其适合这几类团队：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;已经让 AI 参与前端开发的团队&lt;/strong&gt;&lt;br&gt;
+希望不同 Agent 在生成界面时尽量保持一致。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;有设计系统，但信息散落在多个地方的团队&lt;/strong&gt;&lt;br&gt;
+想把 token、组件规范、设计描述收拢到一个统一入口里。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;设计和开发协作频繁的产品团队&lt;/strong&gt;&lt;br&gt;
+既想让设计原则写得清楚，也想让工具链能直接消费。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;想把设计系统接进工程流程的团队&lt;/strong&gt;&lt;br&gt;
+需要 lint、diff、export 这类能力，而不只是一个静态文档。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如果只是做一两个简单页面，这套规范未必立刻体现价值；但只要项目开始强调品牌一致性、可维护性和 AI 生成稳定性，它的意义就会越来越明显。&lt;/p&gt;
+&lt;h2&gt;快速上手&lt;span class="hx-absolute -hx-mt-20" id="快速上手"&gt;&lt;/span&gt;
+&lt;a href="#%e5%bf%ab%e9%80%9f%e4%b8%8a%e6%89%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;如果想最快感受 DESIGN.md 的方式，我建议按这条路径走：&lt;/p&gt;
+&lt;h3&gt;第一步，先写一份最小 DESIGN.md&lt;span class="hx-absolute -hx-mt-20" id="第一步先写一份最小-designmd"&gt;&lt;/span&gt;
+&lt;a href="#%e7%ac%ac%e4%b8%80%e6%ad%a5%e5%85%88%e5%86%99%e4%b8%80%e4%bb%bd%e6%9c%80%e5%b0%8f-designmd" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;先不追求很全，只写最关键的部分：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;colors&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;typography&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;spacing&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Overview&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Colors&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Components&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;也就是先把“值”和“说明”最重要的部分补齐。&lt;/p&gt;
+&lt;h3&gt;第二步，用 linter 检查结构&lt;span class="hx-absolute -hx-mt-20" id="第二步用-linter-检查结构"&gt;&lt;/span&gt;
+&lt;a href="#%e7%ac%ac%e4%ba%8c%e6%ad%a5%e7%94%a8-linter-%e6%a3%80%e6%9f%a5%e7%bb%93%e6%9e%84" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx @google/design.md lint DESIGN.md&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;先确认：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;格式是不是合法&lt;/li&gt;
+&lt;li&gt;token 引用有没有断掉&lt;/li&gt;
+&lt;li&gt;对比度是否合理&lt;/li&gt;
+&lt;li&gt;章节顺序是否符合规范&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;第三步，再接入自己的生成流程&lt;span class="hx-absolute -hx-mt-20" id="第三步再接入自己的生成流程"&gt;&lt;/span&gt;
+&lt;a href="#%e7%ac%ac%e4%b8%89%e6%ad%a5%e5%86%8d%e6%8e%a5%e5%85%a5%e8%87%aa%e5%b7%b1%e7%9a%84%e7%94%9f%e6%88%90%e6%b5%81%e7%a8%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;如果你本来就在用 AI 生成页面、组件或者主题样式，那么可以把 &lt;code&gt;DESIGN.md&lt;/code&gt; 当作稳定上下文的一部分，让它不只是看 prompt，而是真正理解你这套设计系统。&lt;/p&gt;
+&lt;h2&gt;结论&lt;span class="hx-absolute -hx-mt-20" id="结论"&gt;&lt;/span&gt;
+&lt;a href="#%e7%bb%93%e8%ae%ba" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;DESIGN.md 最值得关注的地方，不是它把 design token 换了种写法，而是它把过去经常分散处理的几件事重新收拢到了一起：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;机器要精确值&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;人要设计说明&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;团队要统一入口&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;工具链要可校验、可对比、可导出&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;从这个角度看，它更像是给“AI 参与前端和设计系统协作”补的一层基础设施。&lt;/p&gt;
+&lt;p&gt;如果后续更多 AI 编程工具开始支持这种格式，那么 DESIGN.md 很可能会变成设计系统和 Agent 之间一个很自然的中间层。&lt;/p&gt;</description></item><item><title>Browser Harness：让 AI 直接接管真实浏览器的轻量自愈执行层</title><link>https://silenceper.com/article/2026-04-21-browser-harness-ai-browser-control/</link><pubDate>Tue, 21 Apr 2026 00:50:08 +0800</pubDate><guid>https://silenceper.com/article/2026-04-21-browser-harness-ai-browser-control/</guid><description>
+&lt;p&gt;如果你已经在用 Claude Code、Codex 这类 AI 编程助手，又希望它们能直接操作你的真实浏览器，那么 Browser Harness 是一个很值得关注的项目：它不是再套一层厚重框架，而是给模型一条直连 Chrome 的最短路径，并允许它在任务进行中自己补齐缺失能力。&lt;/p&gt;
+&lt;h2&gt;一句话定位&lt;span class="hx-absolute -hx-mt-20" id="一句话定位"&gt;&lt;/span&gt;
+&lt;a href="#%e4%b8%80%e5%8f%a5%e8%af%9d%e5%ae%9a%e4%bd%8d" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Browser Harness 是一个面向 AI Agent 的轻量浏览器执行层，直接连接 Chrome DevTools Protocol，让模型在真实浏览器里完成任务，并能在执行过程中自我扩展能力。&lt;/p&gt;
+&lt;h2&gt;基础信息卡片&lt;span class="hx-absolute -hx-mt-20" id="基础信息卡片"&gt;&lt;/span&gt;
+&lt;a href="#%e5%9f%ba%e7%a1%80%e4%bf%a1%e6%81%af%e5%8d%a1%e7%89%87" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;字段&lt;/th&gt;
+&lt;th&gt;内容&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;项目名称&lt;/td&gt;
+&lt;td&gt;Browser Harness&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;GitHub&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://github.com/browser-use/browser-harness" target="_blank" rel="noopener"&gt;https://github.com/browser-use/browser-harness&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;官网/相关服务&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://cloud.browser-use.com" target="_blank" rel="noopener"&gt;https://cloud.browser-use.com&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;项目定位&lt;/td&gt;
+&lt;td&gt;面向 AI Agent 的轻量自愈浏览器执行层&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;核心能力&lt;/td&gt;
+&lt;td&gt;直连 CDP、真实浏览器控制、任务中补 helper、远程浏览器、多站点技能沉淀&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;开源协议&lt;/td&gt;
+&lt;td&gt;MIT&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;主要技术栈&lt;/td&gt;
+&lt;td&gt;Python&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;默认分支&lt;/td&gt;
+&lt;td&gt;main&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;适合搭配&lt;/td&gt;
+&lt;td&gt;Claude Code、Codex、Hermes 等 Agent 工具&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;blockquote&gt;
+&lt;p&gt;说明：Star、Fork、Issue 数等活跃数据会持续变化，阅读时请以 GitHub 仓库实时信息为准。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2&gt;解决什么问题&lt;span class="hx-absolute -hx-mt-20" id="解决什么问题"&gt;&lt;/span&gt;
+&lt;a href="#%e8%a7%a3%e5%86%b3%e4%bb%80%e4%b9%88%e9%97%ae%e9%a2%98" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;现在很多 AI 浏览器自动化方案都有一个共同问题：能力看起来很多，但真正落到复杂网页任务上，往往还是需要人为补脚本、补选择器、补边界处理。框架层越厚，模型离真实浏览器越远，遇到页面变化时就越容易卡住。&lt;/p&gt;
+&lt;p&gt;Browser Harness 想解决的就是这件事。&lt;/p&gt;
+&lt;p&gt;它的思路不是把浏览器操作封装成一套固定配方，而是尽量缩薄中间层，直接建立到 Chrome DevTools Protocol（CDP）的连接，把浏览器能力更直接地暴露给模型。这样当任务中途发现“当前 helper 不够用”时，模型不是立刻失败，而是可以直接改 harness 本身，把缺的函数补进去，再继续执行。&lt;/p&gt;
+&lt;p&gt;这也是它 README 里反复强调的关键词：self-healing。这里的“自愈”不是玄学，而是允许模型在执行过程中扩展工具本身，而不是永远被预设接口限制住。&lt;/p&gt;
+&lt;h2&gt;核心功能&lt;span class="hx-absolute -hx-mt-20" id="核心功能"&gt;&lt;/span&gt;
+&lt;a href="#%e6%a0%b8%e5%bf%83%e5%8a%9f%e8%83%bd" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;1. 直连 CDP，尽量减少中间抽象&lt;span class="hx-absolute -hx-mt-20" id="1-直连-cdp尽量减少中间抽象"&gt;&lt;/span&gt;
+&lt;a href="#1-%e7%9b%b4%e8%bf%9e-cdp%e5%b0%bd%e9%87%8f%e5%87%8f%e5%b0%91%e4%b8%ad%e9%97%b4%e6%8a%bd%e8%b1%a1" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;项目最吸引人的一点，是它对“薄”这件事非常执着。&lt;/p&gt;
+&lt;p&gt;README 里直接把整体规模写得很透明：核心代码量大约只有 592 行 Python，主要由 run.py、helpers.py、admin.py、daemon.py 组成。它传递出的不是“大而全平台”的感觉，而是一个刻意保持轻量、方便被模型理解和修改的浏览器执行层。&lt;/p&gt;
+&lt;p&gt;对于 AI Agent 场景，这一点很关键。中间层越薄，模型越容易读懂当前工具到底能做什么、不能做什么，也越容易在任务失败时自己修。&lt;/p&gt;
+&lt;h3&gt;2. 允许模型在任务中途补齐缺失能力&lt;span class="hx-absolute -hx-mt-20" id="2-允许模型在任务中途补齐缺失能力"&gt;&lt;/span&gt;
+&lt;a href="#2-%e5%85%81%e8%ae%b8%e6%a8%a1%e5%9e%8b%e5%9c%a8%e4%bb%bb%e5%8a%a1%e4%b8%ad%e9%80%94%e8%a1%a5%e9%bd%90%e7%bc%ba%e5%a4%b1%e8%83%bd%e5%8a%9b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;这个项目最有辨识度的地方，不是“能操作浏览器”，而是“能边做任务边长能力”。&lt;/p&gt;
+&lt;p&gt;README 里给了一个很直观的例子：当模型想上传文件时，如果 helpers.py 里还没有 upload_file()，它就直接把这个函数写进去，然后继续完成上传。&lt;/p&gt;
+&lt;p&gt;这意味着 Browser Harness 不是把模型当成一个只能调用固定 API 的操作者，而是把它当成一个既能执行任务、又能维护执行层的工程师。对于那些流程多变、网站细节又经常变化的场景，这种设计会比一套完全预定义的动作库更灵活。&lt;/p&gt;
+&lt;h3&gt;3. 支持真实本地浏览器，也支持远程浏览器&lt;span class="hx-absolute -hx-mt-20" id="3-支持真实本地浏览器也支持远程浏览器"&gt;&lt;/span&gt;
+&lt;a href="#3-%e6%94%af%e6%8c%81%e7%9c%9f%e5%ae%9e%e6%9c%ac%e5%9c%b0%e6%b5%8f%e8%a7%88%e5%99%a8%e4%b9%9f%e6%94%af%e6%8c%81%e8%bf%9c%e7%a8%8b%e6%b5%8f%e8%a7%88%e5%99%a8" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;从 install.md 和 SKILL.md 看，Browser Harness 的使用路径分成两类。&lt;/p&gt;
+&lt;p&gt;第一类是连接用户自己的真实 Chrome。它强调的是“直接接到你正在用的浏览器”，这样模型看到的就是你真实登录态、真实标签页和真实环境，更适合日常助理式操作。&lt;/p&gt;
+&lt;p&gt;第二类是远程浏览器。项目提供了 Browser Use cloud 这类远程能力，适合子代理并行执行，或者在无界面的服务器环境里运行。README 还明确提到免费层支持 3 个并发浏览器，不需要绑卡，这对做自动化实验或者多任务拆分来说门槛比较低。&lt;/p&gt;
+&lt;h3&gt;4. 把经验沉淀成 domain skills&lt;span class="hx-absolute -hx-mt-20" id="4-把经验沉淀成-domain-skills"&gt;&lt;/span&gt;
+&lt;a href="#4-%e6%8a%8a%e7%bb%8f%e9%aa%8c%e6%b2%89%e6%b7%80%e6%88%90-domain-skills" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;很多自动化项目把“经验”留在一次性脚本里，下一次重跑还得重新踩坑。Browser Harness 则明显想把这些网站级经验沉淀下来。&lt;/p&gt;
+&lt;p&gt;仓库里有 domain-skills/ 和 interaction-skills/ 两类知识：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;domain-skills 更偏站点级任务经验，比如某个平台的页面结构、稳定选择器、交互细节&lt;/li&gt;
+&lt;li&gt;interaction-skills 更偏通用浏览器操作能力，比如下载、滚动、iframe、上传、弹窗等&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;更有意思的是，项目鼓励这些技能由 agent 在真实任务中自动生成，而不是手工拍脑袋编写。这个思路很符合 Agent 工具演进的方向：真正有价值的知识，不是事先想出来的，而是任务跑通之后沉淀下来的。&lt;/p&gt;
+&lt;h3&gt;5. 对 Codex / Claude Code 的接入路径比较清晰&lt;span class="hx-absolute -hx-mt-20" id="5-对-codex--claude-code-的接入路径比较清晰"&gt;&lt;/span&gt;
+&lt;a href="#5-%e5%af%b9-codex--claude-code-%e7%9a%84%e6%8e%a5%e5%85%a5%e8%b7%af%e5%be%84%e6%af%94%e8%be%83%e6%b8%85%e6%99%b0" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;这个项目并不试图做一个封闭产品，而是很明显地在拥抱现有的 AI 编程助手工作流。&lt;/p&gt;
+&lt;p&gt;README 里直接给了面向 Claude Code 和 Codex 的 setup prompt；install.md 还专门说明了如何把它的 SKILL.md 注册到对应 agent 的全局技能目录中。换句话说，它不是让你额外学习一套新平台，而是把自己做成现有 Agent 工作流中的浏览器能力补丁。&lt;/p&gt;
+&lt;p&gt;这也是它容易传播的原因之一：对已经在用 Claude Code、Codex 的用户来说，上手心智负担很低。&lt;/p&gt;
+&lt;h2&gt;适合谁&lt;span class="hx-absolute -hx-mt-20" id="适合谁"&gt;&lt;/span&gt;
+&lt;a href="#%e9%80%82%e5%90%88%e8%b0%81" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;我觉得 Browser Harness 比较适合这几类人：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;已经在使用 Claude Code、Codex、Hermes 这类 agent，希望把浏览器能力也接进来的人&lt;/li&gt;
+&lt;li&gt;经常要处理真实网页登录态、后台录入、上传下载、内容运营这类网页任务的人&lt;/li&gt;
+&lt;li&gt;想做更灵活的浏览器自动化，而不满足于固定脚本的人&lt;/li&gt;
+&lt;li&gt;想让多个子代理并行跑网页任务的人&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如果你的目标只是做稳定、封闭、规则非常明确的网页测试，那么传统测试框架可能已经够用了。但如果你更在意“让模型自己理解页面、补工具、继续执行”，那 Browser Harness 的设计会更对路。&lt;/p&gt;
+&lt;h2&gt;快速上手&lt;span class="hx-absolute -hx-mt-20" id="快速上手"&gt;&lt;/span&gt;
+&lt;a href="#%e5%bf%ab%e9%80%9f%e4%b8%8a%e6%89%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;按照项目文档，体验它的大致路径不复杂：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;打开仓库，先看 install.md&lt;/li&gt;
+&lt;li&gt;克隆项目并安装为可全局调用的工具&lt;/li&gt;
+&lt;li&gt;让它连接到你的真实 Chrome，或配置远程浏览器&lt;/li&gt;
+&lt;li&gt;再读 SKILL.md，了解日常使用方式&lt;/li&gt;
+&lt;li&gt;从一个具体网页任务开始，让模型边做边学习&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;它的一个典型调用形态是：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;通过 browser-harness 执行一段 Python&lt;/li&gt;
+&lt;li&gt;helpers 会预先导入&lt;/li&gt;
+&lt;li&gt;daemon 自动启动&lt;/li&gt;
+&lt;li&gt;模型根据任务不断调用、修改、补充 helper&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如果你已经在自己的 AI 工作流里用了技能文件、任务脚本、子代理协作这些机制，那么 Browser Harness 基本能无缝接进去。&lt;/p&gt;
+&lt;h2&gt;结论&lt;span class="hx-absolute -hx-mt-20" id="结论"&gt;&lt;/span&gt;
+&lt;a href="#%e7%bb%93%e8%ae%ba" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Browser Harness 的价值，不在于它把浏览器自动化包装得多花哨，而在于它重新定义了 AI 操作浏览器时“工具应该长什么样”。&lt;/p&gt;
+&lt;p&gt;它足够轻，模型看得懂；它足够近，能直接碰到真实浏览器；它又足够开放，允许模型在任务执行过程中自己把工具补完整。这几件事叠在一起，才让它和传统“浏览器自动化脚本封装层”拉开了差异。&lt;/p&gt;
+&lt;p&gt;如果你最近正好在关注 AI Agent 如何真正落到网页任务、内容运营、后台操作、跨站点流程自动化这些场景，这个项目值得你专门花点时间看一遍。&lt;/p&gt;
+&lt;p&gt;我自己的判断是：它未必会成为所有人都用的浏览器方案，但它很可能会成为“AI 如何接管真实浏览器”这条路线里，一个非常有代表性的轻量实现。&lt;/p&gt;</description></item><item><title>Manifest：帮个人 AI Agent 降低模型成本的开源路由器</title><link>https://silenceper.com/article/2026-04-20-manifest-ai-agent-cost-router/</link><pubDate>Mon, 20 Apr 2026 00:05:18 +0800</pubDate><guid>https://silenceper.com/article/2026-04-20-manifest-ai-agent-cost-router/</guid><description>
+&lt;p&gt;如果你已经开始长期使用 Hermes、OpenClaw 这类 AI Agent，很快就会遇到一个现实问题：模型能接很多，但成本不太好管。&lt;/p&gt;
+&lt;p&gt;很多时候，真正浪费钱的地方不是“模型太贵”，而是&lt;strong&gt;不同难度的请求都被发给了同一个模型&lt;/strong&gt;。简单问题用了大模型，复杂任务又缺少稳定的回退链路，最后的结果往往是：钱花了不少，但整体调用方式并不精细。&lt;/p&gt;
+&lt;p&gt;Manifest 想解决的，就是这件事。&lt;/p&gt;
+&lt;p&gt;它不是再包一层模型接口，而是把 Agent 和模型提供方之间的“分发逻辑”单独做成一个开源路由层：根据请求复杂度自动选模型，在失败时自动 fallback，同时把 token、成本和耗时记录下来。&lt;/p&gt;
+&lt;h2&gt;一句话定位&lt;span class="hx-absolute -hx-mt-20" id="一句话定位"&gt;&lt;/span&gt;
+&lt;a href="#%e4%b8%80%e5%8f%a5%e8%af%9d%e5%ae%9a%e4%bd%8d" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Manifest 是一个面向个人 AI Agent 的开源 LLM 路由层，能根据请求复杂度自动选择更合适、也更省钱的模型，把模型成本控制这件事从“手动切换”变成“默认发生”。&lt;/p&gt;
+&lt;h2&gt;基础信息卡片&lt;span class="hx-absolute -hx-mt-20" id="基础信息卡片"&gt;&lt;/span&gt;
+&lt;a href="#%e5%9f%ba%e7%a1%80%e4%bf%a1%e6%81%af%e5%8d%a1%e7%89%87" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;字段&lt;/th&gt;
+&lt;th&gt;内容&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;项目名称&lt;/td&gt;
+&lt;td&gt;Manifest&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;GitHub&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://github.com/mnfst/manifest" target="_blank" rel="noopener"&gt;https://github.com/mnfst/manifest&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;官网&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://manifest.build" target="_blank" rel="noopener"&gt;https://manifest.build&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;项目定位&lt;/td&gt;
+&lt;td&gt;个人 AI Agent 的开源模型路由器&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;核心能力&lt;/td&gt;
+&lt;td&gt;智能路由、模型分层、自动回退、预算限制、成本与用量追踪&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;支持方式&lt;/td&gt;
+&lt;td&gt;Cloud 版本、Docker 自托管&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;开源协议&lt;/td&gt;
+&lt;td&gt;MIT&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;主要技术栈&lt;/td&gt;
+&lt;td&gt;TypeScript&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;适合搭配&lt;/td&gt;
+&lt;td&gt;Hermes、OpenClaw，以及其他自主 Agent 框架&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;blockquote&gt;
+&lt;p&gt;说明：Star、Fork、活跃度这类数据会持续变化，阅读时请以 GitHub 仓库实时信息为准。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2&gt;解决什么问题&lt;span class="hx-absolute -hx-mt-20" id="解决什么问题"&gt;&lt;/span&gt;
+&lt;a href="#%e8%a7%a3%e5%86%b3%e4%bb%80%e4%b9%88%e9%97%ae%e9%a2%98" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;现在很多 AI Agent 在调用模型时，常见做法其实比较粗暴：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;要么所有请求都走同一个模型&lt;/li&gt;
+&lt;li&gt;要么手动在便宜模型和大模型之间来回切&lt;/li&gt;
+&lt;li&gt;要么把路由能力直接交给第三方代理平台&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;问题在于，Agent 的请求天然不是同一种难度。&lt;/p&gt;
+&lt;p&gt;有些只是简单问答，有些是多步推理，有些是代码、视觉、长上下文任务。如果所有请求都默认走高价模型，成本会很快失控；但如果一味追求低价模型，又会在关键任务上掉质量。&lt;/p&gt;
+&lt;p&gt;Manifest 想解决的，就是让个人 Agent 也能像成熟系统一样，根据请求复杂度自动选模型。&lt;/p&gt;
+&lt;p&gt;它的价值不在于“再包一层 API”，而在于把日常最费钱、也最容易被忽略的那一步做成基础设施：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;简单请求走更快、更便宜的模型&lt;/li&gt;
+&lt;li&gt;复杂请求走更强的模型&lt;/li&gt;
+&lt;li&gt;某个模型失败时自动切到后备模型&lt;/li&gt;
+&lt;li&gt;全部调用过程都能在面板里看到成本、token、耗时和使用情况&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如果你平时已经在用多个模型供应商，或者本身就有订阅型模型额度，这类路由层的价值会非常直观。&lt;/p&gt;
+&lt;h2&gt;核心功能&lt;span class="hx-absolute -hx-mt-20" id="核心功能"&gt;&lt;/span&gt;
+&lt;a href="#%e6%a0%b8%e5%bf%83%e5%8a%9f%e8%83%bd" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;1. 自动判断请求难度，再分配到合适模型&lt;span class="hx-absolute -hx-mt-20" id="1-自动判断请求难度再分配到合适模型"&gt;&lt;/span&gt;
+&lt;a href="#1-%e8%87%aa%e5%8a%a8%e5%88%a4%e6%96%ad%e8%af%b7%e6%b1%82%e9%9a%be%e5%ba%a6%e5%86%8d%e5%88%86%e9%85%8d%e5%88%b0%e5%90%88%e9%80%82%e6%a8%a1%e5%9e%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Manifest 的核心不是“模型聚合”，而是“模型分配”。&lt;/p&gt;
+&lt;p&gt;根据官方说明，它会在每次请求进入时做一次本地评分，并把请求划分到不同层级，例如 simple、standard、complex、reasoning，再路由到对应模型。&lt;/p&gt;
+&lt;p&gt;对个人用户来说，这件事最直接的意义是：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;你不需要每次手动想“这一问值不值得上大模型”&lt;/li&gt;
+&lt;li&gt;Agent 也不必把所有任务都交给最贵的那一个&lt;/li&gt;
+&lt;li&gt;模型使用变得更像一个自动调度系统，而不是一个固定开关&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;真正影响长期成本的，往往不是你接了多少家，而是&lt;strong&gt;有没有把不同难度的请求分开处理&lt;/strong&gt;。&lt;/p&gt;
+&lt;h3&gt;2. 支持多层模型回退，不把稳定性压在单点上&lt;span class="hx-absolute -hx-mt-20" id="2-支持多层模型回退不把稳定性压在单点上"&gt;&lt;/span&gt;
+&lt;a href="#2-%e6%94%af%e6%8c%81%e5%a4%9a%e5%b1%82%e6%a8%a1%e5%9e%8b%e5%9b%9e%e9%80%80%e4%b8%8d%e6%8a%8a%e7%a8%b3%e5%ae%9a%e6%80%a7%e5%8e%8b%e5%9c%a8%e5%8d%95%e7%82%b9%e4%b8%8a" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;除了选模型，Manifest 还强调 fallback。&lt;/p&gt;
+&lt;p&gt;你可以按层级设置多个候选模型。当首选模型异常、不可用或效果不理想时，请求可以继续回退到下一层备用模型，而不是整条链路直接中断。&lt;/p&gt;
+&lt;p&gt;这对 Agent 场景尤其重要，因为 Agent 一旦进入多轮任务，单次失败带来的损失往往不是“一次回答没出来”，而是整个流程被打断。&lt;/p&gt;
+&lt;p&gt;从产品角度看，Manifest 做的不是“给你更多模型”，而是把模型调用从“单点依赖”升级成“可调度、可容错的执行链路”。&lt;/p&gt;
+&lt;h3&gt;3. 内置成本、token、时延追踪&lt;span class="hx-absolute -hx-mt-20" id="3-内置成本token时延追踪"&gt;&lt;/span&gt;
+&lt;a href="#3-%e5%86%85%e7%bd%ae%e6%88%90%e6%9c%actoken%e6%97%b6%e5%bb%b6%e8%bf%bd%e8%b8%aa" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;很多人知道自己“模型费用越来越高”，但不知道高在哪。&lt;/p&gt;
+&lt;p&gt;Manifest 把这一层可视化做成了默认能力。根据官方资料，路由过程中会自动记录：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;使用了哪个模型&lt;/li&gt;
+&lt;li&gt;消耗了多少 token&lt;/li&gt;
+&lt;li&gt;调用耗时多久&lt;/li&gt;
+&lt;li&gt;每次请求大概花了多少钱&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这意味着你不只是“省钱”，而是能进一步看清：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;哪类任务最消耗预算&lt;/li&gt;
+&lt;li&gt;哪些模型用得最多&lt;/li&gt;
+&lt;li&gt;哪个供应商性价比更高&lt;/li&gt;
+&lt;li&gt;哪些请求其实没必要走高阶模型&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;对于已经把 AI 工具纳入日常工作流的人，这类数据面板通常不是锦上添花，而是后续持续优化的前提。&lt;/p&gt;
+&lt;h3&gt;4. 同时照顾云端使用和本地自托管&lt;span class="hx-absolute -hx-mt-20" id="4-同时照顾云端使用和本地自托管"&gt;&lt;/span&gt;
+&lt;a href="#4-%e5%90%8c%e6%97%b6%e7%85%a7%e9%a1%be%e4%ba%91%e7%ab%af%e4%bd%bf%e7%94%a8%e5%92%8c%e6%9c%ac%e5%9c%b0%e8%87%aa%e6%89%98%e7%ae%a1" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Manifest 目前提供两种典型使用方式：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;直接使用官方 Cloud 版本&lt;/li&gt;
+&lt;li&gt;用 Docker 自托管部署&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如果你更关注上手速度，Cloud 版本会更省事；如果你更关注控制权、链路透明度和本地数据边界，自托管会更有吸引力。&lt;/p&gt;
+&lt;p&gt;从官方文档和 About 页面可以看到，这个项目非常强调“个人可控”这件事。它把自己和传统第三方云代理服务做了明显区分：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;开源&lt;/li&gt;
+&lt;li&gt;可自托管&lt;/li&gt;
+&lt;li&gt;路由逻辑透明&lt;/li&gt;
+&lt;li&gt;更强调个人 Agent 的使用场景&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;对很多重度用户来说，这种差异比“是否再多支持几家模型”更关键。&lt;/p&gt;
+&lt;h3&gt;5. 对个人订阅和多供应商组合更友好&lt;span class="hx-absolute -hx-mt-20" id="5-对个人订阅和多供应商组合更友好"&gt;&lt;/span&gt;
+&lt;a href="#5-%e5%af%b9%e4%b8%aa%e4%ba%ba%e8%ae%a2%e9%98%85%e5%92%8c%e5%a4%9a%e4%be%9b%e5%ba%94%e5%95%86%e7%bb%84%e5%90%88%e6%9b%b4%e5%8f%8b%e5%a5%bd" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Manifest 一个比较有意思的点，是它不是只围绕 API Key 思路来设计。&lt;/p&gt;
+&lt;p&gt;官方资料里明确提到，它既支持连接多个主流模型提供方，也支持复用部分已经付费的订阅型入口。对于已经同时购买了不同模型服务的人，这会更容易把现有资源整合起来，而不是重新回到单一平台里重复付费。&lt;/p&gt;
+&lt;p&gt;如果你已经在 OpenAI、Anthropic、MiniMax、OpenRouter 或本地模型之间切换，这类统一路由层会比“再买一个聚合平台”更像真正可长期使用的基础设施。&lt;/p&gt;
+&lt;h2&gt;适合谁&lt;span class="hx-absolute -hx-mt-20" id="适合谁"&gt;&lt;/span&gt;
+&lt;a href="#%e9%80%82%e5%90%88%e8%b0%81" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;1. 已经在长期使用个人 AI Agent 的用户&lt;span class="hx-absolute -hx-mt-20" id="1-已经在长期使用个人-ai-agent-的用户"&gt;&lt;/span&gt;
+&lt;a href="#1-%e5%b7%b2%e7%bb%8f%e5%9c%a8%e9%95%bf%e6%9c%9f%e4%bd%bf%e7%94%a8%e4%b8%aa%e4%ba%ba-ai-agent-%e7%9a%84%e7%94%a8%e6%88%b7" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;如果你已经把 Hermes、OpenClaw，或者其他 Agent 工具接进自己的日常工作里，那 Manifest 的价值会非常直接。&lt;/p&gt;
+&lt;p&gt;因为你真正要解决的，不再是“能不能调用模型”，而是：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;怎么控制长期成本&lt;/li&gt;
+&lt;li&gt;怎么避免每个任务都走高价模型&lt;/li&gt;
+&lt;li&gt;怎么在多个提供方之间保持灵活性&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;2. 同时在用多个模型供应商的人&lt;span class="hx-absolute -hx-mt-20" id="2-同时在用多个模型供应商的人"&gt;&lt;/span&gt;
+&lt;a href="#2-%e5%90%8c%e6%97%b6%e5%9c%a8%e7%94%a8%e5%a4%9a%e4%b8%aa%e6%a8%a1%e5%9e%8b%e4%be%9b%e5%ba%94%e5%95%86%e7%9a%84%e4%ba%ba" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;如果你手里已经有多家 provider 的 API Key，或者本来就会混合使用不同模型，那你很容易遇到一个问题：模型很多，但调度很乱。&lt;/p&gt;
+&lt;p&gt;Manifest 更像是把这些分散资源收拢成一层统一入口，让调用逻辑变得更稳定、更有章法。&lt;/p&gt;
+&lt;h3&gt;3. 想自托管 AI 基础设施的个人开发者&lt;span class="hx-absolute -hx-mt-20" id="3-想自托管-ai-基础设施的个人开发者"&gt;&lt;/span&gt;
+&lt;a href="#3-%e6%83%b3%e8%87%aa%e6%89%98%e7%ae%a1-ai-%e5%9f%ba%e7%a1%80%e8%ae%be%e6%96%bd%e7%9a%84%e4%b8%aa%e4%ba%ba%e5%bc%80%e5%8f%91%e8%80%85" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;如果你不想把所有请求都放进第三方黑盒代理里，又希望保留完整的使用追踪、预算控制和回退能力，那这种可自托管的路由层很有吸引力。&lt;/p&gt;
+&lt;p&gt;它不是大而全的平台，而是一个比较清晰的中间层：只解决“请求该发给谁、怎么追踪、怎么控成本”这件事。&lt;/p&gt;
+&lt;h2&gt;快速上手&lt;span class="hx-absolute -hx-mt-20" id="快速上手"&gt;&lt;/span&gt;
+&lt;a href="#%e5%bf%ab%e9%80%9f%e4%b8%8a%e6%89%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Manifest 的上手路径并不复杂，重点是先把它放到 Agent 和模型提供方之间。&lt;/p&gt;
+&lt;h3&gt;方式一：直接使用官方 Cloud&lt;span class="hx-absolute -hx-mt-20" id="方式一直接使用官方-cloud"&gt;&lt;/span&gt;
+&lt;a href="#%e6%96%b9%e5%bc%8f%e4%b8%80%e7%9b%b4%e6%8e%a5%e4%bd%bf%e7%94%a8%e5%ae%98%e6%96%b9-cloud" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;去官网注册后，把 Agent 的模型入口接到 Manifest，再把你已有的 provider 配进去，就可以开始使用它的自动路由能力。&lt;/p&gt;
+&lt;p&gt;适合想先验证效果、尽快体验的人。&lt;/p&gt;
+&lt;h3&gt;方式二：Docker 自托管&lt;span class="hx-absolute -hx-mt-20" id="方式二docker-自托管"&gt;&lt;/span&gt;
+&lt;a href="#%e6%96%b9%e5%bc%8f%e4%ba%8cdocker-%e8%87%aa%e6%89%98%e7%ae%a1" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;官方目前主推 Docker 安装方式，自托管也是它比较明确的使用路线。&lt;/p&gt;
+&lt;p&gt;典型步骤可以理解为：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;按官方安装脚本或 Docker 说明部署 Manifest&lt;/li&gt;
+&lt;li&gt;打开本地面板并创建管理员账号&lt;/li&gt;
+&lt;li&gt;配置模型提供方&lt;/li&gt;
+&lt;li&gt;设置不同复杂度层级对应的模型和 fallback&lt;/li&gt;
+&lt;li&gt;把 Agent 的请求入口切到 Manifest&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;完成后，后续大部分收益都会来自日常自动路由，而不是频繁手动切换模型。&lt;/p&gt;
+&lt;h2&gt;结论&lt;span class="hx-absolute -hx-mt-20" id="结论"&gt;&lt;/span&gt;
+&lt;a href="#%e7%bb%93%e8%ae%ba" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;如果把 Manifest 看成一个“再包装一层模型接口”的项目，会低估它。&lt;/p&gt;
+&lt;p&gt;它真正有价值的地方在于：&lt;strong&gt;把个人 AI Agent 的模型调用，从静态选择变成动态调度。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;这件事听起来不像生成式 AI 那么显眼，但对长期使用者非常实际：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;成本更容易压住&lt;/li&gt;
+&lt;li&gt;模型使用更有层次&lt;/li&gt;
+&lt;li&gt;失败时不容易整条链路中断&lt;/li&gt;
+&lt;li&gt;后续还能基于真实用量继续优化&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如果你已经开始认真使用个人 Agent，而不是偶尔玩一玩，那 Manifest 很值得看。&lt;/p&gt;</description></item><item><title>Superpowers：给 Claude Code、Codex、Cursor 装上一套更靠谱的开发方法论</title><link>https://silenceper.com/article/2026-04-18-superpowers-skills-framework/</link><pubDate>Sat, 18 Apr 2026 23:55:00 +0800</pubDate><guid>https://silenceper.com/article/2026-04-18-superpowers-skills-framework/</guid><description>
+&lt;p&gt;如果你已经开始把 Claude Code、Codex、Cursor 这类 Coding Agent 放进日常开发流程里，应该很容易碰到一个共同问题：它们会写代码，但不一定总能按一个稳定、可复用、可验证的方式把项目往前推进。&lt;/p&gt;
+&lt;p&gt;很多时候，真正让人头疼的并不是“它写不出来”，而是：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;需求还没聊清楚，它就先开工了；&lt;/li&gt;
+&lt;li&gt;方案还没定下来，代码已经改了一半；&lt;/li&gt;
+&lt;li&gt;任务拆得不够细，执行过程里来回返工；&lt;/li&gt;
+&lt;li&gt;测试和验证经常被放到最后，甚至被跳过；&lt;/li&gt;
+&lt;li&gt;一个阶段做完了，但缺少 review 和收尾动作。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Superpowers 想补的，就是这部分能力。&lt;/p&gt;
+&lt;p&gt;它不是新的大模型，也不是新的 AI IDE，而是一套面向 Coding Agent 的 skills 框架和软件开发方法论。简单理解，它更像是给已有 Agent 装上一套“先澄清需求、再拆计划、按 TDD 实现、过程中复查、最后收尾”的工作系统，让 AI 不只是会写代码，而是更像一个更有流程意识的工程助手。&lt;/p&gt;
+&lt;h2&gt;一句话定位&lt;span class="hx-absolute -hx-mt-20" id="一句话定位"&gt;&lt;/span&gt;
+&lt;a href="#%e4%b8%80%e5%8f%a5%e8%af%9d%e5%ae%9a%e4%bd%8d" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Superpowers 是一套给 Coding Agent 使用的 skills 框架，通过把需求澄清、方案设计、任务拆解、测试驱动开发、代码评审和分支收尾串成标准流程，让 AI 编程从“会写代码”变成“会按工程流程做项目”。&lt;/p&gt;
+&lt;h2&gt;基础信息卡片&lt;span class="hx-absolute -hx-mt-20" id="基础信息卡片"&gt;&lt;/span&gt;
+&lt;a href="#%e5%9f%ba%e7%a1%80%e4%bf%a1%e6%81%af%e5%8d%a1%e7%89%87" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;字段&lt;/th&gt;
+&lt;th&gt;内容&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;项目名&lt;/td&gt;
+&lt;td&gt;Superpowers&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;仓库&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://github.com/obra/superpowers" target="_blank" rel="noopener"&gt;https://github.com/obra/superpowers&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;作者 / 团队&lt;/td&gt;
+&lt;td&gt;Jesse Vincent / Prime Radiant&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;License&lt;/td&gt;
+&lt;td&gt;MIT&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;类型&lt;/td&gt;
+&lt;td&gt;Coding Agent 的 skills framework + software development methodology&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;支持对象&lt;/td&gt;
+&lt;td&gt;Claude Code、Codex CLI / App、Cursor、OpenCode、GitHub Copilot CLI、Gemini CLI&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;核心价值&lt;/td&gt;
+&lt;td&gt;给现有 Agent 补上更完整的软件开发流程&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;blockquote&gt;
+&lt;p&gt;说明：Stars、Forks、更新频率等属于动态数据，发布后可能变化，请以 GitHub 页面实时信息为准。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2&gt;解决什么问题&lt;span class="hx-absolute -hx-mt-20" id="解决什么问题"&gt;&lt;/span&gt;
+&lt;a href="#%e8%a7%a3%e5%86%b3%e4%bb%80%e4%b9%88%e9%97%ae%e9%a2%98" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;现在很多 Coding Agent 的问题不是“能力弱”，而是“过程容易飘”。&lt;/p&gt;
+&lt;p&gt;如果只是让它写几个函数、补一段脚本，这种问题还不明显；但一旦进入真实项目，问题会立刻放大。因为真实开发不是把代码写出来就结束，而是要经历需求确认、方案评估、任务拆解、实现、测试、复查、合并、收尾这一整条链路。&lt;/p&gt;
+&lt;p&gt;Superpowers 的思路，不是继续叠提示词，而是把软件开发里那些真正有价值的步骤做成一组可组合的 skills，再通过初始化指令把这些 skills 串起来，让 Agent 在不同阶段自动进入对应流程。&lt;/p&gt;
+&lt;p&gt;换句话说，它更像是在给 Coding Agent 补“工作方法”，而不是补“能力插件”。&lt;/p&gt;
+&lt;h2&gt;核心功能&lt;span class="hx-absolute -hx-mt-20" id="核心功能"&gt;&lt;/span&gt;
+&lt;a href="#%e6%a0%b8%e5%bf%83%e5%8a%9f%e8%83%bd" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;在具体展开之前，可以先看一下 Superpowers 想让 Coding Agent 走的一条典型开发路径：&lt;/p&gt;
+&lt;pre class="mermaid hx-mt-6"&gt;
+flowchart LR
+A[想法 / 需求] --&amp;gt; B[Brainstorming&amp;lt;br/&amp;gt;先把目标和边界聊清楚]
+B --&amp;gt; C[设计确认&amp;lt;br/&amp;gt;分段展示并确认方案]
+C --&amp;gt; D[Writing Plans&amp;lt;br/&amp;gt;拆成可执行的小任务]
+D --&amp;gt; E[Subagent Driven Development&amp;lt;br/&amp;gt;把任务交给子代理推进]
+E --&amp;gt; F[TDD + Code Review&amp;lt;br/&amp;gt;边实现边验证]
+F --&amp;gt; G[Finishing Branch&amp;lt;br/&amp;gt;验证、收尾、合并]
+&lt;/pre&gt;&lt;p&gt;这张图可以帮助快速理解它和普通“提示词包”的差别：Superpowers 想补的不是某一个单点能力，而是把需求澄清、计划拆解、执行、验证和收尾串成一条更完整的开发链路。&lt;/p&gt;
+&lt;h3&gt;1. 先把需求聊清楚，而不是上来就写代码&lt;span class="hx-absolute -hx-mt-20" id="1-先把需求聊清楚而不是上来就写代码"&gt;&lt;/span&gt;
+&lt;a href="#1-%e5%85%88%e6%8a%8a%e9%9c%80%e6%b1%82%e8%81%8a%e6%b8%85%e6%a5%9a%e8%80%8c%e4%b8%8d%e6%98%af%e4%b8%8a%e6%9d%a5%e5%b0%b1%e5%86%99%e4%bb%a3%e7%a0%81" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Superpowers 的第一步不是直接生成代码，而是先进入 brainstorming 流程。&lt;/p&gt;
+&lt;p&gt;这个流程会围绕你的想法继续追问，把目标、边界、方案和取舍逐步聊清楚，然后把设计结果分段展示给你确认。这样做的好处非常直接：避免 Agent 一开始就基于错误理解往下写，后面越写越偏。&lt;/p&gt;
+&lt;p&gt;对于真实项目来说，这一步的价值往往比“多生成几十行代码”更大。&lt;/p&gt;
+&lt;h3&gt;2. 先做计划，再做实现&lt;span class="hx-absolute -hx-mt-20" id="2-先做计划再做实现"&gt;&lt;/span&gt;
+&lt;a href="#2-%e5%85%88%e5%81%9a%e8%ae%a1%e5%88%92%e5%86%8d%e5%81%9a%e5%ae%9e%e7%8e%b0" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;当设计确认之后，Superpowers 会进入 writing-plans 流程，把接下来的工作拆成一批小任务。&lt;/p&gt;
+&lt;p&gt;这些任务不是“优化一下接口”“补一下前端”这种模糊描述，而是更偏可执行的工程任务，通常会包含：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;明确的目标；&lt;/li&gt;
+&lt;li&gt;具体要改哪些文件；&lt;/li&gt;
+&lt;li&gt;需要实现什么内容；&lt;/li&gt;
+&lt;li&gt;如何验证是否完成。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这种拆法的意义在于，后续无论是人继续做，还是交给子代理去做，执行成本都会低很多，也更容易保持上下文稳定。&lt;/p&gt;
+&lt;h3&gt;3. 把 TDD 变成默认流程&lt;span class="hx-absolute -hx-mt-20" id="3-把-tdd-变成默认流程"&gt;&lt;/span&gt;
+&lt;a href="#3-%e6%8a%8a-tdd-%e5%8f%98%e6%88%90%e9%bb%98%e8%ae%a4%e6%b5%81%e7%a8%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Superpowers 很强调 test-driven-development，也就是常说的 RED-GREEN-REFACTOR。&lt;/p&gt;
+&lt;p&gt;它的思路不是“有空再补测试”，而是要求：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;先写失败的测试；&lt;/li&gt;
+&lt;li&gt;先看到测试失败；&lt;/li&gt;
+&lt;li&gt;再写最小实现让测试通过；&lt;/li&gt;
+&lt;li&gt;最后重构整理。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这套要求对人来说并不新鲜，但放到 Coding Agent 场景下意义很大。因为很多 Agent 在没有约束时，天然会优先把“能跑的代码”写出来，而不是优先建立验证闭环。Superpowers 相当于给它加了一套明确的轨道，让实现更可控。&lt;/p&gt;
+&lt;h3&gt;4. 支持子代理协作，不只靠一个 Agent 硬扛&lt;span class="hx-absolute -hx-mt-20" id="4-支持子代理协作不只靠一个-agent-硬扛"&gt;&lt;/span&gt;
+&lt;a href="#4-%e6%94%af%e6%8c%81%e5%ad%90%e4%bb%a3%e7%90%86%e5%8d%8f%e4%bd%9c%e4%b8%8d%e5%8f%aa%e9%9d%a0%e4%b8%80%e4%b8%aa-agent-%e7%a1%ac%e6%89%9b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Superpowers 里一个很有代表性的部分是 subagent-driven-development。&lt;/p&gt;
+&lt;p&gt;它不是让一个 Agent 在超长上下文里一直干到最后，而是把任务交给新的子代理分段完成，并且在过程中加入两轮检查：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;先看是否符合规格；&lt;/li&gt;
+&lt;li&gt;再看代码质量是否过关。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这种方式更接近团队协作里的“执行 + review”，能减少上下文污染，也更适合较长链路的开发任务。对于复杂项目来说，这比单代理一路写到底更稳。&lt;/p&gt;
+&lt;h3&gt;5. 把代码评审和收尾也纳入流程&lt;span class="hx-absolute -hx-mt-20" id="5-把代码评审和收尾也纳入流程"&gt;&lt;/span&gt;
+&lt;a href="#5-%e6%8a%8a%e4%bb%a3%e7%a0%81%e8%af%84%e5%ae%a1%e5%92%8c%e6%94%b6%e5%b0%be%e4%b9%9f%e7%ba%b3%e5%85%a5%e6%b5%81%e7%a8%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;很多工具会把重点放在“生成”上，但真正做项目，最后的检查和收尾同样重要。&lt;/p&gt;
+&lt;p&gt;Superpowers 把 requesting-code-review、finishing-a-development-branch 这类技能也放进了流程里。也就是说，它不只是关心“代码写出来了没”，还会把下面这些环节补上：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;是否和原计划一致；&lt;/li&gt;
+&lt;li&gt;是否有严重问题阻断进度；&lt;/li&gt;
+&lt;li&gt;分支要继续保留、合并还是发 PR；&lt;/li&gt;
+&lt;li&gt;是否完成最终验证和清理。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这也是它和普通“提示词包”差别很大的地方：不是只管开始，而是把整个交付链路都考虑进去了。&lt;/p&gt;
+&lt;h2&gt;适合谁&lt;span class="hx-absolute -hx-mt-20" id="适合谁"&gt;&lt;/span&gt;
+&lt;a href="#%e9%80%82%e5%90%88%e8%b0%81" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;这个项目更适合下面这几类人：&lt;/p&gt;
+&lt;p&gt;第一类，是已经在日常开发里使用 Coding Agent 的工程师。如果你已经会把 Claude Code、Codex 或 Cursor 用在真实项目里，Superpowers 能帮你把“偶尔好用”变成“流程更稳定”。&lt;/p&gt;
+&lt;p&gt;第二类，是在团队里推动 AI 编程落地的人。很多团队最大的问题不是没人用 AI，而是每个人用法都不一样，结果不可复用。Superpowers 提供了一套更统一的工作方式，比较适合作为团队内部的约定参考。&lt;/p&gt;
+&lt;p&gt;第三类，是经常做中等复杂度项目的人。如果只是让 AI 写几个函数，这套流程可能显得稍微重一些；但一旦进入“要改多个文件、要做验证、要持续迭代”的项目场景，它的价值就会明显体现出来。&lt;/p&gt;
+&lt;h2&gt;快速上手&lt;span class="hx-absolute -hx-mt-20" id="快速上手"&gt;&lt;/span&gt;
+&lt;a href="#%e5%bf%ab%e9%80%9f%e4%b8%8a%e6%89%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Superpowers 的安装路径比较多，已经覆盖多个常见工具。&lt;/p&gt;
+&lt;p&gt;比如：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Claude Code 可以通过插件市场安装；&lt;/li&gt;
+&lt;li&gt;Codex CLI / App 可以在插件界面搜索安装；&lt;/li&gt;
+&lt;li&gt;Cursor 可以通过插件市场添加；&lt;/li&gt;
+&lt;li&gt;GitHub Copilot CLI、Gemini CLI 也都有对应安装方式。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;安装完成后，它的关键点不是多出一个单独命令，而是把一套 skills 注入到现有 Coding Agent 的工作流里。也就是说，你原来怎么和 Agent 协作，现在大体上还是怎么协作，只是它在处理开发任务时会更主动地按流程推进。&lt;/p&gt;
+&lt;p&gt;如果你想先快速理解这个项目，最值得先看两部分：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;README 里的 Basic Workflow；&lt;/li&gt;
+&lt;li&gt;skills 列表里和 brainstorming、writing-plans、test-driven-development、subagent-driven-development 相关的部分。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;看完这几项，基本就能理解 Superpowers 的核心设计思路。&lt;/p&gt;
+&lt;h2&gt;结论&lt;span class="hx-absolute -hx-mt-20" id="结论"&gt;&lt;/span&gt;
+&lt;a href="#%e7%bb%93%e8%ae%ba" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Superpowers 不是另一个 Coding Agent，而是一套给 Coding Agent 使用的 skills 框架和开发方法论。&lt;/p&gt;
+&lt;p&gt;它真正吸引人的地方，不在于“能多做一件事”，而在于“让已经会做事的 Agent，用更靠谱的流程去做事”。&lt;/p&gt;
+&lt;p&gt;如果你对 AI 编程的期待，已经从“帮我写点代码”升级到“帮我把项目稳定推进下去”，那这个项目很值得认真看一眼。&lt;/p&gt;</description></item><item><title>Paseo 是什么？一个用来远程管理 coding agent 的开源项目</title><link>https://silenceper.com/article/2026-04-14-paseo/</link><pubDate>Tue, 14 Apr 2026 00:00:00 +0800</pubDate><guid>https://silenceper.com/article/2026-04-14-paseo/</guid><description>
 &lt;p&gt;Paseo 不是新的大模型，也不是又一个“AI IDE”。如果非要给它找一个更准确的位置，我会觉得它更像是放在现有 coding agent 外面的一层管理与调度工具，用来把 Claude Code、Codex、OpenCode 这类东西统一起来，并且把使用场景从“只能坐在电脑前操作”，延伸到手机、桌面端、Web 和 CLI。&lt;/p&gt;
 &lt;h2&gt;Paseo 想解决什么问题&lt;span class="hx-absolute -hx-mt-20" id="paseo-想解决什么问题"&gt;&lt;/span&gt;
 &lt;a href="#paseo-%e6%83%b3%e8%a7%a3%e5%86%b3%e4%bb%80%e4%b9%88%e9%97%ae%e9%a2%98" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;如果你已经开始把 coding agent 放进日常工作流里，那你大概率会越来越熟悉一种状态：&lt;/p&gt;
@@ -78,10 +2011,7 @@
 &lt;li&gt;官网：https://paseo.sh&lt;/li&gt;
 &lt;li&gt;GitHub：https://github.com/getpaseo/paseo&lt;/li&gt;
 &lt;li&gt;Docs：https://paseo.sh/docs&lt;/li&gt;
-&lt;/ul&gt;
-&lt;blockquote&gt;
-&lt;p&gt;注：文中关于项目定位、支持对象和产品形态的描述，主要参考了 Paseo 官网首页、GitHub README 与第三方项目收录页中的公开介绍，并做了归纳整理。&lt;/p&gt;
-&lt;/blockquote&gt;</description></item><item><title>收集Vibe Coding 的AI工具集合</title><link>https://silenceper.com/blog/2026-01-08-awesome-ai-vibe-coding/</link><pubDate>Thu, 08 Jan 2026 00:00:00 +0800</pubDate><guid>https://silenceper.com/blog/2026-01-08-awesome-ai-vibe-coding/</guid><description>
+&lt;/ul&gt;</description></item><item><title>收集Vibe Coding 的AI工具集合</title><link>https://silenceper.com/blog/2026-01-08-awesome-ai-vibe-coding/</link><pubDate>Thu, 08 Jan 2026 00:00:00 +0800</pubDate><guid>https://silenceper.com/blog/2026-01-08-awesome-ai-vibe-coding/</guid><description>
 &lt;p&gt;日常开发中已经离不开AI工具，我创建了一个GitHub仓库，用于收集Vibe Coding 的AI工具集合，欢迎大家一起维护，目前收集的工具如下：&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://github.com/silenceper/awesome-ai-vibe-coding" target="_blank" rel="noopener"&gt;Vibe Coding AI Tools&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img src="https://silenceper.com/img/20260108/vibe-coding-ai-tools.png" alt="" loading="lazy" /&gt;&lt;/p&gt;</description></item><item><title>Windows-MCP：让AI直接操作你的Windows系统</title><link>https://silenceper.com/blog/2025-08-15-windows-mcp/</link><pubDate>Fri, 15 Aug 2025 00:00:00 +0000</pubDate><guid>https://silenceper.com/blog/2025-08-15-windows-mcp/</guid><description>
@@ -196,7 +2126,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
 &lt;button
 class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
-title="Copy code"
+title="复制代码"
 &gt;
 &lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
 &lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
@@ -215,7 +2145,7 @@ title="Copy code"
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; Windows-MCP&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
 &lt;button
 class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
-title="Copy code"
+title="复制代码"
 &gt;
 &lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
 &lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
@@ -229,7 +2159,7 @@ title="Copy code"
 &lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx @anthropic-ai/dxt pack&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
 &lt;button
 class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
-title="Copy code"
+title="复制代码"
 &gt;
 &lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
 &lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;

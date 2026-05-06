@@ -1,0 +1,113 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – Karpathy</title><link>https://silenceper.com/tags/karpathy/</link><description>Recent content in Karpathy on silenceper</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sun, 26 Apr 2026 00:44:55 +0800</lastBuildDate><atom:link href="https://silenceper.com/tags/karpathy/index.xml" rel="self" type="application/rss+xml"/><item><title>andrej-karpathy-skills：把 AI 编程助手调教得更稳一点</title><link>https://silenceper.com/article/2026-04-26-andrej-karpathy-skills/</link><pubDate>Sun, 26 Apr 2026 00:44:55 +0800</pubDate><guid>https://silenceper.com/article/2026-04-26-andrej-karpathy-skills/</guid><description>
+&lt;p&gt;一句话定位：&lt;strong&gt;&lt;code&gt;andrej-karpathy-skills&lt;/code&gt; 不是新的 AI 编程工具，而是一套把 Andrej Karpathy 对 LLM 编码常见问题的观察，整理成可直接放进 Claude Code、Cursor 或个人技能系统里的行为准则。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260425/andrej-karpathy-skills-cover-v2.jpg" alt="" loading="lazy" /&gt;&lt;/p&gt;
+&lt;h2&gt;基础信息卡片&lt;span class="hx-absolute -hx-mt-20" id="基础信息卡片"&gt;&lt;/span&gt;
+&lt;a href="#%e5%9f%ba%e7%a1%80%e4%bf%a1%e6%81%af%e5%8d%a1%e7%89%87" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;项目名称&lt;/strong&gt;：&lt;code&gt;forrestchang/andrej-karpathy-skills&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;项目地址&lt;/strong&gt;：https://github.com/forrestchang/andrej-karpathy-skills&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;项目定位&lt;/strong&gt;：用一份 &lt;code&gt;CLAUDE.md&lt;/code&gt; / 规则文件改善 AI 编程助手的协作方式&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;核心形式&lt;/strong&gt;：&lt;code&gt;CLAUDE.md&lt;/code&gt;、Claude Code 插件、Cursor rule、Skill 文件&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;开源协议&lt;/strong&gt;：MIT&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;默认分支&lt;/strong&gt;：&lt;code&gt;main&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;创建时间&lt;/strong&gt;：2026-01-27&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;最近活跃&lt;/strong&gt;：2026-04-25&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;热度参考&lt;/strong&gt;：86k+ Stars、8.2k+ Forks&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;解决什么问题&lt;span class="hx-absolute -hx-mt-20" id="解决什么问题"&gt;&lt;/span&gt;
+&lt;a href="#%e8%a7%a3%e5%86%b3%e4%bb%80%e4%b9%88%e9%97%ae%e9%a2%98" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;如果你经常让 AI 参与写代码，大概率已经碰到过几类典型问题：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;模型会默认替你做假设，没确认清楚就直接开始写。&lt;/li&gt;
+&lt;li&gt;一件本来很小的需求，最后被写成过度抽象、层层包装的大工程。&lt;/li&gt;
+&lt;li&gt;改一个点的时候，顺手把无关代码、注释、结构也改掉了，diff 越看越心慌。&lt;/li&gt;
+&lt;li&gt;用户说的是“修一下”“补一下”，模型却没有把任务转成可验证目标，最后只能靠人反复返工。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;这个项目的价值就在于，它不试图再造一个编码框架，而是直接约束 AI 助手的工作方式：先想清楚，再少改、精改，并且用能验证的目标去推进任务。&lt;/p&gt;
+&lt;h2&gt;核心功能&lt;span class="hx-absolute -hx-mt-20" id="核心功能"&gt;&lt;/span&gt;
+&lt;a href="#%e6%a0%b8%e5%bf%83%e5%8a%9f%e8%83%bd" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;1. 用四个原则约束 AI 的默认行为&lt;span class="hx-absolute -hx-mt-20" id="1-用四个原则约束-ai-的默认行为"&gt;&lt;/span&gt;
+&lt;a href="#1-%e7%94%a8%e5%9b%9b%e4%b8%aa%e5%8e%9f%e5%88%99%e7%ba%a6%e6%9d%9f-ai-%e7%9a%84%e9%bb%98%e8%ae%a4%e8%a1%8c%e4%b8%ba" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;项目把整套方法压缩成四条非常明确的原则：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;编码前思考&lt;/strong&gt;：不要默认假设，遇到歧义先澄清，把权衡说出来。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;简洁优先&lt;/strong&gt;：能简单解决就不要过度设计，不为没被要求的灵活性买单。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;精准修改&lt;/strong&gt;：只改和当前任务直接相关的内容，减少“顺手优化”的副作用。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;目标驱动执行&lt;/strong&gt;：把“去做某件事”改成可验证目标，比如先写测试，再迭代到通过。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这四条听起来像原则，但本质上是在减少 AI 写代码时最常见的失控点。&lt;/p&gt;
+&lt;h3&gt;2. 不只适用于 Claude Code，也照顾到不同使用场景&lt;span class="hx-absolute -hx-mt-20" id="2-不只适用于-claude-code也照顾到不同使用场景"&gt;&lt;/span&gt;
+&lt;a href="#2-%e4%b8%8d%e5%8f%aa%e9%80%82%e7%94%a8%e4%ba%8e-claude-code%e4%b9%9f%e7%85%a7%e9%a1%be%e5%88%b0%e4%b8%8d%e5%90%8c%e4%bd%bf%e7%94%a8%e5%9c%ba%e6%99%af" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;仓库不只是放了一份 &lt;code&gt;CLAUDE.md&lt;/code&gt;，还把同样的思路整理成了多种可落地形式：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Claude Code 插件安装方式&lt;/li&gt;
+&lt;li&gt;按项目落地的 &lt;code&gt;CLAUDE.md&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Cursor 可直接使用的 &lt;code&gt;.cursor/rules/karpathy-guidelines.mdc&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;可放进个人技能目录的 &lt;code&gt;SKILL.md&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;也就是说，它不是“看完就结束”的经验贴，而是尽量把原则做成了能直接复制、安装和复用的东西。&lt;/p&gt;
+&lt;h3&gt;3. 强调“让 AI 围绕成功标准工作”&lt;span class="hx-absolute -hx-mt-20" id="3-强调让-ai-围绕成功标准工作"&gt;&lt;/span&gt;
+&lt;a href="#3-%e5%bc%ba%e8%b0%83%e8%ae%a9-ai-%e5%9b%b4%e7%bb%95%e6%88%90%e5%8a%9f%e6%a0%87%e5%87%86%e5%b7%a5%e4%bd%9c" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;我觉得这个项目最值得看的点，不是四条原则本身，而是它对任务表达方式的强调：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;不要只说“修 bug”&lt;/li&gt;
+&lt;li&gt;不要只说“加校验”&lt;/li&gt;
+&lt;li&gt;不要只说“重构一下”&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;而是把这些话改成 AI 更容易闭环的目标，例如：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;先写一个能复现问题的测试&lt;/li&gt;
+&lt;li&gt;再修改实现&lt;/li&gt;
+&lt;li&gt;最后以测试通过作为结束条件&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这会明显降低“看起来做了很多，实际没有真正完成”的情况。&lt;/p&gt;
+&lt;h2&gt;适合谁&lt;span class="hx-absolute -hx-mt-20" id="适合谁"&gt;&lt;/span&gt;
+&lt;a href="#%e9%80%82%e5%90%88%e8%b0%81" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;这个项目比较适合下面几类人：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;经常使用 Claude Code、Cursor 或其他 AI 编程助手的开发者&lt;/li&gt;
+&lt;li&gt;已经被 AI 的“自作主张”“过度发挥”“过度工程”折腾过的人&lt;/li&gt;
+&lt;li&gt;想给团队沉淀一套统一协作规则，而不是每次都临时口头提醒的人&lt;/li&gt;
+&lt;li&gt;希望把 AI 从“会写代码”进一步拉到“更稳、更可控、更贴近真实工程协作”的人&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如果你已经有自己的项目规范，这个仓库也很适合当一个基础模板，再叠加你自己的技术栈要求。&lt;/p&gt;
+&lt;h2&gt;快速上手&lt;span class="hx-absolute -hx-mt-20" id="快速上手"&gt;&lt;/span&gt;
+&lt;a href="#%e5%bf%ab%e9%80%9f%e4%b8%8a%e6%89%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;项目给了几种很直接的接入方式。&lt;/p&gt;
+&lt;h3&gt;方式一：作为 Claude Code 插件安装&lt;span class="hx-absolute -hx-mt-20" id="方式一作为-claude-code-插件安装"&gt;&lt;/span&gt;
+&lt;a href="#%e6%96%b9%e5%bc%8f%e4%b8%80%e4%bd%9c%e4%b8%ba-claude-code-%e6%8f%92%e4%bb%b6%e5%ae%89%e8%a3%85" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;/plugin marketplace add forrestchang/andrej-karpathy-skills
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;/plugin install andrej-karpathy-skills@karpathy-skills&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;方式二：直接把 &lt;code&gt;CLAUDE.md&lt;/code&gt; 放进项目里&lt;span class="hx-absolute -hx-mt-20" id="方式二直接把-claudemd-放进项目里"&gt;&lt;/span&gt;
+&lt;a href="#%e6%96%b9%e5%bc%8f%e4%ba%8c%e7%9b%b4%e6%8e%a5%e6%8a%8a-claudemd-%e6%94%be%e8%bf%9b%e9%a1%b9%e7%9b%ae%e9%87%8c" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;新项目：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -o CLAUDE.md https://raw.githubusercontent.com/forrestchang/andrej-karpathy-skills/main/CLAUDE.md&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;已有项目追加：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;&amp;#34;&lt;/span&gt; &amp;gt;&amp;gt; CLAUDE.md
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl https://raw.githubusercontent.com/forrestchang/andrej-karpathy-skills/main/CLAUDE.md &amp;gt;&amp;gt; CLAUDE.md&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;方式三：在 Cursor 中使用同样规则&lt;span class="hx-absolute -hx-mt-20" id="方式三在-cursor-中使用同样规则"&gt;&lt;/span&gt;
+&lt;a href="#%e6%96%b9%e5%bc%8f%e4%b8%89%e5%9c%a8-cursor-%e4%b8%ad%e4%bd%bf%e7%94%a8%e5%90%8c%e6%a0%b7%e8%a7%84%e5%88%99" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;仓库已经提供 &lt;code&gt;.cursor/rules/karpathy-guidelines.mdc&lt;/code&gt;，把对应规则文件带进项目，就能把这套原则继续用在 Cursor 里。&lt;/p&gt;
+&lt;h2&gt;结论&lt;span class="hx-absolute -hx-mt-20" id="结论"&gt;&lt;/span&gt;
+&lt;a href="#%e7%bb%93%e8%ae%ba" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;code&gt;andrej-karpathy-skills&lt;/code&gt; 的亮点不在于“功能很多”，而在于它把 AI 编程里那些最容易踩坑的地方，整理成了一套足够简单、又能立刻落地的约束方式。&lt;/p&gt;
+&lt;p&gt;如果你已经在用 AI 写代码，这个项目值得看一遍；如果你已经被 AI 改坏过项目、写复杂过实现、或者因为没有明确验证目标而反复返工，那它的价值会更直接。&lt;/p&gt;
+&lt;p&gt;从定位上看，它更像一份高复用的协作说明书，而不是另一个新工具。但很多时候，真正缺的恰恰不是更多工具，而是一套更稳的工作方式。&lt;/p&gt;</description></item></channel></rss>

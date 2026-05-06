@@ -1,0 +1,317 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – 视频生成</title><link>https://silenceper.com/tags/%E8%A7%86%E9%A2%91%E7%94%9F%E6%88%90/</link><description>Recent content in 视频生成 on silenceper</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sat, 02 May 2026 10:39:18 +0800</lastBuildDate><atom:link href="https://silenceper.com/tags/%E8%A7%86%E9%A2%91%E7%94%9F%E6%88%90/index.xml" rel="self" type="application/rss+xml"/><item><title>HyperFrames：用 HTML 生成视频的开源渲染框架</title><link>https://silenceper.com/article/2026-05-02-hyperframes-html-video-rendering/</link><pubDate>Sat, 02 May 2026 10:39:18 +0800</pubDate><guid>https://silenceper.com/article/2026-05-02-hyperframes-html-video-rendering/</guid><description>
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260502/hyperframes-demo.gif" alt="HyperFrames demo" loading="lazy" /&gt;&lt;/p&gt;
+&lt;h2&gt;一句话定位&lt;span class="hx-absolute -hx-mt-20" id="一句话定位"&gt;&lt;/span&gt;
+&lt;a href="#%e4%b8%80%e5%8f%a5%e8%af%9d%e5%ae%9a%e4%bd%8d" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;HyperFrames 是 HeyGen 开源的 HTML 视频渲染框架：用写网页的方式定义视频画面、时间轴和动画，再通过浏览器预览并渲染成 MP4。&lt;/p&gt;
+&lt;h2&gt;基础信息卡片&lt;span class="hx-absolute -hx-mt-20" id="基础信息卡片"&gt;&lt;/span&gt;
+&lt;a href="#%e5%9f%ba%e7%a1%80%e4%bf%a1%e6%81%af%e5%8d%a1%e7%89%87" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;项目&lt;/th&gt;
+&lt;th&gt;信息&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;GitHub&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://github.com/heygen-com/hyperframes" target="_blank" rel="noopener"&gt;https://github.com/heygen-com/hyperframes&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;官方文档&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://hyperframes.heygen.com/introduction" target="_blank" rel="noopener"&gt;https://hyperframes.heygen.com/introduction&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;NPM 包&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;hyperframes&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;主要语言&lt;/td&gt;
+&lt;td&gt;TypeScript&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;开源协议&lt;/td&gt;
+&lt;td&gt;Apache-2.0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;当前版本&lt;/td&gt;
+&lt;td&gt;0.4.41&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;运行要求&lt;/td&gt;
+&lt;td&gt;Node.js &amp;gt;= 22、FFmpeg&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;项目定位&lt;/td&gt;
+&lt;td&gt;HTML-native、AI-first、deterministic video rendering&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2&gt;解决什么问题&lt;span class="hx-absolute -hx-mt-20" id="解决什么问题"&gt;&lt;/span&gt;
+&lt;a href="#%e8%a7%a3%e5%86%b3%e4%bb%80%e4%b9%88%e9%97%ae%e9%a2%98" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;做视频自动化时，常见路线大概有两种：一种是使用传统剪辑工具，适合人工制作，但不适合批量生成；另一种是使用代码化视频框架，适合自动化，但经常要求开发者进入特定组件体系或 DSL。&lt;/p&gt;
+&lt;p&gt;HyperFrames 选择了一条更贴近 Web 开发的路线：视频本身就是 HTML。&lt;/p&gt;
+&lt;p&gt;它把视频里的片段、字幕、图片、音频、时间点、轨道关系都放进 HTML 元素和 &lt;code&gt;data-*&lt;/code&gt; 属性里。你可以像写页面一样组织画面，用 CSS / GSAP / Lottie / Three.js 等熟悉的前端技术做动画，再用命令行把它渲染成 MP4。&lt;/p&gt;
+&lt;p&gt;这个思路对 AI Agent 也很友好。因为大模型本来就擅长生成 HTML、CSS 和简单脚本，HyperFrames 又提供了面向 Agent 的 skills / plugin / CLI 工作流，让 Agent 可以从“描述一个视频”一路做到“生成项目、预览、检查、渲染”。&lt;/p&gt;
+&lt;h2&gt;核心功能&lt;span class="hx-absolute -hx-mt-20" id="核心功能"&gt;&lt;/span&gt;
+&lt;a href="#%e6%a0%b8%e5%bf%83%e5%8a%9f%e8%83%bd" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;1. 用 HTML 描述视频结构&lt;span class="hx-absolute -hx-mt-20" id="1-用-html-描述视频结构"&gt;&lt;/span&gt;
+&lt;a href="#1-%e7%94%a8-html-%e6%8f%8f%e8%bf%b0%e8%a7%86%e9%a2%91%e7%bb%93%e6%9e%84" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;HyperFrames 的核心输入是一份 HTML。每个元素通过 &lt;code&gt;data-start&lt;/code&gt;、&lt;code&gt;data-duration&lt;/code&gt;、&lt;code&gt;data-track-index&lt;/code&gt; 等属性表达它在视频中的出现时间、持续时间和轨道位置。&lt;/p&gt;
+&lt;p&gt;一个简单的视频可以由视频素材、标题、图片、背景音乐这些普通 HTML 元素组成：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-html" data-lang="html"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;stage&amp;#34;&lt;/span&gt; &lt;span class="na"&gt;data-composition-id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;my-video&amp;#34;&lt;/span&gt; &lt;span class="na"&gt;data-start&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;0&amp;#34;&lt;/span&gt; &lt;span class="na"&gt;data-width&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;1920&amp;#34;&lt;/span&gt; &lt;span class="na"&gt;data-height&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;1080&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;video&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;clip-1&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;data-start&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;0&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;data-duration&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;5&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;data-track-index&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;0&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;intro.mp4&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;muted&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;playsinline&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;video&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;h1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;clip&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;data-start&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;1&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;data-duration&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;4&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;data-track-index&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;1&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Welcome to HyperFrames
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;h1&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;audio&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;data-start&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;0&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;data-duration&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;5&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;data-track-index&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;2&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;data-volume&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;0.5&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;music.wav&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;audio&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;这种设计的好处是门槛很低：不需要先学习一个全新的视频编辑格式，也不要求把所有内容改写成 React 组件。&lt;/p&gt;
+&lt;h3&gt;2. 浏览器预览，本地渲染成 MP4&lt;span class="hx-absolute -hx-mt-20" id="2-浏览器预览本地渲染成-mp4"&gt;&lt;/span&gt;
+&lt;a href="#2-%e6%b5%8f%e8%a7%88%e5%99%a8%e9%a2%84%e8%a7%88%e6%9c%ac%e5%9c%b0%e6%b8%b2%e6%9f%93%e6%88%90-mp4" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;HyperFrames 提供 CLI，可以直接初始化、预览和渲染项目：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx hyperframes init my-video
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; my-video
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx hyperframes preview
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx hyperframes render&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;预览阶段会在浏览器里实时查看效果；渲染阶段则通过 headless Chrome 逐帧捕获画面，并交给 FFmpeg 输出最终视频。官方文档强调的是确定性渲染：同样的输入应得到一致的输出，这对自动化流水线很重要。&lt;/p&gt;
+&lt;h3&gt;3. 面向 AI Agent 的工作流&lt;span class="hx-absolute -hx-mt-20" id="3-面向-ai-agent-的工作流"&gt;&lt;/span&gt;
+&lt;a href="#3-%e9%9d%a2%e5%90%91-ai-agent-%e7%9a%84%e5%b7%a5%e4%bd%9c%e6%b5%81" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;HyperFrames 不只是一个 CLI，还提供了面向 AI 编程工具的配套能力。项目 README 中推荐先安装 skills：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx skills add heygen-com/hyperframes&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;这些 skills 会教 Agent 如何写正确的 composition、GSAP 时间线、Tailwind v4 浏览器运行时样式，以及不同动画运行时的适配方式。&lt;/p&gt;
+&lt;p&gt;项目还提供了面向 Claude Code、Cursor、Codex、Gemini CLI 等工具的使用说明或插件入口。也就是说，它不是只把“AI 支持”当营销词，而是把 Agent 能不能无交互地初始化、lint、预览、渲染，作为框架设计的一部分。&lt;/p&gt;
+&lt;h3&gt;4. 支持多种动画与素材运行时&lt;span class="hx-absolute -hx-mt-20" id="4-支持多种动画与素材运行时"&gt;&lt;/span&gt;
+&lt;a href="#4-%e6%94%af%e6%8c%81%e5%a4%9a%e7%a7%8d%e5%8a%a8%e7%94%bb%e4%b8%8e%e7%b4%a0%e6%9d%90%e8%bf%90%e8%a1%8c%e6%97%b6" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;HyperFrames 使用 Frame Adapter 模式来接入动画运行时。你可以使用 GSAP、Lottie、CSS animation、Three.js、Web Animations API 等方式构建动画，只要它们能够按帧 seek，就可以被纳入确定性渲染流程。&lt;/p&gt;
+&lt;p&gt;这点对视频自动化很关键：视频不是简单录屏，而是要在指定帧上得到确定画面。HyperFrames 把“页面如何播放”和“渲染器如何按帧捕获”之间的关系抽象出来，让不同动画技术能进入同一条视频生成链路。&lt;/p&gt;
+&lt;h3&gt;5. 内置组件目录与多个子包&lt;span class="hx-absolute -hx-mt-20" id="5-内置组件目录与多个子包"&gt;&lt;/span&gt;
+&lt;a href="#5-%e5%86%85%e7%bd%ae%e7%bb%84%e4%bb%b6%e7%9b%ae%e5%bd%95%e4%b8%8e%e5%a4%9a%e4%b8%aa%e5%ad%90%e5%8c%85" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;项目提供了 50+ ready-to-use blocks and components，例如社交媒体覆盖层、shader transition、数据可视化、电影感效果等，可以通过命令添加：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx hyperframes add flash-through-white
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx hyperframes add instagram-follow
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx hyperframes add data-chart&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;从仓库结构看，它是一个 monorepo，主要包含：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;包&lt;/th&gt;
+&lt;th&gt;作用&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;hyperframes&lt;/code&gt; / &lt;code&gt;@hyperframes/cli&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;初始化、预览、lint、渲染的 CLI&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;@hyperframes/core&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;类型、解析器、生成器、linter、runtime、frame adapters&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;@hyperframes/engine&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;基于 Puppeteer + FFmpeg 的页面到视频渲染引擎&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;@hyperframes/producer&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;完整渲染流水线，包括捕获、编码和音频混合&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;@hyperframes/studio&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;浏览器端 composition editor UI&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;@hyperframes/player&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;可嵌入的 &lt;code&gt;&amp;lt;hyperframes-player&amp;gt;&lt;/code&gt; Web Component&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;@hyperframes/shader-transitions&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;用于 composition 的 WebGL shader transitions&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2&gt;官方视频示例&lt;span class="hx-absolute -hx-mt-20" id="官方视频示例"&gt;&lt;/span&gt;
+&lt;a href="#%e5%ae%98%e6%96%b9%e8%a7%86%e9%a2%91%e7%a4%ba%e4%be%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx hyperframes init my-video --example warm-grain&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;示例&lt;/th&gt;
+&lt;th&gt;类型&lt;/th&gt;
+&lt;th&gt;视频链接&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Warm Grain&lt;/td&gt;
+&lt;td&gt;品牌 / 生活方式&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://static.heygen.ai/hyperframes-oss/docs/images/templates/warm-grain.mp4" target="_blank" rel="noopener"&gt;https://static.heygen.ai/hyperframes-oss/docs/images/templates/warm-grain.mp4&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Play Mode&lt;/td&gt;
+&lt;td&gt;社交媒体 / 产品发布&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://static.heygen.ai/hyperframes-oss/docs/images/templates/play-mode.mp4" target="_blank" rel="noopener"&gt;https://static.heygen.ai/hyperframes-oss/docs/images/templates/play-mode.mp4&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Swiss Grid&lt;/td&gt;
+&lt;td&gt;企业 / 技术 / 数据&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://static.heygen.ai/hyperframes-oss/docs/images/templates/swiss-grid.mp4" target="_blank" rel="noopener"&gt;https://static.heygen.ai/hyperframes-oss/docs/images/templates/swiss-grid.mp4&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Kinetic Type&lt;/td&gt;
+&lt;td&gt;标题卡 / 宣传片&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://static.heygen.ai/hyperframes-oss/docs/images/templates/kinetic-type.mp4" target="_blank" rel="noopener"&gt;https://static.heygen.ai/hyperframes-oss/docs/images/templates/kinetic-type.mp4&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Decision Tree&lt;/td&gt;
+&lt;td&gt;解释型视频 / 教程&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://static.heygen.ai/hyperframes-oss/docs/images/templates/decision-tree.mp4" target="_blank" rel="noopener"&gt;https://static.heygen.ai/hyperframes-oss/docs/images/templates/decision-tree.mp4&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Product Promo&lt;/td&gt;
+&lt;td&gt;产品展示&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://static.heygen.ai/hyperframes-oss/docs/images/templates/product-promo.mp4" target="_blank" rel="noopener"&gt;https://static.heygen.ai/hyperframes-oss/docs/images/templates/product-promo.mp4&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;NYT Graph&lt;/td&gt;
+&lt;td&gt;数据故事 / 图表视频&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://static.heygen.ai/hyperframes-oss/docs/images/templates/nyt-graph.mp4" target="_blank" rel="noopener"&gt;https://static.heygen.ai/hyperframes-oss/docs/images/templates/nyt-graph.mp4&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Vignelli&lt;/td&gt;
+&lt;td&gt;竖屏标题 / 公告&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://static.heygen.ai/hyperframes-oss/docs/images/templates/vignelli.mp4" target="_blank" rel="noopener"&gt;https://static.heygen.ai/hyperframes-oss/docs/images/templates/vignelli.mp4&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2&gt;适合谁&lt;span class="hx-absolute -hx-mt-20" id="适合谁"&gt;&lt;/span&gt;
+&lt;a href="#%e9%80%82%e5%90%88%e8%b0%81" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;HyperFrames 比较适合这几类场景：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;熟悉前端技术、想用代码生成视频的开发者&lt;/strong&gt;&lt;br&gt;
+如果你会写 HTML、CSS、JS，理解它的成本会比较低。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;需要批量生成营销视频、教程视频、数据视频的团队&lt;/strong&gt;&lt;br&gt;
+例如把 CSV 变成动态图表、把产品文档变成短视频、把模板批量填充成不同版本的视频。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;正在搭建 AI Agent 内容生产流程的人&lt;/strong&gt;&lt;br&gt;
+它的 CLI、skills 和插件设计都偏向自动化，适合作为 Agent 生成视频的执行层。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;希望视频生成链路可复现、可集成到流水线的人&lt;/strong&gt;&lt;br&gt;
+相比人工剪辑工具，HyperFrames 更适合放进脚本、CI、Docker 或后端任务里运行。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;快速上手&lt;span class="hx-absolute -hx-mt-20" id="快速上手"&gt;&lt;/span&gt;
+&lt;a href="#%e5%bf%ab%e9%80%9f%e4%b8%8a%e6%89%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;如果想让 AI Agent 参与生成，官方推荐先安装 skills：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx skills add heygen-com/hyperframes&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;然后可以直接让 Agent 按 &lt;code&gt;/hyperframes&lt;/code&gt; 的上下文生成视频，例如：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Using /hyperframes, create a 10-second product intro with a fade-in title, a background video, and background music.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;如果想手动创建项目，可以走 CLI：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx hyperframes init my-video
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; my-video
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx hyperframes preview
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx hyperframes render --output output.mp4&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;本地需要准备：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Node.js &amp;gt;= 22&lt;/li&gt;
+&lt;li&gt;FFmpeg&lt;/li&gt;
+&lt;li&gt;可以运行 Chromium / Puppeteer 的环境&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;结论&lt;span class="hx-absolute -hx-mt-20" id="结论"&gt;&lt;/span&gt;
+&lt;a href="#%e7%bb%93%e8%ae%ba" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;HyperFrames 的核心价值不在于“又做了一个视频编辑器”，而在于它把视频生成问题重新拉回 Web 技术栈：HTML 负责结构，CSS 和动画库负责表现，浏览器负责渲染，FFmpeg 负责输出。&lt;/p&gt;
+&lt;p&gt;对于开发者来说，这意味着视频可以像页面一样被生成、版本管理和自动化；对于 AI Agent 来说，这意味着它有了一个更容易理解和操作的视频生成目标格式。&lt;/p&gt;
+&lt;p&gt;如果你正在做内容自动化、批量视频生成、数据视频，或者想让 AI Agent 从文本直接生成可渲染的视频项目，HyperFrames 是一个值得关注的开源项目。&lt;/p&gt;</description></item></channel></rss>

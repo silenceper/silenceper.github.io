@@ -1,4 +1,530 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – Agent</title><link>https://silenceper.com/tags/agent/</link><description>Recent content in Agent on silenceper</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 14 Apr 2026 00:00:00 +0800</lastBuildDate><atom:link href="https://silenceper.com/tags/agent/index.xml" rel="self" type="application/rss+xml"/><item><title>Paseo 是什么？一个用来远程管理 coding agent 的开源项目</title><link>https://silenceper.com/blog/2026-04-14-paseo/</link><pubDate>Tue, 14 Apr 2026 00:00:00 +0800</pubDate><guid>https://silenceper.com/blog/2026-04-14-paseo/</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – Agent</title><link>https://silenceper.com/tags/agent/</link><description>Recent content in Agent on silenceper</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sun, 26 Apr 2026 00:44:55 +0800</lastBuildDate><atom:link href="https://silenceper.com/tags/agent/index.xml" rel="self" type="application/rss+xml"/><item><title>andrej-karpathy-skills：把 AI 编程助手调教得更稳一点</title><link>https://silenceper.com/article/2026-04-26-andrej-karpathy-skills/</link><pubDate>Sun, 26 Apr 2026 00:44:55 +0800</pubDate><guid>https://silenceper.com/article/2026-04-26-andrej-karpathy-skills/</guid><description>
+&lt;p&gt;一句话定位：&lt;strong&gt;&lt;code&gt;andrej-karpathy-skills&lt;/code&gt; 不是新的 AI 编程工具，而是一套把 Andrej Karpathy 对 LLM 编码常见问题的观察，整理成可直接放进 Claude Code、Cursor 或个人技能系统里的行为准则。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260425/andrej-karpathy-skills-cover-v2.jpg" alt="" loading="lazy" /&gt;&lt;/p&gt;
+&lt;h2&gt;基础信息卡片&lt;span class="hx-absolute -hx-mt-20" id="基础信息卡片"&gt;&lt;/span&gt;
+&lt;a href="#%e5%9f%ba%e7%a1%80%e4%bf%a1%e6%81%af%e5%8d%a1%e7%89%87" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;项目名称&lt;/strong&gt;：&lt;code&gt;forrestchang/andrej-karpathy-skills&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;项目地址&lt;/strong&gt;：https://github.com/forrestchang/andrej-karpathy-skills&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;项目定位&lt;/strong&gt;：用一份 &lt;code&gt;CLAUDE.md&lt;/code&gt; / 规则文件改善 AI 编程助手的协作方式&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;核心形式&lt;/strong&gt;：&lt;code&gt;CLAUDE.md&lt;/code&gt;、Claude Code 插件、Cursor rule、Skill 文件&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;开源协议&lt;/strong&gt;：MIT&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;默认分支&lt;/strong&gt;：&lt;code&gt;main&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;创建时间&lt;/strong&gt;：2026-01-27&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;最近活跃&lt;/strong&gt;：2026-04-25&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;热度参考&lt;/strong&gt;：86k+ Stars、8.2k+ Forks&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;解决什么问题&lt;span class="hx-absolute -hx-mt-20" id="解决什么问题"&gt;&lt;/span&gt;
+&lt;a href="#%e8%a7%a3%e5%86%b3%e4%bb%80%e4%b9%88%e9%97%ae%e9%a2%98" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;如果你经常让 AI 参与写代码，大概率已经碰到过几类典型问题：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;模型会默认替你做假设，没确认清楚就直接开始写。&lt;/li&gt;
+&lt;li&gt;一件本来很小的需求，最后被写成过度抽象、层层包装的大工程。&lt;/li&gt;
+&lt;li&gt;改一个点的时候，顺手把无关代码、注释、结构也改掉了，diff 越看越心慌。&lt;/li&gt;
+&lt;li&gt;用户说的是“修一下”“补一下”，模型却没有把任务转成可验证目标，最后只能靠人反复返工。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;这个项目的价值就在于，它不试图再造一个编码框架，而是直接约束 AI 助手的工作方式：先想清楚，再少改、精改，并且用能验证的目标去推进任务。&lt;/p&gt;
+&lt;h2&gt;核心功能&lt;span class="hx-absolute -hx-mt-20" id="核心功能"&gt;&lt;/span&gt;
+&lt;a href="#%e6%a0%b8%e5%bf%83%e5%8a%9f%e8%83%bd" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;1. 用四个原则约束 AI 的默认行为&lt;span class="hx-absolute -hx-mt-20" id="1-用四个原则约束-ai-的默认行为"&gt;&lt;/span&gt;
+&lt;a href="#1-%e7%94%a8%e5%9b%9b%e4%b8%aa%e5%8e%9f%e5%88%99%e7%ba%a6%e6%9d%9f-ai-%e7%9a%84%e9%bb%98%e8%ae%a4%e8%a1%8c%e4%b8%ba" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;项目把整套方法压缩成四条非常明确的原则：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;编码前思考&lt;/strong&gt;：不要默认假设，遇到歧义先澄清，把权衡说出来。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;简洁优先&lt;/strong&gt;：能简单解决就不要过度设计，不为没被要求的灵活性买单。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;精准修改&lt;/strong&gt;：只改和当前任务直接相关的内容，减少“顺手优化”的副作用。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;目标驱动执行&lt;/strong&gt;：把“去做某件事”改成可验证目标，比如先写测试，再迭代到通过。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这四条听起来像原则，但本质上是在减少 AI 写代码时最常见的失控点。&lt;/p&gt;
+&lt;h3&gt;2. 不只适用于 Claude Code，也照顾到不同使用场景&lt;span class="hx-absolute -hx-mt-20" id="2-不只适用于-claude-code也照顾到不同使用场景"&gt;&lt;/span&gt;
+&lt;a href="#2-%e4%b8%8d%e5%8f%aa%e9%80%82%e7%94%a8%e4%ba%8e-claude-code%e4%b9%9f%e7%85%a7%e9%a1%be%e5%88%b0%e4%b8%8d%e5%90%8c%e4%bd%bf%e7%94%a8%e5%9c%ba%e6%99%af" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;仓库不只是放了一份 &lt;code&gt;CLAUDE.md&lt;/code&gt;，还把同样的思路整理成了多种可落地形式：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Claude Code 插件安装方式&lt;/li&gt;
+&lt;li&gt;按项目落地的 &lt;code&gt;CLAUDE.md&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Cursor 可直接使用的 &lt;code&gt;.cursor/rules/karpathy-guidelines.mdc&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;可放进个人技能目录的 &lt;code&gt;SKILL.md&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;也就是说，它不是“看完就结束”的经验贴，而是尽量把原则做成了能直接复制、安装和复用的东西。&lt;/p&gt;
+&lt;h3&gt;3. 强调“让 AI 围绕成功标准工作”&lt;span class="hx-absolute -hx-mt-20" id="3-强调让-ai-围绕成功标准工作"&gt;&lt;/span&gt;
+&lt;a href="#3-%e5%bc%ba%e8%b0%83%e8%ae%a9-ai-%e5%9b%b4%e7%bb%95%e6%88%90%e5%8a%9f%e6%a0%87%e5%87%86%e5%b7%a5%e4%bd%9c" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;我觉得这个项目最值得看的点，不是四条原则本身，而是它对任务表达方式的强调：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;不要只说“修 bug”&lt;/li&gt;
+&lt;li&gt;不要只说“加校验”&lt;/li&gt;
+&lt;li&gt;不要只说“重构一下”&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;而是把这些话改成 AI 更容易闭环的目标，例如：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;先写一个能复现问题的测试&lt;/li&gt;
+&lt;li&gt;再修改实现&lt;/li&gt;
+&lt;li&gt;最后以测试通过作为结束条件&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这会明显降低“看起来做了很多，实际没有真正完成”的情况。&lt;/p&gt;
+&lt;h2&gt;适合谁&lt;span class="hx-absolute -hx-mt-20" id="适合谁"&gt;&lt;/span&gt;
+&lt;a href="#%e9%80%82%e5%90%88%e8%b0%81" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;这个项目比较适合下面几类人：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;经常使用 Claude Code、Cursor 或其他 AI 编程助手的开发者&lt;/li&gt;
+&lt;li&gt;已经被 AI 的“自作主张”“过度发挥”“过度工程”折腾过的人&lt;/li&gt;
+&lt;li&gt;想给团队沉淀一套统一协作规则，而不是每次都临时口头提醒的人&lt;/li&gt;
+&lt;li&gt;希望把 AI 从“会写代码”进一步拉到“更稳、更可控、更贴近真实工程协作”的人&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如果你已经有自己的项目规范，这个仓库也很适合当一个基础模板，再叠加你自己的技术栈要求。&lt;/p&gt;
+&lt;h2&gt;快速上手&lt;span class="hx-absolute -hx-mt-20" id="快速上手"&gt;&lt;/span&gt;
+&lt;a href="#%e5%bf%ab%e9%80%9f%e4%b8%8a%e6%89%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;项目给了几种很直接的接入方式。&lt;/p&gt;
+&lt;h3&gt;方式一：作为 Claude Code 插件安装&lt;span class="hx-absolute -hx-mt-20" id="方式一作为-claude-code-插件安装"&gt;&lt;/span&gt;
+&lt;a href="#%e6%96%b9%e5%bc%8f%e4%b8%80%e4%bd%9c%e4%b8%ba-claude-code-%e6%8f%92%e4%bb%b6%e5%ae%89%e8%a3%85" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;/plugin marketplace add forrestchang/andrej-karpathy-skills
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;/plugin install andrej-karpathy-skills@karpathy-skills&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;方式二：直接把 &lt;code&gt;CLAUDE.md&lt;/code&gt; 放进项目里&lt;span class="hx-absolute -hx-mt-20" id="方式二直接把-claudemd-放进项目里"&gt;&lt;/span&gt;
+&lt;a href="#%e6%96%b9%e5%bc%8f%e4%ba%8c%e7%9b%b4%e6%8e%a5%e6%8a%8a-claudemd-%e6%94%be%e8%bf%9b%e9%a1%b9%e7%9b%ae%e9%87%8c" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;新项目：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -o CLAUDE.md https://raw.githubusercontent.com/forrestchang/andrej-karpathy-skills/main/CLAUDE.md&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;已有项目追加：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;&amp;#34;&lt;/span&gt; &amp;gt;&amp;gt; CLAUDE.md
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl https://raw.githubusercontent.com/forrestchang/andrej-karpathy-skills/main/CLAUDE.md &amp;gt;&amp;gt; CLAUDE.md&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;方式三：在 Cursor 中使用同样规则&lt;span class="hx-absolute -hx-mt-20" id="方式三在-cursor-中使用同样规则"&gt;&lt;/span&gt;
+&lt;a href="#%e6%96%b9%e5%bc%8f%e4%b8%89%e5%9c%a8-cursor-%e4%b8%ad%e4%bd%bf%e7%94%a8%e5%90%8c%e6%a0%b7%e8%a7%84%e5%88%99" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;仓库已经提供 &lt;code&gt;.cursor/rules/karpathy-guidelines.mdc&lt;/code&gt;，把对应规则文件带进项目，就能把这套原则继续用在 Cursor 里。&lt;/p&gt;
+&lt;h2&gt;结论&lt;span class="hx-absolute -hx-mt-20" id="结论"&gt;&lt;/span&gt;
+&lt;a href="#%e7%bb%93%e8%ae%ba" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;code&gt;andrej-karpathy-skills&lt;/code&gt; 的亮点不在于“功能很多”，而在于它把 AI 编程里那些最容易踩坑的地方，整理成了一套足够简单、又能立刻落地的约束方式。&lt;/p&gt;
+&lt;p&gt;如果你已经在用 AI 写代码，这个项目值得看一遍；如果你已经被 AI 改坏过项目、写复杂过实现、或者因为没有明确验证目标而反复返工，那它的价值会更直接。&lt;/p&gt;
+&lt;p&gt;从定位上看，它更像一份高复用的协作说明书，而不是另一个新工具。但很多时候，真正缺的恰恰不是更多工具，而是一套更稳的工作方式。&lt;/p&gt;</description></item><item><title>Superpowers：给 Claude Code、Codex、Cursor 装上一套更靠谱的开发方法论</title><link>https://silenceper.com/article/2026-04-18-superpowers-skills-framework/</link><pubDate>Sat, 18 Apr 2026 23:55:00 +0800</pubDate><guid>https://silenceper.com/article/2026-04-18-superpowers-skills-framework/</guid><description>
+&lt;p&gt;如果你已经开始把 Claude Code、Codex、Cursor 这类 Coding Agent 放进日常开发流程里，应该很容易碰到一个共同问题：它们会写代码，但不一定总能按一个稳定、可复用、可验证的方式把项目往前推进。&lt;/p&gt;
+&lt;p&gt;很多时候，真正让人头疼的并不是“它写不出来”，而是：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;需求还没聊清楚，它就先开工了；&lt;/li&gt;
+&lt;li&gt;方案还没定下来，代码已经改了一半；&lt;/li&gt;
+&lt;li&gt;任务拆得不够细，执行过程里来回返工；&lt;/li&gt;
+&lt;li&gt;测试和验证经常被放到最后，甚至被跳过；&lt;/li&gt;
+&lt;li&gt;一个阶段做完了，但缺少 review 和收尾动作。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Superpowers 想补的，就是这部分能力。&lt;/p&gt;
+&lt;p&gt;它不是新的大模型，也不是新的 AI IDE，而是一套面向 Coding Agent 的 skills 框架和软件开发方法论。简单理解，它更像是给已有 Agent 装上一套“先澄清需求、再拆计划、按 TDD 实现、过程中复查、最后收尾”的工作系统，让 AI 不只是会写代码，而是更像一个更有流程意识的工程助手。&lt;/p&gt;
+&lt;h2&gt;一句话定位&lt;span class="hx-absolute -hx-mt-20" id="一句话定位"&gt;&lt;/span&gt;
+&lt;a href="#%e4%b8%80%e5%8f%a5%e8%af%9d%e5%ae%9a%e4%bd%8d" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Superpowers 是一套给 Coding Agent 使用的 skills 框架，通过把需求澄清、方案设计、任务拆解、测试驱动开发、代码评审和分支收尾串成标准流程，让 AI 编程从“会写代码”变成“会按工程流程做项目”。&lt;/p&gt;
+&lt;h2&gt;基础信息卡片&lt;span class="hx-absolute -hx-mt-20" id="基础信息卡片"&gt;&lt;/span&gt;
+&lt;a href="#%e5%9f%ba%e7%a1%80%e4%bf%a1%e6%81%af%e5%8d%a1%e7%89%87" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;字段&lt;/th&gt;
+&lt;th&gt;内容&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;项目名&lt;/td&gt;
+&lt;td&gt;Superpowers&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;仓库&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://github.com/obra/superpowers" target="_blank" rel="noopener"&gt;https://github.com/obra/superpowers&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;作者 / 团队&lt;/td&gt;
+&lt;td&gt;Jesse Vincent / Prime Radiant&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;License&lt;/td&gt;
+&lt;td&gt;MIT&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;类型&lt;/td&gt;
+&lt;td&gt;Coding Agent 的 skills framework + software development methodology&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;支持对象&lt;/td&gt;
+&lt;td&gt;Claude Code、Codex CLI / App、Cursor、OpenCode、GitHub Copilot CLI、Gemini CLI&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;核心价值&lt;/td&gt;
+&lt;td&gt;给现有 Agent 补上更完整的软件开发流程&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;blockquote&gt;
+&lt;p&gt;说明：Stars、Forks、更新频率等属于动态数据，发布后可能变化，请以 GitHub 页面实时信息为准。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2&gt;解决什么问题&lt;span class="hx-absolute -hx-mt-20" id="解决什么问题"&gt;&lt;/span&gt;
+&lt;a href="#%e8%a7%a3%e5%86%b3%e4%bb%80%e4%b9%88%e9%97%ae%e9%a2%98" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;现在很多 Coding Agent 的问题不是“能力弱”，而是“过程容易飘”。&lt;/p&gt;
+&lt;p&gt;如果只是让它写几个函数、补一段脚本，这种问题还不明显；但一旦进入真实项目，问题会立刻放大。因为真实开发不是把代码写出来就结束，而是要经历需求确认、方案评估、任务拆解、实现、测试、复查、合并、收尾这一整条链路。&lt;/p&gt;
+&lt;p&gt;Superpowers 的思路，不是继续叠提示词，而是把软件开发里那些真正有价值的步骤做成一组可组合的 skills，再通过初始化指令把这些 skills 串起来，让 Agent 在不同阶段自动进入对应流程。&lt;/p&gt;
+&lt;p&gt;换句话说，它更像是在给 Coding Agent 补“工作方法”，而不是补“能力插件”。&lt;/p&gt;
+&lt;h2&gt;核心功能&lt;span class="hx-absolute -hx-mt-20" id="核心功能"&gt;&lt;/span&gt;
+&lt;a href="#%e6%a0%b8%e5%bf%83%e5%8a%9f%e8%83%bd" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;在具体展开之前，可以先看一下 Superpowers 想让 Coding Agent 走的一条典型开发路径：&lt;/p&gt;
+&lt;pre class="mermaid hx-mt-6"&gt;
+flowchart LR
+A[想法 / 需求] --&amp;gt; B[Brainstorming&amp;lt;br/&amp;gt;先把目标和边界聊清楚]
+B --&amp;gt; C[设计确认&amp;lt;br/&amp;gt;分段展示并确认方案]
+C --&amp;gt; D[Writing Plans&amp;lt;br/&amp;gt;拆成可执行的小任务]
+D --&amp;gt; E[Subagent Driven Development&amp;lt;br/&amp;gt;把任务交给子代理推进]
+E --&amp;gt; F[TDD + Code Review&amp;lt;br/&amp;gt;边实现边验证]
+F --&amp;gt; G[Finishing Branch&amp;lt;br/&amp;gt;验证、收尾、合并]
+&lt;/pre&gt;&lt;p&gt;这张图可以帮助快速理解它和普通“提示词包”的差别：Superpowers 想补的不是某一个单点能力，而是把需求澄清、计划拆解、执行、验证和收尾串成一条更完整的开发链路。&lt;/p&gt;
+&lt;h3&gt;1. 先把需求聊清楚，而不是上来就写代码&lt;span class="hx-absolute -hx-mt-20" id="1-先把需求聊清楚而不是上来就写代码"&gt;&lt;/span&gt;
+&lt;a href="#1-%e5%85%88%e6%8a%8a%e9%9c%80%e6%b1%82%e8%81%8a%e6%b8%85%e6%a5%9a%e8%80%8c%e4%b8%8d%e6%98%af%e4%b8%8a%e6%9d%a5%e5%b0%b1%e5%86%99%e4%bb%a3%e7%a0%81" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Superpowers 的第一步不是直接生成代码，而是先进入 brainstorming 流程。&lt;/p&gt;
+&lt;p&gt;这个流程会围绕你的想法继续追问，把目标、边界、方案和取舍逐步聊清楚，然后把设计结果分段展示给你确认。这样做的好处非常直接：避免 Agent 一开始就基于错误理解往下写，后面越写越偏。&lt;/p&gt;
+&lt;p&gt;对于真实项目来说，这一步的价值往往比“多生成几十行代码”更大。&lt;/p&gt;
+&lt;h3&gt;2. 先做计划，再做实现&lt;span class="hx-absolute -hx-mt-20" id="2-先做计划再做实现"&gt;&lt;/span&gt;
+&lt;a href="#2-%e5%85%88%e5%81%9a%e8%ae%a1%e5%88%92%e5%86%8d%e5%81%9a%e5%ae%9e%e7%8e%b0" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;当设计确认之后，Superpowers 会进入 writing-plans 流程，把接下来的工作拆成一批小任务。&lt;/p&gt;
+&lt;p&gt;这些任务不是“优化一下接口”“补一下前端”这种模糊描述，而是更偏可执行的工程任务，通常会包含：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;明确的目标；&lt;/li&gt;
+&lt;li&gt;具体要改哪些文件；&lt;/li&gt;
+&lt;li&gt;需要实现什么内容；&lt;/li&gt;
+&lt;li&gt;如何验证是否完成。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这种拆法的意义在于，后续无论是人继续做，还是交给子代理去做，执行成本都会低很多，也更容易保持上下文稳定。&lt;/p&gt;
+&lt;h3&gt;3. 把 TDD 变成默认流程&lt;span class="hx-absolute -hx-mt-20" id="3-把-tdd-变成默认流程"&gt;&lt;/span&gt;
+&lt;a href="#3-%e6%8a%8a-tdd-%e5%8f%98%e6%88%90%e9%bb%98%e8%ae%a4%e6%b5%81%e7%a8%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Superpowers 很强调 test-driven-development，也就是常说的 RED-GREEN-REFACTOR。&lt;/p&gt;
+&lt;p&gt;它的思路不是“有空再补测试”，而是要求：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;先写失败的测试；&lt;/li&gt;
+&lt;li&gt;先看到测试失败；&lt;/li&gt;
+&lt;li&gt;再写最小实现让测试通过；&lt;/li&gt;
+&lt;li&gt;最后重构整理。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这套要求对人来说并不新鲜，但放到 Coding Agent 场景下意义很大。因为很多 Agent 在没有约束时，天然会优先把“能跑的代码”写出来，而不是优先建立验证闭环。Superpowers 相当于给它加了一套明确的轨道，让实现更可控。&lt;/p&gt;
+&lt;h3&gt;4. 支持子代理协作，不只靠一个 Agent 硬扛&lt;span class="hx-absolute -hx-mt-20" id="4-支持子代理协作不只靠一个-agent-硬扛"&gt;&lt;/span&gt;
+&lt;a href="#4-%e6%94%af%e6%8c%81%e5%ad%90%e4%bb%a3%e7%90%86%e5%8d%8f%e4%bd%9c%e4%b8%8d%e5%8f%aa%e9%9d%a0%e4%b8%80%e4%b8%aa-agent-%e7%a1%ac%e6%89%9b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Superpowers 里一个很有代表性的部分是 subagent-driven-development。&lt;/p&gt;
+&lt;p&gt;它不是让一个 Agent 在超长上下文里一直干到最后，而是把任务交给新的子代理分段完成，并且在过程中加入两轮检查：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;先看是否符合规格；&lt;/li&gt;
+&lt;li&gt;再看代码质量是否过关。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这种方式更接近团队协作里的“执行 + review”，能减少上下文污染，也更适合较长链路的开发任务。对于复杂项目来说，这比单代理一路写到底更稳。&lt;/p&gt;
+&lt;h3&gt;5. 把代码评审和收尾也纳入流程&lt;span class="hx-absolute -hx-mt-20" id="5-把代码评审和收尾也纳入流程"&gt;&lt;/span&gt;
+&lt;a href="#5-%e6%8a%8a%e4%bb%a3%e7%a0%81%e8%af%84%e5%ae%a1%e5%92%8c%e6%94%b6%e5%b0%be%e4%b9%9f%e7%ba%b3%e5%85%a5%e6%b5%81%e7%a8%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;很多工具会把重点放在“生成”上，但真正做项目，最后的检查和收尾同样重要。&lt;/p&gt;
+&lt;p&gt;Superpowers 把 requesting-code-review、finishing-a-development-branch 这类技能也放进了流程里。也就是说，它不只是关心“代码写出来了没”，还会把下面这些环节补上：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;是否和原计划一致；&lt;/li&gt;
+&lt;li&gt;是否有严重问题阻断进度；&lt;/li&gt;
+&lt;li&gt;分支要继续保留、合并还是发 PR；&lt;/li&gt;
+&lt;li&gt;是否完成最终验证和清理。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这也是它和普通“提示词包”差别很大的地方：不是只管开始，而是把整个交付链路都考虑进去了。&lt;/p&gt;
+&lt;h2&gt;适合谁&lt;span class="hx-absolute -hx-mt-20" id="适合谁"&gt;&lt;/span&gt;
+&lt;a href="#%e9%80%82%e5%90%88%e8%b0%81" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;这个项目更适合下面这几类人：&lt;/p&gt;
+&lt;p&gt;第一类，是已经在日常开发里使用 Coding Agent 的工程师。如果你已经会把 Claude Code、Codex 或 Cursor 用在真实项目里，Superpowers 能帮你把“偶尔好用”变成“流程更稳定”。&lt;/p&gt;
+&lt;p&gt;第二类，是在团队里推动 AI 编程落地的人。很多团队最大的问题不是没人用 AI，而是每个人用法都不一样，结果不可复用。Superpowers 提供了一套更统一的工作方式，比较适合作为团队内部的约定参考。&lt;/p&gt;
+&lt;p&gt;第三类，是经常做中等复杂度项目的人。如果只是让 AI 写几个函数，这套流程可能显得稍微重一些；但一旦进入“要改多个文件、要做验证、要持续迭代”的项目场景，它的价值就会明显体现出来。&lt;/p&gt;
+&lt;h2&gt;快速上手&lt;span class="hx-absolute -hx-mt-20" id="快速上手"&gt;&lt;/span&gt;
+&lt;a href="#%e5%bf%ab%e9%80%9f%e4%b8%8a%e6%89%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Superpowers 的安装路径比较多，已经覆盖多个常见工具。&lt;/p&gt;
+&lt;p&gt;比如：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Claude Code 可以通过插件市场安装；&lt;/li&gt;
+&lt;li&gt;Codex CLI / App 可以在插件界面搜索安装；&lt;/li&gt;
+&lt;li&gt;Cursor 可以通过插件市场添加；&lt;/li&gt;
+&lt;li&gt;GitHub Copilot CLI、Gemini CLI 也都有对应安装方式。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;安装完成后，它的关键点不是多出一个单独命令，而是把一套 skills 注入到现有 Coding Agent 的工作流里。也就是说，你原来怎么和 Agent 协作，现在大体上还是怎么协作，只是它在处理开发任务时会更主动地按流程推进。&lt;/p&gt;
+&lt;p&gt;如果你想先快速理解这个项目，最值得先看两部分：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;README 里的 Basic Workflow；&lt;/li&gt;
+&lt;li&gt;skills 列表里和 brainstorming、writing-plans、test-driven-development、subagent-driven-development 相关的部分。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;看完这几项，基本就能理解 Superpowers 的核心设计思路。&lt;/p&gt;
+&lt;h2&gt;结论&lt;span class="hx-absolute -hx-mt-20" id="结论"&gt;&lt;/span&gt;
+&lt;a href="#%e7%bb%93%e8%ae%ba" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Superpowers 不是另一个 Coding Agent，而是一套给 Coding Agent 使用的 skills 框架和开发方法论。&lt;/p&gt;
+&lt;p&gt;它真正吸引人的地方，不在于“能多做一件事”，而在于“让已经会做事的 Agent，用更靠谱的流程去做事”。&lt;/p&gt;
+&lt;p&gt;如果你对 AI 编程的期待，已经从“帮我写点代码”升级到“帮我把项目稳定推进下去”，那这个项目很值得认真看一眼。&lt;/p&gt;</description></item><item><title>从 OpenClaw 到 Hermes Agent：为什么我觉得它更懂你</title><link>https://silenceper.com/blog/2026-04-15-openclaw-to-hermes-agent/</link><pubDate>Wed, 15 Apr 2026 08:25:09 +0800</pubDate><guid>https://silenceper.com/blog/2026-04-15-openclaw-to-hermes-agent/</guid><description>
+&lt;p&gt;这两天我把日常在用的 Agent，慢慢从 OpenClaw 切到了 Hermes Agent。&lt;/p&gt;
+&lt;p&gt;一开始我其实没有抱太高预期。因为这类 Agent 产品，最容易出现的情况就是：第一次上手很惊艳，但真正多用几轮之后，你会发现它们更像“会执行命令的聊天工具”。单次对话里看起来很聪明，但一旦上下文断开，很多东西就又回到了起点。你得重新交代偏好，重新说明习惯，重新告诉它哪些事情能做、哪些事情不要做。&lt;/p&gt;
+&lt;p&gt;但在实际用了 Hermes 一天之后，我对它的印象确实和一开始不太一样。&lt;/p&gt;
+&lt;p&gt;最直观的一点是，它不像一种“用完就走”的 Agent。相比我之前使用 OpenClaw 的感受，Hermes 更像是会持续积累上下文的助手。它不仅能记住一些长期偏好，还会把一些稳定的工作习惯、发布规则、表达方式、甚至你纠正过它的点，逐步沉淀下来。用得越久，这种差异会越明显。&lt;/p&gt;
+&lt;p&gt;简单说一句我的体会：目前体验下来，Hermes 确实比 OpenClaw 更“懂你”。&lt;/p&gt;
+&lt;p&gt;这篇文章我不打算写成功能罗列，而是结合我自己的上手过程，讲清楚三件事：&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260415/hermes-agent-banner.png" alt="" loading="lazy" /&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Hermes Agent 怎么安装&lt;/li&gt;
+&lt;li&gt;装完之后怎么配置，尤其是怎么把 Telegram 这一条链路跑通&lt;/li&gt;
+&lt;li&gt;为什么从长期使用体验看，Hermes 会比 OpenClaw 更容易形成“更懂你”的感觉&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;一、Hermes Agent 到底是什么&lt;span class="hx-absolute -hx-mt-20" id="一hermes-agent-到底是什么"&gt;&lt;/span&gt;
+&lt;a href="#%e4%b8%80hermes-agent-%e5%88%b0%e5%ba%95%e6%98%af%e4%bb%80%e4%b9%88" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Hermes Agent 是 Nous Research 开源的一个通用 Agent 框架。它可以跑在终端里，也可以挂在 Telegram、Discord、Slack、WhatsApp、Signal 等消息平台上。你可以把它理解成一个“既能聊天，也能真正调用工具做事”的长期在线助手。&lt;/p&gt;
+&lt;p&gt;它和普通聊天机器人最大的区别，不只是能不能调用 shell、文件系统或者浏览器，而是它本身带了一套比较完整的长期能力：&lt;/p&gt;
+&lt;p&gt;一是持久化记忆。它会把你是谁、你偏好的沟通方式、你环境里的固定约束、你反复强调过的规则，拆分成用户画像和系统记忆，跨会话保留下来。&lt;/p&gt;
+&lt;p&gt;二是技能。不是每次都从零开始，而是可以把做成过的复杂流程沉淀成 skill，下次遇到类似任务时直接复用。&lt;/p&gt;
+&lt;p&gt;三是会话检索。以前聊过什么、做过什么、怎么修过某个问题，它能搜索历史会话，不需要你每次都从头复述背景。&lt;/p&gt;
+&lt;p&gt;所以它更像一个“越用越贴合你”的 Agent，而不是一次性工具。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260415/hermes-agent-session-recap.svg" alt="" loading="lazy" /&gt;&lt;/p&gt;
+&lt;h2&gt;二、怎么安装 Hermes Agent&lt;span class="hx-absolute -hx-mt-20" id="二怎么安装-hermes-agent"&gt;&lt;/span&gt;
+&lt;a href="#%e4%ba%8c%e6%80%8e%e4%b9%88%e5%ae%89%e8%a3%85-hermes-agent" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Hermes 官方给出的安装方式很直接，Linux、macOS、WSL2 都可以直接走安装脚本。&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -fsSL https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh &lt;span class="p"&gt;|&lt;/span&gt; bash&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;安装完成后，一般重新加载一下 shell：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;source&lt;/span&gt; ~/.bashrc&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;然后直接运行：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;hermes&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;如果只是想先快速看看它能不能跑起来，这一步就够了。&lt;/p&gt;
+&lt;p&gt;官方仓库里给出的常用入口也比较清晰：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;hermes
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;hermes model
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;hermes tools
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;hermes setup
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;hermes gateway
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;hermes claw migrate
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;hermes doctor&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260415/hermes-agent-cli-layout.svg" alt="" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;其中我建议第一次安装完，别急着自己手填配置，先跑一遍：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;hermes setup&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;这个 setup 会比你手改配置省事很多。尤其是你后面还要接 Telegram，或者准备从 OpenClaw 迁移过来，这一步可以少踩不少坑。&lt;/p&gt;
+&lt;h2&gt;三、Hermes 的配置文件大概长什么样&lt;span class="hx-absolute -hx-mt-20" id="三hermes-的配置文件大概长什么样"&gt;&lt;/span&gt;
+&lt;a href="#%e4%b8%89hermes-%e7%9a%84%e9%85%8d%e7%bd%ae%e6%96%87%e4%bb%b6%e5%a4%a7%e6%a6%82%e9%95%bf%e4%bb%80%e4%b9%88%e6%a0%b7" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Hermes 的核心配置主要在两个地方：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;~/.hermes/config.yaml&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;~/.hermes/.env&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;前者更偏“设置”，比如模型、工具、显示、memory、delegation 这些；后者更偏“密钥和环境变量”，比如各平台 token、API key、allowed users 等。&lt;/p&gt;
+&lt;p&gt;这点和很多项目一样，建议你也延续这个习惯：配置归配置，密钥归密钥。不要把 token、bot secret 之类的内容直接混到 &lt;code&gt;config.yaml&lt;/code&gt; 里。&lt;/p&gt;
+&lt;p&gt;日常最常用的几个命令是：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;hermes config edit
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;hermes config &lt;span class="nb"&gt;set&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;hermes model
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;hermes tools
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;hermes doctor&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;如果只是先用 CLI，其实配好模型就能开始了。但如果你希望它在消息平台上长期在线，那接下来就该配置 gateway。&lt;/p&gt;
+&lt;h2&gt;四、怎么接入 Telegram&lt;span class="hx-absolute -hx-mt-20" id="四怎么接入-telegram"&gt;&lt;/span&gt;
+&lt;a href="#%e5%9b%9b%e6%80%8e%e4%b9%88%e6%8e%a5%e5%85%a5-telegram" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;如果你只是想先把 Hermes 挂到一个最稳定、最容易用的平台上，我会推荐先接 Telegram。&lt;/p&gt;
+&lt;p&gt;原因很简单：配置链路短，生态成熟，BotFather 的体验也相对稳定，而且 Hermes 对 Telegram 的支持已经比较完整。&lt;/p&gt;
+&lt;p&gt;这一节不追求把所有参数讲全，而是先把 Telegram 消息收发链路跑通。等你确认这条链路稳定后，再回头补更细的策略配置，会更省时间。&lt;/p&gt;
+&lt;h3&gt;1. 前置条件&lt;span class="hx-absolute -hx-mt-20" id="1-前置条件"&gt;&lt;/span&gt;
+&lt;a href="#1-%e5%89%8d%e7%bd%ae%e6%9d%a1%e4%bb%b6" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;在开始之前，最好先确认下面几件事：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;你已经能在本机或服务器上正常运行 &lt;code&gt;hermes&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;模型已经配置完成，CLI 模式下可以正常对话&lt;/li&gt;
+&lt;li&gt;你已经通过 BotFather 创建好 Telegram Bot&lt;/li&gt;
+&lt;li&gt;你知道自己的 Telegram 用户 ID，或者至少知道后面要限制哪些用户可以访问&lt;/li&gt;
+&lt;li&gt;你准备让 Hermes 长期在线，而不是只在当前终端里临时跑一下&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如果前面这些还没准备好，不建议一上来就折腾 Telegram 端，不然很容易把“模型问题”和“消息平台问题”混在一起排错。&lt;/p&gt;
+&lt;h3&gt;2. 最小可用配置&lt;span class="hx-absolute -hx-mt-20" id="2-最小可用配置"&gt;&lt;/span&gt;
+&lt;a href="#2-%e6%9c%80%e5%b0%8f%e5%8f%af%e7%94%a8%e9%85%8d%e7%bd%ae" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Hermes 这边 Telegram 的核心环境变量主要有这些：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;TELEGRAM_BOT_TOKEN&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;TELEGRAM_ALLOWED_USERS&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;TELEGRAM_HOME_CHANNEL&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;TELEGRAM_HOME_CHANNEL_NAME&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;TELEGRAM_REPLY_TO_MODE&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如果你只想先跑通，先关注下面几个配置项就够了：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;TELEGRAM_BOT_TOKEN&lt;/code&gt;：这是入口。这个 token 去找 BotFather 创建机器人就能拿到，没有它就不可能接通 Telegram。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;TELEGRAM_ALLOWED_USERS&lt;/code&gt;：非常建议一开始就配上。对于一个能调用终端、文件和各种工具的 Agent 来说，访问边界最好默认收紧，不要等跑通之后再补安全限制。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;TELEGRAM_HOME_CHANNEL&lt;/code&gt;：这是给定时任务和默认投递用的。如果你后面想让 Hermes 发日报、巡检结果或者定时提醒，这个配置会直接决定它往哪里送消息。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;TELEGRAM_REPLY_TO_MODE&lt;/code&gt;：影响的是回复体验。如果你在群聊里使用，或者你很在意消息线程关系，这个参数会明显影响观感。第一次配置时保守一点，用 &lt;code&gt;first&lt;/code&gt; 就够了。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;3. 启动与验证&lt;span class="hx-absolute -hx-mt-20" id="3-启动与验证"&gt;&lt;/span&gt;
+&lt;a href="#3-%e5%90%af%e5%8a%a8%e4%b8%8e%e9%aa%8c%e8%af%81" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;配完环境变量之后，先直接启动 gateway：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;hermes gateway run&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;如果你后面准备长期后台运行，也可以继续接：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;hermes gateway install
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;hermes gateway start&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;验证时我更推荐用最简单的“三步法”：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;看启动日志里有没有明显报错&lt;/li&gt;
+&lt;li&gt;在 Telegram 里给 Bot 发一条简单消息，比如“你好”&lt;/li&gt;
+&lt;li&gt;看 Hermes 是否能返回一条正常回复&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;只要这三步能闭环，基本就说明消息链路已经打通了。&lt;/p&gt;
+&lt;h3&gt;4. 常见问题&lt;span class="hx-absolute -hx-mt-20" id="4-常见问题"&gt;&lt;/span&gt;
+&lt;a href="#4-%e5%b8%b8%e8%a7%81%e9%97%ae%e9%a2%98" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Telegram 这一段虽然相对简单，但也有几个很典型的坑：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Bot token 配错：最常见，尤其是复制时多空格或漏字符&lt;/li&gt;
+&lt;li&gt;allowed users 没配对：表现为 Bot 在线，但你发消息它不理你&lt;/li&gt;
+&lt;li&gt;直接把群聊场景当成私聊场景来测：线程、reply 关系会更复杂&lt;/li&gt;
+&lt;li&gt;先在本地临时跑通，后面换到服务器后忘了同步环境变量&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;所以更稳妥的做法是：先在私聊里把最小闭环跑通，再逐步扩到群聊、线程和自动投递。&lt;/p&gt;
+&lt;h2&gt;五、从技术架构上看，为什么 Hermes Agent 会更容易形成“更懂你”的体验&lt;span class="hx-absolute -hx-mt-20" id="五从技术架构上看为什么-hermes-agent-会更容易形成更懂你的体验"&gt;&lt;/span&gt;
+&lt;a href="#%e4%ba%94%e4%bb%8e%e6%8a%80%e6%9c%af%e6%9e%b6%e6%9e%84%e4%b8%8a%e7%9c%8b%e4%b8%ba%e4%bb%80%e4%b9%88-hermes-agent-%e4%bc%9a%e6%9b%b4%e5%ae%b9%e6%98%93%e5%bd%a2%e6%88%90%e6%9b%b4%e6%87%82%e4%bd%a0%e7%9a%84%e4%bd%93%e9%aa%8c" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;如果把“更懂你”理解成一句产品宣传语，这件事很容易说空。但从 Hermes Agent 的系统设计来看，它之所以更容易给人这种感觉，并不是因为某一轮回答突然更像人，而是因为它把“长期协作”这件事拆成了几层明确的技术结构。&lt;/p&gt;
+&lt;p&gt;换句话说，Hermes 不是只在做一个会聊天的 Agent，而是在做一套能够把“用户是谁、过去做过什么、哪些规则长期有效、哪些流程已经验证过”重新接回当前任务的执行系统。&lt;/p&gt;
+&lt;p&gt;先看一张结构图：&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260415/hermes-agent-flow-style6-cn.png" alt="Hermes Agent 架构配图" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;图里最关键的是这几层关系：用户画像、持久记忆、技能、历史会话召回，并不是孤立存在的，而是会在 Prompt Builder 和 Agent Loop 中被重新接回当前任务。工具执行后的结果也会继续回流，新的经验再写回记忆、技能和会话体系里。&lt;/p&gt;
+&lt;p&gt;这张图里最关键的一点是：Hermes 并不把所有信息都粗暴塞进一次对话上下文里，而是把“更懂你”拆成了几个不同的技术来源，再由 Prompt Builder 和 Agent Loop 在执行时重新组合。&lt;/p&gt;
+&lt;p&gt;所以它带来的体验不是“这一轮刚好猜对了”，而更像是“这次是在以前的基础上继续往下做”。&lt;/p&gt;
+&lt;h3&gt;1. 它把长期信息拆成了不同层次，而不是全塞进一次对话上下文&lt;span class="hx-absolute -hx-mt-20" id="1-它把长期信息拆成了不同层次而不是全塞进一次对话上下文"&gt;&lt;/span&gt;
+&lt;a href="#1-%e5%ae%83%e6%8a%8a%e9%95%bf%e6%9c%9f%e4%bf%a1%e6%81%af%e6%8b%86%e6%88%90%e4%ba%86%e4%b8%8d%e5%90%8c%e5%b1%82%e6%ac%a1%e8%80%8c%e4%b8%8d%e6%98%af%e5%85%a8%e5%a1%9e%e8%bf%9b%e4%b8%80%e6%ac%a1%e5%af%b9%e8%af%9d%e4%b8%8a%e4%b8%8b%e6%96%87" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;很多 Agent 在实际使用里最大的问题，并不是模型不够强，而是所有信息都挤在当前会话里。&lt;/p&gt;
+&lt;p&gt;当前对话一长，上下文就会膨胀；
+开了新会话，很多信息又得重新说一遍；
+如果没有明确的持久层，所谓“记住你”其实只是“这轮还没忘”。&lt;/p&gt;
+&lt;p&gt;Hermes 在设计上把这件事拆开了：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;用户画像&lt;/li&gt;
+&lt;li&gt;持久记忆&lt;/li&gt;
+&lt;li&gt;技能&lt;/li&gt;
+&lt;li&gt;历史会话检索&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这几个层不是一回事。&lt;/p&gt;
+&lt;p&gt;用户画像更偏“你是谁、你习惯怎样工作”；
+持久记忆更偏“有哪些长期有效的稳定约束”；
+技能更偏“某类任务该怎么做”；
+历史会话检索则解决“以前到底聊过什么、做过什么”。&lt;/p&gt;
+&lt;p&gt;这种分层很关键，因为它避免了一个常见问题：把所有长期信息都粗暴塞进 prompt，结果越堆越乱，最后谁也不好用。&lt;/p&gt;
+&lt;h3&gt;2. 它不是只会存信息，还会在合适的结构里使用这些信息&lt;span class="hx-absolute -hx-mt-20" id="2-它不是只会存信息还会在合适的结构里使用这些信息"&gt;&lt;/span&gt;
+&lt;a href="#2-%e5%ae%83%e4%b8%8d%e6%98%af%e5%8f%aa%e4%bc%9a%e5%ad%98%e4%bf%a1%e6%81%af%e8%bf%98%e4%bc%9a%e5%9c%a8%e5%90%88%e9%80%82%e7%9a%84%e7%bb%93%e6%9e%84%e9%87%8c%e4%bd%bf%e7%94%a8%e8%bf%99%e4%ba%9b%e4%bf%a1%e6%81%af" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;很多系统也能“记忆”，但记忆只是存起来，未必真的在后续任务里稳定起作用。&lt;/p&gt;
+&lt;p&gt;Hermes 的一个优势，是它把记忆和执行链路接得比较近。&lt;/p&gt;
+&lt;p&gt;比如：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;用户偏好会在后续对话里直接影响表达方式&lt;/li&gt;
+&lt;li&gt;环境约束会影响工具选择&lt;/li&gt;
+&lt;li&gt;已经验证过的流程会沉淀成 skill，而不是每次重新推理&lt;/li&gt;
+&lt;li&gt;过去会话可以通过检索重新找回，而不是靠模型模糊回忆&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;也就是说，它不是把“记住”做成一个装饰层，而是把这些信息真正接进了后续决策里。&lt;/p&gt;
+&lt;p&gt;从技术角度看，这会直接影响使用体验：
+同样一个模型，如果每次都重新理解你，和它能够基于稳定信息继续往下做事，主观感受会差很多。&lt;/p&gt;
+&lt;h3&gt;3. 技能机制让它能把“会做”变成“下次还会这么做”&lt;span class="hx-absolute -hx-mt-20" id="3-技能机制让它能把会做变成下次还会这么做"&gt;&lt;/span&gt;
+&lt;a href="#3-%e6%8a%80%e8%83%bd%e6%9c%ba%e5%88%b6%e8%ae%a9%e5%ae%83%e8%83%bd%e6%8a%8a%e4%bc%9a%e5%81%9a%e5%8f%98%e6%88%90%e4%b8%8b%e6%ac%a1%e8%bf%98%e4%bc%9a%e8%bf%99%e4%b9%88%e5%81%9a" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Hermes 里我觉得非常重要的一点，是 skill 这一层。&lt;/p&gt;
+&lt;p&gt;因为很多 Agent 的问题并不是这次做不出来，而是下次遇到类似任务时，又要重新走一遍。之前踩过的坑、试过的方法、确认过的流程，并不会自然沉淀下来。&lt;/p&gt;
+&lt;p&gt;Hermes 的 skill 机制，本质上是在补这个缺口。&lt;/p&gt;
+&lt;p&gt;当一个复杂流程被验证可用之后，它可以被写成结构化技能。下次再遇到类似任务，系统不是“从头想一遍”，而是优先沿用已经跑通过的方法。&lt;/p&gt;
+&lt;p&gt;这种设计带来的结果，不只是效率更高，更重要的是风格和行为会更稳定。&lt;/p&gt;
+&lt;p&gt;用户会逐渐感受到：它不是这次碰巧做对，而是开始形成一种持续一致的工作方式。&lt;/p&gt;
+&lt;h3&gt;4. 会话检索让“过去做过什么”不再只能靠模糊记忆&lt;span class="hx-absolute -hx-mt-20" id="4-会话检索让过去做过什么不再只能靠模糊记忆"&gt;&lt;/span&gt;
+&lt;a href="#4-%e4%bc%9a%e8%af%9d%e6%a3%80%e7%b4%a2%e8%ae%a9%e8%bf%87%e5%8e%bb%e5%81%9a%e8%bf%87%e4%bb%80%e4%b9%88%e4%b8%8d%e5%86%8d%e5%8f%aa%e8%83%bd%e9%9d%a0%e6%a8%a1%e7%b3%8a%e8%ae%b0%e5%bf%86" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;另一个很容易被忽略的点，是历史会话检索。&lt;/p&gt;
+&lt;p&gt;很多 Agent 系统一旦离开当前上下文，过去发生过的事基本就断掉了。哪怕它曾经帮你解决过类似问题，下一次也不一定能用上。&lt;/p&gt;
+&lt;p&gt;Hermes 在这里做得更实用一些。它不是假设模型天然会记住一切，而是提供会话搜索能力，把历史记录当成可召回的信息源。&lt;/p&gt;
+&lt;p&gt;这件事非常重要，因为“懂你”很多时候并不是人格化的感觉，而是它能不能重新找到以前与你相关的真实上下文。&lt;/p&gt;
+&lt;p&gt;如果它能找回：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;你之前怎么定义一个问题&lt;/li&gt;
+&lt;li&gt;当时为什么选了某种方案&lt;/li&gt;
+&lt;li&gt;哪个约束是你反复强调过的&lt;/li&gt;
+&lt;li&gt;某个流程之前已经验证过&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;那它在下一次继续工作时，就更像是在延续关系，而不是重新开始。&lt;/p&gt;
+&lt;h3&gt;5. 它的结构更强调长期协作，而不是单轮最优&lt;span class="hx-absolute -hx-mt-20" id="5-它的结构更强调长期协作而不是单轮最优"&gt;&lt;/span&gt;
+&lt;a href="#5-%e5%ae%83%e7%9a%84%e7%bb%93%e6%9e%84%e6%9b%b4%e5%bc%ba%e8%b0%83%e9%95%bf%e6%9c%9f%e5%8d%8f%e4%bd%9c%e8%80%8c%e4%b8%8d%e6%98%af%e5%8d%95%e8%bd%ae%e6%9c%80%e4%bc%98" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;如果只追求单轮回答漂亮，很多系统都能做得不错。&lt;/p&gt;
+&lt;p&gt;但长期使用时，真正重要的往往不是“这一轮说得有多好”，而是：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;下一轮还能不能接上&lt;/li&gt;
+&lt;li&gt;过几天还能不能延续&lt;/li&gt;
+&lt;li&gt;新会话里还能不能保持一致&lt;/li&gt;
+&lt;li&gt;遇到相似任务时能不能少让用户重复自己&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Hermes 的架构里，memory、skills、session search、cron、gateway 这些能力是互相连着的。&lt;/p&gt;
+&lt;p&gt;这意味着它不是单纯围绕一次回答来设计，而是更接近“长期在线、持续协作”的思路。&lt;/p&gt;
+&lt;p&gt;而一旦系统的目标从“回答一次”变成“陪你持续工作”，它在体验上就会更容易给人一种“越来越懂你”的感觉。&lt;/p&gt;
+&lt;h3&gt;6. 所以这里的“更懂你”，本质上不是拟人化，而是系统工程结果&lt;span class="hx-absolute -hx-mt-20" id="6-所以这里的更懂你本质上不是拟人化而是系统工程结果"&gt;&lt;/span&gt;
+&lt;a href="#6-%e6%89%80%e4%bb%a5%e8%bf%99%e9%87%8c%e7%9a%84%e6%9b%b4%e6%87%82%e4%bd%a0%e6%9c%ac%e8%b4%a8%e4%b8%8a%e4%b8%8d%e6%98%af%e6%8b%9f%e4%ba%ba%e5%8c%96%e8%80%8c%e6%98%af%e7%b3%bb%e7%bb%9f%e5%b7%a5%e7%a8%8b%e7%bb%93%e6%9e%9c" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;我现在更愿意把这件事理解成一个技术结果，而不是一句感受型判断。&lt;/p&gt;
+&lt;p&gt;Hermes 给人的“更懂你”，并不是因为它突然更会聊天，也不是因为它某一轮特别像人，而是因为它在系统层面做了几件更利于长期协作的事：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;把长期信息分层保存&lt;/li&gt;
+&lt;li&gt;把记忆接入后续执行&lt;/li&gt;
+&lt;li&gt;用技能沉淀流程&lt;/li&gt;
+&lt;li&gt;用会话检索补足跨会话连续性&lt;/li&gt;
+&lt;li&gt;让 Agent 真正适合长期在线工作&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这些能力叠在一起，最后才会表现成用户侧的那种主观感受：它好像越来越知道你要什么，也越来越少需要你反复解释同一件事。&lt;/p&gt;
+&lt;h2&gt;六、最后&lt;span class="hx-absolute -hx-mt-20" id="六最后"&gt;&lt;/span&gt;
+&lt;a href="#%e5%85%ad%e6%9c%80%e5%90%8e" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;如果你只是想找一个“能调工具、能跑命令、能接平台”的 Agent，其实现在已经有不少选择。&lt;/p&gt;
+&lt;p&gt;但如果你在意的是另外一件事：这个 Agent 能不能越来越理解你的偏好、越来越贴合你的习惯、越来越不像一次性工具，那 Hermes 确实值得认真试一下。&lt;/p&gt;
+&lt;p&gt;至少就我目前这一天的体验来说，它已经给了我一个很明确的结论：&lt;/p&gt;
+&lt;p&gt;Hermes 不只是另一个 Agent。
+它更像是一个会持续积累、会慢慢记住你、也更可能在长期使用里形成默契的 Agent。&lt;/p&gt;
+&lt;p&gt;而这件事，恰恰是我现在最看重的。&lt;/p&gt;</description></item><item><title>Paseo 是什么？一个用来远程管理 coding agent 的开源项目</title><link>https://silenceper.com/article/2026-04-14-paseo/</link><pubDate>Tue, 14 Apr 2026 00:00:00 +0800</pubDate><guid>https://silenceper.com/article/2026-04-14-paseo/</guid><description>
 &lt;p&gt;Paseo 不是新的大模型，也不是又一个“AI IDE”。如果非要给它找一个更准确的位置，我会觉得它更像是放在现有 coding agent 外面的一层管理与调度工具，用来把 Claude Code、Codex、OpenCode 这类东西统一起来，并且把使用场景从“只能坐在电脑前操作”，延伸到手机、桌面端、Web 和 CLI。&lt;/p&gt;
 &lt;h2&gt;Paseo 想解决什么问题&lt;span class="hx-absolute -hx-mt-20" id="paseo-想解决什么问题"&gt;&lt;/span&gt;
 &lt;a href="#paseo-%e6%83%b3%e8%a7%a3%e5%86%b3%e4%bb%80%e4%b9%88%e9%97%ae%e9%a2%98" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;如果你已经开始把 coding agent 放进日常工作流里，那你大概率会越来越熟悉一种状态：&lt;/p&gt;
@@ -78,10 +604,7 @@
 &lt;li&gt;官网：https://paseo.sh&lt;/li&gt;
 &lt;li&gt;GitHub：https://github.com/getpaseo/paseo&lt;/li&gt;
 &lt;li&gt;Docs：https://paseo.sh/docs&lt;/li&gt;
-&lt;/ul&gt;
-&lt;blockquote&gt;
-&lt;p&gt;注：文中关于项目定位、支持对象和产品形态的描述，主要参考了 Paseo 官网首页、GitHub README 与第三方项目收录页中的公开介绍，并做了归纳整理。&lt;/p&gt;
-&lt;/blockquote&gt;</description></item><item><title>让 AI 代理接管所有软件：CLI-Anything 项目分析</title><link>https://silenceper.com/article/2026-03-12-cli-anything-github-project-analysis/</link><pubDate>Thu, 12 Mar 2026 22:30:00 +0800</pubDate><guid>https://silenceper.com/article/2026-03-12-cli-anything-github-project-analysis/</guid><description>
+&lt;/ul&gt;</description></item><item><title>让 AI 代理接管所有软件：CLI-Anything 项目分析</title><link>https://silenceper.com/article/2026-03-12-cli-anything-github-project-analysis/</link><pubDate>Thu, 12 Mar 2026 22:30:00 +0800</pubDate><guid>https://silenceper.com/article/2026-03-12-cli-anything-github-project-analysis/</guid><description>
 &lt;p&gt;如果你最近在做 AI Agent 落地，大概率已经遇到同一个问题：Agent 会“思考”，但不会稳定地“操作软件”。&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;CLI-Anything&lt;/code&gt; 这类项目的价值，就在于把“软件操作能力”从 GUI 点击变成可组合、可测试、可自动化的命令行能力。&lt;/p&gt;
 &lt;h2&gt;一句话定位&lt;span class="hx-absolute -hx-mt-20" id="一句话定位"&gt;&lt;/span&gt;

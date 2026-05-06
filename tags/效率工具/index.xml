@@ -1,4 +1,213 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – 效率工具</title><link>https://silenceper.com/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/</link><description>Recent content in 效率工具 on silenceper</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 10 Mar 2026 09:00:00 +0800</lastBuildDate><atom:link href="https://silenceper.com/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/index.xml" rel="self" type="application/rss+xml"/><item><title>OpenClaw 介绍：把 AI 变成真正能干活的个人助理</title><link>https://silenceper.com/article/2026-03-10-first-article/</link><pubDate>Tue, 10 Mar 2026 09:00:00 +0800</pubDate><guid>https://silenceper.com/article/2026-03-10-first-article/</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – 效率工具</title><link>https://silenceper.com/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/</link><description>Recent content in 效率工具 on silenceper</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Mon, 04 May 2026 15:49:45 +0800</lastBuildDate><atom:link href="https://silenceper.com/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/index.xml" rel="self" type="application/rss+xml"/><item><title>Keep Codex Fast：让 Codex 本地状态保持轻快的安全维护技能</title><link>https://silenceper.com/article/2026-05-04-keep-codex-fast/</link><pubDate>Mon, 04 May 2026 15:49:45 +0800</pubDate><guid>https://silenceper.com/article/2026-05-04-keep-codex-fast/</guid><description>
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260504/keep-codex-fast-cover.png" alt="Keep Codex Fast" loading="lazy" /&gt;&lt;/p&gt;
+&lt;h2&gt;一句话定位&lt;span class="hx-absolute -hx-mt-20" id="一句话定位"&gt;&lt;/span&gt;
+&lt;a href="#%e4%b8%80%e5%8f%a5%e8%af%9d%e5%ae%9a%e4%bd%8d" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Keep Codex Fast 是一个面向 Codex 重度用户的本地状态维护 Skill：先检查、先交接、先备份，再把旧会话、日志、临时工作区等“拖慢体验”的本地状态安全归档。&lt;/p&gt;
+&lt;h2&gt;基础信息卡片&lt;span class="hx-absolute -hx-mt-20" id="基础信息卡片"&gt;&lt;/span&gt;
+&lt;a href="#%e5%9f%ba%e7%a1%80%e4%bf%a1%e6%81%af%e5%8d%a1%e7%89%87" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;项目&lt;/th&gt;
+&lt;th&gt;信息&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;GitHub&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://github.com/vibeforge1111/keep-codex-fast" target="_blank" rel="noopener"&gt;https://github.com/vibeforge1111/keep-codex-fast&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;作者&lt;/td&gt;
+&lt;td&gt;vibeforge1111&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;开源协议&lt;/td&gt;
+&lt;td&gt;MIT&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;主要语言&lt;/td&gt;
+&lt;td&gt;Python&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;默认分支&lt;/td&gt;
+&lt;td&gt;main&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;项目定位&lt;/td&gt;
+&lt;td&gt;Codex 本地状态检查与安全维护 Skill&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;当前热度&lt;/td&gt;
+&lt;td&gt;约 559 Stars、29 Forks（2026-05-04 查询）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2&gt;解决什么问题&lt;span class="hx-absolute -hx-mt-20" id="解决什么问题"&gt;&lt;/span&gt;
+&lt;a href="#%e8%a7%a3%e5%86%b3%e4%bb%80%e4%b9%88%e9%97%ae%e9%a2%98" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Codex 用久之后，很多人会遇到一种不太容易定位的“变重”：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;长对话越积越多；&lt;/li&gt;
+&lt;li&gt;经常恢复旧线程；&lt;/li&gt;
+&lt;li&gt;同时维护多个仓库；&lt;/li&gt;
+&lt;li&gt;本地终端、开发服务器、日志、工作区持续堆积；&lt;/li&gt;
+&lt;li&gt;想清理，又担心误删历史上下文。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Keep Codex Fast 关注的不是“让模型回答更快”，而是整理 Codex 在本机留下的运行状态。它的核心原则很克制：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Make handoffs first. Archive, don&amp;rsquo;t delete. Apply changes only when you are ready.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;也就是：先做交接文档，归档而不是删除，只有在你确认准备好时才真正应用改动。&lt;/p&gt;
+&lt;p&gt;这对长期使用 Codex 做开发的人很实用。因为真正让人犹豫清理的，往往不是文件本身，而是旧会话里还藏着项目决策、排错过程、失败命令和下一步计划。Keep Codex Fast 把“清理”拆成了更安全的流程：先看清楚，再保留可恢复的上下文，最后再归档。&lt;/p&gt;
+&lt;h2&gt;核心功能&lt;span class="hx-absolute -hx-mt-20" id="核心功能"&gt;&lt;/span&gt;
+&lt;a href="#%e6%a0%b8%e5%bf%83%e5%8a%9f%e8%83%bd" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;pre class="mermaid hx-mt-6"&gt;
+flowchart TD
+A[Codex 本地状态变重] --&amp;gt; B[只读检查]
+B --&amp;gt; C[生成维护报告]
+C --&amp;gt; D{是否还有重要旧会话?}
+D -- 有 --&amp;gt; E[创建 handoff 交接文档]
+E --&amp;gt; F[备份重要状态]
+D -- 没有 --&amp;gt; F
+F --&amp;gt; G[归档旧会话/旧工作区]
+G --&amp;gt; H[轮转大日志]
+H --&amp;gt; I[清理失效项目引用]
+I --&amp;gt; J[再次检查并确认结果]
+&lt;/pre&gt;&lt;p&gt;这张流程图里最关键的是第一步：默认只读检查。Keep Codex Fast 不会一上来就移动文件或删除历史，而是先报告本地状态，让你知道问题主要来自哪里。&lt;/p&gt;
+&lt;h3&gt;1. 默认只读报告&lt;span class="hx-absolute -hx-mt-20" id="1-默认只读报告"&gt;&lt;/span&gt;
+&lt;a href="#1-%e9%bb%98%e8%ae%a4%e5%8f%aa%e8%af%bb%e6%8a%a5%e5%91%8a" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;项目 README 明确说明：默认模式只做报告，不写文件、不创建备份、不移动目录，也不会修改本地 Codex 状态。它会帮助你看到哪些本地状态增长明显，例如活跃会话、归档会话、日志、旧工作区、失效项目引用以及较重的 Node/开发进程。&lt;/p&gt;
+&lt;p&gt;这让第一次使用的心理负担比较低：你可以先把它当成一次体检，而不是一次清理操作。&lt;/p&gt;
+&lt;h3&gt;2. Handoffs First：先交接，再归档&lt;span class="hx-absolute -hx-mt-20" id="2-handoffs-first先交接再归档"&gt;&lt;/span&gt;
+&lt;a href="#2-handoffs-first%e5%85%88%e4%ba%a4%e6%8e%a5%e5%86%8d%e5%bd%92%e6%a1%a3" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Keep Codex Fast 特别强调 handoff 文档。所谓 handoff，就是一份小型连续性笔记，记录：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;当前在做什么；&lt;/li&gt;
+&lt;li&gt;已经改了什么；&lt;/li&gt;
+&lt;li&gt;哪些文件重要；&lt;/li&gt;
+&lt;li&gt;已经跑过哪些命令或检查；&lt;/li&gt;
+&lt;li&gt;还有什么错误、警告或未决问题；&lt;/li&gt;
+&lt;li&gt;下一步应该怎么继续。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;有了这份文档，你就可以把沉重的旧聊天归档，然后在新的 Codex 会话里从 handoff 继续，不必一直依赖越来越长的历史线程。&lt;/p&gt;
+&lt;h3&gt;3. 备份优先，归档而不是删除&lt;span class="hx-absolute -hx-mt-20" id="3-备份优先归档而不是删除"&gt;&lt;/span&gt;
+&lt;a href="#3-%e5%a4%87%e4%bb%bd%e4%bc%98%e5%85%88%e5%bd%92%e6%a1%a3%e8%80%8c%e4%b8%8d%e6%98%af%e5%88%a0%e9%99%a4" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;真正执行维护时，Keep Codex Fast 的策略也是保守的：先备份重要状态，再把旧会话、旧工作区、大日志移动到归档位置。它处理的是“从热路径移走”，而不是“永久删除”。&lt;/p&gt;
+&lt;p&gt;根据项目说明，它可以处理的内容包括：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;旧的非置顶活跃会话；&lt;/li&gt;
+&lt;li&gt;过期 worktrees；&lt;/li&gt;
+&lt;li&gt;较大的 &lt;code&gt;logs_2.sqlite*&lt;/code&gt; 日志文件；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;config.toml&lt;/code&gt; 中失效或临时项目引用；&lt;/li&gt;
+&lt;li&gt;Windows &lt;code&gt;\\?\C:\...&lt;/code&gt; 这类扩展路径不一致问题；&lt;/li&gt;
+&lt;li&gt;较重的 Node/开发进程报告。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;4. 手动应用，不建议自动清理&lt;span class="hx-absolute -hx-mt-20" id="4-手动应用不建议自动清理"&gt;&lt;/span&gt;
+&lt;a href="#4-%e6%89%8b%e5%8a%a8%e5%ba%94%e7%94%a8%e4%b8%8d%e5%bb%ba%e8%ae%ae%e8%87%aa%e5%8a%a8%e6%b8%85%e7%90%86" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;项目也给出了一个很重要的边界：周期性维护更适合做“提醒”和“报告”，不适合自动执行清理。原因很简单，自动化并不知道哪些旧会话对你仍然重要，也不知道 handoff 是否已经准备好。&lt;/p&gt;
+&lt;p&gt;所以更稳妥的方式是：定期检查，人工确认，然后在 Codex 关闭或明确等待 Codex 退出后再应用维护。&lt;/p&gt;
+&lt;h2&gt;适合谁&lt;span class="hx-absolute -hx-mt-20" id="适合谁"&gt;&lt;/span&gt;
+&lt;a href="#%e9%80%82%e5%90%88%e8%b0%81" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Keep Codex Fast 更适合这些 Codex 用户：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;每天高频使用 Codex 做开发；&lt;/li&gt;
+&lt;li&gt;经常跨多个仓库工作；&lt;/li&gt;
+&lt;li&gt;习惯保留很长的历史会话；&lt;/li&gt;
+&lt;li&gt;经常恢复旧线程继续排错或开发；&lt;/li&gt;
+&lt;li&gt;本地同时运行多个终端、服务或 worktree；&lt;/li&gt;
+&lt;li&gt;想清理 Codex 本地状态，但不想冒丢上下文的风险。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如果你只是偶尔打开 Codex 问几个问题，可能暂时感受不到它的价值。但只要 Codex 已经成为日常开发工作流的一部分，这类“本地状态维护”就会越来越重要。&lt;/p&gt;
+&lt;h2&gt;快速上手&lt;span class="hx-absolute -hx-mt-20" id="快速上手"&gt;&lt;/span&gt;
+&lt;a href="#%e5%bf%ab%e9%80%9f%e4%b8%8a%e6%89%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;在 Codex 中可以直接让它安装这个 Skill：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Install the keep-codex-fast skill from https://github.com/vibeforge1111/keep-codex-fast&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;安装后，先做一次只读检查：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Use $keep-codex-fast to inspect my Codex local state and recommend a safe maintenance plan.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;如果检查结果显示有旧会话值得归档，先为还可能继续的项目创建 handoff：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Create a comprehensive handoff document for this repo/session before I archive Codex history.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Include:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- repo/path and branch
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- current goal
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- what we already completed
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- files touched or investigated
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- commands/tests already run
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- known errors, warnings, or failing checks
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- open decisions
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- constraints, user preferences, and do-not-touch areas
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- the next 3-7 concrete steps
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Also include a reactivation prompt I can paste into a fresh Codex chat so it can continue from this handoff without relying on the old chat context.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;确认重要会话都有交接文档后，再考虑应用安全维护：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Use $keep-codex-fast to apply safe Codex maintenance.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Before changing anything, confirm that important active repo chats have handoff docs or do not need them.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Then back up first, archive instead of deleting, move stale worktrees, rotate large logs, prune dead config references, and verify the result.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;If Codex is currently running, do not mutate local state. Tell me to close Codex first.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;如果你想直接运行脚本，项目也提供了命令行方式：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;python scripts/keep_codex_fast.py&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;只读报告之外，还可以按需使用：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;python scripts/keep_codex_fast.py --details
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;python scripts/keep_codex_fast.py --backup-only
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;python scripts/keep_codex_fast.py --apply --archive-older-than-days &lt;span class="m"&gt;10&lt;/span&gt; --worktree-older-than-days &lt;span class="m"&gt;7&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;python scripts/keep_codex_fast.py --apply --wait-for-codex-exit&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h2&gt;结论&lt;span class="hx-absolute -hx-mt-20" id="结论"&gt;&lt;/span&gt;
+&lt;a href="#%e7%bb%93%e8%ae%ba" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Keep Codex Fast 的价值不在于做一次“激进清理”，而在于把 Codex 本地维护变成一个可控流程：先报告，先交接，先备份，再归档。&lt;/p&gt;
+&lt;p&gt;对重度 Codex 用户来说，旧会话和本地状态既是负担，也是资产。这个项目提供的思路很实用：把真正有价值的上下文沉淀成 handoff，把不需要长期留在热路径里的状态移出去，让新的 Codex 会话重新变轻。&lt;/p&gt;
+&lt;p&gt;如果你已经明显感觉 Codex 本地使用体验变重，Keep Codex Fast 值得先跑一次只读检查。即使暂时不执行清理，它也能帮你看清楚：到底是哪些本地状态在增长，以及后续应该怎样安全地处理。&lt;/p&gt;</description></item><item><title>OpenClaw 介绍：把 AI 变成真正能干活的个人助理</title><link>https://silenceper.com/article/2026-03-10-first-article/</link><pubDate>Tue, 10 Mar 2026 09:00:00 +0800</pubDate><guid>https://silenceper.com/article/2026-03-10-first-article/</guid><description>
 &lt;h2&gt;OpenClaw 是什么？&lt;span class="hx-absolute -hx-mt-20" id="openclaw-是什么"&gt;&lt;/span&gt;
 &lt;a href="#openclaw-%e6%98%af%e4%bb%80%e4%b9%88" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;OpenClaw 是一个面向个人与团队的 &lt;strong&gt;AI Agent 平台&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;它不只是“会聊天”的 AI，而是可以连接你的常用工具，真正执行任务：&lt;/p&gt;

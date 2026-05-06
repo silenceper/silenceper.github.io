@@ -1,0 +1,317 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – Video Generation</title><link>https://silenceper.com/en/tags/video-generation/</link><description>Recent content in Video Generation on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en-US</language><lastBuildDate>Sat, 02 May 2026 10:39:18 +0800</lastBuildDate><atom:link href="https://silenceper.com/en/tags/video-generation/index.xml" rel="self" type="application/rss+xml"/><item><title>HyperFrames: An Open-source Rendering Framework for Generating Video with HTML</title><link>https://silenceper.com/en/article/2026-05-02-hyperframes-html-video-rendering/</link><pubDate>Sat, 02 May 2026 10:39:18 +0800</pubDate><guid>https://silenceper.com/en/article/2026-05-02-hyperframes-html-video-rendering/</guid><description>
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260502/hyperframes-demo.gif" alt="HyperFrames demo" loading="lazy" /&gt;&lt;/p&gt;
+&lt;h2&gt;One-line Positioning&lt;span class="hx-absolute -hx-mt-20" id="one-line-positioning"&gt;&lt;/span&gt;
+&lt;a href="#one-line-positioning" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;HyperFrames is HeyGen&amp;rsquo;s open-source HTML video rendering framework. It lets you define video scenes, timelines, and animations the same way you write web pages, then preview them in a browser and render them to MP4.&lt;/p&gt;
+&lt;h2&gt;Basic Info&lt;span class="hx-absolute -hx-mt-20" id="basic-info"&gt;&lt;/span&gt;
+&lt;a href="#basic-info" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Item&lt;/th&gt;
+&lt;th&gt;Info&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;GitHub&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://github.com/heygen-com/hyperframes" target="_blank" rel="noopener"&gt;https://github.com/heygen-com/hyperframes&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Docs&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://hyperframes.heygen.com/introduction" target="_blank" rel="noopener"&gt;https://hyperframes.heygen.com/introduction&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;NPM package&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;hyperframes&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Main language&lt;/td&gt;
+&lt;td&gt;TypeScript&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;License&lt;/td&gt;
+&lt;td&gt;Apache-2.0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Current version&lt;/td&gt;
+&lt;td&gt;0.4.41&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Requirements&lt;/td&gt;
+&lt;td&gt;Node.js &amp;gt;= 22, FFmpeg&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Positioning&lt;/td&gt;
+&lt;td&gt;HTML-native, AI-first, deterministic video rendering&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2&gt;What Problem Does It Solve?&lt;span class="hx-absolute -hx-mt-20" id="what-problem-does-it-solve"&gt;&lt;/span&gt;
+&lt;a href="#what-problem-does-it-solve" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;There are usually two common paths for video automation. One is to use traditional editing tools, which are great for manual production but not ideal for batch generation. The other is to use code-based video frameworks, which are automation-friendly but often require developers to enter a specific component system or DSL.&lt;/p&gt;
+&lt;p&gt;HyperFrames takes a route that feels closer to normal web development: the video itself is HTML.&lt;/p&gt;
+&lt;p&gt;It puts clips, subtitles, images, audio, timing, and track relationships into HTML elements and &lt;code&gt;data-*&lt;/code&gt; attributes. You can organize scenes like a web page, animate them with familiar frontend tools such as CSS, GSAP, Lottie, and Three.js, then render the result to MP4 from the command line.&lt;/p&gt;
+&lt;p&gt;This approach is also friendly to AI agents. Large language models are already good at generating HTML, CSS, and simple scripts. HyperFrames adds skills, plugins, and CLI workflows for agents, so an agent can go from &amp;ldquo;describe a video&amp;rdquo; to &amp;ldquo;create the project, preview it, inspect it, and render it.&amp;rdquo;&lt;/p&gt;
+&lt;h2&gt;Core Features&lt;span class="hx-absolute -hx-mt-20" id="core-features"&gt;&lt;/span&gt;
+&lt;a href="#core-features" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;1. Describe Video Structure with HTML&lt;span class="hx-absolute -hx-mt-20" id="1-describe-video-structure-with-html"&gt;&lt;/span&gt;
+&lt;a href="#1-describe-video-structure-with-html" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The core input to HyperFrames is an HTML document. Each element uses attributes such as &lt;code&gt;data-start&lt;/code&gt;, &lt;code&gt;data-duration&lt;/code&gt;, and &lt;code&gt;data-track-index&lt;/code&gt; to describe when it appears, how long it lasts, and where it sits in the timeline.&lt;/p&gt;
+&lt;p&gt;A simple video can be composed from ordinary HTML elements such as video clips, titles, images, and background music:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-html" data-lang="html"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;stage&amp;#34;&lt;/span&gt; &lt;span class="na"&gt;data-composition-id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;my-video&amp;#34;&lt;/span&gt; &lt;span class="na"&gt;data-start&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;0&amp;#34;&lt;/span&gt; &lt;span class="na"&gt;data-width&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;1920&amp;#34;&lt;/span&gt; &lt;span class="na"&gt;data-height&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;1080&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;video&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;clip-1&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;data-start&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;0&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;data-duration&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;5&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;data-track-index&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;0&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;intro.mp4&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;muted&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;playsinline&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;video&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;h1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;clip&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;data-start&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;1&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;data-duration&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;4&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;data-track-index&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;1&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Welcome to HyperFrames
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;h1&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;audio&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;data-start&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;0&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;data-duration&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;5&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;data-track-index&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;2&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;data-volume&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;0.5&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;music.wav&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;audio&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;The benefit is a low learning curve. You do not need to learn a new video-editing format first, and you do not have to rewrite everything as React components.&lt;/p&gt;
+&lt;h3&gt;2. Browser Preview, Local MP4 Rendering&lt;span class="hx-absolute -hx-mt-20" id="2-browser-preview-local-mp4-rendering"&gt;&lt;/span&gt;
+&lt;a href="#2-browser-preview-local-mp4-rendering" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;HyperFrames provides a CLI for project initialization, preview, and rendering:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx hyperframes init my-video
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; my-video
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx hyperframes preview
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx hyperframes render&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;During preview, you inspect the composition in a browser. During rendering, headless Chrome captures frames and passes them to FFmpeg to produce the final video. The official docs emphasize deterministic rendering: the same input should produce the same output, which matters for automation pipelines.&lt;/p&gt;
+&lt;h3&gt;3. AI-agent-oriented Workflow&lt;span class="hx-absolute -hx-mt-20" id="3-ai-agent-oriented-workflow"&gt;&lt;/span&gt;
+&lt;a href="#3-ai-agent-oriented-workflow" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;HyperFrames is not just a CLI. It also provides supporting workflows for AI coding tools. The project README recommends installing skills first:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx skills add heygen-com/hyperframes&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;These skills teach agents how to write valid compositions, GSAP timelines, Tailwind v4 browser-runtime styles, and adapters for different animation runtimes.&lt;/p&gt;
+&lt;p&gt;The project also provides instructions or plugin entry points for tools such as Claude Code, Cursor, Codex, and Gemini CLI. In other words, &amp;ldquo;AI support&amp;rdquo; is not just a marketing phrase. Agent-friendly initialization, linting, previewing, and rendering are part of the framework&amp;rsquo;s design.&lt;/p&gt;
+&lt;h3&gt;4. Support for Multiple Animation and Asset Runtimes&lt;span class="hx-absolute -hx-mt-20" id="4-support-for-multiple-animation-and-asset-runtimes"&gt;&lt;/span&gt;
+&lt;a href="#4-support-for-multiple-animation-and-asset-runtimes" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;HyperFrames uses a Frame Adapter pattern to integrate animation runtimes. You can build animations with GSAP, Lottie, CSS animation, Three.js, or the Web Animations API, as long as they can seek frame by frame and participate in deterministic rendering.&lt;/p&gt;
+&lt;p&gt;This matters for video automation. Video is not just screen recording. You need a deterministic frame at a specific timestamp. HyperFrames abstracts the relationship between &amp;ldquo;how the page plays&amp;rdquo; and &amp;ldquo;how the renderer captures frames&amp;rdquo;, allowing different animation technologies to enter the same video-generation pipeline.&lt;/p&gt;
+&lt;h3&gt;5. Built-in Component Registry and Multiple Packages&lt;span class="hx-absolute -hx-mt-20" id="5-built-in-component-registry-and-multiple-packages"&gt;&lt;/span&gt;
+&lt;a href="#5-built-in-component-registry-and-multiple-packages" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The project provides 50+ ready-to-use blocks and components, such as social-media overlays, shader transitions, data visualization, and cinematic effects. They can be added through commands:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx hyperframes add flash-through-white
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx hyperframes add instagram-follow
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx hyperframes add data-chart&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;From the repository structure, HyperFrames is a monorepo with several key packages:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Package&lt;/th&gt;
+&lt;th&gt;Purpose&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;hyperframes&lt;/code&gt; / &lt;code&gt;@hyperframes/cli&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;CLI for init, preview, lint, and render&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;@hyperframes/core&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Types, parser, generator, linter, runtime, and frame adapters&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;@hyperframes/engine&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Puppeteer + FFmpeg based page-to-video rendering engine&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;@hyperframes/producer&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Full rendering pipeline, including capture, encoding, and audio mixing&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;@hyperframes/studio&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Browser-side composition editor UI&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;@hyperframes/player&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Embeddable &lt;code&gt;&amp;lt;hyperframes-player&amp;gt;&lt;/code&gt; Web Component&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;@hyperframes/shader-transitions&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;WebGL shader transitions for compositions&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2&gt;Official Video Examples&lt;span class="hx-absolute -hx-mt-20" id="official-video-examples"&gt;&lt;/span&gt;
+&lt;a href="#official-video-examples" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx hyperframes init my-video --example warm-grain&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Example&lt;/th&gt;
+&lt;th&gt;Type&lt;/th&gt;
+&lt;th&gt;Video link&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Warm Grain&lt;/td&gt;
+&lt;td&gt;Brand / lifestyle&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://static.heygen.ai/hyperframes-oss/docs/images/templates/warm-grain.mp4" target="_blank" rel="noopener"&gt;https://static.heygen.ai/hyperframes-oss/docs/images/templates/warm-grain.mp4&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Play Mode&lt;/td&gt;
+&lt;td&gt;Social media / product launch&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://static.heygen.ai/hyperframes-oss/docs/images/templates/play-mode.mp4" target="_blank" rel="noopener"&gt;https://static.heygen.ai/hyperframes-oss/docs/images/templates/play-mode.mp4&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Swiss Grid&lt;/td&gt;
+&lt;td&gt;Enterprise / technology / data&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://static.heygen.ai/hyperframes-oss/docs/images/templates/swiss-grid.mp4" target="_blank" rel="noopener"&gt;https://static.heygen.ai/hyperframes-oss/docs/images/templates/swiss-grid.mp4&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Kinetic Type&lt;/td&gt;
+&lt;td&gt;Title card / promo&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://static.heygen.ai/hyperframes-oss/docs/images/templates/kinetic-type.mp4" target="_blank" rel="noopener"&gt;https://static.heygen.ai/hyperframes-oss/docs/images/templates/kinetic-type.mp4&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Decision Tree&lt;/td&gt;
+&lt;td&gt;Explainer video / tutorial&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://static.heygen.ai/hyperframes-oss/docs/images/templates/decision-tree.mp4" target="_blank" rel="noopener"&gt;https://static.heygen.ai/hyperframes-oss/docs/images/templates/decision-tree.mp4&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Product Promo&lt;/td&gt;
+&lt;td&gt;Product showcase&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://static.heygen.ai/hyperframes-oss/docs/images/templates/product-promo.mp4" target="_blank" rel="noopener"&gt;https://static.heygen.ai/hyperframes-oss/docs/images/templates/product-promo.mp4&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;NYT Graph&lt;/td&gt;
+&lt;td&gt;Data story / chart video&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://static.heygen.ai/hyperframes-oss/docs/images/templates/nyt-graph.mp4" target="_blank" rel="noopener"&gt;https://static.heygen.ai/hyperframes-oss/docs/images/templates/nyt-graph.mp4&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Vignelli&lt;/td&gt;
+&lt;td&gt;Vertical title / announcement&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://static.heygen.ai/hyperframes-oss/docs/images/templates/vignelli.mp4" target="_blank" rel="noopener"&gt;https://static.heygen.ai/hyperframes-oss/docs/images/templates/vignelli.mp4&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2&gt;Who Is It For?&lt;span class="hx-absolute -hx-mt-20" id="who-is-it-for"&gt;&lt;/span&gt;
+&lt;a href="#who-is-it-for" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;HyperFrames is a good fit for several scenarios:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Frontend developers who want to generate video with code&lt;/strong&gt;&lt;br&gt;
+If you already know HTML, CSS, and JavaScript, the mental model is easy to pick up.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Teams that need batch-generated marketing, tutorial, or data videos&lt;/strong&gt;&lt;br&gt;
+For example, turning CSV files into animated charts, product docs into short videos, or templates into many personalized variants.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;People building AI-agent content production workflows&lt;/strong&gt;&lt;br&gt;
+Its CLI, skills, and plugin design all lean toward automation, making it suitable as an execution layer for agent-generated video.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Teams that need reproducible video generation pipelines&lt;/strong&gt;&lt;br&gt;
+Compared with manual editing tools, HyperFrames is easier to run from scripts, CI, Docker, or backend jobs.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;Quick Start&lt;span class="hx-absolute -hx-mt-20" id="quick-start"&gt;&lt;/span&gt;
+&lt;a href="#quick-start" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;If you want an AI agent to participate in video generation, the official recommendation is to install the skills first:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx skills add heygen-com/hyperframes&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Then you can ask the agent to create a video with &lt;code&gt;/hyperframes&lt;/code&gt; context, for example:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Using /hyperframes, create a 10-second product intro with a fade-in title, a background video, and background music.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;If you want to create a project manually, use the CLI:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx hyperframes init my-video
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; my-video
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx hyperframes preview
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx hyperframes render --output output.mp4&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Prepare these locally:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Node.js &amp;gt;= 22&lt;/li&gt;
+&lt;li&gt;FFmpeg&lt;/li&gt;
+&lt;li&gt;an environment that can run Chromium / Puppeteer&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Conclusion&lt;span class="hx-absolute -hx-mt-20" id="conclusion"&gt;&lt;/span&gt;
+&lt;a href="#conclusion" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The core value of HyperFrames is not &amp;ldquo;another video editor.&amp;rdquo; It brings video generation back into the web stack: HTML handles structure, CSS and animation libraries handle presentation, the browser handles rendering, and FFmpeg handles output.&lt;/p&gt;
+&lt;p&gt;For developers, that means videos can be generated, versioned, and automated like web pages. For AI agents, it provides a target format that is easier to understand and operate.&lt;/p&gt;
+&lt;p&gt;If you are working on content automation, batch video generation, data videos, or text-to-renderable-video workflows for AI agents, HyperFrames is an open-source project worth watching.&lt;/p&gt;</description></item></channel></rss>

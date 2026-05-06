@@ -1,0 +1,210 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – Codex</title><link>https://silenceper.com/en/tags/codex/</link><description>Recent content in Codex on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en-US</language><lastBuildDate>Mon, 04 May 2026 15:49:45 +0800</lastBuildDate><atom:link href="https://silenceper.com/en/tags/codex/index.xml" rel="self" type="application/rss+xml"/><item><title>Keep Codex Fast: A Safe Maintenance Skill for Keeping Local Codex State Lightweight</title><link>https://silenceper.com/en/article/2026-05-04-keep-codex-fast/</link><pubDate>Mon, 04 May 2026 15:49:45 +0800</pubDate><guid>https://silenceper.com/en/article/2026-05-04-keep-codex-fast/</guid><description>
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260504/keep-codex-fast-cover.png" alt="Keep Codex Fast" loading="lazy" /&gt;&lt;/p&gt;
+&lt;h2&gt;One-line Positioning&lt;span class="hx-absolute -hx-mt-20" id="one-line-positioning"&gt;&lt;/span&gt;
+&lt;a href="#one-line-positioning" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Keep Codex Fast is a local-state maintenance skill for heavy Codex users. It inspects first, creates handoff notes, backs up important state, and then safely archives old sessions, logs, and temporary workspaces that can make the local experience feel heavier over time.&lt;/p&gt;
+&lt;h2&gt;Basic Info&lt;span class="hx-absolute -hx-mt-20" id="basic-info"&gt;&lt;/span&gt;
+&lt;a href="#basic-info" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Item&lt;/th&gt;
+&lt;th&gt;Info&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;GitHub&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://github.com/vibeforge1111/keep-codex-fast" target="_blank" rel="noopener"&gt;https://github.com/vibeforge1111/keep-codex-fast&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Author&lt;/td&gt;
+&lt;td&gt;vibeforge1111&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;License&lt;/td&gt;
+&lt;td&gt;MIT&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Main language&lt;/td&gt;
+&lt;td&gt;Python&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Default branch&lt;/td&gt;
+&lt;td&gt;main&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Positioning&lt;/td&gt;
+&lt;td&gt;Codex local-state inspection and safe maintenance skill&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Current traction&lt;/td&gt;
+&lt;td&gt;About 559 stars and 29 forks, checked on 2026-05-04&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2&gt;What Problem Does It Solve?&lt;span class="hx-absolute -hx-mt-20" id="what-problem-does-it-solve"&gt;&lt;/span&gt;
+&lt;a href="#what-problem-does-it-solve" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;After using Codex for a long time, many users run into a kind of &amp;ldquo;heaviness&amp;rdquo; that is hard to pin down:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Long conversations keep accumulating.&lt;/li&gt;
+&lt;li&gt;Old threads are frequently resumed.&lt;/li&gt;
+&lt;li&gt;Multiple repositories are active at the same time.&lt;/li&gt;
+&lt;li&gt;Local terminals, dev servers, logs, and workspaces keep piling up.&lt;/li&gt;
+&lt;li&gt;You want to clean things up, but worry about deleting useful context.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Keep Codex Fast is not about making the model answer faster. It is about organizing the local runtime state Codex leaves on your machine. Its core principle is intentionally conservative:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Make handoffs first. Archive, don&amp;rsquo;t delete. Apply changes only when you are ready.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;In other words: write continuity notes first, archive instead of deleting, and only apply changes after you have confirmed that you are ready.&lt;/p&gt;
+&lt;p&gt;This is practical for people who use Codex for real development work. The part that makes cleanup hard is usually not the files themselves. It is the project decisions, debugging paths, failed commands, and next-step plans hidden inside older chats. Keep Codex Fast turns &amp;ldquo;cleanup&amp;rdquo; into a safer workflow: inspect first, preserve recoverable context, then archive.&lt;/p&gt;
+&lt;h2&gt;Core Workflow&lt;span class="hx-absolute -hx-mt-20" id="core-workflow"&gt;&lt;/span&gt;
+&lt;a href="#core-workflow" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;pre class="mermaid hx-mt-6"&gt;
+flowchart TD
+A[Codex local state becomes heavy] --&amp;gt; B[Read-only inspection]
+B --&amp;gt; C[Generate maintenance report]
+C --&amp;gt; D{Any important old sessions?}
+D -- Yes --&amp;gt; E[Create handoff notes]
+E --&amp;gt; F[Back up important state]
+D -- No --&amp;gt; F
+F --&amp;gt; G[Archive old sessions and workspaces]
+G --&amp;gt; H[Rotate large logs]
+H --&amp;gt; I[Prune stale project references]
+I --&amp;gt; J[Inspect again and confirm results]
+&lt;/pre&gt;&lt;p&gt;The most important part of this flow is the first step: read-only inspection by default. Keep Codex Fast does not immediately move files or delete history. It first reports what local state exists and where the weight is coming from.&lt;/p&gt;
+&lt;h3&gt;1. Read-only Report by Default&lt;span class="hx-absolute -hx-mt-20" id="1-read-only-report-by-default"&gt;&lt;/span&gt;
+&lt;a href="#1-read-only-report-by-default" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The project README makes the default mode clear: it only reports. It does not write files, create backups, move directories, or mutate local Codex state. It helps you see which areas are growing, including active sessions, archived sessions, logs, old workspaces, stale project references, and heavy Node or dev processes.&lt;/p&gt;
+&lt;p&gt;That makes the first run low-risk. You can treat it as a health check rather than a cleanup operation.&lt;/p&gt;
+&lt;h3&gt;2. Handoffs First&lt;span class="hx-absolute -hx-mt-20" id="2-handoffs-first"&gt;&lt;/span&gt;
+&lt;a href="#2-handoffs-first" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Keep Codex Fast puts special emphasis on handoff notes. A handoff is a small continuity document that records:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;what you are working on;&lt;/li&gt;
+&lt;li&gt;what has already changed;&lt;/li&gt;
+&lt;li&gt;which files matter;&lt;/li&gt;
+&lt;li&gt;which commands or checks have already been run;&lt;/li&gt;
+&lt;li&gt;what errors, warnings, or open problems remain;&lt;/li&gt;
+&lt;li&gt;what should happen next.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;With that document in place, you can archive a heavy old chat and continue from a fresh Codex session without relying on a growing historical thread.&lt;/p&gt;
+&lt;h3&gt;3. Back Up First, Archive Instead of Deleting&lt;span class="hx-absolute -hx-mt-20" id="3-back-up-first-archive-instead-of-deleting"&gt;&lt;/span&gt;
+&lt;a href="#3-back-up-first-archive-instead-of-deleting" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;When it actually performs maintenance, Keep Codex Fast still takes the conservative path: back up important state first, then move old sessions, stale workspaces, and large logs into an archive location. It removes items from the hot path instead of permanently deleting them.&lt;/p&gt;
+&lt;p&gt;According to the project description, it can handle:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;old non-pinned active sessions;&lt;/li&gt;
+&lt;li&gt;expired worktrees;&lt;/li&gt;
+&lt;li&gt;large &lt;code&gt;logs_2.sqlite*&lt;/code&gt; log files;&lt;/li&gt;
+&lt;li&gt;stale or temporary project references in &lt;code&gt;config.toml&lt;/code&gt;;&lt;/li&gt;
+&lt;li&gt;extended Windows path inconsistencies such as &lt;code&gt;\\?\C:\...&lt;/code&gt;;&lt;/li&gt;
+&lt;li&gt;reports for heavy Node or dev processes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;4. Manual Application, Not Automatic Cleanup&lt;span class="hx-absolute -hx-mt-20" id="4-manual-application-not-automatic-cleanup"&gt;&lt;/span&gt;
+&lt;a href="#4-manual-application-not-automatic-cleanup" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The project also draws an important boundary: scheduled maintenance is better suited for reminders and reports, not automatic cleanup. The reason is simple. Automation cannot know which old sessions are still important, or whether a handoff is good enough.&lt;/p&gt;
+&lt;p&gt;A safer workflow is to inspect regularly, confirm manually, and only apply maintenance after Codex is closed or after explicitly waiting for Codex to exit.&lt;/p&gt;
+&lt;h2&gt;Who Is It For?&lt;span class="hx-absolute -hx-mt-20" id="who-is-it-for"&gt;&lt;/span&gt;
+&lt;a href="#who-is-it-for" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Keep Codex Fast is most useful for Codex users who:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;use Codex for development every day;&lt;/li&gt;
+&lt;li&gt;work across multiple repositories;&lt;/li&gt;
+&lt;li&gt;keep long chat histories;&lt;/li&gt;
+&lt;li&gt;often resume old threads for debugging or implementation;&lt;/li&gt;
+&lt;li&gt;run multiple local terminals, services, or worktrees;&lt;/li&gt;
+&lt;li&gt;want to clean local Codex state without losing useful context.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;If you only open Codex occasionally for small questions, you may not feel the value yet. But once Codex becomes part of your daily development workflow, this kind of local-state maintenance becomes increasingly important.&lt;/p&gt;
+&lt;h2&gt;Quick Start&lt;span class="hx-absolute -hx-mt-20" id="quick-start"&gt;&lt;/span&gt;
+&lt;a href="#quick-start" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Inside Codex, you can ask it to install the skill directly:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Install the keep-codex-fast skill from https://github.com/vibeforge1111/keep-codex-fast&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;After installation, start with a read-only inspection:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Use $keep-codex-fast to inspect my Codex local state and recommend a safe maintenance plan.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;If the report shows old sessions worth archiving, create a handoff for any project that may continue:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Create a comprehensive handoff document for this repo/session before I archive Codex history.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Include:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- repo/path and branch
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- current goal
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- what we already completed
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- files touched or investigated
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- commands/tests already run
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- known errors, warnings, or failing checks
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- open decisions
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- constraints, user preferences, and do-not-touch areas
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- the next 3-7 concrete steps
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Also include a reactivation prompt I can paste into a fresh Codex chat so it can continue from this handoff without relying on the old chat context.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;After important sessions have handoff notes, you can consider safe maintenance:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Use $keep-codex-fast to apply safe Codex maintenance.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Before changing anything, confirm that important active repo chats have handoff docs or do not need them.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Then back up first, archive instead of deleting, move stale worktrees, rotate large logs, prune dead config references, and verify the result.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;If Codex is currently running, do not mutate local state. Tell me to close Codex first.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;If you prefer running the script directly, the project also provides a CLI path:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;python scripts/keep_codex_fast.py&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Beyond the read-only report, you can use options such as:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;python scripts/keep_codex_fast.py --details
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;python scripts/keep_codex_fast.py --backup-only
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;python scripts/keep_codex_fast.py --apply --archive-older-than-days &lt;span class="m"&gt;10&lt;/span&gt; --worktree-older-than-days &lt;span class="m"&gt;7&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;python scripts/keep_codex_fast.py --apply --wait-for-codex-exit&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h2&gt;Conclusion&lt;span class="hx-absolute -hx-mt-20" id="conclusion"&gt;&lt;/span&gt;
+&lt;a href="#conclusion" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The value of Keep Codex Fast is not aggressive cleanup. Its value is turning Codex local maintenance into a controlled process: report first, hand off first, back up first, then archive.&lt;/p&gt;
+&lt;p&gt;For heavy Codex users, old sessions and local state are both a burden and an asset. The project&amp;rsquo;s approach is practical: extract truly valuable context into handoff notes, move state that does not need to stay on the hot path, and let new Codex sessions start light again.&lt;/p&gt;
+&lt;p&gt;If your local Codex experience already feels heavier, Keep Codex Fast is worth running in read-only mode first. Even if you do not apply cleanup immediately, it can show which local state is growing and how to handle it safely later.&lt;/p&gt;</description></item></channel></rss>

@@ -1,4 +1,4 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – Paseo</title><link>https://silenceper.com/tags/paseo/</link><description>Recent content in Paseo on silenceper</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 14 Apr 2026 00:00:00 +0800</lastBuildDate><atom:link href="https://silenceper.com/tags/paseo/index.xml" rel="self" type="application/rss+xml"/><item><title>Paseo 是什么？一个用来远程管理 coding agent 的开源项目</title><link>https://silenceper.com/blog/2026-04-14-paseo/</link><pubDate>Tue, 14 Apr 2026 00:00:00 +0800</pubDate><guid>https://silenceper.com/blog/2026-04-14-paseo/</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – Paseo</title><link>https://silenceper.com/tags/paseo/</link><description>Recent content in Paseo on silenceper</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 14 Apr 2026 00:00:00 +0800</lastBuildDate><atom:link href="https://silenceper.com/tags/paseo/index.xml" rel="self" type="application/rss+xml"/><item><title>Paseo 是什么？一个用来远程管理 coding agent 的开源项目</title><link>https://silenceper.com/article/2026-04-14-paseo/</link><pubDate>Tue, 14 Apr 2026 00:00:00 +0800</pubDate><guid>https://silenceper.com/article/2026-04-14-paseo/</guid><description>
 &lt;p&gt;Paseo 不是新的大模型，也不是又一个“AI IDE”。如果非要给它找一个更准确的位置，我会觉得它更像是放在现有 coding agent 外面的一层管理与调度工具，用来把 Claude Code、Codex、OpenCode 这类东西统一起来，并且把使用场景从“只能坐在电脑前操作”，延伸到手机、桌面端、Web 和 CLI。&lt;/p&gt;
 &lt;h2&gt;Paseo 想解决什么问题&lt;span class="hx-absolute -hx-mt-20" id="paseo-想解决什么问题"&gt;&lt;/span&gt;
 &lt;a href="#paseo-%e6%83%b3%e8%a7%a3%e5%86%b3%e4%bb%80%e4%b9%88%e9%97%ae%e9%a2%98" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;如果你已经开始把 coding agent 放进日常工作流里，那你大概率会越来越熟悉一种状态：&lt;/p&gt;
@@ -78,7 +78,4 @@
 &lt;li&gt;官网：https://paseo.sh&lt;/li&gt;
 &lt;li&gt;GitHub：https://github.com/getpaseo/paseo&lt;/li&gt;
 &lt;li&gt;Docs：https://paseo.sh/docs&lt;/li&gt;
-&lt;/ul&gt;
-&lt;blockquote&gt;
-&lt;p&gt;注：文中关于项目定位、支持对象和产品形态的描述，主要参考了 Paseo 官网首页、GitHub README 与第三方项目收录页中的公开介绍，并做了归纳整理。&lt;/p&gt;
-&lt;/blockquote&gt;</description></item></channel></rss>
+&lt;/ul&gt;</description></item></channel></rss>
