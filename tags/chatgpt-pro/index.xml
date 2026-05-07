@@ -1,0 +1,278 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – ChatGPT Pro</title><link>https://silenceper.com/tags/chatgpt-pro/</link><description>Recent content in ChatGPT Pro on silenceper</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 07 May 2026 22:30:00 +0800</lastBuildDate><atom:link href="https://silenceper.com/tags/chatgpt-pro/index.xml" rel="self" type="application/rss+xml"/><item><title>如何免费申请 ChatGPT Pro：OpenAI Codex for Open Source 开源计划指南</title><link>https://silenceper.com/article/2026-05-07-free-chatgpt-pro-codex-for-oss/</link><pubDate>Thu, 07 May 2026 22:30:00 +0800</pubDate><guid>https://silenceper.com/article/2026-05-07-free-chatgpt-pro-codex-for-oss/</guid><description>
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260507/codex-for-oss-official-page-screenshot.png" alt="OpenAI Developers Codex for Open Source 官方页面截图" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;很多人搜索“如何免费使用 ChatGPT”，但更准确的说法应该是：&lt;strong&gt;如何通过 OpenAI 官方计划，合规申请一段时间的 ChatGPT Pro 权益&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;ChatGPT 本身已经有免费版本。如果你只是普通用户，并没有维护开源项目，那么这篇文章不适合把它理解成“免费领取 Pro”的教程。&lt;/p&gt;
+&lt;p&gt;但如果你是开源项目维护者，OpenAI 的 &lt;a href="https://developers.openai.com/community/codex-for-oss" target="_blank" rel="noopener"&gt;Codex for Open Source&lt;/a&gt; 计划确实提供了一个官方申请渠道。根据 OpenAI 官方页面，开源维护者可以申请 API credits、6 个月 ChatGPT Pro with Codex，以及有条件的 Codex Security 访问权限。&lt;/p&gt;
+&lt;p&gt;本文按 2026 年 5 月 7 日可见的 OpenAI 官方页面整理。项目规则和表单可能会变化，申请前建议再核对一次官方页面。&lt;/p&gt;
+&lt;h2&gt;一句话总结&lt;span class="hx-absolute -hx-mt-20" id="一句话总结"&gt;&lt;/span&gt;
+&lt;a href="#%e4%b8%80%e5%8f%a5%e8%af%9d%e6%80%bb%e7%bb%93" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Codex for Open Source 不是面向所有人的免费 Pro 活动，而是 OpenAI 面向开源维护者的支持计划。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如果你维护公共开源项目，并且能说明项目价值、维护者角色和 AI 工具在开源维护中的真实用途，就可以尝试申请。&lt;/p&gt;
+&lt;h2&gt;这个计划是什么？&lt;span class="hx-absolute -hx-mt-20" id="这个计划是什么"&gt;&lt;/span&gt;
+&lt;a href="#%e8%bf%99%e4%b8%aa%e8%ae%a1%e5%88%92%e6%98%af%e4%bb%80%e4%b9%88" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;a href="https://developers.openai.com/community/codex-for-oss" target="_blank" rel="noopener"&gt;Codex for Open Source&lt;/a&gt; 是 OpenAI 面向重要开源软件维护者推出的支持计划。&lt;/p&gt;
+&lt;p&gt;OpenAI 在官方说明中提到，开源维护者经常要处理 pull request review、issue triage、release 维护、安全和代码质量保障等工作。这个计划的目的，是用 Codex、ChatGPT Pro、API credits 等工具，降低真实开源维护流程里的编码和审查负担。&lt;/p&gt;
+&lt;p&gt;官方页面目前列出的权益包括：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;权益&lt;/th&gt;
+&lt;th&gt;适合用途&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;6 个月 ChatGPT Pro with Codex&lt;/td&gt;
+&lt;td&gt;日常编码、代码理解、issue 分析、PR review、文档和维护工作流&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;API credits&lt;/td&gt;
+&lt;td&gt;PR 自动审查、维护自动化、release workflow、开源项目机器人&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Codex Security&lt;/td&gt;
+&lt;td&gt;对符合条件的仓库进行更深入的安全相关分析&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;需要注意：这些权益不是保证发放。OpenAI 的项目条款说明，获批者可能收到一项或多项权益，具体由 OpenAI 审核决定，权益的可用性、期限、范围和时间也可能因申请者、仓库或使用场景不同而变化。&lt;/p&gt;
+&lt;h2&gt;哪些人适合申请？&lt;span class="hx-absolute -hx-mt-20" id="哪些人适合申请"&gt;&lt;/span&gt;
+&lt;a href="#%e5%93%aa%e4%ba%9b%e4%ba%ba%e9%80%82%e5%90%88%e7%94%b3%e8%af%b7" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;这个计划更适合下面几类人。&lt;/p&gt;
+&lt;h3&gt;1. 开源项目的主维护者或核心维护者&lt;span class="hx-absolute -hx-mt-20" id="1-开源项目的主维护者或核心维护者"&gt;&lt;/span&gt;
+&lt;a href="#1-%e5%bc%80%e6%ba%90%e9%a1%b9%e7%9b%ae%e7%9a%84%e4%b8%bb%e7%bb%b4%e6%8a%a4%e8%80%85%e6%88%96%e6%a0%b8%e5%bf%83%e7%bb%b4%e6%8a%a4%e8%80%85" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;如果你是某个开源项目的 primary maintainer 或 core maintainer，并且日常负责 issue、PR、release、安全修复、文档、测试或社区维护，那么你比较适合申请。&lt;/p&gt;
+&lt;p&gt;申请表会要求你说明自己的维护者角色，所以不要只写“我是用户”或“我关注这个项目”，而要说清楚你实际负责什么维护工作。&lt;/p&gt;
+&lt;h3&gt;2. 维护公共且被真实使用的项目&lt;span class="hx-absolute -hx-mt-20" id="2-维护公共且被真实使用的项目"&gt;&lt;/span&gt;
+&lt;a href="#2-%e7%bb%b4%e6%8a%a4%e5%85%ac%e5%85%b1%e4%b8%94%e8%a2%ab%e7%9c%9f%e5%ae%9e%e4%bd%bf%e7%94%a8%e7%9a%84%e9%a1%b9%e7%9b%ae" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;官方页面建议 core maintainer 或维护 widely used public project 的人申请。&lt;/p&gt;
+&lt;p&gt;这不意味着只有超高 stars 的项目才有机会。如果你的项目在某个语言、框架、插件、基础设施或开发者工具生态中有价值，也可以在申请材料里解释它为什么重要。&lt;/p&gt;
+&lt;p&gt;可以准备这些证据：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;GitHub stars、forks、contributors&lt;/li&gt;
+&lt;li&gt;npm、PyPI、Maven、crates.io、Docker Hub 等平台下载量&lt;/li&gt;
+&lt;li&gt;下游依赖、用户案例、生产使用场景&lt;/li&gt;
+&lt;li&gt;最近 3 到 6 个月的 PR、issue、release 活跃度&lt;/li&gt;
+&lt;li&gt;你本人负责的 review、triage、release、安全修复或文档维护工作&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;3. 有明确 AI 维护工作流的人&lt;span class="hx-absolute -hx-mt-20" id="3-有明确-ai-维护工作流的人"&gt;&lt;/span&gt;
+&lt;a href="#3-%e6%9c%89%e6%98%8e%e7%a1%ae-ai-%e7%bb%b4%e6%8a%a4%e5%b7%a5%e4%bd%9c%e6%b5%81%e7%9a%84%e4%ba%ba" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;如果你计划把 Codex 或 API credits 用在 PR 初审、变更摘要、测试建议、release notes、维护脚本、issue 分类等场景，申请材料会更有说服力。&lt;/p&gt;
+&lt;p&gt;一个好的申请不应该只写“我想免费用 ChatGPT Pro”，而应该写清楚：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;你的项目为什么值得被支持；&lt;/li&gt;
+&lt;li&gt;你在项目中承担什么维护责任；&lt;/li&gt;
+&lt;li&gt;ChatGPT Pro、Codex 或 API credits 会如何帮助开源维护；&lt;/li&gt;
+&lt;li&gt;AI 输出会如何被维护者复核，而不是直接无人值守地合并。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;申请前需要准备什么？&lt;span class="hx-absolute -hx-mt-20" id="申请前需要准备什么"&gt;&lt;/span&gt;
+&lt;a href="#%e7%94%b3%e8%af%b7%e5%89%8d%e9%9c%80%e8%a6%81%e5%87%86%e5%a4%87%e4%bb%80%e4%b9%88" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;OpenAI 官方申请表目前需要填写这些信息：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;字段&lt;/th&gt;
+&lt;th&gt;说明&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;First name / Last name&lt;/td&gt;
+&lt;td&gt;你的姓名&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Email&lt;/td&gt;
+&lt;td&gt;与 ChatGPT 账号关联的邮箱&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;GitHub username&lt;/td&gt;
+&lt;td&gt;GitHub profile visibility 需要设为 public&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;GitHub repository URL&lt;/td&gt;
+&lt;td&gt;仓库需要设为 public&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;维护者角色&lt;/td&gt;
+&lt;td&gt;说明你是 primary maintainer 还是 core maintainer&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Why does this repository qualify?&lt;/td&gt;
+&lt;td&gt;说明项目为什么符合条件，可写 stars、monthly downloads 或生态重要性，限制 500 字符&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;I&amp;rsquo;m interested in&lt;/td&gt;
+&lt;td&gt;可选择 Codex Security、API credits&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;OpenAI Organization ID&lt;/td&gt;
+&lt;td&gt;申请表提供了查询入口&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;How will you use API credits for your project?&lt;/td&gt;
+&lt;td&gt;说明 API credits 如何用于项目维护，限制 500 字符&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Anything else we should know?&lt;/td&gt;
+&lt;td&gt;补充项目背景、维护压力或其他说明，限制 500 字符&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;申请表还说明，OpenAI 会 rolling basis review applications，并通过 email 通知 selected applicants。&lt;/p&gt;
+&lt;h2&gt;具体申请步骤&lt;span class="hx-absolute -hx-mt-20" id="具体申请步骤"&gt;&lt;/span&gt;
+&lt;a href="#%e5%85%b7%e4%bd%93%e7%94%b3%e8%af%b7%e6%ad%a5%e9%aa%a4" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;第 1 步：确认自己是否符合申请定位&lt;span class="hx-absolute -hx-mt-20" id="第-1-步确认自己是否符合申请定位"&gt;&lt;/span&gt;
+&lt;a href="#%e7%ac%ac-1-%e6%ad%a5%e7%a1%ae%e8%ae%a4%e8%87%aa%e5%b7%b1%e6%98%af%e5%90%a6%e7%ac%a6%e5%90%88%e7%94%b3%e8%af%b7%e5%ae%9a%e4%bd%8d" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;先判断自己是否真的在维护开源项目。&lt;/p&gt;
+&lt;p&gt;不要为了申请权益临时创建空仓库，也不要夸大项目影响力。OpenAI 的项目条款要求申请者提供准确、完整的个人、仓库和维护角色信息；OpenAI 也可能考虑仓库使用情况、生态重要性、活跃维护证据、角色或权限以及项目容量等因素。&lt;/p&gt;
+&lt;p&gt;更直接地说：&lt;strong&gt;提交申请不等于一定获得 ChatGPT Pro、API credits 或 Codex Security。&lt;/strong&gt;&lt;/p&gt;
+&lt;h3&gt;第 2 步：整理项目影响力材料&lt;span class="hx-absolute -hx-mt-20" id="第-2-步整理项目影响力材料"&gt;&lt;/span&gt;
+&lt;a href="#%e7%ac%ac-2-%e6%ad%a5%e6%95%b4%e7%90%86%e9%a1%b9%e7%9b%ae%e5%bd%b1%e5%93%8d%e5%8a%9b%e6%9d%90%e6%96%99" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;建议提前准备一段 500 字符以内的项目资格说明。重点不是堆形容词，而是给可验证的信息。&lt;/p&gt;
+&lt;p&gt;可以按这个结构写：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;I am the core maintainer of [project], responsible for PR review, issue triage, releases, and security fixes. The project has [stars/downloads/users] and is used by [ecosystem/users/downstream projects]. It plays an important role in [specific ecosystem or scenario].&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;如果你的项目 stars 不高，但在某个细分生态里很关键，就把这个事实说清楚。例如它是某个框架插件、部署工具、SDK、MCP server、CLI 工具、语言生态组件，或者被一批真实项目依赖。&lt;/p&gt;
+&lt;h3&gt;第 3 步：打开官方申请页面&lt;span class="hx-absolute -hx-mt-20" id="第-3-步打开官方申请页面"&gt;&lt;/span&gt;
+&lt;a href="#%e7%ac%ac-3-%e6%ad%a5%e6%89%93%e5%bc%80%e5%ae%98%e6%96%b9%e7%94%b3%e8%af%b7%e9%a1%b5%e9%9d%a2" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;进入 &lt;a href="https://developers.openai.com/community/codex-for-oss" target="_blank" rel="noopener"&gt;Codex for Open Source 官方页面&lt;/a&gt;，点击页面里的 &lt;strong&gt;Apply today&lt;/strong&gt;，进入 &lt;a href="https://openai.com/form/codex-for-oss/" target="_blank" rel="noopener"&gt;OpenAI 官方申请表&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;官方表单说明，入选维护者可获得：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;6 months of ChatGPT Pro, which includes Codex&lt;/li&gt;
+&lt;li&gt;Conditional access to Codex Security&lt;/li&gt;
+&lt;li&gt;API credits for coding, maintainer automation, release workflows, and core open source work&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;第 4 步：填写关键说明&lt;span class="hx-absolute -hx-mt-20" id="第-4-步填写关键说明"&gt;&lt;/span&gt;
+&lt;a href="#%e7%ac%ac-4-%e6%ad%a5%e5%a1%ab%e5%86%99%e5%85%b3%e9%94%ae%e8%af%b4%e6%98%8e" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;申请表里最关键的是两段短文本。&lt;/p&gt;
+&lt;p&gt;第一段是 &lt;strong&gt;Why does this repository qualify?&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;这段要回答：你的仓库为什么值得被支持？&lt;/p&gt;
+&lt;p&gt;可以参考：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;I am the primary maintainer of [project], responsible for PR review, issue triage, releases, and documentation. The project has [stars] GitHub stars and about [downloads] monthly downloads. It is used by [downstream projects/users] and provides [specific value] for the [ecosystem] ecosystem.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;第二段是 &lt;strong&gt;How will you use API credits for your project?&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;这段要回答：你准备如何把 API credits 用在开源维护上？&lt;/p&gt;
+&lt;p&gt;可以参考：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;We plan to use API credits for pull request review, change summaries, test suggestions, release note generation, issue triage, and maintainer automation. All outputs will be reviewed by maintainers and used only for authorized repositories and core open-source maintenance workflows.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;重点是把“使用用途”限定在开源维护里，不要写成个人娱乐、商业项目试用或给团队随意共享。&lt;/p&gt;
+&lt;h3&gt;第 5 步：提交并等待邮件&lt;span class="hx-absolute -hx-mt-20" id="第-5-步提交并等待邮件"&gt;&lt;/span&gt;
+&lt;a href="#%e7%ac%ac-5-%e6%ad%a5%e6%8f%90%e4%ba%a4%e5%b9%b6%e7%ad%89%e5%be%85%e9%82%ae%e4%bb%b6" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;提交后等待 OpenAI 审核。&lt;/p&gt;
+&lt;p&gt;官方表单写明，申请会滚动审核，入选者会通过邮件收到通知。没有收到邮件，通常就代表还在等待或没有被选中；官方条款也说明 OpenAI 可以自行批准或拒绝申请，并可能要求额外信息来验证身份、仓库关联、维护者状态或仓库控制权。&lt;/p&gt;
+&lt;h2&gt;提高通过率的写法&lt;span class="hx-absolute -hx-mt-20" id="提高通过率的写法"&gt;&lt;/span&gt;
+&lt;a href="#%e6%8f%90%e9%ab%98%e9%80%9a%e8%bf%87%e7%8e%87%e7%9a%84%e5%86%99%e6%b3%95" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;不要只强调“我想免费用 ChatGPT”&lt;span class="hx-absolute -hx-mt-20" id="不要只强调我想免费用-chatgpt"&gt;&lt;/span&gt;
+&lt;a href="#%e4%b8%8d%e8%a6%81%e5%8f%aa%e5%bc%ba%e8%b0%83%e6%88%91%e6%83%b3%e5%85%8d%e8%b4%b9%e7%94%a8-chatgpt" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;这个计划的关键词是 open-source maintenance，不是 personal free access。&lt;/p&gt;
+&lt;p&gt;更好的表达是：你希望用 ChatGPT Pro with Codex 减少维护负担，提高 PR review、bug triage、release、文档和测试效率。&lt;/p&gt;
+&lt;h3&gt;项目影响力要具体&lt;span class="hx-absolute -hx-mt-20" id="项目影响力要具体"&gt;&lt;/span&gt;
+&lt;a href="#%e9%a1%b9%e7%9b%ae%e5%bd%b1%e5%93%8d%e5%8a%9b%e8%a6%81%e5%85%b7%e4%bd%93" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;“我的项目很重要”不如下面这种表达更有说服力：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;The project has 2,000 GitHub stars, 50,000 monthly npm downloads, and is used by several downstream developer tools.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;如果没有下载量，也可以写活跃度、下游引用、社区使用场景或生态位置。&lt;/p&gt;
+&lt;h3&gt;维护者身份要清晰&lt;span class="hx-absolute -hx-mt-20" id="维护者身份要清晰"&gt;&lt;/span&gt;
+&lt;a href="#%e7%bb%b4%e6%8a%a4%e8%80%85%e8%ba%ab%e4%bb%bd%e8%a6%81%e6%b8%85%e6%99%b0" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;申请表要求 GitHub profile 和 repository 公开。你也应该在申请材料里讲清楚自己是 primary maintainer 还是 core maintainer，以及你负责哪些维护动作。&lt;/p&gt;
+&lt;p&gt;比如：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;review pull requests&lt;/li&gt;
+&lt;li&gt;triage issues&lt;/li&gt;
+&lt;li&gt;maintain releases&lt;/li&gt;
+&lt;li&gt;fix security issues&lt;/li&gt;
+&lt;li&gt;maintain documentation&lt;/li&gt;
+&lt;li&gt;manage CI or release workflow&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;API credits 用途要合规&lt;span class="hx-absolute -hx-mt-20" id="api-credits-用途要合规"&gt;&lt;/span&gt;
+&lt;a href="#api-credits-%e7%94%a8%e9%80%94%e8%a6%81%e5%90%88%e8%a7%84" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;不要写：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;I want to use the credits for my personal AI experiments.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;更建议写：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;We will use API credits for PR review summaries, test suggestions, release note generation, and issue triage. Maintainers will review all AI outputs before taking action.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h2&gt;注意事项&lt;span class="hx-absolute -hx-mt-20" id="注意事项"&gt;&lt;/span&gt;
+&lt;a href="#%e6%b3%a8%e6%84%8f%e4%ba%8b%e9%a1%b9" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;1. 不是申请就一定成功&lt;span class="hx-absolute -hx-mt-20" id="1-不是申请就一定成功"&gt;&lt;/span&gt;
+&lt;a href="#1-%e4%b8%8d%e6%98%af%e7%94%b3%e8%af%b7%e5%b0%b1%e4%b8%80%e5%ae%9a%e6%88%90%e5%8a%9f" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;OpenAI 的项目条款写得很清楚：提交申请不保证被选中、获得资助或获得访问权限。&lt;/p&gt;
+&lt;p&gt;OpenAI 可能根据仓库使用情况、生态重要性、活跃维护证据、维护者角色或权限，以及项目容量等因素综合判断。&lt;/p&gt;
+&lt;h3&gt;2. 权益不可转让、出售或共享&lt;span class="hx-absolute -hx-mt-20" id="2-权益不可转让出售或共享"&gt;&lt;/span&gt;
+&lt;a href="#2-%e6%9d%83%e7%9b%8a%e4%b8%8d%e5%8f%af%e8%bd%ac%e8%ae%a9%e5%87%ba%e5%94%ae%e6%88%96%e5%85%b1%e4%ba%ab" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;项目权益是个人、有限、不可转让、没有现金价值的。不能出售、转让、再授权、交换或共享。&lt;/p&gt;
+&lt;p&gt;如果你获得兑换码、邀请或激活流程，也需要按 OpenAI 提供的兑换说明和附加条款使用。&lt;/p&gt;
+&lt;h3&gt;3. Codex Security 和 API credits 可能需要额外审核&lt;span class="hx-absolute -hx-mt-20" id="3-codex-security-和-api-credits-可能需要额外审核"&gt;&lt;/span&gt;
+&lt;a href="#3-codex-security-%e5%92%8c-api-credits-%e5%8f%af%e8%83%bd%e9%9c%80%e8%a6%81%e9%a2%9d%e5%a4%96%e5%ae%a1%e6%a0%b8" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Codex Security 和 API credits 属于额外权益，可能需要单独审核、额外资格检查或附加条款。&lt;/p&gt;
+&lt;p&gt;尤其是 Codex Security，OpenAI 可能会限制在申请者拥有、维护或被授权管理的仓库中使用。&lt;/p&gt;
+&lt;h3&gt;4. 不要扫描或审查未授权仓库&lt;span class="hx-absolute -hx-mt-20" id="4-不要扫描或审查未授权仓库"&gt;&lt;/span&gt;
+&lt;a href="#4-%e4%b8%8d%e8%a6%81%e6%89%ab%e6%8f%8f%e6%88%96%e5%ae%a1%e6%9f%a5%e6%9c%aa%e6%8e%88%e6%9d%83%e4%bb%93%e5%ba%93" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;官方条款明确限制：不要用该计划，包括 Codex Security，去扫描、探测、测试或审查你不拥有、也没有权限审查的仓库、系统或代码库。&lt;/p&gt;
+&lt;p&gt;如果授权不清楚，OpenAI 可能要求证明控制权或授权，也可能限制或撤销访问。&lt;/p&gt;
+&lt;h2&gt;可直接复制的申请文案模板&lt;span class="hx-absolute -hx-mt-20" id="可直接复制的申请文案模板"&gt;&lt;/span&gt;
+&lt;a href="#%e5%8f%af%e7%9b%b4%e6%8e%a5%e5%a4%8d%e5%88%b6%e7%9a%84%e7%94%b3%e8%af%b7%e6%96%87%e6%a1%88%e6%a8%a1%e6%9d%bf" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;项目资格说明模板&lt;span class="hx-absolute -hx-mt-20" id="项目资格说明模板"&gt;&lt;/span&gt;
+&lt;a href="#%e9%a1%b9%e7%9b%ae%e8%b5%84%e6%a0%bc%e8%af%b4%e6%98%8e%e6%a8%a1%e6%9d%bf" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;I am the core maintainer of [project name], responsible for PR review, issue triage, releases, documentation, and security fixes. The project has [stars/downloads/users] and is used by [ecosystem/users/downstream projects]. It plays an important role in [specific ecosystem or scenario], and ChatGPT Pro with Codex would help reduce review workload and maintain code quality.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;API credits 使用计划模板&lt;span class="hx-absolute -hx-mt-20" id="api-credits-使用计划模板"&gt;&lt;/span&gt;
+&lt;a href="#api-credits-%e4%bd%bf%e7%94%a8%e8%ae%a1%e5%88%92%e6%a8%a1%e6%9d%bf" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;We plan to use API credits for pull request review, change summaries, test suggestions, release note generation, issue triage, and maintainer automation. All outputs will be reviewed by maintainers before use, and credits will only be used for authorized repositories and core open-source maintenance workflows.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h2&gt;总结&lt;span class="hx-absolute -hx-mt-20" id="总结"&gt;&lt;/span&gt;
+&lt;a href="#%e6%80%bb%e7%bb%93" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;通过 Codex for Open Source 申请 ChatGPT Pro，本质上不是“免费薅羊毛”，而是 OpenAI 对开源维护工作的支持。&lt;/p&gt;
+&lt;p&gt;如果你确实在维护公共开源项目，并且能清楚说明项目价值、维护职责和 AI 工具的使用场景，就值得认真准备并提交申请。&lt;/p&gt;
+&lt;p&gt;对开源维护者来说，这个计划最有价值的地方不只是 6 个月 ChatGPT Pro，而是把 Codex、API credits 和安全工具接入真实维护流程：更快 review PR，更高效处理 issue，更轻松生成 release notes，也让维护者把时间花在更关键的架构、质量和社区决策上。&lt;/p&gt;
+&lt;h2&gt;官方链接&lt;span class="hx-absolute -hx-mt-20" id="官方链接"&gt;&lt;/span&gt;
+&lt;a href="#%e5%ae%98%e6%96%b9%e9%93%be%e6%8e%a5" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://developers.openai.com/community/codex-for-oss" target="_blank" rel="noopener"&gt;Codex for Open Source 官方说明&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://openai.com/form/codex-for-oss/" target="_blank" rel="noopener"&gt;Codex for Open Source 申请表&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://developers.openai.com/codex/codex-for-oss-terms" target="_blank" rel="noopener"&gt;Codex for Open Source Program Terms&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description></item></channel></rss>

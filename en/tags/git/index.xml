@@ -1,0 +1,888 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – Git</title><link>https://silenceper.com/en/tags/git/</link><description>Recent content in Git on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en-US</language><lastBuildDate>Thu, 07 May 2026 23:39:08 +0800</lastBuildDate><atom:link href="https://silenceper.com/en/tags/git/index.xml" rel="self" type="application/rss+xml"/><item><title>Codex Beginner Guide: From Zero to Having AI Read, Edit, and Deliver Code with You</title><link>https://silenceper.com/en/article/2026-05-07-codex-beginner-guide/</link><pubDate>Thu, 07 May 2026 23:39:08 +0800</pubDate><guid>https://silenceper.com/en/article/2026-05-07-codex-beginner-guide/</guid><description>
+&lt;blockquote&gt;
+&lt;p&gt;In this article, &lt;strong&gt;Codex&lt;/strong&gt; refers to OpenAI&amp;rsquo;s current Codex coding agent. It can help you read code, understand unfamiliar repositories, review code, debug problems, and work through Codex App, IDE extensions, CLI, and Web / Cloud entry points.&lt;/p&gt;
+&lt;p&gt;The screenshots in this article come from official OpenAI pages or OpenAI&amp;rsquo;s official GitHub repository. The actual UI may change over time.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2&gt;Who This Is For&lt;span class="hx-absolute -hx-mt-20" id="who-this-is-for"&gt;&lt;/span&gt;
+&lt;a href="#who-this-is-for" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;This guide is for people who have never used Codex before, including readers who are not yet comfortable writing code.&lt;/p&gt;
+&lt;p&gt;You do not need to understand every AI agent concept first. Start with one simple idea:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Codex is not just an AI chat window. It can enter a code project, read files, edit files, run commands, and show you the resulting diff.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Because Codex can touch project files, the most important beginner habit is not asking it to &amp;ldquo;build a complete project&amp;rdquo; right away. It is learning how to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;ask it to read the project first;&lt;/li&gt;
+&lt;li&gt;ask it to propose a plan;&lt;/li&gt;
+&lt;li&gt;make one small change at a time;&lt;/li&gt;
+&lt;li&gt;review the diff;&lt;/li&gt;
+&lt;li&gt;run tests;&lt;/li&gt;
+&lt;li&gt;keep a Git checkpoint.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Table of Contents&lt;span class="hx-absolute -hx-mt-20" id="table-of-contents"&gt;&lt;/span&gt;
+&lt;a href="#table-of-contents" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;a href="#1-what-is-codex" &gt;What Is Codex?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#2-what-does-codex-look-like" &gt;What Does Codex Look Like?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#3-five-keywords-beginners-should-know" &gt;Five Keywords Beginners Should Know&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#4-choosing-an-entry-point-app-ide-cli-or-web" &gt;Choosing an Entry Point: App, IDE, CLI, or Web&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#5-first-use-start-with-codex-app" &gt;First Use: Start with Codex App&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#6-first-prompt-ask-codex-to-read-before-editing" &gt;First Prompt: Ask Codex to Read Before Editing&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#7-first-code-change-change-one-small-thing" &gt;First Code Change: Change One Small Thing&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#8-prompt-templates-you-can-copy" &gt;Prompt Templates You Can Copy&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#9-safe-usage-permissions-sandboxing-approvals-and-privacy" &gt;Safe Usage: Permissions, Sandboxing, Approvals, and Privacy&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#10-a-7-day-beginner-practice-plan" &gt;A 7-day Beginner Practice Plan&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#11-advanced-use-agentsmd-to-teach-codex-your-project" &gt;Advanced: Use AGENTS.md to Teach Codex Your Project&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#12-faq" &gt;FAQ&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;1. What Is Codex?&lt;span class="hx-absolute -hx-mt-20" id="1-what-is-codex"&gt;&lt;/span&gt;
+&lt;a href="#1-what-is-codex" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Codex is an AI coding assistant that can work inside a code project.&lt;/p&gt;
+&lt;p&gt;You can describe tasks in natural language, for example:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Please explain what this project does.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Please find the cause of this bug and make the smallest necessary fix.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Please add a unit test for this function.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Codex can read project files, analyze code, edit files when needed, run commands or tests, and then show you the result and the diff.&lt;/p&gt;
+&lt;p&gt;Put simply: ChatGPT feels like asking questions in a chat window. Codex feels more like having someone sit inside your project directory and work with you.&lt;/p&gt;
+&lt;h3&gt;The Basic Codex Workflow&lt;span class="hx-absolute -hx-mt-20" id="the-basic-codex-workflow"&gt;&lt;/span&gt;
+&lt;a href="#the-basic-codex-workflow" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;pre class="mermaid hx-mt-6"&gt;
+flowchart LR
+A[You describe a task] --&amp;gt; B[Codex reads project files]
+B --&amp;gt; C[Codex analyzes code and context]
+C --&amp;gt; D[Codex proposes a plan or edits directly]
+D --&amp;gt; E[Codex runs commands / tests / checks]
+E --&amp;gt; F[Codex shows a summary and diff]
+F --&amp;gt; G[You review, ask follow-ups, accept, or roll back]
+&lt;/pre&gt;&lt;p&gt;The most important part is the last step: &lt;strong&gt;you still review the result&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Codex is powerful, but it is not an automatic production deployer. For beginners, the safest mindset is to treat it as a capable assistant whose work still needs review.&lt;/p&gt;
+&lt;h2&gt;2. What Does Codex Look Like?&lt;span class="hx-absolute -hx-mt-20" id="2-what-does-codex-look-like"&gt;&lt;/span&gt;
+&lt;a href="#2-what-does-codex-look-like" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;Figure 1: Codex Welcome / Login Screen&lt;span class="hx-absolute -hx-mt-20" id="figure-1-codex-welcome--login-screen"&gt;&lt;/span&gt;
+&lt;a href="#figure-1-codex-welcome--login-screen" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;When you open Codex App for the first time, you usually see a welcome screen where you can continue with a ChatGPT account or enter an API key.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://images.ctfassets.net/kftzwdyauwt9/6JttRtGUPpCuYGQvs0PCjP/9c54a8e25f76148598e903bed1bddac0/Installer2.png?fm=webp&amp;amp;q=90&amp;amp;w=3840" alt="Codex welcome login screen" loading="lazy" /&gt;&lt;/p&gt;
+&lt;h3&gt;Figure 2: Choose a Project Folder&lt;span class="hx-absolute -hx-mt-20" id="figure-2-choose-a-project-folder"&gt;&lt;/span&gt;
+&lt;a href="#figure-2-choose-a-project-folder" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Codex is not only a chat tool. It usually needs to know which project it should work in. You can choose a project folder or Git repository.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://images.ctfassets.net/kftzwdyauwt9/ke4GwvCgjA68qQlcrZYiH/85d0fdb04d3d0bdd1cf99f16fd82c263/Installer3.png?fm=webp&amp;amp;q=90&amp;amp;w=3840" alt="Codex project picker" loading="lazy" /&gt;&lt;/p&gt;
+&lt;h3&gt;Figure 3: First Task Input&lt;span class="hx-absolute -hx-mt-20" id="figure-3-first-task-input"&gt;&lt;/span&gt;
+&lt;a href="#figure-3-first-task-input" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;After choosing a project, you can describe what you want Codex to do. For the first task, ask it to explain the project instead of editing code.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://images.ctfassets.net/kftzwdyauwt9/IWLhh4SZnwPrLYHfYbZYS/99c1f79ceece96c9fa9650bdcb0d2023/Installer4.png?fm=webp&amp;amp;q=90&amp;amp;w=3840" alt="Codex first task input" loading="lazy" /&gt;&lt;/p&gt;
+&lt;h3&gt;Figure 4: Codex App Main Interface&lt;span class="hx-absolute -hx-mt-20" id="figure-4-codex-app-main-interface"&gt;&lt;/span&gt;
+&lt;a href="#figure-4-codex-app-main-interface" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Codex App is a desktop workspace. It can run multiple threads, work with worktrees, use automations, and integrate with Git workflows.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developers.openai.com/images/codex/app/app-screenshot-light.webp" alt="Codex App main interface" loading="lazy" /&gt;&lt;/p&gt;
+&lt;h3&gt;Figure 5: Local / Worktree / Cloud Modes&lt;span class="hx-absolute -hx-mt-20" id="figure-5-local--worktree--cloud-modes"&gt;&lt;/span&gt;
+&lt;a href="#figure-5-local--worktree--cloud-modes" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;In Codex App, a thread can use different modes: Local, Worktree, or Cloud.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Local: work directly in the current project directory.&lt;/li&gt;
+&lt;li&gt;Worktree: isolate changes in a new Git worktree.&lt;/li&gt;
+&lt;li&gt;Cloud: run in a configured remote cloud environment.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://developers.openai.com/images/codex/app/modes-light.webp" alt="Codex App mode selector" loading="lazy" /&gt;&lt;/p&gt;
+&lt;h3&gt;Figure 6: Git Commit Panel&lt;span class="hx-absolute -hx-mt-20" id="figure-6-git-commit-panel"&gt;&lt;/span&gt;
+&lt;a href="#figure-6-git-commit-panel" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Codex App includes Git tools. It can show diffs and help with staging, committing, pushing, and creating pull requests.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developers.openai.com/images/codex/app/git-commit-light.webp" alt="Codex Git commit panel" loading="lazy" /&gt;&lt;/p&gt;
+&lt;h3&gt;Figure 7: Integrated Terminal&lt;span class="hx-absolute -hx-mt-20" id="figure-7-integrated-terminal"&gt;&lt;/span&gt;
+&lt;a href="#figure-7-integrated-terminal" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Each thread can use an integrated terminal. Common commands include:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git status
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npm &lt;span class="nb"&gt;test&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;pnpm run lint&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;img src="https://developers.openai.com/images/codex/app/integrated-terminal-light.webp" alt="Codex integrated terminal" loading="lazy" /&gt;&lt;/p&gt;
+&lt;h3&gt;Figure 8: In-app Browser&lt;span class="hx-absolute -hx-mt-20" id="figure-8-in-app-browser"&gt;&lt;/span&gt;
+&lt;a href="#figure-8-in-app-browser" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;For frontend projects, Codex can use the in-app browser to preview local pages, inspect page elements, or verify UI fixes.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developers.openai.com/images/codex/app/in-app-browser-light.webp" alt="Codex in-app browser" loading="lazy" /&gt;&lt;/p&gt;
+&lt;h3&gt;Figure 9: Codex Extension in VS Code / Cursor / Windsurf&lt;span class="hx-absolute -hx-mt-20" id="figure-9-codex-extension-in-vs-code--cursor--windsurf"&gt;&lt;/span&gt;
+&lt;a href="#figure-9-codex-extension-in-vs-code--cursor--windsurf" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;If you already use VS Code, Cursor, Windsurf, or another VS Code-compatible editor, you can use the Codex IDE extension.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn.openai.com/devhub/docs/codex-extension.webp" alt="Codex IDE extension entry" loading="lazy" /&gt;&lt;/p&gt;
+&lt;h3&gt;Figure 10: Permission Modes in the IDE&lt;span class="hx-absolute -hx-mt-20" id="figure-10-permission-modes-in-the-ide"&gt;&lt;/span&gt;
+&lt;a href="#figure-10-permission-modes-in-the-ide" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The Codex IDE extension supports modes such as Chat, Agent, and Agent Full Access. Beginners should start with Chat or normal Agent mode instead of granting Full Access immediately.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developers.openai.com/images/codex/ide/approval_mode.png" alt="Codex IDE approval mode" loading="lazy" /&gt;&lt;/p&gt;
+&lt;h3&gt;Figure 11: CLI Interface&lt;span class="hx-absolute -hx-mt-20" id="figure-11-cli-interface"&gt;&lt;/span&gt;
+&lt;a href="#figure-11-cli-interface" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Codex CLI runs the coding agent inside your terminal. It is better suited for people who are already comfortable with command-line workflows.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://github.com/openai/codex/raw/main/.github/codex-cli-splash.png" alt="Codex CLI terminal interface" loading="lazy" /&gt;&lt;/p&gt;
+&lt;h3&gt;Figure 12: Requesting Codex Review on GitHub&lt;span class="hx-absolute -hx-mt-20" id="figure-12-requesting-codex-review-on-github"&gt;&lt;/span&gt;
+&lt;a href="#figure-12-requesting-codex-review-on-github" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;After Codex Cloud / GitHub integration is configured, you can request a review in a GitHub PR comment with &lt;code&gt;@codex review&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developers.openai.com/images/codex/code-review/review-trigger.png" alt="Requesting Codex review on GitHub" loading="lazy" /&gt;&lt;/p&gt;
+&lt;h3&gt;Figure 13: Codex Review Comment in a GitHub PR&lt;span class="hx-absolute -hx-mt-20" id="figure-13-codex-review-comment-in-a-github-pr"&gt;&lt;/span&gt;
+&lt;a href="#figure-13-codex-review-comment-in-a-github-pr" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Codex can leave review comments on a PR and point to specific code locations and issues.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developers.openai.com/images/codex/code-review/review-example.png" alt="Codex GitHub review example" loading="lazy" /&gt;&lt;/p&gt;
+&lt;h2&gt;3. Five Keywords Beginners Should Know&lt;span class="hx-absolute -hx-mt-20" id="3-five-keywords-beginners-should-know"&gt;&lt;/span&gt;
+&lt;a href="#3-five-keywords-beginners-should-know" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Keyword&lt;/th&gt;
+&lt;th&gt;Beginner-friendly meaning&lt;/th&gt;
+&lt;th&gt;Why it matters&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Project folder&lt;/td&gt;
+&lt;td&gt;The folder that contains your code&lt;/td&gt;
+&lt;td&gt;Codex needs to know where it should work&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Git&lt;/td&gt;
+&lt;td&gt;A version control tool for code&lt;/td&gt;
+&lt;td&gt;If something breaks, you can roll back&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;diff&lt;/td&gt;
+&lt;td&gt;The before-and-after change&lt;/td&gt;
+&lt;td&gt;After Codex edits, you review the diff before accepting&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;PR / Pull Request&lt;/td&gt;
+&lt;td&gt;A set of changes submitted for review&lt;/td&gt;
+&lt;td&gt;Common in Codex Cloud and GitHub workflows&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Sandbox / Approval&lt;/td&gt;
+&lt;td&gt;Limits where Codex can work and when it must ask for permission&lt;/td&gt;
+&lt;td&gt;Helps beginners avoid accidental deletion or risky commands&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;If you only remember one word for now, remember &lt;strong&gt;diff&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;After Codex edits files, do not only read its summary. Review the diff, because the diff is what it actually changed.&lt;/p&gt;
+&lt;h2&gt;4. Choosing an Entry Point: App, IDE, CLI, or Web&lt;span class="hx-absolute -hx-mt-20" id="4-choosing-an-entry-point-app-ide-cli-or-web"&gt;&lt;/span&gt;
+&lt;a href="#4-choosing-an-entry-point-app-ide-cli-or-web" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Codex has several entry points. Beginners often get stuck because they do not know where to start.&lt;/p&gt;
+&lt;pre class="mermaid hx-mt-6"&gt;
+flowchart TD
+A[I want to start using Codex] --&amp;gt; B{Do I already use a code editor?}
+B -- Not really --&amp;gt; C[Start with Codex App]
+B -- Yes, VS Code / Cursor / Windsurf --&amp;gt; D[Use the Codex IDE extension]
+B -- I am comfortable with terminals --&amp;gt; E[Use Codex CLI]
+A --&amp;gt; F{Is the project on GitHub?}
+F -- Yes, and I want background tasks or PRs --&amp;gt; G[Use Codex Web / Cloud]
+F -- No, mainly local folders --&amp;gt; C
+&lt;/pre&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Entry point&lt;/th&gt;
+&lt;th&gt;Best for&lt;/th&gt;
+&lt;th&gt;Main use&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Codex App&lt;/td&gt;
+&lt;td&gt;Beginners&lt;/td&gt;
+&lt;td&gt;Desktop app, choose a project, then send tasks&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;IDE extension&lt;/td&gt;
+&lt;td&gt;People already using VS Code, Cursor, Windsurf, or JetBrains&lt;/td&gt;
+&lt;td&gt;Use Codex from the editor sidebar&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;CLI&lt;/td&gt;
+&lt;td&gt;People comfortable with terminals&lt;/td&gt;
+&lt;td&gt;Let Codex read, edit, and run a project from the terminal&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Web / Cloud&lt;/td&gt;
+&lt;td&gt;GitHub projects that need background work&lt;/td&gt;
+&lt;td&gt;Run tasks in the cloud, review diffs, create PRs&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;My recommendation is simple:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Beginners should start with Codex App. Developers who already live in an editor can use the IDE extension. Use CLI after you are comfortable with terminals. Use Web / Cloud when a GitHub project needs background tasks.&lt;/strong&gt;&lt;/p&gt;
+&lt;h2&gt;5. First Use: Start with Codex App&lt;span class="hx-absolute -hx-mt-20" id="5-first-use-start-with-codex-app"&gt;&lt;/span&gt;
+&lt;a href="#5-first-use-start-with-codex-app" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;5.1 Account and Plan&lt;span class="hx-absolute -hx-mt-20" id="51-account-and-plan"&gt;&lt;/span&gt;
+&lt;a href="#51-account-and-plan" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Codex visibility, quotas, and available features can depend on your ChatGPT plan, workspace permissions, and login method.&lt;/p&gt;
+&lt;p&gt;If you use Codex App, you can usually log in with a ChatGPT account or an OpenAI API key. When using an API key, some Cloud-related features may be unavailable.&lt;/p&gt;
+&lt;h3&gt;5.2 Download, Open, and Log In&lt;span class="hx-absolute -hx-mt-20" id="52-download-open-and-log-in"&gt;&lt;/span&gt;
+&lt;a href="#52-download-open-and-log-in" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;For beginners, use this order:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Install Codex App.&lt;/li&gt;
+&lt;li&gt;Log in with your ChatGPT account.&lt;/li&gt;
+&lt;li&gt;Choose a practice project folder.&lt;/li&gt;
+&lt;li&gt;Use Local mode for the first task.&lt;/li&gt;
+&lt;li&gt;For the first task, ask Codex to explain the project instead of editing code.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;5.3 Recommended First Prompt&lt;span class="hx-absolute -hx-mt-20" id="53-recommended-first-prompt"&gt;&lt;/span&gt;
+&lt;a href="#53-recommended-first-prompt" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Please do not modify any files yet. Explain this project in English:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;1. What does this project roughly do?
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;2. What are the main folders for?
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;3. Where might the entry points be?
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;4. If I want to run it, what commands would I usually execute?
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;5. What are you unsure about? Say &amp;#34;not sure&amp;#34; explicitly instead of guessing.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;The key idea is: &lt;strong&gt;read first, do not edit yet&lt;/strong&gt;.&lt;/p&gt;
+&lt;h2&gt;6. First Prompt: Ask Codex to Read Before Editing&lt;span class="hx-absolute -hx-mt-20" id="6-first-prompt-ask-codex-to-read-before-editing"&gt;&lt;/span&gt;
+&lt;a href="#6-first-prompt-ask-codex-to-read-before-editing" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The most common beginner mistake is starting with prompts like:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Refactor the whole project for me.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Build a complete website for me.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Fix all bugs.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;These tasks are too broad. It will be hard for you to judge whether Codex did the right thing.&lt;/p&gt;
+&lt;p&gt;A safer sequence looks like this:&lt;/p&gt;
+&lt;pre class="mermaid hx-mt-6"&gt;
+flowchart TD
+A[Step 1: Explain the project without editing files] --&amp;gt; B[Step 2: Ask Codex for a plan]
+B --&amp;gt; C[Step 3: Change one small thing]
+C --&amp;gt; D[Step 4: Run checks or explain why checks cannot run]
+D --&amp;gt; E[Step 5: Review the diff]
+E --&amp;gt; F[Step 6: Accept, ask follow-ups, or roll back]
+&lt;/pre&gt;&lt;p&gt;For the first task, you can ask:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Please do not modify files yet. Explain the structure of this project and tell me which files a beginner should read first.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;After you confirm that Codex understands the project well enough, move to the next step.&lt;/p&gt;
+&lt;h2&gt;7. First Code Change: Change One Small Thing&lt;span class="hx-absolute -hx-mt-20" id="7-first-code-change-change-one-small-thing"&gt;&lt;/span&gt;
+&lt;a href="#7-first-code-change-change-one-small-thing" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;After you are comfortable with Codex&amp;rsquo;s project understanding, ask it to make a tiny change.&lt;/p&gt;
+&lt;p&gt;A good first target is the README:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Please only modify README.md and add a section named &amp;#34;How beginners can start this project&amp;#34;.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Requirements:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Do not modify any other file.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Do not install new dependencies.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Do not change code.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- After editing, tell me what you changed.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- If the project does not clearly document startup commands, say &amp;#34;not sure&amp;#34; instead of inventing commands.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;After Codex finishes, check two things:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git status
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git diff&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;If you use Codex App, you can also review the changes in the review pane or diff pane.&lt;/p&gt;
+&lt;h3&gt;What Should You Look for in the Diff?&lt;span class="hx-absolute -hx-mt-20" id="what-should-you-look-for-in-the-diff"&gt;&lt;/span&gt;
+&lt;a href="#what-should-you-look-for-in-the-diff" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Did Codex change files you did not allow it to change?&lt;/li&gt;
+&lt;li&gt;Did it add dependencies you do not recognize?&lt;/li&gt;
+&lt;li&gt;Did it delete important configuration?&lt;/li&gt;
+&lt;li&gt;Does the text or code match your request?&lt;/li&gt;
+&lt;li&gt;Does the diff actually support what Codex claimed in its summary?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;As a beginner, you do not need to understand every line of code immediately. Start by checking which files were changed. That alone prevents many problems.&lt;/p&gt;
+&lt;h2&gt;8. Prompt Templates You Can Copy&lt;span class="hx-absolute -hx-mt-20" id="8-prompt-templates-you-can-copy"&gt;&lt;/span&gt;
+&lt;a href="#8-prompt-templates-you-can-copy" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;8.1 Universal Structure&lt;span class="hx-absolute -hx-mt-20" id="81-universal-structure"&gt;&lt;/span&gt;
+&lt;a href="#81-universal-structure" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Goal:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;What do I want you to complete?
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Context:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;What files, errors, reproduction steps, or screenshots are relevant?
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Scope:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Which files may you edit? Which files must you not edit?
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Constraints:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;What must you avoid? For example: do not add dependencies, do not change the database schema, do not change API fields.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Verification:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;What commands should you run after finishing? If you cannot run them, explain why.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Output:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;List the changed files, verification result, risks, and suggested next steps.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;This structure is simple, but useful. It reduces guessing.&lt;/p&gt;
+&lt;h3&gt;8.2 Project Reading Template&lt;span class="hx-absolute -hx-mt-20" id="82-project-reading-template"&gt;&lt;/span&gt;
+&lt;a href="#82-project-reading-template" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Please do not modify files yet. Help me understand this project:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;1. What does this project do?
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;2. What is the tech stack?
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;3. Where are the entry points?
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;4. What are the main directories responsible for?
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;5. In what order should a beginner read the code?
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;6. What are you unsure about?&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;8.3 Bug Fix Template&lt;span class="hx-absolute -hx-mt-20" id="83-bug-fix-template"&gt;&lt;/span&gt;
+&lt;a href="#83-bug-fix-template" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;I am running into a bug. Please help me find and fix it.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Symptom:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;[Paste the error or describe the behavior]
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Reproduction steps:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;1. [Step one]
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;2. [Step two]
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;3. [Step three]
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Requirements:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- First explain what you think is causing it.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Make the smallest necessary change.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Do not add dependencies unless you ask me first.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- After fixing, run relevant tests or explain why you cannot run them.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Finally, list changed files and risks.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;8.4 Feature Template&lt;span class="hx-absolute -hx-mt-20" id="84-feature-template"&gt;&lt;/span&gt;
+&lt;a href="#84-feature-template" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Please help me add a small feature.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Feature goal:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;[Describe the feature]
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Scope:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- You may modify: [files/directories]
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Do not modify: [files/directories]
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Requirements:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Start with a short plan.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Keep each step small.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Follow the existing code style.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- If you need a new dependency, stop and ask me first.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Run relevant checks after finishing.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Output:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- What files changed
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- How to verify
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- What I still need to manually check&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;8.5 Code Review Template&lt;span class="hx-absolute -hx-mt-20" id="85-code-review-template"&gt;&lt;/span&gt;
+&lt;a href="#85-code-review-template" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Please review the current uncommitted changes.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Focus on:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;1. Obvious bugs
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;2. Missing edge cases
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;3. Possible regressions
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;4. Security or performance risks
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;5. Whether tests should be added
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Requirements:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- List high-risk issues first.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Then list medium- and low-risk suggestions.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Do not modify files unless I explicitly ask you to.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;8.6 UI Work with Screenshots Template&lt;span class="hx-absolute -hx-mt-20" id="86-ui-work-with-screenshots-template"&gt;&lt;/span&gt;
+&lt;a href="#86-ui-work-with-screenshots-template" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Codex supports image input. For UI tasks, you can attach screenshots, mockups, or error screenshots as context.&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Please implement a page based on the attached screenshot.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Requirements:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Use the current project&amp;#39;s existing tech stack.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Match the layout, spacing, and type hierarchy as closely as possible.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Do not add a new UI library unless you ask me first.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Add only the necessary components.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- After finishing, tell me which command to run and which URL to open to view it.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h2&gt;9. Safe Usage: Permissions, Sandboxing, Approvals, and Privacy&lt;span class="hx-absolute -hx-mt-20" id="9-safe-usage-permissions-sandboxing-approvals-and-privacy"&gt;&lt;/span&gt;
+&lt;a href="#9-safe-usage-permissions-sandboxing-approvals-and-privacy" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Codex can read files, edit files, and run commands, so safety boundaries matter.&lt;/p&gt;
+&lt;h3&gt;9.1 Recommended Beginner Permissions&lt;span class="hx-absolute -hx-mt-20" id="91-recommended-beginner-permissions"&gt;&lt;/span&gt;
+&lt;a href="#91-recommended-beginner-permissions" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;pre class="mermaid hx-mt-6"&gt;
+flowchart LR
+A[Chat / Read-only&amp;lt;br/&amp;gt;Read, explain, plan] --&amp;gt; B[Agent / Auto&amp;lt;br/&amp;gt;Read, write, and run commands in workspace]
+B --&amp;gt; C[Full Access&amp;lt;br/&amp;gt;Broader permissions and network access]
+A -. Best for beginners .-&amp;gt; A
+B -. Good for small tasks .-&amp;gt; B
+C -. Use carefully .-&amp;gt; C
+&lt;/pre&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Mode&lt;/th&gt;
+&lt;th&gt;Good for&lt;/th&gt;
+&lt;th&gt;Beginner recommendation&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Chat / Read-only&lt;/td&gt;
+&lt;td&gt;Explaining projects, asking questions, writing plans&lt;/td&gt;
+&lt;td&gt;Use this first&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Agent / Auto&lt;/td&gt;
+&lt;td&gt;Small file edits and tests&lt;/td&gt;
+&lt;td&gt;Review the diff before accepting&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Full Access&lt;/td&gt;
+&lt;td&gt;Cross-directory, networked, or complex tasks&lt;/td&gt;
+&lt;td&gt;Do not use as the default when starting&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3&gt;9.2 How to Handle Approval Prompts&lt;span class="hx-absolute -hx-mt-20" id="92-how-to-handle-approval-prompts"&gt;&lt;/span&gt;
+&lt;a href="#92-how-to-handle-approval-prompts" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;When Codex asks for approval, first read what it wants to do.&lt;/p&gt;
+&lt;p&gt;Be careful with actions like:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;rm -rf&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl ... &lt;span class="p"&gt;|&lt;/span&gt; sh&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npm install some-package-you-do-not-understand&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Accessing system directories or directories outside the project&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;If you are unsure, choose the narrower approval option or reject it and ask Codex to explain why the command is needed.&lt;/p&gt;
+&lt;h3&gt;9.3 Do Not Give Codex These Secrets&lt;span class="hx-absolute -hx-mt-20" id="93-do-not-give-codex-these-secrets"&gt;&lt;/span&gt;
+&lt;a href="#93-do-not-give-codex-these-secrets" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Do not paste the following directly into your project, prompt, logs, or screenshots:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;API keys&lt;/li&gt;
+&lt;li&gt;Database passwords&lt;/li&gt;
+&lt;li&gt;Production tokens&lt;/li&gt;
+&lt;li&gt;Customer private data&lt;/li&gt;
+&lt;li&gt;Sensitive personal information&lt;/li&gt;
+&lt;li&gt;Internal company material you are not allowed to share&lt;/li&gt;
+&lt;li&gt;Production database connection strings&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Be especially careful with error logs. They may contain tokens, cookies, URL parameters, or database connection information. Scan them before pasting.&lt;/p&gt;
+&lt;h3&gt;9.4 Create a Git Checkpoint Before Editing&lt;span class="hx-absolute -hx-mt-20" id="94-create-a-git-checkpoint-before-editing"&gt;&lt;/span&gt;
+&lt;a href="#94-create-a-git-checkpoint-before-editing" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Inside the project directory, run:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git status
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git add .
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git commit -m &lt;span class="s2"&gt;&amp;#34;checkpoint before codex task&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;After Codex edits files, run:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git status
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git diff&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;If something goes wrong, Git gives you a way back.&lt;/p&gt;
+&lt;p&gt;If you do not know Git yet, start with this rule: &lt;strong&gt;do not let Codex make large changes in an important production project without a backup.&lt;/strong&gt;&lt;/p&gt;
+&lt;h2&gt;10. A 7-day Beginner Practice Plan&lt;span class="hx-absolute -hx-mt-20" id="10-a-7-day-beginner-practice-plan"&gt;&lt;/span&gt;
+&lt;a href="#10-a-7-day-beginner-practice-plan" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;Day 1: Read the Project Only&lt;span class="hx-absolute -hx-mt-20" id="day-1-read-the-project-only"&gt;&lt;/span&gt;
+&lt;a href="#day-1-read-the-project-only" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Please do not modify files. Explain what this project does, its directory structure, entry points, and how to run it.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Goal: understand what the project roughly is.&lt;/p&gt;
+&lt;h3&gt;Day 2: Ask Codex to Write a Project Overview&lt;span class="hx-absolute -hx-mt-20" id="day-2-ask-codex-to-write-a-project-overview"&gt;&lt;/span&gt;
+&lt;a href="#day-2-ask-codex-to-write-a-project-overview" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Based on your understanding of the project, draft docs/project-overview.md.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Requirements:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Write for beginners.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Explain the main directories and startup steps.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Do not modify code files.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Goal: practice asking Codex to generate documentation.&lt;/p&gt;
+&lt;h3&gt;Day 3: Modify Only the README&lt;span class="hx-absolute -hx-mt-20" id="day-3-modify-only-the-readme"&gt;&lt;/span&gt;
+&lt;a href="#day-3-modify-only-the-readme" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Please only modify README.md and add installation and startup instructions.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Do not modify any other file.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Goal: practice reviewing diffs.&lt;/p&gt;
+&lt;h3&gt;Day 4: Fix a Small Bug&lt;span class="hx-absolute -hx-mt-20" id="day-4-fix-a-small-bug"&gt;&lt;/span&gt;
+&lt;a href="#day-4-fix-a-small-bug" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Here is the error: [paste error]
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Reproduction steps:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;1. [Step one]
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;2. [Step two]
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;3. [Step three]
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Please find the cause and make the smallest fix. Run relevant checks after fixing.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Goal: learn to provide symptoms and reproduction steps.&lt;/p&gt;
+&lt;h3&gt;Day 5: Add a Test&lt;span class="hx-absolute -hx-mt-20" id="day-5-add-a-test"&gt;&lt;/span&gt;
+&lt;a href="#day-5-add-a-test" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Please add a minimal test for the issue we just fixed.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Requirements:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- First explain what the test covers.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Do not do a broad refactor.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Run the test after finishing.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Goal: do not only ask Codex to write code. Ask it to verify code.&lt;/p&gt;
+&lt;h3&gt;Day 6: Ask Codex to Review Your Changes&lt;span class="hx-absolute -hx-mt-20" id="day-6-ask-codex-to-review-your-changes"&gt;&lt;/span&gt;
+&lt;a href="#day-6-ask-codex-to-review-your-changes" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Please review the current uncommitted changes. Focus on bugs, edge cases, regression risk, and whether tests are needed.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Do not modify files yet. Only output review comments.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Goal: use Codex as a second pair of eyes.&lt;/p&gt;
+&lt;h3&gt;Day 7: Try Worktree or Cloud&lt;span class="hx-absolute -hx-mt-20" id="day-7-try-worktree-or-cloud"&gt;&lt;/span&gt;
+&lt;a href="#day-7-try-worktree-or-cloud" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Please try implementing this small feature in an isolated branch or worktree: [feature description]
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Requirements:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Start with a plan.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Keep the change small.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- After finishing, explain how to verify it.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Goal: learn how to try more complex changes in an isolated environment.&lt;/p&gt;
+&lt;h2&gt;11. Advanced: Use AGENTS.md to Teach Codex Your Project&lt;span class="hx-absolute -hx-mt-20" id="11-advanced-use-agentsmd-to-teach-codex-your-project"&gt;&lt;/span&gt;
+&lt;a href="#11-advanced-use-agentsmd-to-teach-codex-your-project" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;When you use Codex often, consider adding an &lt;code&gt;AGENTS.md&lt;/code&gt; file at the project root.&lt;/p&gt;
+&lt;p&gt;Think of it as a project guide written for AI agents. Codex reads these instructions before starting work, which helps it follow your team&amp;rsquo;s conventions.&lt;/p&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-markdown" data-lang="markdown"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="gh"&gt;# AGENTS.md
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="gh"&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="gu"&gt;## Project Conventions
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="gu"&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;-&lt;/span&gt; After modifying JavaScript files, run npm test.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;-&lt;/span&gt; Do not add production dependencies unless the user confirms first.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;-&lt;/span&gt; When modifying shared utility functions, update docs as well.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- In the final summary, include changed files, verification, and risks.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Good things to put in &lt;code&gt;AGENTS.md&lt;/code&gt; include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;startup commands;&lt;/li&gt;
+&lt;li&gt;test, build, and lint commands;&lt;/li&gt;
+&lt;li&gt;code style;&lt;/li&gt;
+&lt;li&gt;directories that must not be touched;&lt;/li&gt;
+&lt;li&gt;release process;&lt;/li&gt;
+&lt;li&gt;PR requirements;&lt;/li&gt;
+&lt;li&gt;database and API compatibility rules.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;A useful rule: &lt;strong&gt;when you remind Codex of the same thing twice, consider putting it in AGENTS.md.&lt;/strong&gt;&lt;/p&gt;
+&lt;h2&gt;12. FAQ&lt;span class="hx-absolute -hx-mt-20" id="12-faq"&gt;&lt;/span&gt;
+&lt;a href="#12-faq" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;Q1: Can I use Codex if I do not know how to code?&lt;span class="hx-absolute -hx-mt-20" id="q1-can-i-use-codex-if-i-do-not-know-how-to-code"&gt;&lt;/span&gt;
+&lt;a href="#q1-can-i-use-codex-if-i-do-not-know-how-to-code" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Yes, but start with &amp;ldquo;explain the project&amp;rdquo;, &amp;ldquo;organize documentation&amp;rdquo;, &amp;ldquo;read this error&amp;rdquo;, and &amp;ldquo;write a learning path&amp;rdquo;. Do not begin with broad refactors.&lt;/p&gt;
+&lt;p&gt;You can use Codex as a learning assistant, but after it edits files, you still need to review the diff and verify the result.&lt;/p&gt;
+&lt;h3&gt;Q2: Should I use Codex App, IDE, CLI, or Web?&lt;span class="hx-absolute -hx-mt-20" id="q2-should-i-use-codex-app-ide-cli-or-web"&gt;&lt;/span&gt;
+&lt;a href="#q2-should-i-use-codex-app-ide-cli-or-web" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Beginners should start with Codex App. If you already use VS Code, Cursor, or Windsurf every day, use the IDE extension. Use CLI after you are comfortable with terminals. Use Web / Cloud when a GitHub project needs background work or PR creation.&lt;/p&gt;
+&lt;h3&gt;Q3: What if Codex makes the wrong change?&lt;span class="hx-absolute -hx-mt-20" id="q3-what-if-codex-makes-the-wrong-change"&gt;&lt;/span&gt;
+&lt;a href="#q3-what-if-codex-makes-the-wrong-change" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Review the diff first. If you do not like it, ask Codex to adjust the change. If the project becomes messy, roll back with Git.&lt;/p&gt;
+&lt;p&gt;If you have not learned Git yet, practice on a sample project before letting Codex make broad changes in an important project.&lt;/p&gt;
+&lt;h3&gt;Q4: Codex asks me to approve a command. Should I allow it?&lt;span class="hx-absolute -hx-mt-20" id="q4-codex-asks-me-to-approve-a-command-should-i-allow-it"&gt;&lt;/span&gt;
+&lt;a href="#q4-codex-asks-me-to-approve-a-command-should-i-allow-it" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Only approve commands you understand.&lt;/p&gt;
+&lt;p&gt;Be especially careful with deleting files, installing dependencies, accessing directories outside the project, downloading from the network, or running scripts.&lt;/p&gt;
+&lt;p&gt;If you do not understand the command, ask:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Please explain what this command does, why it is necessary, and whether there is a safer alternative.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;Q5: Do I need an API key?&lt;span class="hx-absolute -hx-mt-20" id="q5-do-i-need-an-api-key"&gt;&lt;/span&gt;
+&lt;a href="#q5-do-i-need-an-api-key" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Not always.&lt;/p&gt;
+&lt;p&gt;Codex App can use a ChatGPT account or an OpenAI API key. When using an API key, some features such as cloud threads may be unavailable.&lt;/p&gt;
+&lt;h3&gt;Q6: Can Codex deploy directly for me?&lt;span class="hx-absolute -hx-mt-20" id="q6-can-codex-deploy-directly-for-me"&gt;&lt;/span&gt;
+&lt;a href="#q6-can-codex-deploy-directly-for-me" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Do not let Codex operate production without human review.&lt;/p&gt;
+&lt;p&gt;A safer flow is:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Small task
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;-&amp;gt; Review diff
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;-&amp;gt; Run tests
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;-&amp;gt; Review risks
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;-&amp;gt; Commit / PR
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;-&amp;gt; Human confirmation before release&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h2&gt;Final Summary&lt;span class="hx-absolute -hx-mt-20" id="final-summary"&gt;&lt;/span&gt;
+&lt;a href="#final-summary" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The right way to start with Codex is not:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Build the whole project for me in one shot.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;It is:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Explain the project first
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;-&amp;gt; Propose a plan
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;-&amp;gt; Make one small change
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;-&amp;gt; Review the diff
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;-&amp;gt; Run tests
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;-&amp;gt; Iterate&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Keep tasks small, keep permissions tight, and make verification explicit. That is how you can safely start using Codex to read code, edit code, and review code from day one.&lt;/p&gt;
+&lt;h2&gt;References&lt;span class="hx-absolute -hx-mt-20" id="references"&gt;&lt;/span&gt;
+&lt;a href="#references" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://developers.openai.com/codex/cloud" target="_blank" rel="noopener"&gt;Web - Codex | OpenAI Developers&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://developers.openai.com/codex/prompting" target="_blank" rel="noopener"&gt;Prompting - Codex | OpenAI Developers&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://openai.com/codex/get-started/" target="_blank" rel="noopener"&gt;Get started with Codex | OpenAI&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://developers.openai.com/codex/app" target="_blank" rel="noopener"&gt;App - Codex | OpenAI Developers&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://developers.openai.com/codex/quickstart" target="_blank" rel="noopener"&gt;Quickstart - Codex | OpenAI Developers&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://developers.openai.com/codex/app/features" target="_blank" rel="noopener"&gt;Features - Codex app | OpenAI Developers&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://developers.openai.com/codex/ide" target="_blank" rel="noopener"&gt;IDE extension - Codex | OpenAI Developers&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://developers.openai.com/codex/ide/features" target="_blank" rel="noopener"&gt;Features - Codex IDE | OpenAI Developers&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://developers.openai.com/codex/cli" target="_blank" rel="noopener"&gt;CLI - Codex | OpenAI Developers&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://developers.openai.com/codex/integrations/github" target="_blank" rel="noopener"&gt;Code review in GitHub - Codex | OpenAI Developers&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://help.openai.com/en/articles/11369540-using-codex-with-your-chatgpt-plan" target="_blank" rel="noopener"&gt;Using Codex with your ChatGPT plan | OpenAI Help Center&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://developers.openai.com/codex/cli/features" target="_blank" rel="noopener"&gt;Features - Codex CLI | OpenAI Developers&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://developers.openai.com/codex/agent-approvals-security" target="_blank" rel="noopener"&gt;Agent approvals &amp;amp; security - Codex | OpenAI Developers&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://help.openai.com/en/articles/5722486-how-your-data-is-used-to-improve-model-performance" target="_blank" rel="noopener"&gt;How your data is used to improve model performance | OpenAI Help Center&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://developers.openai.com/codex/guides/agents-md" target="_blank" rel="noopener"&gt;Custom instructions with AGENTS.md - Codex | OpenAI Developers&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description></item></channel></rss>

@@ -1,0 +1,151 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – Voice Input</title><link>https://silenceper.com/en/tags/voice-input/</link><description>Recent content in Voice Input on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en-US</language><lastBuildDate>Thu, 07 May 2026 11:26:00 +0800</lastBuildDate><atom:link href="https://silenceper.com/en/tags/voice-input/index.xml" rel="self" type="application/rss+xml"/><item><title>OpenLess: An Open-Source AI Voice Input Tool That Turns Speech into Polished Text</title><link>https://silenceper.com/en/article/2026-05-07-openless-ai-voice-input/</link><pubDate>Thu, 07 May 2026 11:26:00 +0800</pubDate><guid>https://silenceper.com/en/article/2026-05-07-openless-ai-voice-input/</guid><description>
+&lt;h2&gt;One-line positioning&lt;span class="hx-absolute -hx-mt-20" id="one-line-positioning"&gt;&lt;/span&gt;
+&lt;a href="#one-line-positioning" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;OpenLess is an open-source desktop voice input tool: hold a hotkey, speak, release it, and AI-polished text appears at your current cursor.&lt;/p&gt;
+&lt;h2&gt;Basic information&lt;span class="hx-absolute -hx-mt-20" id="basic-information"&gt;&lt;/span&gt;
+&lt;a href="#basic-information" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Item&lt;/th&gt;
+&lt;th&gt;Details&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Project&lt;/td&gt;
+&lt;td&gt;OpenLess&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;GitHub&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://github.com/appergb/openless" target="_blank" rel="noopener"&gt;https://github.com/appergb/openless&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Website&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://openless.top" target="_blank" rel="noopener"&gt;https://openless.top&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Positioning&lt;/td&gt;
+&lt;td&gt;Open-source voice input plus AI text polishing&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Platforms&lt;/td&gt;
+&lt;td&gt;macOS 12+, Windows 10+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Stack&lt;/td&gt;
+&lt;td&gt;Tauri 2, Rust, React, TypeScript&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;License&lt;/td&gt;
+&lt;td&gt;MIT&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Current version&lt;/td&gt;
+&lt;td&gt;v1.2.21-tauri&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;GitHub popularity&lt;/td&gt;
+&lt;td&gt;900+ stars&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2&gt;What problem does it solve?&lt;span class="hx-absolute -hx-mt-20" id="what-problem-does-it-solve"&gt;&lt;/span&gt;
+&lt;a href="#what-problem-does-it-solve" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Many voice input tools only produce a literal transcript. The result often still needs manual cleanup: removing filler words, fixing punctuation, and restructuring the text.&lt;/p&gt;
+&lt;p&gt;OpenLess focuses on a more practical goal: &lt;strong&gt;turning spoken language directly into usable written text&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;The workflow is straightforward. Put your cursor in ChatGPT, Claude, Cursor, Notion, an email draft, WeChat, Slack, or almost any other text field. Press a global hotkey and speak. OpenLess records your voice, transcribes it, polishes the text with AI, and inserts the result at the cursor. If direct insertion is blocked, it falls back to copying the output to the clipboard so your dictation is not lost.&lt;/p&gt;
+&lt;p&gt;Its most distinctive mode is the &lt;strong&gt;AI prompt mode&lt;/strong&gt;. You can speak loosely, and OpenLess turns your words into a structured prompt with clearer context and constraints, ready to send to ChatGPT, Claude, or Cursor.&lt;/p&gt;
+&lt;p&gt;For example, you might say:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;I want ChatGPT to write a SQL query from the orders table, get last month&amp;rsquo;s orders, group by customer, sort by amount descending, and return the top ten.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;OpenLess can turn that into:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Please write a SQL query that:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Pulls orders from last month from the `orders` table.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Groups by customer.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Sorts by total amount, descending.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Returns the top 10 rows only.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;In this workflow, OpenLess is not just a dictation tool. It turns spoken thoughts into text that is easier to send, ask, or submit.&lt;/p&gt;
+&lt;h2&gt;Core features&lt;span class="hx-absolute -hx-mt-20" id="core-features"&gt;&lt;/span&gt;
+&lt;a href="#core-features" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;1. Global-hotkey voice input&lt;span class="hx-absolute -hx-mt-20" id="1-global-hotkey-voice-input"&gt;&lt;/span&gt;
+&lt;a href="#1-global-hotkey-voice-input" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;OpenLess lets you trigger recording with a global hotkey. You can place your cursor in any input field and start speaking. The project currently supports both push-to-talk and toggle recording modes, and &lt;code&gt;Esc&lt;/code&gt; can cancel the current session.&lt;/p&gt;
+&lt;h3&gt;2. Multiple output modes&lt;span class="hx-absolute -hx-mt-20" id="2-multiple-output-modes"&gt;&lt;/span&gt;
+&lt;a href="#2-multiple-output-modes" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;OpenLess does not stop at raw transcription. It provides several output modes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Raw&lt;/strong&gt;: output the transcript directly.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Light polish&lt;/strong&gt;: fix filler words, punctuation, and obvious wording issues while preserving meaning.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Structured&lt;/strong&gt;: turn loose speech into a structured AI prompt.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Formal&lt;/strong&gt;: rewrite spoken text into a more formal written style.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The structured mode is the key differentiator, especially for people who frequently write AI prompts.&lt;/p&gt;
+&lt;h3&gt;3. Insert text at the current cursor&lt;span class="hx-absolute -hx-mt-20" id="3-insert-text-at-the-current-cursor"&gt;&lt;/span&gt;
+&lt;a href="#3-insert-text-at-the-current-cursor" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;OpenLess is not trying to become another note-taking app. Its purpose is to reduce input friction. The polished text is inserted directly into the app you are already using, such as a browser, chat app, editor, or document tool.&lt;/p&gt;
+&lt;p&gt;If an app blocks direct insertion, OpenLess falls back to the clipboard, and you can paste the result manually.&lt;/p&gt;
+&lt;h3&gt;4. Dictionary and hotwords&lt;span class="hx-absolute -hx-mt-20" id="4-dictionary-and-hotwords"&gt;&lt;/span&gt;
+&lt;a href="#4-dictionary-and-hotwords" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The project includes a dictionary feature for product names, people names, and technical terms. Enabled entries are used as hotwords during speech recognition and as semantic hints during polishing.&lt;/p&gt;
+&lt;p&gt;This is useful if you often dictate English product names, technical terms, or internal team vocabulary.&lt;/p&gt;
+&lt;h3&gt;5. History and settings&lt;span class="hx-absolute -hx-mt-20" id="5-history-and-settings"&gt;&lt;/span&gt;
+&lt;a href="#5-history-and-settings" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;OpenLess provides a main window for overview, history, dictionary, style, and settings. You can review the original transcript and polished output for previous recordings, and you can adjust language, hotkeys, and model credentials.&lt;/p&gt;
+&lt;h3&gt;6. Local-first and bring-your-own credentials&lt;span class="hx-absolute -hx-mt-20" id="6-local-first-and-bring-your-own-credentials"&gt;&lt;/span&gt;
+&lt;a href="#6-local-first-and-bring-your-own-credentials" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Many similar tools are closed-source subscription products where your data, dictionary, and model calls stay inside the vendor&amp;rsquo;s account system.&lt;/p&gt;
+&lt;p&gt;OpenLess takes a different approach: the app is open source, data is kept primarily on your own machine, and you configure the speech recognition and text polishing services yourself. It currently supports Volcengine ASR, OpenAI Whisper-compatible batch ASR, and Ark / DeepSeek / OpenAI-compatible Chat Completions.&lt;/p&gt;
+&lt;h2&gt;Who is it for?&lt;span class="hx-absolute -hx-mt-20" id="who-is-it-for"&gt;&lt;/span&gt;
+&lt;a href="#who-is-it-for" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;OpenLess is a good fit for:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;People who frequently write prompts for ChatGPT, Claude, Cursor, or Gemini.&lt;/li&gt;
+&lt;li&gt;Users who write emails, specs, and long messages but do not want to type everything manually.&lt;/li&gt;
+&lt;li&gt;Developers who want to dictate code comments, commit messages, or PR descriptions.&lt;/li&gt;
+&lt;li&gt;Users who prefer an open-source option over fully closed subscription voice input tools.&lt;/li&gt;
+&lt;li&gt;Heavy macOS or Windows desktop users.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;If your daily work involves turning thoughts into written text, OpenLess can fit naturally into that workflow.&lt;/p&gt;
+&lt;h2&gt;Quick start&lt;span class="hx-absolute -hx-mt-20" id="quick-start"&gt;&lt;/span&gt;
+&lt;a href="#quick-start" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;End users can download installers from GitHub Releases:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;macOS: &lt;code&gt;OpenLess_&amp;lt;version&amp;gt;_aarch64.dmg&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Windows: &lt;code&gt;OpenLess_&amp;lt;version&amp;gt;_x64-setup.exe&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;On first launch, you need to grant the required permissions.&lt;/p&gt;
+&lt;p&gt;For macOS:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Grant microphone access.&lt;/li&gt;
+&lt;li&gt;Grant accessibility access.&lt;/li&gt;
+&lt;li&gt;Quit and reopen OpenLess.&lt;/li&gt;
+&lt;li&gt;Fill in ASR and LLM credentials in Settings.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;For Windows:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Grant microphone access.&lt;/li&gt;
+&lt;li&gt;Check that the global hotkey listener is active in Settings.&lt;/li&gt;
+&lt;li&gt;Fill in ASR and LLM credentials.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Developers can run it from source with:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git submodule update --init --recursive
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; openless-all/app
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npm ci
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npm run tauri dev&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;The active app lives in &lt;code&gt;openless-all/app/&lt;/code&gt;. The desktop client is built with Tauri 2, a Rust backend, and a React / TypeScript frontend.&lt;/p&gt;
+&lt;h2&gt;Conclusion&lt;span class="hx-absolute -hx-mt-20" id="conclusion"&gt;&lt;/span&gt;
+&lt;a href="#conclusion" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;OpenLess can be understood as an open-source AI voice input assistant.&lt;/p&gt;
+&lt;p&gt;It does not answer questions, execute tasks, or try to become another AI client. It focuses on one job: &lt;strong&gt;turning what you say into clearer text that is ready to send, ask, or paste into the current input field&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;For people who frequently write prompts, long messages, emails, specs, or code-related descriptions, this is a practical direction. Open source, bring-your-own credentials, local-first storage, and AI-prompt-oriented restructuring are the main reasons OpenLess is worth watching.&lt;/p&gt;</description></item></channel></rss>

@@ -1,4 +1,891 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – Codex</title><link>https://silenceper.com/tags/codex/</link><description>Recent content in Codex on silenceper</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 06 May 2026 23:20:00 +0800</lastBuildDate><atom:link href="https://silenceper.com/tags/codex/index.xml" rel="self" type="application/rss+xml"/><item><title>Petdex：给 Codex 找一个会动的桌面伙伴</title><link>https://silenceper.com/article/2026-05-06-petdex-codex-pets/</link><pubDate>Wed, 06 May 2026 23:20:00 +0800</pubDate><guid>https://silenceper.com/article/2026-05-06-petdex-codex-pets/</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – Codex</title><link>https://silenceper.com/tags/codex/</link><description>Recent content in Codex on silenceper</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 07 May 2026 23:39:08 +0800</lastBuildDate><atom:link href="https://silenceper.com/tags/codex/index.xml" rel="self" type="application/rss+xml"/><item><title>Codex 零基础使用指南：从小白到会让 AI 帮你读代码、改代码、交付代码</title><link>https://silenceper.com/article/2026-05-07-codex-beginner-guide/</link><pubDate>Thu, 07 May 2026 23:39:08 +0800</pubDate><guid>https://silenceper.com/article/2026-05-07-codex-beginner-guide/</guid><description>
+&lt;blockquote&gt;
+&lt;p&gt;本文所说的 &lt;strong&gt;Codex&lt;/strong&gt;，指 OpenAI 当前的 Codex coding agent。它可以帮助你读代码、理解陌生代码库、审查代码、调试问题，并可通过 Codex App、IDE 扩展、CLI、Web / Cloud 等入口使用。&lt;/p&gt;
+&lt;p&gt;本文截图来自 OpenAI 官方页面或 OpenAI 官方 GitHub 仓库中的界面图。实际界面可能随版本更新略有变化。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2&gt;适合谁看？&lt;span class="hx-absolute -hx-mt-20" id="适合谁看"&gt;&lt;/span&gt;
+&lt;a href="#%e9%80%82%e5%90%88%e8%b0%81%e7%9c%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;这篇文章写给完全没用过 Codex，甚至不太会写代码的人。&lt;/p&gt;
+&lt;p&gt;你不需要先理解所有 AI Agent 概念。先记住一句话就够了：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Codex 不是只能聊天的 AI，它可以进入一个代码项目，读文件、改文件、跑命令，并把修改差异展示给你。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;但也正因为它能动项目文件，新手最重要的不是一上来让它“做个完整项目”，而是学会：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;先让它读项目；&lt;/li&gt;
+&lt;li&gt;再让它提计划；&lt;/li&gt;
+&lt;li&gt;只做小修改；&lt;/li&gt;
+&lt;li&gt;看 diff；&lt;/li&gt;
+&lt;li&gt;跑测试；&lt;/li&gt;
+&lt;li&gt;用 Git 留回退点。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;目录&lt;span class="hx-absolute -hx-mt-20" id="目录"&gt;&lt;/span&gt;
+&lt;a href="#%e7%9b%ae%e5%bd%95" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;a href="#1-codex-%e6%98%af%e4%bb%80%e4%b9%88" &gt;Codex 是什么&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#2-%e5%85%88%e7%9c%8b%e7%9c%9f%e5%ae%9e%e7%95%8c%e9%9d%a2codex-%e9%95%bf%e4%bb%80%e4%b9%88%e6%a0%b7" &gt;先看真实界面：Codex 长什么样&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#3-%e9%9b%b6%e5%9f%ba%e7%a1%80%e5%85%88%e7%90%86%e8%a7%a3-5-%e4%b8%aa%e5%85%b3%e9%94%ae%e8%af%8d" &gt;零基础先理解 5 个关键词&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#4-%e9%80%89%e6%8b%a9%e5%85%a5%e5%8f%a3appidecliweb-%e6%80%8e%e4%b9%88%e9%80%89" &gt;选择入口：App、IDE、CLI、Web 怎么选&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#5-%e7%ac%ac%e4%b8%80%e6%ac%a1%e4%bd%bf%e7%94%a8%e6%8e%a8%e8%8d%90%e4%bb%8e-codex-app-%e5%bc%80%e5%a7%8b" &gt;第一次使用：推荐从 Codex App 开始&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#6-%e7%ac%ac%e4%b8%80%e6%ac%a1%e6%8f%90%e9%97%ae%e5%85%88%e8%ae%a9-codex-%e8%af%bb%e9%a1%b9%e7%9b%ae%e4%b8%8d%e8%a6%81%e6%80%a5%e7%9d%80%e6%94%b9%e4%bb%a3%e7%a0%81" &gt;第一次提问：先让 Codex 读项目，不要急着改代码&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#7-%e7%ac%ac%e4%b8%80%e6%ac%a1%e6%94%b9%e4%bb%a3%e7%a0%81%e5%8f%aa%e6%94%b9%e4%b8%80%e4%b8%aa%e5%b0%8f%e5%9c%b0%e6%96%b9" &gt;第一次改代码：只改一个小地方&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#8-%e6%8f%90%e7%a4%ba%e8%af%8d%e6%a8%a1%e6%9d%bf%e7%9b%b4%e6%8e%a5%e5%a4%8d%e5%88%b6%e5%b0%b1%e8%83%bd%e7%94%a8" &gt;提示词模板：直接复制就能用&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#9-%e5%ae%89%e5%85%a8%e4%bd%bf%e7%94%a8%e6%9d%83%e9%99%90%e6%b2%99%e7%9b%92%e5%ae%a1%e6%89%b9%e9%9a%90%e7%a7%81" &gt;安全使用：权限、沙盒、审批、隐私&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#10-7-%e5%a4%a9%e5%b0%8f%e7%99%bd%e7%bb%83%e4%b9%a0%e8%b7%af%e7%ba%bf" &gt;7 天小白练习路线&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#11-%e8%bf%9b%e9%98%b6agentsmd-%e8%ae%a9-codex-%e6%9b%b4%e6%87%82%e4%bd%a0%e7%9a%84%e9%a1%b9%e7%9b%ae" &gt;进阶：AGENTS.md 让 Codex 更懂你的项目&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#12-%e5%b8%b8%e8%a7%81%e9%97%ae%e9%a2%98-faq" &gt;常见问题 FAQ&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;1. Codex 是什么&lt;span class="hx-absolute -hx-mt-20" id="1-codex-是什么"&gt;&lt;/span&gt;
+&lt;a href="#1-codex-%e6%98%af%e4%bb%80%e4%b9%88" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Codex 可以理解为一个“会进入代码项目工作的 AI 编程助手”。&lt;/p&gt;
+&lt;p&gt;你可以用自然语言告诉它任务，例如：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;请解释这个项目是做什么的。&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;请找出这个 bug 的原因，并做最小修改。&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;请为这个函数补一个单元测试。&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;它会读取项目文件、分析代码、必要时修改文件、运行命令或测试，然后把结果和修改差异展示给你。&lt;/p&gt;
+&lt;p&gt;更简单地说：ChatGPT 更像是在聊天窗口里回答你，Codex 更像是坐在你的项目目录里一起干活。&lt;/p&gt;
+&lt;h3&gt;Codex 的基本工作流&lt;span class="hx-absolute -hx-mt-20" id="codex-的基本工作流"&gt;&lt;/span&gt;
+&lt;a href="#codex-%e7%9a%84%e5%9f%ba%e6%9c%ac%e5%b7%a5%e4%bd%9c%e6%b5%81" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;pre class="mermaid hx-mt-6"&gt;
+flowchart LR
+A[你提出任务] --&amp;gt; B[Codex 读取项目文件]
+B --&amp;gt; C[分析代码和上下文]
+C --&amp;gt; D[提出计划或直接修改]
+D --&amp;gt; E[运行命令 / 测试 / 检查]
+E --&amp;gt; F[展示总结和 diff]
+F --&amp;gt; G[你审查、追问、接受或回滚]
+&lt;/pre&gt;&lt;p&gt;这里最关键的是最后一步：&lt;strong&gt;你仍然要审查结果&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;Codex 很强，但它不是“自动上线机器”。新手最稳的用法，是把它当成一个能干活的助手，而不是一个不需要检查的自动驾驶。&lt;/p&gt;
+&lt;h2&gt;2. 先看真实界面：Codex 长什么样&lt;span class="hx-absolute -hx-mt-20" id="2-先看真实界面codex-长什么样"&gt;&lt;/span&gt;
+&lt;a href="#2-%e5%85%88%e7%9c%8b%e7%9c%9f%e5%ae%9e%e7%95%8c%e9%9d%a2codex-%e9%95%bf%e4%bb%80%e4%b9%88%e6%a0%b7" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;图 1：Codex 欢迎 / 登录界面&lt;span class="hx-absolute -hx-mt-20" id="图-1codex-欢迎--登录界面"&gt;&lt;/span&gt;
+&lt;a href="#%e5%9b%be-1codex-%e6%ac%a2%e8%bf%8e--%e7%99%bb%e5%bd%95%e7%95%8c%e9%9d%a2" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;第一次打开 Codex App 时，可以看到欢迎页面，通常可选择使用 ChatGPT 账号继续，或输入 API key。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://images.ctfassets.net/kftzwdyauwt9/6JttRtGUPpCuYGQvs0PCjP/9c54a8e25f76148598e903bed1bddac0/Installer2.png?fm=webp&amp;amp;q=90&amp;amp;w=3840" alt="Codex 欢迎登录界面" loading="lazy" /&gt;&lt;/p&gt;
+&lt;h3&gt;图 2：选择项目文件夹&lt;span class="hx-absolute -hx-mt-20" id="图-2选择项目文件夹"&gt;&lt;/span&gt;
+&lt;a href="#%e5%9b%be-2%e9%80%89%e6%8b%a9%e9%a1%b9%e7%9b%ae%e6%96%87%e4%bb%b6%e5%a4%b9" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Codex 不是只和你闲聊，它通常需要知道自己要在哪个项目里工作。你可以选择一个项目文件夹或 Git 仓库。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://images.ctfassets.net/kftzwdyauwt9/ke4GwvCgjA68qQlcrZYiH/85d0fdb04d3d0bdd1cf99f16fd82c263/Installer3.png?fm=webp&amp;amp;q=90&amp;amp;w=3840" alt="Codex 选择项目界面" loading="lazy" /&gt;&lt;/p&gt;
+&lt;h3&gt;图 3：第一次输入任务&lt;span class="hx-absolute -hx-mt-20" id="图-3第一次输入任务"&gt;&lt;/span&gt;
+&lt;a href="#%e5%9b%be-3%e7%ac%ac%e4%b8%80%e6%ac%a1%e8%be%93%e5%85%a5%e4%bb%bb%e5%8a%a1" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;选择项目后，就可以在输入框里告诉 Codex 要做什么。第一次建议先让它解释项目，不要急着改代码。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://images.ctfassets.net/kftzwdyauwt9/IWLhh4SZnwPrLYHfYbZYS/99c1f79ceece96c9fa9650bdcb0d2023/Installer4.png?fm=webp&amp;amp;q=90&amp;amp;w=3840" alt="Codex 第一次任务输入界面" loading="lazy" /&gt;&lt;/p&gt;
+&lt;h3&gt;图 4：Codex App 主界面：线程、项目、修改预览&lt;span class="hx-absolute -hx-mt-20" id="图-4codex-app-主界面线程项目修改预览"&gt;&lt;/span&gt;
+&lt;a href="#%e5%9b%be-4codex-app-%e4%b8%bb%e7%95%8c%e9%9d%a2%e7%ba%bf%e7%a8%8b%e9%a1%b9%e7%9b%ae%e4%bf%ae%e6%94%b9%e9%a2%84%e8%a7%88" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Codex App 是桌面端工作台，可以并行处理多个线程，也能配合 worktree、自动化和 Git 功能使用。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developers.openai.com/images/codex/app/app-screenshot-light.webp" alt="Codex App 主界面" loading="lazy" /&gt;&lt;/p&gt;
+&lt;h3&gt;图 5：Local / Worktree / Cloud 模式&lt;span class="hx-absolute -hx-mt-20" id="图-5local--worktree--cloud-模式"&gt;&lt;/span&gt;
+&lt;a href="#%e5%9b%be-5local--worktree--cloud-%e6%a8%a1%e5%bc%8f" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Codex App 中，一个线程可以选择不同模式：Local、Worktree、Cloud。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Local：直接在当前项目目录工作；&lt;/li&gt;
+&lt;li&gt;Worktree：把改动隔离到新的 Git worktree；&lt;/li&gt;
+&lt;li&gt;Cloud：在配置好的云环境中远程运行。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://developers.openai.com/images/codex/app/modes-light.webp" alt="Codex App 模式选择界面" loading="lazy" /&gt;&lt;/p&gt;
+&lt;h3&gt;图 6：Git 提交面板&lt;span class="hx-absolute -hx-mt-20" id="图-6git-提交面板"&gt;&lt;/span&gt;
+&lt;a href="#%e5%9b%be-6git-%e6%8f%90%e4%ba%a4%e9%9d%a2%e6%9d%bf" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Codex App 内置 Git 工具，可以展示 diff，也可以 stage、commit、push、创建 PR。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developers.openai.com/images/codex/app/git-commit-light.webp" alt="Codex Git commit 面板" loading="lazy" /&gt;&lt;/p&gt;
+&lt;h3&gt;图 7：内置终端&lt;span class="hx-absolute -hx-mt-20" id="图-7内置终端"&gt;&lt;/span&gt;
+&lt;a href="#%e5%9b%be-7%e5%86%85%e7%bd%ae%e7%bb%88%e7%ab%af" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;每个线程可以使用内置终端，常见用途包括：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git status
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npm &lt;span class="nb"&gt;test&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;pnpm run lint&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;img src="https://developers.openai.com/images/codex/app/integrated-terminal-light.webp" alt="Codex 内置终端" loading="lazy" /&gt;&lt;/p&gt;
+&lt;h3&gt;图 8：App 内置浏览器&lt;span class="hx-absolute -hx-mt-20" id="图-8app-内置浏览器"&gt;&lt;/span&gt;
+&lt;a href="#%e5%9b%be-8app-%e5%86%85%e7%bd%ae%e6%b5%8f%e8%a7%88%e5%99%a8" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;做前端项目时，Codex 可以借助 App 内置浏览器预览本地页面、检查页面元素，或验证 UI 修复。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developers.openai.com/images/codex/app/in-app-browser-light.webp" alt="Codex App 内置浏览器" loading="lazy" /&gt;&lt;/p&gt;
+&lt;h3&gt;图 9：VS Code / Cursor / Windsurf 中的 Codex 扩展&lt;span class="hx-absolute -hx-mt-20" id="图-9vs-code--cursor--windsurf-中的-codex-扩展"&gt;&lt;/span&gt;
+&lt;a href="#%e5%9b%be-9vs-code--cursor--windsurf-%e4%b8%ad%e7%9a%84-codex-%e6%89%a9%e5%b1%95" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;如果你已经使用 VS Code、Cursor、Windsurf 或 VS Code 兼容编辑器，可以用 Codex IDE 扩展。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn.openai.com/devhub/docs/codex-extension.webp" alt="Codex IDE 扩展入口" loading="lazy" /&gt;&lt;/p&gt;
+&lt;h3&gt;图 10：IDE 中切换权限模式&lt;span class="hx-absolute -hx-mt-20" id="图-10ide-中切换权限模式"&gt;&lt;/span&gt;
+&lt;a href="#%e5%9b%be-10ide-%e4%b8%ad%e5%88%87%e6%8d%a2%e6%9d%83%e9%99%90%e6%a8%a1%e5%bc%8f" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Codex IDE 扩展支持 Chat、Agent、Agent Full Access 等模式。新手建议先用 Chat 或普通 Agent 模式，不要一开始就给 Full Access。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developers.openai.com/images/codex/ide/approval_mode.png" alt="Codex IDE 权限模式" loading="lazy" /&gt;&lt;/p&gt;
+&lt;h3&gt;图 11：CLI 终端界面&lt;span class="hx-absolute -hx-mt-20" id="图-11cli-终端界面"&gt;&lt;/span&gt;
+&lt;a href="#%e5%9b%be-11cli-%e7%bb%88%e7%ab%af%e7%95%8c%e9%9d%a2" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Codex CLI 是在终端里运行的 coding agent，更适合已经习惯命令行的开发者。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://github.com/openai/codex/raw/main/.github/codex-cli-splash.png" alt="Codex CLI 终端界面" loading="lazy" /&gt;&lt;/p&gt;
+&lt;h3&gt;图 12：GitHub 中请求 Codex Review&lt;span class="hx-absolute -hx-mt-20" id="图-12github-中请求-codex-review"&gt;&lt;/span&gt;
+&lt;a href="#%e5%9b%be-12github-%e4%b8%ad%e8%af%b7%e6%b1%82-codex-review" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;当 Codex Cloud / GitHub 集成设置好后，可以在 GitHub PR 评论中使用 &lt;code&gt;@codex review&lt;/code&gt; 请求代码审查。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developers.openai.com/images/codex/code-review/review-trigger.png" alt="GitHub 中 @codex review 评论" loading="lazy" /&gt;&lt;/p&gt;
+&lt;h3&gt;图 13：Codex 在 GitHub PR 中发布 review&lt;span class="hx-absolute -hx-mt-20" id="图-13codex-在-github-pr-中发布-review"&gt;&lt;/span&gt;
+&lt;a href="#%e5%9b%be-13codex-%e5%9c%a8-github-pr-%e4%b8%ad%e5%8f%91%e5%b8%83-review" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Codex 会在 PR 上留下 review comment，指出具体代码位置和问题说明。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developers.openai.com/images/codex/code-review/review-example.png" alt="Codex GitHub review 示例" loading="lazy" /&gt;&lt;/p&gt;
+&lt;h2&gt;3. 零基础先理解 5 个关键词&lt;span class="hx-absolute -hx-mt-20" id="3-零基础先理解-5-个关键词"&gt;&lt;/span&gt;
+&lt;a href="#3-%e9%9b%b6%e5%9f%ba%e7%a1%80%e5%85%88%e7%90%86%e8%a7%a3-5-%e4%b8%aa%e5%85%b3%e9%94%ae%e8%af%8d" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;关键词&lt;/th&gt;
+&lt;th&gt;小白解释&lt;/th&gt;
+&lt;th&gt;为什么重要&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;项目文件夹&lt;/td&gt;
+&lt;td&gt;装代码的文件夹&lt;/td&gt;
+&lt;td&gt;Codex 需要知道在哪个项目里工作&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Git&lt;/td&gt;
+&lt;td&gt;代码版本管理工具&lt;/td&gt;
+&lt;td&gt;改坏了可以回退&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;diff&lt;/td&gt;
+&lt;td&gt;修改前后的差异&lt;/td&gt;
+&lt;td&gt;Codex 改完后，你要看 diff 决定是否接受&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;PR / Pull Request&lt;/td&gt;
+&lt;td&gt;把一组代码修改提交给别人审查&lt;/td&gt;
+&lt;td&gt;Codex Cloud / GitHub 场景经常会用到&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;沙盒 / 审批&lt;/td&gt;
+&lt;td&gt;限制 Codex 能改哪里、能否联网、何时要你同意&lt;/td&gt;
+&lt;td&gt;小白避免误删文件或误跑危险命令&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;如果你现在只想记一个词，那就是 &lt;strong&gt;diff&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;Codex 改完文件后，不要只看它的总结。一定要看 diff，因为 diff 才是它真正改了什么。&lt;/p&gt;
+&lt;h2&gt;4. 选择入口：App、IDE、CLI、Web 怎么选&lt;span class="hx-absolute -hx-mt-20" id="4-选择入口appidecliweb-怎么选"&gt;&lt;/span&gt;
+&lt;a href="#4-%e9%80%89%e6%8b%a9%e5%85%a5%e5%8f%a3appidecliweb-%e6%80%8e%e4%b9%88%e9%80%89" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Codex 有多个入口。零基础用户最容易卡住的地方，就是不知道该从哪里开始。&lt;/p&gt;
+&lt;pre class="mermaid hx-mt-6"&gt;
+flowchart TD
+A[我要开始用 Codex] --&amp;gt; B{我会用代码编辑器吗?}
+B -- 不太会 --&amp;gt; C[优先用 Codex App]
+B -- 会用 VS Code / Cursor / Windsurf --&amp;gt; D[用 Codex IDE 扩展]
+B -- 会用终端 --&amp;gt; E[用 Codex CLI]
+A --&amp;gt; F{项目在 GitHub 上吗?}
+F -- 是，想让 Codex 后台跑任务或出 PR --&amp;gt; G[用 Codex Web / Cloud]
+F -- 否，本地文件夹为主 --&amp;gt; C
+&lt;/pre&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;入口&lt;/th&gt;
+&lt;th&gt;适合谁&lt;/th&gt;
+&lt;th&gt;主要用途&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Codex App&lt;/td&gt;
+&lt;td&gt;最适合零基础开始&lt;/td&gt;
+&lt;td&gt;桌面 App，选择项目后直接发任务&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;IDE 扩展&lt;/td&gt;
+&lt;td&gt;已经用 VS Code、Cursor、Windsurf、JetBrains 的人&lt;/td&gt;
+&lt;td&gt;在编辑器侧边栏中使用 Codex&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;CLI&lt;/td&gt;
+&lt;td&gt;会用终端的人&lt;/td&gt;
+&lt;td&gt;在终端中让 Codex 读、改、跑项目&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Web / Cloud&lt;/td&gt;
+&lt;td&gt;项目在 GitHub 上，想后台处理任务&lt;/td&gt;
+&lt;td&gt;在云环境中运行任务、审查 diff、创建 PR&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;我的建议很简单：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;小白优先 Codex App；开发者优先 IDE 扩展；命令行熟练后再用 CLI；GitHub 项目需要后台跑任务时再看 Web / Cloud。&lt;/strong&gt;&lt;/p&gt;
+&lt;h2&gt;5. 第一次使用：推荐从 Codex App 开始&lt;span class="hx-absolute -hx-mt-20" id="5-第一次使用推荐从-codex-app-开始"&gt;&lt;/span&gt;
+&lt;a href="#5-%e7%ac%ac%e4%b8%80%e6%ac%a1%e4%bd%bf%e7%94%a8%e6%8e%a8%e8%8d%90%e4%bb%8e-codex-app-%e5%bc%80%e5%a7%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;5.1 账号与计划&lt;span class="hx-absolute -hx-mt-20" id="51-账号与计划"&gt;&lt;/span&gt;
+&lt;a href="#51-%e8%b4%a6%e5%8f%b7%e4%b8%8e%e8%ae%a1%e5%88%92" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Codex 的可见入口、额度和功能，会受你的 ChatGPT 计划、workspace 权限和登录方式影响。&lt;/p&gt;
+&lt;p&gt;如果你使用 Codex App，通常可以用 ChatGPT 账号登录，也可以使用 OpenAI API key。需要注意的是，用 API key 登录时，某些 Cloud 相关功能可能不可用。&lt;/p&gt;
+&lt;h3&gt;5.2 下载、打开、登录&lt;span class="hx-absolute -hx-mt-20" id="52-下载打开登录"&gt;&lt;/span&gt;
+&lt;a href="#52-%e4%b8%8b%e8%bd%bd%e6%89%93%e5%bc%80%e7%99%bb%e5%bd%95" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;建议小白按这个顺序：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;安装 Codex App。&lt;/li&gt;
+&lt;li&gt;使用 ChatGPT 账号登录。&lt;/li&gt;
+&lt;li&gt;选择一个练习项目文件夹。&lt;/li&gt;
+&lt;li&gt;第一次先选择 Local。&lt;/li&gt;
+&lt;li&gt;第一次任务只让 Codex 解释项目，不要让它改代码。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;5.3 第一次推荐输入&lt;span class="hx-absolute -hx-mt-20" id="53-第一次推荐输入"&gt;&lt;/span&gt;
+&lt;a href="#53-%e7%ac%ac%e4%b8%80%e6%ac%a1%e6%8e%a8%e8%8d%90%e8%be%93%e5%85%a5" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;请先不要修改任何文件。请用中文解释这个项目：
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;1. 这个项目大概是做什么的？
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;2. 主要文件夹分别有什么作用？
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;3. 入口文件可能在哪里？
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;4. 如果我要运行它，通常要执行哪些命令？
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;5. 你有哪些不确定的地方？请明确说“不确定”，不要猜。&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;这条 prompt 的核心是：&lt;strong&gt;先读项目，不改项目&lt;/strong&gt;。&lt;/p&gt;
+&lt;h2&gt;6. 第一次提问：先让 Codex 读项目，不要急着改代码&lt;span class="hx-absolute -hx-mt-20" id="6-第一次提问先让-codex-读项目不要急着改代码"&gt;&lt;/span&gt;
+&lt;a href="#6-%e7%ac%ac%e4%b8%80%e6%ac%a1%e6%8f%90%e9%97%ae%e5%85%88%e8%ae%a9-codex-%e8%af%bb%e9%a1%b9%e7%9b%ae%e4%b8%8d%e8%a6%81%e6%80%a5%e7%9d%80%e6%94%b9%e4%bb%a3%e7%a0%81" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;新手最容易犯的错误，是第一次就说：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;帮我重构整个项目。&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;帮我做一个完整网站。&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;把所有 bug 都修了。&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;这些任务范围太大，你很难判断 Codex 改得对不对。&lt;/p&gt;
+&lt;p&gt;更好的顺序是：&lt;/p&gt;
+&lt;pre class="mermaid hx-mt-6"&gt;
+flowchart TD
+A[第一步：解释项目，不改文件] --&amp;gt; B[第二步：让 Codex 提计划]
+B --&amp;gt; C[第三步：只改一个小地方]
+C --&amp;gt; D[第四步：运行检查或说明无法检查]
+D --&amp;gt; E[第五步：看 diff]
+E --&amp;gt; F[第六步：接受、追问或回滚]
+&lt;/pre&gt;&lt;p&gt;第一次可以这样问：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;请先不要修改文件。请解释这个项目的结构，并告诉我新手应该先读哪些文件。&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;等你确认 Codex 对项目理解基本正确，再进入下一步。&lt;/p&gt;
+&lt;h2&gt;7. 第一次改代码：只改一个小地方&lt;span class="hx-absolute -hx-mt-20" id="7-第一次改代码只改一个小地方"&gt;&lt;/span&gt;
+&lt;a href="#7-%e7%ac%ac%e4%b8%80%e6%ac%a1%e6%94%b9%e4%bb%a3%e7%a0%81%e5%8f%aa%e6%94%b9%e4%b8%80%e4%b8%aa%e5%b0%8f%e5%9c%b0%e6%96%b9" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;等你确认 Codex 已经大致理解项目后，再让它做一个很小的修改。&lt;/p&gt;
+&lt;p&gt;推荐从 README 开始：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;请只修改 README.md，新增一个“小白如何启动项目”的小节。
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;要求：
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- 不要修改其他文件
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- 不要安装新依赖
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- 不要改代码
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- 改完后告诉我你改了哪里
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- 如果项目里没有明确启动命令，请说明“不确定”，不要编造&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;改完后，你要看两件事：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git status
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git diff&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;如果你用的是 Codex App，也可以直接看 review pane 或 diff pane。&lt;/p&gt;
+&lt;h3&gt;看 diff 时重点看什么？&lt;span class="hx-absolute -hx-mt-20" id="看-diff-时重点看什么"&gt;&lt;/span&gt;
+&lt;a href="#%e7%9c%8b-diff-%e6%97%b6%e9%87%8d%e7%82%b9%e7%9c%8b%e4%bb%80%e4%b9%88" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;有没有改到你没让它改的文件；&lt;/li&gt;
+&lt;li&gt;有没有新增你不认识的依赖；&lt;/li&gt;
+&lt;li&gt;有没有删除关键配置；&lt;/li&gt;
+&lt;li&gt;文案或代码是不是符合你的需求；&lt;/li&gt;
+&lt;li&gt;它说“已完成”的事情，diff 里是否真的体现了。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;新手不要怕看不懂全部代码。先从“它到底改了哪些文件”开始，就已经能避免很多风险。&lt;/p&gt;
+&lt;h2&gt;8. 提示词模板：直接复制就能用&lt;span class="hx-absolute -hx-mt-20" id="8-提示词模板直接复制就能用"&gt;&lt;/span&gt;
+&lt;a href="#8-%e6%8f%90%e7%a4%ba%e8%af%8d%e6%a8%a1%e6%9d%bf%e7%9b%b4%e6%8e%a5%e5%a4%8d%e5%88%b6%e5%b0%b1%e8%83%bd%e7%94%a8" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;8.1 万能结构&lt;span class="hx-absolute -hx-mt-20" id="81-万能结构"&gt;&lt;/span&gt;
+&lt;a href="#81-%e4%b8%87%e8%83%bd%e7%bb%93%e6%9e%84" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;目标：
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;我想让你完成什么？
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;上下文：
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;相关文件、错误信息、复现步骤、截图是什么？
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;范围：
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;允许你改哪些文件？不允许你改哪些文件？
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;约束：
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;不要做什么？例如不要新增依赖、不要改数据库结构、不要改接口字段。
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;验证：
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;完成后请运行哪些命令？如果不能运行，请说明原因。
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;输出：
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;请列出修改文件、验证结果、风险点和下一步建议。&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;这个结构不复杂，但很有用。它能减少 Codex 自己猜。&lt;/p&gt;
+&lt;h3&gt;8.2 读项目模板&lt;span class="hx-absolute -hx-mt-20" id="82-读项目模板"&gt;&lt;/span&gt;
+&lt;a href="#82-%e8%af%bb%e9%a1%b9%e7%9b%ae%e6%a8%a1%e6%9d%bf" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;请先不要修改文件。请帮我理解这个项目：
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;1. 这个项目是做什么的？
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;2. 技术栈是什么？
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;3. 入口文件在哪里？
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;4. 主要目录分别负责什么？
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;5. 我作为新手应该按什么顺序阅读？
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;6. 你有哪些不确定点？&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;8.3 修 bug 模板&lt;span class="hx-absolute -hx-mt-20" id="83-修-bug-模板"&gt;&lt;/span&gt;
+&lt;a href="#83-%e4%bf%ae-bug-%e6%a8%a1%e6%9d%bf" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;我遇到一个 bug，请帮我定位并修复。
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;现象：
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;[粘贴报错或描述现象]
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;复现步骤：
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;1. [第一步]
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;2. [第二步]
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;3. [第三步]
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;要求：
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- 先解释你认为的原因
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- 只做最小必要修改
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- 不要新增依赖，除非先征得我同意
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- 修完后运行相关测试或说明无法运行的原因
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- 最后列出修改文件和风险点&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;8.4 新增功能模板&lt;span class="hx-absolute -hx-mt-20" id="84-新增功能模板"&gt;&lt;/span&gt;
+&lt;a href="#84-%e6%96%b0%e5%a2%9e%e5%8a%9f%e8%83%bd%e6%a8%a1%e6%9d%bf" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;请帮我新增一个小功能。
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;功能目标：
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;[描述你要的功能]
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;范围：
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- 可以修改：[文件/目录]
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- 不要修改：[文件/目录]
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;要求：
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- 先给出简短计划
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- 每一步尽量小
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- 保持现有代码风格
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- 如需新增依赖，先停下来问我
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- 完成后运行相关检查
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;输出：
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- 改了哪些文件
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- 如何验证
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- 还需要我手动检查什么&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;8.5 代码审查模板&lt;span class="hx-absolute -hx-mt-20" id="85-代码审查模板"&gt;&lt;/span&gt;
+&lt;a href="#85-%e4%bb%a3%e7%a0%81%e5%ae%a1%e6%9f%a5%e6%a8%a1%e6%9d%bf" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;请审查当前未提交的修改。
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;重点看：
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;1. 是否有明显 bug
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;2. 是否有边界情况遗漏
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;3. 是否破坏现有行为
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;4. 是否有安全或性能风险
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;5. 是否需要补测试
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;要求：
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- 先列高风险问题
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- 再列中低风险建议
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- 不要直接修改文件，除非我明确要求&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;8.6 带截图做 UI 的模板&lt;span class="hx-absolute -hx-mt-20" id="86-带截图做-ui-的模板"&gt;&lt;/span&gt;
+&lt;a href="#86-%e5%b8%a6%e6%88%aa%e5%9b%be%e5%81%9a-ui-%e7%9a%84%e6%a8%a1%e6%9d%bf" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Codex 支持图片输入。做 UI 时，可以把截图、设计稿或报错截图一起发给它。&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;请根据我附上的截图实现一个页面。
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;要求：
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- 使用当前项目已有技术栈
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- 尽量匹配截图中的布局、间距和字体层级
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- 不要新增 UI 库，除非先问我
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- 只新增必要组件
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- 完成后告诉我运行哪个命令、访问哪个页面查看效果&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h2&gt;9. 安全使用：权限、沙盒、审批、隐私&lt;span class="hx-absolute -hx-mt-20" id="9-安全使用权限沙盒审批隐私"&gt;&lt;/span&gt;
+&lt;a href="#9-%e5%ae%89%e5%85%a8%e4%bd%bf%e7%94%a8%e6%9d%83%e9%99%90%e6%b2%99%e7%9b%92%e5%ae%a1%e6%89%b9%e9%9a%90%e7%a7%81" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Codex 能读文件、改文件、运行命令，所以安全边界很重要。&lt;/p&gt;
+&lt;h3&gt;9.1 小白推荐权限&lt;span class="hx-absolute -hx-mt-20" id="91-小白推荐权限"&gt;&lt;/span&gt;
+&lt;a href="#91-%e5%b0%8f%e7%99%bd%e6%8e%a8%e8%8d%90%e6%9d%83%e9%99%90" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;pre class="mermaid hx-mt-6"&gt;
+flowchart LR
+A[Chat / Read-only&amp;lt;br/&amp;gt;只读、解释、规划] --&amp;gt; B[Agent / Auto&amp;lt;br/&amp;gt;可在工作目录内读写和运行命令]
+B --&amp;gt; C[Full Access&amp;lt;br/&amp;gt;更大权限和网络访问]
+A -. 新手优先 .-&amp;gt; A
+B -. 小任务可用 .-&amp;gt; B
+C -. 谨慎使用 .-&amp;gt; C
+&lt;/pre&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;模式&lt;/th&gt;
+&lt;th&gt;适合场景&lt;/th&gt;
+&lt;th&gt;小白建议&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Chat / Read-only&lt;/td&gt;
+&lt;td&gt;解释项目、问问题、写计划&lt;/td&gt;
+&lt;td&gt;第一次使用优先&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Agent / Auto&lt;/td&gt;
+&lt;td&gt;小范围改文件、跑测试&lt;/td&gt;
+&lt;td&gt;看清 diff 后再接受&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Full Access&lt;/td&gt;
+&lt;td&gt;跨目录、联网、复杂任务&lt;/td&gt;
+&lt;td&gt;新手不要默认使用&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3&gt;9.2 审批弹窗怎么选&lt;span class="hx-absolute -hx-mt-20" id="92-审批弹窗怎么选"&gt;&lt;/span&gt;
+&lt;a href="#92-%e5%ae%a1%e6%89%b9%e5%bc%b9%e7%aa%97%e6%80%8e%e4%b9%88%e9%80%89" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;当你看到 Codex 请求批准时，先看它要做什么。&lt;/p&gt;
+&lt;p&gt;谨慎对待这些行为：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;rm -rf&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl ... &lt;span class="p"&gt;|&lt;/span&gt; sh&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npm install 某个你不了解的包&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;访问系统目录或项目外目录&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;如果你不确定，就选更窄的批准方式，或者直接拒绝，让 Codex 解释为什么需要这个命令。&lt;/p&gt;
+&lt;h3&gt;9.3 不要把这些内容交给 Codex&lt;span class="hx-absolute -hx-mt-20" id="93-不要把这些内容交给-codex"&gt;&lt;/span&gt;
+&lt;a href="#93-%e4%b8%8d%e8%a6%81%e6%8a%8a%e8%bf%99%e4%ba%9b%e5%86%85%e5%ae%b9%e4%ba%a4%e7%bb%99-codex" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;不要把以下内容直接放进项目、prompt、日志或截图里：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;API key&lt;/li&gt;
+&lt;li&gt;数据库密码&lt;/li&gt;
+&lt;li&gt;生产环境 token&lt;/li&gt;
+&lt;li&gt;客户隐私数据&lt;/li&gt;
+&lt;li&gt;身份证、银行卡、手机号等敏感信息&lt;/li&gt;
+&lt;li&gt;公司未授权共享的内部材料&lt;/li&gt;
+&lt;li&gt;生产数据库连接字符串&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;尤其要注意：很多错误日志里会带 token、cookie、URL 参数或数据库连接信息。粘贴前先看一眼。&lt;/p&gt;
+&lt;h3&gt;9.4 每次改代码前先做 Git checkpoint&lt;span class="hx-absolute -hx-mt-20" id="94-每次改代码前先做-git-checkpoint"&gt;&lt;/span&gt;
+&lt;a href="#94-%e6%af%8f%e6%ac%a1%e6%94%b9%e4%bb%a3%e7%a0%81%e5%89%8d%e5%85%88%e5%81%9a-git-checkpoint" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;在项目目录里执行：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git status
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git add .
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git commit -m &lt;span class="s2"&gt;&amp;#34;checkpoint before codex task&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Codex 改完后执行：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git status
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git diff&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;如果改坏了，可以用 Git 回退。&lt;/p&gt;
+&lt;p&gt;如果你还不会 Git，至少先做到一点：&lt;strong&gt;不要在没有备份的情况下，把 Codex 放进很重要的生产项目里大改。&lt;/strong&gt;&lt;/p&gt;
+&lt;h2&gt;10. 7 天小白练习路线&lt;span class="hx-absolute -hx-mt-20" id="10-7-天小白练习路线"&gt;&lt;/span&gt;
+&lt;a href="#10-7-%e5%a4%a9%e5%b0%8f%e7%99%bd%e7%bb%83%e4%b9%a0%e8%b7%af%e7%ba%bf" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;第 1 天：只读项目，不改文件&lt;span class="hx-absolute -hx-mt-20" id="第-1-天只读项目不改文件"&gt;&lt;/span&gt;
+&lt;a href="#%e7%ac%ac-1-%e5%a4%a9%e5%8f%aa%e8%af%bb%e9%a1%b9%e7%9b%ae%e4%b8%8d%e6%94%b9%e6%96%87%e4%bb%b6" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;请不要修改文件。请解释这个项目的用途、目录结构、入口文件和运行方式。&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;目标：知道项目大概是什么。&lt;/p&gt;
+&lt;h3&gt;第 2 天：让 Codex 写项目说明&lt;span class="hx-absolute -hx-mt-20" id="第-2-天让-codex-写项目说明"&gt;&lt;/span&gt;
+&lt;a href="#%e7%ac%ac-2-%e5%a4%a9%e8%ae%a9-codex-%e5%86%99%e9%a1%b9%e7%9b%ae%e8%af%b4%e6%98%8e" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;请根据你对项目的理解，生成一份 docs/project-overview.md 草稿。
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;要求：
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- 面向零基础读者
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- 解释主要目录和启动方式
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- 不要修改代码文件&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;目标：练习让 Codex 生成文档。&lt;/p&gt;
+&lt;h3&gt;第 3 天：只改 README&lt;span class="hx-absolute -hx-mt-20" id="第-3-天只改-readme"&gt;&lt;/span&gt;
+&lt;a href="#%e7%ac%ac-3-%e5%a4%a9%e5%8f%aa%e6%94%b9-readme" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;请只修改 README.md，补充“安装依赖”和“启动项目”说明。
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;不要修改其他文件。&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;目标：练习看 diff。&lt;/p&gt;
+&lt;h3&gt;第 4 天：修一个小 bug&lt;span class="hx-absolute -hx-mt-20" id="第-4-天修一个小-bug"&gt;&lt;/span&gt;
+&lt;a href="#%e7%ac%ac-4-%e5%a4%a9%e4%bf%ae%e4%b8%80%e4%b8%aa%e5%b0%8f-bug" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;这是报错信息：[粘贴错误]
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;复现步骤：
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;1. [第一步]
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;2. [第二步]
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;3. [第三步]
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;请定位原因并做最小修改。修完后运行相关检查。&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;目标：学会提供现象和复现步骤。&lt;/p&gt;
+&lt;h3&gt;第 5 天：补测试&lt;span class="hx-absolute -hx-mt-20" id="第-5-天补测试"&gt;&lt;/span&gt;
+&lt;a href="#%e7%ac%ac-5-%e5%a4%a9%e8%a1%a5%e6%b5%8b%e8%af%95" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;请为刚才修复的问题补一个最小测试。
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;要求：
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- 先说明测试覆盖什么
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- 不要大范围重构
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- 完成后运行测试&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;目标：不要只让 Codex 改代码，也要让它验证。&lt;/p&gt;
+&lt;h3&gt;第 6 天：让 Codex 审查你的改动&lt;span class="hx-absolute -hx-mt-20" id="第-6-天让-codex-审查你的改动"&gt;&lt;/span&gt;
+&lt;a href="#%e7%ac%ac-6-%e5%a4%a9%e8%ae%a9-codex-%e5%ae%a1%e6%9f%a5%e4%bd%a0%e7%9a%84%e6%94%b9%e5%8a%a8" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;请审查当前未提交修改，重点看 bug、边界情况、回归风险和是否需要测试。
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;先不要修改文件，只输出审查意见。&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;目标：把 Codex 当第二双眼睛。&lt;/p&gt;
+&lt;h3&gt;第 7 天：尝试 Worktree 或 Cloud&lt;span class="hx-absolute -hx-mt-20" id="第-7-天尝试-worktree-或-cloud"&gt;&lt;/span&gt;
+&lt;a href="#%e7%ac%ac-7-%e5%a4%a9%e5%b0%9d%e8%af%95-worktree-%e6%88%96-cloud" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;请在隔离分支或 worktree 中尝试实现这个小功能：[功能描述]
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;要求：
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- 先给计划
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- 改动尽量小
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- 完成后说明如何验证&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;目标：学会在隔离环境里尝试更复杂的改动。&lt;/p&gt;
+&lt;h2&gt;11. 进阶：AGENTS.md 让 Codex 更懂你的项目&lt;span class="hx-absolute -hx-mt-20" id="11-进阶agentsmd-让-codex-更懂你的项目"&gt;&lt;/span&gt;
+&lt;a href="#11-%e8%bf%9b%e9%98%b6agentsmd-%e8%ae%a9-codex-%e6%9b%b4%e6%87%82%e4%bd%a0%e7%9a%84%e9%a1%b9%e7%9b%ae" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;当你经常使用 Codex，可以在项目根目录添加 &lt;code&gt;AGENTS.md&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;可以把它理解成“给 AI Agent 看的项目说明书”。Codex 开始工作前会读取这些项目指导，帮助它理解团队约定。&lt;/p&gt;
+&lt;p&gt;示例：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-markdown" data-lang="markdown"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="gh"&gt;# AGENTS.md
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="gh"&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="gu"&gt;## 项目约定
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="gu"&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;-&lt;/span&gt; 修改 JavaScript 文件后，请运行 npm test。
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;-&lt;/span&gt; 不要新增生产依赖，除非先征得用户确认。
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;-&lt;/span&gt; 修改公共工具函数时，请同步更新 docs/。
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- 输出总结时，请包含：修改文件、验证方式、风险点。&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;适合写进 &lt;code&gt;AGENTS.md&lt;/code&gt; 的内容包括：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;项目启动方式；&lt;/li&gt;
+&lt;li&gt;测试、构建、lint 命令；&lt;/li&gt;
+&lt;li&gt;代码风格；&lt;/li&gt;
+&lt;li&gt;不能改的目录；&lt;/li&gt;
+&lt;li&gt;发布流程；&lt;/li&gt;
+&lt;li&gt;PR 要求；&lt;/li&gt;
+&lt;li&gt;数据库和接口兼容性要求。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;一个好用的原则是：&lt;strong&gt;当你第二次提醒 Codex 同一件事，就应该考虑把它写进 AGENTS.md。&lt;/strong&gt;&lt;/p&gt;
+&lt;h2&gt;12. 常见问题 FAQ&lt;span class="hx-absolute -hx-mt-20" id="12-常见问题-faq"&gt;&lt;/span&gt;
+&lt;a href="#12-%e5%b8%b8%e8%a7%81%e9%97%ae%e9%a2%98-faq" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;Q1：我完全不会代码，可以用 Codex 吗？&lt;span class="hx-absolute -hx-mt-20" id="q1我完全不会代码可以用-codex-吗"&gt;&lt;/span&gt;
+&lt;a href="#q1%e6%88%91%e5%ae%8c%e5%85%a8%e4%b8%8d%e4%bc%9a%e4%bb%a3%e7%a0%81%e5%8f%af%e4%bb%a5%e7%94%a8-codex-%e5%90%97" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;可以，但建议从“解释项目”“整理文档”“读报错”“写学习路线”开始，不要一上来让它做大范围重构。&lt;/p&gt;
+&lt;p&gt;你可以把 Codex 当成辅助学习工具，但它修改文件后仍然需要你审查 diff 和验证结果。&lt;/p&gt;
+&lt;h3&gt;Q2：Codex App、IDE、CLI、Web 到底选哪个？&lt;span class="hx-absolute -hx-mt-20" id="q2codex-appidecliweb-到底选哪个"&gt;&lt;/span&gt;
+&lt;a href="#q2codex-appidecliweb-%e5%88%b0%e5%ba%95%e9%80%89%e5%93%aa%e4%b8%aa" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;小白优先用 Codex App；已经每天用 VS Code、Cursor 或 Windsurf，就用 IDE 扩展；会终端再用 CLI；项目在 GitHub 上且想让 Codex 后台处理任务、生成 PR 时，用 Web / Cloud。&lt;/p&gt;
+&lt;h3&gt;Q3：Codex 改错了怎么办？&lt;span class="hx-absolute -hx-mt-20" id="q3codex-改错了怎么办"&gt;&lt;/span&gt;
+&lt;a href="#q3codex-%e6%94%b9%e9%94%99%e4%ba%86%e6%80%8e%e4%b9%88%e5%8a%9e" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;先看 diff，不满意就让它继续改；如果项目已经被改乱，使用 Git 回滚。&lt;/p&gt;
+&lt;p&gt;如果你还没学 Git，建议先用练习项目，不要直接在重要项目上大范围改动。&lt;/p&gt;
+&lt;h3&gt;Q4：Codex 要求批准命令，我该点同意吗？&lt;span class="hx-absolute -hx-mt-20" id="q4codex-要求批准命令我该点同意吗"&gt;&lt;/span&gt;
+&lt;a href="#q4codex-%e8%a6%81%e6%b1%82%e6%89%b9%e5%87%86%e5%91%bd%e4%bb%a4%e6%88%91%e8%af%a5%e7%82%b9%e5%90%8c%e6%84%8f%e5%90%97" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;看懂命令再同意。&lt;/p&gt;
+&lt;p&gt;涉及删除文件、安装依赖、访问项目外目录、联网下载、运行脚本的命令尤其要谨慎。&lt;/p&gt;
+&lt;p&gt;看不懂时，可以直接问：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;请解释这个命令要做什么、为什么必须执行、有没有更安全的替代方式。&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;Q5：需要 API key 吗？&lt;span class="hx-absolute -hx-mt-20" id="q5需要-api-key-吗"&gt;&lt;/span&gt;
+&lt;a href="#q5%e9%9c%80%e8%a6%81-api-key-%e5%90%97" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;不一定。&lt;/p&gt;
+&lt;p&gt;Codex App 可以使用 ChatGPT 账号或 OpenAI API key 登录。但使用 API key 时，部分功能例如 cloud threads 可能不可用。&lt;/p&gt;
+&lt;h3&gt;Q6：Codex 能直接替我上线吗？&lt;span class="hx-absolute -hx-mt-20" id="q6codex-能直接替我上线吗"&gt;&lt;/span&gt;
+&lt;a href="#q6codex-%e8%83%bd%e7%9b%b4%e6%8e%a5%e6%9b%bf%e6%88%91%e4%b8%8a%e7%ba%bf%e5%90%97" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;不建议让 Codex 在无人审查的情况下直接操作生产环境。&lt;/p&gt;
+&lt;p&gt;更安全的流程是：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;小范围任务
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;→ 查看 diff
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;→ 运行测试
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;→ 审查风险
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;→ commit / PR
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;→ 人工确认后再发布&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h2&gt;最后总结&lt;span class="hx-absolute -hx-mt-20" id="最后总结"&gt;&lt;/span&gt;
+&lt;a href="#%e6%9c%80%e5%90%8e%e6%80%bb%e7%bb%93" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Codex 的正确入门方式不是：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;帮我一次性做完整项目。&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;而是：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;先解释项目
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;→ 再提出计划
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;→ 只做小修改
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;→ 看 diff
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;→ 跑测试
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;→ 再迭代&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;把任务拆小、把权限收紧、把验证写清楚，你就可以从零基础开始，安全地使用 Codex 帮你读代码、改代码和审查代码。🚀&lt;/p&gt;
+&lt;h2&gt;参考资料&lt;span class="hx-absolute -hx-mt-20" id="参考资料"&gt;&lt;/span&gt;
+&lt;a href="#%e5%8f%82%e8%80%83%e8%b5%84%e6%96%99" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://developers.openai.com/codex/cloud" target="_blank" rel="noopener"&gt;Web - Codex | OpenAI Developers&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://developers.openai.com/codex/prompting" target="_blank" rel="noopener"&gt;Prompting - Codex | OpenAI Developers&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://openai.com/codex/get-started/" target="_blank" rel="noopener"&gt;Get started with Codex | OpenAI&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://developers.openai.com/codex/app" target="_blank" rel="noopener"&gt;App - Codex | OpenAI Developers&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://developers.openai.com/codex/quickstart" target="_blank" rel="noopener"&gt;Quickstart - Codex | OpenAI Developers&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://developers.openai.com/codex/app/features" target="_blank" rel="noopener"&gt;Features - Codex app | OpenAI Developers&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://developers.openai.com/codex/ide" target="_blank" rel="noopener"&gt;IDE extension - Codex | OpenAI Developers&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://developers.openai.com/codex/ide/features" target="_blank" rel="noopener"&gt;Features - Codex IDE | OpenAI Developers&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://developers.openai.com/codex/cli" target="_blank" rel="noopener"&gt;CLI - Codex | OpenAI Developers&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://developers.openai.com/codex/integrations/github" target="_blank" rel="noopener"&gt;Code review in GitHub - Codex | OpenAI Developers&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://help.openai.com/en/articles/11369540-using-codex-with-your-chatgpt-plan" target="_blank" rel="noopener"&gt;Using Codex with your ChatGPT plan | OpenAI Help Center&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://developers.openai.com/codex/cli/features" target="_blank" rel="noopener"&gt;Features - Codex CLI | OpenAI Developers&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://developers.openai.com/codex/agent-approvals-security" target="_blank" rel="noopener"&gt;Agent approvals &amp;amp; security - Codex | OpenAI Developers&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://help.openai.com/en/articles/5722486-how-your-data-is-used-to-improve-model-performance" target="_blank" rel="noopener"&gt;How your data is used to improve model performance | OpenAI Help Center&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://developers.openai.com/codex/guides/agents-md" target="_blank" rel="noopener"&gt;Custom instructions with AGENTS.md - Codex | OpenAI Developers&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description></item><item><title>Petdex：给 Codex 找一个会动的桌面伙伴</title><link>https://silenceper.com/article/2026-05-06-petdex-codex-pets/</link><pubDate>Wed, 06 May 2026 23:20:00 +0800</pubDate><guid>https://silenceper.com/article/2026-05-06-petdex-codex-pets/</guid><description>
 &lt;p&gt;&lt;img src="https://silenceper.com/img/20260506/petdex-home.png" alt="Petdex 首页截图" loading="lazy" /&gt;&lt;/p&gt;
 &lt;h2&gt;一句话定位&lt;span class="hx-absolute -hx-mt-20" id="一句话定位"&gt;&lt;/span&gt;
 &lt;a href="#%e4%b8%80%e5%8f%a5%e8%af%9d%e5%ae%9a%e4%bd%8d" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Petdex 是一个面向 Codex 的动态宠物图鉴网站：你可以在里面浏览、预览、收藏和安装各种像素风 companion，让本地 Codex 使用体验多一点陪伴感。&lt;/p&gt;

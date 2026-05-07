@@ -1,0 +1,151 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – AI 工具</title><link>https://silenceper.com/tags/ai-%E5%B7%A5%E5%85%B7/</link><description>Recent content in AI 工具 on silenceper</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 07 May 2026 11:26:00 +0800</lastBuildDate><atom:link href="https://silenceper.com/tags/ai-%E5%B7%A5%E5%85%B7/index.xml" rel="self" type="application/rss+xml"/><item><title>OpenLess：开源的 AI 语音输入工具，按住说话，松开成文</title><link>https://silenceper.com/article/2026-05-07-openless-ai-voice-input/</link><pubDate>Thu, 07 May 2026 11:26:00 +0800</pubDate><guid>https://silenceper.com/article/2026-05-07-openless-ai-voice-input/</guid><description>
+&lt;h2&gt;一句话定位&lt;span class="hx-absolute -hx-mt-20" id="一句话定位"&gt;&lt;/span&gt;
+&lt;a href="#%e4%b8%80%e5%8f%a5%e8%af%9d%e5%ae%9a%e4%bd%8d" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;OpenLess 是一个开源的桌面语音输入工具：按住快捷键说话，松开后把语音转成经过 AI 润色的文字，并直接插入到当前光标位置。&lt;/p&gt;
+&lt;h2&gt;基础信息卡片&lt;span class="hx-absolute -hx-mt-20" id="基础信息卡片"&gt;&lt;/span&gt;
+&lt;a href="#%e5%9f%ba%e7%a1%80%e4%bf%a1%e6%81%af%e5%8d%a1%e7%89%87" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;项目&lt;/th&gt;
+&lt;th&gt;信息&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;项目名&lt;/td&gt;
+&lt;td&gt;OpenLess&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;GitHub&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://github.com/appergb/openless" target="_blank" rel="noopener"&gt;https://github.com/appergb/openless&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;官网&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://openless.top" target="_blank" rel="noopener"&gt;https://openless.top&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;项目定位&lt;/td&gt;
+&lt;td&gt;开源语音输入 + AI 润色工具&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;支持平台&lt;/td&gt;
+&lt;td&gt;macOS 12+、Windows 10+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;技术栈&lt;/td&gt;
+&lt;td&gt;Tauri 2、Rust、React、TypeScript&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;许可证&lt;/td&gt;
+&lt;td&gt;MIT&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;当前版本&lt;/td&gt;
+&lt;td&gt;v1.2.21-tauri&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;GitHub 热度&lt;/td&gt;
+&lt;td&gt;约 900+ Stars&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2&gt;解决什么问题&lt;span class="hx-absolute -hx-mt-20" id="解决什么问题"&gt;&lt;/span&gt;
+&lt;a href="#%e8%a7%a3%e5%86%b3%e4%bb%80%e4%b9%88%e9%97%ae%e9%a2%98" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;很多语音输入工具只是把语音转成逐字稿，结果常常还要手动删语气词、补标点、整理结构。&lt;/p&gt;
+&lt;p&gt;OpenLess 想解决的是：&lt;strong&gt;把口语直接变成可用的书面文字&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;典型使用方式是，把光标放在 ChatGPT、Claude、Cursor、Notion、邮件、微信或 Slack 的输入框里，按下全局快捷键说一段话。OpenLess 会完成录音、语音识别、AI 润色，然后把处理后的文字插入到当前光标位置。如果目标输入框无法直接插入，它会自动复制到剪贴板，避免刚才说过的话丢失。&lt;/p&gt;
+&lt;p&gt;它尤其强调 &lt;strong&gt;AI prompt 模式&lt;/strong&gt;：你可以随口描述需求，它帮你整理成结构清晰、约束明确的 prompt，再直接发给 ChatGPT、Claude 或 Cursor。&lt;/p&gt;
+&lt;p&gt;比如你口述：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;我想让 ChatGPT 帮我写个 SQL，从 orders 表里查上个月的订单，按客户分组，金额倒序，要前十个。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;OpenLess 可以整理成：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;请帮我写一段 SQL，要求如下：
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- 从 `orders` 表查询上个月的订单。
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- 按客户分组。
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- 按金额倒序排序。
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- 只返回前 10 条。&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;这类场景里，它不是简单“听写”，而是把口语变成更适合发送、提问或提交的文字。&lt;/p&gt;
+&lt;h2&gt;核心功能&lt;span class="hx-absolute -hx-mt-20" id="核心功能"&gt;&lt;/span&gt;
+&lt;a href="#%e6%a0%b8%e5%bf%83%e5%8a%9f%e8%83%bd" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;1. 全局快捷键语音输入&lt;span class="hx-absolute -hx-mt-20" id="1-全局快捷键语音输入"&gt;&lt;/span&gt;
+&lt;a href="#1-%e5%85%a8%e5%b1%80%e5%bf%ab%e6%8d%b7%e9%94%ae%e8%af%ad%e9%9f%b3%e8%be%93%e5%85%a5" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;OpenLess 支持通过全局快捷键触发录音。用户可以把光标放在任意输入框里，然后按快捷键开始说话。项目当前支持按住说话和切换式录音两种方式，录音过程中也可以用 &lt;code&gt;Esc&lt;/code&gt; 取消。&lt;/p&gt;
+&lt;h3&gt;2. 多种输出模式&lt;span class="hx-absolute -hx-mt-20" id="2-多种输出模式"&gt;&lt;/span&gt;
+&lt;a href="#2-%e5%a4%9a%e7%a7%8d%e8%be%93%e5%87%ba%e6%a8%a1%e5%bc%8f" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;OpenLess 不是只输出原始转写，而是提供了几种处理方式：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;原文&lt;/strong&gt;：直接输出转写文字，不额外修改。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;轻度润色&lt;/strong&gt;：修正语气词、标点和明显错字，尽量保留原意。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;清晰结构&lt;/strong&gt;：把口语整理成结构化 prompt，适合直接发给 AI 工具。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;正式表达&lt;/strong&gt;：把口语转换成更正式的书面语。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;其中“清晰结构”是它最有辨识度的模式，尤其适合经常写 AI prompt 的用户。&lt;/p&gt;
+&lt;h3&gt;3. 直接插入当前光标位置&lt;span class="hx-absolute -hx-mt-20" id="3-直接插入当前光标位置"&gt;&lt;/span&gt;
+&lt;a href="#3-%e7%9b%b4%e6%8e%a5%e6%8f%92%e5%85%a5%e5%bd%93%e5%89%8d%e5%85%89%e6%a0%87%e4%bd%8d%e7%bd%ae" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;OpenLess 的目标不是成为一个新的笔记容器，而是减少输入成本。处理后的文字会直接落到当前应用的输入框里，例如浏览器、聊天工具、编辑器、文档工具等。&lt;/p&gt;
+&lt;p&gt;如果某些应用限制了直接写入，它会回退到复制到剪贴板，用户手动粘贴即可。&lt;/p&gt;
+&lt;h3&gt;4. 词典和热词&lt;span class="hx-absolute -hx-mt-20" id="4-词典和热词"&gt;&lt;/span&gt;
+&lt;a href="#4-%e8%af%8d%e5%85%b8%e5%92%8c%e7%83%ad%e8%af%8d" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;项目提供词典能力，可以维护产品名、人名、专有名词等。启用后的词条会用于语音识别阶段的热词提示，也会在润色阶段作为语义参考。&lt;/p&gt;
+&lt;p&gt;这对经常输入英文产品名、技术名词、团队内部名称的用户会比较有用。&lt;/p&gt;
+&lt;h3&gt;5. 历史记录和设置面板&lt;span class="hx-absolute -hx-mt-20" id="5-历史记录和设置面板"&gt;&lt;/span&gt;
+&lt;a href="#5-%e5%8e%86%e5%8f%b2%e8%ae%b0%e5%bd%95%e5%92%8c%e8%ae%be%e7%bd%ae%e9%9d%a2%e6%9d%bf" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;OpenLess 提供主窗口，用来查看概览、历史、词典、风格和设置。用户可以回看每次录音的原始转写和润色结果，也可以调整语言、快捷键、模型凭据等配置。&lt;/p&gt;
+&lt;h3&gt;6. 本地优先，自带服务凭据&lt;span class="hx-absolute -hx-mt-20" id="6-本地优先自带服务凭据"&gt;&lt;/span&gt;
+&lt;a href="#6-%e6%9c%ac%e5%9c%b0%e4%bc%98%e5%85%88%e8%87%aa%e5%b8%a6%e6%9c%8d%e5%8a%a1%e5%87%ad%e6%8d%ae" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;类似工具很多是闭源订阅服务，用户的数据、词典和模型调用都沉淀在服务商账户里。&lt;/p&gt;
+&lt;p&gt;OpenLess 的思路是：应用开源，数据尽量保留在本机，用户自己配置语音识别和文本润色服务。当前支持火山引擎 ASR、OpenAI Whisper 兼容批式 ASR，以及 Ark / DeepSeek / OpenAI 兼容的 Chat Completions。&lt;/p&gt;
+&lt;h2&gt;适合谁&lt;span class="hx-absolute -hx-mt-20" id="适合谁"&gt;&lt;/span&gt;
+&lt;a href="#%e9%80%82%e5%90%88%e8%b0%81" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;OpenLess 比较适合这些用户：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;经常给 ChatGPT、Claude、Cursor、Gemini 写 prompt 的人。&lt;/li&gt;
+&lt;li&gt;经常写邮件、需求说明、长消息，又不想一直打字的人。&lt;/li&gt;
+&lt;li&gt;希望用语音快速整理代码注释、commit message、PR 描述的开发者。&lt;/li&gt;
+&lt;li&gt;想要开源方案，不想完全依赖闭源订阅语音输入工具的人。&lt;/li&gt;
+&lt;li&gt;macOS 或 Windows 桌面重度用户。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如果你的日常工作里有大量“把想法变成文字”的环节，OpenLess 会比较容易融入工作流。&lt;/p&gt;
+&lt;h2&gt;快速上手&lt;span class="hx-absolute -hx-mt-20" id="快速上手"&gt;&lt;/span&gt;
+&lt;a href="#%e5%bf%ab%e9%80%9f%e4%b8%8a%e6%89%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;普通用户可以直接到 GitHub Releases 下载对应平台安装包：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;macOS：&lt;code&gt;OpenLess_&amp;lt;version&amp;gt;_aarch64.dmg&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Windows：&lt;code&gt;OpenLess_&amp;lt;version&amp;gt;_x64-setup.exe&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;首次启动后需要授予必要权限。&lt;/p&gt;
+&lt;p&gt;macOS 用户需要：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;授予麦克风权限。&lt;/li&gt;
+&lt;li&gt;授予辅助功能权限。&lt;/li&gt;
+&lt;li&gt;退出并重新打开 OpenLess。&lt;/li&gt;
+&lt;li&gt;在设置里填写 ASR 和 LLM 服务凭据。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Windows 用户需要：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;授予麦克风权限。&lt;/li&gt;
+&lt;li&gt;在设置里确认全局快捷键监听正常。&lt;/li&gt;
+&lt;li&gt;填写 ASR 和 LLM 服务凭据。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;开发者从源码运行大致如下：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git submodule update --init --recursive
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; openless-all/app
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npm ci
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npm run tauri dev&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;项目当前活跃代码在 &lt;code&gt;openless-all/app/&lt;/code&gt;，桌面端基于 Tauri 2，后端为 Rust，前端为 React / TypeScript。&lt;/p&gt;
+&lt;h2&gt;结论&lt;span class="hx-absolute -hx-mt-20" id="结论"&gt;&lt;/span&gt;
+&lt;a href="#%e7%bb%93%e8%ae%ba" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;OpenLess 可以理解为一个开源版 AI 语音输入助手。&lt;/p&gt;
+&lt;p&gt;它不做问答，不帮你执行任务，也不试图变成另一个 AI 客户端。它专注做一件事：&lt;strong&gt;把你说的话变成更清楚、更适合发送或提问的文字，并放到当前输入框里&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;对于经常写 prompt、长消息、邮件、需求说明或代码相关描述的人来说，这个方向很实用。开源、自带服务凭据、本地优先，再加上面向 AI prompt 的结构化整理，是 OpenLess 目前最值得关注的几个特点。&lt;/p&gt;</description></item></channel></rss>
