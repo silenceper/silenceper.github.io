@@ -1989,7 +1989,7 @@ title="复制代码"
 &lt;p&gt;如果只把 Codex 当成“代码生成器”，它能帮你省一些时间。&lt;/p&gt;
 &lt;p&gt;但如果把它当成一个可配置、可复盘、可沉淀经验的工程队友，它带来的效率提升会大很多。&lt;/p&gt;</description></item><item><title>andrej-karpathy-skills：把 AI 编程助手调教得更稳一点</title><link>https://silenceper.com/article/2026-04-26-andrej-karpathy-skills/</link><pubDate>Sun, 26 Apr 2026 00:44:55 +0800</pubDate><guid>https://silenceper.com/article/2026-04-26-andrej-karpathy-skills/</guid><description>
 &lt;p&gt;一句话定位：&lt;strong&gt;&lt;code&gt;andrej-karpathy-skills&lt;/code&gt; 不是新的 AI 编程工具，而是一套把 Andrej Karpathy 对 LLM 编码常见问题的观察，整理成可直接放进 Claude Code、Cursor 或个人技能系统里的行为准则。&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://silenceper.com/img/20260425/andrej-karpathy-skills-cover-v2.jpg" alt="" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260425/andrej-karpathy-skills-cover-v2.jpg" alt="Andrej Karpathy Skills 项目封面" loading="lazy" /&gt;&lt;/p&gt;
 &lt;h2&gt;基础信息卡片&lt;span class="hx-absolute -hx-mt-20" id="基础信息卡片"&gt;&lt;/span&gt;
 &lt;a href="#%e5%9f%ba%e7%a1%80%e4%bf%a1%e6%81%af%e5%8d%a1%e7%89%87" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;项目名称&lt;/strong&gt;：&lt;code&gt;forrestchang/andrej-karpathy-skills&lt;/code&gt;&lt;/li&gt;
@@ -2101,7 +2101,7 @@ title="复制代码"
 &lt;p&gt;如果你已经在用 AI 写代码，这个项目值得看一遍；如果你已经被 AI 改坏过项目、写复杂过实现、或者因为没有明确验证目标而反复返工，那它的价值会更直接。&lt;/p&gt;
 &lt;p&gt;从定位上看，它更像一份高复用的协作说明书，而不是另一个新工具。但很多时候，真正缺的恰恰不是更多工具，而是一套更稳的工作方式。&lt;/p&gt;</description></item><item><title>DESIGN.md：给 AI 编程工具看的设计规范文件</title><link>https://silenceper.com/article/2026-04-23-design-md-ai-coding-design-spec/</link><pubDate>Thu, 23 Apr 2026 09:57:00 +0800</pubDate><guid>https://silenceper.com/article/2026-04-23-design-md-ai-coding-design-spec/</guid><description>
 &lt;p&gt;一句话定位：&lt;strong&gt;DESIGN.md 是 Google Labs 推出的一份开放格式规范，用一个 &lt;code&gt;DESIGN.md&lt;/code&gt; 文件同时承载机器可读的 design tokens 和人类可读的设计说明，让 AI 编程工具更稳定地理解界面风格。&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://silenceper.com/img/20260422/design-md-issue-preview-v2.png" alt="" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260422/design-md-issue-preview-v2.png" alt="design.md 生成 GitHub issue 的预览界面" loading="lazy" /&gt;&lt;/p&gt;
 &lt;h2&gt;基础信息卡片&lt;span class="hx-absolute -hx-mt-20" id="基础信息卡片"&gt;&lt;/span&gt;
 &lt;a href="#%e5%9f%ba%e7%a1%80%e4%bf%a1%e6%81%af%e5%8d%a1%e7%89%87" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;项目名称&lt;/strong&gt;：DESIGN.md&lt;/li&gt;

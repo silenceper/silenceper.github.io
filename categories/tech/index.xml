@@ -5424,7 +5424,7 @@ title="复制代码"
 &lt;/ul&gt;
 &lt;h1&gt;原理&lt;/h1&gt;&lt;p&gt;以上两种方式的对比可以发现，通过cni方式安装的flannel会多一个&lt;code&gt;cni0&lt;/code&gt;的网桥，其实这个与&lt;code&gt;docker0&lt;/code&gt;网桥的作用是一样的，创建了一对veth pair 分别联通容器内部与主机网络，并把其中一端接入&lt;code&gt;cni0&lt;/code&gt;网桥。&lt;/p&gt;
 &lt;p&gt;整个通信过程如图：&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://ws1.sinaimg.cn/large/65209136gy1fvmsrceiq7j20oh0gv0ut.jpg" alt="" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://ws1.sinaimg.cn/large/65209136gy1fvmsrceiq7j20oh0gv0ut.jpg" alt="Flannel 在 Kubernetes 中的网络架构示意图" loading="lazy" /&gt;&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;图中的ip信息与本机不一致，主要说明通信过程&lt;/p&gt;
 &lt;/blockquote&gt;

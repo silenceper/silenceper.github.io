@@ -5,7 +5,7 @@
 &lt;p&gt;最直观的一点是，它不像一种“用完就走”的 Agent。相比我之前使用 OpenClaw 的感受，Hermes 更像是会持续积累上下文的助手。它不仅能记住一些长期偏好，还会把一些稳定的工作习惯、发布规则、表达方式、甚至你纠正过它的点，逐步沉淀下来。用得越久，这种差异会越明显。&lt;/p&gt;
 &lt;p&gt;简单说一句我的体会：目前体验下来，Hermes 确实比 OpenClaw 更“懂你”。&lt;/p&gt;
 &lt;p&gt;这篇文章我不打算写成功能罗列，而是结合我自己的上手过程，讲清楚三件事：&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://silenceper.com/img/20260415/hermes-agent-banner.png" alt="" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260415/hermes-agent-banner.png" alt="Hermes Agent 工作流横幅图" loading="lazy" /&gt;&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Hermes Agent 怎么安装&lt;/li&gt;
 &lt;li&gt;装完之后怎么配置，尤其是怎么把 Telegram 这一条链路跑通&lt;/li&gt;
@@ -18,7 +18,7 @@
 &lt;p&gt;二是技能。不是每次都从零开始，而是可以把做成过的复杂流程沉淀成 skill，下次遇到类似任务时直接复用。&lt;/p&gt;
 &lt;p&gt;三是会话检索。以前聊过什么、做过什么、怎么修过某个问题，它能搜索历史会话，不需要你每次都从头复述背景。&lt;/p&gt;
 &lt;p&gt;所以它更像一个“越用越贴合你”的 Agent，而不是一次性工具。&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://silenceper.com/img/20260415/hermes-agent-session-recap.svg" alt="" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260415/hermes-agent-session-recap.svg" alt="Hermes Agent 会话回顾流程图" loading="lazy" /&gt;&lt;/p&gt;
 &lt;h2&gt;二、怎么安装 Hermes Agent&lt;span class="hx-absolute -hx-mt-20" id="二怎么安装-hermes-agent"&gt;&lt;/span&gt;
 &lt;a href="#%e4%ba%8c%e6%80%8e%e4%b9%88%e5%ae%89%e8%a3%85-hermes-agent" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Hermes 官方给出的安装方式很直接，Linux、macOS、WSL2 都可以直接走安装脚本。&lt;/p&gt;
 &lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
@@ -75,7 +75,7 @@ title="复制代码"
 &lt;/button&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src="https://silenceper.com/img/20260415/hermes-agent-cli-layout.svg" alt="" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260415/hermes-agent-cli-layout.svg" alt="Hermes Agent CLI 布局示意图" loading="lazy" /&gt;&lt;/p&gt;
 &lt;p&gt;其中我建议第一次安装完，别急着自己手填配置，先跑一遍：&lt;/p&gt;
 &lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
 &lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;hermes setup&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;

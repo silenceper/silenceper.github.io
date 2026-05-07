@@ -5,7 +5,7 @@
 &lt;p&gt;最直观的一点是，它不像一种“用完就走”的 Agent。相比我之前使用 OpenClaw 的感受，Hermes 更像是会持续积累上下文的助手。它不仅能记住一些长期偏好，还会把一些稳定的工作习惯、发布规则、表达方式、甚至你纠正过它的点，逐步沉淀下来。用得越久，这种差异会越明显。&lt;/p&gt;
 &lt;p&gt;简单说一句我的体会：目前体验下来，Hermes 确实比 OpenClaw 更“懂你”。&lt;/p&gt;
 &lt;p&gt;这篇文章我不打算写成功能罗列，而是结合我自己的上手过程，讲清楚三件事：&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://silenceper.com/img/20260415/hermes-agent-banner.png" alt="" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260415/hermes-agent-banner.png" alt="Hermes Agent 工作流横幅图" loading="lazy" /&gt;&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Hermes Agent 怎么安装&lt;/li&gt;
 &lt;li&gt;装完之后怎么配置，尤其是怎么把 Telegram 这一条链路跑通&lt;/li&gt;
@@ -18,7 +18,7 @@
 &lt;p&gt;二是技能。不是每次都从零开始，而是可以把做成过的复杂流程沉淀成 skill，下次遇到类似任务时直接复用。&lt;/p&gt;
 &lt;p&gt;三是会话检索。以前聊过什么、做过什么、怎么修过某个问题，它能搜索历史会话，不需要你每次都从头复述背景。&lt;/p&gt;
 &lt;p&gt;所以它更像一个“越用越贴合你”的 Agent，而不是一次性工具。&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://silenceper.com/img/20260415/hermes-agent-session-recap.svg" alt="" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260415/hermes-agent-session-recap.svg" alt="Hermes Agent 会话回顾流程图" loading="lazy" /&gt;&lt;/p&gt;
 &lt;h2&gt;二、怎么安装 Hermes Agent&lt;span class="hx-absolute -hx-mt-20" id="二怎么安装-hermes-agent"&gt;&lt;/span&gt;
 &lt;a href="#%e4%ba%8c%e6%80%8e%e4%b9%88%e5%ae%89%e8%a3%85-hermes-agent" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Hermes 官方给出的安装方式很直接，Linux、macOS、WSL2 都可以直接走安装脚本。&lt;/p&gt;
 &lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
@@ -75,7 +75,7 @@ title="复制代码"
 &lt;/button&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src="https://silenceper.com/img/20260415/hermes-agent-cli-layout.svg" alt="" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260415/hermes-agent-cli-layout.svg" alt="Hermes Agent CLI 布局示意图" loading="lazy" /&gt;&lt;/p&gt;
 &lt;p&gt;其中我建议第一次安装完，别急着自己手填配置，先跑一遍：&lt;/p&gt;
 &lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
 &lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;hermes setup&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
@@ -287,7 +287,7 @@ title="复制代码"
 &lt;p&gt;Paseo 处理的，基本就是这类问题。&lt;/p&gt;
 &lt;p&gt;它不是去替代这些 agent，而是给这些 agent 补上一层统一入口：你可以在不同设备上接入同一套工作流，查看任务进度、追加一句 follow-up、继续推进没有做完的事情，而不必总是守在那台启动任务的电脑前。&lt;/p&gt;
 &lt;p&gt;这里其实挺适合直接看一眼它的界面。只看文字不太容易形成感觉，但看到截图后就会明白，它想做的并不是一个聊天框，而更像一个围绕 agent 会话展开的工作台。&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://silenceper.com/img/20260414/paseo-hero.png" alt="" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260414/paseo-hero.png" alt="Paseo Web 管理 coding agent 的界面预览" loading="lazy" /&gt;&lt;/p&gt;
 &lt;h2&gt;它和常见 AI 编程工具的区别&lt;span class="hx-absolute -hx-mt-20" id="它和常见-ai-编程工具的区别"&gt;&lt;/span&gt;
 &lt;a href="#%e5%ae%83%e5%92%8c%e5%b8%b8%e8%a7%81-ai-%e7%bc%96%e7%a8%8b%e5%b7%a5%e5%85%b7%e7%9a%84%e5%8c%ba%e5%88%ab" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;从产品形态上看，Paseo 最容易被注意到的点当然是“可以从手机上控制 coding agent”。这个卖点很直观，也确实很容易传播。&lt;/p&gt;
 &lt;p&gt;但如果只把它理解成“在手机上看 Claude Code”，其实还是有点低估它了。&lt;/p&gt;
@@ -324,7 +324,7 @@ title="复制代码"
 &lt;/ul&gt;
 &lt;p&gt;那你就会更容易理解这种统一入口的意义。&lt;/p&gt;
 &lt;p&gt;再看一张移动端预览图，会更明显一些。它想表达的并不是“把 IDE 缩小到手机里”，而是让你在离开电脑之后，依然能跟进 agent 的执行过程。&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://silenceper.com/img/20260414/paseo-mobile.png" alt="" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260414/paseo-mobile.png" alt="Paseo 移动端查看 agent 会话的界面预览" loading="lazy" /&gt;&lt;/p&gt;
 &lt;p&gt;所以我会觉得，Paseo 真正切中的不是“AI 编程”里最热闹的那部分，而是一个更往后、更偏工作流的问题：&lt;/p&gt;
 &lt;p&gt;当 coding agent 开始真正参与开发流程之后，人和 agent 之间的协作方式应该怎么组织？&lt;/p&gt;
 &lt;h2&gt;哪些人会更适合用它&lt;span class="hx-absolute -hx-mt-20" id="哪些人会更适合用它"&gt;&lt;/span&gt;
@@ -667,7 +667,7 @@ style Skill fill:#ffffcc
 &lt;p&gt;随着开源 Skills 生态系统的不断成熟，我们有理由相信，未来的 AI Agent 将更加智能、高效，能够处理更复杂的任务，同时保持合理的成本。&lt;/p&gt;</description></item><item><title>收集Vibe Coding 的AI工具集合</title><link>https://silenceper.com/blog/2026-01-08-awesome-ai-vibe-coding/</link><pubDate>Thu, 08 Jan 2026 00:00:00 +0800</pubDate><guid>https://silenceper.com/blog/2026-01-08-awesome-ai-vibe-coding/</guid><description>
 &lt;p&gt;日常开发中已经离不开AI工具，我创建了一个GitHub仓库，用于收集Vibe Coding 的AI工具集合，欢迎大家一起维护，目前收集的工具如下：&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://github.com/silenceper/awesome-ai-vibe-coding" target="_blank" rel="noopener"&gt;Vibe Coding AI Tools&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://silenceper.com/img/20260108/vibe-coding-ai-tools.png" alt="" loading="lazy" /&gt;&lt;/p&gt;</description></item><item><title>免费体验 Google AI 图片生成神器：Nano Banana Pro 完整教程</title><link>https://silenceper.com/blog/2025-11-30-nano-banana-pro/</link><pubDate>Sun, 30 Nov 2025 00:00:00 +0800</pubDate><guid>https://silenceper.com/blog/2025-11-30-nano-banana-pro/</guid><description>
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260108/vibe-coding-ai-tools.png" alt="Vibe Coding AI 工具集合封面图" loading="lazy" /&gt;&lt;/p&gt;</description></item><item><title>免费体验 Google AI 图片生成神器：Nano Banana Pro 完整教程</title><link>https://silenceper.com/blog/2025-11-30-nano-banana-pro/</link><pubDate>Sun, 30 Nov 2025 00:00:00 +0800</pubDate><guid>https://silenceper.com/blog/2025-11-30-nano-banana-pro/</guid><description>
 &lt;h2&gt;简介&lt;span class="hx-absolute -hx-mt-20" id="简介"&gt;&lt;/span&gt;
 &lt;a href="#%e7%ae%80%e4%bb%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Google Cloud Platform (GCP) 为新用户提供了 300 美元的免费试用额度，可以用来体验各种 Google Cloud 服务。本文将详细介绍如何利用这个免费试用额度来使用 Google AI Studio 中的 Nano Banana Pro 模型。&lt;/p&gt;
 &lt;p&gt;Nano Banana Pro 是 Google 推出的轻量级 AI 模型，适合快速原型开发和实验。通过本文的步骤，你可以免费体验这个强大的 AI 模型。&lt;/p&gt;
@@ -1611,8 +1611,8 @@ title="复制代码"
 &lt;/ol&gt;
 &lt;h2&gt;AI&amp;amp;&amp;amp;MCP交流群&lt;span class="hx-absolute -hx-mt-20" id="aimcp交流群"&gt;&lt;/span&gt;
 &lt;a href="#aimcp%e4%ba%a4%e6%b5%81%e7%be%a4" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;我建了一个&amp;quot;AI技术交流群&amp;quot;，目的是为了方便大家交流AI相关的知识和共享资源，目前AI变化真的是太快了，如果二维码失效大家关注公众号&amp;quot;AI技术小林&amp;quot;，发送关键字”加群“，拉你进去，；
-&lt;img src="https://public-1251960616.cos.ap-nanjing.myqcloud.com/images/WechatIMG247.jpg" alt="" loading="lazy" /&gt;
-&lt;img src="https://public-1251960616.cos.ap-nanjing.myqcloud.com/images/qrcode-ai.bmp" alt="" loading="lazy" /&gt;&lt;/p&gt;</description></item><item><title>MCP-K8s：当AI成为我的Kubernetes小助手</title><link>https://silenceper.com/blog/202504/mcp-k8s/</link><pubDate>Thu, 03 Apr 2025 22:20:59 +0800</pubDate><guid>https://silenceper.com/blog/202504/mcp-k8s/</guid><description>
+&lt;img src="https://public-1251960616.cos.ap-nanjing.myqcloud.com/images/WechatIMG247.jpg" alt="AI 技术交流群说明截图" loading="lazy" /&gt;
+&lt;img src="https://public-1251960616.cos.ap-nanjing.myqcloud.com/images/qrcode-ai.bmp" alt="AI 技术交流群二维码" loading="lazy" /&gt;&lt;/p&gt;</description></item><item><title>MCP-K8s：当AI成为我的Kubernetes小助手</title><link>https://silenceper.com/blog/202504/mcp-k8s/</link><pubDate>Thu, 03 Apr 2025 22:20:59 +0800</pubDate><guid>https://silenceper.com/blog/202504/mcp-k8s/</guid><description>
 &lt;p&gt;还记得刚开始接触Kubernetes时的感受吗？复杂的架构、繁多的概念、以及那些需要记忆的kubectl命令&amp;hellip;，现在有了MCP可以让这种交互变得更加简单，尝试通过AI自然语言对话来完成对k8s集群各种资源的操作乃至于定于集群的问题。&lt;/p&gt;
 &lt;h2&gt;它是怎么工作的？&lt;span class="hx-absolute -hx-mt-20" id="它是怎么工作的"&gt;&lt;/span&gt;
 &lt;a href="#%e5%ae%83%e6%98%af%e6%80%8e%e4%b9%88%e5%b7%a5%e4%bd%9c%e7%9a%84" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;说起来很简单，MCP-K8s就像是在Kubernetes和AI之间搭了一座桥。通过MCP（Model Control Protocol）协议，它能让AI理解你的自然语言指令，并转换成对应的Kubernetes操作。&lt;/p&gt;
@@ -1645,18 +1645,18 @@ title="复制代码"
 &lt;a href="#%e5%ae%9e%e6%88%98%e4%bd%93%e9%aa%8c" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;来看看实际用起来是什么感觉：&lt;/p&gt;
 &lt;h3&gt;查询集群信息&lt;span class="hx-absolute -hx-mt-20" id="查询集群信息"&gt;&lt;/span&gt;
 &lt;a href="#%e6%9f%a5%e8%af%a2%e9%9b%86%e7%be%a4%e4%bf%a1%e6%81%af" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;比如我想看看集群节点情况，直接问就好了：&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://fastly.jsdelivr.net/gh/bucketio/img3@main/2025/04/04/1743696360238-e9a6e1a0-7e80-4ee4-a8b1-95ac9895c8d6.png" alt="" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://fastly.jsdelivr.net/gh/bucketio/img3@main/2025/04/04/1743696360238-e9a6e1a0-7e80-4ee4-a8b1-95ac9895c8d6.png" alt="通过 MCP-K8s 查询 Kubernetes 集群节点信息" loading="lazy" /&gt;&lt;/p&gt;
 &lt;p&gt;查询k8s版本
-&lt;img src="https://fastly.jsdelivr.net/gh/bucketio/img1@main/2025/04/04/1743696412136-0acd7f20-dfbd-4914-88c8-97c994aaa8f3.png" alt="" loading="lazy" /&gt;&lt;/p&gt;
+&lt;img src="https://fastly.jsdelivr.net/gh/bucketio/img1@main/2025/04/04/1743696412136-0acd7f20-dfbd-4914-88c8-97c994aaa8f3.png" alt="通过 MCP-K8s 查询 Kubernetes 版本" loading="lazy" /&gt;&lt;/p&gt;
 &lt;h3&gt;创建资源&lt;span class="hx-absolute -hx-mt-20" id="创建资源"&gt;&lt;/span&gt;
 &lt;a href="#%e5%88%9b%e5%bb%ba%e8%b5%84%e6%ba%90" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;需要创建新资源？就像跟同事说话一样描述你的需求：&lt;/p&gt;
 &lt;p&gt;AI会帮你处理好所有细节：&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://fastly.jsdelivr.net/gh/bucketio/img16@main/2025/04/04/1743696489031-d64a1eab-425a-45eb-ba01-919bf4e1bf2d.png" alt="" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://fastly.jsdelivr.net/gh/bucketio/img16@main/2025/04/04/1743696489031-d64a1eab-425a-45eb-ba01-919bf4e1bf2d.png" alt="通过自然语言让 MCP-K8s 创建 Kubernetes 资源" loading="lazy" /&gt;&lt;/p&gt;
 &lt;p&gt;最终效果如下：&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://fastly.jsdelivr.net/gh/bucketio/img5@main/2025/04/04/1743696505355-2b937898-2ba3-477c-8602-2ef41b0e340a.png" alt="" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://fastly.jsdelivr.net/gh/bucketio/img5@main/2025/04/04/1743696505355-2b937898-2ba3-477c-8602-2ef41b0e340a.png" alt="MCP-K8s 创建资源后的查询结果" loading="lazy" /&gt;&lt;/p&gt;
 &lt;h3&gt;模拟排障&lt;span class="hx-absolute -hx-mt-20" id="模拟排障"&gt;&lt;/span&gt;
 &lt;a href="#%e6%a8%a1%e6%8b%9f%e6%8e%92%e9%9a%9c" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;这个是我最喜欢的部分。有一次我故意搞了个问题，有一个pod没有running：&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://fastly.jsdelivr.net/gh/bucketio/img5@main/2025/04/04/1743696613252-7db3f346-231f-45b2-9d37-17ee9a6df034.png" alt="" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://fastly.jsdelivr.net/gh/bucketio/img5@main/2025/04/04/1743696613252-7db3f346-231f-45b2-9d37-17ee9a6df034.png" alt="MCP-K8s 分析 Kubernetes Pod 异常状态" loading="lazy" /&gt;&lt;/p&gt;
 &lt;p&gt;只需要简单说明情况：&lt;/p&gt;
 &lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
 &lt;div&gt;&lt;pre&gt;&lt;code&gt;mcp-demo 命名空间下有个nginx 的pod没有running，看下是什么原因并解决&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
@@ -1669,7 +1669,7 @@ title="复制代码"
 &lt;/button&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src="https://fastly.jsdelivr.net/gh/bucketio/img15@main/2025/04/04/1743696631863-bcb23517-9775-4eac-aef8-833abea9dbfd.png" alt="" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://fastly.jsdelivr.net/gh/bucketio/img15@main/2025/04/04/1743696631863-bcb23517-9775-4eac-aef8-833abea9dbfd.png" alt="MCP-K8s 给出 Kubernetes 问题排查建议" loading="lazy" /&gt;&lt;/p&gt;
 &lt;p&gt;在这个过程中AI会自动调用mcp 工具，并将查询到的结果提交给大模型进行分析，分析之后 进行定位并解决&lt;/p&gt;
 &lt;h2&gt;个人想法&lt;span class="hx-absolute -hx-mt-20" id="个人想法"&gt;&lt;/span&gt;
 &lt;a href="#%e4%b8%aa%e4%ba%ba%e6%83%b3%e6%b3%95" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;这里不得不夸一下Claude模型，感觉它特别能够理解mcp的tool，每次都能够精准的知道应该传入那种参数。虽然在tool定义中都有描述，但是对比了其他的一些模型和mcp server的交互，总是不尽人意，要不就是给的参数json格式错误，要不就是理解错了参数需要传入的信息。&lt;/p&gt;

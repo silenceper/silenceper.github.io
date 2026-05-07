@@ -455,8 +455,8 @@ title="复制代码"
 &lt;/ol&gt;
 &lt;h2&gt;AI&amp;amp;&amp;amp;MCP交流群&lt;span class="hx-absolute -hx-mt-20" id="aimcp交流群"&gt;&lt;/span&gt;
 &lt;a href="#aimcp%e4%ba%a4%e6%b5%81%e7%be%a4" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;我建了一个&amp;quot;AI技术交流群&amp;quot;，目的是为了方便大家交流AI相关的知识和共享资源，目前AI变化真的是太快了，如果二维码失效大家关注公众号&amp;quot;AI技术小林&amp;quot;，发送关键字”加群“，拉你进去，；
-&lt;img src="https://public-1251960616.cos.ap-nanjing.myqcloud.com/images/WechatIMG247.jpg" alt="" loading="lazy" /&gt;
-&lt;img src="https://public-1251960616.cos.ap-nanjing.myqcloud.com/images/qrcode-ai.bmp" alt="" loading="lazy" /&gt;&lt;/p&gt;</description></item><item><title>MCP-K8s：当AI成为我的Kubernetes小助手</title><link>https://silenceper.com/blog/202504/mcp-k8s/</link><pubDate>Thu, 03 Apr 2025 22:20:59 +0800</pubDate><guid>https://silenceper.com/blog/202504/mcp-k8s/</guid><description>
+&lt;img src="https://public-1251960616.cos.ap-nanjing.myqcloud.com/images/WechatIMG247.jpg" alt="AI 技术交流群说明截图" loading="lazy" /&gt;
+&lt;img src="https://public-1251960616.cos.ap-nanjing.myqcloud.com/images/qrcode-ai.bmp" alt="AI 技术交流群二维码" loading="lazy" /&gt;&lt;/p&gt;</description></item><item><title>MCP-K8s：当AI成为我的Kubernetes小助手</title><link>https://silenceper.com/blog/202504/mcp-k8s/</link><pubDate>Thu, 03 Apr 2025 22:20:59 +0800</pubDate><guid>https://silenceper.com/blog/202504/mcp-k8s/</guid><description>
 &lt;p&gt;还记得刚开始接触Kubernetes时的感受吗？复杂的架构、繁多的概念、以及那些需要记忆的kubectl命令&amp;hellip;，现在有了MCP可以让这种交互变得更加简单，尝试通过AI自然语言对话来完成对k8s集群各种资源的操作乃至于定于集群的问题。&lt;/p&gt;
 &lt;h2&gt;它是怎么工作的？&lt;span class="hx-absolute -hx-mt-20" id="它是怎么工作的"&gt;&lt;/span&gt;
 &lt;a href="#%e5%ae%83%e6%98%af%e6%80%8e%e4%b9%88%e5%b7%a5%e4%bd%9c%e7%9a%84" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;说起来很简单，MCP-K8s就像是在Kubernetes和AI之间搭了一座桥。通过MCP（Model Control Protocol）协议，它能让AI理解你的自然语言指令，并转换成对应的Kubernetes操作。&lt;/p&gt;
@@ -489,18 +489,18 @@ title="复制代码"
 &lt;a href="#%e5%ae%9e%e6%88%98%e4%bd%93%e9%aa%8c" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;来看看实际用起来是什么感觉：&lt;/p&gt;
 &lt;h3&gt;查询集群信息&lt;span class="hx-absolute -hx-mt-20" id="查询集群信息"&gt;&lt;/span&gt;
 &lt;a href="#%e6%9f%a5%e8%af%a2%e9%9b%86%e7%be%a4%e4%bf%a1%e6%81%af" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;比如我想看看集群节点情况，直接问就好了：&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://fastly.jsdelivr.net/gh/bucketio/img3@main/2025/04/04/1743696360238-e9a6e1a0-7e80-4ee4-a8b1-95ac9895c8d6.png" alt="" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://fastly.jsdelivr.net/gh/bucketio/img3@main/2025/04/04/1743696360238-e9a6e1a0-7e80-4ee4-a8b1-95ac9895c8d6.png" alt="通过 MCP-K8s 查询 Kubernetes 集群节点信息" loading="lazy" /&gt;&lt;/p&gt;
 &lt;p&gt;查询k8s版本
-&lt;img src="https://fastly.jsdelivr.net/gh/bucketio/img1@main/2025/04/04/1743696412136-0acd7f20-dfbd-4914-88c8-97c994aaa8f3.png" alt="" loading="lazy" /&gt;&lt;/p&gt;
+&lt;img src="https://fastly.jsdelivr.net/gh/bucketio/img1@main/2025/04/04/1743696412136-0acd7f20-dfbd-4914-88c8-97c994aaa8f3.png" alt="通过 MCP-K8s 查询 Kubernetes 版本" loading="lazy" /&gt;&lt;/p&gt;
 &lt;h3&gt;创建资源&lt;span class="hx-absolute -hx-mt-20" id="创建资源"&gt;&lt;/span&gt;
 &lt;a href="#%e5%88%9b%e5%bb%ba%e8%b5%84%e6%ba%90" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;需要创建新资源？就像跟同事说话一样描述你的需求：&lt;/p&gt;
 &lt;p&gt;AI会帮你处理好所有细节：&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://fastly.jsdelivr.net/gh/bucketio/img16@main/2025/04/04/1743696489031-d64a1eab-425a-45eb-ba01-919bf4e1bf2d.png" alt="" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://fastly.jsdelivr.net/gh/bucketio/img16@main/2025/04/04/1743696489031-d64a1eab-425a-45eb-ba01-919bf4e1bf2d.png" alt="通过自然语言让 MCP-K8s 创建 Kubernetes 资源" loading="lazy" /&gt;&lt;/p&gt;
 &lt;p&gt;最终效果如下：&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://fastly.jsdelivr.net/gh/bucketio/img5@main/2025/04/04/1743696505355-2b937898-2ba3-477c-8602-2ef41b0e340a.png" alt="" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://fastly.jsdelivr.net/gh/bucketio/img5@main/2025/04/04/1743696505355-2b937898-2ba3-477c-8602-2ef41b0e340a.png" alt="MCP-K8s 创建资源后的查询结果" loading="lazy" /&gt;&lt;/p&gt;
 &lt;h3&gt;模拟排障&lt;span class="hx-absolute -hx-mt-20" id="模拟排障"&gt;&lt;/span&gt;
 &lt;a href="#%e6%a8%a1%e6%8b%9f%e6%8e%92%e9%9a%9c" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;这个是我最喜欢的部分。有一次我故意搞了个问题，有一个pod没有running：&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://fastly.jsdelivr.net/gh/bucketio/img5@main/2025/04/04/1743696613252-7db3f346-231f-45b2-9d37-17ee9a6df034.png" alt="" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://fastly.jsdelivr.net/gh/bucketio/img5@main/2025/04/04/1743696613252-7db3f346-231f-45b2-9d37-17ee9a6df034.png" alt="MCP-K8s 分析 Kubernetes Pod 异常状态" loading="lazy" /&gt;&lt;/p&gt;
 &lt;p&gt;只需要简单说明情况：&lt;/p&gt;
 &lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
 &lt;div&gt;&lt;pre&gt;&lt;code&gt;mcp-demo 命名空间下有个nginx 的pod没有running，看下是什么原因并解决&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
@@ -513,7 +513,7 @@ title="复制代码"
 &lt;/button&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src="https://fastly.jsdelivr.net/gh/bucketio/img15@main/2025/04/04/1743696631863-bcb23517-9775-4eac-aef8-833abea9dbfd.png" alt="" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://fastly.jsdelivr.net/gh/bucketio/img15@main/2025/04/04/1743696631863-bcb23517-9775-4eac-aef8-833abea9dbfd.png" alt="MCP-K8s 给出 Kubernetes 问题排查建议" loading="lazy" /&gt;&lt;/p&gt;
 &lt;p&gt;在这个过程中AI会自动调用mcp 工具，并将查询到的结果提交给大模型进行分析，分析之后 进行定位并解决&lt;/p&gt;
 &lt;h2&gt;个人想法&lt;span class="hx-absolute -hx-mt-20" id="个人想法"&gt;&lt;/span&gt;
 &lt;a href="#%e4%b8%aa%e4%ba%ba%e6%83%b3%e6%b3%95" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;这里不得不夸一下Claude模型，感觉它特别能够理解mcp的tool，每次都能够精准的知道应该传入那种参数。虽然在tool定义中都有描述，但是对比了其他的一些模型和mcp server的交互，总是不尽人意，要不就是给的参数json格式错误，要不就是理解错了参数需要传入的信息。&lt;/p&gt;
