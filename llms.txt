@@ -21,6 +21,7 @@ This file is a compact map for AI agents and search assistants. Prefer canonical
 - [SEO / GEO 增长专题](https://silenceper.com/topics/seo-geo/): SEO、GEO、内容增长与可见性优化实践。
 
 ## Recommended Recent Content
+- [DeepSeek TUI：把 DeepSeek V4 变成终端里的本地编程 Agent](https://silenceper.com/article/2026-05-08-deepseek-tui-terminal-agent/): DeepSeek TUI 是面向 DeepSeek V4 的终端原生编程 Agent，支持 100 万 token 上下文、Auto mode、Plan/Agent/YOLO 模式、side-git 回滚、LSP 诊断、MCP、RLM 和成本追踪。
 - [Codex 指令速查：从会用到用顺手](https://silenceper.com/article/2026-05-08-codex-cli-commands/): 一篇面向 Codex CLI 用户的指令速查：覆盖安装登录、交互式斜杠指令、codex exec、代码审查、会话恢复、权限沙箱、配置、MCP 与日常工作流。
 - [Codex 零基础使用指南：从小白到会让 AI 帮你读代码、改代码、交付代码](https://silenceper.com/article/2026-05-07-codex-beginner-guide/): 面向零基础用户的 OpenAI Codex 入门指南：认识 Codex App、IDE 扩展、CLI、Web / Cloud，理解权限、沙盒、Git checkpoint、AGENTS.md 和提示词模板。
 - [如何免费申请 ChatGPT Pro：OpenAI Codex for Open Source 开源计划指南](https://silenceper.com/article/2026-05-07-free-chatgpt-pro-codex-for-oss/): 介绍 OpenAI Codex for Open Source 官方开源计划：开源维护者如何申请 6 个月 ChatGPT Pro with Codex、API credits 和 Codex Security 相关权益。
@@ -44,4 +45,3 @@ This file is a compact map for AI agents and search assistants. Prefer canonical
 - [一个命令找到适合你硬件的大模型：llmfit 项目介绍](https://silenceper.com/article/2026-03-12-llmfit-github-project-intro/): 介绍 AlexsJones/llmfit：一款根据本机 CPU/GPU/RAM 自动推荐可运行 LLM 的终端工具，覆盖 TUI、CLI 与 API 三种模式。
 - [mem9 平台介绍：和本地 memory 对比后，你就知道它值不值得上](https://silenceper.com/article/2026-03-11-mem9-platform-intro/): 先讲 mem9 与本地 memory 的核心差异，再讲场景与原理，帮助你判断是否该接入。
 - [MediaCrawler 项目解析：多平台自媒体数据采集的工程化方案](https://silenceper.com/article/2026-03-11-mediacrawler-github-project-analysis/): 解析 NanmiCoder/MediaCrawler 的能力边界、技术方案、风险点与可落地场景，帮助你判断是否适合引入。
-- [Hermes Agent 项目解析：一个能持续学习的开源 AI Agent 框架](https://silenceper.com/article/2026-03-11-hermes-agent-github-project-intro/): 深入解析 NousResearch/hermes-agent 的定位、能力边界、适用人群与可变现方向，帮助你判断是否适合落地。

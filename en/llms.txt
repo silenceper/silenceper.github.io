@@ -21,6 +21,7 @@ This file is a compact map for AI agents and search assistants. Prefer canonical
 - [SEO / GEO Growth](https://silenceper.com/en/topics/seo-geo/): SEO, GEO, content growth, and visibility optimization practices.
 
 ## Recommended Recent Content
+- [DeepSeek TUI: Turning DeepSeek V4 into a Local Terminal Coding Agent](https://silenceper.com/en/article/2026-05-08-deepseek-tui-terminal-agent/): DeepSeek TUI is a terminal-native coding agent for DeepSeek V4, with 1M-token context, Auto mode, Plan/Agent/YOLO modes, side-git rollback, LSP diagnostics, MCP, RLM, and cost tracking.
 - [Codex Command Cheat Sheet: From Basic Usage to a Reliable Workflow](https://silenceper.com/en/article/2026-05-08-codex-cli-commands/): A practical Codex CLI command guide covering login, interactive slash commands, codex exec, code review, session resume, sandboxing, configuration, MCP, and daily workflows.
 - [Codex Beginner Guide: From Zero to Having AI Read, Edit, and Deliver Code with You](https://silenceper.com/en/article/2026-05-07-codex-beginner-guide/): A beginner-friendly guide to OpenAI Codex: Codex App, IDE extension, CLI, Web / Cloud, permissions, sandboxing, Git checkpoints, AGENTS.md, and prompt templates.
 - [How to Apply for ChatGPT Pro for Free: OpenAI Codex for Open Source Guide](https://silenceper.com/en/article/2026-05-07-free-chatgpt-pro-codex-for-oss/): A practical guide to OpenAI Codex for Open Source: how open-source maintainers can apply for six months of ChatGPT Pro with Codex, API credits, and conditional Codex Security access.
@@ -44,4 +45,3 @@ This file is a compact map for AI agents and search assistants. Prefer canonical
 - [一个命令找到适合你硬件的大模型：llmfit 项目介绍](https://silenceper.com/article/2026-03-12-llmfit-github-project-intro/): 介绍 AlexsJones/llmfit：一款根据本机 CPU/GPU/RAM 自动推荐可运行 LLM 的终端工具，覆盖 TUI、CLI 与 API 三种模式。
 - [mem9 平台介绍：和本地 memory 对比后，你就知道它值不值得上](https://silenceper.com/article/2026-03-11-mem9-platform-intro/): 先讲 mem9 与本地 memory 的核心差异，再讲场景与原理，帮助你判断是否该接入。
 - [MediaCrawler 项目解析：多平台自媒体数据采集的工程化方案](https://silenceper.com/article/2026-03-11-mediacrawler-github-project-analysis/): 解析 NanmiCoder/MediaCrawler 的能力边界、技术方案、风险点与可落地场景，帮助你判断是否适合引入。
-- [Hermes Agent 项目解析：一个能持续学习的开源 AI Agent 框架](https://silenceper.com/article/2026-03-11-hermes-agent-github-project-intro/): 深入解析 NousResearch/hermes-agent 的定位、能力边界、适用人群与可变现方向，帮助你判断是否适合落地。

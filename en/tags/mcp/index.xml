@@ -1,0 +1,367 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – MCP</title><link>https://silenceper.com/en/tags/mcp/</link><description>Recent content in MCP on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en-US</language><lastBuildDate>Fri, 08 May 2026 17:20:00 +0800</lastBuildDate><atom:link href="https://silenceper.com/en/tags/mcp/index.xml" rel="self" type="application/rss+xml"/><item><title>DeepSeek TUI: Turning DeepSeek V4 into a Local Terminal Coding Agent</title><link>https://silenceper.com/en/article/2026-05-08-deepseek-tui-terminal-agent/</link><pubDate>Fri, 08 May 2026 17:20:00 +0800</pubDate><guid>https://silenceper.com/en/article/2026-05-08-deepseek-tui-terminal-agent/</guid><description>
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260508/deepseek-tui-screenshot.png" alt="DeepSeek TUI screenshot" loading="lazy" /&gt;&lt;/p&gt;
+&lt;h2&gt;One-sentence positioning&lt;span class="hx-absolute -hx-mt-20" id="one-sentence-positioning"&gt;&lt;/span&gt;
+&lt;a href="#one-sentence-positioning" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;DeepSeek TUI is a terminal-native coding agent built for DeepSeek V4: it brings model reasoning, file editing, shell execution, Git, MCP, sub-agents, LSP diagnostics, and cost tracking into a keyboard-driven TUI workflow.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;If many AI coding tools feel like “code completion inside an editor”, DeepSeek TUI feels more like starting a local terminal workspace that can read a project, edit files, run commands, inspect diagnostics, and still keep permissions and cost visible.&lt;/p&gt;
+&lt;h2&gt;Basic information&lt;span class="hx-absolute -hx-mt-20" id="basic-information"&gt;&lt;/span&gt;
+&lt;a href="#basic-information" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Item&lt;/th&gt;
+&lt;th&gt;Details&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Project&lt;/td&gt;
+&lt;td&gt;DeepSeek TUI&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;GitHub&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://github.com/Hmbown/DeepSeek-TUI" target="_blank" rel="noopener"&gt;https://github.com/Hmbown/DeepSeek-TUI&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Positioning&lt;/td&gt;
+&lt;td&gt;Terminal coding agent for DeepSeek models&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Main language&lt;/td&gt;
+&lt;td&gt;Rust&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;License&lt;/td&gt;
+&lt;td&gt;MIT&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Target models&lt;/td&gt;
+&lt;td&gt;DeepSeek V4, including &lt;code&gt;deepseek-v4-pro&lt;/code&gt; and &lt;code&gt;deepseek-v4-flash&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Install options&lt;/td&gt;
+&lt;td&gt;npm, Cargo, Homebrew, release binaries, Docker&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Platforms&lt;/td&gt;
+&lt;td&gt;Linux x64/ARM64, macOS x64/ARM64, Windows x64&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2&gt;What problem does it solve?&lt;span class="hx-absolute -hx-mt-20" id="what-problem-does-it-solve"&gt;&lt;/span&gt;
+&lt;a href="#what-problem-does-it-solve" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;There are many AI coding tools now, but a lot of them share a similar limitation: they are either too chat-oriented, too editor-completion-oriented, or they hide automation behind layers of UI.&lt;/p&gt;
+&lt;p&gt;DeepSeek TUI targets a different workflow:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;you like working in the terminal;&lt;/li&gt;
+&lt;li&gt;you want the agent to understand the current workspace;&lt;/li&gt;
+&lt;li&gt;you want it to read files, edit files, run commands, and manage Git;&lt;/li&gt;
+&lt;li&gt;you do not want it to freely mutate the project without boundaries;&lt;/li&gt;
+&lt;li&gt;you also want to see context usage, token cost, and prefix-cache behavior.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;So it is not just a “DeepSeek chat client in the terminal”. It is a TUI agent designed around real coding workflows.&lt;/p&gt;
+&lt;h2&gt;Core highlights&lt;span class="hx-absolute -hx-mt-20" id="core-highlights"&gt;&lt;/span&gt;
+&lt;a href="#core-highlights" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;1. Native fit for DeepSeek V4&lt;span class="hx-absolute -hx-mt-20" id="1-native-fit-for-deepseek-v4"&gt;&lt;/span&gt;
+&lt;a href="#1-native-fit-for-deepseek-v4" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The first notable feature is that DeepSeek TUI is not merely a generic OpenAI-compatible wrapper. It is designed around DeepSeek V4’s capabilities.&lt;/p&gt;
+&lt;p&gt;It supports:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;deepseek-v4-pro&lt;/code&gt; / &lt;code&gt;deepseek-v4-flash&lt;/code&gt;;&lt;/li&gt;
+&lt;li&gt;1M-token context windows;&lt;/li&gt;
+&lt;li&gt;streaming reasoning blocks;&lt;/li&gt;
+&lt;li&gt;prefix-cache-aware cost reporting;&lt;/li&gt;
+&lt;li&gt;Auto mode that chooses both model and thinking level for each turn.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This makes it suitable for long-context tasks: reading large repositories, debugging across files, summarizing architecture, and running batched code analysis, not just answering questions about one function.&lt;/p&gt;
+&lt;h3&gt;2. Auto mode chooses both model and thinking level&lt;span class="hx-absolute -hx-mt-20" id="2-auto-mode-chooses-both-model-and-thinking-level"&gt;&lt;/span&gt;
+&lt;a href="#2-auto-mode-chooses-both-model-and-thinking-level" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;One of the most distinctive ideas in the project is &lt;strong&gt;Auto mode&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Use:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;deepseek --model auto&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Or inside the TUI:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;/model auto&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Before the real turn runs, Auto mode performs a lightweight routing step and selects:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;deepseek-v4-flash&lt;/code&gt; or &lt;code&gt;deepseek-v4-pro&lt;/code&gt;;&lt;/li&gt;
+&lt;li&gt;thinking level: &lt;code&gt;off&lt;/code&gt;, &lt;code&gt;high&lt;/code&gt;, or &lt;code&gt;max&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Simple turns can stay on Flash with thinking off. More complex debugging, architecture, security review, or release tasks can move to a stronger model or higher reasoning level.&lt;/p&gt;
+&lt;p&gt;This is practical because real development work does not need the highest-cost setting on every turn. Letting the tool select a tier per task is more natural than asking the user to manually switch models all the time.&lt;/p&gt;
+&lt;h3&gt;3. A full coding-agent workflow inside the terminal&lt;span class="hx-absolute -hx-mt-20" id="3-a-full-coding-agent-workflow-inside-the-terminal"&gt;&lt;/span&gt;
+&lt;a href="#3-a-full-coding-agent-workflow-inside-the-terminal" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;DeepSeek TUI includes a broad tool suite:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;file operations;&lt;/li&gt;
+&lt;li&gt;shell execution;&lt;/li&gt;
+&lt;li&gt;Git;&lt;/li&gt;
+&lt;li&gt;web search and browsing;&lt;/li&gt;
+&lt;li&gt;apply-patch;&lt;/li&gt;
+&lt;li&gt;sub-agents;&lt;/li&gt;
+&lt;li&gt;MCP servers;&lt;/li&gt;
+&lt;li&gt;RLM batched analysis;&lt;/li&gt;
+&lt;li&gt;HTTP/SSE runtime API.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Its architecture roughly follows this path:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;deepseek dispatcher CLI
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;→ deepseek-tui companion binary
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;→ ratatui terminal interface
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;→ async Agent Engine
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;→ OpenAI-compatible streaming client
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;→ typed tool registry and streamed tool results&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;In other words, it is not just rendering model output in a terminal. It has a real loop for tool calls, session state, task queues, and diagnostic feedback.&lt;/p&gt;
+&lt;h3&gt;4. Plan, Agent, and YOLO make permissions explicit&lt;span class="hx-absolute -hx-mt-20" id="4-plan-agent-and-yolo-make-permissions-explicit"&gt;&lt;/span&gt;
+&lt;a href="#4-plan-agent-and-yolo-make-permissions-explicit" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Many agent tools leave users unsure: will it edit files, run commands, or do risky operations?&lt;/p&gt;
+&lt;p&gt;DeepSeek TUI exposes three modes:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Mode&lt;/th&gt;
+&lt;th&gt;Good for&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Plan&lt;/td&gt;
+&lt;td&gt;read-only exploration and planning&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Agent&lt;/td&gt;
+&lt;td&gt;default interactive mode with approval gates&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;YOLO&lt;/td&gt;
+&lt;td&gt;auto-approved mode for trusted or isolated workspaces&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;This separation matters. For a new project or unfamiliar repository, start with Plan. After the direction is clear, move to Agent. YOLO should be reserved for trusted, reversible, or isolated environments.&lt;/p&gt;
+&lt;h3&gt;5. side-git rollback without touching your project Git&lt;span class="hx-absolute -hx-mt-20" id="5-side-git-rollback-without-touching-your-project-git"&gt;&lt;/span&gt;
+&lt;a href="#5-side-git-rollback-without-touching-your-project-git" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;DeepSeek TUI also has a useful safety mechanism: workspace rollback.&lt;/p&gt;
+&lt;p&gt;It uses side-git snapshots around turns and supports:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;/restore&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;as well as turn-level rollback such as &lt;code&gt;revert_turn&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;The key point is that this does not depend on or pollute your project’s own &lt;code&gt;.git&lt;/code&gt;. That is useful for AI coding because an agent may perform many consecutive edits. If one turn goes in the wrong direction, a turn-level rollback is often easier than manually reconstructing the state with Git.&lt;/p&gt;
+&lt;h3&gt;6. LSP diagnostics feed back into the next reasoning turn&lt;span class="hx-absolute -hx-mt-20" id="6-lsp-diagnostics-feed-back-into-the-next-reasoning-turn"&gt;&lt;/span&gt;
+&lt;a href="#6-lsp-diagnostics-feed-back-into-the-next-reasoning-turn" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Another strong feature is &lt;strong&gt;LSP diagnostics&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;After edits, the project can collect errors and warnings through language servers such as:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;rust-analyzer;&lt;/li&gt;
+&lt;li&gt;pyright;&lt;/li&gt;
+&lt;li&gt;typescript-language-server;&lt;/li&gt;
+&lt;li&gt;gopls;&lt;/li&gt;
+&lt;li&gt;clangd.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;These diagnostics are not only shown to the user. They are fed back into the model context before the next reasoning turn. That means the agent can quickly notice type errors, lint issues, and broken references after editing.&lt;/p&gt;
+&lt;p&gt;This makes it closer to a real development environment than a pure text-editing agent.&lt;/p&gt;
+&lt;h3&gt;7. Cost tracking and prefix-cache visibility&lt;span class="hx-absolute -hx-mt-20" id="7-cost-tracking-and-prefix-cache-visibility"&gt;&lt;/span&gt;
+&lt;a href="#7-cost-tracking-and-prefix-cache-visibility" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;DeepSeek TUI tracks more than model responses. It shows:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;per-turn token usage;&lt;/li&gt;
+&lt;li&gt;session-level token usage;&lt;/li&gt;
+&lt;li&gt;estimated cost;&lt;/li&gt;
+&lt;li&gt;cache hit / miss information;&lt;/li&gt;
+&lt;li&gt;prefix-cache-related telemetry.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For long-context agents, this is important. Real project work costs tokens not only for the latest question, but also for history, file content, tool results, and repeated reasoning. Seeing that cost structure gives users more control.&lt;/p&gt;
+&lt;h3&gt;8. Rust binary distribution, not a Node/Python runtime dependency&lt;span class="hx-absolute -hx-mt-20" id="8-rust-binary-distribution-not-a-nodepython-runtime-dependency"&gt;&lt;/span&gt;
+&lt;a href="#8-rust-binary-distribution-not-a-nodepython-runtime-dependency" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;DeepSeek TUI is written in Rust and distributed as self-contained binaries.&lt;/p&gt;
+&lt;p&gt;You can install it through npm:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npm install -g deepseek-tui&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;But the npm package acts mainly as an installer that downloads the correct prebuilt Rust binaries. The project also supports:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;cargo install deepseek-tui-cli --locked
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;cargo install deepseek-tui --locked&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;plus Homebrew, direct release binaries, and Docker.&lt;/p&gt;
+&lt;p&gt;For terminal tools, this is a good distribution model: many installation paths, but a simple runtime.&lt;/p&gt;
+&lt;h3&gt;9. Practical attention to China and ARM64 environments&lt;span class="hx-absolute -hx-mt-20" id="9-practical-attention-to-china-and-arm64-environments"&gt;&lt;/span&gt;
+&lt;a href="#9-practical-attention-to-china-and-arm64-environments" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The README includes mirror-friendly installation notes for mainland China and documents Linux ARM64 prebuilt support.&lt;/p&gt;
+&lt;p&gt;For npm, for example:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npm install -g deepseek-tui --registry&lt;span class="o"&gt;=&lt;/span&gt;https://registry.npmmirror.com&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Cargo can also be configured with a Tsinghua mirror.&lt;/p&gt;
+&lt;p&gt;This may not look like a headline feature, but it directly affects whether users can actually install the tool. For mainland China networks, Raspberry Pi, Graviton, domestic ARM devices, and HarmonyOS PCs, installation quality often decides whether people keep trying.&lt;/p&gt;
+&lt;h2&gt;Who is it for?&lt;span class="hx-absolute -hx-mt-20" id="who-is-it-for"&gt;&lt;/span&gt;
+&lt;a href="#who-is-it-for" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;DeepSeek TUI is a good fit if you:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;already use the DeepSeek API and want a terminal coding agent;&lt;/li&gt;
+&lt;li&gt;prefer TUI, keyboard-driven, command-line workflows;&lt;/li&gt;
+&lt;li&gt;often work with large repositories and multi-file tasks;&lt;/li&gt;
+&lt;li&gt;want an AI agent that can run commands and edit files, but still has approvals and rollback;&lt;/li&gt;
+&lt;li&gt;want MCP, sub-agents, LSP diagnostics, and task queues in a local development workflow;&lt;/li&gt;
+&lt;li&gt;care about token usage and cost visibility.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;If you already know tools like Codex CLI, Claude Code, or Gemini CLI, DeepSeek TUI’s value is that it turns DeepSeek V4’s context, reasoning, cache, and cost model into a terminal-native development experience.&lt;/p&gt;
+&lt;h2&gt;Quick start&lt;span class="hx-absolute -hx-mt-20" id="quick-start"&gt;&lt;/span&gt;
+&lt;a href="#quick-start" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Install:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npm install -g deepseek-tui&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Check version:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;deepseek --version&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Start:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;deepseek&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Configure API key ahead of time:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;deepseek auth &lt;span class="nb"&gt;set&lt;/span&gt; --provider deepseek&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Check auth status:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;deepseek auth status&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Verify setup:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;deepseek doctor&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;For the first run, avoid jumping straight into YOLO mode. Start with automatic model routing:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;deepseek --model auto&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Then ask it to read the project and plan first:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Read this project structure first. Explain the main modules and startup flow. Do not modify files.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;After the understanding looks correct, move into implementation or debugging.&lt;/p&gt;
+&lt;h2&gt;Conclusion&lt;span class="hx-absolute -hx-mt-20" id="conclusion"&gt;&lt;/span&gt;
+&lt;a href="#conclusion" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;DeepSeek TUI is interesting not because it is “another terminal chat UI”, but because it packages DeepSeek V4 into a fairly complete local agent workflow.&lt;/p&gt;
+&lt;p&gt;Its identity is clear:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;deeply aligned with DeepSeek V4;&lt;/li&gt;
+&lt;li&gt;terminal-native TUI;&lt;/li&gt;
+&lt;li&gt;Auto mode for model and thinking-level routing;&lt;/li&gt;
+&lt;li&gt;Plan / Agent / YOLO permission modes;&lt;/li&gt;
+&lt;li&gt;side-git rollback;&lt;/li&gt;
+&lt;li&gt;LSP diagnostic feedback;&lt;/li&gt;
+&lt;li&gt;MCP, sub-agents, RLM, and HTTP/SSE API;&lt;/li&gt;
+&lt;li&gt;visible cost and prefix-cache telemetry.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;If you want a coding agent that is more DeepSeek-native, terminal-first, and control-oriented, DeepSeek TUI is worth trying.&lt;/p&gt;</description></item></channel></rss>
