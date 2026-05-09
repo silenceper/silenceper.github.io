@@ -21,6 +21,8 @@ This file is a compact map for AI agents and search assistants. Prefer canonical
 - [SEO / GEO Growth](https://silenceper.com/en/topics/seo-geo/): SEO, GEO, content growth, and visibility optimization practices.
 
 ## Recommended Recent Content
+- [Codex Chrome Extension: When Should AI Use Your Browser Login State?](https://silenceper.com/en/article/2026-05-09-codex-chrome-browser-login-state/): The Codex Chrome extension lets Codex work with Chrome when a task depends on signed-in browser state, real web pages, or browser-context verification.
+- [Warp: An AI Agent Terminal with Built-in Code Review Workflow](https://silenceper.com/en/article/2026-05-09-warp-agentic-terminal/): Warp is an AI-native development environment born from the terminal, combining the command line, coding agents, Git diff review, code review, and commit workflows in one workspace.
 - [DeepSeek TUI: Turning DeepSeek V4 into a Local Terminal Coding Agent](https://silenceper.com/en/article/2026-05-08-deepseek-tui-terminal-agent/): DeepSeek TUI is a terminal-native coding agent for DeepSeek V4, with 1M-token context, Auto mode, Plan/Agent/YOLO modes, side-git rollback, LSP diagnostics, MCP, RLM, and cost tracking.
 - [Codex Command Cheat Sheet: From Basic Usage to a Reliable Workflow](https://silenceper.com/en/article/2026-05-08-codex-cli-commands/): A practical Codex CLI command guide covering login, interactive slash commands, codex exec, code review, session resume, sandboxing, configuration, MCP, and daily workflows.
 - [Codex Beginner Guide: From Zero to Having AI Read, Edit, and Deliver Code with You](https://silenceper.com/en/article/2026-05-07-codex-beginner-guide/): A beginner-friendly guide to OpenAI Codex: Codex App, IDE extension, CLI, Web / Cloud, permissions, sandboxing, Git checkpoints, AGENTS.md, and prompt templates.
@@ -43,5 +45,3 @@ This file is a compact map for AI agents and search assistants. Prefer canonical
 - [Paseo 是什么？一个用来远程管理 coding agent 的开源项目](https://silenceper.com/article/2026-04-14-paseo/): Paseo 不是新的大模型，也不是又一个 AI IDE。它更像是一层放在 Claude Code、Codex、OpenCode 外面的管理与调度工具，用来把多 agent 工作流统一起来，并延伸到手机、桌面端、Web 和 CLI。
 - [让 AI 代理接管所有软件：CLI-Anything 项目分析](https://silenceper.com/article/2026-03-12-cli-anything-github-project-analysis/): 分析 HKUDS/CLI-Anything：它如何把任意软件转换为 Agent 可调用的 CLI，并支持 Claude Code、OpenCode、Codex 等平台。
 - [一个命令找到适合你硬件的大模型：llmfit 项目介绍](https://silenceper.com/article/2026-03-12-llmfit-github-project-intro/): 介绍 AlexsJones/llmfit：一款根据本机 CPU/GPU/RAM 自动推荐可运行 LLM 的终端工具，覆盖 TUI、CLI 与 API 三种模式。
-- [mem9 平台介绍：和本地 memory 对比后，你就知道它值不值得上](https://silenceper.com/article/2026-03-11-mem9-platform-intro/): 先讲 mem9 与本地 memory 的核心差异，再讲场景与原理，帮助你判断是否该接入。
-- [MediaCrawler 项目解析：多平台自媒体数据采集的工程化方案](https://silenceper.com/article/2026-03-11-mediacrawler-github-project-analysis/): 解析 NanmiCoder/MediaCrawler 的能力边界、技术方案、风险点与可落地场景，帮助你判断是否适合引入。

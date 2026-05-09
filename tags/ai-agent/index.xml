@@ -1,4 +1,376 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – AI Agent</title><link>https://silenceper.com/tags/ai-agent/</link><description>Recent content in AI Agent on silenceper</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 07 May 2026 19:47:00 +0800</lastBuildDate><atom:link href="https://silenceper.com/tags/ai-agent/index.xml" rel="self" type="application/rss+xml"/><item><title>open-slide：为 AI Agent 设计的幻灯片框架</title><link>https://silenceper.com/article/2026-05-07-open-slide-agent-slide-framework/</link><pubDate>Thu, 07 May 2026 19:47:00 +0800</pubDate><guid>https://silenceper.com/article/2026-05-07-open-slide-agent-slide-framework/</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – AI Agent</title><link>https://silenceper.com/tags/ai-agent/</link><description>Recent content in AI Agent on silenceper</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sat, 09 May 2026 22:15:00 +0800</lastBuildDate><atom:link href="https://silenceper.com/tags/ai-agent/index.xml" rel="self" type="application/rss+xml"/><item><title>Codex Chrome 插件：什么时候该让 AI 使用你的浏览器登录态</title><link>https://silenceper.com/article/2026-05-09-codex-chrome-browser-login-state/</link><pubDate>Sat, 09 May 2026 22:15:00 +0800</pubDate><guid>https://silenceper.com/article/2026-05-09-codex-chrome-browser-login-state/</guid><description>
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260509/codex-app-screenshot.webp" alt="Codex app window with a project sidebar, active thread, and review pane" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;很多人第一次看到 Codex Chrome 插件，会把它理解成“让 AI 打开网页”。这个说法太窄，也容易让人误解。&lt;/p&gt;
+&lt;p&gt;更准确地说，它解决的是另一类问题：&lt;strong&gt;当任务必须依赖你的 Chrome 登录态、浏览器上下文或真实网页操作时，让 Codex 在你授权的范围内进入这条工作流。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;比如：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;你要让 Codex 读取登录后才能看到的 CRM、邮箱、后台系统；&lt;/li&gt;
+&lt;li&gt;你要在真实业务页面里复现一个 bug；&lt;/li&gt;
+&lt;li&gt;你要让它根据页面状态回到代码仓库里修复问题；&lt;/li&gt;
+&lt;li&gt;你要上传一个本地文件到网页表单，再核对页面结果；&lt;/li&gt;
+&lt;li&gt;你要处理没有 API、只有网页操作入口的内部系统。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这些任务过去通常只能靠人手动完成，AI 最多在旁边给步骤建议。Chrome 插件补上的，就是“真实浏览器环境”这一段。&lt;/p&gt;
+&lt;h2&gt;先说结论&lt;span class="hx-absolute -hx-mt-20" id="先说结论"&gt;&lt;/span&gt;
+&lt;a href="#%e5%85%88%e8%af%b4%e7%bb%93%e8%ae%ba" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Codex Chrome 插件不是普通网页摘要插件，也不是一个独立聊天机器人。它是 Codex App 的浏览器能力扩展。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;我的使用判断很简单：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;本地开发预览、公开网页、无需登录的页面，优先用 Codex 的 in-app browser；&lt;/li&gt;
+&lt;li&gt;某个系统有专门插件或结构化集成时，优先用对应插件；&lt;/li&gt;
+&lt;li&gt;只有任务必须依赖 Chrome 登录态、浏览器 profile、cookies 或真实网页操作时，再使用 Chrome 插件；&lt;/li&gt;
+&lt;li&gt;涉及付款、转账、删除生产数据、安全设置、导出敏感信息时，让 Codex 准备和核对，不要让它直接提交关键动作。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;也就是说，它的价值不是“更方便地打开网页”，而是让 Codex 可以参与完整验证链路：看页面、操作后台、复现问题、回到代码里修复，再继续验证。&lt;/p&gt;
+&lt;h2&gt;基础信息&lt;span class="hx-absolute -hx-mt-20" id="基础信息"&gt;&lt;/span&gt;
+&lt;a href="#%e5%9f%ba%e7%a1%80%e4%bf%a1%e6%81%af" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;项目&lt;/th&gt;
+&lt;th&gt;信息&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;名称&lt;/td&gt;
+&lt;td&gt;Codex Chrome extension&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;官方文档&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://developers.openai.com/codex/app/chrome-extension" target="_blank" rel="noopener"&gt;https://developers.openai.com/codex/app/chrome-extension&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;所属产品&lt;/td&gt;
+&lt;td&gt;Codex App&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;核心定位&lt;/td&gt;
+&lt;td&gt;让 Codex 使用 Chrome 处理需要登录态的浏览器任务&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;典型场景&lt;/td&gt;
+&lt;td&gt;Gmail、Salesforce、LinkedIn、CRM、内部系统、需要账号登录的网页流程&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;推荐搭配&lt;/td&gt;
+&lt;td&gt;Codex App、Plugins、In-app Browser、Computer Use&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;权限模型&lt;/td&gt;
+&lt;td&gt;新站点默认请求确认；支持 allowlist / blocklist&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;安全重点&lt;/td&gt;
+&lt;td&gt;页面内容按不可信上下文处理，敏感操作需要人工确认&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2&gt;它解决的真实边界&lt;span class="hx-absolute -hx-mt-20" id="它解决的真实边界"&gt;&lt;/span&gt;
+&lt;a href="#%e5%ae%83%e8%a7%a3%e5%86%b3%e7%9a%84%e7%9c%9f%e5%ae%9e%e8%be%b9%e7%95%8c" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;很多 AI 编程工具都能读代码、改文件、跑命令，但一进入真实网页环境，就会遇到新的边界：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;页面需要登录；&lt;/li&gt;
+&lt;li&gt;数据只存在浏览器会话里；&lt;/li&gt;
+&lt;li&gt;内部系统没有稳定 API；&lt;/li&gt;
+&lt;li&gt;复现问题必须点击真实页面；&lt;/li&gt;
+&lt;li&gt;本地开发页面和线上后台之间要来回验证；&lt;/li&gt;
+&lt;li&gt;有些任务需要复制、上传、下载、截图或核对页面状态。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;没有 Chrome 插件时，Codex 可以告诉你“下一步点哪里”，但它自己无法在你的登录态页面里继续推进。接入 Chrome 后，它可以在你确认的网站里完成更长的任务链路。&lt;/p&gt;
+&lt;p&gt;一个典型流程可能是这样：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;@Chrome 打开后台的订单详情页，核对这个用户的订阅状态。
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;如果页面显示异常，回到仓库里检查对应接口和前端展示逻辑。
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;修复后再用浏览器验证页面是否恢复正常。&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;这类任务的重点不是浏览器自动化本身，而是 Codex 能把“网页证据”和“代码修改”放进同一个工作线程里。&lt;/p&gt;
+&lt;h2&gt;和 in-app browser 怎么分工&lt;span class="hx-absolute -hx-mt-20" id="和-in-app-browser-怎么分工"&gt;&lt;/span&gt;
+&lt;a href="#%e5%92%8c-in-app-browser-%e6%80%8e%e4%b9%88%e5%88%86%e5%b7%a5" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;img src="https://silenceper.com/img/20260509/codex-in-app-browser.webp" alt="Codex app showing a browser comment on a local web app preview" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;官方文档里把边界说得很清楚：本地开发服务器、文件预览、公开页面、无需登录的页面，优先用 in-app browser。这样可以把预览和验证留在 Codex 内部，不必动用你的 Chrome profile。&lt;/p&gt;
+&lt;p&gt;Chrome 插件更适合这些场景：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;页面必须依赖你的 Chrome 登录态；&lt;/li&gt;
+&lt;li&gt;任务需要访问真实账号下的数据；&lt;/li&gt;
+&lt;li&gt;需要浏览器 profile、cookies 或扩展环境；&lt;/li&gt;
+&lt;li&gt;本地预览工具无法完成登录、权限或业务状态验证；&lt;/li&gt;
+&lt;li&gt;目标系统没有可用 API，只能通过网页操作。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;我的建议是：&lt;strong&gt;能不用真实登录态，就不用真实登录态；必须用时，再把权限收窄到当前任务。&lt;/strong&gt;&lt;/p&gt;
+&lt;h2&gt;核心能力&lt;span class="hx-absolute -hx-mt-20" id="核心能力"&gt;&lt;/span&gt;
+&lt;a href="#%e6%a0%b8%e5%bf%83%e8%83%bd%e5%8a%9b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;1. 连接 Chrome，使用真实登录态&lt;span class="hx-absolute -hx-mt-20" id="1-连接-chrome使用真实登录态"&gt;&lt;/span&gt;
+&lt;a href="#1-%e8%bf%9e%e6%8e%a5-chrome%e4%bd%bf%e7%94%a8%e7%9c%9f%e5%ae%9e%e7%99%bb%e5%bd%95%e6%80%81" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;&lt;img src="https://silenceper.com/img/20260509/codex-chrome-connected.png" alt="Codex Chrome extension showing connected status" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;安装和连接完成后，Chrome 工具栏里的 Codex 扩展会显示 Connected。之后你可以在新的 Codex 线程里直接指定 Chrome 任务，例如：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;@Chrome open Salesforce and update the account from these call notes.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;这里真正重要的是：Codex 使用的是你的 Chrome 环境，而不是一个无登录态的临时浏览器。因此它可以处理 Gmail、Salesforce、LinkedIn、CRM、内部后台这类必须登录后才能访问的页面。&lt;/p&gt;
+&lt;h3&gt;2. 新网站默认需要确认&lt;span class="hx-absolute -hx-mt-20" id="2-新网站默认需要确认"&gt;&lt;/span&gt;
+&lt;a href="#2-%e6%96%b0%e7%bd%91%e7%ab%99%e9%bb%98%e8%ae%a4%e9%9c%80%e8%a6%81%e7%a1%ae%e8%ae%a4" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Codex Chrome 插件默认不会无差别使用所有网站。它在访问每个新网站前会询问，通常按 host 维度确认，例如 &lt;code&gt;example.com&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;你可以根据任务风险选择：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;只允许当前聊天使用这个网站；&lt;/li&gt;
+&lt;li&gt;将该 host 加入长期允许列表；&lt;/li&gt;
+&lt;li&gt;拒绝访问这个网站。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这个设计很关键。因为登录态浏览器里可能有邮箱、后台、财务系统、内部工具和个人账号，不能把“能访问”直接等同于“应该访问”。&lt;/p&gt;
+&lt;h3&gt;3. 支持 allowlist / blocklist&lt;span class="hx-absolute -hx-mt-20" id="3-支持-allowlist--blocklist"&gt;&lt;/span&gt;
+&lt;a href="#3-%e6%94%af%e6%8c%81-allowlist--blocklist" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;官方文档提到，可以在 Computer Use 设置里管理域名 allowlist 和 blocklist：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;allowlist：Codex 可以再次使用这些域名，不需要每次重复确认；&lt;/li&gt;
+&lt;li&gt;blocklist：Codex 不应该使用这些域名；&lt;/li&gt;
+&lt;li&gt;从 allowlist 移除后，下次会重新询问；&lt;/li&gt;
+&lt;li&gt;从 blocklist 移除后，Codex 可以重新发起请求，而不是继续视为禁止。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;高频、低风险、任务边界清楚的网站，可以考虑放进 allowlist。邮箱、金融、账号安全、生产后台这类页面，我更倾向于临时授权或保持人工确认。&lt;/p&gt;
+&lt;h3&gt;4. 文件上传需要额外开启 file URL 权限&lt;span class="hx-absolute -hx-mt-20" id="4-文件上传需要额外开启-file-url-权限"&gt;&lt;/span&gt;
+&lt;a href="#4-%e6%96%87%e4%bb%b6%e4%b8%8a%e4%bc%a0%e9%9c%80%e8%a6%81%e9%a2%9d%e5%a4%96%e5%bc%80%e5%90%af-file-url-%e6%9d%83%e9%99%90" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;&lt;img src="https://silenceper.com/img/20260509/codex-file-url-access.webp" alt="Chrome extension settings showing Allow access to file URLs enabled for Codex" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;如果 Chrome 任务需要上传本机文件，官方文档要求在 Chrome 扩展详情里开启 &lt;strong&gt;Allow access to file URLs&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;路径大致是：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Chrome toolbar → Extensions → Manage Extensions → Codex → Details → Allow access to file URLs&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;这类权限建议按需开启。因为一旦涉及本地文件，任务边界就从“网页操作”扩展到了“本机文件 + 网页上传”。明确需要上传时再开，用完后重新评估是否保留。&lt;/p&gt;
+&lt;h2&gt;使用时最应该注意什么&lt;span class="hx-absolute -hx-mt-20" id="使用时最应该注意什么"&gt;&lt;/span&gt;
+&lt;a href="#%e4%bd%bf%e7%94%a8%e6%97%b6%e6%9c%80%e5%ba%94%e8%af%a5%e6%b3%a8%e6%84%8f%e4%bb%80%e4%b9%88" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;把网页内容当成不可信上下文&lt;span class="hx-absolute -hx-mt-20" id="把网页内容当成不可信上下文"&gt;&lt;/span&gt;
+&lt;a href="#%e6%8a%8a%e7%bd%91%e9%a1%b5%e5%86%85%e5%ae%b9%e5%bd%93%e6%88%90%e4%b8%8d%e5%8f%af%e4%bf%a1%e4%b8%8a%e4%b8%8b%e6%96%87" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;官方文档明确提醒：页面内容应该被视为 untrusted context。&lt;/p&gt;
+&lt;p&gt;原因很直接：网页里可能包含误导性文本、隐藏指令或恶意内容。如果 Codex 把网页内容当成用户指令，就可能发生越权操作或数据外发。&lt;/p&gt;
+&lt;p&gt;所以使用 Chrome 插件时，我建议保持几个习惯：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;不要让 Codex 访问和任务无关的敏感页面；&lt;/li&gt;
+&lt;li&gt;首次访问某个站点时认真看确认弹窗；&lt;/li&gt;
+&lt;li&gt;对邮箱、财务、账号、安全设置类页面保持人工复核；&lt;/li&gt;
+&lt;li&gt;不要把密码、密钥、恢复码等敏感信息交给浏览器任务；&lt;/li&gt;
+&lt;li&gt;复杂任务拆小，每一步都能看清楚结果。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;谨慎开启 Always allow browser content&lt;span class="hx-absolute -hx-mt-20" id="谨慎开启-always-allow-browser-content"&gt;&lt;/span&gt;
+&lt;a href="#%e8%b0%a8%e6%85%8e%e5%bc%80%e5%90%af-always-allow-browser-content" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;官方把 “Always allow browser content” 标成 Elevated Risk。开启后，Codex 使用网站时不再每次确认。&lt;/p&gt;
+&lt;p&gt;这对高频低风险站点可能方便，但对真实账号环境来说风险会明显上升。我的建议是：默认不要全局开启。除非你非常确定站点不敏感、任务边界稳定，并且你能接受它被长期授权。&lt;/p&gt;
+&lt;h3&gt;浏览器历史不是普通上下文&lt;span class="hx-absolute -hx-mt-20" id="浏览器历史不是普通上下文"&gt;&lt;/span&gt;
+&lt;a href="#%e6%b5%8f%e8%a7%88%e5%99%a8%e5%8e%86%e5%8f%b2%e4%b8%8d%e6%98%af%e6%99%ae%e9%80%9a%e4%b8%8a%e4%b8%8b%e6%96%87" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;浏览器历史可能包含内部 URL、搜索词、业务系统路径、账号活动记录等信息。官方文档也说明，Codex 在需要浏览器历史时会单独询问，而且浏览器历史没有 always-allow 选项。&lt;/p&gt;
+&lt;p&gt;这个设计是合理的。历史记录不是普通辅助信息，它可能暴露你的工作习惯、内部系统结构甚至业务线索。除非任务确实需要，否则不建议授权。&lt;/p&gt;
+&lt;h2&gt;适合哪些任务&lt;span class="hx-absolute -hx-mt-20" id="适合哪些任务"&gt;&lt;/span&gt;
+&lt;a href="#%e9%80%82%e5%90%88%e5%93%aa%e4%ba%9b%e4%bb%bb%e5%8a%a1" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Codex Chrome 插件比较适合：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;在 CRM / 后台系统里按说明更新资料；&lt;/li&gt;
+&lt;li&gt;读取登录后才能访问的业务页面，并结合代码修改；&lt;/li&gt;
+&lt;li&gt;在真实网页里复现 bug；&lt;/li&gt;
+&lt;li&gt;验证需要账号态的功能流程；&lt;/li&gt;
+&lt;li&gt;处理内部工具、低代码后台、工单系统这类没有稳定 API 的任务；&lt;/li&gt;
+&lt;li&gt;根据页面结果回到代码仓库里继续修复问题；&lt;/li&gt;
+&lt;li&gt;上传文件、核对页面状态、下载结果并继续处理。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;不太适合一上来就交给它的动作包括：付款、转账、删除生产数据、修改安全设置、导出大量个人信息。即使工具能做，也应该把这些动作留给人工确认。&lt;/p&gt;
+&lt;h2&gt;快速上手&lt;span class="hx-absolute -hx-mt-20" id="快速上手"&gt;&lt;/span&gt;
+&lt;a href="#%e5%bf%ab%e9%80%9f%e4%b8%8a%e6%89%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;按照官方文档，基本流程是：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;1. 打开 Codex App
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;2. 进入 Plugins
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;3. 添加 Chrome plugin
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;4. 按引导安装或连接 Chrome 扩展
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;5. 接受 Chrome 权限提示
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;6. 在 Chrome 工具栏确认 Codex 扩展显示 Connected
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;7. 新开一个 Codex thread
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;8. 在提示词里用 @Chrome 指定浏览器任务&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;如果连接异常，可以先检查：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Chrome 扩展是否显示 Connected；&lt;/li&gt;
+&lt;li&gt;Codex App 里的 Chrome plugin 是否开启；&lt;/li&gt;
+&lt;li&gt;当前是否使用安装了扩展的 Chrome profile；&lt;/li&gt;
+&lt;li&gt;目标网站是否在 blocklist；&lt;/li&gt;
+&lt;li&gt;是否需要重启 Chrome / Codex；&lt;/li&gt;
+&lt;li&gt;上传本地文件时，是否开启了 Allow access to file URLs。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;我的使用建议&lt;span class="hx-absolute -hx-mt-20" id="我的使用建议"&gt;&lt;/span&gt;
+&lt;a href="#%e6%88%91%e7%9a%84%e4%bd%bf%e7%94%a8%e5%bb%ba%e8%ae%ae" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;如果你把 Codex 当成工程协作者，而不是单纯聊天机器人，Chrome 插件会很有用。它让 Codex 不只停留在代码仓库里，还能进入真实页面完成验证闭环。&lt;/p&gt;
+&lt;p&gt;但越接近真实账号和真实业务系统，越要收紧权限。&lt;/p&gt;
+&lt;p&gt;我会按这个顺序使用：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;公开页面、本地页面：先用 in-app browser；&lt;/li&gt;
+&lt;li&gt;结构化系统：优先用专门插件或 API；&lt;/li&gt;
+&lt;li&gt;必须登录态：再用 Chrome 插件；&lt;/li&gt;
+&lt;li&gt;高风险动作：只让 Codex 准备、检查、解释，由人最终确认。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;这样用，Chrome 插件不是“把浏览器交给 AI”，而是把一段过去必须人工完成的验证流程，变成可控、可复核、能回到代码里的协作流程。&lt;/p&gt;</description></item><item><title>Warp：把 AI Agent、终端和代码审查合在一起的智能开发工作台</title><link>https://silenceper.com/article/2026-05-09-warp-agentic-terminal/</link><pubDate>Sat, 09 May 2026 21:47:00 +0800</pubDate><guid>https://silenceper.com/article/2026-05-09-warp-agentic-terminal/</guid><description>
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260509/warp-preview.png" alt="Warp Agentic Development Environment product preview" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;一句话定位：&lt;/strong&gt;&lt;br&gt;
+Warp 是一个从终端演进而来的 AI 原生开发环境，把命令行、编码 Agent、Git Diff、代码审查和提交工作流整合在同一个界面里。&lt;/p&gt;
+&lt;h2&gt;基础信息卡片&lt;span class="hx-absolute -hx-mt-20" id="基础信息卡片"&gt;&lt;/span&gt;
+&lt;a href="#%e5%9f%ba%e7%a1%80%e4%bf%a1%e6%81%af%e5%8d%a1%e7%89%87" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;项目&lt;/th&gt;
+&lt;th&gt;信息&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;项目名称&lt;/td&gt;
+&lt;td&gt;Warp&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;GitHub&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://github.com/warpdotdev/warp" target="_blank" rel="noopener"&gt;https://github.com/warpdotdev/warp&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;官网&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://warp.dev" target="_blank" rel="noopener"&gt;https://warp.dev&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;项目定位&lt;/td&gt;
+&lt;td&gt;从终端演进而来的 AI 原生开发环境&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;主要语言&lt;/td&gt;
+&lt;td&gt;Rust&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Stars / Forks&lt;/td&gt;
+&lt;td&gt;约 57k Stars / 4.3k Forks&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;开源协议&lt;/td&gt;
+&lt;td&gt;主要为 AGPL-3.0；&lt;code&gt;warpui_core&lt;/code&gt; / &lt;code&gt;warpui&lt;/code&gt; 使用 MIT&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;核心能力&lt;/td&gt;
+&lt;td&gt;AI Coding Agent、终端工作区、Git Diff 审查、Agent 开源协作流程&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;快速开始&lt;/td&gt;
+&lt;td&gt;官网下载安装；开发者可参考 &lt;code&gt;./script/bootstrap&lt;/code&gt;、&lt;code&gt;./script/run&lt;/code&gt; 本地构建&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2&gt;它解决什么问题？&lt;span class="hx-absolute -hx-mt-20" id="它解决什么问题"&gt;&lt;/span&gt;
+&lt;a href="#%e5%ae%83%e8%a7%a3%e5%86%b3%e4%bb%80%e4%b9%88%e9%97%ae%e9%a2%98" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;传统终端很强，但开发流程往往分散在多个工具里：&lt;br&gt;
+写命令在终端，改代码在编辑器，看 Diff 在 Git 工具，评审在 PR 页面，AI 编程助手又是另一个窗口。&lt;/p&gt;
+&lt;p&gt;Warp 的思路是：&lt;strong&gt;把这些开发动作收拢到一个 AI 原生工作区里&lt;/strong&gt;。&lt;br&gt;
+你可以让 Agent 执行任务、生成代码变更、跑测试，同时直接查看 Git Diff、添加评论、准备提交。&lt;/p&gt;
+&lt;h2&gt;核心功能亮点&lt;span class="hx-absolute -hx-mt-20" id="核心功能亮点"&gt;&lt;/span&gt;
+&lt;a href="#%e6%a0%b8%e5%bf%83%e5%8a%9f%e8%83%bd%e4%ba%ae%e7%82%b9" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;1. 内置 AI Coding Agent&lt;span class="hx-absolute -hx-mt-20" id="1-内置-ai-coding-agent"&gt;&lt;/span&gt;
+&lt;a href="#1-%e5%86%85%e7%bd%ae-ai-coding-agent" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Warp 不只是终端，而是内置了编码 Agent。&lt;br&gt;
+你可以把一个开发任务交给它，例如实现功能、修改代码、运行检查、生成 Diff。&lt;/p&gt;
+&lt;p&gt;README 中也提到，Warp 支持使用内置 coding agent，也可以接入 Claude Code、Codex、Gemini CLI 等外部 CLI Agent。&lt;/p&gt;
+&lt;h3&gt;2. 终端 + Agent + Git Diff 一体化&lt;span class="hx-absolute -hx-mt-20" id="2-终端--agent--git-diff-一体化"&gt;&lt;/span&gt;
+&lt;a href="#2-%e7%bb%88%e7%ab%af--agent--git-diff-%e4%b8%80%e4%bd%93%e5%8c%96" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;截图中可以看到：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;左侧是 Agent 执行任务的过程&lt;/li&gt;
+&lt;li&gt;右侧是代码 Diff 审查界面&lt;/li&gt;
+&lt;li&gt;可以查看未提交变更&lt;/li&gt;
+&lt;li&gt;可以逐行审阅代码&lt;/li&gt;
+&lt;li&gt;可以添加评论&lt;/li&gt;
+&lt;li&gt;可以直接进入提交流程&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这让 Warp 更像一个“开发工作台”，而不是单纯的命令行窗口。&lt;/p&gt;
+&lt;h3&gt;3. 面向开源协作的 Agent 工作流&lt;span class="hx-absolute -hx-mt-20" id="3-面向开源协作的-agent-工作流"&gt;&lt;/span&gt;
+&lt;a href="#3-%e9%9d%a2%e5%90%91%e5%bc%80%e6%ba%90%e5%8d%8f%e4%bd%9c%e7%9a%84-agent-%e5%b7%a5%e4%bd%9c%e6%b5%81" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Warp 提供了 &lt;code&gt;build.warp.dev&lt;/code&gt;，用于观察 Oz agents 如何参与开源项目流程，包括：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;triage issues&lt;/li&gt;
+&lt;li&gt;编写 spec&lt;/li&gt;
+&lt;li&gt;实现变更&lt;/li&gt;
+&lt;li&gt;审查 PR&lt;/li&gt;
+&lt;li&gt;查看活跃 agent session&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这说明 Warp 不只是个人效率工具，也在探索 Agent 参与开源协作的流程。&lt;/p&gt;
+&lt;h3&gt;4. 开源客户端代码&lt;span class="hx-absolute -hx-mt-20" id="4-开源客户端代码"&gt;&lt;/span&gt;
+&lt;a href="#4-%e5%bc%80%e6%ba%90%e5%ae%a2%e6%88%b7%e7%ab%af%e4%bb%a3%e7%a0%81" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Warp 的客户端代码已经开源，并提供贡献指南。&lt;br&gt;
+本地构建流程大致是：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;./script/bootstrap
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;./script/run
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;./script/presubmit&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;适合想研究现代终端、AI Agent 工作流、Rust 桌面应用架构的开发者深入看看。&lt;/p&gt;
+&lt;h2&gt;适合谁？&lt;span class="hx-absolute -hx-mt-20" id="适合谁"&gt;&lt;/span&gt;
+&lt;a href="#%e9%80%82%e5%90%88%e8%b0%81" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Warp 比较适合：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;高频使用终端的开发者&lt;/li&gt;
+&lt;li&gt;希望把 AI 编程助手融入日常开发流程的人&lt;/li&gt;
+&lt;li&gt;想在一个界面里完成命令执行、代码变更、Diff 审查和提交的人&lt;/li&gt;
+&lt;li&gt;关注 AI Agent 如何参与开源维护、Issue 处理和 PR 工作流的团队&lt;/li&gt;
+&lt;li&gt;Rust / 桌面开发 / 开发者工具方向的研究者&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;快速上手&lt;span class="hx-absolute -hx-mt-20" id="快速上手"&gt;&lt;/span&gt;
+&lt;a href="#%e5%bf%ab%e9%80%9f%e4%b8%8a%e6%89%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;普通用户可以直接下载安装：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;https://www.warp.dev/download&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;开发者想研究源码，可以从 GitHub 开始：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;https://github.com/warpdotdev/warp&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;本地构建参考：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;./script/bootstrap
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;./script/run
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;./script/presubmit&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h2&gt;结论&lt;span class="hx-absolute -hx-mt-20" id="结论"&gt;&lt;/span&gt;
+&lt;a href="#%e7%bb%93%e8%ae%ba" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Warp 的吸引点在于：&lt;strong&gt;它不是给终端简单加一个 AI 聊天框，而是把 AI Agent 真正放进开发流程里。&lt;/strong&gt;&lt;br&gt;
+从任务执行、代码修改、Diff 审查到提交，Warp 试图把开发者每天反复切换的工具链整合成一个 AI 原生工作区。对于习惯终端、又想系统性使用 AI 编程工具的开发者来说，这是一个非常值得关注的项目。&lt;/p&gt;</description></item><item><title>open-slide：为 AI Agent 设计的幻灯片框架</title><link>https://silenceper.com/article/2026-05-07-open-slide-agent-slide-framework/</link><pubDate>Thu, 07 May 2026 19:47:00 +0800</pubDate><guid>https://silenceper.com/article/2026-05-07-open-slide-agent-slide-framework/</guid><description>
 &lt;p&gt;&lt;img src="https://silenceper.com/img/20260507/open-slide-github-cover.png" alt="open-slide GitHub README 封面图" loading="lazy" /&gt;&lt;/p&gt;
 &lt;h2&gt;一句话定位&lt;span class="hx-absolute -hx-mt-20" id="一句话定位"&gt;&lt;/span&gt;
 &lt;a href="#%e4%b8%80%e5%8f%a5%e8%af%9d%e5%ae%9a%e4%bd%8d" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;open-slide 是一个为 AI Agent 设计的 React 幻灯片框架：你用自然语言描述要做什么，Agent 负责写 React 页面，open-slide 负责画布、预览、演示、导出和迭代。&lt;/p&gt;

@@ -1,4 +1,371 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – AI Agent</title><link>https://silenceper.com/en/tags/ai-agent/</link><description>Recent content in AI Agent on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en-US</language><lastBuildDate>Thu, 07 May 2026 19:47:00 +0800</lastBuildDate><atom:link href="https://silenceper.com/en/tags/ai-agent/index.xml" rel="self" type="application/rss+xml"/><item><title>open-slide: A Slide Framework Built for AI Agents</title><link>https://silenceper.com/en/article/2026-05-07-open-slide-agent-slide-framework/</link><pubDate>Thu, 07 May 2026 19:47:00 +0800</pubDate><guid>https://silenceper.com/en/article/2026-05-07-open-slide-agent-slide-framework/</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – AI Agent</title><link>https://silenceper.com/en/tags/ai-agent/</link><description>Recent content in AI Agent on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en-US</language><lastBuildDate>Sat, 09 May 2026 22:15:00 +0800</lastBuildDate><atom:link href="https://silenceper.com/en/tags/ai-agent/index.xml" rel="self" type="application/rss+xml"/><item><title>Codex Chrome Extension: When Should AI Use Your Browser Login State?</title><link>https://silenceper.com/en/article/2026-05-09-codex-chrome-browser-login-state/</link><pubDate>Sat, 09 May 2026 22:15:00 +0800</pubDate><guid>https://silenceper.com/en/article/2026-05-09-codex-chrome-browser-login-state/</guid><description>
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260509/codex-app-screenshot.webp" alt="Codex app window with a project sidebar, active thread, and review pane" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;When people first hear about the Codex Chrome extension, it is easy to describe it as “letting AI open web pages.” That is too narrow.&lt;/p&gt;
+&lt;p&gt;A more accurate way to think about it is this: &lt;strong&gt;when a task depends on your Chrome login state, browser context, or real web-page interactions, the extension lets Codex enter that workflow within the permissions you grant.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;For example:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;you need Codex to read a CRM, mailbox, admin dashboard, or internal system that only works after login;&lt;/li&gt;
+&lt;li&gt;you want to reproduce a bug in the real business page;&lt;/li&gt;
+&lt;li&gt;you want Codex to inspect page state, return to the repository, fix the code, and verify the page again;&lt;/li&gt;
+&lt;li&gt;you need to upload a local file to a web form and check the result;&lt;/li&gt;
+&lt;li&gt;you have an internal system with no stable API, only a web UI.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Without browser access, AI can usually only tell you what to click next. The Chrome extension fills the gap around the real browser environment.&lt;/p&gt;
+&lt;h2&gt;The short version&lt;span class="hx-absolute -hx-mt-20" id="the-short-version"&gt;&lt;/span&gt;
+&lt;a href="#the-short-version" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;The Codex Chrome extension is not a generic web-page summarizer or a standalone chatbot. It is a browser capability inside the Codex App workflow.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;My rule of thumb is simple:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;for local previews, public pages, and pages that do not require login, use Codex’s in-app browser first;&lt;/li&gt;
+&lt;li&gt;when a system has a dedicated plugin or structured integration, use that first;&lt;/li&gt;
+&lt;li&gt;use the Chrome extension only when the task truly depends on Chrome login state, browser profile, cookies, or real web interactions;&lt;/li&gt;
+&lt;li&gt;for payments, transfers, production deletes, security settings, or sensitive exports, let Codex prepare and verify, but keep the final action in human hands.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Its value is not “opening a browser more conveniently.” Its value is letting Codex participate in the full verification loop: inspect the page, operate an admin flow, reproduce the issue, return to code, fix it, and verify again.&lt;/p&gt;
+&lt;h2&gt;Basic information&lt;span class="hx-absolute -hx-mt-20" id="basic-information"&gt;&lt;/span&gt;
+&lt;a href="#basic-information" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Item&lt;/th&gt;
+&lt;th&gt;Details&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Name&lt;/td&gt;
+&lt;td&gt;Codex Chrome extension&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Official docs&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://developers.openai.com/codex/app/chrome-extension" target="_blank" rel="noopener"&gt;https://developers.openai.com/codex/app/chrome-extension&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Product&lt;/td&gt;
+&lt;td&gt;Codex App&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Positioning&lt;/td&gt;
+&lt;td&gt;Let Codex use Chrome for browser tasks that need signed-in state&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Typical scenarios&lt;/td&gt;
+&lt;td&gt;Gmail, Salesforce, LinkedIn, CRM, internal tools, logged-in web flows&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Works with&lt;/td&gt;
+&lt;td&gt;Codex App, Plugins, In-app Browser, Computer Use&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Permission model&lt;/td&gt;
+&lt;td&gt;Ask before new websites by default; supports allowlist and blocklist&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Security focus&lt;/td&gt;
+&lt;td&gt;Treat page content as untrusted context; keep sensitive actions under human review&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2&gt;The real boundary it solves&lt;span class="hx-absolute -hx-mt-20" id="the-real-boundary-it-solves"&gt;&lt;/span&gt;
+&lt;a href="#the-real-boundary-it-solves" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Many AI coding tools can read code, edit files, and run commands. But once the task enters a real web environment, new boundaries appear:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;the page requires login;&lt;/li&gt;
+&lt;li&gt;data exists only inside a browser session;&lt;/li&gt;
+&lt;li&gt;an internal system has no stable API;&lt;/li&gt;
+&lt;li&gt;reproducing the issue requires clicking through the real page;&lt;/li&gt;
+&lt;li&gt;local development pages and production dashboards must be checked together;&lt;/li&gt;
+&lt;li&gt;the workflow involves copying, uploading, downloading, screenshots, or checking visual state.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;With the Chrome extension, a task can look like this:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;@Chrome open the order detail page in the admin dashboard and check this user&amp;#39;s subscription status.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;If the page looks wrong, return to the repository, inspect the related API and frontend rendering logic,
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;fix the issue, then verify the page again in the browser.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;The important part is not browser automation by itself. The important part is that Codex can connect “evidence from the page” with “changes in the codebase” inside one working thread.&lt;/p&gt;
+&lt;h2&gt;How it differs from the in-app browser&lt;span class="hx-absolute -hx-mt-20" id="how-it-differs-from-the-in-app-browser"&gt;&lt;/span&gt;
+&lt;a href="#how-it-differs-from-the-in-app-browser" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;img src="https://silenceper.com/img/20260509/codex-in-app-browser.webp" alt="Codex app showing a browser comment on a local web app preview" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;OpenAI’s docs draw a clear line: local development servers, file-backed previews, public pages, and pages that do not require login should use the in-app browser first. That keeps preview and verification inside Codex without touching your Chrome profile.&lt;/p&gt;
+&lt;p&gt;The Chrome extension is better for cases where:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;the page needs your Chrome login state;&lt;/li&gt;
+&lt;li&gt;the task must access data under your real account;&lt;/li&gt;
+&lt;li&gt;the workflow depends on browser profile, cookies, or extensions;&lt;/li&gt;
+&lt;li&gt;the in-app browser cannot complete login, permission checks, or business-state verification;&lt;/li&gt;
+&lt;li&gt;the target system has no usable API and only exposes a web UI.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;My recommendation: &lt;strong&gt;do not use real login state when you do not need it. When you must use it, narrow the permission to the current task.&lt;/strong&gt;&lt;/p&gt;
+&lt;h2&gt;Core capabilities&lt;span class="hx-absolute -hx-mt-20" id="core-capabilities"&gt;&lt;/span&gt;
+&lt;a href="#core-capabilities" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;1. Connect Chrome and use real signed-in state&lt;span class="hx-absolute -hx-mt-20" id="1-connect-chrome-and-use-real-signed-in-state"&gt;&lt;/span&gt;
+&lt;a href="#1-connect-chrome-and-use-real-signed-in-state" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;&lt;img src="https://silenceper.com/img/20260509/codex-chrome-connected.png" alt="Codex Chrome extension showing connected status" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;After setup, the Codex extension in the Chrome toolbar shows a connected state. In a new Codex thread, you can invoke Chrome directly:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;@Chrome open Salesforce and update the account from these call notes.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;The key point is that Codex is using your Chrome environment, not a temporary browser with no login state. That makes it useful for Gmail, Salesforce, LinkedIn, CRM systems, and internal dashboards that only work after sign-in.&lt;/p&gt;
+&lt;h3&gt;2. New websites require approval by default&lt;span class="hx-absolute -hx-mt-20" id="2-new-websites-require-approval-by-default"&gt;&lt;/span&gt;
+&lt;a href="#2-new-websites-require-approval-by-default" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The extension does not automatically give Codex access to every website. By default, Codex asks before interacting with each new website, usually at the host level such as &lt;code&gt;example.com&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;You can choose to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;allow the website for the current chat;&lt;/li&gt;
+&lt;li&gt;always allow that host;&lt;/li&gt;
+&lt;li&gt;decline the website.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This matters because a signed-in browser may contain email, admin systems, finance tools, internal tools, and personal accounts. “Can access” should not automatically mean “should access.”&lt;/p&gt;
+&lt;h3&gt;3. Allowlist and blocklist support&lt;span class="hx-absolute -hx-mt-20" id="3-allowlist-and-blocklist-support"&gt;&lt;/span&gt;
+&lt;a href="#3-allowlist-and-blocklist-support" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The docs mention domain allowlists and blocklists in Computer Use settings:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;allowlist: Codex can use those domains again without asking every time;&lt;/li&gt;
+&lt;li&gt;blocklist: Codex should not use those domains;&lt;/li&gt;
+&lt;li&gt;removing a domain from the allowlist makes Codex ask again;&lt;/li&gt;
+&lt;li&gt;removing a domain from the blocklist lets Codex ask again instead of treating it as blocked.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For frequent, low-risk, well-scoped sites, an allowlist can be convenient. For mail, finance, account security, or production dashboards, I would prefer temporary approval or continued human confirmation.&lt;/p&gt;
+&lt;h3&gt;4. File uploads require file URL access&lt;span class="hx-absolute -hx-mt-20" id="4-file-uploads-require-file-url-access"&gt;&lt;/span&gt;
+&lt;a href="#4-file-uploads-require-file-url-access" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;&lt;img src="https://silenceper.com/img/20260509/codex-file-url-access.webp" alt="Chrome extension settings showing Allow access to file URLs enabled for Codex" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;If a Chrome task needs to upload local files, OpenAI’s docs say you need to enable &lt;strong&gt;Allow access to file URLs&lt;/strong&gt; in the Chrome extension details page:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Chrome toolbar → Extensions → Manage Extensions → Codex → Details → Allow access to file URLs&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;This should be enabled only when needed. Once local files are involved, the boundary expands from “web operation” to “local file + web upload.” Turn it on for explicit upload tasks, then reassess whether it should remain enabled.&lt;/p&gt;
+&lt;h2&gt;What to watch out for&lt;span class="hx-absolute -hx-mt-20" id="what-to-watch-out-for"&gt;&lt;/span&gt;
+&lt;a href="#what-to-watch-out-for" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;Treat web pages as untrusted context&lt;span class="hx-absolute -hx-mt-20" id="treat-web-pages-as-untrusted-context"&gt;&lt;/span&gt;
+&lt;a href="#treat-web-pages-as-untrusted-context" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The official docs explicitly say page content should be treated as untrusted context.&lt;/p&gt;
+&lt;p&gt;That is important because web pages can include misleading text, hidden instructions, or malicious content. If Codex treats page content as user instructions, it may take actions outside the intended scope or leak data.&lt;/p&gt;
+&lt;p&gt;Practical habits:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;do not let Codex visit sensitive pages unrelated to the task;&lt;/li&gt;
+&lt;li&gt;read the approval prompt carefully when a new site is requested;&lt;/li&gt;
+&lt;li&gt;keep human review for mail, finance, account, and security settings;&lt;/li&gt;
+&lt;li&gt;do not put passwords, secrets, recovery codes, or keys into browser tasks;&lt;/li&gt;
+&lt;li&gt;split complex tasks into small steps that are easy to inspect.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Be careful with “Always allow browser content”&lt;span class="hx-absolute -hx-mt-20" id="be-careful-with-always-allow-browser-content"&gt;&lt;/span&gt;
+&lt;a href="#be-careful-with-always-allow-browser-content" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;OpenAI marks “Always allow browser content” as Elevated Risk. When enabled, Codex no longer asks before using websites.&lt;/p&gt;
+&lt;p&gt;That may be convenient for frequent low-risk sites, but it raises the risk in real account environments. I would keep it off by default unless the site is clearly non-sensitive and the task boundary is stable.&lt;/p&gt;
+&lt;h3&gt;Browser history is not ordinary context&lt;span class="hx-absolute -hx-mt-20" id="browser-history-is-not-ordinary-context"&gt;&lt;/span&gt;
+&lt;a href="#browser-history-is-not-ordinary-context" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Browser history may contain internal URLs, search terms, admin paths, account activity, and business signals. The docs say Codex asks separately when it wants to use browser history, and history does not have an always-allow option.&lt;/p&gt;
+&lt;p&gt;That is the right design. Browser history is not just “helpful context”; it can reveal how you work and what internal systems exist. Do not authorize it unless the task truly requires it.&lt;/p&gt;
+&lt;h2&gt;Good fits&lt;span class="hx-absolute -hx-mt-20" id="good-fits"&gt;&lt;/span&gt;
+&lt;a href="#good-fits" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The Chrome extension is useful for:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;updating data in a CRM or admin dashboard according to clear instructions;&lt;/li&gt;
+&lt;li&gt;reading logged-in business pages and combining that with code changes;&lt;/li&gt;
+&lt;li&gt;reproducing bugs in real web pages;&lt;/li&gt;
+&lt;li&gt;verifying flows that require account state;&lt;/li&gt;
+&lt;li&gt;working with internal tools, low-code systems, or ticketing systems without stable APIs;&lt;/li&gt;
+&lt;li&gt;using page results to continue debugging in the codebase;&lt;/li&gt;
+&lt;li&gt;uploading files, checking page state, downloading results, and continuing the workflow.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;It is not a good fit for giving AI full control over payments, transfers, production deletes, security settings, or large personal-data exports. Even if the tool can do it, the final action should stay with a human.&lt;/p&gt;
+&lt;h2&gt;Quick start&lt;span class="hx-absolute -hx-mt-20" id="quick-start"&gt;&lt;/span&gt;
+&lt;a href="#quick-start" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The basic setup from the official docs is:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;1. Open the Codex App
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;2. Go to Plugins
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;3. Add the Chrome plugin
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;4. Follow the setup flow to install or connect the Chrome extension
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;5. Accept Chrome permission prompts
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;6. Confirm the Codex extension shows Connected in Chrome
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;7. Start a new Codex thread
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;8. Use @Chrome in your prompt for browser tasks&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;If the connection fails, check:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;whether the Chrome extension shows Connected;&lt;/li&gt;
+&lt;li&gt;whether the Chrome plugin is enabled in Codex;&lt;/li&gt;
+&lt;li&gt;whether you are using the Chrome profile where the extension is installed;&lt;/li&gt;
+&lt;li&gt;whether the target website is in the blocklist;&lt;/li&gt;
+&lt;li&gt;whether Chrome or Codex needs to be restarted;&lt;/li&gt;
+&lt;li&gt;whether file uploads require &lt;strong&gt;Allow access to file URLs&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;My recommendation&lt;span class="hx-absolute -hx-mt-20" id="my-recommendation"&gt;&lt;/span&gt;
+&lt;a href="#my-recommendation" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;If you treat Codex as an engineering collaborator rather than just a chatbot, the Chrome extension is useful. It lets Codex move beyond the repository and participate in the real verification loop.&lt;/p&gt;
+&lt;p&gt;But the closer a task gets to real accounts and production systems, the tighter the permission boundary should be.&lt;/p&gt;
+&lt;p&gt;I would use it in this order:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;public or local pages: use the in-app browser first;&lt;/li&gt;
+&lt;li&gt;structured systems: prefer dedicated plugins or APIs;&lt;/li&gt;
+&lt;li&gt;signed-in browser state: use the Chrome extension only when needed;&lt;/li&gt;
+&lt;li&gt;high-risk actions: let Codex prepare, inspect, and explain, but keep final confirmation human.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Used this way, the Chrome extension is not “handing your browser to AI.” It is turning a manual verification workflow into a controlled, reviewable collaboration loop that can return to the codebase.&lt;/p&gt;</description></item><item><title>Warp: An AI Agent Terminal with Built-in Code Review Workflow</title><link>https://silenceper.com/en/article/2026-05-09-warp-agentic-terminal/</link><pubDate>Sat, 09 May 2026 21:47:00 +0800</pubDate><guid>https://silenceper.com/en/article/2026-05-09-warp-agentic-terminal/</guid><description>
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260509/warp-preview.png" alt="Warp Agentic Development Environment product preview" loading="lazy" /&gt;&lt;/p&gt;
+&lt;h2&gt;One-sentence positioning&lt;span class="hx-absolute -hx-mt-20" id="one-sentence-positioning"&gt;&lt;/span&gt;
+&lt;a href="#one-sentence-positioning" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Warp is an AI-native development environment born from the terminal. It brings the command line, coding agents, Git diff review, code review, and commit workflows into one workspace.&lt;/strong&gt;&lt;/p&gt;
+&lt;h2&gt;Basic information&lt;span class="hx-absolute -hx-mt-20" id="basic-information"&gt;&lt;/span&gt;
+&lt;a href="#basic-information" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Item&lt;/th&gt;
+&lt;th&gt;Details&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Project&lt;/td&gt;
+&lt;td&gt;Warp&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;GitHub&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://github.com/warpdotdev/warp" target="_blank" rel="noopener"&gt;https://github.com/warpdotdev/warp&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Website&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://warp.dev" target="_blank" rel="noopener"&gt;https://warp.dev&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Positioning&lt;/td&gt;
+&lt;td&gt;An AI-native development environment evolved from the terminal&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Main language&lt;/td&gt;
+&lt;td&gt;Rust&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Stars / Forks&lt;/td&gt;
+&lt;td&gt;About 57k Stars / 4.3k Forks&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;License&lt;/td&gt;
+&lt;td&gt;Mainly AGPL-3.0; &lt;code&gt;warpui_core&lt;/code&gt; and &lt;code&gt;warpui&lt;/code&gt; are MIT licensed&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Core capabilities&lt;/td&gt;
+&lt;td&gt;AI Coding Agent, terminal workspace, Git Diff review, agentic open-source workflows&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Getting started&lt;/td&gt;
+&lt;td&gt;Download from the official website; developers can build locally with &lt;code&gt;./script/bootstrap&lt;/code&gt; and &lt;code&gt;./script/run&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2&gt;What problem does it solve?&lt;span class="hx-absolute -hx-mt-20" id="what-problem-does-it-solve"&gt;&lt;/span&gt;
+&lt;a href="#what-problem-does-it-solve" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The terminal is powerful, but the daily development workflow is often scattered across many tools: commands in a terminal, code changes in an editor, diffs in a Git client, review in a PR page, and AI coding assistance in yet another window.&lt;/p&gt;
+&lt;p&gt;Warp’s approach is to &lt;strong&gt;pull these actions back into an AI-native workspace&lt;/strong&gt;. You can ask an agent to work on a task, generate code changes, run checks, inspect the Git diff, leave comments, and prepare commits in one place.&lt;/p&gt;
+&lt;h2&gt;Core highlights&lt;span class="hx-absolute -hx-mt-20" id="core-highlights"&gt;&lt;/span&gt;
+&lt;a href="#core-highlights" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;1. A built-in AI Coding Agent&lt;span class="hx-absolute -hx-mt-20" id="1-a-built-in-ai-coding-agent"&gt;&lt;/span&gt;
+&lt;a href="#1-a-built-in-ai-coding-agent" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Warp is not just a terminal with a chat box. It includes a coding agent that can work through development tasks: implementing features, changing files, running checks, and producing diffs.&lt;/p&gt;
+&lt;p&gt;The README also notes that Warp supports its built-in coding agent and can work with external CLI agents such as Claude Code, Codex, Gemini CLI, and others.&lt;/p&gt;
+&lt;h3&gt;2. Terminal + Agent + Git Diff in one workspace&lt;span class="hx-absolute -hx-mt-20" id="2-terminal--agent--git-diff-in-one-workspace"&gt;&lt;/span&gt;
+&lt;a href="#2-terminal--agent--git-diff-in-one-workspace" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The screenshot shows a typical development flow:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;the left side displays the agent’s task execution process;&lt;/li&gt;
+&lt;li&gt;the right side shows a Git Diff review interface;&lt;/li&gt;
+&lt;li&gt;uncommitted changes are visible;&lt;/li&gt;
+&lt;li&gt;code can be reviewed line by line;&lt;/li&gt;
+&lt;li&gt;comments can be added directly in the diff;&lt;/li&gt;
+&lt;li&gt;the workflow can move toward committing changes without leaving the workspace.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;That makes Warp feel more like a development workbench than a traditional terminal window.&lt;/p&gt;
+&lt;h3&gt;3. Agentic workflows for open-source collaboration&lt;span class="hx-absolute -hx-mt-20" id="3-agentic-workflows-for-open-source-collaboration"&gt;&lt;/span&gt;
+&lt;a href="#3-agentic-workflows-for-open-source-collaboration" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Warp also provides &lt;code&gt;build.warp.dev&lt;/code&gt;, where you can watch Oz agents participate in open-source project workflows, including:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;issue triage;&lt;/li&gt;
+&lt;li&gt;spec writing;&lt;/li&gt;
+&lt;li&gt;implementation;&lt;/li&gt;
+&lt;li&gt;PR review;&lt;/li&gt;
+&lt;li&gt;active agent sessions.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This means Warp is not only a personal productivity tool. It is also exploring how agents can participate in open-source maintenance and collaboration.&lt;/p&gt;
+&lt;h3&gt;4. Open-source client code&lt;span class="hx-absolute -hx-mt-20" id="4-open-source-client-code"&gt;&lt;/span&gt;
+&lt;a href="#4-open-source-client-code" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Warp’s client code is open source, and the repository includes contribution documentation.&lt;/p&gt;
+&lt;p&gt;The local build flow is roughly:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;./script/bootstrap
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;./script/run
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;./script/presubmit&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;It is worth reading if you are interested in modern terminals, AI-agent development workflows, or Rust desktop application architecture.&lt;/p&gt;
+&lt;h2&gt;Who is it for?&lt;span class="hx-absolute -hx-mt-20" id="who-is-it-for"&gt;&lt;/span&gt;
+&lt;a href="#who-is-it-for" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Warp is a good fit for:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;developers who spend a lot of time in the terminal;&lt;/li&gt;
+&lt;li&gt;people who want to integrate AI coding assistants into real development workflows;&lt;/li&gt;
+&lt;li&gt;users who want commands, code changes, diff review, and commits in one interface;&lt;/li&gt;
+&lt;li&gt;teams exploring how AI agents can help with open-source maintenance, issue handling, and PR workflows;&lt;/li&gt;
+&lt;li&gt;developers studying Rust, desktop apps, terminals, or developer tools.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Quick start&lt;span class="hx-absolute -hx-mt-20" id="quick-start"&gt;&lt;/span&gt;
+&lt;a href="#quick-start" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Regular users can download Warp from:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;https://www.warp.dev/download&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Developers can start from the GitHub repository:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;https://github.com/warpdotdev/warp&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Local build reference:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;./script/bootstrap
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;./script/run
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;./script/presubmit&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h2&gt;Conclusion&lt;span class="hx-absolute -hx-mt-20" id="conclusion"&gt;&lt;/span&gt;
+&lt;a href="#conclusion" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Warp’s most interesting point is that &lt;strong&gt;it does not simply add an AI chat panel to a terminal. It puts the AI agent directly into the development workflow.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;From task execution and code modification to diff review and committing, Warp tries to combine the tools developers switch between every day into one AI-native workspace. If you already work heavily in the terminal and want to use AI coding tools more systematically, Warp is a project worth watching.&lt;/p&gt;</description></item><item><title>open-slide: A Slide Framework Built for AI Agents</title><link>https://silenceper.com/en/article/2026-05-07-open-slide-agent-slide-framework/</link><pubDate>Thu, 07 May 2026 19:47:00 +0800</pubDate><guid>https://silenceper.com/en/article/2026-05-07-open-slide-agent-slide-framework/</guid><description>
 &lt;p&gt;&lt;img src="https://silenceper.com/img/20260507/open-slide-github-cover.png" alt="open-slide GitHub README cover" loading="lazy" /&gt;&lt;/p&gt;
 &lt;h2&gt;One-line positioning&lt;span class="hx-absolute -hx-mt-20" id="one-line-positioning"&gt;&lt;/span&gt;
 &lt;a href="#one-line-positioning" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;open-slide is a React slide framework built for AI agents: you describe what the deck should be, the agent writes React pages, and open-slide handles the canvas, preview, presentation mode, export, and iteration loop.&lt;/p&gt;

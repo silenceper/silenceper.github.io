@@ -21,6 +21,8 @@ This file is a compact map for AI agents and search assistants. Prefer canonical
 - [SEO / GEO 增长专题](https://silenceper.com/topics/seo-geo/): SEO、GEO、内容增长与可见性优化实践。
 
 ## Recommended Recent Content
+- [Codex Chrome 插件：什么时候该让 AI 使用你的浏览器登录态](https://silenceper.com/article/2026-05-09-codex-chrome-browser-login-state/): Codex Chrome 插件是 Codex App 的浏览器能力扩展，适合处理必须依赖 Chrome 登录态、浏览器上下文或真实网页操作的任务。
+- [Warp：把 AI Agent、终端和代码审查合在一起的智能开发工作台](https://silenceper.com/article/2026-05-09-warp-agentic-terminal/): Warp 是从终端演进而来的 AI 原生开发环境，把命令行、编码 Agent、Git Diff、代码审查和提交工作流整合在同一个界面里。
 - [DeepSeek TUI：把 DeepSeek V4 变成终端里的本地编程 Agent](https://silenceper.com/article/2026-05-08-deepseek-tui-terminal-agent/): DeepSeek TUI 是面向 DeepSeek V4 的终端原生编程 Agent，支持 100 万 token 上下文、Auto mode、Plan/Agent/YOLO 模式、side-git 回滚、LSP 诊断、MCP、RLM 和成本追踪。
 - [Codex 指令速查：从会用到用顺手](https://silenceper.com/article/2026-05-08-codex-cli-commands/): 一篇面向 Codex CLI 用户的指令速查：覆盖安装登录、交互式斜杠指令、codex exec、代码审查、会话恢复、权限沙箱、配置、MCP 与日常工作流。
 - [Codex 零基础使用指南：从小白到会让 AI 帮你读代码、改代码、交付代码](https://silenceper.com/article/2026-05-07-codex-beginner-guide/): 面向零基础用户的 OpenAI Codex 入门指南：认识 Codex App、IDE 扩展、CLI、Web / Cloud，理解权限、沙盒、Git checkpoint、AGENTS.md 和提示词模板。
@@ -43,5 +45,3 @@ This file is a compact map for AI agents and search assistants. Prefer canonical
 - [Paseo 是什么？一个用来远程管理 coding agent 的开源项目](https://silenceper.com/article/2026-04-14-paseo/): Paseo 不是新的大模型，也不是又一个 AI IDE。它更像是一层放在 Claude Code、Codex、OpenCode 外面的管理与调度工具，用来把多 agent 工作流统一起来，并延伸到手机、桌面端、Web 和 CLI。
 - [让 AI 代理接管所有软件：CLI-Anything 项目分析](https://silenceper.com/article/2026-03-12-cli-anything-github-project-analysis/): 分析 HKUDS/CLI-Anything：它如何把任意软件转换为 Agent 可调用的 CLI，并支持 Claude Code、OpenCode、Codex 等平台。
 - [一个命令找到适合你硬件的大模型：llmfit 项目介绍](https://silenceper.com/article/2026-03-12-llmfit-github-project-intro/): 介绍 AlexsJones/llmfit：一款根据本机 CPU/GPU/RAM 自动推荐可运行 LLM 的终端工具，覆盖 TUI、CLI 与 API 三种模式。
-- [mem9 平台介绍：和本地 memory 对比后，你就知道它值不值得上](https://silenceper.com/article/2026-03-11-mem9-platform-intro/): 先讲 mem9 与本地 memory 的核心差异，再讲场景与原理，帮助你判断是否该接入。
-- [MediaCrawler 项目解析：多平台自媒体数据采集的工程化方案](https://silenceper.com/article/2026-03-11-mediacrawler-github-project-analysis/): 解析 NanmiCoder/MediaCrawler 的能力边界、技术方案、风险点与可落地场景，帮助你判断是否适合引入。

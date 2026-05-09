@@ -1,4 +1,153 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – 开源项目</title><link>https://silenceper.com/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/</link><description>Recent content in 开源项目 on silenceper</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 07 May 2026 22:30:00 +0800</lastBuildDate><atom:link href="https://silenceper.com/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/index.xml" rel="self" type="application/rss+xml"/><item><title>如何免费申请 ChatGPT Pro：OpenAI Codex for Open Source 开源计划指南</title><link>https://silenceper.com/article/2026-05-07-free-chatgpt-pro-codex-for-oss/</link><pubDate>Thu, 07 May 2026 22:30:00 +0800</pubDate><guid>https://silenceper.com/article/2026-05-07-free-chatgpt-pro-codex-for-oss/</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – 开源项目</title><link>https://silenceper.com/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/</link><description>Recent content in 开源项目 on silenceper</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sat, 09 May 2026 21:47:00 +0800</lastBuildDate><atom:link href="https://silenceper.com/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/index.xml" rel="self" type="application/rss+xml"/><item><title>Warp：把 AI Agent、终端和代码审查合在一起的智能开发工作台</title><link>https://silenceper.com/article/2026-05-09-warp-agentic-terminal/</link><pubDate>Sat, 09 May 2026 21:47:00 +0800</pubDate><guid>https://silenceper.com/article/2026-05-09-warp-agentic-terminal/</guid><description>
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260509/warp-preview.png" alt="Warp Agentic Development Environment product preview" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;一句话定位：&lt;/strong&gt;&lt;br&gt;
+Warp 是一个从终端演进而来的 AI 原生开发环境，把命令行、编码 Agent、Git Diff、代码审查和提交工作流整合在同一个界面里。&lt;/p&gt;
+&lt;h2&gt;基础信息卡片&lt;span class="hx-absolute -hx-mt-20" id="基础信息卡片"&gt;&lt;/span&gt;
+&lt;a href="#%e5%9f%ba%e7%a1%80%e4%bf%a1%e6%81%af%e5%8d%a1%e7%89%87" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;项目&lt;/th&gt;
+&lt;th&gt;信息&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;项目名称&lt;/td&gt;
+&lt;td&gt;Warp&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;GitHub&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://github.com/warpdotdev/warp" target="_blank" rel="noopener"&gt;https://github.com/warpdotdev/warp&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;官网&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://warp.dev" target="_blank" rel="noopener"&gt;https://warp.dev&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;项目定位&lt;/td&gt;
+&lt;td&gt;从终端演进而来的 AI 原生开发环境&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;主要语言&lt;/td&gt;
+&lt;td&gt;Rust&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Stars / Forks&lt;/td&gt;
+&lt;td&gt;约 57k Stars / 4.3k Forks&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;开源协议&lt;/td&gt;
+&lt;td&gt;主要为 AGPL-3.0；&lt;code&gt;warpui_core&lt;/code&gt; / &lt;code&gt;warpui&lt;/code&gt; 使用 MIT&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;核心能力&lt;/td&gt;
+&lt;td&gt;AI Coding Agent、终端工作区、Git Diff 审查、Agent 开源协作流程&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;快速开始&lt;/td&gt;
+&lt;td&gt;官网下载安装；开发者可参考 &lt;code&gt;./script/bootstrap&lt;/code&gt;、&lt;code&gt;./script/run&lt;/code&gt; 本地构建&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2&gt;它解决什么问题？&lt;span class="hx-absolute -hx-mt-20" id="它解决什么问题"&gt;&lt;/span&gt;
+&lt;a href="#%e5%ae%83%e8%a7%a3%e5%86%b3%e4%bb%80%e4%b9%88%e9%97%ae%e9%a2%98" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;传统终端很强，但开发流程往往分散在多个工具里：&lt;br&gt;
+写命令在终端，改代码在编辑器，看 Diff 在 Git 工具，评审在 PR 页面，AI 编程助手又是另一个窗口。&lt;/p&gt;
+&lt;p&gt;Warp 的思路是：&lt;strong&gt;把这些开发动作收拢到一个 AI 原生工作区里&lt;/strong&gt;。&lt;br&gt;
+你可以让 Agent 执行任务、生成代码变更、跑测试，同时直接查看 Git Diff、添加评论、准备提交。&lt;/p&gt;
+&lt;h2&gt;核心功能亮点&lt;span class="hx-absolute -hx-mt-20" id="核心功能亮点"&gt;&lt;/span&gt;
+&lt;a href="#%e6%a0%b8%e5%bf%83%e5%8a%9f%e8%83%bd%e4%ba%ae%e7%82%b9" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;1. 内置 AI Coding Agent&lt;span class="hx-absolute -hx-mt-20" id="1-内置-ai-coding-agent"&gt;&lt;/span&gt;
+&lt;a href="#1-%e5%86%85%e7%bd%ae-ai-coding-agent" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Warp 不只是终端，而是内置了编码 Agent。&lt;br&gt;
+你可以把一个开发任务交给它，例如实现功能、修改代码、运行检查、生成 Diff。&lt;/p&gt;
+&lt;p&gt;README 中也提到，Warp 支持使用内置 coding agent，也可以接入 Claude Code、Codex、Gemini CLI 等外部 CLI Agent。&lt;/p&gt;
+&lt;h3&gt;2. 终端 + Agent + Git Diff 一体化&lt;span class="hx-absolute -hx-mt-20" id="2-终端--agent--git-diff-一体化"&gt;&lt;/span&gt;
+&lt;a href="#2-%e7%bb%88%e7%ab%af--agent--git-diff-%e4%b8%80%e4%bd%93%e5%8c%96" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;截图中可以看到：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;左侧是 Agent 执行任务的过程&lt;/li&gt;
+&lt;li&gt;右侧是代码 Diff 审查界面&lt;/li&gt;
+&lt;li&gt;可以查看未提交变更&lt;/li&gt;
+&lt;li&gt;可以逐行审阅代码&lt;/li&gt;
+&lt;li&gt;可以添加评论&lt;/li&gt;
+&lt;li&gt;可以直接进入提交流程&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这让 Warp 更像一个“开发工作台”，而不是单纯的命令行窗口。&lt;/p&gt;
+&lt;h3&gt;3. 面向开源协作的 Agent 工作流&lt;span class="hx-absolute -hx-mt-20" id="3-面向开源协作的-agent-工作流"&gt;&lt;/span&gt;
+&lt;a href="#3-%e9%9d%a2%e5%90%91%e5%bc%80%e6%ba%90%e5%8d%8f%e4%bd%9c%e7%9a%84-agent-%e5%b7%a5%e4%bd%9c%e6%b5%81" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Warp 提供了 &lt;code&gt;build.warp.dev&lt;/code&gt;，用于观察 Oz agents 如何参与开源项目流程，包括：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;triage issues&lt;/li&gt;
+&lt;li&gt;编写 spec&lt;/li&gt;
+&lt;li&gt;实现变更&lt;/li&gt;
+&lt;li&gt;审查 PR&lt;/li&gt;
+&lt;li&gt;查看活跃 agent session&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这说明 Warp 不只是个人效率工具，也在探索 Agent 参与开源协作的流程。&lt;/p&gt;
+&lt;h3&gt;4. 开源客户端代码&lt;span class="hx-absolute -hx-mt-20" id="4-开源客户端代码"&gt;&lt;/span&gt;
+&lt;a href="#4-%e5%bc%80%e6%ba%90%e5%ae%a2%e6%88%b7%e7%ab%af%e4%bb%a3%e7%a0%81" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Warp 的客户端代码已经开源，并提供贡献指南。&lt;br&gt;
+本地构建流程大致是：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;./script/bootstrap
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;./script/run
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;./script/presubmit&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;适合想研究现代终端、AI Agent 工作流、Rust 桌面应用架构的开发者深入看看。&lt;/p&gt;
+&lt;h2&gt;适合谁？&lt;span class="hx-absolute -hx-mt-20" id="适合谁"&gt;&lt;/span&gt;
+&lt;a href="#%e9%80%82%e5%90%88%e8%b0%81" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Warp 比较适合：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;高频使用终端的开发者&lt;/li&gt;
+&lt;li&gt;希望把 AI 编程助手融入日常开发流程的人&lt;/li&gt;
+&lt;li&gt;想在一个界面里完成命令执行、代码变更、Diff 审查和提交的人&lt;/li&gt;
+&lt;li&gt;关注 AI Agent 如何参与开源维护、Issue 处理和 PR 工作流的团队&lt;/li&gt;
+&lt;li&gt;Rust / 桌面开发 / 开发者工具方向的研究者&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;快速上手&lt;span class="hx-absolute -hx-mt-20" id="快速上手"&gt;&lt;/span&gt;
+&lt;a href="#%e5%bf%ab%e9%80%9f%e4%b8%8a%e6%89%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;普通用户可以直接下载安装：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;https://www.warp.dev/download&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;开发者想研究源码，可以从 GitHub 开始：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;https://github.com/warpdotdev/warp&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;本地构建参考：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;./script/bootstrap
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;./script/run
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;./script/presubmit&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h2&gt;结论&lt;span class="hx-absolute -hx-mt-20" id="结论"&gt;&lt;/span&gt;
+&lt;a href="#%e7%bb%93%e8%ae%ba" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Warp 的吸引点在于：&lt;strong&gt;它不是给终端简单加一个 AI 聊天框，而是把 AI Agent 真正放进开发流程里。&lt;/strong&gt;&lt;br&gt;
+从任务执行、代码修改、Diff 审查到提交，Warp 试图把开发者每天反复切换的工具链整合成一个 AI 原生工作区。对于习惯终端、又想系统性使用 AI 编程工具的开发者来说，这是一个非常值得关注的项目。&lt;/p&gt;</description></item><item><title>如何免费申请 ChatGPT Pro：OpenAI Codex for Open Source 开源计划指南</title><link>https://silenceper.com/article/2026-05-07-free-chatgpt-pro-codex-for-oss/</link><pubDate>Thu, 07 May 2026 22:30:00 +0800</pubDate><guid>https://silenceper.com/article/2026-05-07-free-chatgpt-pro-codex-for-oss/</guid><description>
 &lt;p&gt;&lt;img src="https://silenceper.com/img/20260507/codex-for-oss-official-page-screenshot.png" alt="OpenAI Developers Codex for Open Source 官方页面截图" loading="lazy" /&gt;&lt;/p&gt;
 &lt;p&gt;很多人搜索“如何免费使用 ChatGPT”，但更准确的说法应该是：&lt;strong&gt;如何通过 OpenAI 官方计划，合规申请一段时间的 ChatGPT Pro 权益&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;ChatGPT 本身已经有免费版本。如果你只是普通用户，并没有维护开源项目，那么这篇文章不适合把它理解成“免费领取 Pro”的教程。&lt;/p&gt;

@@ -1,4 +1,150 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – Open Source</title><link>https://silenceper.com/en/tags/open-source/</link><description>Recent content in Open Source on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en-US</language><lastBuildDate>Thu, 07 May 2026 22:30:00 +0800</lastBuildDate><atom:link href="https://silenceper.com/en/tags/open-source/index.xml" rel="self" type="application/rss+xml"/><item><title>How to Apply for ChatGPT Pro for Free: OpenAI Codex for Open Source Guide</title><link>https://silenceper.com/en/article/2026-05-07-free-chatgpt-pro-codex-for-oss/</link><pubDate>Thu, 07 May 2026 22:30:00 +0800</pubDate><guid>https://silenceper.com/en/article/2026-05-07-free-chatgpt-pro-codex-for-oss/</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – Open Source</title><link>https://silenceper.com/en/tags/open-source/</link><description>Recent content in Open Source on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en-US</language><lastBuildDate>Sat, 09 May 2026 21:47:00 +0800</lastBuildDate><atom:link href="https://silenceper.com/en/tags/open-source/index.xml" rel="self" type="application/rss+xml"/><item><title>Warp: An AI Agent Terminal with Built-in Code Review Workflow</title><link>https://silenceper.com/en/article/2026-05-09-warp-agentic-terminal/</link><pubDate>Sat, 09 May 2026 21:47:00 +0800</pubDate><guid>https://silenceper.com/en/article/2026-05-09-warp-agentic-terminal/</guid><description>
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260509/warp-preview.png" alt="Warp Agentic Development Environment product preview" loading="lazy" /&gt;&lt;/p&gt;
+&lt;h2&gt;One-sentence positioning&lt;span class="hx-absolute -hx-mt-20" id="one-sentence-positioning"&gt;&lt;/span&gt;
+&lt;a href="#one-sentence-positioning" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Warp is an AI-native development environment born from the terminal. It brings the command line, coding agents, Git diff review, code review, and commit workflows into one workspace.&lt;/strong&gt;&lt;/p&gt;
+&lt;h2&gt;Basic information&lt;span class="hx-absolute -hx-mt-20" id="basic-information"&gt;&lt;/span&gt;
+&lt;a href="#basic-information" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Item&lt;/th&gt;
+&lt;th&gt;Details&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Project&lt;/td&gt;
+&lt;td&gt;Warp&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;GitHub&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://github.com/warpdotdev/warp" target="_blank" rel="noopener"&gt;https://github.com/warpdotdev/warp&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Website&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://warp.dev" target="_blank" rel="noopener"&gt;https://warp.dev&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Positioning&lt;/td&gt;
+&lt;td&gt;An AI-native development environment evolved from the terminal&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Main language&lt;/td&gt;
+&lt;td&gt;Rust&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Stars / Forks&lt;/td&gt;
+&lt;td&gt;About 57k Stars / 4.3k Forks&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;License&lt;/td&gt;
+&lt;td&gt;Mainly AGPL-3.0; &lt;code&gt;warpui_core&lt;/code&gt; and &lt;code&gt;warpui&lt;/code&gt; are MIT licensed&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Core capabilities&lt;/td&gt;
+&lt;td&gt;AI Coding Agent, terminal workspace, Git Diff review, agentic open-source workflows&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Getting started&lt;/td&gt;
+&lt;td&gt;Download from the official website; developers can build locally with &lt;code&gt;./script/bootstrap&lt;/code&gt; and &lt;code&gt;./script/run&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2&gt;What problem does it solve?&lt;span class="hx-absolute -hx-mt-20" id="what-problem-does-it-solve"&gt;&lt;/span&gt;
+&lt;a href="#what-problem-does-it-solve" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The terminal is powerful, but the daily development workflow is often scattered across many tools: commands in a terminal, code changes in an editor, diffs in a Git client, review in a PR page, and AI coding assistance in yet another window.&lt;/p&gt;
+&lt;p&gt;Warp’s approach is to &lt;strong&gt;pull these actions back into an AI-native workspace&lt;/strong&gt;. You can ask an agent to work on a task, generate code changes, run checks, inspect the Git diff, leave comments, and prepare commits in one place.&lt;/p&gt;
+&lt;h2&gt;Core highlights&lt;span class="hx-absolute -hx-mt-20" id="core-highlights"&gt;&lt;/span&gt;
+&lt;a href="#core-highlights" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;1. A built-in AI Coding Agent&lt;span class="hx-absolute -hx-mt-20" id="1-a-built-in-ai-coding-agent"&gt;&lt;/span&gt;
+&lt;a href="#1-a-built-in-ai-coding-agent" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Warp is not just a terminal with a chat box. It includes a coding agent that can work through development tasks: implementing features, changing files, running checks, and producing diffs.&lt;/p&gt;
+&lt;p&gt;The README also notes that Warp supports its built-in coding agent and can work with external CLI agents such as Claude Code, Codex, Gemini CLI, and others.&lt;/p&gt;
+&lt;h3&gt;2. Terminal + Agent + Git Diff in one workspace&lt;span class="hx-absolute -hx-mt-20" id="2-terminal--agent--git-diff-in-one-workspace"&gt;&lt;/span&gt;
+&lt;a href="#2-terminal--agent--git-diff-in-one-workspace" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The screenshot shows a typical development flow:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;the left side displays the agent’s task execution process;&lt;/li&gt;
+&lt;li&gt;the right side shows a Git Diff review interface;&lt;/li&gt;
+&lt;li&gt;uncommitted changes are visible;&lt;/li&gt;
+&lt;li&gt;code can be reviewed line by line;&lt;/li&gt;
+&lt;li&gt;comments can be added directly in the diff;&lt;/li&gt;
+&lt;li&gt;the workflow can move toward committing changes without leaving the workspace.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;That makes Warp feel more like a development workbench than a traditional terminal window.&lt;/p&gt;
+&lt;h3&gt;3. Agentic workflows for open-source collaboration&lt;span class="hx-absolute -hx-mt-20" id="3-agentic-workflows-for-open-source-collaboration"&gt;&lt;/span&gt;
+&lt;a href="#3-agentic-workflows-for-open-source-collaboration" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Warp also provides &lt;code&gt;build.warp.dev&lt;/code&gt;, where you can watch Oz agents participate in open-source project workflows, including:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;issue triage;&lt;/li&gt;
+&lt;li&gt;spec writing;&lt;/li&gt;
+&lt;li&gt;implementation;&lt;/li&gt;
+&lt;li&gt;PR review;&lt;/li&gt;
+&lt;li&gt;active agent sessions.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This means Warp is not only a personal productivity tool. It is also exploring how agents can participate in open-source maintenance and collaboration.&lt;/p&gt;
+&lt;h3&gt;4. Open-source client code&lt;span class="hx-absolute -hx-mt-20" id="4-open-source-client-code"&gt;&lt;/span&gt;
+&lt;a href="#4-open-source-client-code" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Warp’s client code is open source, and the repository includes contribution documentation.&lt;/p&gt;
+&lt;p&gt;The local build flow is roughly:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;./script/bootstrap
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;./script/run
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;./script/presubmit&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;It is worth reading if you are interested in modern terminals, AI-agent development workflows, or Rust desktop application architecture.&lt;/p&gt;
+&lt;h2&gt;Who is it for?&lt;span class="hx-absolute -hx-mt-20" id="who-is-it-for"&gt;&lt;/span&gt;
+&lt;a href="#who-is-it-for" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Warp is a good fit for:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;developers who spend a lot of time in the terminal;&lt;/li&gt;
+&lt;li&gt;people who want to integrate AI coding assistants into real development workflows;&lt;/li&gt;
+&lt;li&gt;users who want commands, code changes, diff review, and commits in one interface;&lt;/li&gt;
+&lt;li&gt;teams exploring how AI agents can help with open-source maintenance, issue handling, and PR workflows;&lt;/li&gt;
+&lt;li&gt;developers studying Rust, desktop apps, terminals, or developer tools.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Quick start&lt;span class="hx-absolute -hx-mt-20" id="quick-start"&gt;&lt;/span&gt;
+&lt;a href="#quick-start" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Regular users can download Warp from:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;https://www.warp.dev/download&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Developers can start from the GitHub repository:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;https://github.com/warpdotdev/warp&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Local build reference:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;./script/bootstrap
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;./script/run
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;./script/presubmit&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h2&gt;Conclusion&lt;span class="hx-absolute -hx-mt-20" id="conclusion"&gt;&lt;/span&gt;
+&lt;a href="#conclusion" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Warp’s most interesting point is that &lt;strong&gt;it does not simply add an AI chat panel to a terminal. It puts the AI agent directly into the development workflow.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;From task execution and code modification to diff review and committing, Warp tries to combine the tools developers switch between every day into one AI-native workspace. If you already work heavily in the terminal and want to use AI coding tools more systematically, Warp is a project worth watching.&lt;/p&gt;</description></item><item><title>How to Apply for ChatGPT Pro for Free: OpenAI Codex for Open Source Guide</title><link>https://silenceper.com/en/article/2026-05-07-free-chatgpt-pro-codex-for-oss/</link><pubDate>Thu, 07 May 2026 22:30:00 +0800</pubDate><guid>https://silenceper.com/en/article/2026-05-07-free-chatgpt-pro-codex-for-oss/</guid><description>
 &lt;p&gt;&lt;img src="https://silenceper.com/img/20260507/codex-for-oss-official-page-screenshot.png" alt="OpenAI Developers Codex for Open Source official page screenshot" loading="lazy" /&gt;&lt;/p&gt;
 &lt;p&gt;Many people search for “how to use ChatGPT for free.” A more accurate version of that question is: &lt;strong&gt;how can eligible open-source maintainers apply for official ChatGPT Pro benefits through an OpenAI program?&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;ChatGPT already has a free tier. If you are not maintaining an open-source project, this is not a general “free Pro giveaway” guide.&lt;/p&gt;
