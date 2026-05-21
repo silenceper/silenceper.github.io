@@ -1,4 +1,664 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper –</title><link>https://silenceper.com/</link><description>Recent content on silenceper</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><atom:link href="https://silenceper.com/index.xml" rel="self" type="application/rss+xml"/><item><title>Codex Chrome 插件：什么时候该让 AI 使用你的浏览器登录态</title><link>https://silenceper.com/article/2026-05-09-codex-chrome-browser-login-state/</link><pubDate>Sat, 09 May 2026 22:15:00 +0800</pubDate><guid>https://silenceper.com/article/2026-05-09-codex-chrome-browser-login-state/</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – silenceper | AI 工具、科技观察与开源实践</title><link>https://silenceper.com/</link><description>Recent content in silenceper | AI 工具、科技观察与开源实践 on silenceper</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><atom:link href="https://silenceper.com/index.xml" rel="self" type="application/rss+xml"/><item><title>OpenAI 图像验证工具：给 AI 图片加上一层出处说明</title><link>https://silenceper.com/blog/2026-05-21-openai-verify-image/</link><pubDate>Thu, 21 May 2026 17:30:38 +0800</pubDate><guid>https://silenceper.com/blog/2026-05-21-openai-verify-image/</guid><description>
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260521/openai-verify-product-hero.png" alt="OpenAI Verify 原产品页面上传界面截图" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;AI 生成图片越来越像真实照片，也越来越容易被转发、截图、二次编辑。问题随之出现：当一张图片在社交平台、新闻现场或聊天群里传播时，普通人很难判断它到底来自相机、设计软件，还是某个 AI 工具。&lt;/p&gt;
+&lt;p&gt;OpenAI 这次推出的“验证 OpenAI 生成的图像”工具，解决的正是这个问题：上传一张图片，系统会检测它是否带有 OpenAI 生成图像相关的溯源特征，从而判断这张图是否可能由 ChatGPT、OpenAI API 或 Codex 等 OpenAI 工具生成。&lt;/p&gt;
+&lt;p&gt;它不是一个“识别真假新闻”的工具，也不是用来判断图片内容是否真实的工具。它更像是一张图片的“来源检测器”：告诉你这张图里有没有 OpenAI 生成内容留下的技术痕迹。&lt;/p&gt;
+&lt;h2&gt;它能做什么？&lt;span class="hx-absolute -hx-mt-20" id="它能做什么"&gt;&lt;/span&gt;
+&lt;a href="#%e5%ae%83%e8%83%bd%e5%81%9a%e4%bb%80%e4%b9%88" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;这个工具的使用方式很简单：上传一张 PNG、JPG 或 WEBP 图片，系统会自动分析，并返回检测结果。&lt;/p&gt;
+&lt;p&gt;它主要检测两类特征：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;C2PA 内容凭证&lt;/li&gt;
+&lt;li&gt;SynthID 数字水印&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如果图片中存在这些特征，工具就可以判断它很可能来自 OpenAI 的图像生成工具。&lt;/p&gt;
+&lt;p&gt;这里的重点是“溯源”，不是“鉴定真假”。比如一张 AI 生成的“某地洪水照片”，即使工具检测到它来自 OpenAI，也只能说明这张图片由 OpenAI 工具生成，不能进一步判断图片描述的事件是否真实、地点是否准确、上下文是否被误导性使用。&lt;/p&gt;
+&lt;p&gt;换句话说，它回答的是：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;这张图片是不是 OpenAI 工具生成的？&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;而不是：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;这张图片讲的事情是不是真的？&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2&gt;C2PA 和 SynthID 分别是什么？&lt;span class="hx-absolute -hx-mt-20" id="c2pa-和-synthid-分别是什么"&gt;&lt;/span&gt;
+&lt;a href="#c2pa-%e5%92%8c-synthid-%e5%88%86%e5%88%ab%e6%98%af%e4%bb%80%e4%b9%88" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;OpenAI 这个验证工具背后，主要依赖两种技术路径。&lt;/p&gt;
+&lt;p&gt;第一种是 &lt;strong&gt;C2PA 内容凭证&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;C2PA 可以理解为一种嵌入数字内容中的来源信息。对于支持的 OpenAI 生成图片，它可以记录这张图是由 ChatGPT 或 API 等工具创建的。只要这个凭证还在，它就是很有力的来源证明。&lt;/p&gt;
+&lt;p&gt;但它也有一个限制：C2PA 依赖元数据。图片经过某些平台转发、压缩、截图、编辑后，元数据可能会被清除。一旦这些信息被去掉，工具就可能检测不到。&lt;/p&gt;
+&lt;p&gt;第二种是 &lt;strong&gt;SynthID 数字水印&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;SynthID 是一种更“隐形”的水印技术。它不是简单地把文字或标记贴在图片角落，而是把特征嵌入到图像本身。这样即使图片被裁剪、加滤镜或有损压缩，仍然有机会保留可检测的水印信号。&lt;/p&gt;
+&lt;p&gt;简单说：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;C2PA 更像图片文件里的“身份证信息”&lt;/li&gt;
+&lt;li&gt;SynthID 更像藏在图片内容里的“隐形标记”&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;两者结合，可以提高 AI 图片来源识别的可靠性。&lt;/p&gt;
+&lt;h2&gt;检测成功意味着什么？&lt;span class="hx-absolute -hx-mt-20" id="检测成功意味着什么"&gt;&lt;/span&gt;
+&lt;a href="#%e6%a3%80%e6%b5%8b%e6%88%90%e5%8a%9f%e6%84%8f%e5%91%b3%e7%9d%80%e4%bb%80%e4%b9%88" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;如果工具检测到了相关特征，说明这张图片极有可能由 OpenAI 的工具生成。&lt;/p&gt;
+&lt;p&gt;OpenAI 页面中也提到，这类检测结果非常可靠，误报很少。也就是说，如果系统明确检测到 OpenAI 的相关特征，基本可以把它视为一个强信号。&lt;/p&gt;
+&lt;p&gt;但这里仍然有边界：它不能说明这张图生成之后发生了什么。&lt;/p&gt;
+&lt;p&gt;比如：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;图片是否被裁剪过&lt;/li&gt;
+&lt;li&gt;是否被重新压缩过&lt;/li&gt;
+&lt;li&gt;是否被加了文字&lt;/li&gt;
+&lt;li&gt;是否被用于错误语境&lt;/li&gt;
+&lt;li&gt;是否被人为拼接或二次编辑&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这些都不是这个工具主要回答的问题。&lt;/p&gt;
+&lt;p&gt;所以，检测成功只能证明“来源倾向”，不能证明“传播语境”。&lt;/p&gt;
+&lt;h2&gt;检测不到，又意味着什么？&lt;span class="hx-absolute -hx-mt-20" id="检测不到又意味着什么"&gt;&lt;/span&gt;
+&lt;a href="#%e6%a3%80%e6%b5%8b%e4%b8%8d%e5%88%b0%e5%8f%88%e6%84%8f%e5%91%b3%e7%9d%80%e4%bb%80%e4%b9%88" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;img src="https://silenceper.com/img/20260521/openai-verify-feature-section.png" alt="OpenAI Verify 原页面功能说明区域截图" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;这是最容易被误解的地方。&lt;/p&gt;
+&lt;p&gt;如果工具没有检测到任何相关特征，并不代表这张图一定不是 OpenAI 生成的。&lt;/p&gt;
+&lt;p&gt;可能原因包括：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;图片元数据已经被清除&lt;/li&gt;
+&lt;li&gt;数字水印被破坏或降级&lt;/li&gt;
+&lt;li&gt;图片经过截图、压缩、编辑等处理&lt;/li&gt;
+&lt;li&gt;图片来自较早的 OpenAI 图像模型&lt;/li&gt;
+&lt;li&gt;图片生成时间早于相关溯源能力上线&lt;/li&gt;
+&lt;li&gt;图片可能由其他公司的 AI 模型生成&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;所以，“未检测到”只能说明：当前上传的这张图片里，没有发现该工具支持的 OpenAI 溯源特征。&lt;/p&gt;
+&lt;p&gt;它不能反推出“这张图一定不是 AI 生成”，也不能反推出“这张图一定真实”。&lt;/p&gt;
+&lt;p&gt;这一点非常重要。&lt;/p&gt;
+&lt;h2&gt;为什么这个工具有意义？&lt;span class="hx-absolute -hx-mt-20" id="为什么这个工具有意义"&gt;&lt;/span&gt;
+&lt;a href="#%e4%b8%ba%e4%bb%80%e4%b9%88%e8%bf%99%e4%b8%aa%e5%b7%a5%e5%85%b7%e6%9c%89%e6%84%8f%e4%b9%89" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;现在的互联网内容环境里，AI 图片的传播速度很快，尤其在新闻事件、公共安全、社会争议和营销传播中，一张图很容易被脱离上下文使用。&lt;/p&gt;
+&lt;p&gt;内容溯源的价值在于，它可以给用户多一个判断依据。&lt;/p&gt;
+&lt;p&gt;当你看到一张图片时，如果能知道它是否由 AI 工具生成，就可以更谨慎地决定：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;是否相信它&lt;/li&gt;
+&lt;li&gt;是否转发它&lt;/li&gt;
+&lt;li&gt;是否把它当作新闻证据&lt;/li&gt;
+&lt;li&gt;是否需要进一步核查来源&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;对于媒体、平台、研究人员、内容创作者和普通用户来说，这类工具都能降低信息误判的概率。&lt;/p&gt;
+&lt;p&gt;它不解决所有问题，但它让“图片从哪里来”这件事变得更透明。&lt;/p&gt;
+&lt;h2&gt;使用时需要注意什么？&lt;span class="hx-absolute -hx-mt-20" id="使用时需要注意什么"&gt;&lt;/span&gt;
+&lt;a href="#%e4%bd%bf%e7%94%a8%e6%97%b6%e9%9c%80%e8%a6%81%e6%b3%a8%e6%84%8f%e4%bb%80%e4%b9%88" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;OpenAI 给出的建议是：上传单张图片进行检测。如果使用截图，最好紧贴图片边缘裁剪，避免把多张图片放在同一个文件里。&lt;/p&gt;
+&lt;p&gt;这样做是为了减少干扰，让系统更准确地检测图片中的 C2PA 元数据或 SynthID 水印。&lt;/p&gt;
+&lt;p&gt;另外，OpenAI 表示，上传的图片会被用于检测是否包含相关溯源特征。除非法律另有规定，上传图片不会被存储，也不会用于训练模型。&lt;/p&gt;
+&lt;h2&gt;这个工具真正改变的是什么？&lt;span class="hx-absolute -hx-mt-20" id="这个工具真正改变的是什么"&gt;&lt;/span&gt;
+&lt;a href="#%e8%bf%99%e4%b8%aa%e5%b7%a5%e5%85%b7%e7%9c%9f%e6%ad%a3%e6%94%b9%e5%8f%98%e7%9a%84%e6%98%af%e4%bb%80%e4%b9%88" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;过去，我们看到一张可疑图片时，常常只能依赖肉眼判断：看光影、看手指、看文字、看细节。但 AI 图像生成能力越来越强，肉眼识别会越来越不可靠。&lt;/p&gt;
+&lt;p&gt;OpenAI 这个工具代表的是另一条路线：不再只看图片“像不像真的”，而是看它有没有可信的技术来源信息。&lt;/p&gt;
+&lt;p&gt;这比单纯的视觉识别更稳健，也更适合未来的内容生态。&lt;/p&gt;
+&lt;p&gt;当然，它仍然不是万能答案。它只覆盖 OpenAI 支持的生成图片，也不能识别所有 AI 模型生成的内容，更不能判断图片表达的信息是否真实。&lt;/p&gt;
+&lt;p&gt;但它提供了一个清晰的方向：未来的 AI 内容不应该只是“生成”，还应该能被追溯、被解释、被验证。&lt;/p&gt;
+&lt;p&gt;在 AI 内容越来越多的时代，透明度本身会变成基础设施。OpenAI 的这个图像验证工具，就是这个基础设施的一部分。&lt;/p&gt;</description></item><item><title>Marketing Skills for AI Agents：给 AI Agent 装上一套营销工作流</title><link>https://silenceper.com/article/2026-05-20-marketing-skills-ai-agents/</link><pubDate>Wed, 20 May 2026 09:06:51 +0800</pubDate><guid>https://silenceper.com/article/2026-05-20-marketing-skills-ai-agents/</guid><description>
+&lt;p&gt;项目地址：https://github.com/coreyhaines31/marketingskills&lt;/p&gt;
+&lt;h2&gt;一句话定位&lt;span class="hx-absolute -hx-mt-20" id="一句话定位"&gt;&lt;/span&gt;
+&lt;a href="#%e4%b8%80%e5%8f%a5%e8%af%9d%e5%ae%9a%e4%bd%8d" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;code&gt;marketingskills&lt;/code&gt; 是一套面向 AI 编程代理的营销技能包，让 Claude Code、OpenAI Codex、Cursor、Windsurf 等 Agent 在处理 SEO、转化率优化、文案、广告、分析和增长任务时，有更专业的工作流与判断标准。&lt;/p&gt;
+&lt;h2&gt;基础信息卡片&lt;span class="hx-absolute -hx-mt-20" id="基础信息卡片"&gt;&lt;/span&gt;
+&lt;a href="#%e5%9f%ba%e7%a1%80%e4%bf%a1%e6%81%af%e5%8d%a1%e7%89%87" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;项目&lt;/th&gt;
+&lt;th&gt;信息&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;项目名称&lt;/td&gt;
+&lt;td&gt;Marketing Skills for AI Agents&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;GitHub&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;coreyhaines31/marketingskills&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;作者&lt;/td&gt;
+&lt;td&gt;Corey Haines&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;官网&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://marketing-skills.com" target="_blank" rel="noopener"&gt;https://marketing-skills.com&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;许可证&lt;/td&gt;
+&lt;td&gt;MIT&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;主要语言&lt;/td&gt;
+&lt;td&gt;JavaScript / Shell&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;最新版本&lt;/td&gt;
+&lt;td&gt;v2.0.1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;仓库热度&lt;/td&gt;
+&lt;td&gt;约 29.5k Stars、4.8k Forks&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;适配对象&lt;/td&gt;
+&lt;td&gt;Claude Code、OpenAI Codex、Cursor、Windsurf，以及支持 Agent Skills spec 的 AI Agent&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2&gt;解决什么问题&lt;span class="hx-absolute -hx-mt-20" id="解决什么问题"&gt;&lt;/span&gt;
+&lt;a href="#%e8%a7%a3%e5%86%b3%e4%bb%80%e4%b9%88%e9%97%ae%e9%a2%98" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;现在很多 AI 编程代理已经很擅长写代码，但当任务进入营销领域时，输出质量往往不稳定。&lt;/p&gt;
+&lt;p&gt;比如你让 Agent：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;优化一个落地页的转化率&lt;/li&gt;
+&lt;li&gt;写一组冷邮件&lt;/li&gt;
+&lt;li&gt;做一次 SEO 审计&lt;/li&gt;
+&lt;li&gt;规划 A/B 测试&lt;/li&gt;
+&lt;li&gt;设计产品发布方案&lt;/li&gt;
+&lt;li&gt;分析用户流失和留存问题&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;它通常能给出一些建议，但这些建议很容易停留在通用层面：看起来合理，但缺少具体流程、检查清单和营销经验。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;marketingskills&lt;/code&gt; 解决的正是这个问题。它把常见营销任务沉淀成一组可复用的 Agent Skills，让 AI 在遇到具体营销场景时，不只是“临场发挥”，而是能按相对专业的营销工作流执行。&lt;/p&gt;
+&lt;h2&gt;核心功能&lt;span class="hx-absolute -hx-mt-20" id="核心功能"&gt;&lt;/span&gt;
+&lt;a href="#%e6%a0%b8%e5%bf%83%e5%8a%9f%e8%83%bd" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;1. 覆盖完整的营销工作链路&lt;span class="hx-absolute -hx-mt-20" id="1-覆盖完整的营销工作链路"&gt;&lt;/span&gt;
+&lt;a href="#1-%e8%a6%86%e7%9b%96%e5%ae%8c%e6%95%b4%e7%9a%84%e8%90%a5%e9%94%80%e5%b7%a5%e4%bd%9c%e9%93%be%e8%b7%af" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;这个项目不是单一提示词，而是一组围绕营销工作的技能库。README 中列出的技能覆盖了从获客、转化到留存的多个环节。&lt;/p&gt;
+&lt;p&gt;常见方向包括：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;SEO 与内容：&lt;code&gt;seo-audit&lt;/code&gt;、&lt;code&gt;ai-seo&lt;/code&gt;、&lt;code&gt;schema&lt;/code&gt;、&lt;code&gt;content-strategy&lt;/code&gt;、&lt;code&gt;programmatic-seo&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;转化率优化：&lt;code&gt;cro&lt;/code&gt;、&lt;code&gt;signup&lt;/code&gt;、&lt;code&gt;onboarding&lt;/code&gt;、&lt;code&gt;popups&lt;/code&gt;、&lt;code&gt;paywalls&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;文案与内容生产：&lt;code&gt;copywriting&lt;/code&gt;、&lt;code&gt;copy-editing&lt;/code&gt;、&lt;code&gt;cold-email&lt;/code&gt;、&lt;code&gt;emails&lt;/code&gt;、&lt;code&gt;social&lt;/code&gt;、&lt;code&gt;video&lt;/code&gt;、&lt;code&gt;image&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;广告与投放：&lt;code&gt;ads&lt;/code&gt;、&lt;code&gt;ad-creative&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;增长与留存：&lt;code&gt;referrals&lt;/code&gt;、&lt;code&gt;free-tools&lt;/code&gt;、&lt;code&gt;churn-prevention&lt;/code&gt;、&lt;code&gt;community-marketing&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;销售与 GTM：&lt;code&gt;revops&lt;/code&gt;、&lt;code&gt;sales-enablement&lt;/code&gt;、&lt;code&gt;launch&lt;/code&gt;、&lt;code&gt;pricing&lt;/code&gt;、&lt;code&gt;competitors&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;策略与研究：&lt;code&gt;customer-research&lt;/code&gt;、&lt;code&gt;marketing-ideas&lt;/code&gt;、&lt;code&gt;marketing-psychology&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这意味着它不是只帮你“写一段营销文案”，而是能覆盖更完整的营销任务链路。&lt;/p&gt;
+&lt;h3&gt;2. 以产品上下文作为基础&lt;span class="hx-absolute -hx-mt-20" id="2-以产品上下文作为基础"&gt;&lt;/span&gt;
+&lt;a href="#2-%e4%bb%a5%e4%ba%a7%e5%93%81%e4%b8%8a%e4%b8%8b%e6%96%87%e4%bd%9c%e4%b8%ba%e5%9f%ba%e7%a1%80" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;项目中很重要的一个设计是 &lt;code&gt;product-marketing&lt;/code&gt; 技能。&lt;/p&gt;
+&lt;p&gt;根据 README 的说明，其他技能会先读取 &lt;code&gt;product-marketing&lt;/code&gt;，理解产品、用户、定位和市场信息，再进入具体任务。这一点很关键。&lt;/p&gt;
+&lt;p&gt;因为营销任务很依赖上下文。不同产品的用户、使用场景、定价方式、竞争对手都不一样。如果没有统一的产品语境，AI 很容易写出“正确但没用”的内容。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;product-marketing&lt;/code&gt; 相当于给所有后续营销任务提供一个基础档案，让 Agent 先理解“这个产品到底卖给谁、解决什么问题、为什么值得买”，再去写页面、邮件、广告或 SEO 内容。&lt;/p&gt;
+&lt;h3&gt;3. 技能之间可以相互协作&lt;span class="hx-absolute -hx-mt-20" id="3-技能之间可以相互协作"&gt;&lt;/span&gt;
+&lt;a href="#3-%e6%8a%80%e8%83%bd%e4%b9%8b%e9%97%b4%e5%8f%af%e4%bb%a5%e7%9b%b8%e4%ba%92%e5%8d%8f%e4%bd%9c" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;&lt;code&gt;marketingskills&lt;/code&gt; 的另一个特点是技能之间存在关联。&lt;/p&gt;
+&lt;p&gt;比如：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;copywriting&lt;/code&gt; 可以和 &lt;code&gt;cro&lt;/code&gt;、&lt;code&gt;ab-testing&lt;/code&gt; 配合，用于落地页优化和实验设计&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;revops&lt;/code&gt; 可以和 &lt;code&gt;sales-enablement&lt;/code&gt;、&lt;code&gt;cold-email&lt;/code&gt; 配合，用于销售线索与外联流程&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;seo-audit&lt;/code&gt; 可以和 &lt;code&gt;schema&lt;/code&gt;、&lt;code&gt;ai-seo&lt;/code&gt; 配合，用于搜索与 AI 搜索优化&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;customer-research&lt;/code&gt; 可以为 &lt;code&gt;copywriting&lt;/code&gt;、&lt;code&gt;cro&lt;/code&gt;、&lt;code&gt;competitors&lt;/code&gt; 提供输入&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这种设计更接近真实营销工作：不是每个任务孤立完成，而是研究、定位、文案、渠道、数据和实验之间互相影响。&lt;/p&gt;
+&lt;h3&gt;4. 支持主流 AI 编程代理&lt;span class="hx-absolute -hx-mt-20" id="4-支持主流-ai-编程代理"&gt;&lt;/span&gt;
+&lt;a href="#4-%e6%94%af%e6%8c%81%e4%b8%bb%e6%b5%81-ai-%e7%bc%96%e7%a8%8b%e4%bb%a3%e7%90%86" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;项目明确提到支持：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Claude Code&lt;/li&gt;
+&lt;li&gt;OpenAI Codex&lt;/li&gt;
+&lt;li&gt;Cursor&lt;/li&gt;
+&lt;li&gt;Windsurf&lt;/li&gt;
+&lt;li&gt;其他支持 Agent Skills spec 的代理&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这让它更像一个可迁移的营销能力包，而不是绑定在某个特定 AI 产品里的提示词集合。&lt;/p&gt;
+&lt;p&gt;如果团队已经在用 AI 编程代理做开发任务，可以把这套技能加入项目，让同一个 Agent 同时承担部分增长、内容和转化优化工作。&lt;/p&gt;
+&lt;h2&gt;适合谁&lt;span class="hx-absolute -hx-mt-20" id="适合谁"&gt;&lt;/span&gt;
+&lt;a href="#%e9%80%82%e5%90%88%e8%b0%81" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;这个项目比较适合以下几类用户：&lt;/p&gt;
+&lt;h3&gt;技术型创业者&lt;span class="hx-absolute -hx-mt-20" id="技术型创业者"&gt;&lt;/span&gt;
+&lt;a href="#%e6%8a%80%e6%9c%af%e5%9e%8b%e5%88%9b%e4%b8%9a%e8%80%85" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;有产品、有代码能力，但缺少系统营销经验。可以用它帮助自己完成定位、落地页、冷启动内容、SEO、冷邮件和增长实验。&lt;/p&gt;
+&lt;h3&gt;独立开发者&lt;span class="hx-absolute -hx-mt-20" id="独立开发者"&gt;&lt;/span&gt;
+&lt;a href="#%e7%8b%ac%e7%ab%8b%e5%bc%80%e5%8f%91%e8%80%85" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;很多独立开发者的问题不是不会做产品，而是不知道如何持续获客。&lt;code&gt;marketingskills&lt;/code&gt; 可以把一些常见营销动作流程化，降低启动成本。&lt;/p&gt;
+&lt;h3&gt;SaaS / AI 工具团队&lt;span class="hx-absolute -hx-mt-20" id="saas--ai-工具团队"&gt;&lt;/span&gt;
+&lt;a href="#saas--ai-%e5%b7%a5%e5%85%b7%e5%9b%a2%e9%98%9f" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;这类产品通常需要持续做内容、转化、试用激活、留存和销售辅助材料。项目中的 CRO、SEO、onboarding、pricing、sales-enablement 等技能都很贴合。&lt;/p&gt;
+&lt;h3&gt;使用 AI Agent 的技术营销团队&lt;span class="hx-absolute -hx-mt-20" id="使用-ai-agent-的技术营销团队"&gt;&lt;/span&gt;
+&lt;a href="#%e4%bd%bf%e7%94%a8-ai-agent-%e7%9a%84%e6%8a%80%e6%9c%af%e8%90%a5%e9%94%80%e5%9b%a2%e9%98%9f" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;如果团队已经在用 Claude Code、Codex、Cursor 处理工程任务，也可以把营销任务中的重复流程交给 Agent 辅助完成，比如生成广告创意、优化页面文案、整理竞品对比页、搭建实验计划等。&lt;/p&gt;
+&lt;h2&gt;快速上手&lt;span class="hx-absolute -hx-mt-20" id="快速上手"&gt;&lt;/span&gt;
+&lt;a href="#%e5%bf%ab%e9%80%9f%e4%b8%8a%e6%89%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;推荐使用 &lt;code&gt;npx skills&lt;/code&gt; 安装全部技能：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx skills add coreyhaines31/marketingskills&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;如果只想先试几个常用技能，可以安装指定技能：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx skills add coreyhaines31/marketingskills --skill product-marketing cro copywriting seo-audit&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;也可以先查看可用技能列表：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx skills add coreyhaines31/marketingskills --list&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;安装后，可以让 Agent 处理类似任务：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;帮我基于当前产品定位，重写首页首屏文案。&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;审计这个 landing page 的转化问题，并给出优先级排序。&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;为这个 SaaS 产品设计一个 signup flow 的 A/B 测试方案。&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;基于我们的产品信息，写一组 B2B 冷邮件和 follow-up sequence。&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;帮我规划一套 AI SEO 内容优化方案。&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h2&gt;结论&lt;span class="hx-absolute -hx-mt-20" id="结论"&gt;&lt;/span&gt;
+&lt;a href="#%e7%bb%93%e8%ae%ba" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;code&gt;marketingskills&lt;/code&gt; 的价值不在于“又整理了一堆提示词”，而在于它把营销工作拆成了可复用、可组合、可被 AI Agent 自动调用的技能模块。&lt;/p&gt;
+&lt;p&gt;对于开发者和技术团队来说，这相当于给 AI 编程代理补上一套营销工作流。它不能替代真实的市场判断，但可以显著降低执行营销任务的起步成本：从写文案、做 SEO，到规划转化实验和产品发布，都有更清晰的流程可以遵循。&lt;/p&gt;
+&lt;p&gt;如果你已经在用 Claude Code、Codex、Cursor 或类似 Agent 做开发工作，同时又希望让 AI 帮你处理一部分增长和营销任务，&lt;code&gt;marketingskills&lt;/code&gt; 值得加入工具箱。&lt;/p&gt;</description></item><item><title>Persistent Memory 不是越多越好：Agent 到底该记住什么？</title><link>https://silenceper.com/article/2026-05-10-agent-persistent-memory/</link><pubDate>Sun, 10 May 2026 11:20:00 +0800</pubDate><guid>https://silenceper.com/article/2026-05-10-agent-persistent-memory/</guid><description>
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260510/agent-memory-decision-map-zh.png" alt="Agent 记忆决策图" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;现在很多 AI Agent 产品都在讲 memory：长期记忆、项目记忆、个人偏好、会话历史、知识库、向量检索、自动总结。&lt;/p&gt;
+&lt;p&gt;这件事很容易让人产生一个错觉：&lt;strong&gt;记得越多，Agent 就越聪明。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;我的判断正好相反。&lt;/p&gt;
+&lt;p&gt;对真正参与工程工作的 Agent 来说，Persistent Memory 不应该是聊天记录垃圾桶，也不应该是“把所有东西都塞进向量库”。它更像一层过滤器：只留下那些稳定、可复用、能改变未来行为的上下文。&lt;/p&gt;
+&lt;p&gt;否则，memory 会从助力变成噪音。Agent 会拿过期信息当事实，把一次性偏好当永久规则，把未验证猜测当项目结论，甚至把不该保存的敏感内容带到下一次任务里。&lt;/p&gt;
+&lt;h2&gt;先说结论&lt;span class="hx-absolute -hx-mt-20" id="先说结论"&gt;&lt;/span&gt;
+&lt;a href="#%e5%85%88%e8%af%b4%e7%bb%93%e8%ae%ba" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Agent 最应该记住的，不是“发生过什么”，而是这些信息：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;未来大概率还会用到；&lt;/li&gt;
+&lt;li&gt;短期内不会快速过期；&lt;/li&gt;
+&lt;li&gt;能减少重复解释；&lt;/li&gt;
+&lt;li&gt;能改变 Agent 的默认行为；&lt;/li&gt;
+&lt;li&gt;有来源、有边界、必要时能重新验证。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;反过来，下面这些东西不应该直接变成长期记忆：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;密钥、密码、token、cookie、恢复码；&lt;/li&gt;
+&lt;li&gt;某次任务里的临时分支状态；&lt;/li&gt;
+&lt;li&gt;价格、排期、版本、政策这类会变化的信息；&lt;/li&gt;
+&lt;li&gt;没有证据的猜测；&lt;/li&gt;
+&lt;li&gt;原始聊天记录和大段私人上下文；&lt;/li&gt;
+&lt;li&gt;一次性的情绪、口头偏好或临时指令。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;一句话：&lt;strong&gt;memory 是索引，不是档案馆；是工作规则，不是原始日志。&lt;/strong&gt;&lt;/p&gt;
+&lt;h2&gt;为什么“记得越多”会出问题&lt;span class="hx-absolute -hx-mt-20" id="为什么记得越多会出问题"&gt;&lt;/span&gt;
+&lt;a href="#%e4%b8%ba%e4%bb%80%e4%b9%88%e8%ae%b0%e5%be%97%e8%b6%8a%e5%a4%9a%e4%bc%9a%e5%87%ba%e9%97%ae%e9%a2%98" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;普通聊天助手记住你的称呼、语言偏好、写作风格，通常问题不大。但工程 Agent 不一样。它会读代码、改文件、跑命令、接 MCP、调用浏览器、访问内部系统，甚至参与发布流程。&lt;/p&gt;
+&lt;p&gt;一旦 memory 质量不好，风险会被放大。&lt;/p&gt;
+&lt;p&gt;比如：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;它记住“这个项目用 pnpm”，但项目后来迁移到了 bun；&lt;/li&gt;
+&lt;li&gt;它记住“release 分支可以直接部署”，但后来发布规则变成必须和 &lt;code&gt;origin/release&lt;/code&gt; 完全一致；&lt;/li&gt;
+&lt;li&gt;它记住“某个接口返回字段叫 &lt;code&gt;groupName&lt;/code&gt;”，但真实 source-of-truth 已经变成 &lt;code&gt;displayName&lt;/code&gt;；&lt;/li&gt;
+&lt;li&gt;它记住“用户不需要测试”，然后在更高风险的后端改动里也跳过测试；&lt;/li&gt;
+&lt;li&gt;它记住某次排障里的临时 SQL，把它当成通用诊断入口。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这些都不是模型能力问题，而是 memory 生命周期问题。&lt;/p&gt;
+&lt;p&gt;OpenAI 在 ChatGPT memory 文档里把记忆分成 saved memories 和 reference chat history 两类，并强调用户可以管理、删除或关闭记忆能力。这个产品设计背后的重点不是“无限保存”，而是“可控制”。Claude Code 的 memory 设计也把用户级、项目级、目录级记忆拆开，让 &lt;code&gt;CLAUDE.md&lt;/code&gt; 这类文件承担不同范围的上下文。&lt;/p&gt;
+&lt;p&gt;工程 Agent 的 memory 也应该这样分层，而不是把所有上下文混在一起。&lt;/p&gt;
+&lt;h2&gt;三种上下文，不要混用&lt;span class="hx-absolute -hx-mt-20" id="三种上下文不要混用"&gt;&lt;/span&gt;
+&lt;a href="#%e4%b8%89%e7%a7%8d%e4%b8%8a%e4%b8%8b%e6%96%87%e4%b8%8d%e8%a6%81%e6%b7%b7%e7%94%a8" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;我更倾向于把 Agent 上下文分成三类。&lt;/p&gt;
+&lt;h3&gt;1. 当前任务上下文&lt;span class="hx-absolute -hx-mt-20" id="1-当前任务上下文"&gt;&lt;/span&gt;
+&lt;a href="#1-%e5%bd%93%e5%89%8d%e4%bb%bb%e5%8a%a1%e4%b8%8a%e4%b8%8b%e6%96%87" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;这是最短命的上下文。&lt;/p&gt;
+&lt;p&gt;比如：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;当前用户刚说的需求；&lt;/li&gt;
+&lt;li&gt;当前工作树的 diff；&lt;/li&gt;
+&lt;li&gt;当前终端输出；&lt;/li&gt;
+&lt;li&gt;当前浏览器页面状态；&lt;/li&gt;
+&lt;li&gt;本轮排障看到的错误日志；&lt;/li&gt;
+&lt;li&gt;当前计划和待办列表。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这些信息对当前任务很重要，但大多不应该进入长期 memory。任务结束后，它们要么被代码、文档、issue、commit 记录接管，要么就应该自然消失。&lt;/p&gt;
+&lt;p&gt;如果把当前任务上下文都存进 memory，下一次任务会被旧现场污染。&lt;/p&gt;
+&lt;h3&gt;2. 项目 source-of-truth&lt;span class="hx-absolute -hx-mt-20" id="2-项目-source-of-truth"&gt;&lt;/span&gt;
+&lt;a href="#2-%e9%a1%b9%e7%9b%ae-source-of-truth" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;这是应该优先相信的上下文。&lt;/p&gt;
+&lt;p&gt;比如：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;AGENTS.md&lt;/code&gt; / &lt;code&gt;CLAUDE.md&lt;/code&gt;；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;README.md&lt;/code&gt;；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Makefile&lt;/code&gt;；&lt;/li&gt;
+&lt;li&gt;CI 配置；&lt;/li&gt;
+&lt;li&gt;schema / migration；&lt;/li&gt;
+&lt;li&gt;package catalog；&lt;/li&gt;
+&lt;li&gt;API 类型定义；&lt;/li&gt;
+&lt;li&gt;测试用例；&lt;/li&gt;
+&lt;li&gt;项目内设计文档。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这些东西不一定叫 memory，但对 Agent 来说，它们就是最重要的可验证记忆。&lt;/p&gt;
+&lt;p&gt;如果某条 memory 和代码仓库里的 source-of-truth 冲突，应该以仓库为准。memory 只能提示“可能去哪里看”，不能替代真实文件。&lt;/p&gt;
+&lt;h3&gt;3. 长期工作记忆&lt;span class="hx-absolute -hx-mt-20" id="3-长期工作记忆"&gt;&lt;/span&gt;
+&lt;a href="#3-%e9%95%bf%e6%9c%9f%e5%b7%a5%e4%bd%9c%e8%ae%b0%e5%bf%86" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;这才是 Persistent Memory 应该承担的部分。&lt;/p&gt;
+&lt;p&gt;它记录的是跨任务稳定成立、但不一定已经写进项目文件的协作知识。&lt;/p&gt;
+&lt;p&gt;比如：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;用户默认使用中文；&lt;/li&gt;
+&lt;li&gt;某个仓库新增文章要同时生成 &lt;code&gt;.en.md&lt;/code&gt;；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;public&lt;/code&gt; 目录经常是脏的，文章验证应避免直接构建进去；&lt;/li&gt;
+&lt;li&gt;用户明确要求某类 UI 改动不能碰无关界面；&lt;/li&gt;
+&lt;li&gt;某个部署脚本必须保留 linux/amd64，因为本机是 mac arm；&lt;/li&gt;
+&lt;li&gt;某类排障要先查日志，不要先猜修复方案。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这些记忆的价值是减少重复沟通，让 Agent 在下一次任务里更快进入正确边界。&lt;/p&gt;
+&lt;h2&gt;Agent 到底该记住什么？&lt;span class="hx-absolute -hx-mt-20" id="agent-到底该记住什么"&gt;&lt;/span&gt;
+&lt;a href="#agent-%e5%88%b0%e5%ba%95%e8%af%a5%e8%ae%b0%e4%bd%8f%e4%bb%80%e4%b9%88" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;我会用下面这张表来判断。&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;应该记住&lt;/th&gt;
+&lt;th&gt;例子&lt;/th&gt;
+&lt;th&gt;原因&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;稳定偏好&lt;/td&gt;
+&lt;td&gt;默认中文、回答简洁、先给结论&lt;/td&gt;
+&lt;td&gt;会持续改变协作方式&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;项目惯例&lt;/td&gt;
+&lt;td&gt;新文章放 &lt;code&gt;content/article/&lt;/code&gt;，英文版用同 slug &lt;code&gt;.en.md&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;能减少重复探索&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;硬约束&lt;/td&gt;
+&lt;td&gt;不改后端接口、不碰无关 UI、不要写入 &lt;code&gt;public&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;违反会造成真实风险&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;反复出现的故障模式&lt;/td&gt;
+&lt;td&gt;某类安装报错来自缓存权限，某类部署慢要看 workflow&lt;/td&gt;
+&lt;td&gt;能加速排障&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;已确认的业务规则&lt;/td&gt;
+&lt;td&gt;协作者只能加减分，不能改学生数据&lt;/td&gt;
+&lt;td&gt;能避免产品规则回退&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;用户认可的方向&lt;/td&gt;
+&lt;td&gt;某个 UI 展示方案已被认可，后续应基于它迭代&lt;/td&gt;
+&lt;td&gt;能保持连续性&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;可复用工作流&lt;/td&gt;
+&lt;td&gt;发文后用 &lt;code&gt;hugo --renderToMemory --minify&lt;/code&gt; 验证&lt;/td&gt;
+&lt;td&gt;能提高交付稳定性&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;这些信息有一个共同点：它们不是“历史细节”，而是“未来默认动作”。&lt;/p&gt;
+&lt;p&gt;一条好的 memory 应该能回答这个问题：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;下一次遇到相似任务时，Agent 的行为会不会因此变得更正确？&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;如果答案是否定的，就不要存。&lt;/p&gt;
+&lt;h2&gt;什么应该重新验证？&lt;span class="hx-absolute -hx-mt-20" id="什么应该重新验证"&gt;&lt;/span&gt;
+&lt;a href="#%e4%bb%80%e4%b9%88%e5%ba%94%e8%af%a5%e9%87%8d%e6%96%b0%e9%aa%8c%e8%af%81" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;有些信息可以作为线索，但不能作为事实。&lt;/p&gt;
+&lt;p&gt;例如：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;最新 API 用法；&lt;/li&gt;
+&lt;li&gt;当前价格和套餐；&lt;/li&gt;
+&lt;li&gt;GitHub Actions 当前状态；&lt;/li&gt;
+&lt;li&gt;远端分支是否已经更新；&lt;/li&gt;
+&lt;li&gt;某个模型是否仍然可用；&lt;/li&gt;
+&lt;li&gt;某个法规、政策、平台规则；&lt;/li&gt;
+&lt;li&gt;当前日期、排期、发布节奏；&lt;/li&gt;
+&lt;li&gt;线上服务是否正常。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这些信息即使曾经正确，也很容易过期。&lt;/p&gt;
+&lt;p&gt;所以 memory 里最多只能写：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;上次排障时，问题出现在 release workflow 的镜像构建阶段。
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;下次遇到类似发布慢问题，先检查当前 workflow 和最近一次 Actions 日志。&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;而不是写：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;发布慢就是因为镜像构建。&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;前者是可复用诊断线索，后者是过期风险很高的结论。&lt;/p&gt;
+&lt;h2&gt;什么绝对不该存？&lt;span class="hx-absolute -hx-mt-20" id="什么绝对不该存"&gt;&lt;/span&gt;
+&lt;a href="#%e4%bb%80%e4%b9%88%e7%bb%9d%e5%af%b9%e4%b8%8d%e8%af%a5%e5%ad%98" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;长期 memory 最危险的不是“不够聪明”，而是“记住了不该记的东西”。&lt;/p&gt;
+&lt;p&gt;我会把下面几类列入禁止区：&lt;/p&gt;
+&lt;h3&gt;1. secrets 和凭据&lt;span class="hx-absolute -hx-mt-20" id="1-secrets-和凭据"&gt;&lt;/span&gt;
+&lt;a href="#1-secrets-%e5%92%8c%e5%87%ad%e6%8d%ae" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;包括：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;API key；&lt;/li&gt;
+&lt;li&gt;token；&lt;/li&gt;
+&lt;li&gt;cookie；&lt;/li&gt;
+&lt;li&gt;SSH 私钥；&lt;/li&gt;
+&lt;li&gt;数据库密码；&lt;/li&gt;
+&lt;li&gt;支付后台密钥；&lt;/li&gt;
+&lt;li&gt;恢复码；&lt;/li&gt;
+&lt;li&gt;临时验证码。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这些信息不应该进 memory，也不应该进文章、日志、截图、issue。&lt;/p&gt;
+&lt;h3&gt;2. 原始私人内容&lt;span class="hx-absolute -hx-mt-20" id="2-原始私人内容"&gt;&lt;/span&gt;
+&lt;a href="#2-%e5%8e%9f%e5%a7%8b%e7%a7%81%e4%ba%ba%e5%86%85%e5%ae%b9" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;不要把大量聊天原文、邮箱内容、客户资料、订单详情、学生信息、病历、财务记录直接写进 memory。&lt;/p&gt;
+&lt;p&gt;如果确实需要保留工作上下文，也应该压缩成非敏感规则，例如：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;用户处理教育类 SaaS 项目时，很在意老师协作权限和家长端展示边界。&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;而不是保存某个具体学生、家长或订单的原始信息。&lt;/p&gt;
+&lt;h3&gt;3. 未验证猜测&lt;span class="hx-absolute -hx-mt-20" id="3-未验证猜测"&gt;&lt;/span&gt;
+&lt;a href="#3-%e6%9c%aa%e9%aa%8c%e8%af%81%e7%8c%9c%e6%b5%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Agent 很容易在排障中形成假设。假设可以存在当前会话里，但不应该沉淀成长期记忆。&lt;/p&gt;
+&lt;p&gt;只有经过代码、日志、测试、线上验证支撑的结论，才有资格进入 memory。&lt;/p&gt;
+&lt;h3&gt;4. 一次性临时状态&lt;span class="hx-absolute -hx-mt-20" id="4-一次性临时状态"&gt;&lt;/span&gt;
+&lt;a href="#4-%e4%b8%80%e6%ac%a1%e6%80%a7%e4%b8%b4%e6%97%b6%e7%8a%b6%e6%80%81" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;比如：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;当前正在某个临时分支；&lt;/li&gt;
+&lt;li&gt;某个端口今天被占用；&lt;/li&gt;
+&lt;li&gt;某个文件刚才被生成；&lt;/li&gt;
+&lt;li&gt;某个任务这次不需要测试；&lt;/li&gt;
+&lt;li&gt;某个页面现在打开在 Chrome 第三个标签页。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这些信息应该留在当前任务上下文里，不应该污染长期记忆。&lt;/p&gt;
+&lt;h2&gt;一个简单的保存判断法&lt;span class="hx-absolute -hx-mt-20" id="一个简单的保存判断法"&gt;&lt;/span&gt;
+&lt;a href="#%e4%b8%80%e4%b8%aa%e7%ae%80%e5%8d%95%e7%9a%84%e4%bf%9d%e5%ad%98%e5%88%a4%e6%96%ad%e6%b3%95" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;我会让每条 memory 通过 5 个问题：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;下次还会用吗？&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;一个月后大概率还成立吗？&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;能改变 Agent 的默认行为吗？&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;是否能追溯来源或重新验证？&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;如果记错了，会不会造成风险？&lt;/strong&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;只有前四个答案偏“是”，第五个风险可控，才值得保存。&lt;/p&gt;
+&lt;p&gt;如果一条信息很有用但容易过期，就不要写成事实，写成“下次优先检查哪里”。&lt;/p&gt;
+&lt;p&gt;如果一条信息风险很高，就不要写进 memory，应该写进项目权限、CI guard、测试、文档或人工审批流程。&lt;/p&gt;
+&lt;h2&gt;Memory 应该怎么写？&lt;span class="hx-absolute -hx-mt-20" id="memory-应该怎么写"&gt;&lt;/span&gt;
+&lt;a href="#memory-%e5%ba%94%e8%af%a5%e6%80%8e%e4%b9%88%e5%86%99" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;好的 memory 应该短、稳定、可执行。&lt;/p&gt;
+&lt;p&gt;不好的写法：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;用户上次让我们改文章，后来 public 脏了，然后用了 hugo 命令，最后好像可以。&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;好的写法：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;在 silenceper.com 新增文章时，文章真源是 content/article/；英文版使用同 slug 加 .en.md；验证优先用 hugo --renderToMemory --minify，避免写入 public。&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;差异在于：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;去掉了过程噪音；&lt;/li&gt;
+&lt;li&gt;保留了未来动作；&lt;/li&gt;
+&lt;li&gt;标明了适用仓库；&lt;/li&gt;
+&lt;li&gt;给出了具体路径和命令；&lt;/li&gt;
+&lt;li&gt;没有把临时现场当事实。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;不同信息应该放在哪里？&lt;span class="hx-absolute -hx-mt-20" id="不同信息应该放在哪里"&gt;&lt;/span&gt;
+&lt;a href="#%e4%b8%8d%e5%90%8c%e4%bf%a1%e6%81%af%e5%ba%94%e8%af%a5%e6%94%be%e5%9c%a8%e5%93%aa%e9%87%8c" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;不是所有长期信息都应该放进同一个 memory 系统。&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;信息类型&lt;/th&gt;
+&lt;th&gt;更适合的位置&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;项目硬规则&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;AGENTS.md&lt;/code&gt; / &lt;code&gt;CLAUDE.md&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;构建和发布命令&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;README.md&lt;/code&gt; / &lt;code&gt;Makefile&lt;/code&gt; / CI&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;业务规则&lt;/td&gt;
+&lt;td&gt;代码、测试、产品文档&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;用户个人偏好&lt;/td&gt;
+&lt;td&gt;用户级 memory&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;仓库协作惯例&lt;/td&gt;
+&lt;td&gt;项目级 memory&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;可复用操作流程&lt;/td&gt;
+&lt;td&gt;Skill / runbook&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;当前任务现场&lt;/td&gt;
+&lt;td&gt;当前会话 / issue / PR 描述&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;可变化事实&lt;/td&gt;
+&lt;td&gt;每次重新查源&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;一个成熟的 Agent 工作流，不应该把 memory 当唯一入口。&lt;/p&gt;
+&lt;p&gt;更好的结构是：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;memory 负责提示方向
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;repo 文件负责定义规则
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;测试负责防止回退
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;日志负责还原现场
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;人工审批负责高风险动作&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;这样 Agent 即使记忆不完整，也能通过 source-of-truth 找回正确上下文。&lt;/p&gt;
+&lt;h2&gt;Persistent Memory 的真正价值&lt;span class="hx-absolute -hx-mt-20" id="persistent-memory-的真正价值"&gt;&lt;/span&gt;
+&lt;a href="#persistent-memory-%e7%9a%84%e7%9c%9f%e6%ad%a3%e4%bb%b7%e5%80%bc" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Persistent Memory 最有价值的地方，不是让 Agent 像人一样“什么都记得”。&lt;/p&gt;
+&lt;p&gt;它的价值是让 Agent 少犯重复错误。&lt;/p&gt;
+&lt;p&gt;比如：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;不再每次都问“这个项目用中文还是英文”；&lt;/li&gt;
+&lt;li&gt;不再把已确认的业务规则推翻；&lt;/li&gt;
+&lt;li&gt;不再重复踩同一个部署坑；&lt;/li&gt;
+&lt;li&gt;不再把用户明确拒绝的 UI 方案又拿出来；&lt;/li&gt;
+&lt;li&gt;不再在脏工作树里误改无关文件；&lt;/li&gt;
+&lt;li&gt;不再把需要查代码的套餐信息凭印象回答。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这些看起来都不是宏大的 AGI 能力，但对真实工作非常重要。&lt;/p&gt;
+&lt;p&gt;工程效率的提升，往往不是来自 Agent 记住了更多碎片，而是来自它记住了更少、更准、更能约束行为的东西。&lt;/p&gt;
+&lt;h2&gt;我的建议&lt;span class="hx-absolute -hx-mt-20" id="我的建议"&gt;&lt;/span&gt;
+&lt;a href="#%e6%88%91%e7%9a%84%e5%bb%ba%e8%ae%ae" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;如果你在重度使用 Codex、Claude Code、Cursor 或其他编程 Agent，可以按这个原则管理 memory：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;把 memory 当索引，不当真源。&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;把稳定规则写进项目文件。&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;把可变化事实留给实时搜索和源码检查。&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;把敏感内容挡在 memory 外面。&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;把每条 memory 写成未来行为，而不是历史流水账。&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;定期清理过期、重复、含糊的记忆。&lt;/strong&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;最终目标不是让 Agent 记住一切，而是让它在下一次工作时更少打扰你、更少跑偏、更少踩坑。&lt;/p&gt;
+&lt;p&gt;当 memory 变成一套可维护的工程资产，而不是聊天记录堆积物，Agent 才真正开始像一个可靠的长期协作者。&lt;/p&gt;
+&lt;h2&gt;参考资料&lt;span class="hx-absolute -hx-mt-20" id="参考资料"&gt;&lt;/span&gt;
+&lt;a href="#%e5%8f%82%e8%80%83%e8%b5%84%e6%96%99" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://help.openai.com/en/articles/8590148-memory-faq/" target="_blank" rel="noopener"&gt;OpenAI Memory FAQ&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://openai.com/index/running-codex-safely/" target="_blank" rel="noopener"&gt;Running Codex safely at OpenAI&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://docs.claude.com/en/docs/claude-code/memory" target="_blank" rel="noopener"&gt;Claude Code memory documentation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://arxiv.org/abs/2310.08560" target="_blank" rel="noopener"&gt;MemGPT: Towards LLMs as Operating Systems&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://arxiv.org/abs/2603.07670" target="_blank" rel="noopener"&gt;Memory for Autonomous LLM Agents: Mechanisms, Evaluation, and Emerging Frontiers&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description></item><item><title>Codex Chrome 插件：什么时候该让 AI 使用你的浏览器登录态</title><link>https://silenceper.com/article/2026-05-09-codex-chrome-browser-login-state/</link><pubDate>Sat, 09 May 2026 22:15:00 +0800</pubDate><guid>https://silenceper.com/article/2026-05-09-codex-chrome-browser-login-state/</guid><description>
 &lt;p&gt;&lt;img src="https://silenceper.com/img/20260509/codex-app-screenshot.webp" alt="Codex app window with a project sidebar, active thread, and review pane" loading="lazy" /&gt;&lt;/p&gt;
 &lt;p&gt;很多人第一次看到 Codex Chrome 插件，会把它理解成“让 AI 打开网页”。这个说法太窄，也容易让人误解。&lt;/p&gt;
 &lt;p&gt;更准确地说，它解决的是另一类问题：&lt;strong&gt;当任务必须依赖你的 Chrome 登录态、浏览器上下文或真实网页操作时，让 Codex 在你授权的范围内进入这条工作流。&lt;/strong&gt;&lt;/p&gt;
@@ -9932,762 +10592,4 @@ title="复制代码"
 &lt;li&gt;RabbitMQ Queue&lt;/li&gt;
 &lt;li&gt;Redis Lists&lt;/li&gt;
 &lt;li&gt;Redis Streams&lt;/li&gt;
-&lt;/ul&gt;</description></item><item><title>源码分析：KEDA是如何工作的?</title><link>https://silenceper.com/kubernetes-book/keda/source.html</link><pubDate>Wed, 04 Nov 2020 15:40:59 +0800</pubDate><guid>https://silenceper.com/kubernetes-book/keda/source.html</guid><description>
-&lt;blockquote&gt;
-&lt;p&gt;文章中源码是基于KEDA 2.0( &lt;a href="https://github.com/kedacore/keda/commit/50bec808f8b4656922797e4bcb7c2b61fabd6d0e" target="_blank" rel="noopener"&gt;50bec80&lt;/a&gt;)来进行分析&lt;/p&gt;
-&lt;p&gt;keda 2.0 要求k8s集群版本 &amp;gt;=1.16&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;KEDA 在&lt;a href="https://keda.sh/blog/keda-2.0-release/" target="_blank" rel="noopener"&gt;2020年11月4号release了2.0版本&lt;/a&gt;，包含了一些新的比较有用的特性，比如&lt;code&gt;ScaledObject/ScaledJob&lt;/code&gt;中支持多触发器、支持HPA原始的CPU、Memory scaler等。&lt;/p&gt;
-&lt;p&gt;具体的安装使用请参考上一篇文章&lt;a href="./introduction.md" &gt;使用keda完成基于事件的弹性伸缩&lt;/a&gt;，这篇文章主要深入的看下KEDA内部机制以及是如何工作的。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;我们先提出几个问题，带着问题去看代码，方便我们理解整个机制：&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;KEDA是如何获取到多种事件的指标，以及如何判断扩缩容的？&lt;/li&gt;
-&lt;li&gt;KEDA是如何做到将应用的副本数缩容0，依据是什么？&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2&gt;代码结构&lt;span class="hx-absolute -hx-mt-20" id="代码结构"&gt;&lt;/span&gt;
-&lt;a href="#%e4%bb%a3%e7%a0%81%e7%bb%93%e6%9e%84" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;对一些主要目录说明，其他一些MD文件主要是文字说明：&lt;/p&gt;
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
-&lt;div&gt;&lt;pre&gt;&lt;code&gt;├── BRANDING.md
-├── BUILD.md //如何在本地编译和运行
-├── CHANGELOG.md
-├── CONTRIBUTING.md //如何参与贡献次项目
-├── CREATE-NEW-SCALER.md
-├── Dockerfile
-├── Dockerfile.adapter
-├── GOVERNANCE.md
-├── LICENSE
-├── MAINTAINERS.md
-├── Makefile // 构建编译相关命令
-├── PROJECT
-├── README.md
-├── RELEASE-PROCESS.MD
-├── adapter // keda-metrics-apiserver 组件入口
-├── api // 自定义资源定义，例如ScaledObject的定义
-├── bin
-├── config //组件yaml资源，通过kustomization工具生成
-├── controllers //kubebuilder 中controller 代码控制crd资源
-├── go.mod
-├── go.sum
-├── hack
-├── images
-├── main.go //keda-operator controller入口
-├── pkg //包含组件核心代码实现
-├── tests //e2e测试
-├── tools
-├── vendor
-└── version&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
-&lt;button
-class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
-title="复制代码"
-&gt;
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;/button&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;keda中主要是两个组件&lt;code&gt;keda-operator&lt;/code&gt;以及&lt;code&gt;keda-metrics-apiserver&lt;/code&gt;。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;keda-operator ： 负责创建/更新HPA以及通过Loop控制应用副本数&lt;/li&gt;
-&lt;li&gt;keda-metrics-apiserver：实现external-metrics接口，以对接给HPA的external类型的指标查询（比如各种prometheus指标，mysql等）&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2&gt;keda-operator&lt;span class="hx-absolute -hx-mt-20" id="keda-operator"&gt;&lt;/span&gt;
-&lt;a href="#keda-operator" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;项目中用到了&lt;a href="https://github.com/kubernetes-sigs/kubebuilder" target="_blank" rel="noopener"&gt;kubebuilder&lt;/a&gt; SDK，用来完成这个Operator的编写。&lt;/p&gt;
-&lt;p&gt;对于k8s中的自定义controller不了解的可以看看这边文章：&lt;a href="https://silenceper.com/blog/202005/custom-resources-and-controllers/" &gt;如何在Kubernetes中创建一个自定义Controller?&lt;/a&gt;。&lt;/p&gt;
-&lt;p&gt;keda controller的主要流程，画了幅图：
-&lt;img src="https://silenceper.oss-cn-beijing.aliyuncs.com/images/keda-controller-analyze.png" alt="keda-controller 分析流程" loading="lazy" /&gt;&lt;/p&gt;
-&lt;p&gt;组件启动入口在于&lt;code&gt;main.go&lt;/code&gt;文件中：&lt;/p&gt;
-&lt;p&gt;通过&lt;code&gt;controller-runtime&lt;/code&gt;组件启动两个自定义controller：&lt;code&gt;ScaledObjectReconciler&lt;/code&gt;,&lt;code&gt;ScaledJobReconciler&lt;/code&gt;:&lt;/p&gt;
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
-&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;mgr&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;ctrl&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;NewManager&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;ctrl&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;GetConfigOrDie&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;ctrl&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Options&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;Scheme&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;scheme&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;MetricsBindAddress&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;metricsAddr&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;HealthProbeBindAddress&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#34;:8081&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;Port&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;9443&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;LeaderElection&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;enableLeaderElection&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;LeaderElectionID&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#34;operator.keda.sh&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;})&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="c1"&gt;// Add readiness probe &lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;mgr&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;AddReadyzCheck&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;ready-ping&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;healthz&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Ping&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="c1"&gt;// Add liveness probe&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;mgr&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;AddHealthzCheck&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;health-ping&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;healthz&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Ping&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="cp"&gt;//注册 ScaledObject 处理的controller&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="nx"&gt;controllers&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;ScaledObjectReconciler&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;Client&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;mgr&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;GetClient&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;Log&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;ctrl&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Log&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;WithName&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;controllers&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nf"&gt;WithName&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;ScaledObject&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;Scheme&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;mgr&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;GetScheme&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="p"&gt;}).&lt;/span&gt;&lt;span class="nf"&gt;SetupWithManager&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;mgr&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;!=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kc"&gt;nil&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;setupLog&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;Error&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#34;unable to create controller&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#34;controller&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#34;ScaledObject&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;os&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;Exit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="cp"&gt;////注册 ScaledJob 处理的controller&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="nx"&gt;controllers&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;ScaledJobReconciler&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;Client&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;mgr&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;GetClient&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;Log&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;ctrl&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Log&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;WithName&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;controllers&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nf"&gt;WithName&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;ScaledJob&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;Scheme&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;mgr&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;GetScheme&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="p"&gt;}).&lt;/span&gt;&lt;span class="nf"&gt;SetupWithManager&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;mgr&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;!=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kc"&gt;nil&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;setupLog&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;Error&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#34;unable to create controller&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#34;controller&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#34;ScaledJob&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;os&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;Exit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;mgr&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;Start&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;ctrl&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;SetupSignalHandler&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;!=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kc"&gt;nil&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;setupLog&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;Error&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#34;problem running manager&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;os&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;Exit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
-&lt;button
-class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
-title="复制代码"
-&gt;
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;/button&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;h3&gt;ScaledObjectReconciler 处理&lt;span class="hx-absolute -hx-mt-20" id="scaledobjectreconciler-处理"&gt;&lt;/span&gt;
-&lt;a href="#scaledobjectreconciler-%e5%a4%84%e7%90%86" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;我们主要关注&lt;a href="https://github.com/kedacore/keda/blob/main/controllers/scaledobject_controller.go#L100" target="_blank" rel="noopener"&gt;&lt;code&gt;Reconcile&lt;/code&gt;&lt;/a&gt;方法，当&lt;code&gt;ScaledObject&lt;/code&gt;发生变化时将会触发该方法：
-方法内部主要功能实现：&lt;/p&gt;
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
-&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="c1"&gt;// 处理删除ScaledObject的情况&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;scaledObject&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;GetDeletionTimestamp&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;!=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kc"&gt;nil&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="cp"&gt;//进入垃圾回收（比如停止goroutine中Loop，恢复原有副本数）&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;ctrl&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Result&lt;/span&gt;&lt;span class="p"&gt;{},&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;r&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;finalizeScaledObject&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;reqLogger&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;scaledObject&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="c1"&gt;// 给ScaledObject资源加上Finalizer：finalizer.keda.sh&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;r&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;ensureFinalizer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;reqLogger&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;scaledObject&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;!=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kc"&gt;nil&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;ctrl&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Result&lt;/span&gt;&lt;span class="p"&gt;{},&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="c1"&gt;// 真正处理ScaledObject资源&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="nx"&gt;msg&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;r&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;reconcileScaledObject&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;reqLogger&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;scaledObject&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="c1"&gt;// 设置Status字段说明&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="nx"&gt;conditions&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;scaledObject&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Status&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Conditions&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;DeepCopy&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;!=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kc"&gt;nil&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;reqLogger&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;Error&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;msg&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;conditions&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;SetReadyCondition&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;metav1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;ConditionFalse&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#34;ScaledObjectCheckFailed&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;msg&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;conditions&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;SetActiveCondition&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;metav1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;ConditionUnknown&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#34;UnkownState&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#34;ScaledObject check failed&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;reqLogger&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;V&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nf"&gt;Info&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;msg&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;conditions&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;SetReadyCondition&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;metav1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;ConditionTrue&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#34;ScaledObjectReady&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;msg&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="nx"&gt;kedacontrollerutil&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;SetStatusConditions&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;r&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Client&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;reqLogger&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;scaledObject&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="nx"&gt;conditions&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;ctrl&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Result&lt;/span&gt;&lt;span class="p"&gt;{},&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
-&lt;button
-class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
-title="复制代码"
-&gt;
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;/button&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;&lt;strong&gt;r.reconcileScaledObject方法：&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;这个方法中主要两个动作：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;ensureHPAForScaledObjectExists&lt;/code&gt;创建HPA资源&lt;/li&gt;
-&lt;li&gt;进入&lt;code&gt;requestScaleLoop&lt;/code&gt;（不断的检测scaler 是否active，进行副本数的修改）&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4&gt;ensureHPAForScaledObjectExists&lt;span class="hx-absolute -hx-mt-20" id="ensurehpaforscaledobjectexists"&gt;&lt;/span&gt;
-&lt;a href="#ensurehpaforscaledobjectexists" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;通过跟踪进入到&lt;a href="https://github.com/kedacore/keda/blob/50bec808f8b4656922797e4bcb7c2b61fabd6d0e/controllers/hpa.go#L43" target="_blank" rel="noopener"&gt;newHPAForScaledObject&lt;/a&gt;方法:&lt;/p&gt;
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
-&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;scaledObjectMetricSpecs&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;r&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;getScaledObjectMetricSpecs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;logger&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;scaledObject&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="nx"&gt;省略代码&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="nx"&gt;hpa&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="nx"&gt;autoscalingv2beta2&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;HorizontalPodAutoscaler&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;Spec&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;autoscalingv2beta2&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;HorizontalPodAutoscalerSpec&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;MinReplicas&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;getHPAMinReplicas&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;scaledObject&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;MaxReplicas&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;getHPAMaxReplicas&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;scaledObject&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;Metrics&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;scaledObjectMetricSpecs&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;Behavior&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;behavior&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;ScaleTargetRef&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;autoscalingv2beta2&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;CrossVersionObjectReference&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;Name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;scaledObject&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Spec&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;ScaleTargetRef&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Name&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;Kind&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;gvkr&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Kind&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;APIVersion&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;gvkr&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;GroupVersion&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="nf"&gt;String&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;}},&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;ObjectMeta&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;metav1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;ObjectMeta&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;Name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;getHPAName&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;scaledObject&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;Namespace&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;scaledObject&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Namespace&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;Labels&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;labels&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;TypeMeta&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;metav1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;TypeMeta&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;APIVersion&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#34;v2beta2&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
-&lt;button
-class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
-title="复制代码"
-&gt;
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;/button&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;可以看到创建ScalerObject其实最终也是创建了HPA，其实还是通过HPA本身的特性来控制应用的弹性伸缩。&lt;/p&gt;
-&lt;p&gt;其中&lt;a href="https://github.com/kedacore/keda/blob/50bec808f8b4656922797e4bcb7c2b61fabd6d0e/controllers/hpa.go#L135" target="_blank" rel="noopener"&gt;getScaledObjectMetricSpecs&lt;/a&gt;方法中就是获取到&lt;code&gt;triggers&lt;/code&gt;中的metrics指标。&lt;/p&gt;
-&lt;p&gt;这里有区分一下External的metrics和resource metrics，因为CPU/Memory scaler是通过resource metrics 来获取的。&lt;/p&gt;
-&lt;h4&gt;requestScaleLoop&lt;span class="hx-absolute -hx-mt-20" id="requestscaleloop"&gt;&lt;/span&gt;
-&lt;a href="#requestscaleloop" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;&lt;a href="https://github.com/kedacore/keda/blob/50bec808f8b4656922797e4bcb7c2b61fabd6d0e/controllers/scaledobject_controller.go#L299" target="_blank" rel="noopener"&gt;requestScaleLoop&lt;/a&gt;方法中用来循环check Scaler中的IsActive状态并作出对应的处理，比如修改副本数，直接来看最终的处理吧：
-这里有两种模型来触发&lt;code&gt;RequestScale&lt;/code&gt;：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Pull模型：即主动的调用scaler 中的&lt;code&gt;IsActive&lt;/code&gt;方法&lt;/li&gt;
-&lt;li&gt;Push模型：由Scaler来触发，&lt;code&gt;PushScaler&lt;/code&gt;多了一个Run方法，通过channel传入active状态。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;code&gt;IsActive&lt;/code&gt;是由Scaler实现的，比如对于prometheus来说，可能指标为0则为false&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;这个具体的scaler实现后续再讲，我们来看看RequestScale做了什么事：&lt;/p&gt;
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
-&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;//当前副本数为0，并是所有scaler属于active状态，则修改副本数为MinReplicaCount 或 1&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;currentScale&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Spec&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Replicas&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;isActive&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;e&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;scaleFromZero&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;ctx&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;logger&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;scaledObject&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;currentScale&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;!&lt;/span&gt;&lt;span class="nx"&gt;isActive&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;currentScale&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Spec&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Replicas&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;scaledObject&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Spec&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;MinReplicaCount&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kc"&gt;nil&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;||&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="nx"&gt;scaledObject&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Spec&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;MinReplicaCount&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;// 所有scaler都处理not active状态，并且当前副本数大于0，且MinReplicaCount设定为0&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;// 则缩容副本数为0&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;e&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;scaleToZero&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;ctx&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;logger&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;scaledObject&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;currentScale&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;!&lt;/span&gt;&lt;span class="nx"&gt;isActive&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;scaledObject&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Spec&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;MinReplicaCount&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;!=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kc"&gt;nil&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;currentScale&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Spec&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Replicas&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="nx"&gt;scaledObject&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Spec&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;MinReplicaCount&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;// 所有scaler都处理not active状态，并且当前副本数小于MinReplicaCount，则修改为MinReplicaCount&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;currentScale&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Spec&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Replicas&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="nx"&gt;scaledObject&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Spec&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;MinReplicaCount&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;e&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;updateScaleOnScaleTarget&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;ctx&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;scaledObject&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;currentScale&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;isActive&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="c1"&gt;// 处理active状态，并且副本数大于0，则更新LastActiveTime&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;e&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;updateLastActiveTime&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;ctx&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;logger&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;scaledObject&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="c1"&gt;// 不处理&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;logger&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;V&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nf"&gt;Info&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;ScaleTarget no change&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
-&lt;button
-class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
-title="复制代码"
-&gt;
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;/button&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;h3&gt;ScaledJobReconciler 处理&lt;span class="hx-absolute -hx-mt-20" id="scaledjobreconciler-处理"&gt;&lt;/span&gt;
-&lt;a href="#scaledjobreconciler-%e5%a4%84%e7%90%86" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;&lt;code&gt;ScaledJobReconciler&lt;/code&gt;相比&lt;code&gt;ScalerObject&lt;/code&gt;少了创建HPA的步骤，其余的步骤主要是通过&lt;a href="https://github.com/kedacore/keda/blob/50bec808f8b4656922797e4bcb7c2b61fabd6d0e/pkg/scaling/scale_handler.go#L223" target="_blank" rel="noopener"&gt;checkScaledJobScalers&lt;/a&gt;，&lt;a href="https://github.com/kedacore/keda/blob/50bec808f8b4656922797e4bcb7c2b61fabd6d0e/pkg/scaling/executor/scale_jobs.go#L24" target="_blank" rel="noopener"&gt;RequestJobScale&lt;/a&gt;两个方法来判断Job创建：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;checkScaledJobScalers&lt;/code&gt; 方法，用于计算isActive，maxValue的值&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;RequestJobScale&lt;/code&gt; 方法，用于负责创建Job，里面还涉及到三种扩容策略&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;这里直接看代码吧，不贴代码了。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;如何停止Loop&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;这里有个问题就是&lt;code&gt;startPushScalers&lt;/code&gt;和&lt;code&gt;startScaleLoop&lt;/code&gt;都是在Goroutine中处理的，所以当ScaleObject/ScalerJob被删除的时候，这里需要能够被删除，这里就用到了&lt;code&gt;context.Cancel&lt;/code&gt;方法，在Goroutine启动的时候就将，context保存在&lt;a href="https://github.com/kedacore/keda/blob/50bec808f8b4656922797e4bcb7c2b61fabd6d0e/pkg/scaling/scale_handler.go#L43" target="_blank" rel="noopener"&gt;scaleLoopContexts *sync.Map&lt;/a&gt;中(如果已经有了，就先Cancel一次)，在删除资源的时候，进行删除:&lt;/p&gt;
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
-&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kd"&gt;func&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;h&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="nx"&gt;scaleHandler&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;DeleteScalableObject&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;scalableObject&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kd"&gt;interface&lt;/span&gt;&lt;span class="p"&gt;{})&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;error&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;withTriggers&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;asDuckWithTriggers&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;scalableObject&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;!=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kc"&gt;nil&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;h&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;logger&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;Error&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#34;error duck typing object into withTrigger&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;key&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;generateKey&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;withTriggers&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;result&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;ok&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;h&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;scaleLoopContexts&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;Load&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;key&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;ok&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;cancel&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;ok&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;result&lt;/span&gt;&lt;span class="p"&gt;.(&lt;/span&gt;&lt;span class="nx"&gt;context&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;CancelFunc&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;ok&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;cancel&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;h&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;scaleLoopContexts&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;Delete&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;key&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;h&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;logger&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;V&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nf"&gt;Info&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;ScaleObject was not found in controller cache&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#34;key&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;key&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kc"&gt;nil&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
-&lt;button
-class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
-title="复制代码"
-&gt;
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;/button&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;ps: 这里的妙啊，学到了&lt;/p&gt;
-&lt;h2&gt;keda-metrics-apiserver&lt;span class="hx-absolute -hx-mt-20" id="keda-metrics-apiserver"&gt;&lt;/span&gt;
-&lt;a href="#keda-metrics-apiserver" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;keda-metrics-apiserver实现了&lt;code&gt;ExternalMetricsProvider&lt;/code&gt;接口：&lt;/p&gt;
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
-&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kd"&gt;type&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;ExternalMetricsProvider&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kd"&gt;interface&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;GetExternalMetric&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;namespace&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;string&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;metricSelector&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;labels&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Selector&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;info&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;ExternalMetricInfo&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="nx"&gt;external_metrics&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;ExternalMetricValueList&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;error&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;ListAllExternalMetrics&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[]&lt;/span&gt;&lt;span class="nx"&gt;ExternalMetricInfo&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
-&lt;button
-class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
-title="复制代码"
-&gt;
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;/button&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;ul&gt;
-&lt;li&gt;GetExternalMetric 用于返回Scaler的指标，调用&lt;code&gt;scaler.GetMetrics&lt;/code&gt;方法&lt;/li&gt;
-&lt;li&gt;ListAllExternalMetrics 返回所有支持的external metrics，例如prometheus，mysql等&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;当代码写好之后，再通过apiservice注册到apiservier上(当然还涉及到鉴权，这里不啰嗦了)：&lt;/p&gt;
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
-&lt;div&gt;&lt;pre&gt;&lt;code&gt;apiVersion: apiregistration.k8s.io/v1
-kind: APIService
-metadata:
-labels:
-app.kubernetes.io/name: v1beta1.external.metrics.k8s.io
-app.kubernetes.io/version: latest
-app.kubernetes.io/part-of: keda-operator
-name: v1beta1.external.metrics.k8s.io
-spec:
-service:
-name: keda-metrics-apiserver
-namespace: keda
-group: external.metrics.k8s.io
-version: v1beta1
-insecureSkipTLSVerify: true
-groupPriorityMinimum: 100
-versionPriority: 100&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
-&lt;button
-class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
-title="复制代码"
-&gt;
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;/button&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;h2&gt;实现一个Scaler&lt;span class="hx-absolute -hx-mt-20" id="实现一个scaler"&gt;&lt;/span&gt;
-&lt;a href="#%e5%ae%9e%e7%8e%b0%e4%b8%80%e4%b8%aascaler" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;其实有两种Scaler，即上面将的一个pull，一个push的模型，PushScaler多了一个Run方法：&lt;/p&gt;
-&lt;p&gt;实现一个Scaler，主要实现以下接口：&lt;/p&gt;
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
-&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// Scaler interface&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="kd"&gt;type&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;Scaler&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kd"&gt;interface&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;// 返回external_metrics.ExternalMetricValue对象，其实就是用于 keda-metrics-apiserver中获取到scaler的指标&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;GetMetrics&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;ctx&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;context&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Context&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;metricName&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;string&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;metricSelector&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;labels&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Selector&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;([]&lt;/span&gt;&lt;span class="nx"&gt;external_metrics&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;ExternalMetricValue&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;error&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;// 返回v2beta2.MetricSpec 结构，主要用于ScalerObject描述创建HPA的类型和Target指标等&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;GetMetricSpecForScaling&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[]&lt;/span&gt;&lt;span class="nx"&gt;v2beta2&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;MetricSpec&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;// 返回该Scaler是否Active，可能会影响Loop中直接修改副本数&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;IsActive&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;ctx&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;context&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Context&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;bool&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;error&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="cp"&gt;//调用完一次上面的方法就会调用一次Close &lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;Close&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;error&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="c1"&gt;// PushScaler interface&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="kd"&gt;type&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;PushScaler&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kd"&gt;interface&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;Scaler&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;// 通过scaler实现Run方法，往active channel中，写入值，而非上面的直接调用IsActive放回&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;Run&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;ctx&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;context&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Context&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;active&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kd"&gt;chan&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;bool&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
-&lt;button
-class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
-title="复制代码"
-&gt;
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;/button&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;h2&gt;总结&lt;span class="hx-absolute -hx-mt-20" id="总结"&gt;&lt;/span&gt;
-&lt;a href="#%e6%80%bb%e7%bb%93" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;回过头来我们解答下在开头留下的问题：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;KEDA是如何获取到多种事件的指标，以及如何判断扩缩容的？&lt;/p&gt;
-&lt;p&gt;答：keda controler中生成了external 类型的hpa，并且实现了external metrics 的api&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;KEDA是如何做到将应用的副本数缩容0，依据是什么？&lt;/p&gt;
-&lt;p&gt;答： keda 内部有个loop，不断的check isActive状态，会主动的修改应用副本&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;</description></item><item><title>使用keda完成基于事件的弹性伸缩</title><link>https://silenceper.com/blog/202009/how-to-use-keda/</link><pubDate>Mon, 14 Sep 2020 11:20:59 +0800</pubDate><guid>https://silenceper.com/blog/202009/how-to-use-keda/</guid><description>
-&lt;blockquote&gt;
-&lt;p&gt;文章中使用的是keda 1.5版本，2.0还未release
-1.5版本支持deployment，job两种资源。而在2.0增加了StatefulSet以及自定义资源&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;a href="https://keda.sh/" target="_blank" rel="noopener"&gt;keda&lt;/a&gt; 是一个支持多种事件源来对应用进行弹性伸缩的控制器。
-我觉得keda可以认为是基于HPA的external metrics的一种扩展，因为它利用了hpa中external metrics的能力，允许直接配置多个事件源：
-&lt;img src="https://silenceper.com/img/20200914/keda-scalers.png" alt="支持的事件源" loading="lazy" /&gt;&lt;/p&gt;
-&lt;h1&gt;安装keda&lt;/h1&gt;&lt;p&gt;从 &lt;a href="https://github.com/kedacore/keda/releases" target="_blank" rel="noopener"&gt;https://github.com/kedacore/keda/releases&lt;/a&gt; 下载1.5版本的zip包，包含了yaml和crd:&lt;/p&gt;
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
-&lt;div&gt;&lt;pre&gt;&lt;code&gt;├── 00-namespace.yaml
-├── 01-service_account.yaml
-├── 10-cluster_role.yaml
-├── 11-role_binding.yaml
-├── 12-operator.yaml
-├── 20-metrics-cluster_role.yaml
-├── 21-metrics-role_binding.yaml
-├── 22-metrics-deployment.yaml
-├── 23-metrics-service.yaml
-├── 24-metrics-api_service.yaml
-└── crds
-├── keda.k8s.io_scaledobjects_crd.yaml
-└── keda.k8s.io_triggerauthentications_crd.yaml&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
-&lt;button
-class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
-title="复制代码"
-&gt;
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;/button&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;安装：&lt;/p&gt;
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
-&lt;div&gt;&lt;pre&gt;&lt;code&gt;kubectl apply -f ./crds/
-kubectl apply -f .&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
-&lt;button
-class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
-title="复制代码"
-&gt;
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;/button&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;以prometheus 和cron两个事件源看下如何使用&lt;/p&gt;
-&lt;h2&gt;配置 ScaledObject&lt;span class="hx-absolute -hx-mt-20" id="配置-scaledobject"&gt;&lt;/span&gt;
-&lt;a href="#%e9%85%8d%e7%bd%ae-scaledobject" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;以Deployment为例，看下ScaledObject支持哪些变量&lt;/p&gt;
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
-&lt;div&gt;&lt;pre&gt;&lt;code&gt;apiVersion: keda.k8s.io/v1alpha1
-kind: ScaledObject
-metadata:
-name: {scaled-object-name}
-spec:
-scaleTargetRef:
-deploymentName: {deployment-name} # must be in the same namespace as the ScaledObject
-containerName: {container-name} #Optional. Default: deployment.spec.template.spec.containers[0]
-pollingInterval: 30 # Optional. Default: 30 seconds
-cooldownPeriod: 300 # Optional. Default: 300 seconds
-minReplicaCount: 0 # Optional. Default: 0
-maxReplicaCount: 100 # Optional. Default: 100
-triggers:
-# {list of triggers to activate the deployment}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
-&lt;button
-class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
-title="复制代码"
-&gt;
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;/button&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;h2&gt;基于prometheus指标进行伸缩&lt;span class="hx-absolute -hx-mt-20" id="基于prometheus指标进行伸缩"&gt;&lt;/span&gt;
-&lt;a href="#%e5%9f%ba%e4%ba%8eprometheus%e6%8c%87%e6%a0%87%e8%bf%9b%e8%a1%8c%e4%bc%b8%e7%bc%a9" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;我这里有个&lt;a href="https://github.com/silenceper/http-demo" target="_blank" rel="noopener"&gt;http demo&lt;/a&gt;的应用，上报了&lt;code&gt;gin_requests_total&lt;/code&gt;指标到prometheus，通过ab请求http接口模拟压力上升的情况：&lt;/p&gt;
-&lt;p&gt;这里我将&lt;code&gt;minReplicaCount&lt;/code&gt;设置为2，因为在没有流量的时候副本数将会被keda设置为0。&lt;/p&gt;
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
-&lt;div&gt;&lt;pre&gt;&lt;code&gt;apiVersion: keda.k8s.io/v1alpha1
-kind: ScaledObject
-metadata:
-name: prometheus-scaledobject
-namespace: default
-spec:
-scaleTargetRef:
-deploymentName: http-demo
-minReplicaCount: 2
-triggers:
-- type: prometheus
-metadata:
-serverAddress: http://192.168.99.100:31046/
-metricName: gin_requests_total
-threshold: &amp;#39;2&amp;#39;
-query: sum(rate(gin_requests_total{app=&amp;#34;http-demo&amp;#34;,code=&amp;#34;200&amp;#34;}[2m]))&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
-&lt;button
-class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
-title="复制代码"
-&gt;
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;/button&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;当创建该&lt;code&gt;ScaledObject &lt;/code&gt;，我们看到同时创建了一个hpa资源：&lt;/p&gt;
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
-&lt;div&gt;&lt;pre&gt;&lt;code&gt;➜ example kubectl get hpa
-NAME REFERENCE TARGETS MINPODS MAXPODS REPLICAS AGE
-keda-hpa-http-demo Deployment/http-demo 0/2 (avg) 2 100 2 70m&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
-&lt;button
-class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
-title="复制代码"
-&gt;
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;/button&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;通过压测观察hpa资源变化：&lt;/p&gt;
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
-&lt;div&gt;&lt;pre&gt;&lt;code&gt;&amp;gt; ab -c 10 -n 1000 http://127.0.0.1:8080/&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
-&lt;button
-class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
-title="复制代码"
-&gt;
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;/button&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
-&lt;div&gt;&lt;pre&gt;&lt;code&gt;Every 1.0s: kubectl get hpa anymore.local: Mon Sep 14 14:23:59 2020
-NAME REFERENCE TARGETS MINPODS MAXPODS REPLICAS AGE
-keda-hpa-http-demo Deployment/http-demo 8/2 (avg) 2 100 4 73m&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
-&lt;button
-class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
-title="复制代码"
-&gt;
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;/button&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;可以看得到随着流量上升，由hpa控制的副本数在上升，这就达到了我们根据流量扩容的目的，当流量降下来之后，副本数也减少。&lt;/p&gt;
-&lt;h1&gt;组件组成&lt;/h1&gt;&lt;p&gt;keda由两个组件组成：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;keda operator： 负责创建维护hpa对象资源，同时激活和停止hpa伸缩。在无事件的时候将副本数降低为0(如果未设置minReplicaCount的话)&lt;/li&gt;
-&lt;li&gt;metrics server: 实现了hpa中external metrics，根据事件源配置返回计算结果。
-&lt;img src="https://silenceper.com/img/20200914/keda-arch.png" alt="keda架构图" loading="lazy" /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;可以看得到HPA控制了副本1-&amp;gt;N和N-&amp;gt;1的变化。
-keda控制了副本0-&amp;gt;1和1-&amp;gt;0的变化（起到了激活和停止的作用，对于一些消费型的任务副本比较有用，比如在凌晨启动任务进行消费）&lt;/p&gt;
-&lt;h1&gt;扩展事件源(external-scalers)&lt;/h1&gt;&lt;p&gt;对于在keda不支持的一些事件源，我们还可以使用keda提供的扩展机制来扩充自己的事件源。
-&lt;a href="https://keda.sh/docs/1.5/concepts/external-scalers/" target="_blank" rel="noopener"&gt;https://keda.sh/docs/1.5/concepts/external-scalers/&lt;/a&gt;
-主要是通过grpc实现一下接口实现：&lt;/p&gt;
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
-&lt;div&gt;&lt;pre&gt;&lt;code&gt;type Scaler interface {
-GetMetrics(ctx context.Context, metricName string, metricSelector labels.Selector) ([]external_metrics.ExternalMetricValue, error)
-GetMetricSpecForScaling() []v2beta2.MetricSpec
-IsActive(ctx context.Context) (bool, error)
-Close() error
-}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
-&lt;button
-class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
-title="复制代码"
-&gt;
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;/button&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;ul&gt;
-&lt;li&gt;IsActive 在ScaledObject / ScaledJob CRD中定义的pollingInterval上，每隔pollingInterval时间，调用IsActive，如果返回true，则将比例缩放为1(默认1)&lt;/li&gt;
-&lt;li&gt;Close调用Close可以使缩放器清除连接或其他资源。&lt;/li&gt;
-&lt;li&gt;GetMetricSpec 返回缩放器的HPA定义的目标值。&lt;/li&gt;
-&lt;li&gt;GetMetrics 返回从GetMetricSpec引用的指标的值。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;blockquote&gt;
-&lt;p&gt;在2.0中还多支持一种&lt;code&gt;PushScaler&lt;/code&gt;形式的扩展，允许用户主动push来是否开启/停止基于事件伸缩&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h1&gt;总结&lt;/h1&gt;&lt;p&gt;之前用过k8s-prometheus-adapter项目来进行应用的自定义指标进行扩展，对比keda感觉keda操作更简单，配置更加动态化，因为抽象了hpa，用户直接操作&lt;code&gt;ScaledObject&lt;/code&gt;即可，不需要关注hpa如何进行配置。而且支持将副本数设置为0，同时又拥有类似cronhpa(定时伸缩)的功能，扩展能力比较强。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;阅读原文体验更加，文中链接支持跳转&lt;/p&gt;
-&lt;/blockquote&gt;</description></item><item><title>将镜像tar包通过API直接push到registry仓库</title><link>https://silenceper.com/blog/202007/docker-tar-push/</link><pubDate>Fri, 10 Jul 2020 14:20:59 +0800</pubDate><guid>https://silenceper.com/blog/202007/docker-tar-push/</guid><description>
-&lt;p&gt;为了实现docker tar包能够直接通过页面上传，调研了一下registry的api，以及如何解析tar包（其实就是docker daemon程序实现的部分）。&lt;/p&gt;
-&lt;p&gt;要想实现，首先要了解docker tar包中结构组成：&lt;/p&gt;
-&lt;h2&gt;tar包结构&lt;span class="hx-absolute -hx-mt-20" id="tar包结构"&gt;&lt;/span&gt;
-&lt;a href="#tar%e5%8c%85%e7%bb%93%e6%9e%84" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;拿了一个包含一个镜像的tar包进行解压：&lt;/p&gt;
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
-&lt;div&gt;&lt;pre&gt;&lt;code&gt;.
-├── 1ecf8bc84a7c3d60c0a6bbdd294f12a6b0e17a8269616fc9bdbedd926f74f50c
-│   ├── VERSION
-│   ├── json
-│   └── layer.tar
-├── 6f4ec1f3d7ea33646d491a705f94442f5a706e9ac9acbca22fa9b117094eb720.json
-├── aaac5bde2c2bcb6cc28b1e6d3f29fe13efce6d6b669300cc2c6bfab96b942af4
-│   ├── VERSION
-│   ├── json
-│   └── layer.tar
-├── b63363f0d2ac8b3dca6f903bb5a7301bf497b1e5be8dc4f57a14e4dc649ef9bb
-│   ├── VERSION
-│   ├── json
-│   └── layer.tar
-├── c453224a84b8318b0a09a83052314dd876899d3a1a1cf2379e74bba410415059
-│   ├── VERSION
-│   ├── json
-│   └── layer.tar
-├── dd8ef1d42fbcccc87927eee94e57519c401b84437b98fcf35505fb6b7267a375
-│   ├── VERSION
-│   ├── json
-│   └── layer.tar
-├── manifest.json
-└── repositories&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
-&lt;button
-class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
-title="复制代码"
-&gt;
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;/button&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;文件说明：&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;manifest.json文件&lt;/strong&gt;：&lt;/p&gt;
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
-&lt;div&gt;&lt;pre&gt;&lt;code&gt;[
-{
-&amp;#34;Config&amp;#34;:&amp;#34;6f4ec1f3d7ea33646d491a705f94442f5a706e9ac9acbca22fa9b117094eb720.json&amp;#34;,
-&amp;#34;RepoTags&amp;#34;:[
-&amp;#34;alpine:filebeat-6.8.7-arm64&amp;#34;
-],
-&amp;#34;Layers&amp;#34;:[
-&amp;#34;aaac5bde2c2bcb6cc28b1e6d3f29fe13efce6d6b669300cc2c6bfab96b942af4/layer.tar&amp;#34;,
-&amp;#34;dd8ef1d42fbcccc87927eee94e57519c401b84437b98fcf35505fb6b7267a375/layer.tar&amp;#34;,
-&amp;#34;c453224a84b8318b0a09a83052314dd876899d3a1a1cf2379e74bba410415059/layer.tar&amp;#34;,
-&amp;#34;b63363f0d2ac8b3dca6f903bb5a7301bf497b1e5be8dc4f57a14e4dc649ef9bb/layer.tar&amp;#34;,
-&amp;#34;1ecf8bc84a7c3d60c0a6bbdd294f12a6b0e17a8269616fc9bdbedd926f74f50c/layer.tar&amp;#34;
-]
-}
-]&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
-&lt;button
-class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
-title="复制代码"
-&gt;
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;/button&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;manifest.json 包含了对这个tar包的描述信息，比如image config文件地址，tags说明，镜像layer信息，在解析的时候也是根据这个文件去获取关联的文件。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;image config文件&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;比如：&lt;code&gt;6f4ec1f3d7ea33646d491a705f94442f5a706e9ac9acbca22fa9b117094eb720.json&lt;/code&gt;文件：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;内容太多就不贴了
-这里包含了镜像运行的信息，比如env，执行参数，以及镜像历史等。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;strong&gt;layer层文件：layer.tar&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;镜像的每一层的文件信息都打包在了一个单独的&lt;code&gt;layer.tar&lt;/code&gt;包中，也是在上传的时候需要用到的。&lt;/p&gt;
-&lt;h2&gt;registry api&lt;span class="hx-absolute -hx-mt-20" id="registry-api"&gt;&lt;/span&gt;
-&lt;a href="#registry-api" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;流程：&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;1、获取鉴权信息&lt;/li&gt;
-&lt;li&gt;2、检查layer.tar是否已经存在&lt;/li&gt;
-&lt;li&gt;3、上传layer.tar&lt;/li&gt;
-&lt;li&gt;4、上传image config&lt;/li&gt;
-&lt;li&gt;5、上传manifest（非包中的&lt;code&gt;manifest.json&lt;/code&gt;而是&lt;a href="https://github.com/docker/distribution/blob/master/manifest/schema2/manifest.go#L63" target="_blank" rel="noopener"&gt;Manifest struct&lt;/a&gt;）&lt;/li&gt;
-&lt;/ul&gt;
-&lt;blockquote&gt;
-&lt;p&gt;这里只列出了在上传的时候需要用的api&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;1、获取鉴权信息&lt;/p&gt;
-&lt;p&gt;这里跟registry仓库选择的鉴权方式有关，可选basic auth或者token鉴权。
-这里我是以最基本的basic auth为例子，如果是token鉴权的方式参考这里：
-&lt;a href="https://docs.docker.com/registry/spec/auth/jwt/" target="_blank" rel="noopener"&gt;https://docs.docker.com/registry/spec/auth/jwt/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;2、检查上传&lt;/p&gt;
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
-&lt;div&gt;&lt;pre&gt;&lt;code&gt;HEAD /v2/image/blobs/&amp;lt;digest&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
-&lt;button
-class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
-title="复制代码"
-&gt;
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;/button&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;若返回200 OK 则表示存在，不用上传&lt;/p&gt;
-&lt;p&gt;3、开始上传服务
-我这里是以分块上传的方式进行&lt;/p&gt;
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
-&lt;div&gt;&lt;pre&gt;&lt;code&gt;POST /v2/image/blobs/uploads/&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
-&lt;button
-class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
-title="复制代码"
-&gt;
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;/button&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;如果post请求返回202 accepted，一个url会在location字段返回.&lt;/p&gt;
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
-&lt;div&gt;&lt;pre&gt;&lt;code&gt; 202 Accepted
-Location: /v2/\&amp;lt;image&amp;gt;/blobs/uploads/\&amp;lt;uuid&amp;gt;
-Range: bytes=0-&amp;lt;offset&amp;gt;
-Content-Length: 0
-Docker-Upload-UUID: &amp;lt;uuid&amp;gt; # 可以用来查看上传状态和实现断点续传&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
-&lt;button
-class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
-title="复制代码"
-&gt;
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;/button&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;4、分块上传
-根据上一步获取的url，以&lt;code&gt;PATCH&lt;/code&gt;的方式提交分块数据。
-如果是最后一块数据上传，则以PUT的方式提交，如下：&lt;/p&gt;
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
-&lt;div&gt;&lt;pre&gt;&lt;code&gt; &amp;gt; PUT /v2/&amp;lt;name&amp;gt;/blob/uploads/&amp;lt;uuid&amp;gt;?digest=&amp;lt;digest&amp;gt;
-&amp;gt; Content-Length: &amp;lt;size of chunk&amp;gt;
-&amp;gt; Content-Range: &amp;lt;start of range&amp;gt;-&amp;lt;end of range&amp;gt;
-&amp;gt; Content-Type: application/octet-stream
-&amp;lt;Last Layer Chunk Binary Data&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
-&lt;button
-class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
-title="复制代码"
-&gt;
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;/button&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;上传layer，image config，manifests信息都是一样的。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;我暂时只用到了以上api，更多的api参考：https://docs.docker.com/registry/spec/api/&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2&gt;实现&lt;span class="hx-absolute -hx-mt-20" id="实现"&gt;&lt;/span&gt;
-&lt;a href="#%e5%ae%9e%e7%8e%b0" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;上面说API没啥感觉，还是看代码比较明白，所以实现了这么一个工具：&lt;a href="https://github.com/silenceper/docker-tar-push" target="_blank" rel="noopener"&gt;https://github.com/silenceper/docker-tar-push
-&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Usage:&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
-&lt;div&gt;&lt;pre&gt;&lt;code&gt;push your docker tar archive image without docker.
-Usage:
-docker-tar-push [flags]
-Flags:
--h, --help help for docker-tar-push
---log-level int log-level, 0:Fatal,1:Error,2:Warn,3:Info,4:Debug (default 3)
---password string registry auth password
---registry string registry url
---skip-ssl-verify skip ssl verify
---username string registry auth username&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
-&lt;button
-class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
-title="复制代码"
-&gt;
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;/button&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;&lt;strong&gt;Example:&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
-&lt;div&gt;&lt;pre&gt;&lt;code&gt;docker-tar-push alpine:latest --registry=http://localhost:5000&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
-&lt;button
-class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
-title="复制代码"
-&gt;
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
-&lt;/button&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;&lt;strong&gt;参考&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://www.jianshu.com/p/6a7b80122602" target="_blank" rel="noopener"&gt;https://www.jianshu.com/p/6a7b80122602&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/Razikus/dockerregistrypusher" target="_blank" rel="noopener"&gt;https://github.com/Razikus/dockerregistrypusher&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://docs.docker.com/registry/spec/auth/jwt/" target="_blank" rel="noopener"&gt;https://docs.docker.com/registry/spec/auth/jwt/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/docker/distribution/" target="_blank" rel="noopener"&gt;https://github.com/docker/distribution/&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</description></item></channel></rss>

@@ -1,4 +1,214 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – OpenAI Codex</title><link>https://silenceper.com/tags/openai-codex/</link><description>Recent content in OpenAI Codex on silenceper</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 07 May 2026 22:30:00 +0800</lastBuildDate><atom:link href="https://silenceper.com/tags/openai-codex/index.xml" rel="self" type="application/rss+xml"/><item><title>如何免费申请 ChatGPT Pro：OpenAI Codex for Open Source 开源计划指南</title><link>https://silenceper.com/article/2026-05-07-free-chatgpt-pro-codex-for-oss/</link><pubDate>Thu, 07 May 2026 22:30:00 +0800</pubDate><guid>https://silenceper.com/article/2026-05-07-free-chatgpt-pro-codex-for-oss/</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – OpenAI Codex</title><link>https://silenceper.com/tags/openai-codex/</link><description>Recent content in OpenAI Codex on silenceper</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 20 May 2026 09:06:51 +0800</lastBuildDate><atom:link href="https://silenceper.com/tags/openai-codex/index.xml" rel="self" type="application/rss+xml"/><item><title>Marketing Skills for AI Agents：给 AI Agent 装上一套营销工作流</title><link>https://silenceper.com/article/2026-05-20-marketing-skills-ai-agents/</link><pubDate>Wed, 20 May 2026 09:06:51 +0800</pubDate><guid>https://silenceper.com/article/2026-05-20-marketing-skills-ai-agents/</guid><description>
+&lt;p&gt;项目地址：https://github.com/coreyhaines31/marketingskills&lt;/p&gt;
+&lt;h2&gt;一句话定位&lt;span class="hx-absolute -hx-mt-20" id="一句话定位"&gt;&lt;/span&gt;
+&lt;a href="#%e4%b8%80%e5%8f%a5%e8%af%9d%e5%ae%9a%e4%bd%8d" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;code&gt;marketingskills&lt;/code&gt; 是一套面向 AI 编程代理的营销技能包，让 Claude Code、OpenAI Codex、Cursor、Windsurf 等 Agent 在处理 SEO、转化率优化、文案、广告、分析和增长任务时，有更专业的工作流与判断标准。&lt;/p&gt;
+&lt;h2&gt;基础信息卡片&lt;span class="hx-absolute -hx-mt-20" id="基础信息卡片"&gt;&lt;/span&gt;
+&lt;a href="#%e5%9f%ba%e7%a1%80%e4%bf%a1%e6%81%af%e5%8d%a1%e7%89%87" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;项目&lt;/th&gt;
+&lt;th&gt;信息&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;项目名称&lt;/td&gt;
+&lt;td&gt;Marketing Skills for AI Agents&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;GitHub&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;coreyhaines31/marketingskills&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;作者&lt;/td&gt;
+&lt;td&gt;Corey Haines&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;官网&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://marketing-skills.com" target="_blank" rel="noopener"&gt;https://marketing-skills.com&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;许可证&lt;/td&gt;
+&lt;td&gt;MIT&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;主要语言&lt;/td&gt;
+&lt;td&gt;JavaScript / Shell&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;最新版本&lt;/td&gt;
+&lt;td&gt;v2.0.1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;仓库热度&lt;/td&gt;
+&lt;td&gt;约 29.5k Stars、4.8k Forks&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;适配对象&lt;/td&gt;
+&lt;td&gt;Claude Code、OpenAI Codex、Cursor、Windsurf，以及支持 Agent Skills spec 的 AI Agent&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2&gt;解决什么问题&lt;span class="hx-absolute -hx-mt-20" id="解决什么问题"&gt;&lt;/span&gt;
+&lt;a href="#%e8%a7%a3%e5%86%b3%e4%bb%80%e4%b9%88%e9%97%ae%e9%a2%98" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;现在很多 AI 编程代理已经很擅长写代码，但当任务进入营销领域时，输出质量往往不稳定。&lt;/p&gt;
+&lt;p&gt;比如你让 Agent：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;优化一个落地页的转化率&lt;/li&gt;
+&lt;li&gt;写一组冷邮件&lt;/li&gt;
+&lt;li&gt;做一次 SEO 审计&lt;/li&gt;
+&lt;li&gt;规划 A/B 测试&lt;/li&gt;
+&lt;li&gt;设计产品发布方案&lt;/li&gt;
+&lt;li&gt;分析用户流失和留存问题&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;它通常能给出一些建议，但这些建议很容易停留在通用层面：看起来合理，但缺少具体流程、检查清单和营销经验。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;marketingskills&lt;/code&gt; 解决的正是这个问题。它把常见营销任务沉淀成一组可复用的 Agent Skills，让 AI 在遇到具体营销场景时，不只是“临场发挥”，而是能按相对专业的营销工作流执行。&lt;/p&gt;
+&lt;h2&gt;核心功能&lt;span class="hx-absolute -hx-mt-20" id="核心功能"&gt;&lt;/span&gt;
+&lt;a href="#%e6%a0%b8%e5%bf%83%e5%8a%9f%e8%83%bd" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;1. 覆盖完整的营销工作链路&lt;span class="hx-absolute -hx-mt-20" id="1-覆盖完整的营销工作链路"&gt;&lt;/span&gt;
+&lt;a href="#1-%e8%a6%86%e7%9b%96%e5%ae%8c%e6%95%b4%e7%9a%84%e8%90%a5%e9%94%80%e5%b7%a5%e4%bd%9c%e9%93%be%e8%b7%af" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;这个项目不是单一提示词，而是一组围绕营销工作的技能库。README 中列出的技能覆盖了从获客、转化到留存的多个环节。&lt;/p&gt;
+&lt;p&gt;常见方向包括：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;SEO 与内容：&lt;code&gt;seo-audit&lt;/code&gt;、&lt;code&gt;ai-seo&lt;/code&gt;、&lt;code&gt;schema&lt;/code&gt;、&lt;code&gt;content-strategy&lt;/code&gt;、&lt;code&gt;programmatic-seo&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;转化率优化：&lt;code&gt;cro&lt;/code&gt;、&lt;code&gt;signup&lt;/code&gt;、&lt;code&gt;onboarding&lt;/code&gt;、&lt;code&gt;popups&lt;/code&gt;、&lt;code&gt;paywalls&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;文案与内容生产：&lt;code&gt;copywriting&lt;/code&gt;、&lt;code&gt;copy-editing&lt;/code&gt;、&lt;code&gt;cold-email&lt;/code&gt;、&lt;code&gt;emails&lt;/code&gt;、&lt;code&gt;social&lt;/code&gt;、&lt;code&gt;video&lt;/code&gt;、&lt;code&gt;image&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;广告与投放：&lt;code&gt;ads&lt;/code&gt;、&lt;code&gt;ad-creative&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;增长与留存：&lt;code&gt;referrals&lt;/code&gt;、&lt;code&gt;free-tools&lt;/code&gt;、&lt;code&gt;churn-prevention&lt;/code&gt;、&lt;code&gt;community-marketing&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;销售与 GTM：&lt;code&gt;revops&lt;/code&gt;、&lt;code&gt;sales-enablement&lt;/code&gt;、&lt;code&gt;launch&lt;/code&gt;、&lt;code&gt;pricing&lt;/code&gt;、&lt;code&gt;competitors&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;策略与研究：&lt;code&gt;customer-research&lt;/code&gt;、&lt;code&gt;marketing-ideas&lt;/code&gt;、&lt;code&gt;marketing-psychology&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这意味着它不是只帮你“写一段营销文案”，而是能覆盖更完整的营销任务链路。&lt;/p&gt;
+&lt;h3&gt;2. 以产品上下文作为基础&lt;span class="hx-absolute -hx-mt-20" id="2-以产品上下文作为基础"&gt;&lt;/span&gt;
+&lt;a href="#2-%e4%bb%a5%e4%ba%a7%e5%93%81%e4%b8%8a%e4%b8%8b%e6%96%87%e4%bd%9c%e4%b8%ba%e5%9f%ba%e7%a1%80" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;项目中很重要的一个设计是 &lt;code&gt;product-marketing&lt;/code&gt; 技能。&lt;/p&gt;
+&lt;p&gt;根据 README 的说明，其他技能会先读取 &lt;code&gt;product-marketing&lt;/code&gt;，理解产品、用户、定位和市场信息，再进入具体任务。这一点很关键。&lt;/p&gt;
+&lt;p&gt;因为营销任务很依赖上下文。不同产品的用户、使用场景、定价方式、竞争对手都不一样。如果没有统一的产品语境，AI 很容易写出“正确但没用”的内容。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;product-marketing&lt;/code&gt; 相当于给所有后续营销任务提供一个基础档案，让 Agent 先理解“这个产品到底卖给谁、解决什么问题、为什么值得买”，再去写页面、邮件、广告或 SEO 内容。&lt;/p&gt;
+&lt;h3&gt;3. 技能之间可以相互协作&lt;span class="hx-absolute -hx-mt-20" id="3-技能之间可以相互协作"&gt;&lt;/span&gt;
+&lt;a href="#3-%e6%8a%80%e8%83%bd%e4%b9%8b%e9%97%b4%e5%8f%af%e4%bb%a5%e7%9b%b8%e4%ba%92%e5%8d%8f%e4%bd%9c" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;&lt;code&gt;marketingskills&lt;/code&gt; 的另一个特点是技能之间存在关联。&lt;/p&gt;
+&lt;p&gt;比如：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;copywriting&lt;/code&gt; 可以和 &lt;code&gt;cro&lt;/code&gt;、&lt;code&gt;ab-testing&lt;/code&gt; 配合，用于落地页优化和实验设计&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;revops&lt;/code&gt; 可以和 &lt;code&gt;sales-enablement&lt;/code&gt;、&lt;code&gt;cold-email&lt;/code&gt; 配合，用于销售线索与外联流程&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;seo-audit&lt;/code&gt; 可以和 &lt;code&gt;schema&lt;/code&gt;、&lt;code&gt;ai-seo&lt;/code&gt; 配合，用于搜索与 AI 搜索优化&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;customer-research&lt;/code&gt; 可以为 &lt;code&gt;copywriting&lt;/code&gt;、&lt;code&gt;cro&lt;/code&gt;、&lt;code&gt;competitors&lt;/code&gt; 提供输入&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这种设计更接近真实营销工作：不是每个任务孤立完成，而是研究、定位、文案、渠道、数据和实验之间互相影响。&lt;/p&gt;
+&lt;h3&gt;4. 支持主流 AI 编程代理&lt;span class="hx-absolute -hx-mt-20" id="4-支持主流-ai-编程代理"&gt;&lt;/span&gt;
+&lt;a href="#4-%e6%94%af%e6%8c%81%e4%b8%bb%e6%b5%81-ai-%e7%bc%96%e7%a8%8b%e4%bb%a3%e7%90%86" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;项目明确提到支持：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Claude Code&lt;/li&gt;
+&lt;li&gt;OpenAI Codex&lt;/li&gt;
+&lt;li&gt;Cursor&lt;/li&gt;
+&lt;li&gt;Windsurf&lt;/li&gt;
+&lt;li&gt;其他支持 Agent Skills spec 的代理&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这让它更像一个可迁移的营销能力包，而不是绑定在某个特定 AI 产品里的提示词集合。&lt;/p&gt;
+&lt;p&gt;如果团队已经在用 AI 编程代理做开发任务，可以把这套技能加入项目，让同一个 Agent 同时承担部分增长、内容和转化优化工作。&lt;/p&gt;
+&lt;h2&gt;适合谁&lt;span class="hx-absolute -hx-mt-20" id="适合谁"&gt;&lt;/span&gt;
+&lt;a href="#%e9%80%82%e5%90%88%e8%b0%81" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;这个项目比较适合以下几类用户：&lt;/p&gt;
+&lt;h3&gt;技术型创业者&lt;span class="hx-absolute -hx-mt-20" id="技术型创业者"&gt;&lt;/span&gt;
+&lt;a href="#%e6%8a%80%e6%9c%af%e5%9e%8b%e5%88%9b%e4%b8%9a%e8%80%85" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;有产品、有代码能力，但缺少系统营销经验。可以用它帮助自己完成定位、落地页、冷启动内容、SEO、冷邮件和增长实验。&lt;/p&gt;
+&lt;h3&gt;独立开发者&lt;span class="hx-absolute -hx-mt-20" id="独立开发者"&gt;&lt;/span&gt;
+&lt;a href="#%e7%8b%ac%e7%ab%8b%e5%bc%80%e5%8f%91%e8%80%85" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;很多独立开发者的问题不是不会做产品，而是不知道如何持续获客。&lt;code&gt;marketingskills&lt;/code&gt; 可以把一些常见营销动作流程化，降低启动成本。&lt;/p&gt;
+&lt;h3&gt;SaaS / AI 工具团队&lt;span class="hx-absolute -hx-mt-20" id="saas--ai-工具团队"&gt;&lt;/span&gt;
+&lt;a href="#saas--ai-%e5%b7%a5%e5%85%b7%e5%9b%a2%e9%98%9f" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;这类产品通常需要持续做内容、转化、试用激活、留存和销售辅助材料。项目中的 CRO、SEO、onboarding、pricing、sales-enablement 等技能都很贴合。&lt;/p&gt;
+&lt;h3&gt;使用 AI Agent 的技术营销团队&lt;span class="hx-absolute -hx-mt-20" id="使用-ai-agent-的技术营销团队"&gt;&lt;/span&gt;
+&lt;a href="#%e4%bd%bf%e7%94%a8-ai-agent-%e7%9a%84%e6%8a%80%e6%9c%af%e8%90%a5%e9%94%80%e5%9b%a2%e9%98%9f" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;如果团队已经在用 Claude Code、Codex、Cursor 处理工程任务，也可以把营销任务中的重复流程交给 Agent 辅助完成，比如生成广告创意、优化页面文案、整理竞品对比页、搭建实验计划等。&lt;/p&gt;
+&lt;h2&gt;快速上手&lt;span class="hx-absolute -hx-mt-20" id="快速上手"&gt;&lt;/span&gt;
+&lt;a href="#%e5%bf%ab%e9%80%9f%e4%b8%8a%e6%89%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;推荐使用 &lt;code&gt;npx skills&lt;/code&gt; 安装全部技能：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx skills add coreyhaines31/marketingskills&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;如果只想先试几个常用技能，可以安装指定技能：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx skills add coreyhaines31/marketingskills --skill product-marketing cro copywriting seo-audit&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;也可以先查看可用技能列表：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx skills add coreyhaines31/marketingskills --list&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;安装后，可以让 Agent 处理类似任务：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;帮我基于当前产品定位，重写首页首屏文案。&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;审计这个 landing page 的转化问题，并给出优先级排序。&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;为这个 SaaS 产品设计一个 signup flow 的 A/B 测试方案。&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;基于我们的产品信息，写一组 B2B 冷邮件和 follow-up sequence。&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;帮我规划一套 AI SEO 内容优化方案。&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h2&gt;结论&lt;span class="hx-absolute -hx-mt-20" id="结论"&gt;&lt;/span&gt;
+&lt;a href="#%e7%bb%93%e8%ae%ba" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;code&gt;marketingskills&lt;/code&gt; 的价值不在于“又整理了一堆提示词”，而在于它把营销工作拆成了可复用、可组合、可被 AI Agent 自动调用的技能模块。&lt;/p&gt;
+&lt;p&gt;对于开发者和技术团队来说，这相当于给 AI 编程代理补上一套营销工作流。它不能替代真实的市场判断，但可以显著降低执行营销任务的起步成本：从写文案、做 SEO，到规划转化实验和产品发布，都有更清晰的流程可以遵循。&lt;/p&gt;
+&lt;p&gt;如果你已经在用 Claude Code、Codex、Cursor 或类似 Agent 做开发工作，同时又希望让 AI 帮你处理一部分增长和营销任务，&lt;code&gt;marketingskills&lt;/code&gt; 值得加入工具箱。&lt;/p&gt;</description></item><item><title>如何免费申请 ChatGPT Pro：OpenAI Codex for Open Source 开源计划指南</title><link>https://silenceper.com/article/2026-05-07-free-chatgpt-pro-codex-for-oss/</link><pubDate>Thu, 07 May 2026 22:30:00 +0800</pubDate><guid>https://silenceper.com/article/2026-05-07-free-chatgpt-pro-codex-for-oss/</guid><description>
 &lt;p&gt;&lt;img src="https://silenceper.com/img/20260507/codex-for-oss-official-page-screenshot.png" alt="OpenAI Developers Codex for Open Source 官方页面截图" loading="lazy" /&gt;&lt;/p&gt;
 &lt;p&gt;很多人搜索“如何免费使用 ChatGPT”，但更准确的说法应该是：&lt;strong&gt;如何通过 OpenAI 官方计划，合规申请一段时间的 ChatGPT Pro 权益&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;ChatGPT 本身已经有免费版本。如果你只是普通用户，并没有维护开源项目，那么这篇文章不适合把它理解成“免费领取 Pro”的教程。&lt;/p&gt;

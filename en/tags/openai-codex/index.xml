@@ -1,4 +1,214 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – OpenAI Codex</title><link>https://silenceper.com/en/tags/openai-codex/</link><description>Recent content in OpenAI Codex on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en-US</language><lastBuildDate>Thu, 07 May 2026 22:30:00 +0800</lastBuildDate><atom:link href="https://silenceper.com/en/tags/openai-codex/index.xml" rel="self" type="application/rss+xml"/><item><title>How to Apply for ChatGPT Pro for Free: OpenAI Codex for Open Source Guide</title><link>https://silenceper.com/en/article/2026-05-07-free-chatgpt-pro-codex-for-oss/</link><pubDate>Thu, 07 May 2026 22:30:00 +0800</pubDate><guid>https://silenceper.com/en/article/2026-05-07-free-chatgpt-pro-codex-for-oss/</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – OpenAI Codex</title><link>https://silenceper.com/en/tags/openai-codex/</link><description>Recent content in OpenAI Codex on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en-US</language><lastBuildDate>Wed, 20 May 2026 09:06:51 +0800</lastBuildDate><atom:link href="https://silenceper.com/en/tags/openai-codex/index.xml" rel="self" type="application/rss+xml"/><item><title>Marketing Skills for AI Agents: A Marketing Workflow Pack for AI Agents</title><link>https://silenceper.com/en/article/2026-05-20-marketing-skills-ai-agents/</link><pubDate>Wed, 20 May 2026 09:06:51 +0800</pubDate><guid>https://silenceper.com/en/article/2026-05-20-marketing-skills-ai-agents/</guid><description>
+&lt;p&gt;Project: &lt;a href="https://github.com/coreyhaines31/marketingskills" target="_blank" rel="noopener"&gt;https://github.com/coreyhaines31/marketingskills&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;One-sentence positioning&lt;span class="hx-absolute -hx-mt-20" id="one-sentence-positioning"&gt;&lt;/span&gt;
+&lt;a href="#one-sentence-positioning" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;code&gt;marketingskills&lt;/code&gt; is a marketing skill pack for AI coding agents. It gives Claude Code, OpenAI Codex, Cursor, Windsurf, and other agents more professional workflows and evaluation criteria when handling SEO, conversion optimization, copywriting, ads, analytics, and growth tasks.&lt;/p&gt;
+&lt;h2&gt;Basic information&lt;span class="hx-absolute -hx-mt-20" id="basic-information"&gt;&lt;/span&gt;
+&lt;a href="#basic-information" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Item&lt;/th&gt;
+&lt;th&gt;Details&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Project&lt;/td&gt;
+&lt;td&gt;Marketing Skills for AI Agents&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;GitHub&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;coreyhaines31/marketingskills&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Author&lt;/td&gt;
+&lt;td&gt;Corey Haines&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Website&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://marketing-skills.com" target="_blank" rel="noopener"&gt;https://marketing-skills.com&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;License&lt;/td&gt;
+&lt;td&gt;MIT&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Main languages&lt;/td&gt;
+&lt;td&gt;JavaScript / Shell&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Latest version&lt;/td&gt;
+&lt;td&gt;v2.0.1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Repository popularity&lt;/td&gt;
+&lt;td&gt;About 29.5k Stars and 4.8k Forks&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Target agents&lt;/td&gt;
+&lt;td&gt;Claude Code, OpenAI Codex, Cursor, Windsurf, and other AI agents that support the Agent Skills spec&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2&gt;What problem does it solve?&lt;span class="hx-absolute -hx-mt-20" id="what-problem-does-it-solve"&gt;&lt;/span&gt;
+&lt;a href="#what-problem-does-it-solve" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Many AI coding agents are already good at writing code. But once the task moves into marketing, the quality often becomes inconsistent.&lt;/p&gt;
+&lt;p&gt;For example, you might ask an agent to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;optimize the conversion rate of a landing page;&lt;/li&gt;
+&lt;li&gt;write a cold email sequence;&lt;/li&gt;
+&lt;li&gt;run an SEO audit;&lt;/li&gt;
+&lt;li&gt;plan an A/B test;&lt;/li&gt;
+&lt;li&gt;design a product launch plan;&lt;/li&gt;
+&lt;li&gt;analyze churn and retention problems.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The agent can usually produce suggestions, but those suggestions often stay at a generic level: they look reasonable, yet lack concrete workflows, checklists, and marketing judgment.&lt;/p&gt;
+&lt;p&gt;That is the problem &lt;code&gt;marketingskills&lt;/code&gt; tries to solve. It turns common marketing tasks into reusable Agent Skills, so an AI agent does not have to improvise every time it meets a marketing scenario. Instead, it can follow a more professional workflow.&lt;/p&gt;
+&lt;h2&gt;Core capabilities&lt;span class="hx-absolute -hx-mt-20" id="core-capabilities"&gt;&lt;/span&gt;
+&lt;a href="#core-capabilities" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;1. Covers a full marketing workflow&lt;span class="hx-absolute -hx-mt-20" id="1-covers-a-full-marketing-workflow"&gt;&lt;/span&gt;
+&lt;a href="#1-covers-a-full-marketing-workflow" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;This project is not a single prompt. It is a skill library built around marketing work. The skills listed in the README cover multiple stages from acquisition to conversion and retention.&lt;/p&gt;
+&lt;p&gt;Common areas include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;SEO and content: &lt;code&gt;seo-audit&lt;/code&gt;, &lt;code&gt;ai-seo&lt;/code&gt;, &lt;code&gt;schema&lt;/code&gt;, &lt;code&gt;content-strategy&lt;/code&gt;, &lt;code&gt;programmatic-seo&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Conversion optimization: &lt;code&gt;cro&lt;/code&gt;, &lt;code&gt;signup&lt;/code&gt;, &lt;code&gt;onboarding&lt;/code&gt;, &lt;code&gt;popups&lt;/code&gt;, &lt;code&gt;paywalls&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Copywriting and content production: &lt;code&gt;copywriting&lt;/code&gt;, &lt;code&gt;copy-editing&lt;/code&gt;, &lt;code&gt;cold-email&lt;/code&gt;, &lt;code&gt;emails&lt;/code&gt;, &lt;code&gt;social&lt;/code&gt;, &lt;code&gt;video&lt;/code&gt;, &lt;code&gt;image&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Ads and paid acquisition: &lt;code&gt;ads&lt;/code&gt;, &lt;code&gt;ad-creative&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Growth and retention: &lt;code&gt;referrals&lt;/code&gt;, &lt;code&gt;free-tools&lt;/code&gt;, &lt;code&gt;churn-prevention&lt;/code&gt;, &lt;code&gt;community-marketing&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Sales and GTM: &lt;code&gt;revops&lt;/code&gt;, &lt;code&gt;sales-enablement&lt;/code&gt;, &lt;code&gt;launch&lt;/code&gt;, &lt;code&gt;pricing&lt;/code&gt;, &lt;code&gt;competitors&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Strategy and research: &lt;code&gt;customer-research&lt;/code&gt;, &lt;code&gt;marketing-ideas&lt;/code&gt;, &lt;code&gt;marketing-psychology&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;That means it is not only helping you “write a piece of marketing copy.” It can support a much broader marketing task chain.&lt;/p&gt;
+&lt;h3&gt;2. Uses product context as the foundation&lt;span class="hx-absolute -hx-mt-20" id="2-uses-product-context-as-the-foundation"&gt;&lt;/span&gt;
+&lt;a href="#2-uses-product-context-as-the-foundation" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;One of the most important design choices in the project is the &lt;code&gt;product-marketing&lt;/code&gt; skill.&lt;/p&gt;
+&lt;p&gt;According to the README, other skills read &lt;code&gt;product-marketing&lt;/code&gt; first to understand the product, users, positioning, and market context before entering a specific task. This is important.&lt;/p&gt;
+&lt;p&gt;Marketing tasks are highly dependent on context. Different products have different users, use cases, pricing models, and competitors. Without a shared product context, AI can easily produce content that is “correct but useless.”&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;product-marketing&lt;/code&gt; works like a base profile for all later marketing tasks. It helps the agent understand what the product is, who it serves, what problem it solves, and why people should care before writing pages, emails, ads, or SEO content.&lt;/p&gt;
+&lt;h3&gt;3. Skills can work together&lt;span class="hx-absolute -hx-mt-20" id="3-skills-can-work-together"&gt;&lt;/span&gt;
+&lt;a href="#3-skills-can-work-together" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Another important characteristic of &lt;code&gt;marketingskills&lt;/code&gt; is that its skills are connected.&lt;/p&gt;
+&lt;p&gt;For example:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;copywriting&lt;/code&gt; can work with &lt;code&gt;cro&lt;/code&gt; and &lt;code&gt;ab-testing&lt;/code&gt; for landing page optimization and experiment design;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;revops&lt;/code&gt; can work with &lt;code&gt;sales-enablement&lt;/code&gt; and &lt;code&gt;cold-email&lt;/code&gt; for sales lead and outreach workflows;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;seo-audit&lt;/code&gt; can work with &lt;code&gt;schema&lt;/code&gt; and &lt;code&gt;ai-seo&lt;/code&gt; for search and AI-search optimization;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;customer-research&lt;/code&gt; can provide inputs for &lt;code&gt;copywriting&lt;/code&gt;, &lt;code&gt;cro&lt;/code&gt;, and &lt;code&gt;competitors&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This design is closer to real marketing work. Tasks are not isolated. Research, positioning, copy, channels, data, and experiments all influence each other.&lt;/p&gt;
+&lt;h3&gt;4. Supports mainstream AI coding agents&lt;span class="hx-absolute -hx-mt-20" id="4-supports-mainstream-ai-coding-agents"&gt;&lt;/span&gt;
+&lt;a href="#4-supports-mainstream-ai-coding-agents" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The project explicitly mentions support for:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Claude Code&lt;/li&gt;
+&lt;li&gt;OpenAI Codex&lt;/li&gt;
+&lt;li&gt;Cursor&lt;/li&gt;
+&lt;li&gt;Windsurf&lt;/li&gt;
+&lt;li&gt;other agents that support the Agent Skills spec&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This makes it feel more like a portable marketing capability pack than a prompt collection tied to a single AI product.&lt;/p&gt;
+&lt;p&gt;If a team already uses AI coding agents for engineering tasks, it can add this skill pack to the project and let the same agent assist with parts of growth, content, and conversion optimization work.&lt;/p&gt;
+&lt;h2&gt;Who is it for?&lt;span class="hx-absolute -hx-mt-20" id="who-is-it-for"&gt;&lt;/span&gt;
+&lt;a href="#who-is-it-for" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;This project is especially suitable for these groups:&lt;/p&gt;
+&lt;h3&gt;Technical founders&lt;span class="hx-absolute -hx-mt-20" id="technical-founders"&gt;&lt;/span&gt;
+&lt;a href="#technical-founders" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;They have a product and engineering ability, but may lack systematic marketing experience. The skill pack can help with positioning, landing pages, cold-start content, SEO, cold emails, and growth experiments.&lt;/p&gt;
+&lt;h3&gt;Indie hackers&lt;span class="hx-absolute -hx-mt-20" id="indie-hackers"&gt;&lt;/span&gt;
+&lt;a href="#indie-hackers" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Many indie developers do not struggle with building products as much as they struggle with acquiring users consistently. &lt;code&gt;marketingskills&lt;/code&gt; can turn common marketing actions into repeatable workflows and lower the startup cost.&lt;/p&gt;
+&lt;h3&gt;SaaS and AI tool teams&lt;span class="hx-absolute -hx-mt-20" id="saas-and-ai-tool-teams"&gt;&lt;/span&gt;
+&lt;a href="#saas-and-ai-tool-teams" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;These products usually need continuous work on content, conversion, trial activation, retention, and sales enablement materials. Skills such as CRO, SEO, onboarding, pricing, and sales enablement are especially relevant.&lt;/p&gt;
+&lt;h3&gt;Technical marketing teams using AI agents&lt;span class="hx-absolute -hx-mt-20" id="technical-marketing-teams-using-ai-agents"&gt;&lt;/span&gt;
+&lt;a href="#technical-marketing-teams-using-ai-agents" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;If a team already uses Claude Code, Codex, or Cursor for engineering work, it can also hand repetitive marketing workflows to agents: generating ad ideas, improving page copy, preparing competitor comparison pages, or designing experiment plans.&lt;/p&gt;
+&lt;h2&gt;Quick start&lt;span class="hx-absolute -hx-mt-20" id="quick-start"&gt;&lt;/span&gt;
+&lt;a href="#quick-start" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The recommended way is to install all skills with &lt;code&gt;npx skills&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx skills add coreyhaines31/marketingskills&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;If you only want to try a few common skills first, install selected skills:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx skills add coreyhaines31/marketingskills --skill product-marketing cro copywriting seo-audit&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;You can also list the available skills first:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx skills add coreyhaines31/marketingskills --list&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;After installation, you can ask an agent to handle tasks such as:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Rewrite the hero copy of our homepage based on the current product positioning.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Audit this landing page for conversion issues and prioritize the fixes.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Design an A/B test plan for the signup flow of this SaaS product.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Write a B2B cold email sequence and follow-up sequence based on our product information.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Plan an AI SEO content optimization workflow for this product.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h2&gt;Conclusion&lt;span class="hx-absolute -hx-mt-20" id="conclusion"&gt;&lt;/span&gt;
+&lt;a href="#conclusion" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The value of &lt;code&gt;marketingskills&lt;/code&gt; is not that it collects another batch of prompts. Its value is that it breaks marketing work into reusable, composable skill modules that AI agents can call automatically.&lt;/p&gt;
+&lt;p&gt;For developers and technical teams, it adds a marketing workflow layer to AI coding agents. It cannot replace real market judgment, but it can significantly lower the starting cost of marketing execution: from writing copy and doing SEO to planning conversion experiments and product launches, the agent has clearer processes to follow.&lt;/p&gt;
+&lt;p&gt;If you already use Claude Code, Codex, Cursor, or a similar agent for development work, and you also want AI to help with some growth and marketing tasks, &lt;code&gt;marketingskills&lt;/code&gt; is worth adding to your toolbox.&lt;/p&gt;</description></item><item><title>How to Apply for ChatGPT Pro for Free: OpenAI Codex for Open Source Guide</title><link>https://silenceper.com/en/article/2026-05-07-free-chatgpt-pro-codex-for-oss/</link><pubDate>Thu, 07 May 2026 22:30:00 +0800</pubDate><guid>https://silenceper.com/en/article/2026-05-07-free-chatgpt-pro-codex-for-oss/</guid><description>
 &lt;p&gt;&lt;img src="https://silenceper.com/img/20260507/codex-for-oss-official-page-screenshot.png" alt="OpenAI Developers Codex for Open Source official page screenshot" loading="lazy" /&gt;&lt;/p&gt;
 &lt;p&gt;Many people search for “how to use ChatGPT for free.” A more accurate version of that question is: &lt;strong&gt;how can eligible open-source maintainers apply for official ChatGPT Pro benefits through an OpenAI program?&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;ChatGPT already has a free tier. If you are not maintaining an open-source project, this is not a general “free Pro giveaway” guide.&lt;/p&gt;

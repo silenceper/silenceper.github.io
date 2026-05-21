@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Agent 记忆决策图</title>
+  <desc id="desc">一张展示 AI Agent 应该记住、应该重新验证、以及不应该保存内容的信息图。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f7fafc"/>
+      <stop offset="0.52" stop-color="#eef6f1"/>
+      <stop offset="1" stop-color="#f8f3ea"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="20" flood-color="#172033" flood-opacity="0.14"/>
+    </filter>
+    <style>
+      .title { font: 800 54px -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; fill: #14213d; letter-spacing: 0; }
+      .subtitle { font: 400 24px -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; fill: #4d5b6b; letter-spacing: 0; }
+      .card-title { font: 800 29px -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; fill: #152238; letter-spacing: 0; }
+      .card-text { font: 500 21px -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; fill: #405064; letter-spacing: 0; }
+      .small { font: 800 18px -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; fill: #6c7787; letter-spacing: 0; }
+      .pill-text { font: 800 18px -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; letter-spacing: 0; }
+      .rule { stroke: #c9d4df; stroke-width: 2; stroke-dasharray: 8 10; }
+      .arrow { stroke: #607086; stroke-width: 3; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    </style>
+    <marker id="arrowhead" markerWidth="12" markerHeight="12" refX="9" refY="6" orient="auto">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#607086"/>
+    </marker>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <circle cx="1380" cy="112" r="132" fill="#d7efe6" opacity="0.78"/>
+  <circle cx="190" cy="780" r="160" fill="#f2dfb8" opacity="0.38"/>
+
+  <text x="92" y="104" class="title">Persistent Memory 是过滤器，不是垃圾桶</text>
+  <text x="96" y="146" class="subtitle">只保存持续有用、仍然真实、并且会改变 Agent 后续行为的上下文。</text>
+
+  <g transform="translate(90 220)" filter="url(#shadow)">
+    <rect x="0" y="0" width="415" height="470" rx="26" fill="#ffffff"/>
+    <rect x="0" y="0" width="415" height="14" rx="7" fill="#2f8f6b"/>
+    <text x="38" y="64" class="small">应该记住</text>
+    <text x="38" y="112" class="card-title">稳定的工作上下文</text>
+    <text x="38" y="164" class="card-text">项目约定</text>
+    <text x="38" y="214" class="card-text">稳定用户偏好</text>
+    <text x="38" y="264" class="card-text">反复出现的故障模式</text>
+    <text x="38" y="314" class="card-text">有证据的决策</text>
+    <text x="38" y="364" class="card-text">工作流边界</text>
+    <rect x="38" y="410" width="212" height="36" rx="18" fill="#e5f4ee"/>
+    <text x="58" y="434" class="pill-text" fill="#247252">减少重复沟通</text>
+  </g>
+
+  <g transform="translate(592 220)" filter="url(#shadow)">
+    <rect x="0" y="0" width="415" height="470" rx="26" fill="#ffffff"/>
+    <rect x="0" y="0" width="415" height="14" rx="7" fill="#4f73d9"/>
+    <text x="38" y="64" class="small">需要重新验证</text>
+    <text x="38" y="112" class="card-title">会漂移的事实</text>
+    <text x="38" y="164" class="card-text">价格、日期、排期</text>
+    <text x="38" y="214" class="card-text">API 行为和版本发布</text>
+    <text x="38" y="264" class="card-text">当前分支状态</text>
+    <text x="38" y="314" class="card-text">远端服务状态</text>
+    <text x="38" y="364" class="card-text">外部来源说法</text>
+    <rect x="38" y="410" width="222" height="36" rx="18" fill="#e8eefc"/>
+    <text x="58" y="434" class="pill-text" fill="#355abc">记忆只是线索</text>
+  </g>
+
+  <g transform="translate(1094 220)" filter="url(#shadow)">
+    <rect x="0" y="0" width="415" height="470" rx="26" fill="#ffffff"/>
+    <rect x="0" y="0" width="415" height="14" rx="7" fill="#d45b4f"/>
+    <text x="38" y="64" class="small">不应该保存</text>
+    <text x="38" y="112" class="card-title">高风险或高噪音材料</text>
+    <text x="38" y="164" class="card-text">密钥和凭据</text>
+    <text x="38" y="214" class="card-text">原始私人对话</text>
+    <text x="38" y="264" class="card-text">未验证的猜测</text>
+    <text x="38" y="314" class="card-text">一次性临时状态</text>
+    <text x="38" y="364" class="card-text">敏感个人数据</text>
+    <rect x="38" y="410" width="222" height="36" rx="18" fill="#fcebea"/>
+    <text x="58" y="434" class="pill-text" fill="#b64037">召回风险更高</text>
+  </g>
+
+  <line x1="506" y1="455" x2="574" y2="455" class="arrow" marker-end="url(#arrowhead)"/>
+  <line x1="1008" y1="455" x2="1076" y2="455" class="arrow" marker-end="url(#arrowhead)"/>
+
+  <line x1="90" y1="750" x2="1510" y2="750" class="rule"/>
+  <text x="92" y="804" class="card-title">实用判断</text>
+  <text x="92" y="846" class="subtitle">如果不能追溯、很快过期，或本来就应该回源检查，就不要把它变成长期记忆。</text>
+</svg>
