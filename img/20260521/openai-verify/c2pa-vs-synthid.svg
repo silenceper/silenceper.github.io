@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="820" viewBox="0 0 1400 820">
+
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#0f172a"/>
+    <stop offset="55%" stop-color="#111827"/>
+    <stop offset="100%" stop-color="#1e293b"/>
+  </linearGradient>
+  <linearGradient id="green" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#10b981"/>
+    <stop offset="100%" stop-color="#22c55e"/>
+  </linearGradient>
+  <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+    <feDropShadow dx="0" dy="14" stdDeviation="14" flood-color="#000" flood-opacity="0.28"/>
+  </filter>
+  <style>
+    .title{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans CJK SC','Microsoft YaHei',Arial,sans-serif;font-size:50px;font-weight:800;fill:#f8fafc}
+    .sub{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans CJK SC','Microsoft YaHei',Arial,sans-serif;font-size:24px;fill:#cbd5e1}
+    .label{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans CJK SC','Microsoft YaHei',Arial,sans-serif;font-size:25px;font-weight:700;fill:#0f172a}
+    .small{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans CJK SC','Microsoft YaHei',Arial,sans-serif;font-size:19px;fill:#475569}
+    .white{fill:#fff}.muted{fill:#94a3b8}.accent{fill:#34d399}.stroke{stroke:#334155;stroke-width:2;fill:none}
+  </style>
+</defs>
+
+<rect width="1400" height="820" fill="#f8fafc"/>
+<rect x="0" y="0" width="1400" height="205" fill="url(#bg)"/>
+<text x="90" y="90" class="title">C2PA 与 SynthID：两种不同的“来源信号”</text>
+<text x="92" y="138" class="sub">一个更像文件身份证，一个更像嵌入图像内部的隐形标记</text>
+
+<g filter="url(#shadow)">
+  <rect x="90" y="260" width="570" height="420" rx="36" fill="#ffffff"/>
+  <rect x="135" y="315" width="116" height="145" rx="16" fill="#e2e8f0" stroke="#94a3b8" stroke-width="3"/>
+  <rect x="158" y="348" width="70" height="10" rx="5" fill="#64748b"/>
+  <rect x="158" y="380" width="70" height="10" rx="5" fill="#64748b"/>
+  <rect x="158" y="412" width="48" height="10" rx="5" fill="#64748b"/>
+  <circle cx="253" cy="315" r="28" fill="#10b981"/>
+  <path d="M240 316 L250 327 L267 302" fill="none" stroke="white" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="318" y="348" class="label">C2PA 内容凭证</text>
+  <text x="318" y="392" class="small">把来源信息写入图片元数据</text>
+  <text x="318" y="428" class="small">适合证明图片由 ChatGPT / API 等工具创建</text>
+  <text x="318" y="464" class="small">限制：转发、压缩或编辑后可能被清除</text>
+  <rect x="135" y="535" width="480" height="72" rx="18" fill="#f1f5f9"/>
+  <text x="375" y="580" text-anchor="middle" class="small">强证明，但依赖元数据还在</text>
+</g>
+
+<g filter="url(#shadow)">
+  <rect x="740" y="260" width="570" height="420" rx="36" fill="#ffffff"/>
+  <rect x="785" y="315" width="150" height="145" rx="20" fill="#dbeafe"/>
+  <path d="M815 420 C850 350 890 350 918 420" fill="none" stroke="#38bdf8" stroke-width="8" opacity="0.85"/>
+  <path d="M805 382 C850 322 892 322 930 382" fill="none" stroke="#0ea5e9" stroke-width="5" opacity="0.45"/>
+  <circle cx="860" cy="388" r="17" fill="#10b981" opacity="0.9"/>
+  <text x="998" y="348" class="label">SynthID 数字水印</text>
+  <text x="998" y="392" class="small">把不可见特征嵌入图像内容本身</text>
+  <text x="998" y="428" class="small">目标是抵御裁剪、滤镜和有损压缩</text>
+  <text x="998" y="464" class="small">限制：强编辑、质量下降或旧图仍可能失败</text>
+  <rect x="785" y="535" width="480" height="72" rx="18" fill="#f1f5f9"/>
+  <text x="1025" y="580" text-anchor="middle" class="small">更耐处理，但也不是万能检测</text>
+</g>
+</svg>
