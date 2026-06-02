@@ -1,0 +1,169 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – Content Creation</title><link>https://silenceper.com/en/tags/content-creation/</link><description>Recent content in Content Creation on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en-US</language><lastBuildDate>Sat, 23 May 2026 13:01:30 +0800</lastBuildDate><atom:link href="https://silenceper.com/en/tags/content-creation/index.xml" rel="self" type="application/rss+xml"/><item><title>HTML Anything: Let Local AI Agents Generate Publish-Ready HTML</title><link>https://silenceper.com/en/article/2026-05-23-html-anything-agentic-html-editor/</link><pubDate>Sat, 23 May 2026 13:01:30 +0800</pubDate><guid>https://silenceper.com/en/article/2026-05-23-html-anything-agentic-html-editor/</guid><description>
+&lt;h1&gt;HTML Anything: Let Local AI Agents Generate Publish-Ready HTML&lt;/h1&gt;&lt;p&gt;&lt;img src="https://silenceper.com/img/20260523/banner.png" alt="HTML Anything official hero image" loading="lazy" /&gt;&lt;/p&gt;
+&lt;h2&gt;One-line positioning&lt;span class="hx-absolute -hx-mt-20" id="one-line-positioning"&gt;&lt;/span&gt;
+&lt;a href="#one-line-positioning" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;HTML Anything is a local-first agentic HTML editor: it takes Markdown, tables, drafts, and data, then asks the AI coding agent already logged in on your machine to generate publish-ready single-file HTML or PNG.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Project: &lt;a href="https://github.com/nexu-io/html-anything" target="_blank" rel="noopener"&gt;https://github.com/nexu-io/html-anything&lt;/a&gt;&lt;br&gt;
+Live demo: &lt;a href="https://open-design.ai/html-anything/" target="_blank" rel="noopener"&gt;https://open-design.ai/html-anything/&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;Basic information&lt;span class="hx-absolute -hx-mt-20" id="basic-information"&gt;&lt;/span&gt;
+&lt;a href="#basic-information" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Item&lt;/th&gt;
+&lt;th&gt;Details&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Repository&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;nexu-io/html-anything&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Positioning&lt;/td&gt;
+&lt;td&gt;An HTML editor for the agent era&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Main stack&lt;/td&gt;
+&lt;td&gt;Next.js, React, Tailwind, SSE, local CLI agent execution&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;License&lt;/td&gt;
+&lt;td&gt;Apache-2.0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Current traction&lt;/td&gt;
+&lt;td&gt;About 4.6k stars / 476 forks&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Supported agent CLIs&lt;/td&gt;
+&lt;td&gt;Claude Code, Cursor Agent, Codex, Gemini CLI, GitHub Copilot CLI, OpenCode, Qwen Coder, Aider&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Typical outputs&lt;/td&gt;
+&lt;td&gt;HTML, PNG, WeChat / Zhihu-ready rich content, social images, data reports, decks, posters, video frames&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2&gt;What problem does it solve?&lt;span class="hx-absolute -hx-mt-20" id="what-problem-does-it-solve"&gt;&lt;/span&gt;
+&lt;a href="#what-problem-does-it-solve" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Markdown is great for drafting, but it is not always the final format readers should see.&lt;/p&gt;
+&lt;p&gt;When content is meant for WeChat, Zhihu, X, Xiaohongshu, data reports, long images, decks, or posters, Markdown is usually only the first step. You still need layout, typography, spacing, screenshots, and platform-specific paste compatibility.&lt;/p&gt;
+&lt;p&gt;HTML Anything makes a simple bet: &lt;strong&gt;if the final reader-facing format is HTML or an image, the AI agent should generate that final artifact directly instead of asking the user to keep tweaking styles by hand.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;It changes the workflow from:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Write Markdown → manually format → adjust CSS → screenshot / paste into platforms → fix formatting again&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;to:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Enter content → choose a template → local agent generates HTML → preview → copy or export&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h2&gt;Core features&lt;span class="hx-absolute -hx-mt-20" id="core-features"&gt;&lt;/span&gt;
+&lt;a href="#core-features" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;1. Automatically detects local AI agents&lt;span class="hx-absolute -hx-mt-20" id="1-automatically-detects-local-ai-agents"&gt;&lt;/span&gt;
+&lt;a href="#1-automatically-detects-local-ai-agents" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;HTML Anything does not ask you to configure another API key. It scans your local &lt;code&gt;PATH&lt;/code&gt; and detects coding-agent CLIs that are already installed and logged in.&lt;/p&gt;
+&lt;p&gt;Supported tools include Claude Code, Cursor Agent, OpenAI Codex, Gemini CLI, GitHub Copilot CLI, OpenCode, Qwen Coder, and Aider.&lt;/p&gt;
+&lt;p&gt;As long as you have already logged in through the terminal, HTML Anything can reuse the existing session and treat the local agent as the engine for generating HTML.&lt;/p&gt;
+&lt;h3&gt;2. Uses Skill templates to control output quality&lt;span class="hx-absolute -hx-mt-20" id="2-uses-skill-templates-to-control-output-quality"&gt;&lt;/span&gt;
+&lt;a href="#2-uses-skill-templates-to-control-output-quality" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The project ships with 75 Skill templates covering documents, decks, posters, social cards, web prototypes, data reports, and Hyperframes video frames.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260523/deck-guizang-editorial.png" alt="HTML Anything Skill example: deck-guizang-editorial" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;These Skills are not just visual themes. They are templates with explicit design constraints: font stacks, an 8px baseline grid, color contrast, radius, shadows, and the requirement to use real user-provided data. The goal is to reduce rough, generic AI-looking output.&lt;/p&gt;
+&lt;h3&gt;3. Supports multiple content surfaces&lt;span class="hx-absolute -hx-mt-20" id="3-supports-multiple-content-surfaces"&gt;&lt;/span&gt;
+&lt;a href="#3-supports-multiple-content-surfaces" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Beyond regular articles, HTML Anything is closer to a “content artifact generator.” The same input can become different deliverables:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Magazine-style articles&lt;/li&gt;
+&lt;li&gt;Keynote-style decks&lt;/li&gt;
+&lt;li&gt;Resumes&lt;/li&gt;
+&lt;li&gt;Posters&lt;/li&gt;
+&lt;li&gt;Xiaohongshu cards&lt;/li&gt;
+&lt;li&gt;X / Tweet cards&lt;/li&gt;
+&lt;li&gt;Web prototypes&lt;/li&gt;
+&lt;li&gt;Data reports&lt;/li&gt;
+&lt;li&gt;Hyperframes / Remotion video frames&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260523/doc-kami-parchment.png" alt="HTML Anything document-style example: doc-kami-parchment" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;The value is that a piece of content is no longer limited to plain Markdown. It can be shaped into different visual artifacts depending on where it will be published.&lt;/p&gt;
+&lt;h3&gt;4. Streams generation into a sandboxed preview&lt;span class="hx-absolute -hx-mt-20" id="4-streams-generation-into-a-sandboxed-preview"&gt;&lt;/span&gt;
+&lt;a href="#4-streams-generation-into-a-sandboxed-preview" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The generation flow uses SSE. HTML produced by the agent is appended into a frontend iframe in real time, so the user can watch the page appear as it is generated.&lt;/p&gt;
+&lt;p&gt;The overall structure looks like this:&lt;/p&gt;
+&lt;pre class="mermaid hx-mt-6"&gt;
+flowchart TD
+A[User input: Markdown / CSV / Excel / JSON / draft] --&amp;gt; B[Choose local agent]
+B --&amp;gt; C[Choose Skill template]
+C --&amp;gt; D[POST /api/convert]
+D --&amp;gt; E[Local CLI agent generates HTML]
+E --&amp;gt; F[SSE streaming response]
+F --&amp;gt; G[Sandbox iframe live preview]
+G --&amp;gt; H[Copy to platform or export HTML / PNG]
+&lt;/pre&gt;&lt;p&gt;The preview runs inside a sandboxed iframe, which isolates generated content while still letting the user confirm the final result directly in the browser.&lt;/p&gt;
+&lt;h3&gt;5. Exports directly to publishing platforms&lt;span class="hx-absolute -hx-mt-20" id="5-exports-directly-to-publishing-platforms"&gt;&lt;/span&gt;
+&lt;a href="#5-exports-directly-to-publishing-platforms" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;After generation, the result can be copied or exported for different destinations:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;WeChat Official Account: inline CSS for fewer style losses when pasting&lt;/li&gt;
+&lt;li&gt;Zhihu: rich text and formula-friendly handling&lt;/li&gt;
+&lt;li&gt;X / Weibo / Xiaohongshu: high-DPI PNG export from the preview area&lt;/li&gt;
+&lt;li&gt;Local files: download single-file &lt;code&gt;.html&lt;/code&gt; or &lt;code&gt;.png&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260523/video-hyperframes.png" alt="HTML Anything video-frame example: video-hyperframes" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;This makes it more than a page generator. It is closer to a publishing-oriented workbench.&lt;/p&gt;
+&lt;h2&gt;Who is it for?&lt;span class="hx-absolute -hx-mt-20" id="who-is-it-for"&gt;&lt;/span&gt;
+&lt;a href="#who-is-it-for" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;HTML Anything is a good fit for:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;People who often publish Markdown articles to WeChat, Zhihu, or social platforms&lt;/li&gt;
+&lt;li&gt;Content creators who want to quickly produce long images, posters, decks, or data reports&lt;/li&gt;
+&lt;li&gt;Developers already using local AI coding agents such as Claude Code, Cursor, or Codex&lt;/li&gt;
+&lt;li&gt;Teams that want to move from “write first, format later” to “generate the deliverable directly”&lt;/li&gt;
+&lt;li&gt;Developers interested in agentic editors, AI design workflows, and Skill-template systems&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Quick start&lt;span class="hx-absolute -hx-mt-20" id="quick-start"&gt;&lt;/span&gt;
+&lt;a href="#quick-start" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git clone https://github.com/nexu-io/html-anything
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; html-anything
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;pnpm install
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;pnpm -F @html-anything/next dev&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Then open:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;http://localhost:3000&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Basic workflow:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Choose a locally detected AI agent from the top bar&lt;/li&gt;
+&lt;li&gt;Choose a Skill template&lt;/li&gt;
+&lt;li&gt;Paste Markdown, tables, JSON, SQL, or a draft&lt;/li&gt;
+&lt;li&gt;Press &lt;code&gt;⌘ + Enter&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Preview the generated result in the iframe&lt;/li&gt;
+&lt;li&gt;Copy it to a platform, or export &lt;code&gt;.html&lt;/code&gt; / &lt;code&gt;.png&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;Conclusion&lt;span class="hx-absolute -hx-mt-20" id="conclusion"&gt;&lt;/span&gt;
+&lt;a href="#conclusion" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;HTML Anything is not just another HTML editor. Its real value is connecting local AI agents, design templates, and platform exports into one content-delivery workflow.&lt;/p&gt;
+&lt;p&gt;It targets a very concrete problem: &lt;strong&gt;you already have the content, but you do not want to spend more time formatting, screenshotting, and adapting it for each platform.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;If you already use tools like Claude Code, Cursor, or Codex, HTML Anything is a natural extension: let the agent generate not only code, but also the final artifact readers will actually see.&lt;/p&gt;</description></item></channel></rss>

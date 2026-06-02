@@ -1,4 +1,185 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – 工作流</title><link>https://silenceper.com/tags/%E5%B7%A5%E4%BD%9C%E6%B5%81/</link><description>Recent content in 工作流 on silenceper</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 10 Mar 2026 12:50:00 +0800</lastBuildDate><atom:link href="https://silenceper.com/tags/%E5%B7%A5%E4%BD%9C%E6%B5%81/index.xml" rel="self" type="application/rss+xml"/><item><title>OpenClaw Skills 去哪找？我常用的 6 个渠道与实用命令</title><link>https://silenceper.com/article/2026-03-10-where-to-find-openclaw-skills/</link><pubDate>Tue, 10 Mar 2026 12:50:00 +0800</pubDate><guid>https://silenceper.com/article/2026-03-10-where-to-find-openclaw-skills/</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – 工作流</title><link>https://silenceper.com/tags/%E5%B7%A5%E4%BD%9C%E6%B5%81/</link><description>Recent content in 工作流 on silenceper</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sat, 23 May 2026 15:40:00 +0800</lastBuildDate><atom:link href="https://silenceper.com/tags/%E5%B7%A5%E4%BD%9C%E6%B5%81/index.xml" rel="self" type="application/rss+xml"/><item><title>Codex 已经不只是写代码工具，而是在变成长任务工作台</title><link>https://silenceper.com/article/2026-05-23-codex-long-task-workbench/</link><pubDate>Sat, 23 May 2026 15:40:00 +0800</pubDate><guid>https://silenceper.com/article/2026-05-23-codex-long-task-workbench/</guid><description>
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260509/codex-app-screenshot.webp" alt="Codex App 工作区界面" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;我最近对 Codex 的感受很明确：它已经不只是一个“帮我写代码”的工具。&lt;/p&gt;
+&lt;p&gt;更准确地说，&lt;strong&gt;Codex 正在从代码生成器，变成一个长任务工作台。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;它的核心变化不是多一个按钮，而是把线程、工具、权限、验证、自动化、记忆和项目规则串在一起，让你可以把一个任务交给它推进，中途接管、纠偏、复核结果。&lt;/p&gt;
+&lt;h2&gt;一句话定位&lt;span class="hx-absolute -hx-mt-20" id="一句话定位"&gt;&lt;/span&gt;
+&lt;a href="#%e4%b8%80%e5%8f%a5%e8%af%9d%e5%ae%9a%e4%bd%8d" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;以前的 Codex 更像“帮我改这段代码”；现在更像“围绕这个目标，帮我持续推进到可验证结果”。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;这类工具的关键不是一次生成多漂亮，而是能不能做到：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;任务不断线：同一个 thread 里保留上下文和决策；&lt;/li&gt;
+&lt;li&gt;过程可接管：你可以随时补充背景、改方向、批准下一步；&lt;/li&gt;
+&lt;li&gt;结果可验证：跑测试、看 diff、截屏、打开浏览器检查；&lt;/li&gt;
+&lt;li&gt;经验可沉淀：把重复流程写进 &lt;code&gt;AGENTS.md&lt;/code&gt;、Skill 或 automation。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;我会怎么用&lt;span class="hx-absolute -hx-mt-20" id="我会怎么用"&gt;&lt;/span&gt;
+&lt;a href="#%e6%88%91%e4%bc%9a%e6%80%8e%e4%b9%88%e7%94%a8" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;1. 给每个重要任务开一个长期线程&lt;span class="hx-absolute -hx-mt-20" id="1-给每个重要任务开一个长期线程"&gt;&lt;/span&gt;
+&lt;a href="#1-%e7%bb%99%e6%af%8f%e4%b8%aa%e9%87%8d%e8%a6%81%e4%bb%bb%e5%8a%a1%e5%bc%80%e4%b8%80%e4%b8%aa%e9%95%bf%e6%9c%9f%e7%ba%bf%e7%a8%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;不要把 Codex 当一次性问答窗口用。&lt;/p&gt;
+&lt;p&gt;一个 bug、一篇文章、一次重构、一个发布流程，都应该有自己的 thread。这样它能保留前面读过的文件、做过的判断、跑过的命令和你给过的反馈。&lt;/p&gt;
+&lt;p&gt;我的提示词一般会这样写：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;目标：把这个问题从定位推进到可验证修复。
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;背景：这是线上反馈，相关模块可能在 xxx。
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;约束：不要改无关文件，不要重构接口，不要碰 public 构建产物。
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;完成标准：能解释根因，代码已修改，测试或本地验证通过。
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;工作方式：先读代码和日志，给出判断，再动手改。&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;重点是把“完成标准”写清楚。Codex 不怕任务长，怕的是目标模糊。&lt;/p&gt;
+&lt;h3&gt;2. 让它用工具验证，而不是只给结论&lt;span class="hx-absolute -hx-mt-20" id="2-让它用工具验证而不是只给结论"&gt;&lt;/span&gt;
+&lt;a href="#2-%e8%ae%a9%e5%ae%83%e7%94%a8%e5%b7%a5%e5%85%b7%e9%aa%8c%e8%af%81%e8%80%8c%e4%b8%8d%e6%98%af%e5%8f%aa%e7%bb%99%e7%bb%93%e8%ae%ba" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;长任务最容易出问题的地方，是 Agent 自己觉得完成了，但你没有证据。&lt;/p&gt;
+&lt;p&gt;所以我更喜欢让 Codex 每一步都留下可检查的东西：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;代码任务：&lt;code&gt;git diff&lt;/code&gt;、测试命令、失败日志、修复后的输出；&lt;/li&gt;
+&lt;li&gt;前端任务：本地页面截图、浏览器控制台、关键交互验证；&lt;/li&gt;
+&lt;li&gt;内容任务：来源链接、引用边界、最终 Markdown 文件；&lt;/li&gt;
+&lt;li&gt;发布任务：dry run、构建产物、部署日志、回滚方式。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260509/codex-in-app-browser.webp" alt="Codex in-app browser 用于本地页面验证" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;这也是 Codex 变成“工作台”的原因：它不只是写文本，还能把终端、文件、浏览器和 diff 放到同一个任务链路里。&lt;/p&gt;
+&lt;h3&gt;3. 把重复要求写进项目规则&lt;span class="hx-absolute -hx-mt-20" id="3-把重复要求写进项目规则"&gt;&lt;/span&gt;
+&lt;a href="#3-%e6%8a%8a%e9%87%8d%e5%a4%8d%e8%a6%81%e6%b1%82%e5%86%99%e8%bf%9b%e9%a1%b9%e7%9b%ae%e8%a7%84%e5%88%99" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;如果你每次都要提醒：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;不要改 public
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;默认中文
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;先跑 hugo --renderToMemory --minify
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;文章图片放到 static/img/YYYYMMDD&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;那就不应该每次手动说一遍。&lt;/p&gt;
+&lt;p&gt;更好的做法是写进项目里的 &lt;code&gt;AGENTS.md&lt;/code&gt;，或者沉淀成一个 Skill。这样 Codex 进入这个仓库时，就知道默认边界、语言风格、校验命令和不能碰的文件。&lt;/p&gt;
+&lt;p&gt;这件事很小，但对长任务很关键。因为长任务不是靠单次提示词撑住的，而是靠稳定规则减少偏航。&lt;/p&gt;
+&lt;h3&gt;4. 把重复任务变成 automation&lt;span class="hx-absolute -hx-mt-20" id="4-把重复任务变成-automation"&gt;&lt;/span&gt;
+&lt;a href="#4-%e6%8a%8a%e9%87%8d%e5%a4%8d%e4%bb%bb%e5%8a%a1%e5%8f%98%e6%88%90-automation" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;OpenAI 官方也在强调 Automations：让 Codex 按计划回来做重复任务，然后把结果交给你 review。&lt;/p&gt;
+&lt;p&gt;我觉得适合先自动化的不是“高风险发布”，而是这些低风险、强重复、可检查的任务：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;每周整理最近文章草稿；&lt;/li&gt;
+&lt;li&gt;每天扫一次仓库里的 TODO / failing tests；&lt;/li&gt;
+&lt;li&gt;定期总结 GitHub issue / PR 状态；&lt;/li&gt;
+&lt;li&gt;固定检查站点构建和 SEO 输出；&lt;/li&gt;
+&lt;li&gt;给长期项目生成一份进展摘要。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;一个可用的 automation 提示词可以是：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;每周五下午回到这个线程，检查本周新增文章和草稿。
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;输出三部分：
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;1. 已发布文章列表；
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;2. 可以继续优化的标题或配图；
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;3. 下周最值得写的 3 个选题。
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;只做总结和建议，不要自动改文件。&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;先让它做“可复核的整理”，再逐步交给它执行。&lt;/p&gt;
+&lt;h3&gt;5. 手机端接管适合用来“不断线”&lt;span class="hx-absolute -hx-mt-20" id="5-手机端接管适合用来不断线"&gt;&lt;/span&gt;
+&lt;a href="#5-%e6%89%8b%e6%9c%ba%e7%ab%af%e6%8e%a5%e7%ae%a1%e9%80%82%e5%90%88%e7%94%a8%e6%9d%a5%e4%b8%8d%e6%96%ad%e7%ba%bf" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;OpenAI 近期把 Codex 接进 ChatGPT mobile app，一个重要价值就是：Agent 跑长任务时，你不一定要一直坐在电脑前。&lt;/p&gt;
+&lt;p&gt;比如它中途问你：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;这个方案选 A 还是 B？&lt;/li&gt;
+&lt;li&gt;能不能运行某个命令？&lt;/li&gt;
+&lt;li&gt;这个 diff 是否继续扩大？&lt;/li&gt;
+&lt;li&gt;需要不要改测试？&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这些决策如果能在手机上及时回复，长任务就不会卡在一个小确认上。&lt;/p&gt;
+&lt;p&gt;但我不会把手机端理解成“远程让 AI 随便改生产环境”。更合理的用法是：&lt;strong&gt;让它继续推进调查、整理、验证和草稿，关键动作仍然人工确认。&lt;/strong&gt;&lt;/p&gt;
+&lt;h2&gt;一个可直接复制的长任务模板&lt;span class="hx-absolute -hx-mt-20" id="一个可直接复制的长任务模板"&gt;&lt;/span&gt;
+&lt;a href="#%e4%b8%80%e4%b8%aa%e5%8f%af%e7%9b%b4%e6%8e%a5%e5%a4%8d%e5%88%b6%e7%9a%84%e9%95%bf%e4%bb%bb%e5%8a%a1%e6%a8%a1%e6%9d%bf" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;下次你想让 Codex 做一个完整任务，可以直接从这个模板开始：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;目标：
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;请完成 [具体任务]，直到达到 [可验证结束状态]。
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;背景：
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- 业务背景：
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- 相关路径：
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- 已知问题：
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;约束：
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- 不要修改：
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- 不要做：
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- 必须遵守：
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;工作方式：
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;1. 先阅读相关文件和日志；
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;2. 给出根因或执行计划；
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;3. 等我确认后再修改高风险内容；
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;4. 修改后必须运行验证命令；
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;5. 最后用文件、命令和结果说明完成情况。
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;完成标准：
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- [ ] 代码 / 文档已修改；
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- [ ] 验证命令通过；
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- [ ] 关键风险已说明；
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- [ ] 没有触碰无关文件。&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;如果任务特别长，可以再加一句：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;如果上下文变长，请先总结当前状态、已做决策、剩余任务，再继续。&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h2&gt;不适合直接放手的场景&lt;span class="hx-absolute -hx-mt-20" id="不适合直接放手的场景"&gt;&lt;/span&gt;
+&lt;a href="#%e4%b8%8d%e9%80%82%e5%90%88%e7%9b%b4%e6%8e%a5%e6%94%be%e6%89%8b%e7%9a%84%e5%9c%ba%e6%99%af" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Codex 变强了，但不代表所有事情都应该全自动。&lt;/p&gt;
+&lt;p&gt;我会保留人工确认的场景包括：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;删除生产数据；&lt;/li&gt;
+&lt;li&gt;修改账号、安全、支付、密钥配置；&lt;/li&gt;
+&lt;li&gt;大规模重构公共接口；&lt;/li&gt;
+&lt;li&gt;没有回滚方案的部署；&lt;/li&gt;
+&lt;li&gt;涉及隐私数据的网页操作。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;长任务工作台的价值，是让人从“每一步手动操作”变成“在关键节点做判断”。不是把判断也一起交出去。&lt;/p&gt;
+&lt;h2&gt;结论&lt;span class="hx-absolute -hx-mt-20" id="结论"&gt;&lt;/span&gt;
+&lt;a href="#%e7%bb%93%e8%ae%ba" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Codex 最值得关注的变化，不是它又多会写几行代码，而是它开始能围绕一个目标持续工作。&lt;/p&gt;
+&lt;p&gt;对我来说，实用的用法就五个：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;一个重要任务一个 thread；&lt;/li&gt;
+&lt;li&gt;开始前写清完成标准；&lt;/li&gt;
+&lt;li&gt;让它用工具留下验证证据；&lt;/li&gt;
+&lt;li&gt;把重复规则写进 &lt;code&gt;AGENTS.md&lt;/code&gt; 或 Skill；&lt;/li&gt;
+&lt;li&gt;低风险重复任务再做 automation。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;如果你还在把 Codex 当“代码补全 + 聊天窗口”，可以试着换一种提示方式：不要只问它“怎么写”，而是给它一个目标、约束和验收标准，让它像一个可接管的工作台一样推进。&lt;/p&gt;
+&lt;h2&gt;参考&lt;span class="hx-absolute -hx-mt-20" id="参考"&gt;&lt;/span&gt;
+&lt;a href="#%e5%8f%82%e8%80%83" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;OpenAI：&lt;a href="https://openai.com/index/introducing-the-codex-app/" target="_blank" rel="noopener"&gt;https://openai.com/index/introducing-the-codex-app/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;OpenAI：&lt;a href="https://openai.com/index/work-with-codex-from-anywhere/" target="_blank" rel="noopener"&gt;https://openai.com/index/work-with-codex-from-anywhere/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;OpenAI Academy：&lt;a href="https://openai.com/academy/codex-automations/" target="_blank" rel="noopener"&gt;https://openai.com/academy/codex-automations/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;OpenAI Developers：&lt;a href="https://developers.openai.com/codex/use-cases/follow-goals" target="_blank" rel="noopener"&gt;https://developers.openai.com/codex/use-cases/follow-goals&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description></item><item><title>OpenClaw Skills 去哪找？我常用的 6 个渠道与实用命令</title><link>https://silenceper.com/article/2026-03-10-where-to-find-openclaw-skills/</link><pubDate>Tue, 10 Mar 2026 12:50:00 +0800</pubDate><guid>https://silenceper.com/article/2026-03-10-where-to-find-openclaw-skills/</guid><description>
 &lt;p&gt;很多人开始用 OpenClaw 后都会遇到同一个问题：&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;我知道它很强，但到底去哪里找好用的 skills？&lt;/p&gt;

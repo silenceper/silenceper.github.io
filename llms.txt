@@ -21,6 +21,16 @@ This file is a compact map for AI agents and search assistants. Prefer canonical
 - [SEO / GEO 增长专题](https://silenceper.com/topics/seo-geo/): SEO、GEO、内容增长与可见性优化实践。
 
 ## Recommended Recent Content
+- [html-ppt-skill：让 AI 生成专业 HTML 演示文稿](https://silenceper.com/article/2026-06-02-html-ppt-skill/): html-ppt-skill 是一套面向 AI Agent 的 HTML PPT 生成技能包，用纯静态 HTML/CSS/JS 快速产出带主题、布局、动效和演讲者模式的专业演示文稿。
+- [Agent 不只需要模型：上下文基础设施正在成形](https://silenceper.com/article/2026-05-31-agent-context-infrastructure/): OpenViking、Mirage、SkillOpt 这类项目说明，AI Agent 的竞争点正在从模型调用，转向上下文、文件系统和可优化技能这些基础设施。
+- [AI 工具的免费时代正在结束：从 Copilot token 计费到 Agent 预算治理](https://silenceper.com/article/2026-05-31-ai-tool-usage-based-billing-agent-budget/): GitHub Copilot 转向 usage-based billing、OpenRouter 推出 Guardrails、AgentBudget 这类项目出现，说明 AI 工具正在从订阅制体验进入按量计费和预算治理阶段。
+- [用 Codex 优化网速靠谱吗？先把它当成网络诊断助手](https://silenceper.com/article/2026-05-30-codex-network-speed-optimization/): 从 X 上流传的 Codex 优化网速案例和爱范儿实测说起：Codex 可能帮你发现 DNS、Wi-Fi、代理、后台进程和系统网络配置问题，但它不是一键突破带宽上限的加速器。
+- [FreeDomain：给个人项目和开源项目一个免费的域名入口](https://silenceper.com/article/2026-05-29-freedomain-free-domain-for-projects/): 介绍 DigitalPlat FreeDomain：一个提供免费域名注册和 DNS 接入的平台，适合个人项目、开源项目、学生作品集和早期产品 Demo。
+- [Pi 项目介绍：把 Coding Agent 做成可改造的终端 Harness](https://silenceper.com/article/2026-05-27-pi-coding-agent-harness/): 介绍 earendil-works/pi：一个以终端为核心、强调可扩展与可自定义的 AI coding agent harness，覆盖 CLI、Agent runtime、统一模型 API、TUI 组件和包机制。
+- [GitHub Trending 的信号：AI Agent 正在进入 Skills 工程化阶段](https://silenceper.com/article/2026-05-27-github-trending-agent-skills-engineering/): 从 GitHub Trending 上同时出现的 Understand-Anything、Superpowers、ECC、knowledge-work-plugins、stop-slop、taste-skill 等项目，看 AI Agent 能力如何从提示词转向可安装、可复用、可审计的工作方法。
+- [AI Agent 需要可观测性：为什么下一代安全日志要记录“意图到动作”](https://silenceper.com/article/2026-05-23-ai-agent-observability-intent-to-action-logs/): AI Agent 的安全日志不能只记录 API 调用成功或失败，还要记录用户目标、Agent 计划、工具调用、权限判断、人工确认和执行结果之间的完整链路。
+- [Codex 已经不只是写代码工具，而是在变成长任务工作台](https://silenceper.com/article/2026-05-23-codex-long-task-workbench/): Codex 的价值正在从生成代码，转向承接长期任务：用 durable threads、目标、工具验证、自动化和项目规则，把一个任务持续推进到可检查的结果。
+- [HTML Anything：让本地 AI Agent 直接生成可发布 HTML](https://silenceper.com/article/2026-05-23-html-anything-agentic-html-editor/): HTML Anything 是一个本地优先的 Agentic HTML 编辑器，把 Markdown、表格、草稿和数据交给本机已登录的 AI coding agent，生成可以直接发布的单文件 HTML 或 PNG。
 - [OpenAI 图像验证工具：给 AI 图片加上一层出处说明](https://silenceper.com/blog/2026-05-21-openai-verify-image/): OpenAI 推出的图像验证工具可以检测图片中是否包含 C2PA 内容凭证与 SynthID 数字水印，帮助判断图片是否可能由 OpenAI 工具生成。
 - [Marketing Skills for AI Agents：给 AI Agent 装上一套营销工作流](https://silenceper.com/article/2026-05-20-marketing-skills-ai-agents/): Marketing Skills for AI Agents 是一套面向 AI 编程代理的营销技能包，让 Claude Code、OpenAI Codex、Cursor、Windsurf 等 Agent 在处理 SEO、转化率优化、文案、广告、分析和增长任务时，有更专业的工作流与判断标准。
 - [Persistent Memory 不是越多越好：Agent 到底该记住什么？](https://silenceper.com/article/2026-05-10-agent-persistent-memory/): AI Agent 的长期记忆不应该是聊天记录垃圾桶，而应该是一层可验证、可过期、能改变未来行为的工作上下文。本文整理 Agent 应该记住什么、重新验证什么、以及绝对不该存什么。
@@ -35,13 +45,3 @@ This file is a compact map for AI agents and search assistants. Prefer canonical
 - [Petdex：给 Codex 找一个会动的桌面伙伴](https://silenceper.com/article/2026-05-06-petdex-codex-pets/): 介绍 Petdex：一个面向 Codex 的动态宠物图鉴网站，支持浏览、预览、安装和提交各种像素风 companion。
 - [Keep Codex Fast：让 Codex 本地状态保持轻快的安全维护技能](https://silenceper.com/article/2026-05-04-keep-codex-fast/): 介绍 keep-codex-fast：一个面向 Codex 重度用户的本地状态维护 Skill，强调先检查、先交接、先备份，再安全归档旧会话、日志和工作区。
 - [HyperFrames：用 HTML 生成视频的开源渲染框架](https://silenceper.com/article/2026-05-02-hyperframes-html-video-rendering/): 介绍 HeyGen 开源的 HyperFrames：一个用 HTML、CSS 和前端动画技术定义视频，并通过浏览器与 FFmpeg 渲染 MP4 的视频生成框架。
-- [Multica：把编码 Agent 当成团队成员管理的开源平台](https://silenceper.com/article/2026-04-30-multica-managed-agents/): Multica 是一个开源 Managed Agents 平台，用看板、Issue、运行时和技能系统，把 Claude Code、Codex、OpenCode、Hermes 等编码 Agent 纳入团队协作流程。
-- [Codex 使用最佳实践：别把它当聊天机器人，要当成一个可配置的工程队友](https://silenceper.com/article/2026-04-26-codex-best-practices/): 基于 OpenAI Codex best practices 整理：如何通过上下文、Plan、AGENTS.md、配置、测试验证、MCP、Skill、Automation 和 session 管理，更稳定地使用 Codex。
-- [Obscura：一个为 AI Agent 和网页抓取而生的 Rust 无头浏览器](https://silenceper.com/article/2026-04-26-obscura-rust-headless-browser/): 介绍 h4ckf0r0day/obscura：一个用 Rust + V8 实现、兼容 Puppeteer/Playwright 的轻量无头浏览器，面向 AI Agent 和网页抓取场景。
-- [andrej-karpathy-skills：把 AI 编程助手调教得更稳一点](https://silenceper.com/article/2026-04-26-andrej-karpathy-skills/): 介绍 forrestchang/andrej-karpathy-skills：把 Andrej Karpathy 对 LLM 编码问题的观察，整理成可直接用于 Claude Code、Cursor 和个人技能系统的协作准则。
-- [DESIGN.md：给 AI 编程工具看的设计规范文件](https://silenceper.com/article/2026-04-23-design-md-ai-coding-design-spec/): 介绍 Google Labs 推出的 DESIGN.md：用一个文件同时承载 design token 和设计说明，让 AI 编程工具更稳定地理解界面风格。
-- [Browser Harness：让 AI 直接接管真实浏览器的轻量自愈执行层](https://silenceper.com/article/2026-04-21-browser-harness-ai-browser-control/): 介绍 browser-use/browser-harness：一个基于 CDP 的轻量浏览器执行层，支持 AI 在任务中直接连接真实浏览器，并在执行过程中补齐缺失能力。
-- [Manifest：帮个人 AI Agent 降低模型成本的开源路由器](https://silenceper.com/article/2026-04-20-manifest-ai-agent-cost-router/): 介绍 mnfst/manifest：一个面向个人 AI Agent 的开源模型路由器，支持按请求复杂度自动选模型、设置回退链路，并跟踪 token、成本与用量。
-- [Superpowers：给 Claude Code、Codex、Cursor 装上一套更靠谱的开发方法论](https://silenceper.com/article/2026-04-18-superpowers-skills-framework/): Superpowers 不是新的 Coding Agent，而是一套面向 Claude Code、Codex、Cursor 等工具的 skills 框架和开发方法论。它想解决的，不是 AI 会不会写代码，而是 AI 能不能按工程流程把项目稳定推进下去。
-- [fireworks-tech-graph 项目解析：把技术架构图生成这件事做成一个可复用 Skill](https://silenceper.com/article/2026-04-15-fireworks-tech-graph-project-analysis/): 介绍 yizhiyanhua-ai/fireworks-tech-graph 这个 Claude Code Skill：它如何把自然语言描述转成可直接发布的 SVG + PNG 技术图，以及它适合哪些技术文档场景。
-- [从 OpenClaw 到 Hermes Agent：为什么我觉得它更懂你](https://silenceper.com/blog/2026-04-15-openclaw-to-hermes-agent/): 结合实际迁移体验，记录 Hermes Agent 的安装、配置、Telegram 接入，以及它为什么比 OpenClaw 更容易形成“更懂你”体验的技术原因。

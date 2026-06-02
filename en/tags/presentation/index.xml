@@ -1,0 +1,280 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – Presentation</title><link>https://silenceper.com/en/tags/presentation/</link><description>Recent content in Presentation on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en-US</language><lastBuildDate>Tue, 02 Jun 2026 15:20:00 +0800</lastBuildDate><atom:link href="https://silenceper.com/en/tags/presentation/index.xml" rel="self" type="application/rss+xml"/><item><title>html-ppt-skill: Let AI Generate Professional HTML Presentations</title><link>https://silenceper.com/en/article/2026-06-02-html-ppt-skill/</link><pubDate>Tue, 02 Jun 2026 15:20:00 +0800</pubDate><guid>https://silenceper.com/en/article/2026-06-02-html-ppt-skill/</guid><description>
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260602/html-ppt-hero.gif" alt="html-ppt cover with live previews" loading="lazy" /&gt;&lt;/p&gt;
+&lt;h2&gt;One-line Positioning&lt;span class="hx-absolute -hx-mt-20" id="one-line-positioning"&gt;&lt;/span&gt;
+&lt;a href="#one-line-positioning" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;html-ppt-skill is an AgentSkill for AI agents to generate professional HTML presentations with themes, layouts, animations, and presenter mode using pure static HTML/CSS/JS.&lt;/strong&gt;&lt;/p&gt;
+&lt;h2&gt;Basic Information&lt;span class="hx-absolute -hx-mt-20" id="basic-information"&gt;&lt;/span&gt;
+&lt;a href="#basic-information" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Item&lt;/th&gt;
+&lt;th&gt;Information&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Project&lt;/td&gt;
+&lt;td&gt;html-ppt-skill / HTML PPT Studio&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;GitHub&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://github.com/lewislulu/html-ppt-skill" target="_blank" rel="noopener"&gt;https://github.com/lewislulu/html-ppt-skill&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Author&lt;/td&gt;
+&lt;td&gt;lewis&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;License&lt;/td&gt;
+&lt;td&gt;MIT&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Main technologies&lt;/td&gt;
+&lt;td&gt;HTML, CSS, JavaScript, Shell&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Stars&lt;/td&gt;
+&lt;td&gt;About 5.3k&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Forks&lt;/td&gt;
+&lt;td&gt;About 505&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Positioning&lt;/td&gt;
+&lt;td&gt;AgentSkill / HTML presentation generation toolkit&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Core highlights&lt;/td&gt;
+&lt;td&gt;36 themes, 15 full-deck templates, 31 page layouts, 47 animations, presenter mode&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Build model&lt;/td&gt;
+&lt;td&gt;Pure static HTML/CSS/JS, no build step required&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2&gt;What Problem It Solves&lt;span class="hx-absolute -hx-mt-20" id="what-problem-it-solves"&gt;&lt;/span&gt;
+&lt;a href="#what-problem-it-solves" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Many AI tools can generate a presentation outline, but turning that outline into slides that are presentable, well-designed, and ready for a real talk still usually requires a lot of manual layout work.&lt;/p&gt;
+&lt;p&gt;html-ppt-skill addresses this gap: &lt;strong&gt;it lets an agent move beyond writing content and directly generate an HTML presentation that can be opened, presented, previewed, and exported.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;It packages common presentation authoring capabilities into an AgentSkill, including:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;visual themes;&lt;/li&gt;
+&lt;li&gt;page layouts;&lt;/li&gt;
+&lt;li&gt;full-deck templates;&lt;/li&gt;
+&lt;li&gt;CSS and Canvas animations;&lt;/li&gt;
+&lt;li&gt;presenter mode;&lt;/li&gt;
+&lt;li&gt;export scripts;&lt;/li&gt;
+&lt;li&gt;example decks and verification screenshots.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For users, the interaction can be very direct. You can ask an AgentSkill-compatible agent something like:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;“Create an 8-page technical sharing deck with a cyberpunk theme.”&lt;br&gt;
+“Turn this outline into an investor pitch deck.”&lt;br&gt;
+“Create a 9-card Xiaohongshu-style visual post with a soft white style.”&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The agent can then use this skill to generate the corresponding HTML presentation.&lt;/p&gt;
+&lt;h2&gt;Core Features&lt;span class="hx-absolute -hx-mt-20" id="core-features"&gt;&lt;/span&gt;
+&lt;a href="#core-features" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;1. 36 Visual Themes&lt;span class="hx-absolute -hx-mt-20" id="1-36-visual-themes"&gt;&lt;/span&gt;
+&lt;a href="#1-36-visual-themes" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The project includes 36 themes covering minimal, editorial, dark, cyberpunk, blueprint, Xiaohongshu, investor pitch, academic, and other styles.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260602/html-ppt-themes.png" alt="36 themes · 8 examples" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;Themes are driven by CSS tokens. Swapping one &lt;code&gt;&amp;lt;link&amp;gt;&lt;/code&gt; can reskin the entire deck. This makes it easy for an agent to choose a style based on the content type:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;technical sharing: &lt;code&gt;tokyo-night&lt;/code&gt;, &lt;code&gt;cyberpunk-neon&lt;/code&gt;, &lt;code&gt;engineering-whiteprint&lt;/code&gt;;&lt;/li&gt;
+&lt;li&gt;business reporting: &lt;code&gt;corporate-clean&lt;/code&gt;, &lt;code&gt;pitch-deck-vc&lt;/code&gt;;&lt;/li&gt;
+&lt;li&gt;Xiaohongshu-style posts: &lt;code&gt;xiaohongshu-white&lt;/code&gt;, &lt;code&gt;soft-pastel&lt;/code&gt;;&lt;/li&gt;
+&lt;li&gt;academic content: &lt;code&gt;academic-paper&lt;/code&gt;;&lt;/li&gt;
+&lt;li&gt;architecture proposals: &lt;code&gt;blueprint&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;2. 15 Full-deck Templates&lt;span class="hx-absolute -hx-mt-20" id="2-15-full-deck-templates"&gt;&lt;/span&gt;
+&lt;a href="#2-15-full-deck-templates" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;This is not just a collection of single-page components. It also provides complete multi-slide deck templates.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260602/html-ppt-templates.png" alt="15 full-deck templates" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;The templates fall into two groups.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Extracted visual styles&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Xiaohongshu white editorial style;&lt;/li&gt;
+&lt;li&gt;dark knowledge graph style;&lt;/li&gt;
+&lt;li&gt;blueprint / architecture diagram style;&lt;/li&gt;
+&lt;li&gt;terminal cyberpunk style;&lt;/li&gt;
+&lt;li&gt;purple gradient card style;&lt;/li&gt;
+&lt;li&gt;warning / safety testing style;&lt;/li&gt;
+&lt;li&gt;soft pastel card style;&lt;/li&gt;
+&lt;li&gt;minimal keyboard navigation style.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Scenario templates&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;investor pitch deck;&lt;/li&gt;
+&lt;li&gt;product launch;&lt;/li&gt;
+&lt;li&gt;technical sharing;&lt;/li&gt;
+&lt;li&gt;weekly report;&lt;/li&gt;
+&lt;li&gt;9-page Xiaohongshu post;&lt;/li&gt;
+&lt;li&gt;course module;&lt;/li&gt;
+&lt;li&gt;presenter-mode template with full speaker scripts.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;These templates are especially useful for agents because the agent does not need to design every page from scratch. It can start from a scenario-specific structure and adapt the content.&lt;/p&gt;
+&lt;h3&gt;3. 31 Single-page Layouts&lt;span class="hx-absolute -hx-mt-20" id="3-31-single-page-layouts"&gt;&lt;/span&gt;
+&lt;a href="#3-31-single-page-layouts" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The project provides 31 common page layouts that cover most presentation needs.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260602/html-ppt-layouts.png" alt="31 single-page layouts" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;The layout set includes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;cover;&lt;/li&gt;
+&lt;li&gt;table of contents;&lt;/li&gt;
+&lt;li&gt;section divider;&lt;/li&gt;
+&lt;li&gt;bullet list;&lt;/li&gt;
+&lt;li&gt;two-column and three-column pages;&lt;/li&gt;
+&lt;li&gt;quote pages;&lt;/li&gt;
+&lt;li&gt;statistic highlights;&lt;/li&gt;
+&lt;li&gt;KPI grids;&lt;/li&gt;
+&lt;li&gt;tables;&lt;/li&gt;
+&lt;li&gt;code pages;&lt;/li&gt;
+&lt;li&gt;diffs;&lt;/li&gt;
+&lt;li&gt;terminal pages;&lt;/li&gt;
+&lt;li&gt;flow diagrams;&lt;/li&gt;
+&lt;li&gt;timelines;&lt;/li&gt;
+&lt;li&gt;roadmaps;&lt;/li&gt;
+&lt;li&gt;mind maps;&lt;/li&gt;
+&lt;li&gt;comparison pages;&lt;/li&gt;
+&lt;li&gt;Gantt charts;&lt;/li&gt;
+&lt;li&gt;image hero pages;&lt;/li&gt;
+&lt;li&gt;image grids;&lt;/li&gt;
+&lt;li&gt;bar, line, pie, and radar charts;&lt;/li&gt;
+&lt;li&gt;architecture diagrams;&lt;/li&gt;
+&lt;li&gt;CTA pages;&lt;/li&gt;
+&lt;li&gt;thanks pages.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The README also shows a live cycling preview of real layout files:&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260602/html-ppt-layouts-live.gif" alt="31 layouts cycling through real template files" loading="lazy" /&gt;&lt;/p&gt;
+&lt;h3&gt;4. 47 Animations&lt;span class="hx-absolute -hx-mt-20" id="4-47-animations"&gt;&lt;/span&gt;
+&lt;a href="#4-47-animations" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;html-ppt-skill includes 27 CSS animations and 20 Canvas FX animations.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260602/html-ppt-animations.png" alt="47 animations · 27 CSS &amp;#43; 20 Canvas FX" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;CSS animations include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;fade-in;&lt;/li&gt;
+&lt;li&gt;rise-in;&lt;/li&gt;
+&lt;li&gt;zoom-pop;&lt;/li&gt;
+&lt;li&gt;blur-in;&lt;/li&gt;
+&lt;li&gt;typewriter;&lt;/li&gt;
+&lt;li&gt;neon glow;&lt;/li&gt;
+&lt;li&gt;gradient flow;&lt;/li&gt;
+&lt;li&gt;staggered list entrance;&lt;/li&gt;
+&lt;li&gt;counter-up;&lt;/li&gt;
+&lt;li&gt;path drawing;&lt;/li&gt;
+&lt;li&gt;3D card flip;&lt;/li&gt;
+&lt;li&gt;page turn;&lt;/li&gt;
+&lt;li&gt;spotlight effects.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Canvas FX modules include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;particle burst;&lt;/li&gt;
+&lt;li&gt;confetti cannon;&lt;/li&gt;
+&lt;li&gt;fireworks;&lt;/li&gt;
+&lt;li&gt;starfield;&lt;/li&gt;
+&lt;li&gt;Matrix rain;&lt;/li&gt;
+&lt;li&gt;knowledge graph;&lt;/li&gt;
+&lt;li&gt;neural-network pulses;&lt;/li&gt;
+&lt;li&gt;constellation lines;&lt;/li&gt;
+&lt;li&gt;data stream;&lt;/li&gt;
+&lt;li&gt;magnetic field;&lt;/li&gt;
+&lt;li&gt;shockwave effects.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This means the result is not just a static web page pretending to be a slide deck. It can behave like a real presentation with motion and visual emphasis.&lt;/p&gt;
+&lt;h3&gt;5. Presenter Mode&lt;span class="hx-absolute -hx-mt-20" id="5-presenter-mode"&gt;&lt;/span&gt;
+&lt;a href="#5-presenter-mode" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Presenter mode is one of the most interesting parts of the project.&lt;/p&gt;
+&lt;p&gt;Pressing &lt;code&gt;S&lt;/code&gt; in any deck opens a separate presenter window with four draggable and resizable magnetic cards:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;current slide preview;&lt;/li&gt;
+&lt;li&gt;next slide preview;&lt;/li&gt;
+&lt;li&gt;speaker script;&lt;/li&gt;
+&lt;li&gt;timer.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260602/html-ppt-presenter-mode.jpg" alt="Presenter mode with 4 magnetic cards" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;The implementation is thoughtful. The previews are not screenshots. Each preview is an iframe loading the same deck HTML with a &lt;code&gt;?preview=N&lt;/code&gt; parameter, so it renders only the target slide. The presenter preview and the audience view use the same CSS, fonts, theme, and viewport, which keeps the visual result consistent.&lt;/p&gt;
+&lt;p&gt;Slide changes are synchronized through &lt;code&gt;BroadcastChannel&lt;/code&gt; and &lt;code&gt;postMessage&lt;/code&gt;, so the preview does not need to reload and avoids flicker.&lt;/p&gt;
+&lt;h2&gt;Who It Is For&lt;span class="hx-absolute -hx-mt-20" id="who-it-is-for"&gt;&lt;/span&gt;
+&lt;a href="#who-it-is-for" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;This project is useful for:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;users who want AI to directly generate presentation decks;&lt;/li&gt;
+&lt;li&gt;people using Claude Code, Codex, Cursor, OpenClaw, or similar agent tools;&lt;/li&gt;
+&lt;li&gt;anyone who often creates technical talks, product launches, weekly reports, or course materials;&lt;/li&gt;
+&lt;li&gt;developers who prefer HTML/CSS/JS over traditional slide tools;&lt;/li&gt;
+&lt;li&gt;users who need to generate Xiaohongshu-style visual posts, course slides, or project introductions in batches;&lt;/li&gt;
+&lt;li&gt;teams that want presentation assets to be versioned, scripted, and exported like code.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;It is especially suitable when the content is generated by AI but the final output still needs a deliberate visual design.&lt;/p&gt;
+&lt;h2&gt;Quick Start&lt;span class="hx-absolute -hx-mt-20" id="quick-start"&gt;&lt;/span&gt;
+&lt;a href="#quick-start" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Installation is simple:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx skills add https://github.com/lewislulu/html-ppt-skill&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;After installation, an AgentSkill-compatible agent can use the skill directly.&lt;/p&gt;
+&lt;p&gt;If you clone the project manually, you can scaffold a new deck with:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;./scripts/new-deck.sh my-talk&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Browse the built-in resources:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;open templates/theme-showcase.html
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;open templates/layout-showcase.html
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;open templates/animation-showcase.html
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;open templates/full-decks-index.html&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Export PNG images:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;./scripts/render.sh templates/theme-showcase.html
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;./scripts/render.sh examples/my-talk/index.html &lt;span class="m"&gt;12&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Common keyboard shortcuts:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;← → Space PgUp PgDn Home End Navigate
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;F Fullscreen
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;S Open presenter window
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;N Open notes drawer
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;R Reset timer
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;O Slide overview
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;T Cycle themes
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;A Demo animation on current slide
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;#/N Jump to slide N
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;?preview=N Single-slide preview mode&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h2&gt;Conclusion&lt;span class="hx-absolute -hx-mt-20" id="conclusion"&gt;&lt;/span&gt;
+&lt;a href="#conclusion" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The value of html-ppt-skill is not simply “writing presentations in HTML.” It packages &lt;strong&gt;themes, layouts, templates, animations, presenter mode, and export scripts&lt;/strong&gt; into a reusable capability that agents can call.&lt;/p&gt;
+&lt;p&gt;If you already use AI agents to write documents, prepare proposals, or generate code, this project makes the next step feel natural: &lt;strong&gt;let the agent turn the content directly into a presentable HTML slide deck.&lt;/strong&gt;&lt;/p&gt;</description></item></channel></rss>

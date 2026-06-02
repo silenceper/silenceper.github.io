@@ -1,4 +1,374 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – Codex</title><link>https://silenceper.com/en/tags/codex/</link><description>Recent content in Codex on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en-US</language><lastBuildDate>Sun, 10 May 2026 11:20:00 +0800</lastBuildDate><atom:link href="https://silenceper.com/en/tags/codex/index.xml" rel="self" type="application/rss+xml"/><item><title>Persistent Memory Is Not About Remembering Everything: What Should Agents Actually Keep?</title><link>https://silenceper.com/en/article/2026-05-10-agent-persistent-memory/</link><pubDate>Sun, 10 May 2026 11:20:00 +0800</pubDate><guid>https://silenceper.com/en/article/2026-05-10-agent-persistent-memory/</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – Codex</title><link>https://silenceper.com/en/tags/codex/</link><description>Recent content in Codex on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en-US</language><lastBuildDate>Wed, 27 May 2026 23:40:00 +0800</lastBuildDate><atom:link href="https://silenceper.com/en/tags/codex/index.xml" rel="self" type="application/rss+xml"/><item><title>What GitHub Trending Says About AI Agents: Skills Are Becoming Engineering Assets</title><link>https://silenceper.com/en/article/2026-05-27-github-trending-agent-skills-engineering/</link><pubDate>Wed, 27 May 2026 23:40:00 +0800</pubDate><guid>https://silenceper.com/en/article/2026-05-27-github-trending-agent-skills-engineering/</guid><description>
+&lt;p&gt;On May 27, 2026, I opened GitHub Trending and the interesting part was not one isolated breakout project.&lt;/p&gt;
+&lt;p&gt;The stronger signal was that several projects around &lt;strong&gt;AI agent skills, plugins, workflows, knowledge graphs, and domain playbooks&lt;/strong&gt; were trending at the same time.&lt;/p&gt;
+&lt;p&gt;Individually, they solve different problems:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;some help agents understand a codebase;&lt;/li&gt;
+&lt;li&gt;some give coding agents a software development methodology;&lt;/li&gt;
+&lt;li&gt;some package writing quality, design taste, and security analysis into skills;&lt;/li&gt;
+&lt;li&gt;some turn knowledge-worker roles into plugins;&lt;/li&gt;
+&lt;li&gt;some bundle memory, hooks, MCP configuration, rules, and security scanning into a broader agent harness.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Taken together, the direction is clear: &lt;strong&gt;AI agent competition is moving from “can the model answer?” to “can the work method be installed, reused, verified, and shared by a team?”&lt;/strong&gt;&lt;/p&gt;
+&lt;h2&gt;Projects Worth Watching&lt;span class="hx-absolute -hx-mt-20" id="projects-worth-watching"&gt;&lt;/span&gt;
+&lt;a href="#projects-worth-watching" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;This is not a full Trending recap. It is the slice of today’s GitHub Trending list that feels most relevant to agent workflows.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Project&lt;/th&gt;
+&lt;th&gt;What it does&lt;/th&gt;
+&lt;th&gt;The signal&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href="https://github.com/Lum1104/Understand-Anything" target="_blank" rel="noopener"&gt;Lum1104/Understand-Anything&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Turns codebases, knowledge bases, and docs into interactive knowledge graphs you can explore, search, and ask questions about&lt;/td&gt;
+&lt;td&gt;Agents need a system map before they can safely change systems&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href="https://github.com/obra/superpowers" target="_blank" rel="noopener"&gt;obra/superpowers&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Provides a skill-based software development methodology for coding agents&lt;/td&gt;
+&lt;td&gt;Development process is becoming an installable skill chain&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href="https://github.com/affaan-m/ECC" target="_blank" rel="noopener"&gt;affaan-m/ECC&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Bundles skills, memory optimization, hooks, security scanning, and research-first development across harnesses&lt;/td&gt;
+&lt;td&gt;The agent harness is starting to look like an operating layer&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href="https://github.com/anthropics/knowledge-work-plugins" target="_blank" rel="noopener"&gt;anthropics/knowledge-work-plugins&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Provides plugins for sales, support, product, marketing, legal, finance, data, and other knowledge-work roles&lt;/td&gt;
+&lt;td&gt;Plugins are moving beyond programmers into role-specific workflows&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href="https://github.com/hardikpandya/stop-slop" target="_blank" rel="noopener"&gt;hardikpandya/stop-slop&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;A skill for removing obvious AI writing patterns from prose&lt;/td&gt;
+&lt;td&gt;Quality standards can be packaged as reusable editors&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href="https://github.com/Leonxlnx/taste-skill" target="_blank" rel="noopener"&gt;Leonxlnx/taste-skill&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;A skill set for frontend taste, motion, density, and anti-generic output&lt;/td&gt;
+&lt;td&gt;Design judgment is being turned into a workflow surface&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href="https://github.com/mukul975/Anthropic-Cybersecurity-Skills" target="_blank" rel="noopener"&gt;mukul975/Anthropic-Cybersecurity-Skills&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;A large library of structured cybersecurity skills mapped to security frameworks&lt;/td&gt;
+&lt;td&gt;Expert domain practice is becoming agent-executable playbooks&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;I think of these as &lt;strong&gt;agent capability packs&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;They are not single prompts. They are not chat templates. They are work methods that can be versioned, installed, updated, combined, and audited.&lt;/p&gt;
+&lt;h2&gt;Why This Matters More Than a Better Prompt&lt;span class="hx-absolute -hx-mt-20" id="why-this-matters-more-than-a-better-prompt"&gt;&lt;/span&gt;
+&lt;a href="#why-this-matters-more-than-a-better-prompt" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Early AI agent usage tends to focus on prompting:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;write a longer system prompt;&lt;/li&gt;
+&lt;li&gt;add an &lt;code&gt;AGENTS.md&lt;/code&gt; file;&lt;/li&gt;
+&lt;li&gt;tell the agent to behave like a senior engineer;&lt;/li&gt;
+&lt;li&gt;require a specific output format.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Those things help, but prompts hit three limits quickly.&lt;/p&gt;
+&lt;p&gt;First, they are &lt;strong&gt;hard to maintain&lt;/strong&gt;. A long instruction block keeps growing until nobody knows which rules are still active and which ones are old baggage.&lt;/p&gt;
+&lt;p&gt;Second, they are &lt;strong&gt;hard to compose&lt;/strong&gt;. Coding, UI design, security investigation, copy editing, and data work should not all live inside one giant prompt.&lt;/p&gt;
+&lt;p&gt;Third, they are &lt;strong&gt;hard to verify&lt;/strong&gt;. If one output gets better, was it the model, the context, or the rule?&lt;/p&gt;
+&lt;p&gt;Skills and plugins matter because they split “how to do this kind of work” into smaller capability units.&lt;/p&gt;
+&lt;p&gt;A good skill should answer:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;what task it applies to;&lt;/li&gt;
+&lt;li&gt;what task it should not handle;&lt;/li&gt;
+&lt;li&gt;what context it needs;&lt;/li&gt;
+&lt;li&gt;what it produces;&lt;/li&gt;
+&lt;li&gt;how it verifies that it stayed on track;&lt;/li&gt;
+&lt;li&gt;whether it can move across Claude Code, Codex, Cursor, Gemini CLI, and other harnesses.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;That is the difference between a prompt and an engineering asset.&lt;/p&gt;
+&lt;h2&gt;Four Directions Behind This Wave&lt;span class="hx-absolute -hx-mt-20" id="four-directions-behind-this-wave"&gt;&lt;/span&gt;
+&lt;a href="#four-directions-behind-this-wave" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;1. Code Understanding Becomes Infrastructure&lt;span class="hx-absolute -hx-mt-20" id="1-code-understanding-becomes-infrastructure"&gt;&lt;/span&gt;
+&lt;a href="#1-code-understanding-becomes-infrastructure" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Projects like &lt;code&gt;Understand-Anything&lt;/code&gt; show that large codebases cannot rely only on an agent running &lt;code&gt;rg&lt;/code&gt;, opening a few files, and guessing the architecture.&lt;/p&gt;
+&lt;p&gt;The more useful layer is a structured map:&lt;/p&gt;
+&lt;pre class="mermaid hx-mt-6"&gt;
+flowchart LR
+A[Codebase] --&amp;gt; B[Static structure parsing]
+A --&amp;gt; C[LLM semantic summaries]
+B --&amp;gt; D[Knowledge graph]
+C --&amp;gt; D
+D --&amp;gt; E[Search / Q&amp;amp;A / impact analysis / onboarding]
+&lt;/pre&gt;&lt;p&gt;This is different from traditional documentation. Docs often drift. If a knowledge graph can update with commits, it becomes long-lived context for agents.&lt;/p&gt;
+&lt;p&gt;For many teams, the first step will not be “let the agent change code.” It will be “let the agent build a queryable system map.”&lt;/p&gt;
+&lt;h3&gt;2. Work Methods Become Installable&lt;span class="hx-absolute -hx-mt-20" id="2-work-methods-become-installable"&gt;&lt;/span&gt;
+&lt;a href="#2-work-methods-become-installable" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Projects like &lt;code&gt;superpowers&lt;/code&gt; and &lt;code&gt;ECC&lt;/code&gt; are not just adding commands. They are giving agents working discipline.&lt;/p&gt;
+&lt;p&gt;Clarify the goal. Write a design. Break down the plan. Verify the result. Review the diff. Use worktrees to isolate risk.&lt;/p&gt;
+&lt;p&gt;Those used to be team habits. Now they are becoming skills and hooks.&lt;/p&gt;
+&lt;p&gt;I do not think every task needs a full methodology. Small jobs should not be slowed down by process. But when agents touch real repositories, real permissions, and real deployment paths, method matters more than one-off intelligence.&lt;/p&gt;
+&lt;h3&gt;3. Domain Expertise Becomes Playbooks&lt;span class="hx-absolute -hx-mt-20" id="3-domain-expertise-becomes-playbooks"&gt;&lt;/span&gt;
+&lt;a href="#3-domain-expertise-becomes-playbooks" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;&lt;code&gt;Anthropic-Cybersecurity-Skills&lt;/code&gt; turns security work into many structured skills and maps them to MITRE ATT&amp;amp;CK, NIST CSF, MITRE ATLAS, D3FEND, and NIST AI RMF.&lt;/p&gt;
+&lt;p&gt;The interesting point is not only that security has skills.&lt;/p&gt;
+&lt;p&gt;The bigger signal is that &lt;strong&gt;expert judgment paths are being transformed into agent-callable playbooks&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Security will not be the only field. Legal, finance, sales, support, product, growth, and analytics can all move toward this shape:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;task type -&amp;gt; matching skill -&amp;gt; required context -&amp;gt; steps -&amp;gt; risks -&amp;gt; checks -&amp;gt; deliverable&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;That moves AI agents from generic assistants toward role-specific operators with SOPs.&lt;/p&gt;
+&lt;h3&gt;4. Quality Standards Become Skills&lt;span class="hx-absolute -hx-mt-20" id="4-quality-standards-become-skills"&gt;&lt;/span&gt;
+&lt;a href="#4-quality-standards-become-skills" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;&lt;code&gt;stop-slop&lt;/code&gt; and &lt;code&gt;taste-skill&lt;/code&gt; are small but important examples.&lt;/p&gt;
+&lt;p&gt;They do not teach the agent a new API. They package fuzzy quality expectations into triggerable skills: avoid AI-sounding prose, do not ship generic UI, tune rhythm, density, motion, hierarchy, and design language.&lt;/p&gt;
+&lt;p&gt;Most AI output does not fail because it is completely wrong. It often fails because it is:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;correct but generic;&lt;/li&gt;
+&lt;li&gt;functional but awkward;&lt;/li&gt;
+&lt;li&gt;structured but lifeless;&lt;/li&gt;
+&lt;li&gt;visually complete but product-blind;&lt;/li&gt;
+&lt;li&gt;readable but obviously machine-written.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Once quality standards are packaged, teams no longer need to re-explain their bar every time. That is also knowledge reuse.&lt;/p&gt;
+&lt;h2&gt;What Developers Should Do&lt;span class="hx-absolute -hx-mt-20" id="what-developers-should-do"&gt;&lt;/span&gt;
+&lt;a href="#what-developers-should-do" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;If you already use Codex, Claude Code, Cursor, or another coding agent, do not only track which model is stronger.&lt;/p&gt;
+&lt;p&gt;Start collecting three kinds of assets.&lt;/p&gt;
+&lt;p&gt;The first is &lt;strong&gt;project-level rules&lt;/strong&gt;. Put them in &lt;code&gt;AGENTS.md&lt;/code&gt;, &lt;code&gt;CLAUDE.md&lt;/code&gt;, &lt;code&gt;README&lt;/code&gt;, or docs. Tell the agent how this repository builds, tests, publishes, and which directories are risky.&lt;/p&gt;
+&lt;p&gt;The second is &lt;strong&gt;task-level skills&lt;/strong&gt;. Examples: writing a bilingual Hugo article, debugging slow startup in a Go service, generating a GitHub issue cover image, or running a frontend visual audit. If a task repeats, it probably deserves a skill.&lt;/p&gt;
+&lt;p&gt;The third is &lt;strong&gt;verification scripts&lt;/strong&gt;. Without verification, a skill is just attractive advice. Common tasks should have matching checks such as &lt;code&gt;hugo --renderToMemory --minify&lt;/code&gt;, &lt;code&gt;go test&lt;/code&gt;, &lt;code&gt;pnpm test&lt;/code&gt;, SEO checks, screenshots, or diff checks.&lt;/p&gt;
+&lt;p&gt;My filter is simple:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Question&lt;/th&gt;
+&lt;th&gt;If yes, consider a skill&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Does this task repeat?&lt;/td&gt;
+&lt;td&gt;Yes&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Do you explain the same context every time?&lt;/td&gt;
+&lt;td&gt;Yes&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Do failures usually come from the same traps?&lt;/td&gt;
+&lt;td&gt;Yes&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Is there a clear acceptance check?&lt;/td&gt;
+&lt;td&gt;Yes&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Can the skill limit what it reads or edits?&lt;/td&gt;
+&lt;td&gt;Yes&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;If three or more are true, stop relying only on ad hoc prompting.&lt;/p&gt;
+&lt;h2&gt;What Comes Next&lt;span class="hx-absolute -hx-mt-20" id="what-comes-next"&gt;&lt;/span&gt;
+&lt;a href="#what-comes-next" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;I expect three things to become more visible.&lt;/p&gt;
+&lt;p&gt;First, &lt;strong&gt;skill registries will matter&lt;/strong&gt;. People need to discover, install, update, rate, and combine skills instead of copying Markdown files across machines.&lt;/p&gt;
+&lt;p&gt;Second, &lt;strong&gt;private team skills will become productivity assets&lt;/strong&gt;. Public skills solve general problems. The most valuable skills will encode a team’s own workflows, code standards, deployment rules, and incident history.&lt;/p&gt;
+&lt;p&gt;Third, &lt;strong&gt;skills, memory, and observability will merge&lt;/strong&gt;. Agents need to know which method to use, remember previous lessons, and leave an auditable chain of execution.&lt;/p&gt;
+&lt;p&gt;So today’s GitHub Trending projects are more than a curiosity.&lt;/p&gt;
+&lt;p&gt;They point to a larger shift: &lt;strong&gt;AI agents are moving from smart chat windows to engineering systems built from installable methods, reusable capability packs, and verifiable execution paths.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;That is one of the developer-tool trends I would keep watching in 2026.&lt;/p&gt;
+&lt;h2&gt;References&lt;span class="hx-absolute -hx-mt-20" id="references"&gt;&lt;/span&gt;
+&lt;a href="#references" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;GitHub Trending Today: &lt;a href="https://github.com/trending?since=daily" target="_blank" rel="noopener"&gt;https://github.com/trending?since=daily&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Understand-Anything: &lt;a href="https://github.com/Lum1104/Understand-Anything" target="_blank" rel="noopener"&gt;https://github.com/Lum1104/Understand-Anything&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Superpowers: &lt;a href="https://github.com/obra/superpowers" target="_blank" rel="noopener"&gt;https://github.com/obra/superpowers&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;ECC: &lt;a href="https://github.com/affaan-m/ECC" target="_blank" rel="noopener"&gt;https://github.com/affaan-m/ECC&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Knowledge Work Plugins: &lt;a href="https://github.com/anthropics/knowledge-work-plugins" target="_blank" rel="noopener"&gt;https://github.com/anthropics/knowledge-work-plugins&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Stop Slop: &lt;a href="https://github.com/hardikpandya/stop-slop" target="_blank" rel="noopener"&gt;https://github.com/hardikpandya/stop-slop&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Taste Skill: &lt;a href="https://github.com/Leonxlnx/taste-skill" target="_blank" rel="noopener"&gt;https://github.com/Leonxlnx/taste-skill&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Anthropic Cybersecurity Skills: &lt;a href="https://github.com/mukul975/Anthropic-Cybersecurity-Skills" target="_blank" rel="noopener"&gt;https://github.com/mukul975/Anthropic-Cybersecurity-Skills&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description></item><item><title>Codex Is No Longer Just a Coding Tool. It Is Becoming a Long-Running Task Workbench</title><link>https://silenceper.com/en/article/2026-05-23-codex-long-task-workbench/</link><pubDate>Sat, 23 May 2026 15:40:00 +0800</pubDate><guid>https://silenceper.com/en/article/2026-05-23-codex-long-task-workbench/</guid><description>
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260509/codex-app-screenshot.webp" alt="Codex App workspace" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;My current view of Codex is simple: it is no longer just a tool that helps me write code.&lt;/p&gt;
+&lt;p&gt;More precisely, &lt;strong&gt;Codex is shifting from a code generator into a long-running task workbench.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;The important change is not one extra button. It is the way threads, tools, permissions, verification, automations, memory, and project rules can work together, so a task can keep moving while you step in to steer, approve, or review the result.&lt;/p&gt;
+&lt;h2&gt;The short version&lt;span class="hx-absolute -hx-mt-20" id="the-short-version"&gt;&lt;/span&gt;
+&lt;a href="#the-short-version" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;The old Codex felt like “help me edit this code.” The newer workflow feels more like “help me move this goal toward a verified result.”&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;That matters because useful agent work is not only about a strong first draft. It is about whether the work can:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;stay continuous: keep context and decisions inside the same thread;&lt;/li&gt;
+&lt;li&gt;stay steerable: let you correct direction or approve the next step;&lt;/li&gt;
+&lt;li&gt;stay verifiable: run tests, inspect diffs, capture screenshots, and check pages;&lt;/li&gt;
+&lt;li&gt;stay reusable: move repeated rules into &lt;code&gt;AGENTS.md&lt;/code&gt;, skills, or automations.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;How I would use it&lt;span class="hx-absolute -hx-mt-20" id="how-i-would-use-it"&gt;&lt;/span&gt;
+&lt;a href="#how-i-would-use-it" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;1. Give every important task its own long-running thread&lt;span class="hx-absolute -hx-mt-20" id="1-give-every-important-task-its-own-long-running-thread"&gt;&lt;/span&gt;
+&lt;a href="#1-give-every-important-task-its-own-long-running-thread" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Do not treat Codex as a disposable Q&amp;amp;A window.&lt;/p&gt;
+&lt;p&gt;A bug, an article, a refactor, or a release flow should each have its own thread. That thread can preserve what Codex has already read, what it has tried, which commands it ran, and what feedback you gave.&lt;/p&gt;
+&lt;p&gt;My prompt usually looks like this:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Goal: move this issue from diagnosis to a verified fix.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Context: this is a production report, and the relevant module may be xxx.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Constraints: do not touch unrelated files, do not refactor public interfaces, do not modify public build output.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Definition of done: root cause explained, code changed, tests or local verification passing.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Working style: read code and logs first, explain the finding, then make the change.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;The key is to define what “done” means. Codex can handle long tasks better when the target is concrete.&lt;/p&gt;
+&lt;h3&gt;2. Make it verify with tools, not just produce an answer&lt;span class="hx-absolute -hx-mt-20" id="2-make-it-verify-with-tools-not-just-produce-an-answer"&gt;&lt;/span&gt;
+&lt;a href="#2-make-it-verify-with-tools-not-just-produce-an-answer" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The risky part of long-running agent work is that the agent may believe it is done before you have evidence.&lt;/p&gt;
+&lt;p&gt;So I prefer asking Codex to leave checkable proof at each step:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;code work: &lt;code&gt;git diff&lt;/code&gt;, test command, failure log, fixed output;&lt;/li&gt;
+&lt;li&gt;frontend work: local screenshot, browser console, key interaction check;&lt;/li&gt;
+&lt;li&gt;content work: source links, citation boundary, final Markdown file;&lt;/li&gt;
+&lt;li&gt;release work: dry run, build output, deployment log, rollback path.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260509/codex-in-app-browser.webp" alt="Codex in-app browser for local page verification" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;This is why Codex starts to feel like a workbench: it can connect terminal output, files, browser checks, and diffs inside one task flow.&lt;/p&gt;
+&lt;h3&gt;3. Move repeated requirements into project rules&lt;span class="hx-absolute -hx-mt-20" id="3-move-repeated-requirements-into-project-rules"&gt;&lt;/span&gt;
+&lt;a href="#3-move-repeated-requirements-into-project-rules" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;If you repeatedly say:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Do not modify public
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Use Chinese by default
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Run hugo --renderToMemory --minify first
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Put article images under static/img/YYYYMMDD&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;then those rules should not live only in your prompt history.&lt;/p&gt;
+&lt;p&gt;A better place is &lt;code&gt;AGENTS.md&lt;/code&gt;, or a reusable skill. When Codex enters the repository, it can immediately understand the local boundaries, language preference, verification command, and files it should avoid.&lt;/p&gt;
+&lt;p&gt;This looks small, but it matters for long-running tasks. Long tasks are not kept on track by a single perfect prompt. They stay on track through stable rules.&lt;/p&gt;
+&lt;h3&gt;4. Turn repeated work into automations&lt;span class="hx-absolute -hx-mt-20" id="4-turn-repeated-work-into-automations"&gt;&lt;/span&gt;
+&lt;a href="#4-turn-repeated-work-into-automations" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;OpenAI is also pushing Codex Automations: let Codex come back on a schedule, do repeatable work, and hand the result to you for review.&lt;/p&gt;
+&lt;p&gt;I would start with low-risk, repetitive, easy-to-check work:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;summarize new article drafts every week;&lt;/li&gt;
+&lt;li&gt;scan TODOs or failing tests every day;&lt;/li&gt;
+&lt;li&gt;summarize GitHub issues and PR status;&lt;/li&gt;
+&lt;li&gt;check site build and SEO output on a fixed schedule;&lt;/li&gt;
+&lt;li&gt;generate a weekly progress note for a long-running project.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;A practical automation prompt could be:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Every Friday afternoon, return to this thread and review this week&amp;#39;s new articles and drafts.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Output three sections:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;1. published articles;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;2. titles or images worth improving;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;3. the 3 most promising topics for next week.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Only summarize and suggest. Do not edit files automatically.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Let it organize and report first. Only later should you consider giving it execution authority.&lt;/p&gt;
+&lt;h3&gt;5. Use mobile handoff to keep work from stalling&lt;span class="hx-absolute -hx-mt-20" id="5-use-mobile-handoff-to-keep-work-from-stalling"&gt;&lt;/span&gt;
+&lt;a href="#5-use-mobile-handoff-to-keep-work-from-stalling" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;OpenAI has also connected Codex to the ChatGPT mobile app. For long-running tasks, the useful part is that you do not need to stay at the computer the whole time.&lt;/p&gt;
+&lt;p&gt;Codex may stop and ask:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;should I choose plan A or plan B?&lt;/li&gt;
+&lt;li&gt;may I run this command?&lt;/li&gt;
+&lt;li&gt;should this diff be expanded?&lt;/li&gt;
+&lt;li&gt;do you want me to update the test too?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;If you can answer those small decisions from your phone, a long task does not get stuck on a minor approval.&lt;/p&gt;
+&lt;p&gt;But I would not treat mobile access as “let AI change production remotely.” A better use is: let Codex continue investigation, organization, verification, and drafting, while keeping high-impact actions under human review.&lt;/p&gt;
+&lt;h2&gt;A reusable long-task prompt&lt;span class="hx-absolute -hx-mt-20" id="a-reusable-long-task-prompt"&gt;&lt;/span&gt;
+&lt;a href="#a-reusable-long-task-prompt" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;For a complete Codex task, I would start from this template:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Goal:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Complete [specific task] until it reaches [verifiable end state].
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Context:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Business context:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Relevant paths:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Known problem:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Constraints:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Do not modify:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Do not do:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Must follow:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Working style:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;1. Read the relevant files and logs first.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;2. Explain the root cause or execution plan.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;3. Wait for confirmation before changing high-risk areas.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;4. Run verification commands after editing.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;5. Final response must include changed files, commands, and results.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Definition of done:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- [ ] Code or document updated.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- [ ] Verification command passed.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- [ ] Key risks explained.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- [ ] No unrelated files touched.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;For especially long tasks, add this:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;If the context grows too long, summarize current state, decisions already made,
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;and remaining work before continuing.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h2&gt;Where I would not fully let go&lt;span class="hx-absolute -hx-mt-20" id="where-i-would-not-fully-let-go"&gt;&lt;/span&gt;
+&lt;a href="#where-i-would-not-fully-let-go" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Codex is getting stronger, but that does not mean everything should be fully automatic.&lt;/p&gt;
+&lt;p&gt;I would keep human confirmation for:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;deleting production data;&lt;/li&gt;
+&lt;li&gt;changing account, security, payment, or secret configuration;&lt;/li&gt;
+&lt;li&gt;large refactors of public interfaces;&lt;/li&gt;
+&lt;li&gt;deployments with no rollback path;&lt;/li&gt;
+&lt;li&gt;browser actions involving private data.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The value of a long-running task workbench is moving from “manually operate every step” to “make decisions at the important points.” It should not remove judgment from the process.&lt;/p&gt;
+&lt;h2&gt;Conclusion&lt;span class="hx-absolute -hx-mt-20" id="conclusion"&gt;&lt;/span&gt;
+&lt;a href="#conclusion" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The most interesting change in Codex is not that it can write a few more lines of code. It is that it can increasingly work around a goal over time.&lt;/p&gt;
+&lt;p&gt;For me, the practical workflow is:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;one important task, one thread;&lt;/li&gt;
+&lt;li&gt;define done before starting;&lt;/li&gt;
+&lt;li&gt;make Codex verify with tools;&lt;/li&gt;
+&lt;li&gt;move repeated rules into &lt;code&gt;AGENTS.md&lt;/code&gt; or skills;&lt;/li&gt;
+&lt;li&gt;automate only low-risk repeated work first.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;If you still use Codex as “autocomplete plus chat,” try changing the prompt shape. Do not only ask how to write something. Give it a goal, constraints, and a definition of done, then use it as a workbench you can inspect and take over at any point.&lt;/p&gt;
+&lt;h2&gt;References&lt;span class="hx-absolute -hx-mt-20" id="references"&gt;&lt;/span&gt;
+&lt;a href="#references" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;OpenAI: &lt;a href="https://openai.com/index/introducing-the-codex-app/" target="_blank" rel="noopener"&gt;https://openai.com/index/introducing-the-codex-app/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;OpenAI: &lt;a href="https://openai.com/index/work-with-codex-from-anywhere/" target="_blank" rel="noopener"&gt;https://openai.com/index/work-with-codex-from-anywhere/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;OpenAI Academy: &lt;a href="https://openai.com/academy/codex-automations/" target="_blank" rel="noopener"&gt;https://openai.com/academy/codex-automations/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;OpenAI Developers: &lt;a href="https://developers.openai.com/codex/use-cases/follow-goals" target="_blank" rel="noopener"&gt;https://developers.openai.com/codex/use-cases/follow-goals&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description></item><item><title>Persistent Memory Is Not About Remembering Everything: What Should Agents Actually Keep?</title><link>https://silenceper.com/en/article/2026-05-10-agent-persistent-memory/</link><pubDate>Sun, 10 May 2026 11:20:00 +0800</pubDate><guid>https://silenceper.com/en/article/2026-05-10-agent-persistent-memory/</guid><description>
 &lt;p&gt;&lt;img src="https://silenceper.com/img/20260510/agent-memory-decision-map-en.png" alt="Agent memory decision map" loading="lazy" /&gt;&lt;/p&gt;
 &lt;p&gt;Many AI agent products now talk about memory: long-term memory, project memory, user preferences, chat history, knowledge bases, vector retrieval, and automatic summaries.&lt;/p&gt;
 &lt;p&gt;That makes it easy to believe one simple idea: &lt;strong&gt;the more an agent remembers, the smarter it becomes.&lt;/strong&gt;&lt;/p&gt;

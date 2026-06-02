@@ -1,4 +1,382 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – Developer Tools</title><link>https://silenceper.com/en/tags/developer-tools/</link><description>Recent content in Developer Tools on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en-US</language><lastBuildDate>Sat, 09 May 2026 22:15:00 +0800</lastBuildDate><atom:link href="https://silenceper.com/en/tags/developer-tools/index.xml" rel="self" type="application/rss+xml"/><item><title>Codex Chrome Extension: When Should AI Use Your Browser Login State?</title><link>https://silenceper.com/en/article/2026-05-09-codex-chrome-browser-login-state/</link><pubDate>Sat, 09 May 2026 22:15:00 +0800</pubDate><guid>https://silenceper.com/en/article/2026-05-09-codex-chrome-browser-login-state/</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – Developer Tools</title><link>https://silenceper.com/en/tags/developer-tools/</link><description>Recent content in Developer Tools on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en-US</language><lastBuildDate>Wed, 27 May 2026 23:45:00 +0800</lastBuildDate><atom:link href="https://silenceper.com/en/tags/developer-tools/index.xml" rel="self" type="application/rss+xml"/><item><title>Pi: A Coding Agent Harness You Can Reshape Around Your Workflow</title><link>https://silenceper.com/en/article/2026-05-27-pi-coding-agent-harness/</link><pubDate>Wed, 27 May 2026 23:45:00 +0800</pubDate><guid>https://silenceper.com/en/article/2026-05-27-pi-coding-agent-harness/</guid><description>
+&lt;p&gt;AI coding tools are increasingly becoming full products: built-in plan mode, permission prompts, sub-agents, MCP, task lists, background jobs, and graphical interfaces.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;earendil-works/pi&lt;/code&gt; takes a different path: &lt;strong&gt;keep the core small, and make the rest open to user extension.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Project: &lt;a href="https://github.com/earendil-works/pi" target="_blank" rel="noopener"&gt;https://github.com/earendil-works/pi&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Documentation: &lt;a href="https://pi.dev/" target="_blank" rel="noopener"&gt;https://pi.dev/&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;One-line positioning&lt;span class="hx-absolute -hx-mt-20" id="one-line-positioning"&gt;&lt;/span&gt;
+&lt;a href="#one-line-positioning" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Pi is a customizable terminal AI coding agent harness: it provides a coding agent, tool-calling runtime, unified model API, TUI components, and package system so you can adapt the agent to your workflow instead of adapting yourself to the tool.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;If many coding agents feel like ready-made products, Pi feels more like a set of building blocks for your own agent setup.&lt;/p&gt;
+&lt;h2&gt;Basic information&lt;span class="hx-absolute -hx-mt-20" id="basic-information"&gt;&lt;/span&gt;
+&lt;a href="#basic-information" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Field&lt;/th&gt;
+&lt;th&gt;Details&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Project&lt;/td&gt;
+&lt;td&gt;Pi&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Repository&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://github.com/earendil-works/pi" target="_blank" rel="noopener"&gt;https://github.com/earendil-works/pi&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Website&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://pi.dev/" target="_blank" rel="noopener"&gt;https://pi.dev/&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;License&lt;/td&gt;
+&lt;td&gt;MIT&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Main stack&lt;/td&gt;
+&lt;td&gt;Mostly TypeScript&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Core packages&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;pi-coding-agent&lt;/code&gt;, &lt;code&gt;pi-agent-core&lt;/code&gt;, &lt;code&gt;pi-ai&lt;/code&gt;, &lt;code&gt;pi-tui&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Runtime modes&lt;/td&gt;
+&lt;td&gt;Interactive TUI, print/JSON, RPC, SDK&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Main use cases&lt;/td&gt;
+&lt;td&gt;Terminal coding agent, custom agent workflows, model/tool/UI extension&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Note: stars, forks, versions, and language percentages change over time. Check the GitHub repository for live numbers.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2&gt;What problem does it solve?&lt;span class="hx-absolute -hx-mt-20" id="what-problem-does-it-solve"&gt;&lt;/span&gt;
+&lt;a href="#what-problem-does-it-solve" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Many agent tools are getting more powerful, but that also creates a problem: the default workflow keeps getting heavier.&lt;/p&gt;
+&lt;p&gt;Some users want built-in plan mode, permission confirmation, MCP, sub-agents, and a graphical interface. Others want a lightweight, scriptable agent that fits naturally into their terminal workflow.&lt;/p&gt;
+&lt;p&gt;Pi&amp;rsquo;s bet is:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Do not put every feature into the core.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Keep the agent harness small.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Expose extension points so users can compose their own workflow.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;That is the most interesting part of the project. Pi is not just another replacement for Claude Code or Codex. It is asking a different question: &lt;strong&gt;what should the agent foundation look like if individuals and teams want to keep reshaping it over time?&lt;/strong&gt;&lt;/p&gt;
+&lt;h2&gt;Core features&lt;span class="hx-absolute -hx-mt-20" id="core-features"&gt;&lt;/span&gt;
+&lt;a href="#core-features" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;1. A terminal-first coding agent&lt;span class="hx-absolute -hx-mt-20" id="1-a-terminal-first-coding-agent"&gt;&lt;/span&gt;
+&lt;a href="#1-a-terminal-first-coding-agent" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Pi&amp;rsquo;s main entry point is a terminal TUI. It supports the usual AI coding agent workflow: reading project context, calling tools, editing files, running commands, and iterating within a session.&lt;/p&gt;
+&lt;p&gt;The official positioning is clear: Pi is a minimal terminal coding harness. The goal is not to turn every feature into a fixed button, but to let the tool fit into your terminal habits.&lt;/p&gt;
+&lt;h3&gt;2. Multiple models and providers&lt;span class="hx-absolute -hx-mt-20" id="2-multiple-models-and-providers"&gt;&lt;/span&gt;
+&lt;a href="#2-multiple-models-and-providers" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Pi uses &lt;code&gt;@earendil-works/pi-ai&lt;/code&gt; as a unified multi-provider LLM API.&lt;/p&gt;
+&lt;p&gt;The website lists providers such as Anthropic, OpenAI, Google, Azure, Bedrock, Mistral, Groq, Cerebras, xAI, Hugging Face, OpenRouter, and Ollama. What you can actually use depends on your configuration, account, and API keys.&lt;/p&gt;
+&lt;p&gt;This is useful for teams: you can separate the agent workflow from the model vendor instead of replacing the whole tool whenever you switch models.&lt;/p&gt;
+&lt;h3&gt;3. An extensible agent runtime&lt;span class="hx-absolute -hx-mt-20" id="3-an-extensible-agent-runtime"&gt;&lt;/span&gt;
+&lt;a href="#3-an-extensible-agent-runtime" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;&lt;code&gt;@earendil-works/pi-agent-core&lt;/code&gt; provides agent runtime capabilities such as tool calling and state management.&lt;/p&gt;
+&lt;p&gt;That means Pi is not only a CLI. It can also be reused as a lower-level agent component. You can embed it in a Node.js application, or call it from another system through RPC or JSON event streams.&lt;/p&gt;
+&lt;h3&gt;4. Skills, prompt templates, extensions, and packages&lt;span class="hx-absolute -hx-mt-20" id="4-skills-prompt-templates-extensions-and-packages"&gt;&lt;/span&gt;
+&lt;a href="#4-skills-prompt-templates-extensions-and-packages" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Pi&amp;rsquo;s extension model is close to productized context engineering:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Skills&lt;/strong&gt;: on-demand capability instructions and tool constraints;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Prompt templates&lt;/strong&gt;: reusable prompts;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Extensions&lt;/strong&gt;: TypeScript modules that can extend tools, commands, keybindings, events, and the TUI;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Pi packages&lt;/strong&gt;: bundled extensions, skills, prompts, and themes that can be shared.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The value is that you do not need to control the agent with one long prompt every time. Stable rules, tools, and workflows can become reusable assets.&lt;/p&gt;
+&lt;h3&gt;5. Session trees and shareable history&lt;span class="hx-absolute -hx-mt-20" id="5-session-trees-and-shareable-history"&gt;&lt;/span&gt;
+&lt;a href="#5-session-trees-and-shareable-history" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Pi stores sessions as trees. You can return to an earlier point, branch from there, export the session as HTML, or share it.&lt;/p&gt;
+&lt;p&gt;That matters when debugging agent behavior. Real workflows often involve attempts, failures, corrections, and rollbacks. A tree-shaped history is better than a purely linear chat for preserving those decision paths.&lt;/p&gt;
+&lt;h2&gt;An important tradeoff: not everything is built in&lt;span class="hx-absolute -hx-mt-20" id="an-important-tradeoff-not-everything-is-built-in"&gt;&lt;/span&gt;
+&lt;a href="#an-important-tradeoff-not-everything-is-built-in" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Pi&amp;rsquo;s website has a dedicated &amp;ldquo;What we didn&amp;rsquo;t build&amp;rdquo; section: no built-in MCP, no built-in sub-agents, no built-in permission popups, no built-in plan mode, no built-in todos, and no built-in background bash.&lt;/p&gt;
+&lt;p&gt;This is not simply a missing feature list. It is a product philosophy:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The core provides primitives. More complex features can be built through extensions, skills, scripts, tmux, or packages.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;That tradeoff filters the audience.&lt;/p&gt;
+&lt;p&gt;If you want a complete, conservative, ready-made agent product, Pi may feel too open-ended. If you want control over the system prompt, context, commands, UI, and runtime behavior, Pi becomes more interesting.&lt;/p&gt;
+&lt;h2&gt;Who is it for?&lt;span class="hx-absolute -hx-mt-20" id="who-is-it-for"&gt;&lt;/span&gt;
+&lt;a href="#who-is-it-for" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;Good fit&lt;span class="hx-absolute -hx-mt-20" id="good-fit"&gt;&lt;/span&gt;
+&lt;a href="#good-fit" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Developers who spend a lot of time in the terminal;&lt;/li&gt;
+&lt;li&gt;People who want to study how AI coding agents are built;&lt;/li&gt;
+&lt;li&gt;Teams that want to connect an agent to their own tools, scripts, or products;&lt;/li&gt;
+&lt;li&gt;Teams that want to accumulate reusable skills, prompt templates, and extensions;&lt;/li&gt;
+&lt;li&gt;Users who need multi-model and multi-provider switching without binding themselves to one platform.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Poor fit&lt;span class="hx-absolute -hx-mt-20" id="poor-fit"&gt;&lt;/span&gt;
+&lt;a href="#poor-fit" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Users who want a zero-config graphical product;&lt;/li&gt;
+&lt;li&gt;Users who do not want to understand terminals, config files, or extension mechanisms;&lt;/li&gt;
+&lt;li&gt;Teams that need enterprise-grade permission review, centralized control, audit logs, and SLA out of the box;&lt;/li&gt;
+&lt;li&gt;Users who only want the agent to write code immediately and do not care about workflow malleability.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Quick start&lt;span class="hx-absolute -hx-mt-20" id="quick-start"&gt;&lt;/span&gt;
+&lt;a href="#quick-start" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The official documentation shows this npm install path:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npm install -g --ignore-scripts @earendil-works/pi-coding-agent&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;On macOS and Linux, you can also use the installer:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -fsSL https://pi.dev/install.sh &lt;span class="p"&gt;|&lt;/span&gt; sh&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Then run it inside a project directory:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;pi&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Authentication can be done with &lt;code&gt;/login&lt;/code&gt;, or by setting provider API keys such as &lt;code&gt;ANTHROPIC_API_KEY&lt;/code&gt;. Follow the official docs for the current provider setup details.&lt;/p&gt;
+&lt;h2&gt;How I would try it&lt;span class="hx-absolute -hx-mt-20" id="how-i-would-try-it"&gt;&lt;/span&gt;
+&lt;a href="#how-i-would-try-it" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;If you are only evaluating Pi, do not start by studying every extension mechanism.&lt;/p&gt;
+&lt;p&gt;A better path:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Pick a non-critical repository;&lt;/li&gt;
+&lt;li&gt;Run &lt;code&gt;pi&lt;/code&gt; and ask it to read the project and make a small change;&lt;/li&gt;
+&lt;li&gt;Try &lt;code&gt;pi -p &amp;quot;...&amp;quot;&lt;/code&gt; in print mode and see whether it fits scripting use cases;&lt;/li&gt;
+&lt;li&gt;Check whether session trees, skills, and prompt templates can capture your repeatable workflows;&lt;/li&gt;
+&lt;li&gt;Only then decide whether to study extensions and packages.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The key question is not whether its first output is impressive. The question is whether you can put your own rules into it and reuse them over time.&lt;/p&gt;
+&lt;h2&gt;Pros and limitations&lt;span class="hx-absolute -hx-mt-20" id="pros-and-limitations"&gt;&lt;/span&gt;
+&lt;a href="#pros-and-limitations" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;Pros&lt;span class="hx-absolute -hx-mt-20" id="pros"&gt;&lt;/span&gt;
+&lt;a href="#pros" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Small core, good fit for terminal-heavy developers;&lt;/li&gt;
+&lt;li&gt;Clear extension points for context engineering and custom workflows;&lt;/li&gt;
+&lt;li&gt;Broad multi-provider support, reducing model lock-in;&lt;/li&gt;
+&lt;li&gt;Session trees, export, and sharing are useful for reviewing agent behavior;&lt;/li&gt;
+&lt;li&gt;MIT license, friendly to secondary development and commercial experiments.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Possible limitations&lt;span class="hx-absolute -hx-mt-20" id="possible-limitations"&gt;&lt;/span&gt;
+&lt;a href="#possible-limitations" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;More freedom also means more learning cost;&lt;/li&gt;
+&lt;li&gt;Many advanced capabilities need to be assembled through extensions or external tools;&lt;/li&gt;
+&lt;li&gt;It is not as friendly to non-terminal users;&lt;/li&gt;
+&lt;li&gt;Team-level permissions, security, and auditing need additional work;&lt;/li&gt;
+&lt;li&gt;The maturity of the ecosystem depends on future packages, extensions, and community contributions.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Monetization directions&lt;span class="hx-absolute -hx-mt-20" id="monetization-directions"&gt;&lt;/span&gt;
+&lt;a href="#monetization-directions" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Custom team agent harnesses&lt;/strong&gt;: build standardized coding-agent workflows for engineering teams on top of Pi.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Vertical skills and packages&lt;/strong&gt;: create installable packages for frontend, data analysis, DevOps, security review, and other workflows.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Private enterprise agent foundation&lt;/strong&gt;: connect model routing, audit logs, permissions, and internal tools into the Pi runtime.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Agent workflow consulting&lt;/strong&gt;: help teams turn prompts, AGENTS.md, skills, templates, and CI verification into durable workflow assets.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;Conclusion&lt;span class="hx-absolute -hx-mt-20" id="conclusion"&gt;&lt;/span&gt;
+&lt;a href="#conclusion" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Pi&amp;rsquo;s value is not just that it can write code. Its value is that it breaks a coding agent into layers that can be reshaped: CLI, runtime, model API, TUI, skills, extensions, and packages.&lt;/p&gt;
+&lt;p&gt;If you want a mature all-in-one product, tools like Codex, Claude Code, or Cursor may be more direct.&lt;/p&gt;
+&lt;p&gt;But if you care about this question: &lt;strong&gt;can my agent grow around my workflow?&lt;/strong&gt; Pi is worth studying.&lt;/p&gt;
+&lt;p&gt;It points to an interesting direction: an agent is not only a tool. It can also be an evolving developer workbench foundation.&lt;/p&gt;</description></item><item><title>Codex Is No Longer Just a Coding Tool. It Is Becoming a Long-Running Task Workbench</title><link>https://silenceper.com/en/article/2026-05-23-codex-long-task-workbench/</link><pubDate>Sat, 23 May 2026 15:40:00 +0800</pubDate><guid>https://silenceper.com/en/article/2026-05-23-codex-long-task-workbench/</guid><description>
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260509/codex-app-screenshot.webp" alt="Codex App workspace" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;My current view of Codex is simple: it is no longer just a tool that helps me write code.&lt;/p&gt;
+&lt;p&gt;More precisely, &lt;strong&gt;Codex is shifting from a code generator into a long-running task workbench.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;The important change is not one extra button. It is the way threads, tools, permissions, verification, automations, memory, and project rules can work together, so a task can keep moving while you step in to steer, approve, or review the result.&lt;/p&gt;
+&lt;h2&gt;The short version&lt;span class="hx-absolute -hx-mt-20" id="the-short-version"&gt;&lt;/span&gt;
+&lt;a href="#the-short-version" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;The old Codex felt like “help me edit this code.” The newer workflow feels more like “help me move this goal toward a verified result.”&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;That matters because useful agent work is not only about a strong first draft. It is about whether the work can:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;stay continuous: keep context and decisions inside the same thread;&lt;/li&gt;
+&lt;li&gt;stay steerable: let you correct direction or approve the next step;&lt;/li&gt;
+&lt;li&gt;stay verifiable: run tests, inspect diffs, capture screenshots, and check pages;&lt;/li&gt;
+&lt;li&gt;stay reusable: move repeated rules into &lt;code&gt;AGENTS.md&lt;/code&gt;, skills, or automations.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;How I would use it&lt;span class="hx-absolute -hx-mt-20" id="how-i-would-use-it"&gt;&lt;/span&gt;
+&lt;a href="#how-i-would-use-it" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;1. Give every important task its own long-running thread&lt;span class="hx-absolute -hx-mt-20" id="1-give-every-important-task-its-own-long-running-thread"&gt;&lt;/span&gt;
+&lt;a href="#1-give-every-important-task-its-own-long-running-thread" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Do not treat Codex as a disposable Q&amp;amp;A window.&lt;/p&gt;
+&lt;p&gt;A bug, an article, a refactor, or a release flow should each have its own thread. That thread can preserve what Codex has already read, what it has tried, which commands it ran, and what feedback you gave.&lt;/p&gt;
+&lt;p&gt;My prompt usually looks like this:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Goal: move this issue from diagnosis to a verified fix.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Context: this is a production report, and the relevant module may be xxx.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Constraints: do not touch unrelated files, do not refactor public interfaces, do not modify public build output.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Definition of done: root cause explained, code changed, tests or local verification passing.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Working style: read code and logs first, explain the finding, then make the change.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;The key is to define what “done” means. Codex can handle long tasks better when the target is concrete.&lt;/p&gt;
+&lt;h3&gt;2. Make it verify with tools, not just produce an answer&lt;span class="hx-absolute -hx-mt-20" id="2-make-it-verify-with-tools-not-just-produce-an-answer"&gt;&lt;/span&gt;
+&lt;a href="#2-make-it-verify-with-tools-not-just-produce-an-answer" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The risky part of long-running agent work is that the agent may believe it is done before you have evidence.&lt;/p&gt;
+&lt;p&gt;So I prefer asking Codex to leave checkable proof at each step:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;code work: &lt;code&gt;git diff&lt;/code&gt;, test command, failure log, fixed output;&lt;/li&gt;
+&lt;li&gt;frontend work: local screenshot, browser console, key interaction check;&lt;/li&gt;
+&lt;li&gt;content work: source links, citation boundary, final Markdown file;&lt;/li&gt;
+&lt;li&gt;release work: dry run, build output, deployment log, rollback path.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260509/codex-in-app-browser.webp" alt="Codex in-app browser for local page verification" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;This is why Codex starts to feel like a workbench: it can connect terminal output, files, browser checks, and diffs inside one task flow.&lt;/p&gt;
+&lt;h3&gt;3. Move repeated requirements into project rules&lt;span class="hx-absolute -hx-mt-20" id="3-move-repeated-requirements-into-project-rules"&gt;&lt;/span&gt;
+&lt;a href="#3-move-repeated-requirements-into-project-rules" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;If you repeatedly say:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Do not modify public
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Use Chinese by default
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Run hugo --renderToMemory --minify first
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Put article images under static/img/YYYYMMDD&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;then those rules should not live only in your prompt history.&lt;/p&gt;
+&lt;p&gt;A better place is &lt;code&gt;AGENTS.md&lt;/code&gt;, or a reusable skill. When Codex enters the repository, it can immediately understand the local boundaries, language preference, verification command, and files it should avoid.&lt;/p&gt;
+&lt;p&gt;This looks small, but it matters for long-running tasks. Long tasks are not kept on track by a single perfect prompt. They stay on track through stable rules.&lt;/p&gt;
+&lt;h3&gt;4. Turn repeated work into automations&lt;span class="hx-absolute -hx-mt-20" id="4-turn-repeated-work-into-automations"&gt;&lt;/span&gt;
+&lt;a href="#4-turn-repeated-work-into-automations" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;OpenAI is also pushing Codex Automations: let Codex come back on a schedule, do repeatable work, and hand the result to you for review.&lt;/p&gt;
+&lt;p&gt;I would start with low-risk, repetitive, easy-to-check work:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;summarize new article drafts every week;&lt;/li&gt;
+&lt;li&gt;scan TODOs or failing tests every day;&lt;/li&gt;
+&lt;li&gt;summarize GitHub issues and PR status;&lt;/li&gt;
+&lt;li&gt;check site build and SEO output on a fixed schedule;&lt;/li&gt;
+&lt;li&gt;generate a weekly progress note for a long-running project.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;A practical automation prompt could be:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Every Friday afternoon, return to this thread and review this week&amp;#39;s new articles and drafts.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Output three sections:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;1. published articles;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;2. titles or images worth improving;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;3. the 3 most promising topics for next week.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Only summarize and suggest. Do not edit files automatically.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Let it organize and report first. Only later should you consider giving it execution authority.&lt;/p&gt;
+&lt;h3&gt;5. Use mobile handoff to keep work from stalling&lt;span class="hx-absolute -hx-mt-20" id="5-use-mobile-handoff-to-keep-work-from-stalling"&gt;&lt;/span&gt;
+&lt;a href="#5-use-mobile-handoff-to-keep-work-from-stalling" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;OpenAI has also connected Codex to the ChatGPT mobile app. For long-running tasks, the useful part is that you do not need to stay at the computer the whole time.&lt;/p&gt;
+&lt;p&gt;Codex may stop and ask:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;should I choose plan A or plan B?&lt;/li&gt;
+&lt;li&gt;may I run this command?&lt;/li&gt;
+&lt;li&gt;should this diff be expanded?&lt;/li&gt;
+&lt;li&gt;do you want me to update the test too?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;If you can answer those small decisions from your phone, a long task does not get stuck on a minor approval.&lt;/p&gt;
+&lt;p&gt;But I would not treat mobile access as “let AI change production remotely.” A better use is: let Codex continue investigation, organization, verification, and drafting, while keeping high-impact actions under human review.&lt;/p&gt;
+&lt;h2&gt;A reusable long-task prompt&lt;span class="hx-absolute -hx-mt-20" id="a-reusable-long-task-prompt"&gt;&lt;/span&gt;
+&lt;a href="#a-reusable-long-task-prompt" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;For a complete Codex task, I would start from this template:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Goal:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Complete [specific task] until it reaches [verifiable end state].
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Context:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Business context:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Relevant paths:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Known problem:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Constraints:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Do not modify:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Do not do:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Must follow:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Working style:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;1. Read the relevant files and logs first.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;2. Explain the root cause or execution plan.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;3. Wait for confirmation before changing high-risk areas.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;4. Run verification commands after editing.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;5. Final response must include changed files, commands, and results.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Definition of done:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- [ ] Code or document updated.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- [ ] Verification command passed.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- [ ] Key risks explained.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- [ ] No unrelated files touched.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;For especially long tasks, add this:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;If the context grows too long, summarize current state, decisions already made,
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;and remaining work before continuing.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h2&gt;Where I would not fully let go&lt;span class="hx-absolute -hx-mt-20" id="where-i-would-not-fully-let-go"&gt;&lt;/span&gt;
+&lt;a href="#where-i-would-not-fully-let-go" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Codex is getting stronger, but that does not mean everything should be fully automatic.&lt;/p&gt;
+&lt;p&gt;I would keep human confirmation for:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;deleting production data;&lt;/li&gt;
+&lt;li&gt;changing account, security, payment, or secret configuration;&lt;/li&gt;
+&lt;li&gt;large refactors of public interfaces;&lt;/li&gt;
+&lt;li&gt;deployments with no rollback path;&lt;/li&gt;
+&lt;li&gt;browser actions involving private data.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The value of a long-running task workbench is moving from “manually operate every step” to “make decisions at the important points.” It should not remove judgment from the process.&lt;/p&gt;
+&lt;h2&gt;Conclusion&lt;span class="hx-absolute -hx-mt-20" id="conclusion"&gt;&lt;/span&gt;
+&lt;a href="#conclusion" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The most interesting change in Codex is not that it can write a few more lines of code. It is that it can increasingly work around a goal over time.&lt;/p&gt;
+&lt;p&gt;For me, the practical workflow is:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;one important task, one thread;&lt;/li&gt;
+&lt;li&gt;define done before starting;&lt;/li&gt;
+&lt;li&gt;make Codex verify with tools;&lt;/li&gt;
+&lt;li&gt;move repeated rules into &lt;code&gt;AGENTS.md&lt;/code&gt; or skills;&lt;/li&gt;
+&lt;li&gt;automate only low-risk repeated work first.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;If you still use Codex as “autocomplete plus chat,” try changing the prompt shape. Do not only ask how to write something. Give it a goal, constraints, and a definition of done, then use it as a workbench you can inspect and take over at any point.&lt;/p&gt;
+&lt;h2&gt;References&lt;span class="hx-absolute -hx-mt-20" id="references"&gt;&lt;/span&gt;
+&lt;a href="#references" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;OpenAI: &lt;a href="https://openai.com/index/introducing-the-codex-app/" target="_blank" rel="noopener"&gt;https://openai.com/index/introducing-the-codex-app/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;OpenAI: &lt;a href="https://openai.com/index/work-with-codex-from-anywhere/" target="_blank" rel="noopener"&gt;https://openai.com/index/work-with-codex-from-anywhere/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;OpenAI Academy: &lt;a href="https://openai.com/academy/codex-automations/" target="_blank" rel="noopener"&gt;https://openai.com/academy/codex-automations/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;OpenAI Developers: &lt;a href="https://developers.openai.com/codex/use-cases/follow-goals" target="_blank" rel="noopener"&gt;https://developers.openai.com/codex/use-cases/follow-goals&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description></item><item><title>Codex Chrome Extension: When Should AI Use Your Browser Login State?</title><link>https://silenceper.com/en/article/2026-05-09-codex-chrome-browser-login-state/</link><pubDate>Sat, 09 May 2026 22:15:00 +0800</pubDate><guid>https://silenceper.com/en/article/2026-05-09-codex-chrome-browser-login-state/</guid><description>
 &lt;p&gt;&lt;img src="https://silenceper.com/img/20260509/codex-app-screenshot.webp" alt="Codex app window with a project sidebar, active thread, and review pane" loading="lazy" /&gt;&lt;/p&gt;
 &lt;p&gt;When people first hear about the Codex Chrome extension, it is easy to describe it as “letting AI open web pages.” That is too narrow.&lt;/p&gt;
 &lt;p&gt;A more accurate way to think about it is this: &lt;strong&gt;when a task depends on your Chrome login state, browser context, or real web-page interactions, the extension lets Codex enter that workflow within the permissions you grant.&lt;/strong&gt;&lt;/p&gt;

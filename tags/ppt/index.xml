@@ -1,0 +1,280 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – PPT</title><link>https://silenceper.com/tags/ppt/</link><description>Recent content in PPT on silenceper</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 02 Jun 2026 15:20:00 +0800</lastBuildDate><atom:link href="https://silenceper.com/tags/ppt/index.xml" rel="self" type="application/rss+xml"/><item><title>html-ppt-skill：让 AI 生成专业 HTML 演示文稿</title><link>https://silenceper.com/article/2026-06-02-html-ppt-skill/</link><pubDate>Tue, 02 Jun 2026 15:20:00 +0800</pubDate><guid>https://silenceper.com/article/2026-06-02-html-ppt-skill/</guid><description>
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260602/html-ppt-hero.gif" alt="html-ppt 封面 · 实时预览" loading="lazy" /&gt;&lt;/p&gt;
+&lt;h2&gt;一句话定位&lt;span class="hx-absolute -hx-mt-20" id="一句话定位"&gt;&lt;/span&gt;
+&lt;a href="#%e4%b8%80%e5%8f%a5%e8%af%9d%e5%ae%9a%e4%bd%8d" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;html-ppt-skill 是一套面向 AI Agent 的 HTML PPT 生成技能包，用纯静态 HTML/CSS/JS 快速产出带主题、布局、动效和演讲者模式的专业演示文稿。&lt;/strong&gt;&lt;/p&gt;
+&lt;h2&gt;基础信息卡片&lt;span class="hx-absolute -hx-mt-20" id="基础信息卡片"&gt;&lt;/span&gt;
+&lt;a href="#%e5%9f%ba%e7%a1%80%e4%bf%a1%e6%81%af%e5%8d%a1%e7%89%87" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;项目&lt;/th&gt;
+&lt;th&gt;信息&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;项目名&lt;/td&gt;
+&lt;td&gt;html-ppt-skill / HTML PPT Studio&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;GitHub&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://github.com/lewislulu/html-ppt-skill" target="_blank" rel="noopener"&gt;https://github.com/lewislulu/html-ppt-skill&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;作者&lt;/td&gt;
+&lt;td&gt;lewis&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;协议&lt;/td&gt;
+&lt;td&gt;MIT&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;主要技术&lt;/td&gt;
+&lt;td&gt;HTML、CSS、JavaScript、Shell&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Star&lt;/td&gt;
+&lt;td&gt;约 5.3k&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Fork&lt;/td&gt;
+&lt;td&gt;约 505&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;定位&lt;/td&gt;
+&lt;td&gt;AgentSkill / HTML PPT 生成工具包&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;核心卖点&lt;/td&gt;
+&lt;td&gt;36 套主题、15 套完整 deck 模板、31 种页面布局、47 个动效、演讲者模式&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;构建方式&lt;/td&gt;
+&lt;td&gt;纯静态 HTML/CSS/JS，无需构建步骤&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2&gt;解决什么问题&lt;span class="hx-absolute -hx-mt-20" id="解决什么问题"&gt;&lt;/span&gt;
+&lt;a href="#%e8%a7%a3%e5%86%b3%e4%bb%80%e4%b9%88%e9%97%ae%e9%a2%98" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;很多 AI 工具可以生成 PPT 大纲，但真正落到“可展示、好看、能演讲”的页面时，往往还需要大量人工排版。&lt;/p&gt;
+&lt;p&gt;html-ppt-skill 解决的是：&lt;strong&gt;让 Agent 不只是写内容，而是直接生成可以打开、演示、导出截图的 HTML 演示文稿。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;它把常见 PPT 制作能力封装成一个 AgentSkill，包括：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;视觉主题&lt;/li&gt;
+&lt;li&gt;页面布局&lt;/li&gt;
+&lt;li&gt;完整演示模板&lt;/li&gt;
+&lt;li&gt;CSS / Canvas 动效&lt;/li&gt;
+&lt;li&gt;演讲者模式&lt;/li&gt;
+&lt;li&gt;导出脚本&lt;/li&gt;
+&lt;li&gt;示例 deck 和验证截图&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;对使用者来说，可以直接对支持 AgentSkill 的 AI 工具说：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;“做一份 8 页的技术分享 slides，用 cyberpunk 主题”&lt;br&gt;
+“把这段 outline 变成投资人 pitch deck”&lt;br&gt;
+“做一个小红书图文，9 张，白底柔和风”&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;然后让 Agent 根据这套技能生成对应的 HTML PPT。&lt;/p&gt;
+&lt;h2&gt;核心功能&lt;span class="hx-absolute -hx-mt-20" id="核心功能"&gt;&lt;/span&gt;
+&lt;a href="#%e6%a0%b8%e5%bf%83%e5%8a%9f%e8%83%bd" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;1. 36 套视觉主题&lt;span class="hx-absolute -hx-mt-20" id="1-36-套视觉主题"&gt;&lt;/span&gt;
+&lt;a href="#1-36-%e5%a5%97%e8%a7%86%e8%a7%89%e4%b8%bb%e9%a2%98" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;项目内置 36 套主题，覆盖极简、杂志、暗色、赛博朋克、蓝图、小红书、投资人路演、学术论文等风格。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260602/html-ppt-themes.png" alt="36 主题 · 其中 8 个" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;主题是 CSS token 驱动的，换一行 &lt;code&gt;&amp;lt;link&amp;gt;&lt;/code&gt; 就能给整份 deck 换皮。适合让 Agent 根据内容类型自动选择风格，比如：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;技术分享：&lt;code&gt;tokyo-night&lt;/code&gt;、&lt;code&gt;cyberpunk-neon&lt;/code&gt;、&lt;code&gt;engineering-whiteprint&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;商业汇报：&lt;code&gt;corporate-clean&lt;/code&gt;、&lt;code&gt;pitch-deck-vc&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;小红书图文：&lt;code&gt;xiaohongshu-white&lt;/code&gt;、&lt;code&gt;soft-pastel&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;学术内容：&lt;code&gt;academic-paper&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;架构方案：&lt;code&gt;blueprint&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;2. 15 套完整 deck 模板&lt;span class="hx-absolute -hx-mt-20" id="2-15-套完整-deck-模板"&gt;&lt;/span&gt;
+&lt;a href="#2-15-%e5%a5%97%e5%ae%8c%e6%95%b4-deck-%e6%a8%a1%e6%9d%bf" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;它不是只给几个单页组件，而是提供了完整的多页演示模板。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260602/html-ppt-templates.png" alt="15 套完整 deck 模板" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;模板分两类：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;真实风格提炼款&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;小红书白底杂志风&lt;/li&gt;
+&lt;li&gt;暗底知识图谱风&lt;/li&gt;
+&lt;li&gt;蓝图 / 架构图风&lt;/li&gt;
+&lt;li&gt;终端 cyberpunk 风&lt;/li&gt;
+&lt;li&gt;紫色渐变卡片风&lt;/li&gt;
+&lt;li&gt;警示 / 安全测试风&lt;/li&gt;
+&lt;li&gt;柔和马卡龙图文&lt;/li&gt;
+&lt;li&gt;方向键极简风&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;通用场景款&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;投资人 pitch deck&lt;/li&gt;
+&lt;li&gt;产品发布会&lt;/li&gt;
+&lt;li&gt;技术分享&lt;/li&gt;
+&lt;li&gt;周报&lt;/li&gt;
+&lt;li&gt;小红书 9 页图文&lt;/li&gt;
+&lt;li&gt;教学模块&lt;/li&gt;
+&lt;li&gt;带完整逐字稿的演讲者模式模板&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这些模板对 Agent 很有用，因为它不需要从零设计每页结构，可以直接基于场景套用骨架。&lt;/p&gt;
+&lt;h3&gt;3. 31 种单页布局&lt;span class="hx-absolute -hx-mt-20" id="3-31-种单页布局"&gt;&lt;/span&gt;
+&lt;a href="#3-31-%e7%a7%8d%e5%8d%95%e9%a1%b5%e5%b8%83%e5%b1%80" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;项目提供 31 种常见页面布局，覆盖大多数 PPT 页面类型。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260602/html-ppt-layouts.png" alt="31 种单页布局" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;包括：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;封面&lt;/li&gt;
+&lt;li&gt;目录&lt;/li&gt;
+&lt;li&gt;章节页&lt;/li&gt;
+&lt;li&gt;bullet 列表&lt;/li&gt;
+&lt;li&gt;双栏 / 三栏&lt;/li&gt;
+&lt;li&gt;引用页&lt;/li&gt;
+&lt;li&gt;数据高亮&lt;/li&gt;
+&lt;li&gt;KPI 网格&lt;/li&gt;
+&lt;li&gt;表格&lt;/li&gt;
+&lt;li&gt;代码&lt;/li&gt;
+&lt;li&gt;diff&lt;/li&gt;
+&lt;li&gt;终端&lt;/li&gt;
+&lt;li&gt;流程图&lt;/li&gt;
+&lt;li&gt;时间线&lt;/li&gt;
+&lt;li&gt;路线图&lt;/li&gt;
+&lt;li&gt;思维导图&lt;/li&gt;
+&lt;li&gt;对比页&lt;/li&gt;
+&lt;li&gt;甘特图&lt;/li&gt;
+&lt;li&gt;图片大图&lt;/li&gt;
+&lt;li&gt;图片网格&lt;/li&gt;
+&lt;li&gt;柱状图 / 折线图 / 饼图 / 雷达图&lt;/li&gt;
+&lt;li&gt;架构图&lt;/li&gt;
+&lt;li&gt;CTA&lt;/li&gt;
+&lt;li&gt;Thanks 页&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;README 里还展示了自动轮播的真实布局预览：&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260602/html-ppt-layouts-live.gif" alt="31 种布局通过真实模板文件自动循环播放" loading="lazy" /&gt;&lt;/p&gt;
+&lt;h3&gt;4. 47 个动效&lt;span class="hx-absolute -hx-mt-20" id="4-47-个动效"&gt;&lt;/span&gt;
+&lt;a href="#4-47-%e4%b8%aa%e5%8a%a8%e6%95%88" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;html-ppt-skill 内置 27 个 CSS 动画和 20 个 Canvas FX 动画。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260602/html-ppt-animations.png" alt="47 个动效 · 27 CSS &amp;#43; 20 Canvas FX" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;CSS 动效包括：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;淡入&lt;/li&gt;
+&lt;li&gt;上升进入&lt;/li&gt;
+&lt;li&gt;缩放弹出&lt;/li&gt;
+&lt;li&gt;模糊进入&lt;/li&gt;
+&lt;li&gt;打字机&lt;/li&gt;
+&lt;li&gt;霓虹光效&lt;/li&gt;
+&lt;li&gt;渐变流动&lt;/li&gt;
+&lt;li&gt;列表错开入场&lt;/li&gt;
+&lt;li&gt;数字滚动&lt;/li&gt;
+&lt;li&gt;路径绘制&lt;/li&gt;
+&lt;li&gt;3D 翻卡&lt;/li&gt;
+&lt;li&gt;页面翻转&lt;/li&gt;
+&lt;li&gt;聚光灯等&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Canvas FX 包括：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;粒子爆发&lt;/li&gt;
+&lt;li&gt;彩带&lt;/li&gt;
+&lt;li&gt;烟花&lt;/li&gt;
+&lt;li&gt;星空&lt;/li&gt;
+&lt;li&gt;Matrix 代码雨&lt;/li&gt;
+&lt;li&gt;知识图谱&lt;/li&gt;
+&lt;li&gt;神经网络脉冲&lt;/li&gt;
+&lt;li&gt;星座连线&lt;/li&gt;
+&lt;li&gt;数据流&lt;/li&gt;
+&lt;li&gt;磁场&lt;/li&gt;
+&lt;li&gt;冲击波等&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这让 Agent 做出来的不是“静态网页截图”，而是可以真正播放和展示的 HTML slides。&lt;/p&gt;
+&lt;h3&gt;5. 演讲者模式&lt;span class="hx-absolute -hx-mt-20" id="5-演讲者模式"&gt;&lt;/span&gt;
+&lt;a href="#5-%e6%bc%94%e8%ae%b2%e8%80%85%e6%a8%a1%e5%bc%8f" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;这是项目里比较亮眼的功能。&lt;/p&gt;
+&lt;p&gt;在任意 deck 中按 &lt;code&gt;S&lt;/code&gt; 键，可以打开独立的演讲者窗口。窗口里有 4 个可拖拽、可调整大小的磁吸卡片：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;当前页预览&lt;/li&gt;
+&lt;li&gt;下一页预览&lt;/li&gt;
+&lt;li&gt;逐字稿&lt;/li&gt;
+&lt;li&gt;计时器&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260602/html-ppt-presenter-mode.jpg" alt="演讲者模式 · 4 个磁吸卡片" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;它的设计比较认真：预览不是截图，而是 iframe 加载同一份 deck HTML，通过 &lt;code&gt;?preview=N&lt;/code&gt; 只显示指定页面。因此演讲者看到的预览和观众视图使用同一套 CSS、字体、主题和 viewport，视觉上保持一致。&lt;/p&gt;
+&lt;p&gt;翻页时通过 &lt;code&gt;BroadcastChannel&lt;/code&gt; 和 &lt;code&gt;postMessage&lt;/code&gt; 同步，不需要重新加载页面，避免白屏和闪烁。&lt;/p&gt;
+&lt;h2&gt;适合谁&lt;span class="hx-absolute -hx-mt-20" id="适合谁"&gt;&lt;/span&gt;
+&lt;a href="#%e9%80%82%e5%90%88%e8%b0%81" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;这个项目适合：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;想让 AI 直接生成演示文稿的用户&lt;/li&gt;
+&lt;li&gt;使用 Claude Code、Codex、Cursor、OpenClaw 等 Agent 工具的人&lt;/li&gt;
+&lt;li&gt;经常做技术分享、产品发布、周报、课程内容的人&lt;/li&gt;
+&lt;li&gt;想用 HTML/CSS/JS 替代传统 PPT 的开发者&lt;/li&gt;
+&lt;li&gt;需要批量生成小红书图文、课程 slides、项目介绍页的人&lt;/li&gt;
+&lt;li&gt;想把演示文稿变成可版本管理、可脚本化、可导出的静态资产的人&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;尤其适合“内容由 AI 生成，但希望页面也有设计感”的场景。&lt;/p&gt;
+&lt;h2&gt;快速上手&lt;span class="hx-absolute -hx-mt-20" id="快速上手"&gt;&lt;/span&gt;
+&lt;a href="#%e5%bf%ab%e9%80%9f%e4%b8%8a%e6%89%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;安装命令很简单：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npx skills add https://github.com/lewislulu/html-ppt-skill&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;安装后，可以让支持 AgentSkill 的 Agent 直接调用这套能力。&lt;/p&gt;
+&lt;p&gt;如果手动 clone 项目，也可以用脚本新建 deck：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;./scripts/new-deck.sh my-talk&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;查看内置资源：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;open templates/theme-showcase.html
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;open templates/layout-showcase.html
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;open templates/animation-showcase.html
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;open templates/full-decks-index.html&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;导出 PNG：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;./scripts/render.sh templates/theme-showcase.html
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;./scripts/render.sh examples/my-talk/index.html &lt;span class="m"&gt;12&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;常用快捷键：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;← → Space PgUp PgDn Home End 翻页
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;F 全屏
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;S 打开演讲者窗口
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;N 打开 notes 抽屉
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;R 重置计时器
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;O slide 总览
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;T 切换主题
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;A 演示当前页动画
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;#/N 跳转到第 N 页
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;?preview=N 单页预览模式&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h2&gt;结论&lt;span class="hx-absolute -hx-mt-20" id="结论"&gt;&lt;/span&gt;
+&lt;a href="#%e7%bb%93%e8%ae%ba" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;html-ppt-skill 的价值不只是“用 HTML 写 PPT”，而是把 &lt;strong&gt;主题、布局、模板、动效、演讲者模式和导出流程&lt;/strong&gt; 打包成一套 Agent 可调用的标准能力。&lt;/p&gt;
+&lt;p&gt;如果你已经在用 AI Agent 写文档、做方案、生成代码，这个项目可以让下一步变得更自然：&lt;strong&gt;直接让 Agent 把内容变成一套能展示的 HTML slides。&lt;/strong&gt;&lt;/p&gt;</description></item></channel></rss>

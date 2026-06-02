@@ -1,0 +1,169 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – Agentic Editor</title><link>https://silenceper.com/tags/agentic-editor/</link><description>Recent content in Agentic Editor on silenceper</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sat, 23 May 2026 13:01:30 +0800</lastBuildDate><atom:link href="https://silenceper.com/tags/agentic-editor/index.xml" rel="self" type="application/rss+xml"/><item><title>HTML Anything：让本地 AI Agent 直接生成可发布 HTML</title><link>https://silenceper.com/article/2026-05-23-html-anything-agentic-html-editor/</link><pubDate>Sat, 23 May 2026 13:01:30 +0800</pubDate><guid>https://silenceper.com/article/2026-05-23-html-anything-agentic-html-editor/</guid><description>
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260523/banner.png" alt="HTML Anything 官方主视觉" loading="lazy" /&gt;&lt;/p&gt;
+&lt;h2&gt;一句话定位&lt;span class="hx-absolute -hx-mt-20" id="一句话定位"&gt;&lt;/span&gt;
+&lt;a href="#%e4%b8%80%e5%8f%a5%e8%af%9d%e5%ae%9a%e4%bd%8d" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;HTML Anything 是一个本地优先的 Agentic HTML 编辑器：把 Markdown、表格、草稿、数据等输入交给你本机已登录的 AI coding agent，生成可以直接发布的单文件 HTML 或 PNG。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;项目地址：https://github.com/nexu-io/html-anything&lt;br&gt;
+官网演示：https://open-design.ai/html-anything/&lt;/p&gt;
+&lt;h2&gt;基础信息卡片&lt;span class="hx-absolute -hx-mt-20" id="基础信息卡片"&gt;&lt;/span&gt;
+&lt;a href="#%e5%9f%ba%e7%a1%80%e4%bf%a1%e6%81%af%e5%8d%a1%e7%89%87" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;项目&lt;/th&gt;
+&lt;th&gt;信息&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;仓库&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;nexu-io/html-anything&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;核心定位&lt;/td&gt;
+&lt;td&gt;Agent 时代的 HTML 编辑器&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;主要技术栈&lt;/td&gt;
+&lt;td&gt;Next.js、React、Tailwind、SSE、本地 CLI agent 调用&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;License&lt;/td&gt;
+&lt;td&gt;Apache-2.0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;当前热度&lt;/td&gt;
+&lt;td&gt;约 4.6k Stars / 476 Forks&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;支持的 Agent CLI&lt;/td&gt;
+&lt;td&gt;Claude Code、Cursor Agent、Codex、Gemini CLI、GitHub Copilot CLI、OpenCode、Qwen Coder、Aider&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;典型输出&lt;/td&gt;
+&lt;td&gt;HTML、PNG、公众号 / 知乎可粘贴内容、社交平台图片、数据报告、PPT、海报、视频帧&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2&gt;解决什么问题&lt;span class="hx-absolute -hx-mt-20" id="解决什么问题"&gt;&lt;/span&gt;
+&lt;a href="#%e8%a7%a3%e5%86%b3%e4%bb%80%e4%b9%88%e9%97%ae%e9%a2%98" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Markdown 很适合写草稿，但不一定适合直接给读者看。&lt;/p&gt;
+&lt;p&gt;尤其是当内容要发到公众号、知乎、X、小红书，或者要变成数据报告、长图、PPT、海报时，Markdown 往往只是第一步。后面还要处理排版、字体、间距、截图、平台粘贴兼容等问题。&lt;/p&gt;
+&lt;p&gt;HTML Anything 的判断很直接：&lt;strong&gt;如果最终给人看的形态是 HTML 或图片，那就让 AI agent 直接生成最终成品，而不是让用户继续手工调样式。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;它把原来的流程：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;写 Markdown → 手工排版 → 调 CSS → 截图 / 粘贴平台 → 反复修格式&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;变成：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;输入内容 → 选择模板 → 本地 agent 生成 HTML → 预览 → 复制或导出&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h2&gt;核心功能&lt;span class="hx-absolute -hx-mt-20" id="核心功能"&gt;&lt;/span&gt;
+&lt;a href="#%e6%a0%b8%e5%bf%83%e5%8a%9f%e8%83%bd" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;1. 自动识别本地 AI Agent&lt;span class="hx-absolute -hx-mt-20" id="1-自动识别本地-ai-agent"&gt;&lt;/span&gt;
+&lt;a href="#1-%e8%87%aa%e5%8a%a8%e8%af%86%e5%88%ab%e6%9c%ac%e5%9c%b0-ai-agent" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;HTML Anything 不要求你再配置一个新的 API Key。它会扫描本机 &lt;code&gt;PATH&lt;/code&gt;，识别已经安装并登录过的 coding-agent CLI。&lt;/p&gt;
+&lt;p&gt;支持的工具包括 Claude Code、Cursor Agent、OpenAI Codex、Gemini CLI、GitHub Copilot CLI、OpenCode、Qwen Coder 和 Aider。&lt;/p&gt;
+&lt;p&gt;只要你已经在终端里登录过这些工具，HTML Anything 就可以复用已有 session，把本地 agent 当成生成 HTML 的执行引擎。&lt;/p&gt;
+&lt;h3&gt;2. 用 Skill 模板控制输出质量&lt;span class="hx-absolute -hx-mt-20" id="2-用-skill-模板控制输出质量"&gt;&lt;/span&gt;
+&lt;a href="#2-%e7%94%a8-skill-%e6%a8%a1%e6%9d%bf%e6%8e%a7%e5%88%b6%e8%be%93%e5%87%ba%e8%b4%a8%e9%87%8f" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;项目内置了 75 套 Skill 模板，覆盖文档、PPT、海报、社交卡片、Web 原型、数据报告、Hyperframes 视频帧等场景。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260523/deck-guizang-editorial.png" alt="HTML Anything Skill 示例：deck-guizang-editorial" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;这些 Skill 不是简单的主题皮肤，而是带有明确设计约束的模板。比如字体栈、8px 基线网格、颜色对比、圆角、阴影、真实数据使用等规则都会写进模板约束里，减少 AI 随意发挥带来的粗糙感。&lt;/p&gt;
+&lt;h3&gt;3. 支持多种内容形态&lt;span class="hx-absolute -hx-mt-20" id="3-支持多种内容形态"&gt;&lt;/span&gt;
+&lt;a href="#3-%e6%94%af%e6%8c%81%e5%a4%9a%e7%a7%8d%e5%86%85%e5%ae%b9%e5%bd%a2%e6%80%81" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;除了普通文章，HTML Anything 更像一个“内容成品生成器”。它可以把输入转成不同交付形态：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;杂志风文章&lt;/li&gt;
+&lt;li&gt;Keynote / PPT&lt;/li&gt;
+&lt;li&gt;简历&lt;/li&gt;
+&lt;li&gt;海报&lt;/li&gt;
+&lt;li&gt;小红书卡片&lt;/li&gt;
+&lt;li&gt;X / Tweet 卡片&lt;/li&gt;
+&lt;li&gt;Web 原型&lt;/li&gt;
+&lt;li&gt;数据报告&lt;/li&gt;
+&lt;li&gt;Hyperframes / Remotion 视频帧&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260523/doc-kami-parchment.png" alt="HTML Anything 文档风格示例：doc-kami-parchment" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;这类模板的价值在于：同一份内容不再只是一段 Markdown，而是可以根据发布场景变成不同的视觉成品。&lt;/p&gt;
+&lt;h3&gt;4. 流式生成和沙箱预览&lt;span class="hx-absolute -hx-mt-20" id="4-流式生成和沙箱预览"&gt;&lt;/span&gt;
+&lt;a href="#4-%e6%b5%81%e5%bc%8f%e7%94%9f%e6%88%90%e5%92%8c%e6%b2%99%e7%ae%b1%e9%a2%84%e8%a7%88" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;它的生成流程走 SSE 流式返回。agent 输出的 HTML 会不断追加到前端 iframe 里，用户可以实时看到页面长出来。&lt;/p&gt;
+&lt;p&gt;整体结构可以理解为：&lt;/p&gt;
+&lt;pre class="mermaid hx-mt-6"&gt;
+flowchart TD
+A[用户输入 Markdown / CSV / Excel / JSON / 草稿] --&amp;gt; B[选择本地 Agent]
+B --&amp;gt; C[选择 Skill 模板]
+C --&amp;gt; D[POST /api/convert]
+D --&amp;gt; E[本地 CLI Agent 生成 HTML]
+E --&amp;gt; F[SSE 流式返回]
+F --&amp;gt; G[Sandbox iframe 实时预览]
+G --&amp;gt; H[复制到平台或导出 HTML / PNG]
+&lt;/pre&gt;&lt;p&gt;预览放在 sandbox iframe 中，既能隔离生成内容，又能让用户在浏览器里直接确认最终效果。&lt;/p&gt;
+&lt;h3&gt;5. 一键导出到发布平台&lt;span class="hx-absolute -hx-mt-20" id="5-一键导出到发布平台"&gt;&lt;/span&gt;
+&lt;a href="#5-%e4%b8%80%e9%94%ae%e5%af%bc%e5%87%ba%e5%88%b0%e5%8f%91%e5%b8%83%e5%b9%b3%e5%8f%b0" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;生成后的 HTML 可以继续导出或复制到不同平台：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;微信公众号：内联 CSS 后粘贴，减少样式丢失&lt;/li&gt;
+&lt;li&gt;知乎：适配富文本和公式场景&lt;/li&gt;
+&lt;li&gt;X / 微博 / 小红书：把预览区域导出成高 DPI PNG&lt;/li&gt;
+&lt;li&gt;本地文件：下载单文件 &lt;code&gt;.html&lt;/code&gt; 或 &lt;code&gt;.png&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260523/video-hyperframes.png" alt="HTML Anything 视频帧示例：video-hyperframes" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;这一步让它不只是“生成页面”，而是更接近一个面向发布的工作台。&lt;/p&gt;
+&lt;h2&gt;适合谁&lt;span class="hx-absolute -hx-mt-20" id="适合谁"&gt;&lt;/span&gt;
+&lt;a href="#%e9%80%82%e5%90%88%e8%b0%81" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;HTML Anything 比较适合这些人：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;经常把 Markdown 文章发到公众号、知乎、社交平台的人&lt;/li&gt;
+&lt;li&gt;希望快速生成长图、海报、PPT、数据报告的内容创作者&lt;/li&gt;
+&lt;li&gt;已经在使用 Claude Code、Cursor、Codex 等本地 AI coding agent 的开发者&lt;/li&gt;
+&lt;li&gt;想把内容生产从“写完再排版”变成“直接生成可交付成品”的团队&lt;/li&gt;
+&lt;li&gt;想研究 agentic editor、AI design workflow、Skill 模板机制的开发者&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;快速上手&lt;span class="hx-absolute -hx-mt-20" id="快速上手"&gt;&lt;/span&gt;
+&lt;a href="#%e5%bf%ab%e9%80%9f%e4%b8%8a%e6%89%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git clone https://github.com/nexu-io/html-anything
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; html-anything
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;pnpm install
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;pnpm -F @html-anything/next dev&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;启动后打开：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;http://localhost:3000&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;基本使用流程：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;顶栏选择本机识别到的 AI agent&lt;/li&gt;
+&lt;li&gt;选择一个 Skill 模板&lt;/li&gt;
+&lt;li&gt;粘贴 Markdown、表格、JSON、SQL 或草稿&lt;/li&gt;
+&lt;li&gt;按 &lt;code&gt;⌘ + Enter&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;在 iframe 中预览生成结果&lt;/li&gt;
+&lt;li&gt;复制到平台，或导出 &lt;code&gt;.html&lt;/code&gt; / &lt;code&gt;.png&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;结论&lt;span class="hx-absolute -hx-mt-20" id="结论"&gt;&lt;/span&gt;
+&lt;a href="#%e7%bb%93%e8%ae%ba" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;HTML Anything 的重点不是“又一个 HTML 编辑器”，而是把本地 AI agent、设计模板和平台导出串成了一条内容交付链路。&lt;/p&gt;
+&lt;p&gt;它适合解决一个很具体的问题：&lt;strong&gt;内容已经有了，但不想再花时间手工排版、截图、适配平台。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如果你本来就在用 Claude Code、Cursor、Codex 这类工具，HTML Anything 提供了一个很自然的延伸：让 agent 不只写代码，也直接生成读者最终看到的内容成品。&lt;/p&gt;</description></item></channel></rss>
