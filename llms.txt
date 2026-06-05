@@ -21,6 +21,7 @@ This file is a compact map for AI agents and search assistants. Prefer canonical
 - [SEO / GEO 增长专题](https://silenceper.com/topics/seo-geo/): SEO、GEO、内容增长与可见性优化实践。
 
 ## Recommended Recent Content
+- [html-video：用 HTML、CSS 和 Coding Agent 在本地生成真实 MP4](https://silenceper.com/article/2026-06-05-html-video-agent-mp4/): html-video 是 Open Design 团队推出的开源项目，它用 Coding Agent 理解内容和组织故事板，用 HTML/CSS 表达画面，再通过 Chromium 与 ffmpeg 在本地渲染成真实 MP4。
 - [html-ppt-skill：让 AI 生成专业 HTML 演示文稿](https://silenceper.com/article/2026-06-02-html-ppt-skill/): html-ppt-skill 是一套面向 AI Agent 的 HTML PPT 生成技能包，用纯静态 HTML/CSS/JS 快速产出带主题、布局、动效和演讲者模式的专业演示文稿。
 - [Agent 不只需要模型：上下文基础设施正在成形](https://silenceper.com/article/2026-05-31-agent-context-infrastructure/): OpenViking、Mirage、SkillOpt 这类项目说明，AI Agent 的竞争点正在从模型调用，转向上下文、文件系统和可优化技能这些基础设施。
 - [AI 工具的免费时代正在结束：从 Copilot token 计费到 Agent 预算治理](https://silenceper.com/article/2026-05-31-ai-tool-usage-based-billing-agent-budget/): GitHub Copilot 转向 usage-based billing、OpenRouter 推出 Guardrails、AgentBudget 这类项目出现，说明 AI 工具正在从订阅制体验进入按量计费和预算治理阶段。
@@ -44,4 +45,3 @@ This file is a compact map for AI agents and search assistants. Prefer canonical
 - [OpenLess：开源的 AI 语音输入工具，按住说话，松开成文](https://silenceper.com/article/2026-05-07-openless-ai-voice-input/): 介绍 OpenLess：一个面向 macOS 和 Windows 的开源语音输入工具，可以把口语转成经过 AI 润色的文字，并插入到当前光标位置。
 - [Petdex：给 Codex 找一个会动的桌面伙伴](https://silenceper.com/article/2026-05-06-petdex-codex-pets/): 介绍 Petdex：一个面向 Codex 的动态宠物图鉴网站，支持浏览、预览、安装和提交各种像素风 companion。
 - [Keep Codex Fast：让 Codex 本地状态保持轻快的安全维护技能](https://silenceper.com/article/2026-05-04-keep-codex-fast/): 介绍 keep-codex-fast：一个面向 Codex 重度用户的本地状态维护 Skill，强调先检查、先交接、先备份，再安全归档旧会话、日志和工作区。
-- [HyperFrames：用 HTML 生成视频的开源渲染框架](https://silenceper.com/article/2026-05-02-hyperframes-html-video-rendering/): 介绍 HeyGen 开源的 HyperFrames：一个用 HTML、CSS 和前端动画技术定义视频，并通过浏览器与 FFmpeg 渲染 MP4 的视频生成框架。

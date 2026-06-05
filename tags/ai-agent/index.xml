@@ -1,4 +1,147 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – AI Agent</title><link>https://silenceper.com/tags/ai-agent/</link><description>Recent content in AI Agent on silenceper</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 02 Jun 2026 15:20:00 +0800</lastBuildDate><atom:link href="https://silenceper.com/tags/ai-agent/index.xml" rel="self" type="application/rss+xml"/><item><title>html-ppt-skill：让 AI 生成专业 HTML 演示文稿</title><link>https://silenceper.com/article/2026-06-02-html-ppt-skill/</link><pubDate>Tue, 02 Jun 2026 15:20:00 +0800</pubDate><guid>https://silenceper.com/article/2026-06-02-html-ppt-skill/</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – AI Agent</title><link>https://silenceper.com/tags/ai-agent/</link><description>Recent content in AI Agent on silenceper</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Fri, 05 Jun 2026 23:34:00 +0800</lastBuildDate><atom:link href="https://silenceper.com/tags/ai-agent/index.xml" rel="self" type="application/rss+xml"/><item><title>html-video：用 HTML、CSS 和 Coding Agent 在本地生成真实 MP4</title><link>https://silenceper.com/article/2026-06-05-html-video-agent-mp4/</link><pubDate>Fri, 05 Jun 2026 23:34:00 +0800</pubDate><guid>https://silenceper.com/article/2026-06-05-html-video-agent-mp4/</guid><description>
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260605/html-video-hero.png" alt="html-video 主视觉" loading="lazy" /&gt;&lt;/p&gt;
+&lt;h2&gt;一句话定位&lt;span class="hx-absolute -hx-mt-20" id="一句话定位"&gt;&lt;/span&gt;
+&lt;a href="#%e4%b8%80%e5%8f%a5%e8%af%9d%e5%ae%9a%e4%bd%8d" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;html-video 是一套面向 Coding Agent 的本地视频生成工具：给它一句描述、文章链接或 GitHub 仓库，它会生成多帧动画 HTML，并渲染成真实 MP4。&lt;/strong&gt;&lt;/p&gt;
+&lt;h2&gt;基础信息卡片&lt;span class="hx-absolute -hx-mt-20" id="基础信息卡片"&gt;&lt;/span&gt;
+&lt;a href="#%e5%9f%ba%e7%a1%80%e4%bf%a1%e6%81%af%e5%8d%a1%e7%89%87" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;项目&lt;/th&gt;
+&lt;th&gt;信息&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;项目名&lt;/td&gt;
+&lt;td&gt;html-video&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;GitHub&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://github.com/nexu-io/html-video" target="_blank" rel="noopener"&gt;https://github.com/nexu-io/html-video&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;官网&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://open-design.ai/html-video" target="_blank" rel="noopener"&gt;https://open-design.ai/html-video&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;作者/团队&lt;/td&gt;
+&lt;td&gt;Open Design / nexu-io&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;协议&lt;/td&gt;
+&lt;td&gt;Apache-2.0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;主要技术&lt;/td&gt;
+&lt;td&gt;HTML、CSS、TypeScript、Headless Chromium、ffmpeg&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;默认渲染引擎&lt;/td&gt;
+&lt;td&gt;Hyperframes&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;模板数量&lt;/td&gt;
+&lt;td&gt;21 个内置模板&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;支持 Agent&lt;/td&gt;
+&lt;td&gt;Open Design、Claude Code、Cursor、Codex、Gemini、Qwen、OpenCode、Copilot、Aider、Hermes 等&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;定位&lt;/td&gt;
+&lt;td&gt;Agent 驱动的 HTML-to-Video 本地生成工作流&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2&gt;解决什么问题&lt;span class="hx-absolute -hx-mt-20" id="解决什么问题"&gt;&lt;/span&gt;
+&lt;a href="#%e8%a7%a3%e5%86%b3%e4%bb%80%e4%b9%88%e9%97%ae%e9%a2%98" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;程序化视频并不是新概念。Remotion、Motion Canvas、Manim 这类工具都能把代码变成视频，但它们通常都有各自的创作模型：有的偏 React，有的偏 Canvas，有的偏数学动画。&lt;/p&gt;
+&lt;p&gt;这会带来一个现实门槛：你不是只在“做视频”，还要先选择框架、学习语法、理解渲染方式，然后再把内容拆成镜头。&lt;/p&gt;
+&lt;p&gt;html-video 的目标是把这层复杂度往后藏起来。你面对的是本地 Studio 或 CLI，真正负责拆解内容、选择模板、生成画面的，是接入的 Coding Agent。&lt;/p&gt;
+&lt;pre class="mermaid hx-mt-6"&gt;
+flowchart LR
+A[一句描述 / 文章链接 / GitHub 仓库] --&amp;gt; B[抓取并整理素材]
+B --&amp;gt; C[Coding Agent 生成故事板]
+C --&amp;gt; D[每一帧生成动画 HTML]
+D --&amp;gt; E[Headless Chromium 录制]
+E --&amp;gt; F[ffmpeg 编码与合成]
+F --&amp;gt; G[输出 MP4]
+&lt;/pre&gt;&lt;p&gt;这套流程最关键的地方在于：内容理解和画面渲染被拆开了。Agent 负责“讲什么、怎么分镜”，渲染引擎负责“怎么把画面变成视频”。&lt;/p&gt;
+&lt;h2&gt;核心功能&lt;span class="hx-absolute -hx-mt-20" id="核心功能"&gt;&lt;/span&gt;
+&lt;a href="#%e6%a0%b8%e5%bf%83%e5%8a%9f%e8%83%bd" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;1. 从链接或仓库生成视频&lt;span class="hx-absolute -hx-mt-20" id="1-从链接或仓库生成视频"&gt;&lt;/span&gt;
+&lt;a href="#1-%e4%bb%8e%e9%93%be%e6%8e%a5%e6%88%96%e4%bb%93%e5%ba%93%e7%94%9f%e6%88%90%e8%a7%86%e9%a2%91" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;html-video 不只支持一句 Prompt。你也可以粘贴网页文章、微信公众号文章，或者 GitHub 仓库地址。Studio 会先把来源内容抓取并整理成 Markdown，再交给 Agent 生成视频内容。&lt;/p&gt;
+&lt;p&gt;这对技术内容尤其有用：比如给它一个开源项目仓库，它可以读取项目简介、README 和顶层结构，然后生成一段项目介绍视频。&lt;/p&gt;
+&lt;h3&gt;2. 多帧故事板&lt;span class="hx-absolute -hx-mt-20" id="2-多帧故事板"&gt;&lt;/span&gt;
+&lt;a href="#2-%e5%a4%9a%e5%b8%a7%e6%95%85%e4%ba%8b%e6%9d%bf" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;项目内部使用 content-graph 来组织多场景视频。可以理解为：Agent 先把内容拆成多个节点，每个节点对应一个画面；节点之间的顺序、对比、依赖关系，决定视频的节奏。&lt;/p&gt;
+&lt;p&gt;单帧视频可以直接走快速路径；多场景视频则会逐帧生成 HTML，再统一合成为 MP4。&lt;/p&gt;
+&lt;h3&gt;3. HTML/CSS 表达画面&lt;span class="hx-absolute -hx-mt-20" id="3-htmlcss-表达画面"&gt;&lt;/span&gt;
+&lt;a href="#3-htmlcss-%e8%a1%a8%e8%be%be%e7%94%bb%e9%9d%a2" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;相比直接写视频框架，HTML/CSS 的门槛更低，也更容易被 Coding Agent 生成和修改。标题、卡片、图表、渐变、动效、布局，都可以用 Web 技术来表达。&lt;/p&gt;
+&lt;p&gt;当前默认引擎是 Hyperframes：它会用无头 Chromium 加载这些动画 HTML，逐帧录制，再交给 ffmpeg 编码。&lt;/p&gt;
+&lt;h3&gt;4. 内置模板库&lt;span class="hx-absolute -hx-mt-20" id="4-内置模板库"&gt;&lt;/span&gt;
+&lt;a href="#4-%e5%86%85%e7%bd%ae%e6%a8%a1%e6%9d%bf%e5%ba%93" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;html-video 自带 21 个模板，覆盖数据可视化、产品宣传、标题卡、片尾、动感排版、决策树、电影感画面等常见场景。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260605/html-video-data-chart-nyt.png" alt="模板示例：数据图表" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;上面这种数据图表模板，适合把“一个指标如何变化”讲成短视频里的关键画面。Agent 不需要从零设计每一帧，而是基于模板填入标题、数据、标注和来源。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260605/html-video-glitch-title.png" alt="模板示例：故障风标题" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;这类标题模板则更适合片头、主题揭示，或者技术类视频里常见的“系统上线”“趋势变化”一类表达。&lt;/p&gt;
+&lt;h3&gt;5. 支持本地 Agent 工作流&lt;span class="hx-absolute -hx-mt-20" id="5-支持本地-agent-工作流"&gt;&lt;/span&gt;
+&lt;a href="#5-%e6%94%af%e6%8c%81%e6%9c%ac%e5%9c%b0-agent-%e5%b7%a5%e4%bd%9c%e6%b5%81" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;项目支持多种 Coding Agent，包括 Open Design、Trae CLI、Claude Code、Cursor Agent、Codex CLI、Gemini CLI、Grok、Qwen Code、OpenCode、Copilot CLI、Aider、Hermes，以及 Anthropic API。&lt;/p&gt;
+&lt;p&gt;这意味着它不是绑定某一家模型或平台，而是更像一个本地视频生成工作台：你可以根据自己已经安装和使用的 Agent 来驱动视频生成。&lt;/p&gt;
+&lt;h3&gt;6. 可选配乐和旁白&lt;span class="hx-absolute -hx-mt-20" id="6-可选配乐和旁白"&gt;&lt;/span&gt;
+&lt;a href="#6-%e5%8f%af%e9%80%89%e9%85%8d%e4%b9%90%e5%92%8c%e6%97%81%e7%99%bd" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;如果配置 MiniMax API Key，还可以生成背景音乐和 TTS 旁白。导出时，音频会通过 ffmpeg 混入最终 MP4。没有音频配置时，视频生成流程本身也可以正常使用。&lt;/p&gt;
+&lt;h2&gt;适合谁&lt;span class="hx-absolute -hx-mt-20" id="适合谁"&gt;&lt;/span&gt;
+&lt;a href="#%e9%80%82%e5%90%88%e8%b0%81" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;html-video 比较适合这几类人：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;想把技术文章、开源项目、产品说明做成短视频的开发者；&lt;/li&gt;
+&lt;li&gt;想用 Agent 批量生成项目介绍视频的内容团队；&lt;/li&gt;
+&lt;li&gt;想做“Video as Code”工作流的工程师；&lt;/li&gt;
+&lt;li&gt;不想依赖云端渲染、不想按次付费的视频自动化用户；&lt;/li&gt;
+&lt;li&gt;已经在使用 Claude Code、Codex、Cursor、Hermes 等 Coding Agent 的用户。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;它尤其适合“内容结构明确，但需要更快转成视频表达”的场景。例如开源项目介绍、产品更新、数据变化解读、技术教程片头、社媒短视频素材等。&lt;/p&gt;
+&lt;h2&gt;快速上手&lt;span class="hx-absolute -hx-mt-20" id="快速上手"&gt;&lt;/span&gt;
+&lt;a href="#%e5%bf%ab%e9%80%9f%e4%b8%8a%e6%89%8b" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;项目使用 pnpm 管理 monorepo，官方给出的启动方式是：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;pnpm install
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;pnpm -r build
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;node packages/cli/dist/bin.js studio&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;启动后打开本地 Studio：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;http://127.0.0.1:3071&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;常用 CLI：&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;node packages/cli/dist/bin.js doctor
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;node packages/cli/dist/bin.js search-templates --intent &lt;span class="s2"&gt;&amp;#34;github stars race&amp;#34;&lt;/span&gt; --top &lt;span class="m"&gt;3&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="复制代码"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;doctor&lt;/code&gt; 用来检测本地可用的 Agent 和渲染引擎；&lt;code&gt;search-templates&lt;/code&gt; 可以根据视频意图搜索合适模板。&lt;/p&gt;
+&lt;h2&gt;结论&lt;span class="hx-absolute -hx-mt-20" id="结论"&gt;&lt;/span&gt;
+&lt;a href="#%e7%bb%93%e8%ae%ba" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;html-video 的价值不在于“HTML 截图转视频”这么简单，而在于它把内容输入、Agent 理解、故事板生成、HTML 动画、MP4 渲染串成了一条完整链路。&lt;/p&gt;
+&lt;p&gt;对开发者来说，它降低了程序化视频的上手成本：不用先押注某个视频框架，也不用从空白画布开始设计。你可以先用文章、仓库或 Prompt 提供内容，再让 Agent 基于模板生成视频。&lt;/p&gt;
+&lt;p&gt;目前真正可运行的核心是 Hyperframes 引擎，其他引擎还在规划中。但如果你关注 AI Agent、内容自动化、技术视频生成，html-video 是一个值得跟进的开源项目。&lt;/p&gt;</description></item><item><title>html-ppt-skill：让 AI 生成专业 HTML 演示文稿</title><link>https://silenceper.com/article/2026-06-02-html-ppt-skill/</link><pubDate>Tue, 02 Jun 2026 15:20:00 +0800</pubDate><guid>https://silenceper.com/article/2026-06-02-html-ppt-skill/</guid><description>
 &lt;p&gt;&lt;img src="https://silenceper.com/img/20260602/html-ppt-hero.gif" alt="html-ppt 封面 · 实时预览" loading="lazy" /&gt;&lt;/p&gt;
 &lt;h2&gt;一句话定位&lt;span class="hx-absolute -hx-mt-20" id="一句话定位"&gt;&lt;/span&gt;
 &lt;a href="#%e4%b8%80%e5%8f%a5%e8%af%9d%e5%ae%9a%e4%bd%8d" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;html-ppt-skill 是一套面向 AI Agent 的 HTML PPT 生成技能包，用纯静态 HTML/CSS/JS 快速产出带主题、布局、动效和演讲者模式的专业演示文稿。&lt;/strong&gt;&lt;/p&gt;

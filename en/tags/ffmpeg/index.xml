@@ -1,4 +1,147 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – FFmpeg</title><link>https://silenceper.com/en/tags/ffmpeg/</link><description>Recent content in FFmpeg on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en-US</language><lastBuildDate>Sat, 02 May 2026 10:39:18 +0800</lastBuildDate><atom:link href="https://silenceper.com/en/tags/ffmpeg/index.xml" rel="self" type="application/rss+xml"/><item><title>HyperFrames: An Open-source Rendering Framework for Generating Video with HTML</title><link>https://silenceper.com/en/article/2026-05-02-hyperframes-html-video-rendering/</link><pubDate>Sat, 02 May 2026 10:39:18 +0800</pubDate><guid>https://silenceper.com/en/article/2026-05-02-hyperframes-html-video-rendering/</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>silenceper – Ffmpeg</title><link>https://silenceper.com/en/tags/ffmpeg/</link><description>Recent content in Ffmpeg on silenceper</description><generator>Hugo -- gohugo.io</generator><language>en-US</language><lastBuildDate>Fri, 05 Jun 2026 23:34:00 +0800</lastBuildDate><atom:link href="https://silenceper.com/en/tags/ffmpeg/index.xml" rel="self" type="application/rss+xml"/><item><title>html-video: Generate Real MP4s Locally with HTML, CSS, and Coding Agents</title><link>https://silenceper.com/en/article/2026-06-05-html-video-agent-mp4/</link><pubDate>Fri, 05 Jun 2026 23:34:00 +0800</pubDate><guid>https://silenceper.com/en/article/2026-06-05-html-video-agent-mp4/</guid><description>
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260605/html-video-hero.png" alt="html-video hero" loading="lazy" /&gt;&lt;/p&gt;
+&lt;h2&gt;One-line Positioning&lt;span class="hx-absolute -hx-mt-20" id="one-line-positioning"&gt;&lt;/span&gt;
+&lt;a href="#one-line-positioning" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;html-video is a local video generation workflow for coding agents: give it a prompt, an article link, or a GitHub repository, and it generates animated multi-frame HTML that can be rendered into a real MP4.&lt;/strong&gt;&lt;/p&gt;
+&lt;h2&gt;Basic Information&lt;span class="hx-absolute -hx-mt-20" id="basic-information"&gt;&lt;/span&gt;
+&lt;a href="#basic-information" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Item&lt;/th&gt;
+&lt;th&gt;Information&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Project&lt;/td&gt;
+&lt;td&gt;html-video&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;GitHub&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://github.com/nexu-io/html-video" target="_blank" rel="noopener"&gt;https://github.com/nexu-io/html-video&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Website&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://open-design.ai/html-video" target="_blank" rel="noopener"&gt;https://open-design.ai/html-video&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Team&lt;/td&gt;
+&lt;td&gt;Open Design / nexu-io&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;License&lt;/td&gt;
+&lt;td&gt;Apache-2.0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Main technologies&lt;/td&gt;
+&lt;td&gt;HTML, CSS, TypeScript, Headless Chromium, ffmpeg&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Default render engine&lt;/td&gt;
+&lt;td&gt;Hyperframes&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Templates&lt;/td&gt;
+&lt;td&gt;21 built-in templates&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Supported agents&lt;/td&gt;
+&lt;td&gt;Open Design, Claude Code, Cursor, Codex, Gemini, Qwen, OpenCode, Copilot, Aider, Hermes, and more&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Positioning&lt;/td&gt;
+&lt;td&gt;Agent-driven local HTML-to-video workflow&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2&gt;What Problem It Solves&lt;span class="hx-absolute -hx-mt-20" id="what-problem-it-solves"&gt;&lt;/span&gt;
+&lt;a href="#what-problem-it-solves" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Programmatic video is not a new idea. Tools such as Remotion, Motion Canvas, and Manim can all turn code into video, but each comes with its own authoring model: some are React-oriented, some are canvas-oriented, and some are built primarily for mathematical animation.&lt;/p&gt;
+&lt;p&gt;That creates a practical barrier. You are not just “making a video”; you first need to choose a framework, learn its model, understand its rendering pipeline, and then manually break the content into scenes.&lt;/p&gt;
+&lt;p&gt;html-video tries to move that complexity behind a higher-level workflow. The user interacts with a local Studio or CLI, while the connected coding agent handles content analysis, template selection, and frame generation.&lt;/p&gt;
+&lt;pre class="mermaid hx-mt-6"&gt;
+flowchart LR
+A[Prompt / Article Link / GitHub Repository] --&amp;gt; B[Fetch and Prepare Source Material]
+B --&amp;gt; C[Coding Agent Builds a Storyboard]
+C --&amp;gt; D[Generate Animated HTML Per Frame]
+D --&amp;gt; E[Record with Headless Chromium]
+E --&amp;gt; F[Encode and Compose with ffmpeg]
+F --&amp;gt; G[Export MP4]
+&lt;/pre&gt;&lt;p&gt;The key idea is to separate content understanding from rendering. The agent decides what to say and how to structure the scenes; the rendering engine decides how those scenes become video frames.&lt;/p&gt;
+&lt;h2&gt;Core Features&lt;span class="hx-absolute -hx-mt-20" id="core-features"&gt;&lt;/span&gt;
+&lt;a href="#core-features" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;1. Generate Video from Links or Repositories&lt;span class="hx-absolute -hx-mt-20" id="1-generate-video-from-links-or-repositories"&gt;&lt;/span&gt;
+&lt;a href="#1-generate-video-from-links-or-repositories" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;html-video is not limited to a single prompt. You can paste a web article, a WeChat article, or a GitHub repository URL. The Studio fetches and flattens the source content into Markdown, then passes it to the agent as material for the video.&lt;/p&gt;
+&lt;p&gt;This is especially useful for technical content. For example, if you provide an open-source repository, it can read the project description, README, and top-level structure, then generate a structured project introduction video.&lt;/p&gt;
+&lt;h3&gt;2. Multi-frame Storyboards&lt;span class="hx-absolute -hx-mt-20" id="2-multi-frame-storyboards"&gt;&lt;/span&gt;
+&lt;a href="#2-multi-frame-storyboards" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The project uses a content-graph to organize multi-scene videos. In practice, the agent breaks the source material into nodes; each node becomes a frame, while the sequence, contrast, and dependency relationships between nodes define the pacing of the final video.&lt;/p&gt;
+&lt;p&gt;Single-frame videos can take a fast path. Multi-scene videos generate HTML frame by frame, then compose those frames into one MP4.&lt;/p&gt;
+&lt;h3&gt;3. Express Frames with HTML and CSS&lt;span class="hx-absolute -hx-mt-20" id="3-express-frames-with-html-and-css"&gt;&lt;/span&gt;
+&lt;a href="#3-express-frames-with-html-and-css" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Compared with writing directly in a specialized video framework, HTML and CSS are easier to author, inspect, and modify. Titles, cards, charts, gradients, animations, and layouts can all be represented with common web technologies.&lt;/p&gt;
+&lt;p&gt;The current default engine is Hyperframes. It loads animated HTML with Headless Chromium, records the frames, and hands them to ffmpeg for MP4 encoding.&lt;/p&gt;
+&lt;h3&gt;4. Built-in Template Library&lt;span class="hx-absolute -hx-mt-20" id="4-built-in-template-library"&gt;&lt;/span&gt;
+&lt;a href="#4-built-in-template-library" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;html-video includes 21 templates covering data visualization, product promos, title cards, outros, kinetic typography, decision trees, cinematic frames, and other common video scenes.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260605/html-video-data-chart-nyt.png" alt="Template example: data chart" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;A data chart template like this is useful when a video needs to explain how a metric changes over time. Instead of designing every frame from scratch, the agent can fill the template with a headline, data points, annotations, and a source line.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://silenceper.com/img/20260605/html-video-glitch-title.png" alt="Template example: glitch title" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;A title template like this works well for openers, topic reveals, or technical videos that need a stronger “system online” visual style.&lt;/p&gt;
+&lt;h3&gt;5. Local Agent Workflow&lt;span class="hx-absolute -hx-mt-20" id="5-local-agent-workflow"&gt;&lt;/span&gt;
+&lt;a href="#5-local-agent-workflow" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The project supports multiple coding agents, including Open Design, Trae CLI, Claude Code, Cursor Agent, Codex CLI, Gemini CLI, Grok, Qwen Code, OpenCode, Copilot CLI, Aider, Hermes, and the Anthropic API.&lt;/p&gt;
+&lt;p&gt;That means it is not locked to a single model or vendor. It behaves more like a local video generation workstation that can be driven by whichever coding agent you already use.&lt;/p&gt;
+&lt;h3&gt;6. Optional Soundtrack and Narration&lt;span class="hx-absolute -hx-mt-20" id="6-optional-soundtrack-and-narration"&gt;&lt;/span&gt;
+&lt;a href="#6-optional-soundtrack-and-narration" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;If a MiniMax API key is configured, html-video can also generate background music and TTS narration. During export, ffmpeg mixes the audio into the final MP4. Without an audio key, the rest of the video generation workflow still works normally.&lt;/p&gt;
+&lt;h2&gt;Who It Is For&lt;span class="hx-absolute -hx-mt-20" id="who-it-is-for"&gt;&lt;/span&gt;
+&lt;a href="#who-it-is-for" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;html-video is especially useful for:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Developers who want to turn technical articles, open-source projects, or product updates into short videos;&lt;/li&gt;
+&lt;li&gt;Content teams that want to generate project introduction videos with agents;&lt;/li&gt;
+&lt;li&gt;Engineers exploring “Video as Code” workflows;&lt;/li&gt;
+&lt;li&gt;Users who prefer local rendering and do not want per-render cloud fees;&lt;/li&gt;
+&lt;li&gt;People already using coding agents such as Claude Code, Codex, Cursor, or Hermes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;It is particularly well suited to content that already has a clear structure but needs to be turned into video more quickly: open-source project introductions, product updates, data explainers, technical tutorial intros, and social video assets.&lt;/p&gt;
+&lt;h2&gt;Quick Start&lt;span class="hx-absolute -hx-mt-20" id="quick-start"&gt;&lt;/span&gt;
+&lt;a href="#quick-start" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The project is a pnpm-managed monorepo. The official quick start is:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;pnpm install
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;pnpm -r build
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;node packages/cli/dist/bin.js studio&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Then open the local Studio:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;http://127.0.0.1:3071&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Useful CLI commands:&lt;/p&gt;
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code"&gt;
+&lt;div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;node packages/cli/dist/bin.js doctor
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;node packages/cli/dist/bin.js search-templates --intent &lt;span class="s2"&gt;&amp;#34;github stars race&amp;#34;&lt;/span&gt; --top &lt;span class="m"&gt;3&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0"&gt;
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+&gt;
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"&gt;&lt;/div&gt;
+&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;doctor&lt;/code&gt; checks available local agents and render engines. &lt;code&gt;search-templates&lt;/code&gt; helps find suitable templates based on a video intent.&lt;/p&gt;
+&lt;h2&gt;Conclusion&lt;span class="hx-absolute -hx-mt-20" id="conclusion"&gt;&lt;/span&gt;
+&lt;a href="#conclusion" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The value of html-video is not simply “turning HTML screenshots into video.” Its stronger idea is connecting source input, agent understanding, storyboard generation, animated HTML, and MP4 rendering into one workflow.&lt;/p&gt;
+&lt;p&gt;For developers, it lowers the entry barrier for programmatic video. You do not need to commit to one video framework first, nor do you need to design every scene from a blank canvas. You can start with an article, a repository, or a prompt, then let an agent generate the video from templates.&lt;/p&gt;
+&lt;p&gt;Today, the truly runnable core is the Hyperframes engine, while other render engines are still on the roadmap. But if you care about AI agents, content automation, and technical video generation, html-video is an open-source project worth following.&lt;/p&gt;</description></item><item><title>HyperFrames: An Open-source Rendering Framework for Generating Video with HTML</title><link>https://silenceper.com/en/article/2026-05-02-hyperframes-html-video-rendering/</link><pubDate>Sat, 02 May 2026 10:39:18 +0800</pubDate><guid>https://silenceper.com/en/article/2026-05-02-hyperframes-html-video-rendering/</guid><description>
 &lt;p&gt;&lt;img src="https://silenceper.com/img/20260502/hyperframes-demo.gif" alt="HyperFrames demo" loading="lazy" /&gt;&lt;/p&gt;
 &lt;h2&gt;One-line Positioning&lt;span class="hx-absolute -hx-mt-20" id="one-line-positioning"&gt;&lt;/span&gt;
 &lt;a href="#one-line-positioning" class="subheading-anchor" aria-label="Permalink for this section"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;HyperFrames is HeyGen&amp;rsquo;s open-source HTML video rendering framework. It lets you define video scenes, timelines, and animations the same way you write web pages, then preview them in a browser and render them to MP4.&lt;/p&gt;
